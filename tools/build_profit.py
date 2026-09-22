@@ -144,7 +144,7 @@ SVG = """\
 
 BODY = """\
 <div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
  <header class="panel pad">
   <h1>Profit finder</h1>
   <p class="lede">Every era recipe ranked by expected profit. Uses the same prices you set in the <a href="/calculator">calculator</a>. Adjust your skill levels to see accurate HQ chances.</p>

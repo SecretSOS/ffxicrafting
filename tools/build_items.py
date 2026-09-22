@@ -434,6 +434,7 @@ def build_page(iid):
         '<div id="searchResults" class="search-results" hidden></div></div>'
         '<div class="links"><a href="/calculator">Calculator</a>'
         '<a href="/profit">Profit Finder</a>'
+        '<a href="/shopping">Shopping List</a>'
         '<button class="act" id="themeBtn" type="button">Theme</button>'
         '</div></nav>\n'
         ' <header class="panel pad">\n'
