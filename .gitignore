@@ -8,6 +8,12 @@ venv/
 lsb-server/
 server/
 
+# Local working notes — kept on disk for tooling context, never published.
+# If these were already committed, untrack them:
+#   git rm --cached CLAUDE.md docs/handoff.md
+CLAUDE.md
+docs/
+
 # Local scratch
 *.log
 .DS_Store

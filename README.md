@@ -2,6 +2,8 @@
 
 Crafting data for FFXI era-75 private servers, read from the **LandSandBoat server source** rather than from wikis.
 
+Built by **Secretsos**.
+
 Everything on the site is generated from a SQLite database that is itself built by parsing the server's own SQL, Lua and C++. No hand-entered rates.
 
 ## Layout
