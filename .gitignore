@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# A LandSandBoat checkout, if you clone it inside the repo
+lsb-server/
+server/
+
+# Local scratch
+*.log
+.DS_Store
+Thumbs.db
+
+# Uncomment if the database gets too large for comfort and you would rather
+# rebuild it than commit it. It is ~8 MB, which git handles fine.
+# data/ffxi_crafting.db

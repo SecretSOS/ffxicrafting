@@ -1,0 +1,59 @@
+<div class="wrap">
+ <header class="panel pad">
+  <button class="act theme" id="themeBtn" type="button">Theme</button>
+  <h1>Crafting cost calculator</h1>
+  <p class="lede">Every era recipe from 1 to 60, priced with your server's numbers. Open a level bracket to compare all the options in it and see which is genuinely cheapest per skill level. Prices stay in this browser.</p>
+  <div class="profile">
+   <span class="plabel" id="serverLabel">Server type</span>
+   <div class="combo">
+    <button type="button" class="combo-btn" id="serverBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="serverLabel serverBtn">
+     <span class="dot-live" aria-hidden="true"></span><span id="serverName">Phoenix</span>
+     <span class="combo-sub">era rules · ToAU baseline</span><span class="caret" aria-hidden="true"></span>
+    </button>
+    <div class="combo-menu" id="serverMenu" role="listbox" aria-labelledby="serverLabel" hidden>
+     <p class="combo-group">Era 75 · LandSandBoat</p>
+     <button type="button" role="option" aria-selected="true" class="combo-opt sel" data-v="phoenix">
+      <span class="dot-live"></span><span><b>Phoenix</b><small>era rules, ToAU baseline, WotG case by case</small></span><span class="ok">in use</span></button>
+     <button type="button" role="option" aria-disabled="true" class="combo-opt off">
+      <span class="dot-soon"></span><span><b>HorizonXI</b><small>era 75, its own changes</small></span><span class="soon">soon</span></button>
+     <button type="button" role="option" aria-disabled="true" class="combo-opt off">
+      <span class="dot-soon"></span><span><b>CatsEyeXI</b><small>era 75</small></span><span class="soon">soon</span></button>
+     <button type="button" role="option" aria-disabled="true" class="combo-opt off">
+      <span class="dot-soon"></span><span><b>Eden</b><small>2008 era</small></span><span class="soon">soon</span></button>
+     <p class="combo-group">Other rule sets</p>
+     <button type="button" role="option" aria-disabled="true" class="combo-opt off">
+      <span class="dot-soon"></span><span><b>Retail rules</b><small>modern skill-ups, every expansion</small></span><span class="soon">soon</span></button>
+     <button type="button" role="option" aria-disabled="true" class="combo-opt off">
+      <span class="dot-soon"></span><span><b>Custom profile</b><small>set your own caps, rates and content</small></span><span class="soon">soon</span></button>
+    </div>
+   </div>
+   <p class="pnote">A profile sets the skill-up system, the free skill cap, which expansions' recipes count, and the HQ rate. Everything below uses Phoenix's era assumptions.</p>
+  </div>
+  <div class="crafts" id="crafts" role="group" aria-label="Choose a craft"></div>
+ </header>
+
+ <section class="panel pad summary" id="summary" aria-live="polite"></section>
+
+ <details class="panel" id="pricePanel">
+  <summary><span class="chev"></span>Your prices<span class="meta" id="priceMeta"></span></summary>
+  <div class="filter">
+   <button class="act" id="vendorBtn" type="button">Fill blanks with vendor prices</button>
+   <button class="act" id="clearBtn" type="button">Clear all</button>
+   <button class="act" id="onlyMissing" type="button">Show only unpriced</button>
+   <span class="note" style="font-size:.85rem">Blank uses the vendor price when one exists, otherwise zero. Sell prices default to NPC value.</span>
+  </div>
+  <div class="price-grid" id="prices"></div>
+ </details>
+
+ <div id="brackets"></div>
+
+ <details class="panel">
+  <summary><span class="chev"></span>How the numbers work</summary>
+  <div class="pad note" style="padding-top:0">
+   <p><b>Cost each</b> is your ingredient prices plus one crystal. <b>Per level</b> estimates the gil to gain one full skill level using that recipe, from the era skill-up model in <code>synthutils.cpp</code>: 60% skill-up chance below skill 50, 25% above, gain size from the retail weight table, and only when the recipe sits above your skill. A 5% break allowance is included.</p>
+   <p><b>Cheapest</b> marks the lowest cost per level in each bracket among recipes you can actually attempt there. Recipes needing a guild key item, a sub-craft, or unpriced materials are still listed, just flagged.</p>
+   <p><b>Output</b> is the normal-quality result at its sell price. HQ results are upside this ignores, and they matter most on cheap low-level synths.</p>
+   <p>Icons are drawn here rather than pulled from a wiki, since a published page can't load remote images. Item names still link to the HorizonXI wiki.</p>
+  </div>
+ </details>
+</div>

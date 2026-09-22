@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FFXI Crafting — era-75 crafting data, read from the server source</title>
+<meta name="description" content="Crafting costs, recipes, gathering and loot data for FFXI era-75 private servers, generated from the LandSandBoat server source instead of wiki tables.">
+<meta property="og:title" content="FFXI Crafting">
+<meta property="og:description" content="Era-75 crafting data read from the server source, not the wiki.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;--ink:#ece6d6;--ink-soft:#a9b5cb;
+ --ink-faint:#74829e;--link:#9fd0ff;--gil:#e8c44a;--best:#7fd6a2;
+ --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root{--bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link)}
+:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1000px;margin:0 auto;padding:30px 16px 70px}
+.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
+ box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:16px;padding:26px}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.1rem,5vw,3.2rem);margin:0 0 .2em;line-height:1.05}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.45rem;margin:0 0 .5em}
+.tag{color:var(--ink-soft);max-width:62ch;margin:0 0 1.2em;font-size:1.05rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{display:block;border:1px solid var(--rule);border-radius:8px;padding:18px;text-decoration:none;color:inherit;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+a.card:hover{border-color:var(--gil)}
+.card h3{font-family:var(--font-display);font-weight:400;font-size:1.2rem;margin:0 0 .3em}
+.card p{margin:0;color:var(--ink-soft);font-size:.92rem}
+.card .badge{display:inline-block;margin-top:10px;font-size:.72rem;border-radius:999px;padding:3px 9px;border:1px solid var(--rule);color:var(--ink-faint)}
+.card.live .badge{border-color:var(--best);color:var(--best)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:18px;margin-top:6px}
+.stat b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.5rem}
+.stat span{color:var(--ink-faint);font-size:.78rem}
+ul{margin:.4em 0 0;padding-left:1.1em;color:var(--ink-soft)}
+li{margin:.25em 0}
+footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <header class="panel">
+  <h1>FFXI Crafting</h1>
+  <p class="tag">Crafting costs, recipes, gathering and loot for era-75 servers — read straight from the LandSandBoat server source, not copied from wikis. Every rate here is what the server actually rolls.</p>
+  <div class="stats">
+   <div class="stat"><b>7,164</b><span>items</span></div>
+   <div class="stat"><b>4,443</b><span>recipes</span></div>
+   <div class="stat"><b>41,000+</b><span>acquisition sources</span></div>
+   <div class="stat"><b>8</b><span>crafts, 1 to 60</span></div>
+  </div>
+ </header>
+
+ <section class="panel">
+  <h2>Tools</h2>
+  <div class="cards">
+   <a class="card live" href="/calculator">
+    <h3>Crafting cost calculator</h3>
+    <p>Every recipe from 1 to 60, in 10-level brackets. Put in your server's prices and see which option is genuinely cheapest per skill level.</p>
+    <span class="badge">live</span>
+   </a>
+   <div class="card">
+    <h3>Item lookup</h3>
+    <p>One page per item: every way to get it, every recipe that uses it, and what breaks down into it.</p>
+    <span class="badge">next</span>
+   </div>
+   <div class="card">
+    <h3>BCNM loot tables</h3>
+    <p>All 61 orb battlefields with their crate rolls, odds, entry costs and seal prices.</p>
+    <span class="badge">next</span>
+   </div>
+   <div class="card">
+    <h3>Gathering</h3>
+    <p>Mining, gardening, chocobo digging, fishing and clamming, with per-attempt rates by zone.</p>
+    <span class="badge">soon</span>
+   </div>
+  </div>
+ </section>
+
+ <section class="panel">
+  <h2>Why another FFXI site</h2>
+  <p class="tag" style="margin-bottom:.6em">Wikis document retail, and they drift. A private server runs a specific build of specific code, and that code is public. So this site parses the code.</p>
+  <ul>
+   <li>Drop rates come from the server's own loot tables, not from player-reported percentages.</li>
+   <li>Crafting maths (success, HQ tiers, skill-up chance, specialization caps) is read out of the C++ that runs it.</li>
+   <li>Where a server's own settings would change an answer, the site says so instead of guessing.</li>
+   <li>Every number can be traced back to the file it came from.</li>
+  </ul>
+ </section>
+
+ <section class="panel">
+  <h2>Servers</h2>
+  <p class="tag" style="margin-bottom:.6em">Built for era-75 LandSandBoat servers. Phoenix is live; profiles for others are coming, each with its own caps, rates and enabled content.</p>
+  <ul>
+   <li><strong>Phoenix</strong> — era rules, ToAU baseline, WotG case by case <em>(live)</em></li>
+   <li>HorizonXI, CatsEyeXI, Eden <em>(planned)</em></li>
+   <li>Retail rule set, and custom profiles for servers not listed <em>(planned)</em></li>
+  </ul>
+ </section>
+
+ <footer class="panel">
+  <p>A fan resource. Final Fantasy XI is © Square Enix. Server behaviour is parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3). Everything here is free; nothing about the game data is sold.</p>
+ </footer>
+</div>
+</body>
+</html>
