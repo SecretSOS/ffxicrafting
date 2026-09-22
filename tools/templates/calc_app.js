@@ -65,7 +65,7 @@ function renderPrices(){
     if(onlyMissing && (set || (!isSell && it.v))) return '';
     var hint=isSell?('NPC pays '+fmt(it.b)+(it.x?' · Ex, unsellable':'')):
       (it.v?('vendor '+fmt(it.v)):(it.g?('gathered: '+it.g):(it.m?('drops at '+it.m+'%'):(it.c!==null&&it.c!==undefined?('craftable at lv '+it.c):'no vendor'))));
-    return '<div class="price-row"><div class="nm"><a href="'+it.w+'" target="_blank" rel="noopener">'+esc(it.n)+'</a><small>'+hint+'</small></div>'+
+    return '<div class="price-row"><div class="nm"><a href="'+(it.u||it.w)+'"'+(it.u?'':' target="_blank" rel="noopener"')+'>'+esc(it.n)+'</a><small>'+hint+'</small></div>'+
       '<input type="number" min="0" inputmode="numeric" '+(isSell?'data-sid':'data-id')+'="'+id+'" value="'+(set?prices[key]:'')+'" placeholder="'+(isSell?(it.b||0):(it.v||0))+'" class="'+(set?'set':'')+'" aria-label="'+esc(it.n)+(isSell?' sell price':' buy price')+'"></div>';
   }
   document.getElementById('prices').innerHTML=
@@ -101,7 +101,7 @@ function renderBrackets(){
           (r.sub.length?'<span class="pill sub">'+r.sub.map(function(s){return s[0]+' '+s[1];}).join(', ')+'</span>':'');
         var ings=r.ing.map(function(p){
           var it=I[p[0]], pr=price(p[0]);
-          return '<a href="'+it.w+'" target="_blank" rel="noopener">'+esc(it.n)+'</a>'+(p[1]>1?' ×'+p[1]:'')+
+          return '<a href="'+(it.u||it.w)+'"'+(it.u?'':' target="_blank" rel="noopener"')+'>'+esc(it.n)+'</a>'+(p[1]>1?' ×'+p[1]:'')+
             (pr?' <span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(pr*p[1])+'</span>':' <span class="noprice">no price</span>');
         }).join(' · ');
         return '<tr class="'+cls.join(' ')+'"><td><div class="rname">'+esc(I[r.res].n)+(r.rq>1?' ×'+r.rq:'')+pills+'</div>'+

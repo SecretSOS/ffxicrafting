@@ -4,7 +4,7 @@
 Usage:  python tools/build_calculator.py [db_path] [out_path]
 Defaults: data/ffxi_crafting.db  ->  public/calculator.html
 """
-import sqlite3, json, os, sys
+import sqlite3, json, os, sys, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
@@ -18,6 +18,9 @@ SUB = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
 
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()
+
+def _slug(name):
+    return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
 
 def pretty(n):
     w = n.replace('_', ' ').title().split()
@@ -39,7 +42,8 @@ def add_item(i):
     craft = q(f"""SELECT MIN(level_lo) FROM sources WHERE item_id=? AND type='synthesis'
                   AND (content IS NULL OR content IN {ERA})""", i)[0][0]
     items[i] = dict(n=pretty(name), b=base or 0, w=wiki, x=int(bool(ex)), v=buy or 0,
-                    g=(gather[0][0] if gather else None), m=round(mob or 0, 1), c=craft)
+                    g=(gather[0][0] if gather else None), m=round(mob or 0, 1), c=craft,
+                    u=f'/item/{i}-{_slug(name)}')
 
 crafts = {}
 for code, title in CRAFTS.items():
