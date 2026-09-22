@@ -69,7 +69,7 @@ data = json.dumps(dict(crafts=crafts, items=items), separators=(',', ':')).repla
 read = lambda f: open(os.path.join(TPL, f), encoding='utf-8').read()
 html = (read('calc_head.html') + read('calc_body.html') +
         '\n<script id="data" type="application/json">' + data + '</script>\n<script>\n' +
-        read('calc_app.js') + '\n</script>\n</body></html>\n')
+        read('calc_app.js') + '\n</script>\n<script src="/search.js"></script>\n</body></html>\n')
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 open(OUT, 'w', encoding='utf-8').write(html)
 print(f"{sum(len(c['recipes']) for c in crafts.values())} recipes, {len(items)} items -> {OUT} ({os.path.getsize(OUT)/1024:.0f} KB)")

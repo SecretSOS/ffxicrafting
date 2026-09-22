@@ -326,6 +326,22 @@ a:hover{border-bottom-color:var(--link)}
 .site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
 .site-nav .links a{color:var(--ink-soft);border-bottom:none}
 .site-nav .links a:hover{color:var(--ink)}
+.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
+#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
+#search:focus{border-color:var(--gil);outline:none}
+#search::placeholder{color:var(--ink-faint)}
+.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
+.search-wrap:focus-within .kbd{display:none}
+.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
+ max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+ border-bottom:1px solid var(--rule);font-size:.88rem}
+a.sr-item:last-child{border-bottom:none}
+a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
+.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
 h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
 h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
 h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -413,8 +429,10 @@ def build_page(iid):
         f'<style>\n{CSS}\n</style>\n'
         '</head>\n<body>\n'
         '<div class="wrap">\n'
-        ' <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="links">'
-        '<a href="/calculator">Calculator</a>'
+        ' <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a>'
+        '<div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span>'
+        '<div id="searchResults" class="search-results" hidden></div></div>'
+        '<div class="links"><a href="/calculator">Calculator</a>'
         '<button class="act" id="themeBtn" type="button">Theme</button>'
         '</div></nav>\n'
         ' <header class="panel pad">\n'
@@ -428,6 +446,7 @@ def build_page(iid):
         ' </footer>\n'
         '</div>\n'
         f'<script>\n{THEME_JS}\n</script>\n'
+        '<script src="/search.js"></script>\n'
         '</body>\n</html>\n'
     )
 
