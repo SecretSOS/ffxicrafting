@@ -152,7 +152,7 @@ SVG = """\
 
 BODY = """\
 <div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
  <header class="panel pad">
   <h1>Shopping list</h1>
   <p class="lede">Pick a craft and skill range to see every material you need, grouped by where to get it. Uses the same prices from the <a href="/calculator">calculator</a>.</p>
