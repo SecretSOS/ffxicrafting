@@ -30,13 +30,16 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-bo
 a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
 a:hover{border-bottom-color:var(--link)}
 :focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:900px;margin:0 auto;padding:22px 16px 70px}
+.wrap{max-width:1400px;width:92%;margin:0 auto;padding:22px 16px 70px}
 .panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
  box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
 .pad{padding:20px 22px}
-nav{margin-bottom:14px;font-size:.85rem;color:var(--ink-faint)}
-nav a{color:var(--ink-faint);border-bottom-color:transparent}
-nav a:hover{border-bottom-color:var(--ink-faint)}
+.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap}
+.site-nav .logo:hover{color:var(--gil)}
+.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
+.site-nav .links a{color:var(--ink-soft);border-bottom:none}
+.site-nav .links a:hover{color:var(--ink)}
 h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
 h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
 h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -54,17 +57,15 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 .pill{display:inline-block;font-size:.68rem;border-radius:4px;padding:0 5px;margin-left:4px;border:1px solid var(--rule);color:var(--ink-faint)}
 .pill.ki{border-color:#c9a0ff;color:#c9a0ff}
 .pill.wotg{border-color:var(--gil);color:var(--gil)}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
 .act:hover{color:var(--ink);border-color:var(--frame)}
-.theme{float:right;margin-top:-4px}
-@media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}}
+@media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}.site-nav{gap:10px}}
 </style>
 </head>
 <body>
 <div class="wrap">
- <nav><a href="/">FFXI Crafting</a> · <a href="/calculator">Calculator</a></nav>
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="links"><a href="/calculator">Calculator</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
  <header class="panel pad">
-  <button class="act theme" id="themeBtn" type="button">Theme</button>
   <h1>Alacrity Earring</h1>
   <p class="meta">Stack: 1 · NPC: 1,253g · <a href="https://horizonffxi.wiki/w/index.php?search=Alacrity+Earring&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
  </header>
