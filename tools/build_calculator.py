@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Render public/calculator.html from the database and the templates in tools/templates/.
+"""Render public/calculator.html and per-craft JSON data files.
 
 Usage:  python tools/build_calculator.py [db_path] [out_path]
 Defaults: data/ffxi_crafting.db  ->  public/calculator.html
+Also writes: public/data/calc-items.json, public/data/calc-<craft>.json
 """
-import sqlite3, json, os, sys, re
+import sqlite3, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, 'public', 'calculator.html')
+DATA_DIR = os.path.join(os.path.dirname(OUT), 'data')
 TPL = os.path.join(ROOT, 'tools', 'templates')
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")   # what counts as era-75 content
@@ -19,9 +21,6 @@ SUB = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()
 
-def _slug(name):
-    return re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
-
 def pretty(n):
     w = n.replace('_', ' ').title().split()
     return ' '.join(x.lower() if k and x in ('Of', 'The', 'And', 'A') else x for k, x in enumerate(w))
@@ -30,10 +29,10 @@ items = {}
 def add_item(i):
     if not i or i in items:
         return
-    row = q("SELECT name, base_price, wiki_url, ex, rare FROM items WHERE id=?", i)
+    row = q("SELECT name, base_price, ex, rare FROM items WHERE id=?", i)
     if not row:
         return
-    name, base, wiki, ex, rare = row[0]
+    name, base, ex, rare = row[0]
     buy = q("""SELECT MIN(price) FROM sources WHERE item_id=? AND price>0
                AND type IN ('npc_shop','regional_vendor','guild_vendor')""", i)[0][0]
     gather = q("""SELECT type FROM sources WHERE item_id=? AND type IN
@@ -41,9 +40,14 @@ def add_item(i):
     mob = q("SELECT MAX(pct) FROM sources WHERE item_id=? AND type='mob_drop'", i)[0][0]
     craft = q(f"""SELECT MIN(level_lo) FROM sources WHERE item_id=? AND type='synthesis'
                   AND (content IS NULL OR content IN {ERA})""", i)[0][0]
-    items[i] = dict(n=pretty(name), b=base or 0, w=wiki, x=int(bool(ex)), v=buy or 0,
-                    g=(gather[0][0] if gather else None), m=round(mob or 0, 1), c=craft,
-                    u=f'/item/{i}-{_slug(name)}')
+    d = {'n': pretty(name)}
+    if base: d['b'] = base
+    if int(bool(ex)): d['x'] = 1
+    if buy: d['v'] = buy
+    if gather: d['g'] = gather[0][0]
+    if mob: d['m'] = round(mob, 1)
+    if craft is not None: d['c'] = craft
+    items[i] = d
 
 crafts = {}
 for code, title in CRAFTS.items():
@@ -60,16 +64,35 @@ for code, title in CRAFTS.items():
         for i in (result, crystal, h1, h2, h3):
             add_item(i)
         recipes.append(dict(id=rid, n=pretty(name), lv=lv, cry=crystal, res=result, rq=rq,
-                            ing=[[i, qty] for i, qty in ing], hq=[[h1, h1q], [h2, h2q], [h3, h3q]],
+                            ing=[[i, qty] for i, qty in ing],
                             ki=1 if ki else 0, tag=tag,
                             sub=[[SUB[k].title(), v] for k, v in enumerate(subs) if v and SUB[k] != code]))
     crafts[title] = dict(code=code, recipes=recipes)
 
-data = json.dumps(dict(crafts=crafts, items=items), separators=(',', ':')).replace('</', '<\\/')
+# Write per-craft JSON and shared items
+os.makedirs(DATA_DIR, exist_ok=True)
+sep = (',', ':')
+items_json = json.dumps(items, separators=sep)
+with open(os.path.join(DATA_DIR, 'calc-items.json'), 'w', encoding='utf-8') as f:
+    f.write(items_json)
+print(f"  calc-items.json: {len(items)} items ({len(items_json)/1024:.0f} KB)")
+
+total_recipes = 0
+for title, craft in crafts.items():
+    code = craft['code']
+    recs = craft['recipes']
+    total_recipes += len(recs)
+    rj = json.dumps(recs, separators=sep)
+    with open(os.path.join(DATA_DIR, f'calc-{code}.json'), 'w', encoding='utf-8') as f:
+        f.write(rj)
+    print(f"  calc-{code}.json: {len(recs)} recipes ({len(rj)/1024:.0f} KB)")
+
+# Write HTML shell (no inline data — JS fetches it)
 read = lambda f: open(os.path.join(TPL, f), encoding='utf-8').read()
 html = (read('calc_head.html') + read('calc_body.html') +
-        '\n<script id="data" type="application/json">' + data + '</script>\n<script>\n' +
-        read('calc_app.js') + '\n</script>\n<script src="/search.js"></script>\n</body></html>\n')
+        '\n<script>\n' + read('calc_app.js') + '\n</script>\n<script src="/search.js"></script>\n</body></html>\n')
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
-open(OUT, 'w', encoding='utf-8').write(html)
-print(f"{sum(len(c['recipes']) for c in crafts.values())} recipes, {len(items)} items -> {OUT} ({os.path.getsize(OUT)/1024:.0f} KB)")
+with open(OUT, 'w', encoding='utf-8') as f:
+    f.write(html)
+print(f"\n{total_recipes} recipes, {len(items)} items")
+print(f"calculator.html: {os.path.getsize(OUT)/1024:.0f} KB (shell only, data loaded async)")
