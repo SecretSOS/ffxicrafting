@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bastok Markets · Phoenix era 75</title>
+<meta name="description" content="Bastok Markets: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
+ --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
+ --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
+ --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
+ --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
+:root[data-theme="light"]{
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
+a:hover{border-bottom-color:var(--link)}
+:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1000px;width:92%;margin:0 auto;padding:22px 14px 70px}
+.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
+.site-nav .logo:hover{color:var(--gil)}
+.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
+.site-nav .links a{color:var(--ink-soft);border-bottom:none}
+.site-nav .links a:hover{color:var(--ink)}
+.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
+#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
+#search:focus{border-color:var(--gil);outline:none}
+#search::placeholder{color:var(--ink-faint)}
+.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
+.search-wrap:focus-within .kbd{display:none}
+.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
+ max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+ border-bottom:1px solid var(--rule);font-size:.88rem}
+a.sr-item:last-child{border-bottom:none}
+a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
+.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
+ box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
+.pad{padding:20px 22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:0 0 .5em;color:var(--ink)}
+h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
+.lede{color:var(--ink-soft);max-width:66ch;margin:0}
+.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
+.act:hover{color:var(--ink);border-color:var(--frame)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
+ padding:8px 10px;border-bottom:2px solid var(--rule)}
+td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+.pct{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
+.badge-nm{border-color:var(--gil);color:var(--gil)}
+.badge-wotg{border-color:var(--lightning);color:var(--lightning)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
+.jump a{padding:4px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);font-size:.82rem}
+.jump a:hover{border-color:var(--frame);color:var(--ink)}
+details.mob{margin-bottom:2px}
+details.mob summary{cursor:pointer;font-size:.92rem;padding:8px 0;border-bottom:1px solid var(--rule);color:var(--ink);list-style:none;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+details.mob summary::-webkit-details-marker{display:none}
+details.mob summary::before{content:"\25B6";display:inline-block;margin-right:4px;font-size:.6em;transition:transform .15s;color:var(--ink-faint)}
+details.mob[open] summary::before{transform:rotate(90deg)}
+details.mob .mob-body{padding:6px 0 14px 18px}
+.mob-name{font-family:var(--font-display);font-weight:400}
+.mob-lv{color:var(--ink-faint);font-size:.82rem}
+.mob-flags{font-size:.76rem;color:var(--ink-faint)}
+.mob-spawns{font-size:.82rem;color:var(--ink-faint)}
+.drop{display:flex;align-items:baseline;gap:8px;padding:3px 0;font-size:.88rem}
+.drop-rate{min-width:55px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.gil{color:var(--gil)}
+.note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
+.vendor-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:.88rem}
+.vendor-price{margin-left:auto;white-space:nowrap}
+@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+ <header class="panel pad"><h1>Bastok Markets</h1><p class="lede"><a href="/zone/">← All zones</a></p></header>
+<section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
+<h3>Balthilda <span class="badge">10 items</span></h3>
+<div class="vendor-row"><a href="/item/12992-solea">Solea</a><span class="vendor-price gil">605g</span></div>
+<div class="vendor-row"><a href="/item/12736-mitts">Mitts</a><span class="vendor-price gil">655g</span></div>
+<div class="vendor-row"><a href="/item/12864-slacks">Slacks</a><span class="vendor-price gil">935g</span></div>
+<div class="vendor-row"><a href="/item/13469-leather-ring">Leather Ring</a><span class="vendor-price gil">1,250g</span></div>
+<div class="vendor-row"><a href="/item/12608-tunic">Tunic</a><span class="vendor-price gil">1,400g</span></div>
+<div class="vendor-row"><a href="/item/12985-holly-clogs">Holly Clogs</a><span class="vendor-price gil">1,625g</span></div>
+<div class="vendor-row"><a href="/item/12729-linen-cuffs">Linen Cuffs</a><span class="vendor-price gil">1,745g</span></div>
+<div class="vendor-row"><a href="/item/12473-poets-circlet">Poets Circlet</a><span class="vendor-price gil">2,070g</span></div>
+<div class="vendor-row"><a href="/item/12857-linen-slops">Linen Slops</a><span class="vendor-price gil">2,520g</span></div>
+<div class="vendor-row"><a href="/item/12601-linen-robe">Linen Robe</a><span class="vendor-price gil">3,085g</span></div>
+<h3>Brunhilde <span class="badge">13 items</span></h3>
+<div class="vendor-row"><a href="/item/12704-bronze-mittens">Bronze Mittens</a><span class="vendor-price gil">140g</span></div>
+<div class="vendor-row"><a href="/item/12448-bronze-cap">Bronze Cap</a><span class="vendor-price gil">168g</span></div>
+<div class="vendor-row"><a href="/item/12576-bronze-harness">Bronze Harness</a><span class="vendor-price gil">256g</span></div>
+<div class="vendor-row"><a href="/item/12688-scale-finger-gauntlets">Scale Finger Gauntlets</a><span class="vendor-price gil">1,190g</span></div>
+<div class="vendor-row"><a href="/item/12432-faceguard">Faceguard</a><span class="vendor-price gil">1,450g</span></div>
+<div class="vendor-row"><a href="/item/12560-scale-mail">Scale Mail</a><span class="vendor-price gil">2,230g</span></div>
+<div class="vendor-row"><a href="/item/12689-brass-finger-gauntlets">Brass Finger Gauntlets</a><span class="vendor-price gil">10,368g</span></div>
+<div class="vendor-row"><a href="/item/12433-brass-mask">Brass Mask</a><span class="vendor-price gil">12,800g</span></div>
+<div class="vendor-row"><a href="/item/12561-brass-scale-mail">Brass Scale Mail</a><span class="vendor-price gil">19,488g</span></div>
+<div class="vendor-row"><a href="/item/12672-gauntlets">Gauntlets</a><span class="vendor-price gil">25,673g</span></div>
+<div class="vendor-row"><a href="/item/12416-sallet">Sallet</a><span class="vendor-price gil">31,860g</span></div>
+<div class="vendor-row"><a href="/item/12544-breastplate">Breastplate</a><span class="vendor-price gil">48,672g</span></div>
+<div class="vendor-row"><a href="/item/12417-mythril-sallet">Mythril Sallet</a><span class="vendor-price gil">56,295g</span></div>
+<h3>Carmelide <span class="badge">9 items</span></h3>
+<div class="vendor-row"><a href="/item/13454-copper-ring">Copper Ring</a><span class="vendor-price gil">76g</span></div>
+<div class="vendor-row"><a href="/item/795-lapis-lazuli">Lapis Lazuli</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/796-light-opal">Light Opal</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/799-onyx">Onyx</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/800-amethyst">Amethyst</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/806-tourmaline">Tourmaline</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/807-sardonyx">Sardonyx</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/809-clear-topaz">Clear Topaz</a><span class="vendor-price gil">1,863g</span></div>
+<div class="vendor-row"><a href="/item/814-amber-stone">Amber Stone</a><span class="vendor-price gil">1,863g</span></div>
+<h3>Charging Chocobo <span class="badge">14 items</span></h3>
+<div class="vendor-row"><a href="/item/12960-bronze-leggings">Bronze Leggings</a><span class="vendor-price gil">128g</span></div>
+<div class="vendor-row"><a href="/item/12832-bronze-subligar">Bronze Subligar</a><span class="vendor-price gil">208g</span></div>
+<div class="vendor-row"><a href="/item/13192-leather-belt">Leather Belt</a><span class="vendor-price gil">425g</span></div>
+<div class="vendor-row"><a href="/item/12944-scale-greaves">Scale Greaves</a><span class="vendor-price gil">1,085g</span></div>
+<div class="vendor-row"><a href="/item/12816-scale-cuisses">Scale Cuisses</a><span class="vendor-price gil">1,790g</span></div>
+<div class="vendor-row"><a href="/item/12945-brass-greaves">Brass Greaves</a><span class="vendor-price gil">9,152g</span></div>
+<div class="vendor-row"><a href="/item/13196-silver-belt">Silver Belt</a><span class="vendor-price gil">11,424g</span></div>
+<div class="vendor-row"><a href="/item/12817-brass-cuisses">Brass Cuisses</a><span class="vendor-price gil">15,456g</span></div>
+<div class="vendor-row"><a href="/item/13080-gorget">Gorget</a><span class="vendor-price gil">18,360g</span></div>
+<div class="vendor-row"><a href="/item/13198-swordbelt">Swordbelt</a><span class="vendor-price gil">21,573g</span></div>
+<div class="vendor-row"><a href="/item/12928-plate-leggings">Plate Leggings</a><span class="vendor-price gil">23,760g</span></div>
+<div class="vendor-row"><a href="/item/12800-cuisses">Cuisses</a><span class="vendor-price gil">37,800g</span></div>
+<div class="vendor-row"><a href="/item/12929-mythril-leggings">Mythril Leggings</a><span class="vendor-price gil">39,550g</span></div>
+<div class="vendor-row"><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a><span class="vendor-price gil">63,238g</span></div>
+<h3>Ciqala <span class="badge">15 items</span></h3>
+<div class="vendor-row"><a href="/item/17049-maple-wand">Maple Wand</a><span class="vendor-price gil">51g</span></div>
+<div class="vendor-row"><a href="/item/17088-ash-staff">Ash Staff</a><span class="vendor-price gil">64g</span></div>
+<div class="vendor-row"><a href="/item/17024-ash-club">Ash Club</a><span class="vendor-price gil">71g</span></div>
+<div class="vendor-row"><a href="/item/17059-bronze-rod">Bronze Rod</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="/item/16405-cat-baghnakhs">Cat Baghnakhs</a><span class="vendor-price gil">116g</span></div>
+<div class="vendor-row"><a href="/item/16385-cesti">Cesti</a><span class="vendor-price gil">144g</span></div>
+<div class="vendor-row"><a href="/item/16390-bronze-knuckles">Bronze Knuckles</a><span class="vendor-price gil">244g</span></div>
+<div class="vendor-row"><a href="/item/17042-bronze-hammer">Bronze Hammer</a><span class="vendor-price gil">340g</span></div>
+<div class="vendor-row"><a href="/item/17095-ash-pole">Ash Pole</a><span class="vendor-price gil">420g</span></div>
+<div class="vendor-row"><a href="/item/17081-brass-rod">Brass Rod</a><span class="vendor-price gil">690g</span></div>
+<div class="vendor-row"><a href="/item/16391-brass-knuckles">Brass Knuckles</a><span class="vendor-price gil">900g</span></div>
+<div class="vendor-row"><a href="/item/16407-brass-baghnakhs">Brass Baghnakhs</a><span class="vendor-price gil">1,690g</span></div>
+<div class="vendor-row"><a href="/item/17043-brass-hammer">Brass Hammer</a><span class="vendor-price gil">2,315g</span></div>
+<div class="vendor-row"><a href="/item/16392-metal-knuckles">Metal Knuckles</a><span class="vendor-price gil">5,188g</span></div>
+<div class="vendor-row"><a href="/item/17044-warhammer">Warhammer</a><span class="vendor-price gil">6,496g</span></div>
+<h3>Harmodios <span class="badge">5 items</span></h3>
+<div class="vendor-row"><a href="/item/17345-flute">Flute</a><span class="vendor-price gil">49g</span></div>
+<div class="vendor-row"><a href="/item/17353-maple-harp">Maple Harp</a><span class="vendor-price gil">49g</span></div>
+<div class="vendor-row"><a href="/item/17344-cornette">Cornette</a><span class="vendor-price gil">244g</span></div>
+<div class="vendor-row"><a href="/item/17347-piccolo">Piccolo</a><span class="vendor-price gil">1,090g</span></div>
+<div class="vendor-row"><a href="/item/17351-gemshorn">Gemshorn</a><span class="vendor-price gil">5,159g</span></div>
+<h3>Mjoll <span class="badge">9 items</span></h3>
+<div class="vendor-row"><a href="/item/17318-wooden-arrow">Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
+<div class="vendor-row"><a href="/item/17336-crossbow-bolt">Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="/item/17320-iron-arrow">Iron Arrow</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="/item/17321-silver-arrow">Silver Arrow</a><span class="vendor-price gil">17g</span></div>
+<div class="vendor-row"><a href="/item/17337-mythril-bolt">Mythril Bolt</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="/item/17216-light-crossbow">Light Crossbow</a><span class="vendor-price gil">179g</span></div>
+<div class="vendor-row"><a href="/item/17298-tathlum">Tathlum</a><span class="vendor-price gil">319g</span></div>
+<div class="vendor-row"><a href="/item/17217-crossbow">Crossbow</a><span class="vendor-price gil">2,355g</span></div>
+<div class="vendor-row"><a href="/item/17218-zamburak">Zamburak</a><span class="vendor-price gil">15,243g</span></div>
+<h3>Olwyn <span class="badge">5 items</span></h3>
+<div class="vendor-row"><a href="/item/4148-antidote">Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops">Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="/item/4112-potion">Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops">Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="/item/4128-ether">Ether</a><span class="vendor-price gil">4,786g</span></div>
+<h3>Peritrage <span class="badge">11 items</span></h3>
+<div class="vendor-row"><a href="/item/16448-bronze-dagger">Bronze Dagger</a><span class="vendor-price gil">156g</span></div>
+<div class="vendor-row"><a href="/item/16465-bronze-knife">Bronze Knife</a><span class="vendor-price gil">164g</span></div>
+<div class="vendor-row"><a href="/item/16640-bronze-axe">Bronze Axe</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="/item/16704-butterfly-axe">Butterfly Axe</a><span class="vendor-price gil">672g</span></div>
+<div class="vendor-row"><a href="/item/16449-brass-dagger">Brass Dagger</a><span class="vendor-price gil">930g</span></div>
+<div class="vendor-row"><a href="/item/16641-brass-axe">Brass Axe</a><span class="vendor-price gil">1,560g</span></div>
+<div class="vendor-row"><a href="/item/16450-dagger">Dagger</a><span class="vendor-price gil">2,030g</span></div>
+<div class="vendor-row"><a href="/item/16466-knife">Knife</a><span class="vendor-price gil">2,425g</span></div>
+<div class="vendor-row"><a href="/item/16705-greataxe">Greataxe</a><span class="vendor-price gil">4,550g</span></div>
+<div class="vendor-row"><a href="/item/16473-kukri">Kukri</a><span class="vendor-price gil">6,151g</span></div>
+<div class="vendor-row"><a href="/item/16643-battleaxe">Battleaxe</a><span class="vendor-price gil">12,150g</span></div>
+<h3>Raghd <span class="badge">4 items</span></h3>
+<div class="vendor-row"><a href="/item/13454-copper-ring">Copper Ring</a><span class="vendor-price gil">76g</span></div>
+<div class="vendor-row"><a href="/item/13465-brass-ring">Brass Ring</a><span class="vendor-price gil">200g</span></div>
+<div class="vendor-row"><a href="/item/13327-silver-earring">Silver Earring</a><span class="vendor-price gil">1,250g</span></div>
+<div class="vendor-row"><a href="/item/13456-silver-ring">Silver Ring</a><span class="vendor-price gil">1,250g</span></div>
+<h3>Zhikkom <span class="badge">12 items</span></h3>
+<div class="vendor-row"><a href="/item/16535-bronze-sword">Bronze Sword</a><span class="vendor-price gil">268g</span></div>
+<div class="vendor-row"><a href="/item/16530-xiphos">Xiphos</a><span class="vendor-price gil">672g</span></div>
+<div class="vendor-row"><a href="/item/16551-sapara">Sapara</a><span class="vendor-price gil">776g</span></div>
+<div class="vendor-row"><a href="/item/16565-spatha">Spatha</a><span class="vendor-price gil">1,860g</span></div>
+<div class="vendor-row"><a href="/item/16512-bilbo">Bilbo</a><span class="vendor-price gil">3,495g</span></div>
+<div class="vendor-row"><a href="/item/16552-scimitar">Scimitar</a><span class="vendor-price gil">4,525g</span></div>
+<div class="vendor-row"><a href="/item/16536-iron-sword">Iron Sword</a><span class="vendor-price gil">7,920g</span></div>
+<div class="vendor-row"><a href="/item/16517-degen">Degen</a><span class="vendor-price gil">10,224g</span></div>
+<div class="vendor-row"><a href="/item/16513-tuck">Tuck</a><span class="vendor-price gil">12,754g</span></div>
+<div class="vendor-row"><a href="/item/16545-broadsword">Broadsword</a><span class="vendor-price gil">23,185g</span></div>
+<div class="vendor-row"><a href="/item/16537-mythril-sword">Mythril Sword</a><span class="vendor-price gil">34,073g</span></div>
+<div class="vendor-row"><a href="/item/16558-falchion">Falchion</a><span class="vendor-price gil">67,353g</span></div>
+</section>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
+
+ <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p><p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p></footer>
+</div>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script src="/search.js"></script>
+</body>
+</html>

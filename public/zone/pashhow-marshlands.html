@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pashhow Marshlands · Phoenix era 75</title>
+<meta name="description" content="Pashhow Marshlands: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
+ --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
+ --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
+ --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
+ --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
+:root[data-theme="light"]{
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
+a:hover{border-bottom-color:var(--link)}
+:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1000px;width:92%;margin:0 auto;padding:22px 14px 70px}
+.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
+.site-nav .logo:hover{color:var(--gil)}
+.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
+.site-nav .links a{color:var(--ink-soft);border-bottom:none}
+.site-nav .links a:hover{color:var(--ink)}
+.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
+#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
+#search:focus{border-color:var(--gil);outline:none}
+#search::placeholder{color:var(--ink-faint)}
+.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
+.search-wrap:focus-within .kbd{display:none}
+.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
+ max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+ border-bottom:1px solid var(--rule);font-size:.88rem}
+a.sr-item:last-child{border-bottom:none}
+a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
+.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
+ box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
+.pad{padding:20px 22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:0 0 .5em;color:var(--ink)}
+h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
+.lede{color:var(--ink-soft);max-width:66ch;margin:0}
+.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
+.act:hover{color:var(--ink);border-color:var(--frame)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
+ padding:8px 10px;border-bottom:2px solid var(--rule)}
+td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+.pct{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
+.badge-nm{border-color:var(--gil);color:var(--gil)}
+.badge-wotg{border-color:var(--lightning);color:var(--lightning)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
+.jump a{padding:4px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);font-size:.82rem}
+.jump a:hover{border-color:var(--frame);color:var(--ink)}
+details.mob{margin-bottom:2px}
+details.mob summary{cursor:pointer;font-size:.92rem;padding:8px 0;border-bottom:1px solid var(--rule);color:var(--ink);list-style:none;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+details.mob summary::-webkit-details-marker{display:none}
+details.mob summary::before{content:"\25B6";display:inline-block;margin-right:4px;font-size:.6em;transition:transform .15s;color:var(--ink-faint)}
+details.mob[open] summary::before{transform:rotate(90deg)}
+details.mob .mob-body{padding:6px 0 14px 18px}
+.mob-name{font-family:var(--font-display);font-weight:400}
+.mob-lv{color:var(--ink-faint);font-size:.82rem}
+.mob-flags{font-size:.76rem;color:var(--ink-faint)}
+.mob-spawns{font-size:.82rem;color:var(--ink-faint)}
+.drop{display:flex;align-items:baseline;gap:8px;padding:3px 0;font-size:.88rem}
+.drop-rate{min-width:55px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.gil{color:var(--gil)}
+.note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
+.vendor-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:.88rem}
+.vendor-price{margin-left:auto;white-space:nowrap}
+@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+ <header class="panel pad"><h1>Pashhow Marshlands</h1><p class="lede"><a href="/zone/">← All zones</a></p></header>
+<div class="jump"><a href="#digging">Chocobo digging</a><a href="#caskets">Field caskets</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
+<section class="panel pad" id="digging"><h2>Chocobo digging</h2>
+</section>
+<section class="panel pad" id="caskets"><h2>Field caskets</h2>
+<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">6.24%</td></tr>
+<tr><td><a href="/item/4112-potion">Potion</a></td><td class="pct" style="text-align:right">6.11%</td></tr>
+<tr><td><a href="/item/4128-ether">Ether</a></td><td class="pct" style="text-align:right">6.10%</td></tr>
+<tr><td><a href="/item/1211-handful-of-bronze-bolt-heads">Handful Of Bronze Bolt Heads</a></td><td class="pct" style="text-align:right">5.85%</td></tr>
+<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">5.39%</td></tr>
+<tr><td><a href="/item/943-pinch-of-poison-dust">Pinch Of Poison Dust</a></td><td class="pct" style="text-align:right">5.36%</td></tr>
+<tr><td><a href="/item/857-dhalmel-hide">Dhalmel Hide</a></td><td class="pct" style="text-align:right">5.05%</td></tr>
+<tr><td><a href="/item/913-lump-of-beeswax">Lump Of Beeswax</a></td><td class="pct" style="text-align:right">4.39%</td></tr>
+<tr><td><a href="/item/897-scorpion-claw">Scorpion Claw</a></td><td class="pct" style="text-align:right">4.05%</td></tr>
+<tr><td><a href="/item/643-chunk-of-iron-ore">Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">3.99%</td></tr>
+<tr><td><a href="/item/4151-flask-of-echo-drops">Flask Of Echo Drops</a></td><td class="pct" style="text-align:right">3.24%</td></tr>
+<tr><td><a href="/item/835-flax-flower">Flax Flower</a></td><td class="pct" style="text-align:right">3.06%</td></tr>
+<tr><td><a href="/item/627-pot-of-maple-sugar">Pot Of Maple Sugar</a></td><td class="pct" style="text-align:right">2.99%</td></tr>
+<tr><td><a href="/item/4114-potion-2">Potion +2</a></td><td class="pct" style="text-align:right">2.99%</td></tr>
+<tr><td><a href="/item/4129-ether-1">Ether +1</a></td><td class="pct" style="text-align:right">2.93%</td></tr>
+<tr><td><a href="/item/816-spool-of-silk-thread">Spool Of Silk Thread</a></td><td class="pct" style="text-align:right">2.56%</td></tr>
+<tr><td><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></td><td class="pct" style="text-align:right">2.12%</td></tr>
+<tr><td><a href="/item/4145-elixir">Elixir</a></td><td class="pct" style="text-align:right">2.12%</td></tr>
+<tr><td><a href="/item/900-set-of-fish-bones">Set Of Fish Bones</a></td><td class="pct" style="text-align:right">2.08%</td></tr>
+<tr><td><a href="/item/4447-scream-fungus">Scream Fungus</a></td><td class="pct" style="text-align:right">1.92%</td></tr>
+<tr><td><a href="/item/12993-sandals">Sandals</a></td><td class="pct" style="text-align:right">1.50%</td></tr>
+<tr><td><a href="/item/12977-cotton-gaiters">Cotton Gaiters</a></td><td class="pct" style="text-align:right">1.37%</td></tr>
+<tr><td><a href="/item/12967-beetle-leggings">Beetle Leggings</a></td><td class="pct" style="text-align:right">1.27%</td></tr>
+<tr><td><a href="/item/12721-cotton-gloves">Cotton Gloves</a></td><td class="pct" style="text-align:right">1.12%</td></tr>
+<tr><td><a href="/item/12953-lizard-ledelsens">Lizard Ledelsens</a></td><td class="pct" style="text-align:right">1.12%</td></tr>
+<tr><td><a href="/item/12737-white-mitts">White Mitts</a></td><td class="pct" style="text-align:right">1.11%</td></tr>
+<tr><td><a href="/item/12593-cotton-doublet">Cotton Doublet</a></td><td class="pct" style="text-align:right">1.02%</td></tr>
+<tr><td><a href="/item/12711-beetle-mittens">Beetle Mittens</a></td><td class="pct" style="text-align:right">0.990%</td></tr>
+<tr><td><a href="/item/12865-black-slacks">Black Slacks</a></td><td class="pct" style="text-align:right">0.950%</td></tr>
+<tr><td><a href="/item/12825-lizard-trousers">Lizard Trousers</a></td><td class="pct" style="text-align:right">0.920%</td></tr>
+<tr><td><a href="/item/12455-beetle-mask">Beetle Mask</a></td><td class="pct" style="text-align:right">0.890%</td></tr>
+<tr><td><a href="/item/12424-iron-mask">Iron Mask</a></td><td class="pct" style="text-align:right">0.840%</td></tr>
+<tr><td><a href="/item/12849-cotton-brais">Cotton Brais</a></td><td class="pct" style="text-align:right">0.810%</td></tr>
+<tr><td><a href="/item/12441-lizard-helm">Lizard Helm</a></td><td class="pct" style="text-align:right">0.790%</td></tr>
+<tr><td><a href="/item/12697-lizard-gloves">Lizard Gloves</a></td><td class="pct" style="text-align:right">0.650%</td></tr>
+<tr><td><a href="/item/12552-chainmail">Chainmail</a></td><td class="pct" style="text-align:right">0.520%</td></tr>
+<tr><td><a href="/item/17090-elm-staff">Elm Staff</a></td><td class="pct" style="text-align:right">0.440%</td></tr>
+<tr><td><a href="/item/16406-baghnakhs">Baghnakhs</a></td><td class="pct" style="text-align:right">0.410%</td></tr>
+<tr><td><a href="/item/16835-spear">Spear</a></td><td class="pct" style="text-align:right">0.400%</td></tr>
+<tr><td><a href="/item/12680-chain-mittens">Chain Mittens</a></td><td class="pct" style="text-align:right">0.390%</td></tr>
+</tbody></table>
+</section>
+<section class="panel pad" id="nms"><h2>Notorious monsters</h2>
+<details class="mob"><summary><span class="mob-name">Blobdingnag</span> <span class="badge badge-nm">NM</span> <span class="badge badge-wotg">WotG</span> <span class="mob-lv">Lv 85</span></summary><div class="mob-body">
+<p class="mob-spawns">1 spawns</p>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/2876-muculent-ingot">Muculent Ingot</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">0.800%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">0.800%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">0.800%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/653-mythril-ingot">Mythril Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/653-mythril-ingot">Mythril Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/653-mythril-ingot">Mythril Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/745-gold-ingot">Gold Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/745-gold-ingot">Gold Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/745-gold-ingot">Gold Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/746-platinum-ingot">Platinum Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/746-platinum-ingot">Platinum Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/746-platinum-ingot">Platinum Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/654-darksteel-ingot">Darksteel Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/654-darksteel-ingot">Darksteel Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/654-darksteel-ingot">Darksteel Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">0.200%</span><a href="/item/859-ram-skin">Ram Skin</a></div>
+<div class="drop"><span class="drop-rate">0.200%</span><a href="/item/859-ram-skin">Ram Skin</a></div>
+<div class="drop"><span class="drop-rate">0.200%</span><a href="/item/859-ram-skin">Ram Skin</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1116-manticore-hide">Manticore Hide</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1116-manticore-hide">Manticore Hide</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1116-manticore-hide">Manticore Hide</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1122-wyvern-skin">Wyvern Skin</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1122-wyvern-skin">Wyvern Skin</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1122-wyvern-skin">Wyvern Skin</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1255-chunk-of-fire-ore">Chunk Of Fire Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1255-chunk-of-fire-ore">Chunk Of Fire Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1255-chunk-of-fire-ore">Chunk Of Fire Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1256-chunk-of-ice-ore">Chunk Of Ice Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1256-chunk-of-ice-ore">Chunk Of Ice Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1256-chunk-of-ice-ore">Chunk Of Ice Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1257-chunk-of-wind-ore">Chunk Of Wind Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1257-chunk-of-wind-ore">Chunk Of Wind Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1257-chunk-of-wind-ore">Chunk Of Wind Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1258-chunk-of-earth-ore">Chunk Of Earth Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1258-chunk-of-earth-ore">Chunk Of Earth Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1258-chunk-of-earth-ore">Chunk Of Earth Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1259-chunk-of-lightning-ore">Chunk Of Lightning Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1259-chunk-of-lightning-ore">Chunk Of Lightning Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1259-chunk-of-lightning-ore">Chunk Of Lightning Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1260-chunk-of-water-ore">Chunk Of Water Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1260-chunk-of-water-ore">Chunk Of Water Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1260-chunk-of-water-ore">Chunk Of Water Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1261-chunk-of-light-ore">Chunk Of Light Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1261-chunk-of-light-ore">Chunk Of Light Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1261-chunk-of-light-ore">Chunk Of Light Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1262-chunk-of-dark-ore">Chunk Of Dark Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1262-chunk-of-dark-ore">Chunk Of Dark Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1262-chunk-of-dark-ore">Chunk Of Dark Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1465-slab-of-granite">Slab Of Granite</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1465-slab-of-granite">Slab Of Granite</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1465-slab-of-granite">Slab Of Granite</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bloodpool Vorax</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 24–25</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
+<p class="mob-spawns">1 spawns</p>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Jolly Green</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 27–28</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
+<p class="mob-spawns">1 spawns</p>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/919-clump-of-boyahda-moss">Clump Of Boyahda Moss</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Toxic Tamlyn</span> <span class="badge badge-nm">NM</span> <span class="badge badge-wotg">WotG</span> <span class="mob-lv">Lv 44–45</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
+<p class="mob-spawns">1 spawns</p>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/2855-piece-of-mahogany-heartwood">Piece Of Mahogany Heartwood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Yilbegan</span> <span class="badge badge-nm">NM</span> <span class="badge badge-wotg">WotG</span> <span class="mob-lv">Lv 90–92</span></summary><div class="mob-body">
+<p class="mob-spawns">1 spawns</p>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/2878-square-of-scarlet-kadife">Square Of Scarlet Kadife</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">0.800%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">0.800%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">0.800%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">0.550%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/653-mythril-ingot">Mythril Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/653-mythril-ingot">Mythril Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/653-mythril-ingot">Mythril Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/745-gold-ingot">Gold Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/745-gold-ingot">Gold Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/745-gold-ingot">Gold Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/746-platinum-ingot">Platinum Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/746-platinum-ingot">Platinum Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/746-platinum-ingot">Platinum Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/654-darksteel-ingot">Darksteel Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/654-darksteel-ingot">Darksteel Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/654-darksteel-ingot">Darksteel Ingot</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">0.300%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">0.250%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">0.200%</span><a href="/item/859-ram-skin">Ram Skin</a></div>
+<div class="drop"><span class="drop-rate">0.200%</span><a href="/item/859-ram-skin">Ram Skin</a></div>
+<div class="drop"><span class="drop-rate">0.200%</span><a href="/item/859-ram-skin">Ram Skin</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1116-manticore-hide">Manticore Hide</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1116-manticore-hide">Manticore Hide</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1116-manticore-hide">Manticore Hide</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1122-wyvern-skin">Wyvern Skin</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1122-wyvern-skin">Wyvern Skin</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1122-wyvern-skin">Wyvern Skin</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1255-chunk-of-fire-ore">Chunk Of Fire Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1255-chunk-of-fire-ore">Chunk Of Fire Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1255-chunk-of-fire-ore">Chunk Of Fire Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1256-chunk-of-ice-ore">Chunk Of Ice Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1256-chunk-of-ice-ore">Chunk Of Ice Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1256-chunk-of-ice-ore">Chunk Of Ice Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1257-chunk-of-wind-ore">Chunk Of Wind Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1257-chunk-of-wind-ore">Chunk Of Wind Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1257-chunk-of-wind-ore">Chunk Of Wind Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1258-chunk-of-earth-ore">Chunk Of Earth Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1258-chunk-of-earth-ore">Chunk Of Earth Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1258-chunk-of-earth-ore">Chunk Of Earth Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1259-chunk-of-lightning-ore">Chunk Of Lightning Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1259-chunk-of-lightning-ore">Chunk Of Lightning Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1259-chunk-of-lightning-ore">Chunk Of Lightning Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1260-chunk-of-water-ore">Chunk Of Water Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1260-chunk-of-water-ore">Chunk Of Water Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1260-chunk-of-water-ore">Chunk Of Water Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1261-chunk-of-light-ore">Chunk Of Light Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1261-chunk-of-light-ore">Chunk Of Light Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1261-chunk-of-light-ore">Chunk Of Light Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1262-chunk-of-dark-ore">Chunk Of Dark Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1262-chunk-of-dark-ore">Chunk Of Dark Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1262-chunk-of-dark-ore">Chunk Of Dark Ore</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1465-slab-of-granite">Slab Of Granite</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1465-slab-of-granite">Slab Of Granite</a></div>
+<div class="drop"><span class="drop-rate">0.050%</span><a href="/item/1465-slab-of-granite">Slab Of Granite</a></div>
+</div></details>
+</section>
+<section class="panel pad" id="mobs"><h2>Monsters</h2>
+<details class="mob"><summary><span class="mob-name">Black Bat</span> <span class="mob-lv">Lv 17–18</span> <span class="mob-flags">evening</span> <span class="mob-spawns">37 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bog Bunny</span> <span class="mob-lv">Lv 15–16</span> <span class="mob-spawns">35 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4358-slice-of-hare-meat">Slice Of Hare Meat</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/856-rabbit-hide">Rabbit Hide</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bog Dog</span> <span class="mob-lv">Lv 17–22</span> <span class="mob-flags">night only</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/858-wolf-hide">Wolf Hide</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bogy</span> <span class="mob-lv">Lv 25–26</span> <span class="mob-flags">night only</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/529-luminicloth">Luminicloth</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Brass Quadav</span> <span class="mob-lv">Lv 22–23</span> <span class="mob-spawns">7 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/17397-shell-bug">Shell Bug</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Brass Quadav 3</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">0 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/17397-shell-bug">Shell Bug</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Carnivorous Crawler</span> <span class="mob-lv">Lv 22–23</span> <span class="mob-spawns">25 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/816-spool-of-silk-thread">Spool Of Silk Thread</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Fox Fire</span> <span class="mob-lv">Lv 24–25</span> <span class="mob-flags">fog</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/928-pinch-of-bomb-ash">Pinch Of Bomb Ash</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/17316-bomb-arm">Bomb Arm</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Gadfly</span> <span class="mob-lv">Lv 20–21</span> <span class="mob-spawns">52 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/846-insect-wing">Insect Wing</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Ghoul war</span> <span class="mob-lv">Lv 18–24</span> <span class="mob-flags">night only</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Ambusher</span> <span class="mob-lv">Lv 16–17</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/937-block-of-animal-glue">Block Of Animal Glue</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/656-beastcoin">Beastcoin</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Butcher</span> <span class="mob-lv">Lv 16–17</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/656-beastcoin">Beastcoin</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Digger far</span> <span class="mob-lv">Lv 18–19</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Gambler</span> <span class="mob-lv">Lv 21–22</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/952-bag-of-poison-flour">Bag Of Poison Flour</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Leecher</span> <span class="mob-lv">Lv 21–22</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Mugger</span> <span class="mob-lv">Lv 21–22</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goblin Tinkerer</span> <span class="mob-lv">Lv 16–17</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/656-beastcoin">Beastcoin</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Goobbue</span> <span class="mob-lv">Lv 24–25</span> <span class="mob-spawns">10 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/953-treant-bulb">Treant Bulb</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/919-clump-of-boyahda-moss">Clump Of Boyahda Moss</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Land Pugil</span> <span class="mob-lv">Lv 19–20</span> <span class="mob-spawns">13 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales">Handful Of Pugil Scales</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Malboro</span> <span class="mob-lv">Lv 27–28</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/920-malboro-vine">Malboro Vine</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/13838-dodge-headband">Dodge Headband</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Marsh Funguar</span> <span class="mob-lv">Lv 24–25</span> <span class="mob-spawns">27 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4374-sleepshroom">Sleepshroom</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/4373-woozyshroom">Woozyshroom</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Night Bats MM PM</span> <span class="mob-lv">Lv 15–16</span> <span class="mob-flags">evening</span> <span class="mob-spawns">66 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Snipper</span> <span class="mob-lv">Lv 19–23</span> <span class="mob-spawns">18 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Stag Crab</span> <span class="mob-lv">Lv 14–15</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Swamp Leech</span> <span class="mob-lv">Lv 13–15</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Thread Leech</span> <span class="mob-lv">Lv 21–22</span> <span class="mob-spawns">17 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Thread Leech fished</span> <span class="mob-lv">Lv 21–22</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Thunder Elemental</span> <span class="mob-lv">Lv 27–29</span> <span class="mob-flags">weather</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4108-lightning-cluster">Lightning Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster">Lightning Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster">Lightning Cluster</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Water Elemental</span> <span class="mob-lv">Lv 27–29</span> <span class="mob-flags">weather</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4109-water-cluster">Water Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4109-water-cluster">Water Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4109-water-cluster">Water Cluster</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Water Wasp</span> <span class="mob-lv">Lv 17–18</span> <span class="mob-spawns">28 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/912-beehive-chip">Beehive Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/4370-pot-of-honey">Pot Of Honey</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/846-insect-wing">Insect Wing</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/925-giant-stinger">Giant Stinger</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Zombie blm</span> <span class="mob-lv">Lv 18–24</span> <span class="mob-flags">night only</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+</div></details>
+</section>
+<section class="panel pad" id="steals"><h2>Steals</h2>
+<p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
+<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<tr><td><a href="/item/605-pickaxe">Pickaxe</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/825-square-of-cotton-cloth">Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/920-malboro-vine">Malboro Vine</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/4358-slice-of-hare-meat">Slice Of Hare Meat</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/4370-pot-of-honey">Pot Of Honey</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/4374-sleepshroom">Sleepshroom</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/17336-crossbow-bolt">Crossbow Bolt</a></td><td class="pct" style="text-align:right">—</td></tr>
+</tbody></table>
+</section>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
+
+ <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p><p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p></footer>
+</div>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script src="/search.js"></script>
+</body>
+</html>

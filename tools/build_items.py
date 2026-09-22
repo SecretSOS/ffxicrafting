@@ -436,6 +436,7 @@ def build_page(iid):
         '<a href="/profit">Profit Finder</a>'
         '<a href="/shopping">Shopping List</a>'
         '<a href="/gathering/">Gathering</a>'
+        '<a href="/zone/">Zones</a>'
         '<button class="act" id="themeBtn" type="button">Theme</button>'
         '</div></nav>\n'
         ' <header class="panel pad">\n'
@@ -475,6 +476,13 @@ sm = '<?xml version="1.0" encoding="UTF-8"?>\n'
 sm += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 sm += f'<url><loc>{SITE}/</loc></url>\n'
 sm += f'<url><loc>{SITE}/calculator</loc></url>\n'
+sm += f'<url><loc>{SITE}/profit</loc></url>\n'
+sm += f'<url><loc>{SITE}/shopping</loc></url>\n'
+sm += f'<url><loc>{SITE}/gathering/</loc></url>\n'
+sm += f'<url><loc>{SITE}/zone/</loc></url>\n'
+for zf in sorted(os.listdir(os.path.join(ROOT, 'public', 'zone'))):
+    if zf.endswith('.html') and zf != 'index.html':
+        sm += f'<url><loc>{SITE}/zone/{zf[:-5]}</loc></url>\n'
 for iid in qualifying:
     sm += f'<url><loc>{SITE}{item_urls[iid]}</loc></url>\n'
 sm += '</urlset>\n'

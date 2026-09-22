@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zones · Phoenix era 75</title>
+<meta name="description" content="Every zone with mob drops, vendors, gathering, and chests.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
+ --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
+ --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
+ --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
+ --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
+:root[data-theme="light"]{
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
+a:hover{border-bottom-color:var(--link)}
+:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1000px;width:92%;margin:0 auto;padding:22px 14px 70px}
+.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
+.site-nav .logo:hover{color:var(--gil)}
+.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
+.site-nav .links a{color:var(--ink-soft);border-bottom:none}
+.site-nav .links a:hover{color:var(--ink)}
+.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
+#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
+#search:focus{border-color:var(--gil);outline:none}
+#search::placeholder{color:var(--ink-faint)}
+.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
+.search-wrap:focus-within .kbd{display:none}
+.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
+ max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+ border-bottom:1px solid var(--rule);font-size:.88rem}
+a.sr-item:last-child{border-bottom:none}
+a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
+.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
+ box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
+.pad{padding:20px 22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:0 0 .5em;color:var(--ink)}
+h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
+.lede{color:var(--ink-soft);max-width:66ch;margin:0}
+.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
+.act:hover{color:var(--ink);border-color:var(--frame)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
+ padding:8px 10px;border-bottom:2px solid var(--rule)}
+td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+.pct{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
+.badge-nm{border-color:var(--gil);color:var(--gil)}
+.badge-wotg{border-color:var(--lightning);color:var(--lightning)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
+.jump a{padding:4px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);font-size:.82rem}
+.jump a:hover{border-color:var(--frame);color:var(--ink)}
+details.mob{margin-bottom:2px}
+details.mob summary{cursor:pointer;font-size:.92rem;padding:8px 0;border-bottom:1px solid var(--rule);color:var(--ink);list-style:none;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+details.mob summary::-webkit-details-marker{display:none}
+details.mob summary::before{content:"\25B6";display:inline-block;margin-right:4px;font-size:.6em;transition:transform .15s;color:var(--ink-faint)}
+details.mob[open] summary::before{transform:rotate(90deg)}
+details.mob .mob-body{padding:6px 0 14px 18px}
+.mob-name{font-family:var(--font-display);font-weight:400}
+.mob-lv{color:var(--ink-faint);font-size:.82rem}
+.mob-flags{font-size:.76rem;color:var(--ink-faint)}
+.mob-spawns{font-size:.82rem;color:var(--ink-faint)}
+.drop{display:flex;align-items:baseline;gap:8px;padding:3px 0;font-size:.88rem}
+.drop-rate{min-width:55px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.gil{color:var(--gil)}
+.note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
+.vendor-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:.88rem}
+.vendor-price{margin-left:auto;white-space:nowrap}
+@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+ <header class="panel pad"><h1>Zones</h1><p class="lede">162 zones with data from the server source. Each page shows every mob drop, vendor, gathering point, and treasure chest in the zone.</p></header>
+<section class="panel pad"><div style="columns:2 220px;column-gap:18px">
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/altaieu">Altaieu</a> <span class="badge">320</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/alzadaal-undersea-ruins">Alzadaal Undersea Ruins</a> <span class="badge">24</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/arrapago-reef">Arrapago Reef</a> <span class="badge">180</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/attohwa-chasm">Attohwa Chasm</a> <span class="badge">160</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/aydeewa-subterrane">Aydeewa Subterrane</a> <span class="badge">130</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/bastok-markets">Bastok Markets</a> <span class="badge">124</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/bastok-markets-s">Bastok Markets [S]</a> <span class="badge">4</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/bastok-mines">Bastok Mines</a> <span class="badge">82</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/batallia-downs">Batallia Downs</a> <span class="badge">377</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/batallia-downs-s">Batallia Downs S</a> <span class="badge">284</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/beadeaux">Beadeaux</a> <span class="badge">149</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/beadeaux-s">Beadeaux S</a> <span class="badge">53</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/beaucedine-glacier">Beaucedine Glacier</a> <span class="badge">326</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/beaucedine-glacier-s">Beaucedine Glacier S</a> <span class="badge">272</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/behemoths-dominion">Behemoths Dominion</a> <span class="badge">76</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/bhaflau-thickets">Bhaflau Thickets</a> <span class="badge">140</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/bibiki-bay">Bibiki Bay</a> <span class="badge">291</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/bostaunieux-oubliette">Bostaunieux Oubliette</a> <span class="badge">81</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/buburimu-peninsula">Buburimu Peninsula</a> <span class="badge">186</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/caedarva-mire">Caedarva Mire</a> <span class="badge">150</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/cape-teriggan">Cape Teriggan</a> <span class="badge">116</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/carpenters-landing">Carpenters Landing</a> <span class="badge">167</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/castle-oztroja">Castle Oztroja</a> <span class="badge">138</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/castle-oztroja-s">Castle Oztroja S</a> <span class="badge">71</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/castle-zvahl-baileys">Castle Zvahl Baileys</a> <span class="badge">126</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/castle-zvahl-baileys-s">Castle Zvahl Baileys S</a> <span class="badge">101</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/castle-zvahl-keep">Castle Zvahl Keep</a> <span class="badge">171</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/castle-zvahl-keep-s">Castle Zvahl Keep S</a> <span class="badge">110</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/crawlers-nest">Crawlers Nest</a> <span class="badge">156</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/crawlers-nest-s">Crawlers Nest S</a> <span class="badge">51</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/dangruf-wadi">Dangruf Wadi</a> <span class="badge">128</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/davoi">Davoi</a> <span class="badge">186</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/den-of-rancor">Den of Rancor</a> <span class="badge">150</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/dragons-aery">Dragons Aery</a> <span class="badge">33</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/east-ronfaure">East Ronfaure</a> <span class="badge">360</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/east-ronfaure-s">East Ronfaure S</a> <span class="badge">299</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/east-sarutabaruta">East Sarutabaruta</a> <span class="badge">190</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/eastern-altepa-desert">Eastern Altepa Desert</a> <span class="badge">182</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/feiyin">Feiyin</a> <span class="badge">109</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/fort-ghelsba">Fort Ghelsba</a> <span class="badge">66</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/fort-karugo-narugo-s">Fort Karugo-Narugo [S]</a> <span class="badge">3</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/fort-karugo-narugo-s">Fort Karugo Narugo S</a> <span class="badge">69</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/garlaige-citadel">Garlaige Citadel</a> <span class="badge">131</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/garlaige-citadel-s">Garlaige Citadel S</a> <span class="badge">43</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ghelsba-outpost">Ghelsba Outpost</a> <span class="badge">120</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/giddeus">Giddeus</a> <span class="badge">132</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/grand-palace-of-huxzoi">Grand Palace of Huxzoi</a> <span class="badge">144</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/grauberg-s">Grauberg S</a> <span class="badge">136</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/gusgen-mines">Gusgen Mines</a> <span class="badge">185</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/gustav-tunnel">Gustav Tunnel</a> <span class="badge">123</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/halvung">Halvung</a> <span class="badge">94</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ifrits-cauldron">Ifrits Cauldron</a> <span class="badge">114</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/inner-horutoto-ruins">Inner Horutoto Ruins</a> <span class="badge">129</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/jugner-forest">Jugner Forest</a> <span class="badge">449</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/jugner-forest-s">Jugner Forest S</a> <span class="badge">332</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/kazham">Kazham</a> <span class="badge">74</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/king-ranperres-tomb">King Ranperres Tomb</a> <span class="badge">159</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/konschtat-highlands">Konschtat Highlands</a> <span class="badge">384</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/korroloka-tunnel">Korroloka Tunnel</a> <span class="badge">116</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/kuftal-tunnel">Kuftal Tunnel</a> <span class="badge">156</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/la-theine-plateau">La Theine Plateau</a> <span class="badge">422</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/la-vaule-s">La Vaule S</a> <span class="badge">60</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/labyrinth-of-onzozo">Labyrinth of Onzozo</a> <span class="badge">135</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/lower-delkfutts-tower">Lower Delkfutts Tower</a> <span class="badge">69</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/lower-jeuno">Lower Jeuno</a> <span class="badge">126</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/lufaise-meadows">Lufaise Meadows</a> <span class="badge">155</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/mamook">Mamook</a> <span class="badge">109</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/manaclipper">Manaclipper</a> <span class="badge">44</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/maze-of-shakhrami">Maze of Shakhrami</a> <span class="badge">139</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/meriphataud-mountains">Meriphataud Mountains</a> <span class="badge">378</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/meriphataud-mountains-s">Meriphataud Mountains S</a> <span class="badge">286</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/metalworks">Metalworks</a> <span class="badge">17</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/mhaura">Mhaura</a> <span class="badge">44</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/middle-delkfutts-tower">Middle Delkfutts Tower</a> <span class="badge">111</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/misareaux-coast">Misareaux Coast</a> <span class="badge">124</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/monarch-linn">Monarch Linn</a> <span class="badge">6</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/monastic-cavern">Monastic Cavern</a> <span class="badge">88</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/mount-zhayolm">Mount Zhayolm</a> <span class="badge">97</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/nashmau">Nashmau</a> <span class="badge">78</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/newton-movalpolos">Newton Movalpolos</a> <span class="badge">140</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/norg">Norg</a> <span class="badge">11</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/north-gustaberg">North Gustaberg</a> <span class="badge">379</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/north-gustaberg-s">North Gustaberg S</a> <span class="badge">349</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/nyzul-isle">Nyzul Isle</a> <span class="badge">283</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/oldton-movalpolos">Oldton Movalpolos</a> <span class="badge">163</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/open-sea-route-to-al-zahbi">Open Sea Route to Al Zahbi</a> <span class="badge">38</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/open-sea-route-to-mhaura">Open Sea Route to Mhaura</a> <span class="badge">38</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ordelles-caves">Ordelles Caves</a> <span class="badge">155</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/outer-horutoto-ruins">Outer Horutoto Ruins</a> <span class="badge">71</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/palborough-mines">Palborough Mines</a> <span class="badge">89</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/pashhow-marshlands">Pashhow Marshlands</a> <span class="badge">364</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/pashhow-marshlands-s">Pashhow Marshlands S</a> <span class="badge">303</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/phanauet-channel">Phanauet Channel</a> <span class="badge">39</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/phomiuna-aqueducts">Phomiuna Aqueducts</a> <span class="badge">58</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/port-bastok">Port Bastok</a> <span class="badge">73</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/port-jeuno">Port Jeuno</a> <span class="badge">38</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/port-windurst">Port Windurst</a> <span class="badge">100</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/promyvion-dem">Promyvion Dem</a> <span class="badge">56</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/promyvion-holla">Promyvion Holla</a> <span class="badge">72</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/promyvion-mea">Promyvion Mea</a> <span class="badge">56</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/promyvion-vahzl">Promyvion Vahzl</a> <span class="badge">48</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/psoxja">Psoxja</a> <span class="badge">125</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/qufim-island">Qufim Island</a> <span class="badge">139</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/quicksand-caves">Quicksand Caves</a> <span class="badge">152</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/qulun-dome">Qulun Dome</a> <span class="badge">43</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/rabao">Rabao</a> <span class="badge">55</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ranguemont-pass">Ranguemont Pass</a> <span class="badge">98</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/riverne-site-a01">Riverne Site A01</a> <span class="badge">63</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/riverne-site-b01">Riverne Site B01</a> <span class="badge">39</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/rolanberry-fields">Rolanberry Fields</a> <span class="badge">391</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/rolanberry-fields-s">Rolanberry Fields S</a> <span class="badge">311</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/romaeve">Romaeve</a> <span class="badge">58</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ruaun-gardens">Ruaun Gardens</a> <span class="badge">101</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ruhotz-silvermines">Ruhotz Silvermines</a> <span class="badge">5</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/rulude-gardens">Rulude Gardens</a> <span class="badge">9</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/sacrarium">Sacrarium</a> <span class="badge">44</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/sauromugue-champaign">Sauromugue Champaign</a> <span class="badge">398</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/sauromugue-champaign-s">Sauromugue Champaign S</a> <span class="badge">275</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/sea-serpent-grotto">Sea Serpent Grotto</a> <span class="badge">262</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/selbina">Selbina</a> <span class="badge">40</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ship-bound-for-mhaura">Ship Bound for Mhaura</a> <span class="badge">43</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ship-bound-for-mhaura-pirates">Ship Bound for Mhaura Pirates</a> <span class="badge">46</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ship-bound-for-selbina">Ship Bound for Selbina</a> <span class="badge">38</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/ship-bound-for-selbina-pirates">Ship Bound for Selbina Pirates</a> <span class="badge">41</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/silver-sea-route-to-al-zahbi">Silver Sea Route to Al Zahbi</a> <span class="badge">41</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/silver-sea-route-to-nashmau">Silver Sea Route to Nashmau</a> <span class="badge">43</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/south-gustaberg">South Gustaberg</a> <span class="badge">175</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/southern-san-doria">Southern San Doria</a> <span class="badge">16</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/southern-san-doria-s">Southern San Doria [S]</a> <span class="badge">4</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/spire-of-dem">Spire of Dem</a> <span class="badge">4</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/tahrongi-canyon">Tahrongi Canyon</a> <span class="badge">406</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/talacca-cove">Talacca Cove</a> <span class="badge">30</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/tavnazian-safehold">Tavnazian Safehold</a> <span class="badge">54</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/temple-of-uggalepih">Temple of Uggalepih</a> <span class="badge">134</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/the-boyahda-tree">The Boyahda Tree</a> <span class="badge">136</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/the-eldieme-necropolis">The Eldieme Necropolis</a> <span class="badge">119</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/the-eldieme-necropolis-s">The Eldieme Necropolis S</a> <span class="badge">55</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/the-garden-of-ruhmet">The Garden of Ruhmet</a> <span class="badge">144</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/the-sanctuary-of-zitah">The Sanctuary of Zitah</a> <span class="badge">149</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/the-shrine-of-ruavitau">The Shrine of Ruavitau</a> <span class="badge">69</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/toraimarai-canal">Toraimarai Canal</a> <span class="badge">114</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/uleguerand-range">Uleguerand Range</a> <span class="badge">137</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/upper-delkfutts-tower">Upper Delkfutts Tower</a> <span class="badge">59</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/upper-jeuno">Upper Jeuno</a> <span class="badge">82</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/valkurm-dunes">Valkurm Dunes</a> <span class="badge">180</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/valley-of-sorrows">Valley of Sorrows</a> <span class="badge">54</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/velugannon-palace">Velugannon Palace</a> <span class="badge">68</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/vunkerl-inlet-s">Vunkerl Inlet S</a> <span class="badge">104</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/wajaom-woodlands">Wajaom Woodlands</a> <span class="badge">140</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/west-ronfaure">West Ronfaure</a> <span class="badge">160</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/west-sarutabaruta">West Sarutabaruta</a> <span class="badge">398</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/west-sarutabaruta-s">West Sarutabaruta S</a> <span class="badge">309</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/western-altepa-desert">Western Altepa Desert</a> <span class="badge">173</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/windurst-waters">Windurst Waters</a> <span class="badge">72</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/windurst-waters-s">Windurst Waters [S]</a> <span class="badge">4</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/windurst-woods">Windurst Woods</a> <span class="badge">34</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/xarcabard">Xarcabard</a> <span class="badge">255</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/xarcabard-s">Xarcabard S</a> <span class="badge">287</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/yhoator-jungle">Yhoator Jungle</a> <span class="badge">250</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/yughott-grotto">Yughott Grotto</a> <span class="badge">54</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/yuhtunga-jungle">Yuhtunga Jungle</a> <span class="badge">235</span></div>
+<div style="break-inside:avoid;padding:3px 0"><a href="/zone/zeruhn-mines">Zeruhn Mines</a> <span class="badge">37</span></div>
+</div></section>
+
+ <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p><p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p></footer>
+</div>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script src="/search.js"></script>
+</body>
+</html>

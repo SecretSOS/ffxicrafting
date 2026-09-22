@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toraimarai Canal · Phoenix era 75</title>
+<meta name="description" content="Toraimarai Canal: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
+ --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
+ --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
+ --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
+ --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
+:root[data-theme="light"]{
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
+a:hover{border-bottom-color:var(--link)}
+:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1000px;width:92%;margin:0 auto;padding:22px 14px 70px}
+.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
+.site-nav .logo:hover{color:var(--gil)}
+.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
+.site-nav .links a{color:var(--ink-soft);border-bottom:none}
+.site-nav .links a:hover{color:var(--ink)}
+.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
+#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
+#search:focus{border-color:var(--gil);outline:none}
+#search::placeholder{color:var(--ink-faint)}
+.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
+.search-wrap:focus-within .kbd{display:none}
+.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
+ max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+ border-bottom:1px solid var(--rule);font-size:.88rem}
+a.sr-item:last-child{border-bottom:none}
+a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
+.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
+ box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
+.pad{padding:20px 22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:0 0 .5em;color:var(--ink)}
+h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
+.lede{color:var(--ink-soft);max-width:66ch;margin:0}
+.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
+.act:hover{color:var(--ink);border-color:var(--frame)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
+ padding:8px 10px;border-bottom:2px solid var(--rule)}
+td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+.pct{font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
+.badge-nm{border-color:var(--gil);color:var(--gil)}
+.badge-wotg{border-color:var(--lightning);color:var(--lightning)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
+.jump a{padding:4px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);font-size:.82rem}
+.jump a:hover{border-color:var(--frame);color:var(--ink)}
+details.mob{margin-bottom:2px}
+details.mob summary{cursor:pointer;font-size:.92rem;padding:8px 0;border-bottom:1px solid var(--rule);color:var(--ink);list-style:none;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+details.mob summary::-webkit-details-marker{display:none}
+details.mob summary::before{content:"\25B6";display:inline-block;margin-right:4px;font-size:.6em;transition:transform .15s;color:var(--ink-faint)}
+details.mob[open] summary::before{transform:rotate(90deg)}
+details.mob .mob-body{padding:6px 0 14px 18px}
+.mob-name{font-family:var(--font-display);font-weight:400}
+.mob-lv{color:var(--ink-faint);font-size:.82rem}
+.mob-flags{font-size:.76rem;color:var(--ink-faint)}
+.mob-spawns{font-size:.82rem;color:var(--ink-faint)}
+.drop{display:flex;align-items:baseline;gap:8px;padding:3px 0;font-size:.88rem}
+.drop-rate{min-width:55px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.gil{color:var(--gil)}
+.note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
+.vendor-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:.88rem}
+.vendor-price{margin-left:auto;white-space:nowrap}
+@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+ <header class="panel pad"><h1>Toraimarai Canal</h1><p class="lede"><a href="/zone/">← All zones</a></p></header>
+<div class="jump"><a href="#caskets">Field caskets</a><a href="#coffers">Treasure coffers</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
+<section class="panel pad" id="caskets"><h2>Field caskets</h2>
+<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<tr><td><a href="/item/4119-hi-potion-3">Hi-Potion +3</a></td><td class="pct" style="text-align:right">17.1%</td></tr>
+<tr><td><a href="/item/4133-hi-ether-1">Hi-Ether +1</a></td><td class="pct" style="text-align:right">16.8%</td></tr>
+<tr><td><a href="/item/4144-hi-elixir">Hi-Elixir</a></td><td class="pct" style="text-align:right">5.81%</td></tr>
+<tr><td><a href="/item/739-chunk-of-orichalcum-ore">Chunk Of Orichalcum Ore</a></td><td class="pct" style="text-align:right">5.30%</td></tr>
+<tr><td><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">4.34%</td></tr>
+<tr><td><a href="/item/2459-pinch-of-minium">Pinch Of Minium</a></td><td class="pct" style="text-align:right">2.84%</td></tr>
+<tr><td><a href="/item/4155-remedy">Remedy</a></td><td class="pct" style="text-align:right">2.56%</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">2.55%</td></tr>
+<tr><td><a href="/item/1213-handful-of-darksteel-bolt-heads">Handful Of Darksteel Bolt Heads</a></td><td class="pct" style="text-align:right">2.46%</td></tr>
+<tr><td><a href="/item/5662-dragon-fruit">Dragon Fruit</a></td><td class="pct" style="text-align:right">2.15%</td></tr>
+<tr><td><a href="/item/769-red-rock">Red Rock</a></td><td class="pct" style="text-align:right">2.14%</td></tr>
+<tr><td><a href="/item/844-phoenix-feather">Phoenix Feather</a></td><td class="pct" style="text-align:right">1.45%</td></tr>
+<tr><td><a href="/item/821-spool-of-rainbow-thread">Spool Of Rainbow Thread</a></td><td class="pct" style="text-align:right">1.11%</td></tr>
+<tr><td><a href="/item/16520-verdun">Verdun</a></td><td class="pct" style="text-align:right">0.380%</td></tr>
+<tr><td><a href="/item/13929-errant-hat">Errant Hat</a></td><td class="pct" style="text-align:right">0.270%</td></tr>
+<tr><td><a href="/item/14078-errant-cuffs">Errant Cuffs</a></td><td class="pct" style="text-align:right">0.260%</td></tr>
+<tr><td><a href="/item/14380-errant-houppelande">Errant Houppelande</a></td><td class="pct" style="text-align:right">0.100%</td></tr>
+</tbody></table>
+</section>
+<section class="panel pad" id="coffers"><h2>Treasure coffers</h2>
+<p style="font-size:.88rem;color:var(--ink-soft)">Key: Toraimari Coffer Key · Level 60</p>
+<table><thead><tr><th>Item</th></tr></thead><tbody>
+<tr><td><a href="/item/784-jadeite">Jadeite</a></td></tr>
+<tr><td><a href="/item/791-aquamarine">Aquamarine</a></td></tr>
+<tr><td><a href="/item/797-painite">Painite</a></td></tr>
+<tr><td><a href="/item/801-chrysoberyl">Chrysoberyl</a></td></tr>
+<tr><td><a href="/item/802-moonstone">Moonstone</a></td></tr>
+<tr><td><a href="/item/803-sunstone">Sunstone</a></td></tr>
+<tr><td><a href="/item/805-zircon">Zircon</a></td></tr>
+</tbody></table>
+</section>
+<section class="panel pad" id="nms"><h2>Notorious monsters</h2>
+<details class="mob"><summary><span class="mob-name">Oni Carcass</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 68–70</span></summary><div class="mob-body">
+<p class="mob-spawns">1 spawns</p>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/849-undead-skin">Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/849-undead-skin">Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/849-undead-skin">Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+</section>
+<section class="panel pad" id="mobs"><h2>Monsters</h2>
+<details class="mob"><summary><span class="mob-name">Bigclaw aggro</span> <span class="mob-lv">Lv 49–52</span> <span class="mob-spawns">19 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bigclaw fished</span> <span class="mob-lv">Lv 49–52</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bloodsucker TC</span> <span class="mob-lv">Lv 54–57</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bloodsucker fished</span> <span class="mob-lv">Lv 54–57</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Bouncing Ball</span> <span class="mob-lv">Lv 64–67</span> <span class="mob-spawns">7 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Canal Bats TC</span> <span class="mob-lv">Lv 45–47</span> <span class="mob-spawns">17 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Dark Aspic</span> <span class="mob-lv">Lv 53–55</span> <span class="mob-spawns">7 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Dire Bat UDT TC SSG</span> <span class="mob-lv">Lv 62–64</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Doom Mage TC</span> <span class="mob-lv">Lv 65–67</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Doom Soldier TC</span> <span class="mob-lv">Lv 65–67</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Fallen Knight</span> <span class="mob-lv">Lv 52–55</span> <span class="mob-spawns">14 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Fleshcraver</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Girtab</span> <span class="mob-lv">Lv 58–60</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/896-scorpion-shell">Scorpion Shell</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/897-scorpion-claw">Scorpion Claw</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/897-scorpion-claw">Scorpion Claw</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Hell Bat TC</span> <span class="mob-lv">Lv 47–49</span> <span class="mob-spawns">27 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Impish Bats</span> <span class="mob-lv">Lv 58–60</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Lich</span> <span class="mob-lv">Lv 54–57</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Makara</span> <span class="mob-lv">Lv 49–52</span> <span class="mob-spawns">25 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales">Handful Of Pugil Scales</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Mindcraver</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Mousse SSG</span> <span class="mob-lv">Lv 63–65</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Mousse fished</span> <span class="mob-lv">Lv 63–65</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Rock Crab fished</span> <span class="mob-lv">Lv 52–54</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Rotten Sod</span> <span class="mob-lv">Lv 58–60</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/849-undead-skin">Undead Skin</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Scavenger Crab</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1193-high-quality-crab-shell">High-Quality Crab Shell</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Starmite</span> <span class="mob-lv">Lv 65–67</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/846-insect-wing">Insect Wing</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/894-beetle-jaw">Beetle Jaw</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Stygian Pugil</span> <span class="mob-lv">Lv 63–65</span> <span class="mob-spawns">10 spawns</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales">Handful Of Pugil Scales</a></div>
+</div></details>
+</section>
+<section class="panel pad" id="steals"><h2>Steals</h2>
+<p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
+<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+</tbody></table>
+</section>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
+
+ <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p><p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p></footer>
+</div>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script src="/search.js"></script>
+</body>
+</html>
