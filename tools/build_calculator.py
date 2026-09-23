@@ -60,7 +60,7 @@ for code, title in CRAFTS.items():
     recipes = []
     for r in q(f"""SELECT id,name,main_level,crystal,result,result_qty,hq1,hq1_qty,hq2,hq2_qty,hq3,hq3_qty,key_item,content_tag,
                    wood,smith,gold,cloth,leather,bone,alchemy,cook FROM recipes
-                   WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 62
+                   WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 105
                    AND (content_tag IS NULL OR content_tag IN {ERA}) ORDER BY main_level""", code):
         rid, name, lv, crystal, result, rq, h1, h1q, h2, h2q, h3, h3q, ki, tag = r[:14]
         subs = r[14:]
@@ -100,7 +100,7 @@ body_content = read('calc_body.html')
 
 html = html_head(
     'Crafting cost calculator · Phoenix era 75',
-    'Compare every era recipe by cost per skill level. Eight crafts, 1 to 60, priced with your own server numbers.',
+    'Compare every era recipe by cost per skill level. Eight crafts, 1 to 100, priced with your own server numbers.',
     'https://ffxicrafting.com/calculator',
     extra_css=extra_css)
 html += layout_open(active='calculator', crumbs=[('Home', '/'), ('Calculator', None)])

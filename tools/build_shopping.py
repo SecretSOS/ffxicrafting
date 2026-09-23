@@ -23,11 +23,11 @@ def pretty(z):
 ingredient_ids = set()
 for row in db.execute(f"""SELECT DISTINCT ri.item_id FROM recipe_ingredients ri
                          JOIN recipes r ON r.id = ri.recipe_id
-                         WHERE r.desynth=0 AND r.main_level BETWEEN 1 AND 62
+                         WHERE r.desynth=0 AND r.main_level BETWEEN 1 AND 105
                          AND (r.content_tag IS NULL OR r.content_tag IN {ERA})""").fetchall():
     ingredient_ids.add(row[0])
 for row in db.execute(f"""SELECT DISTINCT crystal FROM recipes
-                         WHERE desynth=0 AND main_level BETWEEN 1 AND 62
+                         WHERE desynth=0 AND main_level BETWEEN 1 AND 105
                          AND (content_tag IS NULL OR content_tag IN {ERA})""").fetchall():
     ingredient_ids.add(row[0])
 
@@ -61,6 +61,7 @@ EXTRA_CSS = """\
 .step-name a:hover{border-bottom:1px solid var(--link)}
 .step-meta{color:var(--ink-faint);font-size:.82rem;margin-top:2px}
 .step-synths{white-space:nowrap;font-size:.88rem;color:var(--ink-soft)}
+.step-ings{color:var(--ink-faint);font-size:.8rem;margin-top:3px;line-height:1.4}
 .summary{display:flex;gap:18px;flex-wrap:wrap;padding:14px 0 0;border-top:1px solid var(--rule);margin-top:4px}
 .group{margin-bottom:18px}
 .group-head{font-family:var(--font-display);font-size:1.05rem;margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
@@ -80,7 +81,7 @@ JS = r"""(function(){
 var CRAFTS=['Woodworking','Smithing','Goldsmithing','Clothcraft','Leathercraft','Bonecraft','Alchemy','Cooking'];
 var CODE={Woodworking:'wood',Smithing:'smith',Goldsmithing:'gold',Clothcraft:'cloth',Leathercraft:'leather',Bonecraft:'bone',Alchemy:'alchemy',Cooking:'cook'};
 var CVAR={Woodworking:'--wood',Smithing:'--smith',Goldsmithing:'--gold',Clothcraft:'--cloth',Leathercraft:'--leather',Bonecraft:'--bone',Alchemy:'--alchemy',Cooking:'--cook'};
-var BRACKETS=[{lo:1,hi:10},{lo:11,hi:20},{lo:21,hi:30},{lo:31,hi:40},{lo:41,hi:50},{lo:51,hi:60}];
+var BRACKETS=[{lo:1,hi:10},{lo:11,hi:20},{lo:21,hi:30},{lo:31,hi:40},{lo:41,hi:50},{lo:51,hi:60},{lo:61,hi:70},{lo:71,hi:80},{lo:81,hi:90},{lo:91,hi:100}];
 var I={},C={},S={},cur=CRAFTS[0],prices={};
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -166,10 +167,15 @@ function renderPath(path){
     if(step.r){
       totalCost+=step.costPerLv*step.levels;
       var it=I[step.r.res];
+      var ingList=[];
+      var cryIt=I[step.r.cry];
+      ingList.push((cryIt?esc(cryIt.n):'Crystal')+' ×'+fmt(step.totalSynths));
+      step.r.ing.forEach(function(p){var pi=I[p[0]];ingList.push((pi?esc(pi.n):'?')+' ×'+fmt(Math.ceil(p[1]*step.totalSynths)));});
       html+='<div class="step"><span class="step-range">'+step.lo+'–'+step.hi+'</span>'+
         '<div class="step-name"><a href="'+itemUrl(step.r.res)+'">'+esc(it?it.n:'?')+'</a>'+(step.r.rq>1?' ×'+step.r.rq:'')+
-        '<div class="step-meta">recipe lv '+step.r.lv+' · '+fmt(step.synthsPerLv)+' synths/level</div></div>'+
-        '<span class="step-synths">'+fmt(step.totalSynths)+' synths · '+gil(step.costPerLv*step.levels)+'</span></div>';
+        '<div class="step-meta">recipe lv '+step.r.lv+' · '+fmt(step.synthsPerLv)+' synths/level · '+fmt(step.totalSynths)+' total</div>'+
+        '<div class="step-ings">'+ingList.join(' · ')+'</div></div>'+
+        '<span class="step-synths">'+gil(step.costPerLv*step.levels)+'</span></div>';
     }else{
       gaps.push(step.lo+'–'+step.hi);
       html+='<div class="step"><span class="step-range">'+step.lo+'–'+step.hi+'</span>'+
@@ -213,7 +219,7 @@ function renderMats(g,totalCost){
   document.getElementById('matsBody').innerHTML=html||'<p class="empty">No materials needed.</p>';}
 function generateText(){
   var from=Number(document.getElementById('fromSkill').value)||1;
-  var to=Number(document.getElementById('toSkill').value)||60;
+  var to=Number(document.getElementById('toSkill').value)||100;
   var path=computePath(cur,from,to);
   var mats=aggregateMats(path);
   var groups=groupMats(mats);
@@ -246,7 +252,7 @@ function generateText(){
   return lines.join('\n');}
 function generateCSV(){
   var from=Number(document.getElementById('fromSkill').value)||1;
-  var to=Number(document.getElementById('toSkill').value)||60;
+  var to=Number(document.getElementById('toSkill').value)||100;
   var path=computePath(cur,from,to);
   var mats=aggregateMats(path);
   var groups=groupMats(mats);
@@ -265,8 +271,8 @@ function generateCSV(){
   return rows.map(function(r){return r.map(function(c){return'"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');}
 function update(){
   if(!C[cur])return;
-  var from=Math.max(1,Math.min(59,Number(document.getElementById('fromSkill').value)||1));
-  var to=Math.max(from+1,Math.min(60,Number(document.getElementById('toSkill').value)||60));
+  var from=Math.max(1,Math.min(99,Number(document.getElementById('fromSkill').value)||1));
+  var to=Math.max(from+1,Math.min(100,Number(document.getElementById('toSkill').value)||100));
   var path=computePath(cur,from,to);
   renderPath(path);}
 function fetchJSON(url,cb){var x=new XMLHttpRequest();x.open('GET',url);x.onload=function(){if(x.status===200)cb(JSON.parse(x.responseText));};x.send();}
@@ -307,8 +313,8 @@ BODY = """\
   <p class="lede">Pick a craft and skill range to see every material you need, grouped by where to get it. Uses the same prices from the <a href="/calculator">calculator</a>.</p>
   <div class="crafts" id="crafts"></div>
   <div class="range-row">
-   <label>From skill</label><input type="number" id="fromSkill" min="1" max="59" value="1">
-   <label>to</label><input type="number" id="toSkill" min="2" max="60" value="60">
+   <label>From skill</label><input type="number" id="fromSkill" min="1" max="99" value="1">
+   <label>to</label><input type="number" id="toSkill" min="2" max="100" value="100">
   </div>
  </header>
  <section class="panel pad" id="pathPanel" hidden>
@@ -328,7 +334,7 @@ BODY = """\
 
 html = html_head(
     'Shopping list · Phoenix era 75',
-    'Aggregate every crafting material for a skill-up path. Pick a craft and skill range, get the totals grouped by vendor, gathered, and dropped.',
+    'Aggregate every crafting material for a skill-up path. Pick a craft and skill range (1–100), get the totals grouped by vendor, gathered, and dropped.',
     'https://ffxicrafting.com/shopping',
     EXTRA_CSS)
 html += layout_open(active='shopping', crumbs=[('Home', '/'), ('Shopping List', None)])

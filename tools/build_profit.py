@@ -23,7 +23,7 @@ for code in CRAFTS:
     for r in q(f"""SELECT id, main_level, crystal, result, result_qty,
                    hq1, hq1_qty, hq2, hq2_qty, hq3, hq3_qty, key_item, content_tag
                    FROM recipes
-                   WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 62
+                   WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 105
                    AND (content_tag IS NULL OR content_tag IN {ERA})
                    ORDER BY main_level""", code):
         rid, lv, crystal, result, rq, h1, h1q, h2, h2q, h3, h3q, ki, tag = r

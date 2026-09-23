@@ -41,9 +41,9 @@ function perLevel(r,skill){
 }
 function bracketsFor(){
   var out=[];
-  for(var lo=1;lo<=51;lo+=(lo===1?9:10)){
+  for(var lo=1;lo<=91;lo+=(lo===1?9:10)){
     var hi=(lo===1?10:lo+9);
-    out.push({lo:lo,hi:Math.min(hi,60)});
+    out.push({lo:lo,hi:Math.min(hi,100)});
   }
   return out;
 }
@@ -145,7 +145,7 @@ function renderBrackets(){
   document.getElementById('brackets').innerHTML=html;
   var netNpc=totalNpc-totalCost, netAh=totalAh-totalCost;
   var sumHtml=
-    '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 60, cheapest path</span></div>'+
+    '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 100, cheapest path</span></div>'+
     '<div class="stat"><b>'+fmt(totalSynths)+'</b><span>synths</span></div>'+
     '<div class="stat"><b>'+gil(totalNpc)+'</b><span>vendor sell recovery</span></div>'+
     '<div class="stat"><b class="'+(netNpc>=0?'gain':'loss')+'">'+(netNpc>=0?'+':'−')+fmt(Math.abs(netNpc))+'</b><span>net (vendor)</span></div>';
@@ -153,7 +153,7 @@ function renderBrackets(){
     sumHtml+='<div class="stat"><b>'+gil(totalAh)+'</b><span>AH sell recovery</span></div>'+
       '<div class="stat"><b class="'+(netAh>=0?'gain':'loss')+'">'+(netAh>=0?'+':'−')+fmt(Math.abs(netAh))+'</b><span>net (AH)</span></div>';
   }
-  sumHtml+='<div class="stat"><b>'+gil(totalCost/59)+'</b><span>per skill level, average</span></div>';
+  sumHtml+='<div class="stat"><b>'+gil(totalCost/99)+'</b><span>per skill level, average</span></div>';
   if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials and are greyed out. Price them in the panel above to bring them into the comparison.</div>';
   document.getElementById('summary').innerHTML=sumHtml;
 }
