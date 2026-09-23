@@ -62,7 +62,30 @@ th .arr{font-size:.6rem;margin-left:2px}
 .ings{color:var(--ink-soft);font-size:.8rem;margin-top:2px;line-height:1.35}
 tr.unpriced{opacity:.45}
 .count{color:var(--ink-faint);font-size:.85rem;padding:10px 22px 0}
-.loading{padding:30px 22px;color:var(--ink-faint)}"""
+.loading{padding:30px 22px;color:var(--ink-faint)}
+.price-summary{cursor:pointer;font-family:var(--font-display);font-size:1.1rem}
+.price-summary small{color:var(--ink-faint);font-size:.82rem;margin-left:6px}
+.price-heading{font:400 1rem var(--font-display);margin:10px 0 4px}
+.price-heading span{color:var(--ink-faint);font-weight:400;font-size:.82rem}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:2px 22px;padding:0 0 18px}
+.price-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.price-row .nm{min-width:0;overflow-wrap:anywhere}
+.price-row .nm a{border-bottom:none}
+.price-row .nm a:hover{border-bottom:1px solid var(--link)}
+.price-row small{display:block;color:var(--ink-faint);font-size:.75rem}
+.price-row input[type=number]{width:7rem;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--rule);
+ border-radius:5px;padding:6px 8px;text-align:right}
+.price-row input[type=number]:focus{border-color:var(--gil);outline:none}
+.price-row input.set{border-color:var(--gil);color:var(--gil)}
+.sell-row{grid-template-columns:minmax(0,1fr) auto}
+.sell-prices{display:flex;align-items:center;gap:10px}
+.sell-npc{color:var(--ink-faint);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:4.5rem;text-align:right}
+.ah-input{width:6rem!important;font-size:.88rem!important}
+.ah-input::placeholder{color:var(--ink-faint);font-size:.78rem}
+.gain{color:var(--best)}
+.loss{color:var(--loss)}
+.profit-src{color:var(--ink-faint);font-weight:400;margin-left:2px}
+@media(max-width:820px){.price-grid{padding:0 0 14px}}"""
 
 JS = r"""(function(){
 "use strict";
@@ -71,30 +94,37 @@ var CODE={Woodworking:'wood',Smithing:'smith',Goldsmithing:'gold',Clothcraft:'cl
 var CVAR={Woodworking:'--wood',Smithing:'--smith',Goldsmithing:'--gold',Clothcraft:'--cloth',Leathercraft:'--leather',Bonecraft:'--bone',Alchemy:'--alchemy',Cooking:'--cook'};
 var NAME={wood:'Woodworking',smith:'Smithing',gold:'Goldsmithing',cloth:'Clothcraft',leather:'Leathercraft',bone:'Bonecraft',alchemy:'Alchemy',cook:'Cooking'};
 var SHORT={wood:'Wood',smith:'Smith',gold:'Gold',cloth:'Cloth',leather:'Lthr',bone:'Bone',alchemy:'Alch',cook:'Cook'};
-var I={},R=[],cur='all',prices={},skills={},canMakeOnly=false,hideUnpricedOn=false;
+var I={},R=[],cur='all',prices={},skills={},canMakeOnly=false,hideUnpricedOn=false,onlyMissing=false;
 var sortCol='profit',sortDir=-1,computed=[];
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 try{skills=JSON.parse(localStorage.getItem('phoenix-skills')||'{}');}catch(e){}
 CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=60;});
 function saveSkills(){try{localStorage.setItem('phoenix-skills',JSON.stringify(skills));}catch(e){}}
+function savePrices(){try{localStorage.setItem('phoenix-prices-v2',JSON.stringify(prices));}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
 function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var it=I[id];return it?(it.v||0):0;}
-function sell(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var it=I[id];return it?(it.b||0):0;}
+function npcSell(id){var it=I[id];return it?(it.b||0):0;}
+function ahPrice(id){var p=prices['s'+id];return(p!==undefined&&p!=='')?Number(p):0;}
+function bestSell(id){return ahPrice(id)||npcSell(id);}
 function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
 function itemUrl(id){var it=I[id];return it?'/item/'+id+'-'+slugify(it.n):'#';}
+function icoHtml(id){return'<img src="/img/item/'+id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;vertical-align:-2px;margin-right:2px" onerror="this.style.display=\'none\'">';}
 function hqChance(gap){if(gap<0)return 0;if(gap<=10)return 0.0156;if(gap<=30)return 0.0625;if(gap<=50)return 0.25;return 0.50;}
 function computeRow(r){
   var craftName=NAME[r.cr],skill=skills[craftName]||60;
   var cost=price(r.cry),unpriced=[];
   r.ing.forEach(function(p){var pr=price(p[0]);if(pr===0)unpriced.push(I[p[0]]?I[p[0]].n:'?');cost+=pr*p[1];});
-  var nqRev=sell(r.res)*r.rq,gap=skill-r.lv,h=hqChance(gap);
+  var nqSell=bestSell(r.res),nqRev=nqSell*r.rq,usesAH=!!ahPrice(r.res);
+  var gap=skill-r.lv,h=hqChance(gap);
   var rev=(1-h)*nqRev;
   if(h>0&&r.hq){var tiers=[h*0.75,h*0.1875,h*0.0625];
-    for(var t=0;t<3;t++){var hid=r.hq[t][0],hqty=r.hq[t][1];rev+=tiers[t]*(hid?sell(hid)*hqty:nqRev);}}
+    for(var t=0;t<3;t++){var hid=r.hq[t][0],hqty=r.hq[t][1];
+      if(hid){rev+=tiers[t]*bestSell(hid)*hqty;if(ahPrice(hid))usesAH=true;}
+      else rev+=tiers[t]*nqRev;}}
   else rev=nqRev;
-  return{r:r,craft:craftName,cost:cost,rev:rev,profit:rev-cost,margin:cost>0?(rev-cost)/cost*100:0,unpriced:unpriced,skill:skill};}
+  return{r:r,craft:craftName,cost:cost,rev:rev,profit:rev-cost,margin:cost>0?(rev-cost)/cost*100:0,unpriced:unpriced,skill:skill,usesAH:usesAH};}
 function computeAll(){
   computed=R.map(computeRow);
   if(cur!=='all')computed=computed.filter(function(x){return x.craft===cur;});
@@ -118,6 +148,43 @@ function renderCrafts(){
 function renderSkills(){
   document.getElementById('skills').innerHTML='<span style="color:var(--ink-faint);font-size:.82rem;margin-right:4px">Your skills:</span>'+
     CRAFTS.map(function(c){return'<span class="skill" style="--c:var('+CVAR[c]+')"><svg><use href="#i-'+CODE[c]+'"/></svg><input type="number" min="0" max="110" value="'+(skills[c]||60)+'" data-craft="'+c+'" aria-label="'+c+' skill"></span>';}).join('');}
+function renderPrices(){
+  var recipes=cur==='all'?R:R.filter(function(r){return NAME[r.cr]===cur;});
+  var seenBuy={},seenSell={},buyIds=[],sellIds=[];
+  recipes.forEach(function(r){
+    if(!seenBuy[r.cry]){seenBuy[r.cry]=1;buyIds.push(r.cry);}
+    r.ing.forEach(function(p){if(!seenBuy[p[0]]){seenBuy[p[0]]=1;buyIds.push(p[0]);}});
+    if(!seenSell[r.res]){seenSell[r.res]=1;sellIds.push(r.res);}
+    if(r.hq)r.hq.forEach(function(h){if(h[0]&&!seenSell[h[0]]){seenSell[h[0]]=1;sellIds.push(h[0]);}});
+  });
+  function buyRow(id){
+    var it=I[id];if(!it)return'';
+    var set=prices[id]!==undefined&&prices[id]!=='';
+    if(onlyMissing&&(set||it.v))return'';
+    var hint=it.v?('vendor '+fmt(it.v)):(it.g?('gathered: '+it.g):(it.m?('drops at '+it.m+'%'):(it.c!==null&&it.c!==undefined?('craftable at lv '+it.c):'no vendor')));
+    return'<div class="price-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a><small>'+hint+'</small></div>'+
+      '<input type="number" min="0" inputmode="numeric" data-id="'+id+'" value="'+(set?prices[id]:'')+'" placeholder="'+(it.v||0)+'" class="'+(set?'set':'')+'" aria-label="'+esc(it.n)+' buy price"></div>';
+  }
+  function sellRow(id){
+    var it=I[id];if(!it)return'';
+    var ahSet=prices['s'+id]!==undefined&&prices['s'+id]!=='';
+    var npc=it.b||0;
+    var exTag=it.x?' <span style="color:var(--loss);font-size:.75rem">Ex</span>':'';
+    return'<div class="price-row sell-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a>'+
+      '<small>Vendor sell: '+fmt(npc)+'g'+exTag+'</small></div>'+
+      '<div class="sell-prices">'+
+      '<span class="sell-npc" title="NPC vendor sell price">'+fmt(npc)+'g</span>'+
+      '<input type="number" min="0" inputmode="numeric" data-sid="'+id+'" value="'+(ahSet?prices['s'+id]:'')+'" placeholder="AH price" class="ah-input'+(ahSet?' set':'')+'" aria-label="'+esc(it.n)+' AH price">'+
+      '</div></div>';
+  }
+  document.getElementById('priceGrid').innerHTML=
+    '<div><h3 class="price-heading">Materials <span>— buy prices</span></h3>'+buyIds.map(buyRow).join('')+'</div>'+
+    '<div><h3 class="price-heading">Results <span>— vendor sell &amp; AH prices</span></h3>'+
+    '<div style="display:flex;justify-content:flex-end;gap:18px;padding:0 0 6px;font-size:.72rem;color:var(--ink-faint)"><span>NPC sell</span><span style="width:7rem;text-align:center">AH price</span></div>'+
+    sellIds.map(sellRow).join('')+'</div>';
+  var n=Object.keys(prices).filter(function(k){return prices[k]!=='';}).length;
+  document.getElementById('priceMeta').textContent=n?(n+' saved'):'using vendor prices';
+}
 function renderHead(){
   var cols=[{k:'name',l:'Recipe'},{k:'lv',l:'Lv',c:'num'},{k:'cost',l:'Cost',c:'num'},{k:'rev',l:'Revenue',c:'num hide-sm'},{k:'profit',l:'Profit',c:'num'},{k:'margin',l:'Margin',c:'num hide-sm'}];
   document.getElementById('thead').innerHTML='<tr>'+cols.map(function(c){
@@ -132,18 +199,20 @@ function renderResults(){
     var hq=hqChance(x.skill-r.lv);
     var pills=(r.ki?'<span class="pill ki">key item</span>':'')+(r.tag==='WOTG'?'<span class="pill wotg">WotG</span>':'');
     var ings=r.ing.map(function(p){var pi=I[p[0]];return pi?esc(pi.n)+(p[1]>1?' ×'+p[1]:''):'?';}).join(' · ');
-    html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r.res)+'">'+esc(it.n)+'</a>'+(r.rq>1?' ×'+r.rq:'')+
+    var profitCls=x.profit>=0?'gain':'loss';
+    var srcLabel=x.usesAH?' <small class="profit-src">AH</small>':' <small class="profit-src">NPC</small>';
+    html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r.res)+'">'+icoHtml(r.res)+esc(it.n)+'</a>'+(r.rq>1?' ×'+r.rq:'')+
       '<span class="craft-tag" style="--c:var(--'+r.cr+')">'+SHORT[r.cr]+' '+r.lv+'</span>'+pills+'</div>'+
       (hq>0?'<div class="rmeta">HQ '+Math.round(hq*100)+'%</div>':'')+
       '<div class="ings">'+ings+'</div></td>'+
       '<td class="num">'+r.lv+'</td>'+
       '<td class="num">'+(x.unpriced.length?'<span style="color:var(--loss)">—</span>':gil(x.cost))+'</td>'+
       '<td class="num hide-sm">'+gil(Math.round(x.rev))+'</td>'+
-      '<td class="num"><span class="'+(x.profit>=0?'positive':'negative')+'">'+(x.profit>=0?'+':'−')+gil(Math.abs(Math.round(x.profit)))+'</span></td>'+
-      '<td class="num hide-sm"><span class="'+(x.margin>=0?'positive':'negative')+'">'+(x.margin>=0?'+':'−')+Math.abs(Math.round(x.margin))+'%</span></td></tr>';});
+      '<td class="num"><span class="'+profitCls+'">'+(x.profit>=0?'+':'−')+gil(Math.abs(Math.round(x.profit)))+srcLabel+'</span></td>'+
+      '<td class="num hide-sm"><span class="'+(x.margin>=0?'gain':'loss')+'">'+(x.margin>=0?'+':'−')+Math.abs(Math.round(x.margin))+'%</span></td></tr>';});
   document.getElementById('results').innerHTML=html||'<tr><td colspan="6" style="padding:20px;color:var(--ink-faint)">No recipes match your filters.</td></tr>';
   document.getElementById('count').textContent=computed.length+' recipe'+(computed.length!==1?'s':'')+(cur!=='all'?' in '+cur:'')+(canMakeOnly?' you can attempt':'')+(hideUnpricedOn?', unpriced hidden':'');}
-function render(){renderCrafts();renderResults();}
+function render(){renderCrafts();renderPrices();renderResults();}
 function fetchJSON(url,cb){var x=new XMLHttpRequest();x.open('GET',url);x.onload=function(){if(x.status===200)cb(JSON.parse(x.responseText));};x.send();}
 document.getElementById('results').innerHTML='<tr><td colspan="6" class="loading">Loading data…</td></tr>';
 renderSkills();
@@ -156,13 +225,33 @@ function setupListeners(){
   document.getElementById('thead').addEventListener('click',function(e){var t=e.target.closest('th');if(!t)return;var col=t.getAttribute('data-col');if(sortCol===col)sortDir=-sortDir;else{sortCol=col;sortDir=(col==='name'||col==='lv')?1:-1;}renderResults();});
   document.getElementById('skills').addEventListener('input',function(e){var t=e.target;if(t.tagName!=='INPUT')return;skills[t.getAttribute('data-craft')]=Number(t.value)||0;saveSkills();renderResults();});
   document.getElementById('canMakeBtn').addEventListener('click',function(){canMakeOnly=!canMakeOnly;this.classList.toggle('on',canMakeOnly);renderResults();});
-  document.getElementById('hideUnpriced').addEventListener('click',function(){hideUnpricedOn=!hideUnpricedOn;this.classList.toggle('on',hideUnpricedOn);renderResults();});}
+  document.getElementById('hideUnpriced').addEventListener('click',function(){hideUnpricedOn=!hideUnpricedOn;this.classList.toggle('on',hideUnpricedOn);renderResults();});
+  document.getElementById('priceGrid').addEventListener('input',function(e){
+    var t=e.target;if(t.tagName!=='INPUT')return;
+    var isSell=t.hasAttribute('data-sid'),id=isSell?t.getAttribute('data-sid'):t.getAttribute('data-id');
+    var key=isSell?('s'+id):id;
+    if(t.value==='')delete prices[key];else prices[key]=t.value;
+    t.classList.toggle('set',t.value!=='');
+    savePrices();renderResults();
+    var n=Object.keys(prices).filter(function(k){return prices[k]!=='';}).length;
+    document.getElementById('priceMeta').textContent=n?(n+' saved'):'using vendor prices';
+  });
+  document.getElementById('vendorBtn').addEventListener('click',function(){
+    Object.keys(I).forEach(function(id){if((prices[id]===undefined||prices[id]==='')&&I[id].v)prices[id]=String(I[id].v);});
+    savePrices();renderPrices();renderResults();
+  });
+  document.getElementById('clearBtn').addEventListener('click',function(){prices={};savePrices();renderPrices();renderResults();});
+  document.getElementById('onlyMissing').addEventListener('click',function(){
+    onlyMissing=!onlyMissing;this.classList.toggle('on',onlyMissing);this.textContent=onlyMissing?'Show all items':'Show only unpriced';
+    renderPrices();
+  });
+}
 })();"""
 
 BODY = """\
  <header class="panel pad">
   <h1>Profit finder</h1>
-  <p class="lede">Every era recipe ranked by expected profit. Uses the same prices you set in the <a href="/calculator">calculator</a>. Adjust your skill levels to see accurate HQ chances.</p>
+  <p class="lede">Every era recipe ranked by expected profit. Set your prices here or in the <a href="/calculator">calculator</a> — they share the same data. Adjust skill levels for accurate HQ chances.</p>
   <div class="crafts" id="crafts"></div>
   <div class="skills" id="skills"></div>
   <div class="filter-row">
@@ -170,6 +259,16 @@ BODY = """\
    <button class="act" id="hideUnpriced" type="button">Hide unpriced</button>
   </div>
  </header>
+ <details class="panel pad" id="pricePanel">
+  <summary class="price-summary">Your prices <small id="priceMeta"></small></summary>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;padding:6px 0 10px;align-items:center">
+   <button class="act" id="vendorBtn" type="button">Fill blanks with vendor prices</button>
+   <button class="act" id="clearBtn" type="button">Clear all</button>
+   <button class="act" id="onlyMissing" type="button">Show only unpriced</button>
+  </div>
+  <p class="note" style="margin:0 0 10px;font-size:.82rem;color:var(--ink-faint)">Prices are shared with the <a href="/calculator">calculator</a> — changes here appear there too.</p>
+  <div class="price-grid" id="priceGrid"></div>
+ </details>
  <section class="panel">
   <div class="count" id="count"></div>
   <div style="overflow-x:auto">
