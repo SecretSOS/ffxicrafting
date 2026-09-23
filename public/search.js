@@ -29,7 +29,7 @@ function search(q){
   var it=index.i[i], nl=it[1].toLowerCase();
   var pos=nl.indexOf(ql);
   if(pos===-1) continue;
-  var entry={n:it[1],t:'item',u:'/item/'+it[0]+'-'+slugify(it[1])};
+  var entry={n:it[1],t:'item',u:'/item/'+it[0]+'-'+slugify(it[1]),id:it[0]};
   if(pos===0) prefix.push(entry);
   else if(nl.charAt(pos-1)===' ') word.push(entry);
   else sub.push(entry);
@@ -49,7 +49,8 @@ function render(){
  var h='';
  for(var i=0;i<shown.length;i++){
   var m=shown[i];
-  h+='<a class="sr-item" href="'+m.u+'" data-i="'+i+'">'+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
+  var ic=m.id?'<img src="/img/item/'+m.id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;flex-shrink:0;align-self:center" onerror="this.style.display=\'none\'">':'';
+  h+='<a class="sr-item" href="'+m.u+'" data-i="'+i+'">'+ic+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
  }
  box.innerHTML=h;
  box.hidden=false;

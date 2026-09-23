@@ -341,11 +341,13 @@ a:hover{border-bottom-color:var(--link)}
 .search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
  background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
  max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
  border-bottom:1px solid var(--rule);font-size:.88rem}
 a.sr-item:last-child{border-bottom:none}
 a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
 .sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.item-head{display:flex;align-items:center;gap:14px}
+.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
 h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
 h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
 h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -372,14 +374,13 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 
 THEME_JS = """\
 (function(){
-var t;try{t=localStorage.getItem('theme')}catch(e){}
+var t;try{t=localStorage.getItem('phoenix-theme')}catch(e){}
 if(t)document.documentElement.setAttribute('data-theme',t);
 var b=document.getElementById('themeBtn');
 if(b)b.onclick=function(){
-var c=document.documentElement.getAttribute('data-theme');
-var n=c==='dark'?'light':c==='light'?null:'dark';
-if(n){document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
-else{document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('theme')}catch(e){}}
+var c=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+var n=c==='light'?'dark':'light';
+document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('phoenix-theme',n)}catch(e){}
 };
 var st=document.getElementById('srcToggle');
 if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
@@ -433,6 +434,9 @@ def build_page(iid):
 
     sep = ' ' if flags and meta_text else ''
 
+    icon_path = os.path.join(ROOT, 'public', 'img', 'item', f'{iid}.png')
+    icon_img = f'<img class="item-icon" src="/img/item/{iid}.png" alt="" width="32" height="32">' if os.path.exists(icon_path) else ''
+
     return (
         '<!doctype html>\n<html lang="en">\n<head>\n'
         '<meta charset="utf-8">\n'
@@ -461,8 +465,10 @@ def build_page(iid):
         '<button class="act" id="themeBtn" type="button">Theme</button>'
         '</div></nav>\n'
         ' <header class="panel pad">\n'
+        f'  <div class="item-head">{icon_img}<div>\n'
         f'  <h1>{ne}</h1>\n'
         f'  <p class="meta">{flags}{sep}{meta_text}{wiki}</p>\n'
+        '  </div></div>\n'
         ' </header>\n'
         f' {sec}\n'
         ' <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">\n'

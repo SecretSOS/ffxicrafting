@@ -23,6 +23,7 @@ function sell(id){ var p=prices['s'+id]; if(p!==undefined&&p!=='') return Number
 function crystalOf(id){ var n=(I[id]&&I[id].n||'').toLowerCase().replace(' crystal',''); return ELEM.indexOf(n)>=0?n:'light'; }
 function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
 function itemUrl(id){ var it=I[id]; return it?'/item/'+id+'-'+slugify(it.n):'#'; }
+function icoHtml(id){ return '<img src="/img/item/'+id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;vertical-align:-2px;margin-right:2px" onerror="this.style.display=\'none\'">'; }
 var W=[[85,15,0,0,0],[85,15,0,0,0],[85,15,0,0,0],[80,20,0,0,0],[80,20,0,0,0],[70,30,0,0,0],[70,30,0,0,0],[60,40,0,0,0],[60,40,0,0,0],[50,40,10,0,0],[40,40,20,0,0],[40,40,20,0,0],[15,45,30,10,0],[10,40,25,25,0],[0,40,30,20,10]];
 function avgGain(diff,skill){ if(skill>=60) return 0.1; var w=W[Math.max(0,Math.min(14,diff))],s=0; for(var i=0;i<5;i++)s+=w[i]*(i+1)/10; return s/100; }
 function costEach(r){ var c=price(r.cry); r.ing.forEach(function(p){ c+=price(p[0])*p[1]; }); return c; }
@@ -68,7 +69,7 @@ function renderPrices(){
     if(onlyMissing && (set || (!isSell && it.v))) return '';
     var hint=isSell?('NPC pays '+fmt(it.b||0)+(it.x?' · Ex, unsellable':'')):
       (it.v?('vendor '+fmt(it.v)):(it.g?('gathered: '+it.g):(it.m?('drops at '+it.m+'%'):(it.c!==null&&it.c!==undefined?('craftable at lv '+it.c):'no vendor'))));
-    return '<div class="price-row"><div class="nm"><a href="'+itemUrl(id)+'">'+esc(it.n)+'</a><small>'+hint+'</small></div>'+
+    return '<div class="price-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a><small>'+hint+'</small></div>'+
       '<input type="number" min="0" inputmode="numeric" '+(isSell?'data-sid':'data-id')+'="'+id+'" value="'+(set?prices[key]:'')+'" placeholder="'+(isSell?(it.b||0):(it.v||0))+'" class="'+(set?'set':'')+'" aria-label="'+esc(it.n)+(isSell?' sell price':' buy price')+'"></div>';
   }
   document.getElementById('prices').innerHTML=
@@ -105,10 +106,10 @@ function renderBrackets(){
           (r.sub.length?'<span class="pill sub">'+r.sub.map(function(s){return s[0]+' '+s[1];}).join(', ')+'</span>':'');
         var ings=r.ing.map(function(p){
           var it=I[p[0]], pr=price(p[0]);
-          return '<a href="'+itemUrl(p[0])+'">'+esc(it.n)+'</a>'+(p[1]>1?' ×'+p[1]:'')+
+          return '<a href="'+itemUrl(p[0])+'">'+icoHtml(p[0])+esc(it.n)+'</a>'+(p[1]>1?' ×'+p[1]:'')+
             (pr?' <span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(pr*p[1])+'</span>':' <span class="noprice">no price</span>');
         }).join(' · ');
-        return '<tr class="'+cls.join(' ')+'"><td><div class="rname">'+esc(I[r.res].n)+(r.rq>1?' ×'+r.rq:'')+pills+'</div>'+
+        return '<tr class="'+cls.join(' ')+'"><td><div class="rname">'+icoHtml(r.res)+esc(I[r.res].n)+(r.rq>1?' ×'+r.rq:'')+pills+'</div>'+
           '<div class="tagline">recipe level '+r.lv+'</div><div class="ings">'+ings+'</div></td>'+
           '<td class="hide-sm"><span class="crystal" style="--ce:var(--'+ce+')"><span class="dot"></span>'+ce+'</span></td>'+
           '<td class="num">'+(x.up.length?'<span class="noprice">—</span>':gil(x.cost))+'</td><td class="num hide-sm">'+fmt(x.pl.synths)+'</td>'+

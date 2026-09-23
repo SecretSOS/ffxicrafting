@@ -54,11 +54,13 @@ a:hover{border-bottom-color:var(--link)}
 .search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
  background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
  max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
  border-bottom:1px solid var(--rule);font-size:.88rem}
 a.sr-item:last-child{border-bottom:none}
 a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
 .sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.item-head{display:flex;align-items:center;gap:14px}
+.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
 h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
 h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
 h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -88,8 +90,10 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 <div class="wrap">
  <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
  <header class="panel pad">
+  <div class="item-head"><img class="item-icon" src="/img/item/2513.png" alt="" width="32" height="32"><div>
   <h1>Rafflesia Vine</h1>
   <p class="meta">Stack: 12 · NPC: 468g · <a href="https://horizonffxi.wiki/w/index.php?search=Rafflesia+Vine&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
+  </div></div>
  </header>
  <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Mob Drops</h3><table><thead><tr><th>Monster</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Level</th><th class="hide-sm">Info</th></tr></thead><tbody><tr data-src="data/zones/castle_oztroja_s/mobs.yaml"><td>Blooming_Rafflesia</td><td>Castle Oztroja S</td><td class="num">15%</td><td class="hide-sm">71–73</td><td class="soft hide-sm">8 spawns</td></tr><tr data-src="data/zones/cirdas_caverns/mobs.yaml"><td>Snippy_Rafflesia</td><td>Cirdas Caverns</td><td class="num">15%</td><td class="hide-sm">125–126</td><td class="soft hide-sm">8 spawns</td></tr><tr data-src="data/zones/abyssea_konschtat/mobs.yaml"><td>Highland_Rafflesia</td><td>Abyssea Konschtat</td><td class="num">10%</td><td class="hide-sm">78–88</td><td class="soft hide-sm">13 spawns</td></tr><tr data-src="data/zones/abyssea_konschtat/mobs.yaml"><td>Highland_Rafflesia_Small</td><td>Abyssea Konschtat</td><td class="num">10%</td><td class="hide-sm">78–88</td><td class="soft hide-sm">3 spawns</td></tr><tr data-src="data/zones/fort_karugo_narugo_s/mobs.yaml"><td>Jumbo_Rafflesia</td><td>Fort Karugo Narugo S</td><td class="num">10%</td><td class="hide-sm">65–69</td><td class="soft hide-sm">9 spawns</td></tr><tr data-src="data/zones/fort_karugo_narugo_s/mobs.yaml"><td>Kirtimukha <span class="pill">notorious,lottery</span></td><td>Fort Karugo Narugo S</td><td class="num">10%</td><td class="hide-sm">65</td><td class="soft hide-sm">1 spawns</td></tr><tr data-src="data/zones/meriphataud_mountains_s/mobs.yaml"><td>Jumbo_Rafflesia</td><td>Meriphataud Mountains S</td><td class="num">10%</td><td class="hide-sm">68–72</td><td class="soft hide-sm">13 spawns</td></tr><tr data-src="data/zones/fort_karugo_narugo_s/mobs.yaml"><td>Rafflesia</td><td>Fort Karugo Narugo S</td><td class="num">5%</td><td class="hide-sm">59–62</td><td class="soft hide-sm">44 spawns</td></tr><tr data-src="data/zones/west_sarutabaruta_s/mobs.yaml"><td>Rafflesia</td><td>West Sarutabaruta S</td><td class="num">5%</td><td class="hide-sm">49–52</td><td class="soft hide-sm">43 spawns</td></tr></tbody></table></section><section class="panel pad"><h2>Used in</h2><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Alchemy 39 <span class="pill wotg">WotG</span></td><td><a href="/item/1023-living-key">Living Key</a> ×3</td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/637-vial-of-slime-oil">Vial of Slime Oil</a> · <a href="/item/913-lump-of-beeswax">Lump of Beeswax</a> · <a href="/item/2513-rafflesia-vine">Rafflesia Vine</a></td></tr><tr><td>Alchemy 60 <span class="pill ki">key item</span> <span class="pill wotg">WotG</span></td><td><a href="/item/5328-bottle-of-hi-potion-drops">Bottle of Hi-Potion Drops</a></td><td class="ings hide-sm"><a href="/item/4096-fire-crystal">Fire Crystal</a> · <a href="/item/638-sprig-of-sage">Sprig of Sage</a> ×2 · <a href="/item/2513-rafflesia-vine">Rafflesia Vine</a> · <a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></td></tr><tr><td>Alchemy 60 <span class="pill wotg">WotG</span></td><td><a href="/item/4116-hi-potion">Hi-Potion</a> <span class="soft">HQ: <a href="/item/4117-hi-potion-1">Hi-Potion +1</a> / <a href="/item/4118-hi-potion-2">Hi-Potion +2</a> / <a href="/item/4119-hi-potion-3">Hi-Potion +3</a></span></td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/638-sprig-of-sage">Sprig of Sage</a> ×2 · <a href="/item/2513-rafflesia-vine">Rafflesia Vine</a> · <a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></td></tr><tr><td>Alchemy 92 <span class="pill wotg">WotG</span></td><td><a href="/item/4201-dexterity-potion">Dexterity Potion</a></td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/1410-sweet-william">Sweet William</a> · <a href="/item/1443-pinch-of-dried-mugwort">Pinch of Dried Mugwort</a> · <a href="/item/2513-rafflesia-vine">Rafflesia Vine</a> · <a href="/item/4370-pot-of-honey">Pot of Honey</a> · <a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></td></tr><tr><td>Woodworking 70 <span class="soft">(Bonecraft 45)</span> <span class="pill wotg">WotG</span></td><td><a href="/item/18736-fay-gendawa">Fay Gendawa</a></td><td class="ings hide-sm"><a href="/item/4098-wind-crystal">Wind Crystal</a> · <a href="/item/720-piece-of-ancient-lumber">Piece of Ancient Lumber</a> · <a href="/item/830-square-of-rainbow-cloth">Square of Rainbow Cloth</a> · <a href="/item/2513-rafflesia-vine">Rafflesia Vine</a> · <a href="/item/2747-gargouille-horn">Gargouille Horn</a> · <a href="/item/2762-piece-of-feyweald-lumber">Piece of Feyweald Lumber</a></td></tr></tbody></table></section>
  <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
@@ -99,14 +103,13 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 </div>
 <script>
 (function(){
-var t;try{t=localStorage.getItem('theme')}catch(e){}
+var t;try{t=localStorage.getItem('phoenix-theme')}catch(e){}
 if(t)document.documentElement.setAttribute('data-theme',t);
 var b=document.getElementById('themeBtn');
 if(b)b.onclick=function(){
-var c=document.documentElement.getAttribute('data-theme');
-var n=c==='dark'?'light':c==='light'?null:'dark';
-if(n){document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
-else{document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('theme')}catch(e){}}
+var c=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+var n=c==='light'?'dark':'light';
+document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('phoenix-theme',n)}catch(e){}
 };
 var st=document.getElementById('srcToggle');
 if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';

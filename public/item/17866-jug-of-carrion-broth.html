@@ -54,11 +54,13 @@ a:hover{border-bottom-color:var(--link)}
 .search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
  background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
  max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
  border-bottom:1px solid var(--rule);font-size:.88rem}
 a.sr-item:last-child{border-bottom:none}
 a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
 .sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.item-head{display:flex;align-items:center;gap:14px}
+.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
 h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
 h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
 h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -88,8 +90,10 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 <div class="wrap">
  <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
  <header class="panel pad">
+  <div class="item-head"><img class="item-icon" src="/img/item/17866.png" alt="" width="32" height="32"><div>
   <h1>Jug of Carrion Broth</h1>
   <p class="meta">Stack: 12 · NPC: 43g · <a href="https://horizonffxi.wiki/w/index.php?search=Carrion+Broth&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
+  </div></div>
  </header>
  <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Vendors</h3><table><thead><tr><th>NPC</th><th>Zone</th><th class="num">Price</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/zones/Kazham/npcs/Mamerie.lua"><td>Mamerie</td><td>Kazham</td><td class="num">301</td><td class="soft hide-sm"></td></tr><tr data-src="scripts/zones/Bastok_Mines/npcs/Neigepance.lua"><td>Neigepance</td><td>Bastok Mines</td><td class="num">301</td><td class="soft hide-sm"></td></tr><tr data-src="scripts/zones/Rabao/npcs/Generoit.lua"><td>Generoit</td><td>Rabao</td><td class="num">301</td><td class="soft hide-sm"></td></tr><tr data-src="scripts/zones/Windurst_Woods/npcs/Quesse.lua"><td>Quesse</td><td>Windurst Woods</td><td class="num">301</td><td class="soft hide-sm"></td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Cooking 11 <span class="pill">ROTZ</span></td><td><a href="/item/17866-jug-of-carrion-broth">Jug of Carrion Broth</a> ×4 <span class="soft">HQ: <a href="/item/17867-jug-of-cold-carrion-broth">Jug of Cold Carrion Broth</a> ×2 / <a href="/item/17867-jug-of-cold-carrion-broth">Jug of Cold Carrion Broth</a> ×4 / <a href="/item/17867-jug-of-cold-carrion-broth">Jug of Cold Carrion Broth</a> ×8</span></td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/1111-block-of-gelatin">Block of Gelatin</a> · <a href="/item/4358-slice-of-hare-meat">Slice of Hare Meat</a> ×2 · <a href="/item/16995-piece-of-rotten-meat">Piece of Rotten Meat</a></td></tr></tbody></table></section>
  <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
@@ -99,14 +103,13 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 </div>
 <script>
 (function(){
-var t;try{t=localStorage.getItem('theme')}catch(e){}
+var t;try{t=localStorage.getItem('phoenix-theme')}catch(e){}
 if(t)document.documentElement.setAttribute('data-theme',t);
 var b=document.getElementById('themeBtn');
 if(b)b.onclick=function(){
-var c=document.documentElement.getAttribute('data-theme');
-var n=c==='dark'?'light':c==='light'?null:'dark';
-if(n){document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
-else{document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('theme')}catch(e){}}
+var c=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+var n=c==='light'?'dark':'light';
+document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('phoenix-theme',n)}catch(e){}
 };
 var st=document.getElementById('srcToggle');
 if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
