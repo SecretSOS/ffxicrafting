@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Woodworking · FFXI Crafting</title>
+<meta name="description" content="Woodworking guild details: shop inventory, GP turnins, rewards, hours, and live open/closed status.">
+<meta property="og:title" content="Woodworking · FFXI Crafting">
+<meta property="og:description" content="Woodworking guild details: shop inventory, GP turnins, rewards, hours, and live open/closed status.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/crafts/woodworking">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.guild-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.guild-header svg{width:48px;height:48px;color:var(--wood);flex-shrink:0}
+.guild-badge{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:4px 12px;letter-spacing:.02em}
+.guild-badge.open{background:color-mix(in srgb,var(--best) 18%,transparent);color:var(--best);border:1px solid var(--best)}
+.guild-badge.closed{background:color-mix(in srgb,var(--loss) 14%,transparent);color:var(--loss);border:1px solid var(--loss)}
+.guild-meta{color:var(--ink-soft);font-size:.88rem;margin-top:4px}
+.guild-next{color:var(--ink-faint);font-size:.82rem;margin-top:2px}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px 18px}
+.shop-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.shop-row .nm{min-width:0;overflow-wrap:anywhere}
+.shop-row .pr{color:var(--gil);white-space:nowrap;font-variant-numeric:tabular-nums}
+.shop-row .st{color:var(--ink-faint);font-size:.82rem;white-space:nowrap}
+.turnin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.turnin-tab{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.82rem}
+.turnin-tab:hover{border-color:var(--wood)}
+.turnin-tab.active{border-color:var(--wood);background:color-mix(in srgb,var(--wood) 16%,transparent);color:var(--ink);font-weight:700}
+.turnin-table{width:100%;border-collapse:collapse}
+.turnin-table th{text-align:left;font-weight:400;font-size:.76rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}
+.turnin-table td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+.reward-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px 18px}
+.reward-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.reward-row .rk{color:var(--ink-faint);font-size:.82rem;white-space:nowrap;text-transform:capitalize}
+.reward-row .gp{color:var(--wood);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vendor-note{color:var(--ink-faint);font-size:.85rem;margin-bottom:10px}
+.stat-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:8px}
+.stat-row .stat b{font-family:var(--font-display);font-weight:400;font-size:1.3rem}
+.tool-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tool-links a{font-size:.85rem;padding:6px 14px;border-radius:999px;border:1px solid var(--rule);color:var(--ink-soft);text-decoration:none;transition:border-color .15s,color .15s}
+.tool-links a:hover{border-color:var(--wood);color:var(--wood)}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+ <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
+ <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
+ <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
+ <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
+ <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
+ <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
+ <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
+ <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+</svg>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <span class="vana-clock" id="vanaClock" title="Vana'diel Time"></span>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">By Craft</div>
+  <a href="/crafts/woodworking" class="active"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking</span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing</span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing</span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft</span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft</span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft</span></a>
+  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy</span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking</span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/crafts">Crafts</a><span class="sep">&rsaquo;</span>Woodworking</nav>
+ <header class="panel pad">
+  <div class="guild-header">
+   <svg aria-hidden="true"><use href="#i-wood"/></svg>
+   <div>
+    <h1>Woodworking</h1>
+    <div class="guild-meta">Woodworking Guild &middot; Northern San d&#x27;Oria</div>
+   </div>
+   <div style="margin-left:auto;text-align:right">
+    <span class="guild-badge" id="guildStatus">…</span>
+    <div class="guild-next" id="guildNext"></div>
+   </div>
+  </div>
+ </header>
+
+ <section class="panel pad">
+  <h2>Guild hours</h2>
+  <table style="border-collapse:collapse;font-size:.92rem">
+   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>6:00</b> – <b>21:00</b> Vana'diel time</td></tr>
+   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Firesday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
+   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Location</td><td>Northern San d&#x27;Oria</td></tr>
+  </table>
+  <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from LandSandBoat. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(104 items)</span></h2>
+  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the woodworking guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
+  <div class="shop-grid">
+   <div class="shop-row"><span class="nm"><a href="/item/705-piece-of-arrowwood-lumber">Piece of Arrowwood Lumber</a></span><span class="pr">20g</span><span class="st">36–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17318-wooden-arrow">Wooden Arrow</a></span><span class="pr">20g</span><span class="st">50–50</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17320-iron-arrow">Iron Arrow</a></span><span class="pr">40g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17321-silver-arrow">Silver Arrow</a></span><span class="pr">90g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/688-arrowwood-log">Arrowwood Log</a></span><span class="pr">100g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/727-dogwood-log">Dogwood Log</a></span><span class="pr">100g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/728-piece-of-dogwood-lumber">Piece of Dogwood Lumber</a></span><span class="pr">100g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/706-piece-of-lauan-lumber">Piece of Lauan Lumber</a></span><span class="pr">180g</span><span class="st">36–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/689-lauan-log">Lauan Log</a></span><span class="pr">180g</span><span class="st">144–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17152-shortbow">Shortbow</a></span><span class="pr">220g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17345-flute">Flute</a></span><span class="pr">240g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17353-maple-harp">Maple Harp</a></span><span class="pr">240g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17049-maple-wand">Maple Wand</a></span><span class="pr">260g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/708-piece-of-maple-lumber">Piece of Maple Lumber</a></span><span class="pr">300g</span><span class="st">36–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/691-maple-log">Maple Log</a></span><span class="pr">300g</span><span class="st">144–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17088-ash-staff">Ash Staff</a></span><span class="pr">320g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17024-ash-club">Ash Club</a></span><span class="pr">360g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/698-ash-log">Ash Log</a></span><span class="pr">480g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/715-piece-of-ash-lumber">Piece of Ash Lumber</a></span><span class="pr">480g</span><span class="st">35–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/1657-spool-of-bundling-twine">Spool of Bundling Twine</a></span><span class="pr">500g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16832-harpoon">Harpoon</a></span><span class="pr">540g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12289-lauan-shield">Lauan Shield</a></span><span class="pr">600g</span><span class="st">0–22</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12984-ash-clogs">Ash Clogs</a></span><span class="pr">620g</span><span class="st">0–18</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/704-bamboo-stick">Bamboo Stick</a></span><span class="pr">720g</span><span class="st">36–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/695-willow-log">Willow Log</a></span><span class="pr">800g</span><span class="st">150–150</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/721-piece-of-rattan-lumber">Piece of Rattan Lumber</a></span><span class="pr">800g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/712-piece-of-willow-lumber">Piece of Willow Lumber</a></span><span class="pr">800g</span><span class="st">36–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17216-light-crossbow">Light Crossbow</a></span><span class="pr">900g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17050-willow-wand">Willow Wand</a></span><span class="pr">1,850g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/22-workbench">Workbench</a></span><span class="pr">1,880g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/102-flower-stand">Flower Stand</a></span><span class="pr">1,940g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17095-ash-pole">Ash Pole</a></span><span class="pr">2,100g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/696-yew-log">Yew Log</a></span><span class="pr">2,200g</span><span class="st">150–150</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/713-piece-of-yew-lumber">Piece of Yew Lumber</a></span><span class="pr">2,200g</span><span class="st">27–135</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17160-longbow">Longbow</a></span><span class="pr">2,460g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/1021-hatchet">Hatchet</a></span><span class="pr">2,500g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17153-self-bow">Self Bow</a></span><span class="pr">2,680g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12290-maple-shield">Maple Shield</a></span><span class="pr">3,024g</span><span class="st">0–22</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/21-desk">Desk</a></span><span class="pr">3,160g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17089-holly-staff">Holly Staff</a></span><span class="pr">3,175g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/697-holly-log">Holly Log</a></span><span class="pr">3,525g</span><span class="st">108–135</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/714-piece-of-holly-lumber">Piece of Holly Lumber</a></span><span class="pr">4,050g</span><span class="st">27–135</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/693-walnut-log">Walnut Log</a></span><span class="pr">4,270g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16833-bronze-spear">Bronze Spear</a></span><span class="pr">4,400g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/711-piece-of-walnut-lumber">Piece of Walnut Lumber</a></span><span class="pr">4,880g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/92-tarutaru-stool">Tarutaru Stool</a></span><span class="pr">4,920g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17347-piccolo">Piccolo</a></span><span class="pr">5,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/23-maple-table">Maple Table</a></span><span class="pr">5,530g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17051-yew-wand">Yew Wand</a></span><span class="pr">7,830g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2-simple-bed">Simple Bed</a></span><span class="pr">8,000g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12985-holly-clogs">Holly Clogs</a></span><span class="pr">8,125g</span><span class="st">0–18</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17025-chestnut-club">Chestnut Club</a></span><span class="pr">8,700g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17280-boomerang">Boomerang</a></span><span class="pr">8,750g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12291-elm-shield">Elm Shield</a></span><span class="pr">9,075g</span><span class="st">0–22</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/690-elm-log">Elm Log</a></span><span class="pr">11,490g</span><span class="st">84–240</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/707-piece-of-elm-lumber">Piece of Elm Lumber</a></span><span class="pr">11,490g</span><span class="st">18–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17217-crossbow">Crossbow</a></span><span class="pr">11,775g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17354-harp">Harp</a></span><span class="pr">12,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/694-chestnut-log">Chestnut Log</a></span><span class="pr">14,130g</span><span class="st">72–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/710-piece-of-chestnut-lumber">Piece of Chestnut Lumber</a></span><span class="pr">14,130g</span><span class="st">18–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17090-elm-staff">Elm Staff</a></span><span class="pr">18,030g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12292-mahogany-shield">Mahogany Shield</a></span><span class="pr">24,900g</span><span class="st">0–22</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17096-holly-pole">Holly Pole</a></span><span class="pr">25,380g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16834-brass-spear">Brass Spear</a></span><span class="pr">26,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17052-chestnut-wand">Chestnut Wand</a></span><span class="pr">28,560g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17161-power-bow">Power Bow</a></span><span class="pr">29,730g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/699-oak-log">Oak Log</a></span><span class="pr">31,600g</span><span class="st">36–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/716-piece-of-oak-lumber">Piece of Oak Lumber</a></span><span class="pr">31,600g</span><span class="st">15–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/97-book-holder">Book Holder</a></span><span class="pr">36,720g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17154-wrapped-bow">Wrapped Bow</a></span><span class="pr">39,600g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/701-rosewood-log">Rosewood Log</a></span><span class="pr">44,100g</span><span class="st">36–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/718-piece-of-rosewood-lumber">Piece of Rosewood Lumber</a></span><span class="pr">44,100g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12986-chestnut-sabots">Chestnut Sabots</a></span><span class="pr">45,900g</span><span class="st">0–18</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17424-spiked-club">Spiked Club</a></span><span class="pr">52,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17091-oak-staff">Oak Staff</a></span><span class="pr">54,810g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17027-oak-cudgel">Oak Cudgel</a></span><span class="pr">56,160g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/700-mahogany-log">Mahogany Log</a></span><span class="pr">60,500g</span><span class="st">16–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/717-piece-of-mahogany-lumber">Piece of Mahogany Lumber</a></span><span class="pr">60,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/730-piece-of-bloodwood-lumber">Piece of Bloodwood Lumber</a></span><span class="pr">61,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/729-bloodwood-log">Bloodwood Log</a></span><span class="pr">63,000g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/702-ebony-log">Ebony Log</a></span><span class="pr">64,000g</span><span class="st">16–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/719-piece-of-ebony-lumber">Piece of Ebony Lumber</a></span><span class="pr">64,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17053-rose-wand">Rose Wand</a></span><span class="pr">74,800g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17218-zamburak">Zamburak</a></span><span class="pr">76,950g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12293-oak-shield">Oak Shield</a></span><span class="pr">78,000g</span><span class="st">0–22</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17348-traversiere">Traversiere</a></span><span class="pr">84,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16835-spear">Spear</a></span><span class="pr">88,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17097-elm-pole">Elm Pole</a></span><span class="pr">91,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16845-lance">Lance</a></span><span class="pr">92,100g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17355-rose-harp">Rose Harp</a></span><span class="pr">100,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/12987-ebony-sabots">Ebony Sabots</a></span><span class="pr">100,800g</span><span class="st">0–18</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17162-great-bow">Great Bow</a></span><span class="pr">109,060g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17030-great-club">Great Club</a></span><span class="pr">110,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17523-quarterstaff">Quarterstaff</a></span><span class="pr">110,250g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17155-composite-bow">Composite Bow</a></span><span class="pr">131,250g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/720-piece-of-ancient-lumber">Piece of Ancient Lumber</a></span><span class="pr">139,750g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/26-tarutaru-desk">Tarutaru Desk</a></span><span class="pr">157,500g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17098-oak-pole">Oak Pole</a></span><span class="pr">187,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17163-battle-bow">Battle Bow</a></span><span class="pr">216,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17156-kaman">Kaman</a></span><span class="pr">221,850g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16836-halberd">Halberd</a></span><span class="pr">222,750g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17164-war-bow">War Bow</a></span><span class="pr">428,400g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/24-oak-table">Oak Table</a></span><span class="pr">468,000g</span><span class="st">0–9</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/3-oak-bed">Oak Bed</a></span><span class="pr">750,000g</span><span class="st">0–45</span></div>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild point turn-ins</h2>
+  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
+  <div class="turnin-tabs" id="turninTabs">
+   <button class="turnin-tab" type="button" data-p="0">Firesday</button>
+   <button class="turnin-tab" type="button" data-p="1">Earthsday</button>
+   <button class="turnin-tab" type="button" data-p="2">Watersday</button>
+   <button class="turnin-tab" type="button" data-p="3">Windsday</button>
+   <button class="turnin-tab" type="button" data-p="4">Iceday</button>
+   <button class="turnin-tab" type="button" data-p="5">Lightningsday</button>
+   <button class="turnin-tab" type="button" data-p="6">Lightsday</button>
+   <button class="turnin-tab" type="button" data-p="7">Darksday</button>
+  </div>
+  <div class="turnin-pattern" id="pat-0">
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/17095-ash-pole">Ash Pole</a></td><td>0</td><td>105</td><td>5,040</td></tr>
+    <tr><td><a href="/item/17122-ash-pole-+1">Ash Pole +1</a></td><td>0</td><td>120</td><td>5,040</td></tr>
+    <tr><td><a href="/item/17153-self-bow">Self Bow</a></td><td>1</td><td>134</td><td>6,240</td></tr>
+    <tr><td><a href="/item/17176-self-bow-+1">Self Bow +1</a></td><td>1</td><td>154</td><td>6,240</td></tr>
+    <tr><td><a href="/item/17051-yew-wand">Yew Wand</a></td><td>2</td><td>261</td><td>8,160</td></tr>
+    <tr><td><a href="/item/17140-yew-wand-+1">Yew Wand +1</a></td><td>2</td><td>414</td><td>8,160</td></tr>
+    <tr><td><a href="/item/17217-crossbow">Crossbow</a></td><td>3</td><td>471</td><td>10,560</td></tr>
+    <tr><td><a href="/item/17225-crossbow-+1">Crossbow +1</a></td><td>3</td><td>471</td><td>10,560</td></tr>
+    <tr><td><a href="/item/12987-ebony-sabots">Ebony Sabots</a></td><td>4</td><td>1344</td><td>15,120</td></tr>
+    <tr><td><a href="/item/13023-ebony-sabots-+1">Ebony Sabots +1</a></td><td>4</td><td>1400</td><td>15,120</td></tr>
+    <tr><td><a href="/item/17355-rose-harp">Rose Harp</a></td><td>5</td><td>2500</td><td>18,000</td></tr>
+    <tr><td><a href="/item/17376-rose-harp-+1">Rose Harp +1</a></td><td>5</td><td>3000</td><td>18,000</td></tr>
+    <tr><td><a href="/item/49-coffer">Coffer</a></td><td>6</td><td>1278</td><td>15,360</td></tr>
+    <tr><td><a href="/item/56-commode">Commode</a></td><td>7</td><td>4900</td><td>20,400</td></tr>
+    <tr><td><a href="/item/16849-cermet-lance">Cermet Lance</a></td><td>8</td><td>2650</td><td>18,480</td></tr>
+    <tr><td><a href="/item/16879-cermet-lance-+1">Cermet Lance +1</a></td><td>8</td><td>3312</td><td>18,480</td></tr>
+    <tr><td><a href="/item/16840-ox-tongue">Ox Tongue</a></td><td>9</td><td>7950</td><td>21,600</td></tr>
+    <tr><td><a href="/item/16894-ox-tongue-+1">Ox Tongue +1</a></td><td>9</td><td>7950</td><td>21,600</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-1" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/17868-jug-of-humus">Jug of Humus</a></td><td>0</td><td>52</td><td>4,080</td></tr>
+    <tr><td><a href="/item/17869-jug-of-rich-humus">Jug of Rich Humus</a></td><td>0</td><td>97</td><td>4,080</td></tr>
+    <tr><td><a href="/item/12985-holly-clogs">Holly Clogs</a></td><td>1</td><td>325</td><td>8,400</td></tr>
+    <tr><td><a href="/item/12991-holly-clogs-+1">Holly Clogs +1</a></td><td>1</td><td>406</td><td>8,400</td></tr>
+    <tr><td><a href="/item/1179-shihei">Shihei</a></td><td>2</td><td>25</td><td>5,280</td></tr>
+    <tr><td><a href="/item/17155-composite-bow">Composite Bow</a></td><td>3</td><td>1250</td><td>14,640</td></tr>
+    <tr><td><a href="/item/17179-composite-bow-+1">Composite Bow +1</a></td><td>3</td><td>1300</td><td>14,640</td></tr>
+    <tr><td><a href="/item/17091-oak-staff">Oak Staff</a></td><td>4</td><td>1218</td><td>14,880</td></tr>
+    <tr><td><a href="/item/17127-oak-staff-+1">Oak Staff +1</a></td><td>4</td><td>1798</td><td>14,880</td></tr>
+    <tr><td><a href="/item/17030-great-club">Great Club</a></td><td>5</td><td>1102</td><td>14,640</td></tr>
+    <tr><td><a href="/item/17408-great-club-+1">Great Club +1</a></td><td>5</td><td>1160</td><td>14,640</td></tr>
+    <tr><td><a href="/item/17157-rapid-bow">Rapid Bow</a></td><td>6</td><td>3655</td><td>19,440</td></tr>
+    <tr><td><a href="/item/17189-rapid-bow-+1">Rapid Bow +1</a></td><td>6</td><td>3762</td><td>19,440</td></tr>
+    <tr><td><a href="/item/12295-round-shield">Round Shield</a></td><td>7</td><td>2817</td><td>18,480</td></tr>
+    <tr><td><a href="/item/12352-round-shield-+1">Round Shield +1</a></td><td>7</td><td>2990</td><td>18,480</td></tr>
+    <tr><td><a href="/item/17359-mythic-harp">Mythic Harp</a></td><td>8</td><td>7000</td><td>21,360</td></tr>
+    <tr><td><a href="/item/17834-mythic-harp-+1">Mythic Harp +1</a></td><td>8</td><td>7140</td><td>21,360</td></tr>
+    <tr><td><a href="/item/17205-gendawa">Gendawa</a></td><td>9</td><td>11305</td><td>22,320</td></tr>
+    <tr><td><a href="/item/17206-gendawa-+1">Gendawa +1</a></td><td>9</td><td>12255</td><td>22,320</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-2" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/22-workbench">Workbench</a></td><td>0</td><td>94</td><td>4,800</td></tr>
+    <tr><td><a href="/item/17389-bamboo-fishing-rod">Bamboo Fishing Rod</a></td><td>1</td><td>135</td><td>6,240</td></tr>
+    <tr><td><a href="/item/92-tarutaru-stool">Tarutaru Stool</a></td><td>2</td><td>246</td><td>8,160</td></tr>
+    <tr><td><a href="/item/17162-great-bow">Great Bow</a></td><td>3</td><td>3116</td><td>18,720</td></tr>
+    <tr><td><a href="/item/17180-great-bow-+1">Great Bow +1</a></td><td>3</td><td>3496</td><td>18,720</td></tr>
+    <tr><td><a href="/item/16845-lance">Lance</a></td><td>4</td><td>1535</td><td>15,840</td></tr>
+    <tr><td><a href="/item/16876-lance-+1">Lance +1</a></td><td>4</td><td>1561</td><td>15,840</td></tr>
+    <tr><td><a href="/item/16847-mythril-lance">Mythril Lance</a></td><td>5</td><td>2580</td><td>18,000</td></tr>
+    <tr><td><a href="/item/16877-mythril-lance-+1">Mythril Lance +1</a></td><td>5</td><td>2640</td><td>18,000</td></tr>
+    <tr><td><a href="/item/17054-ebony-wand">Ebony Wand</a></td><td>6</td><td>1912</td><td>17,040</td></tr>
+    <tr><td><a href="/item/17427-ebony-wand-+1">Ebony Wand +1</a></td><td>6</td><td>3037</td><td>17,040</td></tr>
+    <tr><td><a href="/item/95-water-barrel">Water Barrel</a></td><td>7</td><td>2500</td><td>18,000</td></tr>
+    <tr><td><a href="/item/17101-mythic-pole">Mythic Pole</a></td><td>8</td><td>4740</td><td>20,400</td></tr>
+    <tr><td><a href="/item/17526-mythic-pole-+1">Mythic Pole +1</a></td><td>8</td><td>5727</td><td>20,400</td></tr>
+    <tr><td><a href="/item/18142-shigeto-bow">Shigeto Bow</a></td><td>9</td><td>18550</td><td>23,040</td></tr>
+    <tr><td><a href="/item/18143-shigeto-bow-+1">Shigeto Bow +1</a></td><td>9</td><td>18550</td><td>23,040</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-3" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/22-workbench">Workbench</a></td><td>0</td><td>94</td><td>4,800</td></tr>
+    <tr><td><a href="/item/23-maple-table">Maple Table</a></td><td>1</td><td>158</td><td>6,480</td></tr>
+    <tr><td><a href="/item/17354-harp">Harp</a></td><td>2</td><td>500</td><td>10,320</td></tr>
+    <tr><td><a href="/item/17374-harp-+1">Harp +1</a></td><td>2</td><td>600</td><td>10,320</td></tr>
+    <tr><td><a href="/item/17424-spiked-club">Spiked Club</a></td><td>3</td><td>300</td><td>9,120</td></tr>
+    <tr><td><a href="/item/17425-spiked-club-+1">Spiked Club +1</a></td><td>3</td><td>330</td><td>9,120</td></tr>
+    <tr><td><a href="/item/17218-zamburak">Zamburak</a></td><td>4</td><td>1710</td><td>16,320</td></tr>
+    <tr><td><a href="/item/17229-zamburak-+1">Zamburak +1</a></td><td>4</td><td>1748</td><td>16,320</td></tr>
+    <tr><td><a href="/item/17219-arbalest">Arbalest</a></td><td>5</td><td>2550</td><td>18,000</td></tr>
+    <tr><td><a href="/item/17226-arbalest-+1">Arbalest +1</a></td><td>5</td><td>2625</td><td>18,000</td></tr>
+    <tr><td><a href="/item/16839-partisan">Partisan</a></td><td>6</td><td>2415</td><td>18,000</td></tr>
+    <tr><td><a href="/item/16874-partisan-+1">Partisan +1</a></td><td>6</td><td>2520</td><td>18,000</td></tr>
+    <tr><td><a href="/item/59-chiffonier">Chiffonier</a></td><td>7</td><td>4594</td><td>20,160</td></tr>
+    <tr><td><a href="/item/358-credenza">Credenza</a></td><td>8</td><td>7070</td><td>21,360</td></tr>
+    <tr><td><a href="/item/17102-eight-sided-pole">Eight-Sided Pole</a></td><td>9</td><td>1200</td><td>15,600</td></tr>
+    <tr><td><a href="/item/17568-eight-sided-pole-+1">Eight-Sided Pole +1</a></td><td>9</td><td>1800</td><td>15,600</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-4" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/12289-lauan-shield">Lauan Shield</a></td><td>0</td><td>30</td><td>3,840</td></tr>
+    <tr><td><a href="/item/12333-lauan-shield-+1">Lauan Shield +1</a></td><td>0</td><td>38</td><td>3,840</td></tr>
+    <tr><td><a href="/item/17050-willow-wand">Willow Wand</a></td><td>1</td><td>74</td><td>5,280</td></tr>
+    <tr><td><a href="/item/17138-willow-wand-+1">Willow Wand +1</a></td><td>1</td><td>119</td><td>5,280</td></tr>
+    <tr><td><a href="/item/16834-brass-spear">Brass Spear</a></td><td>2</td><td>400</td><td>9,600</td></tr>
+    <tr><td><a href="/item/16864-brass-spear-+1">Brass Spear +1</a></td><td>2</td><td>410</td><td>9,600</td></tr>
+    <tr><td><a href="/item/12986-chestnut-sabots">Chestnut Sabots</a></td><td>3</td><td>612</td><td>11,520</td></tr>
+    <tr><td><a href="/item/13022-chestnut-sabots-+1">Chestnut Sabots +1</a></td><td>3</td><td>646</td><td>11,520</td></tr>
+    <tr><td><a href="/item/17027-oak-cudgel">Oak Cudgel</a></td><td>4</td><td>1248</td><td>14,880</td></tr>
+    <tr><td><a href="/item/17142-oak-cudgel-+1">Oak Cudgel +1</a></td><td>4</td><td>1768</td><td>14,880</td></tr>
+    <tr><td><a href="/item/16871-kamayari">Kamayari</a></td><td>5</td><td>4070</td><td>19,686</td></tr>
+    <tr><td><a href="/item/16872-kamayari-+1">Kamayari +1</a></td><td>5</td><td>4162</td><td>19,686</td></tr>
+    <tr><td><a href="/item/51-chest">Chest</a></td><td>6</td><td>195</td><td>9,600</td></tr>
+    <tr><td><a href="/item/30-bureau">Bureau</a></td><td>7</td><td>7010</td><td>21,360</td></tr>
+    <tr><td><a href="/item/17221-repeating-crossbow">Repeating Crossbow</a></td><td>8</td><td>5425</td><td>20,640</td></tr>
+    <tr><td><a href="/item/17233-machine-crossbow">Machine Crossbow</a></td><td>8</td><td>6200</td><td>20,640</td></tr>
+    <tr><td><a href="/item/139-star-globe">Star Globe</a></td><td>9</td><td>13430</td><td>22,560</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-5" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/16832-harpoon">Harpoon</a></td><td>0</td><td>27</td><td>3,840</td></tr>
+    <tr><td><a href="/item/16862-harpoon-+1">Harpoon +1</a></td><td>0</td><td>30</td><td>3,840</td></tr>
+    <tr><td><a href="/item/17216-light-crossbow">Light Crossbow</a></td><td>1</td><td>45</td><td>4,800</td></tr>
+    <tr><td><a href="/item/17228-light-crossbow-+1">Light Crossbow +1</a></td><td>1</td><td>53</td><td>4,800</td></tr>
+    <tr><td><a href="/item/12291-elm-shield">Elm Shield</a></td><td>2</td><td>363</td><td>9,360</td></tr>
+    <tr><td><a href="/item/12319-elm-shield-+1">Elm Shield +1</a></td><td>2</td><td>457</td><td>9,360</td></tr>
+    <tr><td><a href="/item/17052-chestnut-wand">Chestnut Wand</a></td><td>3</td><td>714</td><td>12,240</td></tr>
+    <tr><td><a href="/item/17141-solid-wand">Solid Wand</a></td><td>3</td><td>1134</td><td>12,240</td></tr>
+    <tr><td><a href="/item/16836-halberd">Halberd</a></td><td>4</td><td>1350</td><td>15,120</td></tr>
+    <tr><td><a href="/item/16866-halberd-+1">Halberd +1</a></td><td>4</td><td>1400</td><td>15,120</td></tr>
+    <tr><td><a href="/item/17164-war-bow">War Bow</a></td><td>5</td><td>4080</td><td>19,680</td></tr>
+    <tr><td><a href="/item/17173-war-bow-+1">War Bow +1</a></td><td>5</td><td>4160</td><td>19,680</td></tr>
+    <tr><td><a href="/item/17092-mahogany-staff">Mahogany Staff</a></td><td>6</td><td>2310</td><td>17,760</td></tr>
+    <tr><td><a href="/item/17520-heavy-staff">Heavy Staff</a></td><td>6</td><td>2310</td><td>17,760</td></tr>
+    <tr><td><a href="/item/104-tarutaru-folding-screen">Tarutaru Folding Screen</a></td><td>7</td><td>427</td><td>11,760</td></tr>
+    <tr><td><a href="/item/12364-nymph-shield">Nymph Shield</a></td><td>8</td><td>2560</td><td>18,240</td></tr>
+    <tr><td><a href="/item/12365-nymph-shield-+1">Nymph Shield +1</a></td><td>8</td><td>2760</td><td>18,240</td></tr>
+    <tr><td><a href="/item/17364-cythara-anglica">Cythara Anglica</a></td><td>9</td><td>5697</td><td>20,880</td></tr>
+    <tr><td><a href="/item/17837-cythara-anglica-+1">Cythara Anglica +1</a></td><td>9</td><td>7022</td><td>20,880</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-6" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/12289-lauan-shield">Lauan Shield</a></td><td>0</td><td>30</td><td>3,840</td></tr>
+    <tr><td><a href="/item/12333-lauan-shield-+1">Lauan Shield +1</a></td><td>0</td><td>38</td><td>3,840</td></tr>
+    <tr><td><a href="/item/17096-holly-pole">Holly Pole</a></td><td>1</td><td>423</td><td>9,360</td></tr>
+    <tr><td><a href="/item/17124-holly-pole-+1">Holly Pole +1</a></td><td>1</td><td>435</td><td>9,360</td></tr>
+    <tr><td><a href="/item/17090-elm-staff">Elm Staff</a></td><td>2</td><td>601</td><td>11,040</td></tr>
+    <tr><td><a href="/item/17126-elm-staff-+1">Elm Staff +1</a></td><td>2</td><td>887</td><td>11,040</td></tr>
+    <tr><td><a href="/item/12292-mahogany-shield">Mahogany Shield</a></td><td>3</td><td>830</td><td>12,960</td></tr>
+    <tr><td><a href="/item/12334-strong-shield">Strong Shield</a></td><td>3</td><td>1043</td><td>12,960</td></tr>
+    <tr><td><a href="/item/17053-rose-wand">Rose Wand</a></td><td>4</td><td>1360</td><td>15,360</td></tr>
+    <tr><td><a href="/item/17143-rose-wand-+1">Rose Wand +1</a></td><td>4</td><td>2160</td><td>15,360</td></tr>
+    <tr><td><a href="/item/17098-oak-pole">Oak Pole</a></td><td>5</td><td>1560</td><td>16,080</td></tr>
+    <tr><td><a href="/item/17120-oak-pole-+1">Oak Pole +1</a></td><td>5</td><td>1620</td><td>16,080</td></tr>
+    <tr><td><a href="/item/17350-angels-flute">Angels Flute</a></td><td>6</td><td>1200</td><td>15,120</td></tr>
+    <tr><td><a href="/item/17378-angels-flute-+1">Angels Flute +1</a></td><td>6</td><td>1280</td><td>15,120</td></tr>
+    <tr><td><a href="/item/17100-ebony-pole">Ebony Pole</a></td><td>7</td><td>4350</td><td>19,920</td></tr>
+    <tr><td><a href="/item/17525-ebony-pole-+1">Ebony Pole +1</a></td><td>7</td><td>4495</td><td>19,920</td></tr>
+    <tr><td><a href="/item/61-armoire">Armoire</a></td><td>8</td><td>12750</td><td>22,560</td></tr>
+    <tr><td><a href="/item/76-royal-bookshelf">Royal Bookshelf</a></td><td>9</td><td>14625</td><td>22,560</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-7" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/17868-jug-of-humus">Jug of Humus</a></td><td>0</td><td>52</td><td>4,080</td></tr>
+    <tr><td><a href="/item/17869-jug-of-rich-humus">Jug of Rich Humus</a></td><td>0</td><td>97</td><td>4,080</td></tr>
+    <tr><td><a href="/item/12290-maple-shield">Maple Shield</a></td><td>1</td><td>121</td><td>6,000</td></tr>
+    <tr><td><a href="/item/12330-maple-shield-+1">Maple Shield +1</a></td><td>1</td><td>152</td><td>6,000</td></tr>
+    <tr><td><a href="/item/17025-chestnut-club">Chestnut Club</a></td><td>2</td><td>290</td><td>8,640</td></tr>
+    <tr><td><a href="/item/17139-solid-club">Solid Club</a></td><td>2</td><td>447</td><td>8,640</td></tr>
+    <tr><td><a href="/item/16835-spear">Spear</a></td><td>3</td><td>840</td><td>12,960</td></tr>
+    <tr><td><a href="/item/16865-spear-+1">Spear +1</a></td><td>3</td><td>870</td><td>12,960</td></tr>
+    <tr><td><a href="/item/12293-oak-shield">Oak Shield</a></td><td>4</td><td>1950</td><td>16,800</td></tr>
+    <tr><td><a href="/item/12331-oak-shield-+1">Oak Shield +1</a></td><td>4</td><td>2450</td><td>16,800</td></tr>
+    <tr><td><a href="/item/17156-kaman">Kaman</a></td><td>5</td><td>2465</td><td>18,000</td></tr>
+    <tr><td><a href="/item/17182-kaman-+1">Kaman +1</a></td><td>5</td><td>2550</td><td>18,000</td></tr>
+    <tr><td><a href="/item/17099-mahogany-pole">Mahogany Pole</a></td><td>6</td><td>7200</td><td>21,600</td></tr>
+    <tr><td><a href="/item/17521-mahogany-pole-+1">Mahogany Pole +1</a></td><td>6</td><td>7700</td><td>21,600</td></tr>
+    <tr><td><a href="/item/18093-couse">Couse</a></td><td>7</td><td>4826</td><td>20,400</td></tr>
+    <tr><td><a href="/item/18094-couse-+1">Couse +1</a></td><td>7</td><td>5776</td><td>20,400</td></tr>
+    <tr><td><a href="/item/55-cabinet">Cabinet</a></td><td>8</td><td>3200</td><td>18,960</td></tr>
+    <tr><td><a href="/item/77-bookshelf">Bookshelf</a></td><td>9</td><td>14600</td><td>22,560</td></tr>
+   </tbody></table>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild point rewards</h2>
+  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
+  <div class="reward-grid">
+   <div class="reward-row"><span class="nm"><a href="/item/15444-carpenters-belt">Carpenters Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/3331-carpenters-emblem">Carpenters Emblem</a></span><span class="rk">veteran</span><span class="gp">15,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/3672-carpenters-kit">Carpenters Kit</a></span><span class="rk">artisan</span><span class="gp">50,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/14830-carpenters-gloves">Carpenters Gloves</a></span><span class="rk">journeyman</span><span class="gp">70,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/15819-carpenters-ring">Carpenters Ring</a></span><span class="rk">craftsman</span><span class="gp">80,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/14392-carpenters-apron">Carpenters Apron</a></span><span class="rk">artisan</span><span class="gp">100,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/28-drawing-desk">Drawing Desk</a></span><span class="rk">veteran</span><span class="gp">150,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/341-carpenters-signboard">Carpenters Signboard</a></span><span class="rk">veteran</span><span class="gp">200,000 GP</span></div>
+  </div>
+  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:16px 0 8px">Key items</h3>
+  <div class="reward-grid">
+   <div class="reward-row"><span class="nm">Lumberjack</span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Boltmaker</span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Way of the Carpenter</span><span class="rk">veteran</span><span class="gp">20,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Wood Purification</span><span class="rk">novice</span><span class="gp">40,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Wood Ensorcellment</span><span class="rk">novice</span><span class="gp">40,000 GP</span></div>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild vendor</h2>
+  <p class="vendor-note">Rank-gated items sold by the woodworking guild vendor. Requires the listed rank or higher to purchase.</p>
+  <div class="reward-grid">
+   <div class="reward-row"><span class="nm"><a href="/item/688-arrowwood-log">Arrowwood Log</a></span><span class="rk">rank amateur</span><span class="pr">25g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/689-lauan-log">Lauan Log</a></span><span class="rk">rank amateur</span><span class="pr">50g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/691-maple-log">Maple Log</a></span><span class="rk">rank amateur</span><span class="pr">70g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/1657-spool-of-bundling-twine">Spool of Bundling Twine</a></span><span class="rk">rank amateur</span><span class="pr">100g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8805-woodworking-kit-5">Woodworking Kit 5</a></span><span class="rk">rank amateur</span><span class="pr">300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8806-woodworking-kit-10">Woodworking Kit 10</a></span><span class="rk">rank amateur</span><span class="pr">400g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/696-yew-log">Yew Log</a></span><span class="rk">rank initiate</span><span class="pr">500g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8807-woodworking-kit-15">Woodworking Kit 15</a></span><span class="rk">rank amateur</span><span class="pr">650g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/697-holly-log">Holly Log</a></span><span class="rk">rank recruit</span><span class="pr">800g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8808-woodworking-kit-20">Woodworking Kit 20</a></span><span class="rk">rank amateur</span><span class="pr">1,050g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/693-walnut-log">Walnut Log</a></span><span class="rk">rank recruit</span><span class="pr">1,300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/695-willow-log">Willow Log</a></span><span class="rk">rank recruit</span><span class="pr">1,600g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8809-woodworking-kit-25">Woodworking Kit 25</a></span><span class="rk">rank amateur</span><span class="pr">1,600g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/727-dogwood-log">Dogwood Log</a></span><span class="rk">rank novice</span><span class="pr">2,000g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8810-woodworking-kit-30">Woodworking Kit 30</a></span><span class="rk">rank amateur</span><span class="pr">2,300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8811-woodworking-kit-35">Woodworking Kit 35</a></span><span class="rk">rank amateur</span><span class="pr">3,150g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/694-chestnut-log">Chestnut Log</a></span><span class="rk">rank initiate</span><span class="pr">3,400g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/690-elm-log">Elm Log</a></span><span class="rk">rank initiate</span><span class="pr">3,800g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/699-oak-log">Oak Log</a></span><span class="rk">rank novice</span><span class="pr">4,000g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8812-woodworking-kit-40">Woodworking Kit 40</a></span><span class="rk">rank amateur</span><span class="pr">4,150g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/701-rosewood-log">Rosewood Log</a></span><span class="rk">rank apprentice</span><span class="pr">4,500g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/700-mahogany-log">Mahogany Log</a></span><span class="rk">rank journeyman</span><span class="pr">4,500g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/702-ebony-log">Ebony Log</a></span><span class="rk">rank craftsman</span><span class="pr">5,000g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8813-woodworking-kit-45">Woodworking Kit 45</a></span><span class="rk">rank amateur</span><span class="pr">5,300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/2761-feyweald-log">Feyweald Log</a></span><span class="rk">rank craftsman</span><span class="pr">5,500g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8814-woodworking-kit-50">Woodworking Kit 50</a></span><span class="rk">rank amateur</span><span class="pr">7,600g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/9245-cypress-log">Cypress Log</a></span><span class="rk">rank amateur</span><span class="pr">1,126,125g</span></div>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Recipes</h2>
+  <div class="stat-row">
+   <div class="stat"><b>205</b><span>recipes (1–60)</span></div>
+   <div class="stat"><b>369</b><span>total</span></div>
+   <div class="stat"><b>62</b><span>desynth</span></div>
+  </div>
+  <div class="tool-links">
+   <a href="/calculator?craft=wood">Calculator</a>
+   <a href="/profit?craft=wood">Profit Finder</a>
+   <a href="/shopping?craft=wood">Shopping List</a>
+  </div>
+ </section>
+
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
+</div>
+
+<script>(function(){
+var EPOCH=1009810800,
+DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+OPEN=6,CLOSE=21,HOLIDAY=0;
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ hr=vh%24,wd=vd%8,
+ isOpen=wd!==HOLIDAY&&hr>=OPEN&&hr<CLOSE,
+ el=document.getElementById("guildStatus"),
+ nxt=document.getElementById("guildNext");
+ if(!el)return;
+ if(isOpen){
+  el.className="guild-badge open";el.textContent="Open";
+  var left=CLOSE-hr;
+  if(nxt)nxt.textContent="Closes in ~"+left+" Vana\u2019diel hour"+(left!==1?"s":"");
+ }else{
+  el.className="guild-badge closed";el.textContent="Closed";
+  var msg="";
+  if(wd===HOLIDAY){msg=DAYS[HOLIDAY]+" is the guild holiday";}
+  else if(hr<OPEN){msg="Opens at "+OPEN+":00 (in ~"+(OPEN-hr)+" hr)";}
+  else{msg="Opens tomorrow at "+OPEN+":00";}
+  if(nxt)nxt.textContent=msg;
+ }
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script>
+(function(){
+var EPOCH=1009810800;
+function getPattern(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vd=Math.floor(vs/60/60/24);
+ return vd%8;
+}
+var tabs=document.querySelectorAll(".turnin-tab"),
+ pats=document.querySelectorAll(".turnin-pattern"),
+ cur=getPattern();
+function show(p){
+ tabs.forEach(function(t){t.classList.toggle("active",+t.dataset.p===p)});
+ pats.forEach(function(d){d.hidden=+d.id.split("-")[1]!==p});
+}
+show(cur);
+tabs.forEach(function(t){
+ t.addEventListener("click",function(){show(+t.dataset.p)});
+});
+})();</script>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
+<script>(function(){
+var EPOCH=1009810800,DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ vmo=Math.floor(vd/30),vy=Math.floor(vmo/12)+886,
+ mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8,
+ el=document.getElementById("vanaClock");
+ if(!el)return;
+ el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
+ el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\u2019diel Time";
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script src="/search.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

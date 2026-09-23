@@ -19,7 +19,7 @@ CRAFTS = {'wood': 'Woodworking', 'smith': 'Smithing', 'gold': 'Goldsmithing', 'c
 SUB = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, SVG_DEFS, layout_open, layout_close, page_end
+from page_template import html_head, layout_open, layout_close, page_end
 
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()
@@ -103,7 +103,6 @@ html = html_head(
     'Compare every era recipe by cost per skill level. Eight crafts, 1 to 60, priced with your own server numbers.',
     'https://ffxicrafting.com/calculator',
     extra_css=extra_css)
-html += SVG_DEFS + '\n'
 html += layout_open(active='calculator', crumbs=[('Home', '/'), ('Calculator', None)])
 html += body_content + '\n'
 html += layout_close(LSB_COMMIT)

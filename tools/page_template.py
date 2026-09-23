@@ -30,6 +30,24 @@ THEME_JS = '(function(){var r=document.documentElement;try{var t=localStorage.ge
 
 SIDEBAR_JS = '''(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();'''
 
+VANA_CLOCK_JS = '''(function(){
+var EPOCH=1009810800,DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ vmo=Math.floor(vd/30),vy=Math.floor(vmo/12)+886,
+ mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8,
+ el=document.getElementById("vanaClock");
+ if(!el)return;
+ el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
+ el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\\u2019diel Time";
+}
+tick();setInterval(tick,2400);
+})();'''
+
 
 def html_head(title, description='', og_url='', extra_css=''):
     og = ''
@@ -59,6 +77,7 @@ def top_bar():
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <span class="vana-clock" id="vanaClock" title="Vana\'diel Time"></span>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
 '''
@@ -72,7 +91,8 @@ def sidebar(active=''):
     craft_links = ''
     for code, name, var in CRAFTS_ORDERED:
         cls = ' class="active"' if f'craft-{code}' == active else ''
-        craft_links += f'  <a href="/crafts#{code}"{cls}><span class="sb-craft"><span class="sb-craft-dot" style="background:var({var})"></span>{name}</span></a>\n'
+        slug = name.lower()
+        craft_links += f'  <a href="/crafts/{slug}"{cls}><span class="sb-craft" style="--c:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg>{name}</span></a>\n'
 
     return f'''\
 <aside class="sidebar" id="sidebar">
@@ -121,6 +141,7 @@ def page_scripts():
     return f'''\
 <script>{THEME_JS}</script>
 <script>{SIDEBAR_JS}</script>
+<script>{VANA_CLOCK_JS}</script>
 <script src="/search.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 '''
@@ -131,7 +152,8 @@ def page_end():
 
 
 def layout_open(active='', crumbs=None):
-    html = top_bar()
+    html = SVG_DEFS + '\n'
+    html += top_bar()
     html += '<div class="site-layout">\n'
     html += sidebar(active)
     html += '<main class="main">\n'
@@ -146,7 +168,6 @@ def layout_close(lsb_commit):
 
 def full_page(title, description, og_url, body_html, active='', crumbs=None, lsb_commit='', extra_css=''):
     html = html_head(title, description, og_url, extra_css)
-    html += SVG_DEFS + '\n'
     html += layout_open(active, crumbs)
     html += body_html
     html += layout_close(lsb_commit)

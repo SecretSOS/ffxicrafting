@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alchemy · FFXI Crafting</title>
+<meta name="description" content="Alchemy guild details: shop inventory, GP turnins, rewards, hours, and live open/closed status.">
+<meta property="og:title" content="Alchemy · FFXI Crafting">
+<meta property="og:description" content="Alchemy guild details: shop inventory, GP turnins, rewards, hours, and live open/closed status.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/crafts/alchemy">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.guild-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.guild-header svg{width:48px;height:48px;color:var(--alchemy);flex-shrink:0}
+.guild-badge{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:4px 12px;letter-spacing:.02em}
+.guild-badge.open{background:color-mix(in srgb,var(--best) 18%,transparent);color:var(--best);border:1px solid var(--best)}
+.guild-badge.closed{background:color-mix(in srgb,var(--loss) 14%,transparent);color:var(--loss);border:1px solid var(--loss)}
+.guild-meta{color:var(--ink-soft);font-size:.88rem;margin-top:4px}
+.guild-next{color:var(--ink-faint);font-size:.82rem;margin-top:2px}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px 18px}
+.shop-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.shop-row .nm{min-width:0;overflow-wrap:anywhere}
+.shop-row .pr{color:var(--gil);white-space:nowrap;font-variant-numeric:tabular-nums}
+.shop-row .st{color:var(--ink-faint);font-size:.82rem;white-space:nowrap}
+.turnin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.turnin-tab{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.82rem}
+.turnin-tab:hover{border-color:var(--alchemy)}
+.turnin-tab.active{border-color:var(--alchemy);background:color-mix(in srgb,var(--alchemy) 16%,transparent);color:var(--ink);font-weight:700}
+.turnin-table{width:100%;border-collapse:collapse}
+.turnin-table th{text-align:left;font-weight:400;font-size:.76rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}
+.turnin-table td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+.reward-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px 18px}
+.reward-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.reward-row .rk{color:var(--ink-faint);font-size:.82rem;white-space:nowrap;text-transform:capitalize}
+.reward-row .gp{color:var(--alchemy);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vendor-note{color:var(--ink-faint);font-size:.85rem;margin-bottom:10px}
+.stat-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:8px}
+.stat-row .stat b{font-family:var(--font-display);font-weight:400;font-size:1.3rem}
+.tool-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tool-links a{font-size:.85rem;padding:6px 14px;border-radius:999px;border:1px solid var(--rule);color:var(--ink-soft);text-decoration:none;transition:border-color .15s,color .15s}
+.tool-links a:hover{border-color:var(--alchemy);color:var(--alchemy)}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+ <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
+ <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
+ <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
+ <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
+ <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
+ <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
+ <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
+ <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+</svg>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <span class="vana-clock" id="vanaClock" title="Vana'diel Time"></span>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">By Craft</div>
+  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking</span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing</span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing</span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft</span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft</span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft</span></a>
+  <a href="/crafts/alchemy" class="active"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy</span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking</span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/crafts">Crafts</a><span class="sep">&rsaquo;</span>Alchemy</nav>
+ <header class="panel pad">
+  <div class="guild-header">
+   <svg aria-hidden="true"><use href="#i-alchemy"/></svg>
+   <div>
+    <h1>Alchemy</h1>
+    <div class="guild-meta">Alchemy Guild &middot; Bastok Mines</div>
+   </div>
+   <div style="margin-left:auto;text-align:right">
+    <span class="guild-badge" id="guildStatus">…</span>
+    <div class="guild-next" id="guildNext"></div>
+   </div>
+  </div>
+ </header>
+
+ <section class="panel pad">
+  <h2>Guild hours</h2>
+  <table style="border-collapse:collapse;font-size:.92rem">
+   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>8:00</b> – <b>23:00</b> Vana'diel time</td></tr>
+   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Iceday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
+   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Location</td><td>Bastok Mines</td></tr>
+  </table>
+  <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from LandSandBoat. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(125 items)</span></h2>
+  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the alchemy guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
+  <div class="shop-grid">
+   <div class="shop-row"><span class="nm"><a href="/item/17320-iron-arrow">Iron Arrow</a></span><span class="pr">40g</span><span class="st">20–20</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2316-sheet-of-polyflan-paper">Sheet of Polyflan Paper</a></span><span class="pr">40g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></span><span class="pr">60g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17343-bronze-bullet">Bronze Bullet</a></span><span class="pr">135g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/621-pot-of-crying-mustard">Pot of Crying Mustard</a></span><span class="pr">140g</span><span class="st">58–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/18236-wind-fan">Wind Fan</a></span><span class="pr">140g</span><span class="st">60–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4443-cobalt-jellyfish">Cobalt Jellyfish</a></span><span class="pr">160g</span><span class="st">18–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/912-beehive-chip">Beehive Chip</a></span><span class="pr">200g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/622-pinch-of-dried-marjoram">Pinch of Dried Marjoram</a></span><span class="pr">240g</span><span class="st">58–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17301-shuriken">Shuriken</a></span><span class="pr">250g</span><span class="st">40–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/922-bat-wing">Bat Wing</a></span><span class="pr">300g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2163-imp-wing">Imp Wing</a></span><span class="pr">320g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2164-pephredo-hive-chip">Pephredo Hive Chip</a></span><span class="pr">320g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17302-juji-shuriken">Juji Shuriken</a></span><span class="pr">450g</span><span class="st">30–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17340-bullet">Bullet</a></span><span class="pr">500g</span><span class="st">10–10</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2131-triturator">Triturator</a></span><span class="pr">500g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16405-cat-baghnakhs">Cat Baghnakhs</a></span><span class="pr">580g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/913-lump-of-beeswax">Lump of Beeswax</a></span><span class="pr">600g</span><span class="st">0–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/937-block-of-animal-glue">Block of Animal Glue</a></span><span class="pr">600g</span><span class="st">0–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/951-wijnruit">Wijnruit</a></span><span class="pr">600g</span><span class="st">58–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/636-sprig-of-chamomile">Sprig of Chamomile</a></span><span class="pr">650g</span><span class="st">58–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17322-fire-arrow">Fire Arrow</a></span><span class="pr">700g</span><span class="st">20–20</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17323-ice-arrow">Ice Arrow</a></span><span class="pr">700g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17324-lightning-arrow">Lightning Arrow</a></span><span class="pr">700g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2175-chunk-of-flan-meat">Chunk of Flan Meat</a></span><span class="pr">700g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/18228-battery">Battery</a></span><span class="pr">760g</span><span class="st">60–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/18232-hydro-pump">Hydro Pump</a></span><span class="pr">760g</span><span class="st">60–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/638-sprig-of-sage">Sprig of Sage</a></span><span class="pr">925g</span><span class="st">120–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17309-pinwheel">Pinwheel</a></span><span class="pr">1,050g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16600-wax-sword">Wax Sword</a></span><span class="pr">1,340g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4148-antidote">Antidote</a></span><span class="pr">1,580g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/943-pinch-of-poison-dust">Pinch of Poison Dust</a></span><span class="pr">1,600g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17303-manji-shuriken">Manji Shuriken</a></span><span class="pr">1,890g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17304-fuma-shuriken">Fuma Shuriken</a></span><span class="pr">2,000g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16454-blind-dagger">Blind Dagger</a></span><span class="pr">2,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4171-flask-of-vitriol">Flask of Vitriol</a></span><span class="pr">2,400g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17341-silver-bullet">Silver Bullet</a></span><span class="pr">2,480g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4157-flask-of-poison-potion">Flask of Poison Potion</a></span><span class="pr">2,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/928-pinch-of-bomb-ash">Pinch of Bomb Ash</a></span><span class="pr">2,575g</span><span class="st">0–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16471-blind-knife">Blind Knife</a></span><span class="pr">3,375g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/929-jar-of-black-ink">Jar of Black Ink</a></span><span class="pr">3,800g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/1108-pinch-of-sulfur">Pinch of Sulfur</a></span><span class="pr">3,825g</span><span class="st">40–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/933-loop-of-glass-fiber">Loop of Glass Fiber</a></span><span class="pr">4,000g</span><span class="st">36–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4151-flask-of-echo-drops">Flask of Echo Drops</a></span><span class="pr">4,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/925-giant-stinger">Giant Stinger</a></span><span class="pr">4,050g</span><span class="st">0–90</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16896-kunai">Kunai</a></span><span class="pr">4,419g</span><span class="st">50–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4162-flask-of-silencing-potion">Flask of Silencing Potion</a></span><span class="pr">4,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4112-potion">Potion</a></span><span class="pr">4,550g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4166-flask-of-deodorizer">Flask of Deodorizer</a></span><span class="pr">4,800g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/637-vial-of-slime-oil">Vial of Slime Oil</a></span><span class="pr">5,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4165-pot-of-silent-oil">Pot of Silent Oil</a></span><span class="pr">6,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/932-loop-of-carbon-fiber">Loop of Carbon Fiber</a></span><span class="pr">6,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17313-grenade">Grenade</a></span><span class="pr">6,020g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/1109-artificial-lens">Artificial Lens</a></span><span class="pr">6,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2171-colibri-beak">Colibri Beak</a></span><span class="pr">6,250g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2309-bundle-of-homunculus-nerves">Bundle of Homunculus Nerves</a></span><span class="pr">6,425g</span><span class="st">180–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4164-pinch-of-prism-powder">Pinch of Prism Powder</a></span><span class="pr">7,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2229-vial-of-chimera-blood">Vial of Chimera Blood</a></span><span class="pr">7,200g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/920-malboro-vine">Malboro Vine</a></span><span class="pr">7,230g</span><span class="st">8–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/914-vial-of-mercury">Vial of Mercury</a></span><span class="pr">7,500g</span><span class="st">10–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16407-brass-baghnakhs">Brass Baghnakhs</a></span><span class="pr">8,450g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16709-inferno-axe">Inferno Axe</a></span><span class="pr">8,725g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16495-silence-dagger">Silence Dagger</a></span><span class="pr">10,150g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16900-wakizashi">Wakizashi</a></span><span class="pr">12,000g</span><span class="st">50–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4150-flask-of-eye-drops">Flask of Eye Drops</a></span><span class="pr">12,255g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4154-flask-of-holy-water">Flask of Holy Water</a></span><span class="pr">14,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16966-tachi">Tachi</a></span><span class="pr">15,695g</span><span class="st">50–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16572-bee-spatha">Bee Spatha</a></span><span class="pr">17,625g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17314-quake-grenade">Quake Grenade</a></span><span class="pr">18,900g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/931-cermet-chunk">Cermet Chunk</a></span><span class="pr">20,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/947-jar-of-firesand">Jar of Firesand</a></span><span class="pr">22,400g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4116-hi-potion">Hi-Potion</a></span><span class="pr">22,500g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16919-shinobi-gatana">Shinobi-Gatana</a></span><span class="pr">23,321g</span><span class="st">50–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/4128-ether">Ether</a></span><span class="pr">24,160g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16588-flame-claymore">Flame Claymore</a></span><span class="pr">24,475g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16429-silence-baghnakhs">Silence Baghnakhs</a></span><span class="pr">24,750g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16960-uchigatana">Uchigatana</a></span><span class="pr">26,680g</span><span class="st">50–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16496-poison-dagger">Poison Dagger</a></span><span class="pr">28,770g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17315-riot-grenade">Riot Grenade</a></span><span class="pr">30,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16458-poison-baselard">Poison Baselard</a></span><span class="pr">33,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16387-poison-cesti">Poison Cesti</a></span><span class="pr">34,720g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16472-poison-knife">Poison Knife</a></span><span class="pr">36,780g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16543-fire-sword">Fire Sword</a></span><span class="pr">39,600g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16982-nodachi">Nodachi</a></span><span class="pr">40,620g</span><span class="st">20–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16406-baghnakhs">Baghnakhs</a></span><span class="pr">43,200g</span><span class="st">10–10</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16478-poison-kukri">Poison Kukri</a></span><span class="pr">48,600g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17284-chakram">Chakram</a></span><span class="pr">49,980g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17605-acid-dagger">Acid Dagger</a></span><span class="pr">51,510g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16411-claws">Claws</a></span><span class="pr">63,840g</span><span class="st">10–10</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17265-tanegashima">Tanegashima</a></span><span class="pr">65,310g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16901-kodachi">Kodachi</a></span><span class="pr">67,200g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16410-poison-baghnakhs">Poison Baghnakhs</a></span><span class="pr">82,940g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16501-acid-knife">Acid Knife</a></span><span class="pr">86,800g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16417-poison-claws">Poison Claws</a></span><span class="pr">96,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16975-kanesada">Kanesada</a></span><span class="pr">99,000g</span><span class="st">30–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16403-poison-katars">Poison Katars</a></span><span class="pr">110,880g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16594-inferno-sword">Inferno Sword</a></span><span class="pr">122,080g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16988-kotetsu">Kotetsu</a></span><span class="pr">125,440g</span><span class="st">19–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16902-sakurafubuki">Sakurafubuki</a></span><span class="pr">127,050g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16412-mythril-claws">Mythril Claws</a></span><span class="pr">148,800g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16430-acid-claws">Acid Claws</a></span><span class="pr">148,800g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17041-holy-mace">Holy Mace</a></span><span class="pr">155,100g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16581-holy-sword">Holy Sword</a></span><span class="pr">172,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16915-hien">Hien</a></span><span class="pr">186,000g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16973-homura">Homura</a></span><span class="pr">207,000g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17259-pirates-gun">Pirates Gun</a></span><span class="pr">216,000g</span><span class="st">10–10</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16522-flame-degen">Flame Degen</a></span><span class="pr">216,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16962-ashura">Ashura</a></span><span class="pr">227,500g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16419-patas">Patas</a></span><span class="pr">228,800g</span><span class="st">10–10</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16420-bone-patas">Bone Patas</a></span><span class="pr">252,150g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16413-darksteel-claws">Darksteel Claws</a></span><span class="pr">259,200g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16970-hosodachi">Hosodachi</a></span><span class="pr">259,200g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16523-holy-degen">Holy Degen</a></span><span class="pr">280,000g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17285-moonring-blade">Moonring Blade</a></span><span class="pr">299,250g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16967-mikazuki">Mikazuki</a></span><span class="pr">317,900g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16903-kabutowari">Kabutowari</a></span><span class="pr">322,000g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16841-wyvern-spear">Wyvern Spear</a></span><span class="pr">397,800g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16564-flame-blade">Flame Blade</a></span><span class="pr">426,250g</span><span class="st">0–45</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/2459-pinch-of-minium">Pinch of Minium</a></span><span class="pr">453,750g</span><span class="st">24–180</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16421-gold-patas">Gold Patas</a></span><span class="pr">477,750g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16871-kamayari">Kamayari</a></span><span class="pr">549,450g</span><span class="st">10–10</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/17267-negoroshiki">Negoroshiki</a></span><span class="pr">660,000g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16984-jindachi">Jindachi</a></span><span class="pr">722,000g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16964-zanbato">Zanbato</a></span><span class="pr">885,500g</span><span class="st">0–55</span></div>
+   <div class="shop-row"><span class="nm"><a href="/item/16972-kazaridachi">Kazaridachi</a></span><span class="pr">1,073,248g</span><span class="st">0–55</span></div>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild point turn-ins</h2>
+  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
+  <div class="turnin-tabs" id="turninTabs">
+   <button class="turnin-tab" type="button" data-p="0">Firesday</button>
+   <button class="turnin-tab" type="button" data-p="1">Earthsday</button>
+   <button class="turnin-tab" type="button" data-p="2">Watersday</button>
+   <button class="turnin-tab" type="button" data-p="3">Windsday</button>
+   <button class="turnin-tab" type="button" data-p="4">Iceday</button>
+   <button class="turnin-tab" type="button" data-p="5">Lightningsday</button>
+   <button class="turnin-tab" type="button" data-p="6">Lightsday</button>
+   <button class="turnin-tab" type="button" data-p="7">Darksday</button>
+  </div>
+  <div class="turnin-pattern" id="pat-0">
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/4166-flask-of-deodorizer">Flask of Deodorizer</a></td><td>0</td><td>80</td><td>4,560</td></tr>
+    <tr><td><a href="/item/16429-silence-baghnakhs">Silence Baghnakhs</a></td><td>1</td><td>825</td><td>12,240</td></tr>
+    <tr><td><a href="/item/16438-silence-baghnakhs-+1">Silence Baghnakhs +1</a></td><td>1</td><td>825</td><td>12,240</td></tr>
+    <tr><td><a href="/item/16496-poison-dagger">Poison Dagger</a></td><td>2</td><td>959</td><td>13,200</td></tr>
+    <tr><td><a href="/item/16741-poison-dagger-+1">Poison Dagger +1</a></td><td>2</td><td>1142</td><td>13,200</td></tr>
+    <tr><td><a href="/item/16410-poison-baghnakhs">Poison Baghnakhs</a></td><td>3</td><td>638</td><td>11,760</td></tr>
+    <tr><td><a href="/item/16692-poison-baghnakhs-+1">Poison Baghnakhs +1</a></td><td>3</td><td>748</td><td>11,760</td></tr>
+    <tr><td><a href="/item/16543-fire-sword">Fire Sword</a></td><td>4</td><td>1320</td><td>15,120</td></tr>
+    <tr><td><a href="/item/16621-flame-sword">Flame Sword</a></td><td>4</td><td>1320</td><td>15,120</td></tr>
+    <tr><td><a href="/item/16908-yoto">Yoto</a></td><td>5</td><td>1200</td><td>14,880</td></tr>
+    <tr><td><a href="/item/17768-yoto-+1">Yoto +1</a></td><td>5</td><td>1350</td><td>14,880</td></tr>
+    <tr><td><a href="/item/16479-acid-kukri">Acid Kukri</a></td><td>6</td><td>2944</td><td>18,720</td></tr>
+    <tr><td><a href="/item/16494-corrosive-kukri">Corrosive Kukri</a></td><td>6</td><td>3404</td><td>18,720</td></tr>
+    <tr><td><a href="/item/16477-cermet-kukri">Cermet Kukri</a></td><td>7</td><td>8910</td><td>21,840</td></tr>
+    <tr><td><a href="/item/17603-cermet-kukri-+1">Cermet Kukri +1</a></td><td>7</td><td>9075</td><td>21,840</td></tr>
+    <tr><td><a href="/item/16499-venom-kris">Venom Kris</a></td><td>8</td><td>5670</td><td>20,880</td></tr>
+    <tr><td><a href="/item/16761-venom-kris-+1">Venom Kris +1</a></td><td>8</td><td>6195</td><td>20,880</td></tr>
+    <tr><td><a href="/item/4209-mind-potion">Mind Potion</a></td><td>9</td><td>900</td><td>14,400</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-1" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/13683-water-tank">Water Tank</a></td><td>0</td><td>210</td><td>6,480</td></tr>
+    <tr><td><a href="/item/4157-flask-of-poison-potion">Flask of Poison Potion</a></td><td>1</td><td>100</td><td>5,760</td></tr>
+    <tr><td><a href="/item/16906-mokuto">Mokuto</a></td><td>2</td><td>894</td><td>12,960</td></tr>
+    <tr><td><a href="/item/16925-mokuto-+1">Mokuto +1</a></td><td>2</td><td>902</td><td>12,960</td></tr>
+    <tr><td><a href="/item/16417-poison-claws">Poison Claws</a></td><td>3</td><td>2400</td><td>17,520</td></tr>
+    <tr><td><a href="/item/16439-poison-claws-+1">Poison Claws +1</a></td><td>3</td><td>2400</td><td>17,520</td></tr>
+    <tr><td><a href="/item/16501-acid-knife">Acid Knife</a></td><td>4</td><td>2480</td><td>17,760</td></tr>
+    <tr><td><a href="/item/17608-corrosive-knife">Corrosive Knife</a></td><td>4</td><td>2880</td><td>17,760</td></tr>
+    <tr><td><a href="/item/16523-holy-degen">Holy Degen</a></td><td>5</td><td>5600</td><td>20,640</td></tr>
+    <tr><td><a href="/item/16817-holy-degen-+1">Holy Degen +1</a></td><td>5</td><td>6300</td><td>20,640</td></tr>
+    <tr><td><a href="/item/16539-cermet-sword">Cermet Sword</a></td><td>6</td><td>9460</td><td>21,840</td></tr>
+    <tr><td><a href="/item/16825-cermet-sword-+1">Cermet Sword +1</a></td><td>6</td><td>10560</td><td>21,840</td></tr>
+    <tr><td><a href="/item/16401-jamadhars">Jamadhars</a></td><td>7</td><td>6710</td><td>21,120</td></tr>
+    <tr><td><a href="/item/17482-jamadhars-+1">Jamadhars +1</a></td><td>7</td><td>6862</td><td>21,120</td></tr>
+    <tr><td><a href="/item/16609-bloody-sword">Bloody Sword</a></td><td>8</td><td>12375</td><td>22,320</td></tr>
+    <tr><td><a href="/item/17646-carnage-sword">Carnage Sword</a></td><td>8</td><td>13062</td><td>22,320</td></tr>
+    <tr><td><a href="/item/4211-charisma-potion">Charisma Potion</a></td><td>9</td><td>750</td><td>13,920</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-2" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/4148-antidote">Antidote</a></td><td>0</td><td>79</td><td>4,560</td></tr>
+    <tr><td><a href="/item/16495-silence-dagger">Silence Dagger</a></td><td>1</td><td>406</td><td>9,120</td></tr>
+    <tr><td><a href="/item/16508-silence-dagger-+1">Silence Dagger +1</a></td><td>1</td><td>406</td><td>9,120</td></tr>
+    <tr><td><a href="/item/16472-poison-knife">Poison Knife</a></td><td>2</td><td>1226</td><td>14,400</td></tr>
+    <tr><td><a href="/item/16742-poison-knife-+1">Poison Knife +1</a></td><td>2</td><td>1453</td><td>14,400</td></tr>
+    <tr><td><a href="/item/16454-blind-dagger">Blind Dagger</a></td><td>3</td><td>100</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16493-blind-dagger-+1">Blind Dagger +1</a></td><td>3</td><td>120</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16905-bokuto">Bokuto</a></td><td>4</td><td>1240</td><td>14,880</td></tr>
+    <tr><td><a href="/item/16926-bokuto-+1">Bokuto +1</a></td><td>4</td><td>1426</td><td>14,880</td></tr>
+    <tr><td><a href="/item/16430-acid-claws">Acid Claws</a></td><td>5</td><td>2976</td><td>18,720</td></tr>
+    <tr><td><a href="/item/17487-corrosive-claws">Corrosive Claws</a></td><td>5</td><td>3596</td><td>18,720</td></tr>
+    <tr><td><a href="/item/16414-cermet-claws">Cermet Claws</a></td><td>6</td><td>5280</td><td>20,640</td></tr>
+    <tr><td><a href="/item/17488-cermet-claws-+1">Cermet Claws +1</a></td><td>6</td><td>6380</td><td>20,640</td></tr>
+    <tr><td><a href="/item/16418-venom-claws">Venom Claws</a></td><td>7</td><td>5040</td><td>20,400</td></tr>
+    <tr><td><a href="/item/16425-venom-claws-+1">Venom Claws +1</a></td><td>7</td><td>5040</td><td>20,400</td></tr>
+    <tr><td><a href="/item/16431-stun-claws">Stun Claws</a></td><td>8</td><td>6480</td><td>21,120</td></tr>
+    <tr><td><a href="/item/17486-stun-claws-+1">Stun Claws +1</a></td><td>8</td><td>6615</td><td>21,120</td></tr>
+    <tr><td><a href="/item/4201-dexterity-potion">Dexterity Potion</a></td><td>9</td><td>900</td><td>14,400</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-3" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/1164-tsurara">Tsurara</a></td><td>0</td><td>10</td><td>3,360</td></tr>
+    <tr><td><a href="/item/914-vial-of-mercury">Vial of Mercury</a></td><td>1</td><td>300</td><td>8,160</td></tr>
+    <tr><td><a href="/item/4165-pot-of-silent-oil">Pot of Silent Oil</a></td><td>2</td><td>300</td><td>8,640</td></tr>
+    <tr><td><a href="/item/16471-blind-knife">Blind Knife</a></td><td>3</td><td>135</td><td>7,440</td></tr>
+    <tr><td><a href="/item/16490-blind-knife-+1">Blind Knife +1</a></td><td>3</td><td>161</td><td>7,440</td></tr>
+    <tr><td><a href="/item/17605-acid-dagger">Acid Dagger</a></td><td>4</td><td>1717</td><td>16,320</td></tr>
+    <tr><td><a href="/item/17606-corrosive-dagger">Corrosive Dagger</a></td><td>4</td><td>2003</td><td>16,320</td></tr>
+    <tr><td><a href="/item/17041-holy-mace">Holy Mace</a></td><td>5</td><td>3102</td><td>18,270</td></tr>
+    <tr><td><a href="/item/17411-holy-mace-+1">Holy Mace +1</a></td><td>5</td><td>3762</td><td>18,270</td></tr>
+    <tr><td><a href="/item/16554-hanger">Hanger</a></td><td>6</td><td>10185</td><td>22,080</td></tr>
+    <tr><td><a href="/item/17642-hanger-+1">Hanger +1</a></td><td>6</td><td>11235</td><td>22,080</td></tr>
+    <tr><td><a href="/item/16505-venom-kukri">Venom Kukri</a></td><td>7</td><td>7290</td><td>21,360</td></tr>
+    <tr><td><a href="/item/17604-venom-kukri-+1">Venom Kukri +1</a></td><td>7</td><td>7425</td><td>21,360</td></tr>
+    <tr><td><a href="/item/16506-stun-kukri">Stun Kukri</a></td><td>8</td><td>9585</td><td>22,080</td></tr>
+    <tr><td><a href="/item/17614-stun-kukri-+1">Stun Kukri +1</a></td><td>8</td><td>9762</td><td>22,080</td></tr>
+    <tr><td><a href="/item/4207-intelligence-potion">Intelligence Potion</a></td><td>9</td><td>840</td><td>14,400</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-4" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/913-lump-of-beeswax">Lump of Beeswax</a></td><td>0</td><td>30</td><td>3,840</td></tr>
+    <tr><td><a href="/item/16572-bee-spatha">Bee Spatha</a></td><td>1</td><td>705</td><td>11,520</td></tr>
+    <tr><td><a href="/item/16611-bee-spatha-+1">Bee Spatha +1</a></td><td>1</td><td>775</td><td>11,520</td></tr>
+    <tr><td><a href="/item/16906-mokuto">Mokuto</a></td><td>2</td><td>894</td><td>12,960</td></tr>
+    <tr><td><a href="/item/16925-mokuto-+1">Mokuto +1</a></td><td>2</td><td>902</td><td>12,960</td></tr>
+    <tr><td><a href="/item/16907-busuto">Busuto</a></td><td>3</td><td>1200</td><td>14,400</td></tr>
+    <tr><td><a href="/item/16927-busuto-+1">Busuto +1</a></td><td>3</td><td>1230</td><td>14,400</td></tr>
+    <tr><td><a href="/item/16403-poison-katars">Poison Katars</a></td><td>4</td><td>2464</td><td>17,760</td></tr>
+    <tr><td><a href="/item/16693-poison-katars-+1">Poison Katars +1</a></td><td>4</td><td>3024</td><td>17,760</td></tr>
+    <tr><td><a href="/item/16581-holy-sword">Holy Sword</a></td><td>5</td><td>4300</td><td>19,920</td></tr>
+    <tr><td><a href="/item/16816-holy-sword-+1">Holy Sword +1</a></td><td>5</td><td>4800</td><td>19,920</td></tr>
+    <tr><td><a href="/item/16549-divine-sword">Divine Sword</a></td><td>6</td><td>4928</td><td>20,400</td></tr>
+    <tr><td><a href="/item/16826-divine-sword-+1">Divine Sword +1</a></td><td>6</td><td>5488</td><td>20,400</td></tr>
+    <tr><td><a href="/item/16560-cutlass">Cutlass</a></td><td>7</td><td>12250</td><td>22,320</td></tr>
+    <tr><td><a href="/item/17639-cutlass-+1">Cutlass +1</a></td><td>7</td><td>12372</td><td>22,320</td></tr>
+    <tr><td><a href="/item/16860-holy-lance">Holy Lance</a></td><td>8</td><td>3150</td><td>18,960</td></tr>
+    <tr><td><a href="/item/16880-holy-lance-+1">Holy Lance +1</a></td><td>8</td><td>4275</td><td>18,960</td></tr>
+    <tr><td><a href="/item/4203-vitality-potion">Vitality Potion</a></td><td>9</td><td>750</td><td>13,920</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-5" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/4162-flask-of-silencing-potion">Flask of Silencing Potion</a></td><td>0</td><td>150</td><td>5,760</td></tr>
+    <tr><td><a href="/item/2109-bowl-of-bittern">Bowl of Bittern</a></td><td>1</td><td>100</td><td>5,760</td></tr>
+    <tr><td><a href="/item/16458-poison-baselard">Poison Baselard</a></td><td>2</td><td>330</td><td>8,800</td></tr>
+    <tr><td><a href="/item/16743-python-baselard">Python Baselard</a></td><td>2</td><td>457</td><td>8,800</td></tr>
+    <tr><td><a href="/item/16387-poison-cesti">Poison Cesti</a></td><td>3</td><td>992</td><td>13,680</td></tr>
+    <tr><td><a href="/item/16700-poison-cesti-+1">Poison Cesti +1</a></td><td>3</td><td>1312</td><td>13,680</td></tr>
+    <tr><td><a href="/item/16588-flame-claymore">Flame Claymore</a></td><td>4</td><td>979</td><td>13,920</td></tr>
+    <tr><td><a href="/item/16929-burning-claymore">Burning Claymore</a></td><td>4</td><td>979</td><td>13,920</td></tr>
+    <tr><td><a href="/item/16973-homura">Homura</a></td><td>5</td><td>2300</td><td>17,520</td></tr>
+    <tr><td><a href="/item/16986-homura-+1">Homura +1</a></td><td>5</td><td>2392</td><td>17,520</td></tr>
+    <tr><td><a href="/item/16459-acid-baselard">Acid Baselard</a></td><td>6</td><td>3720</td><td>19,440</td></tr>
+    <tr><td><a href="/item/17607-corrosive-baselard">Corrosive Baselard</a></td><td>6</td><td>4320</td><td>19,440</td></tr>
+    <tr><td><a href="/item/16507-venom-baselard">Venom Baselard</a></td><td>7</td><td>6370</td><td>21,120</td></tr>
+    <tr><td><a href="/item/16510-venom-baselard-+1">Venom Baselard +1</a></td><td>7</td><td>6370</td><td>21,120</td></tr>
+    <tr><td><a href="/item/16528-bloody-rapier">Bloody Rapier</a></td><td>8</td><td>7600</td><td>21,600</td></tr>
+    <tr><td><a href="/item/16824-carnage-rapier">Carnage Rapier</a></td><td>8</td><td>8550</td><td>21,600</td></tr>
+    <tr><td><a href="/item/4205-agility-potion">Agility Potion</a></td><td>9</td><td>810</td><td>14,160</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-6" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/4166-flask-of-deodorizer">Flask of Deodorizer</a></td><td>0</td><td>80</td><td>4,560</td></tr>
+    <tr><td><a href="/item/4151-flask-of-echo-drops">Flask of Echo Drops</a></td><td>1</td><td>200</td><td>6,960</td></tr>
+    <tr><td><a href="/item/4150-flask-of-eye-drops">Flask of Eye Drops</a></td><td>2</td><td>519</td><td>10,560</td></tr>
+    <tr><td><a href="/item/16594-inferno-sword">Inferno Sword</a></td><td>3</td><td>3488</td><td>19,200</td></tr>
+    <tr><td><a href="/item/16928-hellfire-sword">Hellfire Sword</a></td><td>3</td><td>3488</td><td>19,200</td></tr>
+    <tr><td><a href="/item/13684-potion-tank">Potion Tank</a></td><td>4</td><td>210</td><td>8,640</td></tr>
+    <tr><td><a href="/item/16973-homura">Homura</a></td><td>5</td><td>2300</td><td>17,520</td></tr>
+    <tr><td><a href="/item/16986-homura-+1">Homura +1</a></td><td>5</td><td>2392</td><td>17,520</td></tr>
+    <tr><td><a href="/item/16568-saber">Saber</a></td><td>6</td><td>8200</td><td>22,080</td></tr>
+    <tr><td><a href="/item/16612-saber-+1">Saber +1</a></td><td>6</td><td>11275</td><td>22,080</td></tr>
+    <tr><td><a href="/item/16503-stun-knife">Stun Knife</a></td><td>7</td><td>8450</td><td>21,600</td></tr>
+    <tr><td><a href="/item/17600-stun-knife-+1">Stun Knife +1</a></td><td>7</td><td>8612</td><td>21,600</td></tr>
+    <tr><td><a href="/item/16432-stun-jamadhars">Stun Jamadhars</a></td><td>8</td><td>7370</td><td>21,360</td></tr>
+    <tr><td><a href="/item/17484-stun-jamadhars-+1">Stun Jamadhars +1</a></td><td>8</td><td>7537</td><td>21,360</td></tr>
+    <tr><td><a href="/item/12305-ice-shield">Ice Shield</a></td><td>9</td><td>5565</td><td>20,880</td></tr>
+    <tr><td><a href="/item/12357-ice-shield-+1">Ice Shield +1</a></td><td>9</td><td>6890</td><td>20,880</td></tr>
+   </tbody></table>
+  </div>
+  <div class="turnin-pattern" id="pat-7" hidden>
+   <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
+    <tr><td><a href="/item/4148-antidote">Antidote</a></td><td>0</td><td>79</td><td>4,560</td></tr>
+    <tr><td><a href="/item/16495-silence-dagger">Silence Dagger</a></td><td>1</td><td>406</td><td>9,120</td></tr>
+    <tr><td><a href="/item/16508-silence-dagger-+1">Silence Dagger +1</a></td><td>1</td><td>406</td><td>9,120</td></tr>
+    <tr><td><a href="/item/16496-poison-dagger">Poison Dagger</a></td><td>2</td><td>959</td><td>13,200</td></tr>
+    <tr><td><a href="/item/16741-poison-dagger-+1">Poison Dagger +1</a></td><td>2</td><td>1142</td><td>13,200</td></tr>
+    <tr><td><a href="/item/16478-poison-kukri">Poison Kukri</a></td><td>3</td><td>1620</td><td>15,840</td></tr>
+    <tr><td><a href="/item/16489-poison-kukri-+1">Poison Kukri +1</a></td><td>3</td><td>1620</td><td>15,840</td></tr>
+    <tr><td><a href="/item/16709-inferno-axe">Inferno Axe</a></td><td>4</td><td>349</td><td>10,080</td></tr>
+    <tr><td><a href="/item/16713-hellfire-axe">Hellfire Axe</a></td><td>4</td><td>380</td><td>10,080</td></tr>
+    <tr><td><a href="/item/13682-ether-tank">Ether Tank</a></td><td>5</td><td>210</td><td>9,120</td></tr>
+    <tr><td><a href="/item/16469-cermet-knife">Cermet Knife</a></td><td>6</td><td>5850</td><td>20,800</td></tr>
+    <tr><td><a href="/item/17609-cermet-knife-+1">Cermet Knife +1</a></td><td>6</td><td>6975</td><td>20,800</td></tr>
+    <tr><td><a href="/item/17080-holy-maul">Holy Maul</a></td><td>7</td><td>3192</td><td>18,960</td></tr>
+    <tr><td><a href="/item/17114-holy-maul-+1">Holy Maul +1</a></td><td>7</td><td>3752</td><td>18,960</td></tr>
+    <tr><td><a href="/item/17085-holy-wand">Holy Wand</a></td><td>8</td><td>3060</td><td>18,960</td></tr>
+    <tr><td><a href="/item/17434-holy-wand-+1">Holy Wand +1</a></td><td>8</td><td>3240</td><td>18,960</td></tr>
+    <tr><td><a href="/item/4199-strength-potion">Strength Potion</a></td><td>9</td><td>900</td><td>14,400</td></tr>
+   </tbody></table>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild point rewards</h2>
+  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
+  <div class="reward-grid">
+   <div class="reward-row"><span class="nm"><a href="/item/15450-alchemists-belt">Alchemists Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/3332-alchemists-emblem">Alchemists Emblem</a></span><span class="rk">veteran</span><span class="gp">15,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/3674-alembic">Alembic</a></span><span class="rk">artisan</span><span class="gp">50,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/17058-caduceus">Caduceus</a></span><span class="rk">journeyman</span><span class="gp">70,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/15825-alchemists-ring">Alchemists Ring</a></span><span class="rk">craftsman</span><span class="gp">80,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/14398-alchemists-apron">Alchemists Apron</a></span><span class="rk">artisan</span><span class="gp">100,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/134-copy-of-emeralda">Copy of Emeralda</a></span><span class="rk">veteran</span><span class="gp">150,000 GP</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/342-alchemists-signboard">Alchemists Signboard</a></span><span class="rk">veteran</span><span class="gp">200,000 GP</span></div>
+  </div>
+  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:16px 0 8px">Key items</h3>
+  <div class="reward-grid">
+   <div class="reward-row"><span class="nm">Trituration</span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Iatrochemistry</span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Anima Synthesis</span><span class="rk">novice</span><span class="gp">20,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Concoction</span><span class="rk">novice</span><span class="gp">20,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Way of the Alchemist</span><span class="rk">veteran</span><span class="gp">20,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Alchemic Purification</span><span class="rk">novice</span><span class="gp">40,000 GP</span></div>
+   <div class="reward-row"><span class="nm">Alchemic Ensorcellment</span><span class="rk">novice</span><span class="gp">40,000 GP</span></div>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Guild vendor</h2>
+  <p class="vendor-note">Rank-gated items sold by the alchemy guild vendor. Requires the listed rank or higher to purchase.</p>
+  <div class="reward-grid">
+   <div class="reward-row"><span class="nm"><a href="/item/912-beehive-chip">Beehive Chip</a></span><span class="rk">rank amateur</span><span class="pr">40g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/2131-triturator">Triturator</a></span><span class="rk">rank amateur</span><span class="pr">75g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/921-bottle-of-ahriman-tears">Bottle of Ahriman Tears</a></span><span class="rk">rank initiate</span><span class="pr">200g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/937-block-of-animal-glue">Block of Animal Glue</a></span><span class="rk">rank recruit</span><span class="pr">300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8889-alchemy-kit-5">Alchemy Kit 5</a></span><span class="rk">rank amateur</span><span class="pr">300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/943-pinch-of-poison-dust">Pinch of Poison Dust</a></span><span class="rk">rank recruit</span><span class="pr">320g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8890-alchemy-kit-10">Alchemy Kit 10</a></span><span class="rk">rank amateur</span><span class="pr">400g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/928-pinch-of-bomb-ash">Pinch of Bomb Ash</a></span><span class="rk">rank initiate</span><span class="pr">515g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8891-alchemy-kit-15">Alchemy Kit 15</a></span><span class="rk">rank amateur</span><span class="pr">650g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/4171-flask-of-vitriol">Flask of Vitriol</a></span><span class="rk">rank apprentice</span><span class="pr">700g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/944-pinch-of-venom-dust">Pinch of Venom Dust</a></span><span class="rk">rank craftsman</span><span class="pr">1,035g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8892-alchemy-kit-20">Alchemy Kit 20</a></span><span class="rk">rank amateur</span><span class="pr">1,050g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/933-loop-of-glass-fiber">Loop of Glass Fiber</a></span><span class="rk">rank novice</span><span class="pr">1,200g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/637-vial-of-slime-oil">Vial of Slime Oil</a></span><span class="rk">rank initiate</span><span class="pr">1,500g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8893-alchemy-kit-25">Alchemy Kit 25</a></span><span class="rk">rank amateur</span><span class="pr">1,600g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/914-vial-of-mercury">Vial of Mercury</a></span><span class="rk">rank amateur</span><span class="pr">1,700g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/923-dryad-root">Dryad Root</a></span><span class="rk">rank apprentice</span><span class="pr">1,800g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/932-loop-of-carbon-fiber">Loop of Carbon Fiber</a></span><span class="rk">rank journeyman</span><span class="pr">1,900g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/939-hecteyes-eye">Hecteyes Eye</a></span><span class="rk">rank journeyman</span><span class="pr">2,100g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8894-alchemy-kit-30">Alchemy Kit 30</a></span><span class="rk">rank amateur</span><span class="pr">2,300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8895-alchemy-kit-35">Alchemy Kit 35</a></span><span class="rk">rank amateur</span><span class="pr">3,150g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/915-jar-of-toad-oil">Jar of Toad Oil</a></span><span class="rk">rank journeyman</span><span class="pr">3,600g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/1886-bottle-of-sieglinde-putty">Bottle of Sieglinde Putty</a></span><span class="rk">rank apprentice</span><span class="pr">4,000g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8896-alchemy-kit-40">Alchemy Kit 40</a></span><span class="rk">rank amateur</span><span class="pr">4,150g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/947-jar-of-firesand">Jar of Firesand</a></span><span class="rk">rank novice</span><span class="pr">5,000g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/931-cermet-chunk">Cermet Chunk</a></span><span class="rk">rank craftsman</span><span class="pr">5,000g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8897-alchemy-kit-45">Alchemy Kit 45</a></span><span class="rk">rank amateur</span><span class="pr">5,300g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/8898-alchemy-kit-50">Alchemy Kit 50</a></span><span class="rk">rank amateur</span><span class="pr">7,600g</span></div>
+   <div class="reward-row"><span class="nm"><a href="/item/9257-azure-leaf">Azure Leaf</a></span><span class="rk">rank amateur</span><span class="pr">1,126,125g</span></div>
+  </div>
+ </section>
+
+ <section class="panel pad">
+  <h2>Recipes</h2>
+  <div class="stat-row">
+   <div class="stat"><b>266</b><span>recipes (1–60)</span></div>
+   <div class="stat"><b>442</b><span>total</span></div>
+   <div class="stat"><b>31</b><span>desynth</span></div>
+  </div>
+  <div class="tool-links">
+   <a href="/calculator?craft=alchemy">Calculator</a>
+   <a href="/profit?craft=alchemy">Profit Finder</a>
+   <a href="/shopping?craft=alchemy">Shopping List</a>
+  </div>
+ </section>
+
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
+</div>
+
+<script>(function(){
+var EPOCH=1009810800,
+DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+OPEN=8,CLOSE=23,HOLIDAY=4;
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ hr=vh%24,wd=vd%8,
+ isOpen=wd!==HOLIDAY&&hr>=OPEN&&hr<CLOSE,
+ el=document.getElementById("guildStatus"),
+ nxt=document.getElementById("guildNext");
+ if(!el)return;
+ if(isOpen){
+  el.className="guild-badge open";el.textContent="Open";
+  var left=CLOSE-hr;
+  if(nxt)nxt.textContent="Closes in ~"+left+" Vana\u2019diel hour"+(left!==1?"s":"");
+ }else{
+  el.className="guild-badge closed";el.textContent="Closed";
+  var msg="";
+  if(wd===HOLIDAY){msg=DAYS[HOLIDAY]+" is the guild holiday";}
+  else if(hr<OPEN){msg="Opens at "+OPEN+":00 (in ~"+(OPEN-hr)+" hr)";}
+  else{msg="Opens tomorrow at "+OPEN+":00";}
+  if(nxt)nxt.textContent=msg;
+ }
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script>
+(function(){
+var EPOCH=1009810800;
+function getPattern(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vd=Math.floor(vs/60/60/24);
+ return vd%8;
+}
+var tabs=document.querySelectorAll(".turnin-tab"),
+ pats=document.querySelectorAll(".turnin-pattern"),
+ cur=getPattern();
+function show(p){
+ tabs.forEach(function(t){t.classList.toggle("active",+t.dataset.p===p)});
+ pats.forEach(function(d){d.hidden=+d.id.split("-")[1]!==p});
+}
+show(cur);
+tabs.forEach(function(t){
+ t.addEventListener("click",function(){show(+t.dataset.p)});
+});
+})();</script>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
+<script>(function(){
+var EPOCH=1009810800,DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ vmo=Math.floor(vd/30),vy=Math.floor(vmo/12)+886,
+ mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8,
+ el=document.getElementById("vanaClock");
+ if(!el)return;
+ el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
+ el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\u2019diel Time";
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script src="/search.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

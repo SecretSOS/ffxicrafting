@@ -447,6 +447,9 @@ sm += f'<url><loc>{SITE}/shopping</loc></url>\n'
 sm += f'<url><loc>{SITE}/about-the-data</loc></url>\n'
 sm += f'<url><loc>{SITE}/bcnm</loc></url>\n'
 sm += f'<url><loc>{SITE}/crafts</loc></url>\n'
+for cf in sorted(os.listdir(os.path.join(ROOT, 'public', 'crafts'))):
+    if cf.endswith('.html'):
+        sm += f'<url><loc>{SITE}/crafts/{cf[:-5]}</loc></url>\n'
 sm += f'<url><loc>{SITE}/gathering/</loc></url>\n'
 for gp in ('mining', 'logging', 'harvesting', 'excavation', 'gardening', 'digging', 'fishing', 'clamming'):
     sm += f'<url><loc>{SITE}/gathering/{gp}</loc></url>\n'

@@ -44,6 +44,7 @@
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <span class="vana-clock" id="vanaClock" title="Vana'diel Time"></span>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
 <div class="site-layout">
@@ -64,14 +65,14 @@
  </div>
  <div class="sb-section">
   <div class="sb-heading">By Craft</div>
-  <a href="/crafts#wood"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--wood)"></span>Woodworking</span></a>
-  <a href="/crafts#smith"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--smith)"></span>Smithing</span></a>
-  <a href="/crafts#gold"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--gold)"></span>Goldsmithing</span></a>
-  <a href="/crafts#cloth"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cloth)"></span>Clothcraft</span></a>
-  <a href="/crafts#leather"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--leather)"></span>Leathercraft</span></a>
-  <a href="/crafts#bone"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--bone)"></span>Bonecraft</span></a>
-  <a href="/crafts#alchemy"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--alchemy)"></span>Alchemy</span></a>
-  <a href="/crafts#cook"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cook)"></span>Cooking</span></a>
+  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking</span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing</span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing</span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft</span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft</span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft</span></a>
+  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy</span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking</span></a>
  </div>
  <div class="sb-section">
   <div class="sb-heading">Info</div>
@@ -92,12 +93,13 @@
    <div class="craft-card" id="wood" style="--c:var(--wood)">
     <svg aria-hidden="true"><use href="#i-wood"/></svg>
     <div>
-     <h3>Woodworking</h3>
+     <h3><a href="/crafts/woodworking" style="color:inherit;text-decoration:none">Woodworking</a></h3>
      <div class="meta">
       <b>205</b> recipes (1–60)<br>
       <b>369</b> total &middot; <b>62</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/woodworking">Guild &amp; details</a>
       <a href="/calculator?craft=wood">Calculator</a>
       <a href="/profit?craft=wood">Profit Finder</a>
       <a href="/shopping?craft=wood">Shopping List</a>
@@ -107,12 +109,13 @@
    <div class="craft-card" id="smith" style="--c:var(--smith)">
     <svg aria-hidden="true"><use href="#i-smith"/></svg>
     <div>
-     <h3>Smithing</h3>
+     <h3><a href="/crafts/smithing" style="color:inherit;text-decoration:none">Smithing</a></h3>
      <div class="meta">
       <b>236</b> recipes (1–60)<br>
       <b>425</b> total &middot; <b>111</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/smithing">Guild &amp; details</a>
       <a href="/calculator?craft=smith">Calculator</a>
       <a href="/profit?craft=smith">Profit Finder</a>
       <a href="/shopping?craft=smith">Shopping List</a>
@@ -122,12 +125,13 @@
    <div class="craft-card" id="gold" style="--c:var(--gold)">
     <svg aria-hidden="true"><use href="#i-gold"/></svg>
     <div>
-     <h3>Goldsmithing</h3>
+     <h3><a href="/crafts/goldsmithing" style="color:inherit;text-decoration:none">Goldsmithing</a></h3>
      <div class="meta">
       <b>259</b> recipes (1–60)<br>
       <b>481</b> total &middot; <b>116</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/goldsmithing">Guild &amp; details</a>
       <a href="/calculator?craft=gold">Calculator</a>
       <a href="/profit?craft=gold">Profit Finder</a>
       <a href="/shopping?craft=gold">Shopping List</a>
@@ -137,12 +141,13 @@
    <div class="craft-card" id="cloth" style="--c:var(--cloth)">
     <svg aria-hidden="true"><use href="#i-cloth"/></svg>
     <div>
-     <h3>Clothcraft</h3>
+     <h3><a href="/crafts/clothcraft" style="color:inherit;text-decoration:none">Clothcraft</a></h3>
      <div class="meta">
       <b>217</b> recipes (1–60)<br>
       <b>412</b> total &middot; <b>93</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/clothcraft">Guild &amp; details</a>
       <a href="/calculator?craft=cloth">Calculator</a>
       <a href="/profit?craft=cloth">Profit Finder</a>
       <a href="/shopping?craft=cloth">Shopping List</a>
@@ -152,12 +157,13 @@
    <div class="craft-card" id="leather" style="--c:var(--leather)">
     <svg aria-hidden="true"><use href="#i-leather"/></svg>
     <div>
-     <h3>Leathercraft</h3>
+     <h3><a href="/crafts/leathercraft" style="color:inherit;text-decoration:none">Leathercraft</a></h3>
      <div class="meta">
       <b>173</b> recipes (1–60)<br>
       <b>355</b> total &middot; <b>60</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/leathercraft">Guild &amp; details</a>
       <a href="/calculator?craft=leather">Calculator</a>
       <a href="/profit?craft=leather">Profit Finder</a>
       <a href="/shopping?craft=leather">Shopping List</a>
@@ -167,12 +173,13 @@
    <div class="craft-card" id="bone" style="--c:var(--bone)">
     <svg aria-hidden="true"><use href="#i-bone"/></svg>
     <div>
-     <h3>Bonecraft</h3>
+     <h3><a href="/crafts/bonecraft" style="color:inherit;text-decoration:none">Bonecraft</a></h3>
      <div class="meta">
       <b>116</b> recipes (1–60)<br>
       <b>252</b> total &middot; <b>65</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/bonecraft">Guild &amp; details</a>
       <a href="/calculator?craft=bone">Calculator</a>
       <a href="/profit?craft=bone">Profit Finder</a>
       <a href="/shopping?craft=bone">Shopping List</a>
@@ -182,12 +189,13 @@
    <div class="craft-card" id="alchemy" style="--c:var(--alchemy)">
     <svg aria-hidden="true"><use href="#i-alchemy"/></svg>
     <div>
-     <h3>Alchemy</h3>
+     <h3><a href="/crafts/alchemy" style="color:inherit;text-decoration:none">Alchemy</a></h3>
      <div class="meta">
       <b>266</b> recipes (1–60)<br>
       <b>442</b> total &middot; <b>31</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/alchemy">Guild &amp; details</a>
       <a href="/calculator?craft=alchemy">Calculator</a>
       <a href="/profit?craft=alchemy">Profit Finder</a>
       <a href="/shopping?craft=alchemy">Shopping List</a>
@@ -197,12 +205,13 @@
    <div class="craft-card" id="cook" style="--c:var(--cook)">
     <svg aria-hidden="true"><use href="#i-cook"/></svg>
     <div>
-     <h3>Cooking</h3>
+     <h3><a href="/crafts/cooking" style="color:inherit;text-decoration:none">Cooking</a></h3>
      <div class="meta">
       <b>222</b> recipes (1–60)<br>
       <b>379</b> total &middot; <b>0</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/cooking">Guild &amp; details</a>
       <a href="/calculator?craft=cook">Calculator</a>
       <a href="/profit?craft=cook">Profit Finder</a>
       <a href="/shopping?craft=cook">Shopping List</a>
@@ -231,6 +240,23 @@
 </div>
 <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
 <script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
+<script>(function(){
+var EPOCH=1009810800,DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ vmo=Math.floor(vd/30),vy=Math.floor(vmo/12)+886,
+ mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8,
+ el=document.getElementById("vanaClock");
+ if(!el)return;
+ el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
+ el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\u2019diel Time";
+}
+tick();setInterval(tick,2400);
+})();</script>
 <script src="/search.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

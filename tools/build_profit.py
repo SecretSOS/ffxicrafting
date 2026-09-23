@@ -8,7 +8,7 @@ OUT = os.path.join(ROOT, 'public', 'profit.html')
 DATA_DIR = os.path.join(ROOT, 'public', 'data')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end, SVG_DEFS
+from page_template import html_head, layout_open, layout_close, page_end
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 CRAFTS = {'wood': 'Woodworking', 'smith': 'Smithing', 'gold': 'Goldsmithing', 'cloth': 'Clothcraft',
@@ -183,7 +183,6 @@ html = html_head(
     'Every era recipe ranked by profit margin. Uses your custom prices and skill levels to find the most profitable crafts in FFXI.',
     'https://ffxicrafting.com/profit',
     EXTRA_CSS)
-html += SVG_DEFS + '\n'
 html += layout_open(active='profit', crumbs=[('Home', '/'), ('Profit Finder', None)])
 html += BODY
 html += layout_close(LSB_COMMIT)

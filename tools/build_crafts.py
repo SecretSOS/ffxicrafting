@@ -7,7 +7,7 @@ DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_craf
 OUT = os.path.join(ROOT, 'public', 'crafts.html')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end, SVG_DEFS, CRAFTS_ORDERED
+from page_template import html_head, layout_open, layout_close, page_end, CRAFTS_ORDERED
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 
@@ -48,7 +48,6 @@ html = html_head(
     'https://ffxicrafting.com/crafts',
     extra_css)
 
-html += SVG_DEFS + '\n'
 html += layout_open(
     active='crafts',
     crumbs=[('Home', '/'), ('Crafts', None)])
@@ -69,12 +68,13 @@ for c in craft_data:
    <div class="craft-card" id="{c['code']}" style="--c:var({c['var']})">
     <svg aria-hidden="true"><use href="#i-{c['code']}"/></svg>
     <div>
-     <h3>{c['name']}</h3>
+     <h3><a href="/crafts/{c['name'].lower()}" style="color:inherit;text-decoration:none">{c['name']}</a></h3>
      <div class="meta">
       <b>{c['era_60']}</b> recipes (1–60)<br>
       <b>{c['total']}</b> total &middot; <b>{c['desynth']}</b> desynth
      </div>
      <div class="craft-links">
+      <a href="/crafts/{c['name'].lower()}">Guild &amp; details</a>
       <a href="/calculator?craft={c['code']}">Calculator</a>
       <a href="/profit?craft={c['code']}">Profit Finder</a>
       <a href="/shopping?craft={c['code']}">Shopping List</a>

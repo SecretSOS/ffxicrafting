@@ -8,7 +8,7 @@ OUT = os.path.join(ROOT, 'public', 'shopping.html')
 DATA_DIR = os.path.join(ROOT, 'public', 'data')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end, SVG_DEFS
+from page_template import html_head, layout_open, layout_close, page_end
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 
@@ -331,7 +331,6 @@ html = html_head(
     'Aggregate every crafting material for a skill-up path. Pick a craft and skill range, get the totals grouped by vendor, gathered, and dropped.',
     'https://ffxicrafting.com/shopping',
     EXTRA_CSS)
-html += SVG_DEFS + '\n'
 html += layout_open(active='shopping', crumbs=[('Home', '/'), ('Shopping List', None)])
 html += BODY
 html += layout_close(LSB_COMMIT)
