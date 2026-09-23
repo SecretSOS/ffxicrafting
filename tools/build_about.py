@@ -215,6 +215,7 @@ html = f"""<!doctype html>
 </div>
 <script>{THEME_JS}</script>
 <script src="/search.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
 """

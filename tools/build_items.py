@@ -472,6 +472,7 @@ def build_page(iid):
         '</div>\n'
         f'<script>\n{THEME_JS}\n</script>\n'
         '<script src="/search.js"></script>\n'
+        '<script defer src="/_vercel/insights/script.js"></script>\n'
         '</body>\n</html>\n'
     )
 

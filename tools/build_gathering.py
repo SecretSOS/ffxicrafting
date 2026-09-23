@@ -202,6 +202,7 @@ def page(title, desc, nav_id, body):
 {THEME_JS}
 </script>
 <script src="/search.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
 """

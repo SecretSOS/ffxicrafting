@@ -289,7 +289,7 @@ HEAD = """\
 <style>
 """
 
-html = HEAD + CSS + '\n</style>\n</head>\n<body>\n' + SVG + '\n' + BODY + '\n<script>\n' + JS + '\n</script>\n<script src="/search.js"></script>\n</body>\n</html>\n'
+html = HEAD + CSS + '\n</style>\n</head>\n<body>\n' + SVG + '\n' + BODY + '\n<script>\n' + JS + '\n</script>\n<script src="/search.js"></script>\n<script defer src="/_vercel/insights/script.js"></script>\n</body>\n</html>\n'
 html = html.replace('__LSB_URL__', LSB_URL).replace('__LSB_SHORT__', LSB_SHORT)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html)
