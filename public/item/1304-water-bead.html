@@ -75,6 +75,9 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 .pill.wotg{border-color:var(--gil);color:var(--gil)}
 .act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
 .act:hover{color:var(--ink);border-color:var(--frame)}
+.src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
+.src-toggle:hover{color:var(--ink-soft)}
+.src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
 @media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}.site-nav{gap:10px}}
 </style>
 </head>
@@ -88,7 +91,7 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
  <section class="panel pad"><h2>Used in</h2><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Goldsmithing 102 <span class="pill">ROTZ</span></td><td><a href="/item/14632-aqua-ring">Aqua Ring</a></td><td class="ings hide-sm"><a href="/item/4099-earth-crystal">Earth Crystal</a> · <a href="/item/1304-water-bead">Water Bead</a> · <a href="/item/13466-orichalcum-ring">Orichalcum Ring</a></td></tr><tr><td>Smithing 95 <span class="soft">(Goldsmithing 60, Leathercraft 35)</span> <span class="pill">COP</span></td><td><a href="/item/14416-barone-corazza">Barone Corazza</a> <span class="soft">HQ: <a href="/item/14417-conte-corazza">Conte Corazza</a> / <a href="/item/14417-conte-corazza">Conte Corazza</a> / <a href="/item/14417-conte-corazza">Conte Corazza</a></span></td><td class="ings hide-sm"><a href="/item/4099-earth-crystal">Earth Crystal</a> · <a href="/item/664-darksteel-sheet">Darksteel Sheet</a> · <a href="/item/669-molybdenum-sheet">Molybdenum Sheet</a> · <a href="/item/745-gold-ingot">Gold Ingot</a> · <a href="/item/763-orichalcum-chain">Orichalcum Chain</a> · <a href="/item/914-vial-of-mercury">Vial of Mercury</a> · <a href="/item/1304-water-bead">Water Bead</a> · <a href="/item/1629-square-of-buffalo-leather">Square of Buffalo Leather</a> · <a href="/item/1699-square-of-scarlet-linen-cloth">Square of Scarlet Linen Cloth</a></td></tr><tr><td>Woodworking 75 <span class="pill">ROTZ</span></td><td><a href="/item/17555-water-staff">Water Staff</a> <span class="soft">HQ: <a href="/item/17556-neptunes-staff">Neptunes Staff</a> / <a href="/item/17556-neptunes-staff">Neptunes Staff</a> / <a href="/item/17556-neptunes-staff">Neptunes Staff</a></span></td><td class="ings hide-sm"><a href="/item/4098-wind-crystal">Wind Crystal</a> · <a href="/item/719-piece-of-ebony-lumber">Piece of Ebony Lumber</a> · <a href="/item/1304-water-bead">Water Bead</a></td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Goldsmithing 87 <span class="pill">ROTZ</span></td><td><a href="/item/1304-water-bead">Water Bead</a></td><td class="ings hide-sm"><a href="/item/4098-wind-crystal">Wind Crystal</a> · <a href="/item/1260-chunk-of-water-ore">Chunk of Water Ore</a></td></tr></tbody></table></section>
  <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
   <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
-  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p>
+  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
  </footer>
 </div>
 <script>
@@ -102,6 +105,17 @@ var n=c==='dark'?'light':c==='light'?null:'dark';
 if(n){document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
 else{document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('theme')}catch(e){}}
 };
+var st=document.getElementById('srcToggle');
+if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
+document.querySelectorAll('#sources tr[data-src]').forEach(function(tr){
+var ex=tr.querySelector('.src-cell');
+if(on&&!ex){var td=document.createElement('td');td.className='src-cell';td.textContent=tr.getAttribute('data-src');tr.appendChild(td)}
+else if(!on&&ex){ex.remove()}});
+document.querySelectorAll('#sources thead tr').forEach(function(tr){
+var ex=tr.querySelector('.src-th');
+if(on&&!ex){var th=document.createElement('th');th.className='src-th';th.textContent='Source';tr.appendChild(th)}
+else if(!on&&ex){ex.remove()}});
+}st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}
 })();
 </script>
 <script src="/search.js"></script>

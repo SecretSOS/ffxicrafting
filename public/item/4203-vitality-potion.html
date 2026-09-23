@@ -75,6 +75,9 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 .pill.wotg{border-color:var(--gil);color:var(--gil)}
 .act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
 .act:hover{color:var(--ink);border-color:var(--frame)}
+.src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
+.src-toggle:hover{color:var(--ink-soft)}
+.src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
 @media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}.site-nav{gap:10px}}
 </style>
 </head>
@@ -85,10 +88,10 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
   <h1>Vitality Potion</h1>
   <p class="meta">Stack: 1 · NPC: 750g · <a href="https://horizonffxi.wiki/w/index.php?search=Vitality+Potion&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
  </header>
- <section class="panel pad"><h2>Where to get it</h2><h3>Battlefields</h3><table><thead><tr><th>Battlefield</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr title="scripts/battlefields/Talacca_Cove/call_to_arms.lua"><td>call_to_arms</td><td>Talacca Cove</td><td class="num">25%</td><td class="soft hide-sm">hi = level cap; gate = entry item</td></tr><tr title="scripts/battlefields/Horlais_Peak/horns_of_war.lua"><td>horns_of_war</td><td>Horlais Peak</td><td class="num">11.2%</td><td class="soft hide-sm">hi = level cap; gate = entry item</td></tr><tr title="scripts/battlefields/Waughroon_Shrine/hills_are_alive.lua"><td>hills_are_alive</td><td>Waughroon Shrine</td><td class="num">11.2%</td><td class="soft hide-sm">hi = level cap; gate = entry item</td></tr><tr title="scripts/battlefields/Horlais_Peak/horns_of_war.lua"><td>Horns of War</td><td>Horlais Peak</td><td class="num">11.2%</td><td class="soft hide-sm">roll 7</td></tr><tr title="scripts/battlefields/Waughroon_Shrine/hills_are_alive.lua"><td>The Hills are Alive</td><td>Waughroon Shrine</td><td class="num">11.2%</td><td class="soft hide-sm">roll 7</td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Alchemy 92 <span class="pill">ROTZ</span></td><td><a href="/item/4203-vitality-potion">Vitality Potion</a></td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/636-sprig-of-chamomile">Sprig of Chamomile</a> · <a href="/item/926-lizard-tail">Lizard Tail</a> · <a href="/item/1443-pinch-of-dried-mugwort">Pinch of Dried Mugwort</a> · <a href="/item/4370-pot-of-honey">Pot of Honey</a> · <a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></td></tr></tbody></table></section>
+ <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Battlefields</h3><table><thead><tr><th>Battlefield</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/battlefields/Talacca_Cove/call_to_arms.lua"><td>call_to_arms</td><td>Talacca Cove</td><td class="num">25%</td><td class="soft hide-sm">hi = level cap; gate = entry item</td></tr><tr data-src="scripts/battlefields/Horlais_Peak/horns_of_war.lua"><td>horns_of_war</td><td>Horlais Peak</td><td class="num">11.2%</td><td class="soft hide-sm">hi = level cap; gate = entry item</td></tr><tr data-src="scripts/battlefields/Waughroon_Shrine/hills_are_alive.lua"><td>hills_are_alive</td><td>Waughroon Shrine</td><td class="num">11.2%</td><td class="soft hide-sm">hi = level cap; gate = entry item</td></tr><tr data-src="scripts/battlefields/Horlais_Peak/horns_of_war.lua"><td>Horns of War</td><td>Horlais Peak</td><td class="num">11.2%</td><td class="soft hide-sm">roll 7</td></tr><tr data-src="scripts/battlefields/Waughroon_Shrine/hills_are_alive.lua"><td>The Hills are Alive</td><td>Waughroon Shrine</td><td class="num">11.2%</td><td class="soft hide-sm">roll 7</td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Alchemy 92 <span class="pill">ROTZ</span></td><td><a href="/item/4203-vitality-potion">Vitality Potion</a></td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/636-sprig-of-chamomile">Sprig of Chamomile</a> · <a href="/item/926-lizard-tail">Lizard Tail</a> · <a href="/item/1443-pinch-of-dried-mugwort">Pinch of Dried Mugwort</a> · <a href="/item/4370-pot-of-honey">Pot of Honey</a> · <a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></td></tr></tbody></table></section>
  <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
   <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
-  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p>
+  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
  </footer>
 </div>
 <script>
@@ -102,6 +105,17 @@ var n=c==='dark'?'light':c==='light'?null:'dark';
 if(n){document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
 else{document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('theme')}catch(e){}}
 };
+var st=document.getElementById('srcToggle');
+if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
+document.querySelectorAll('#sources tr[data-src]').forEach(function(tr){
+var ex=tr.querySelector('.src-cell');
+if(on&&!ex){var td=document.createElement('td');td.className='src-cell';td.textContent=tr.getAttribute('data-src');tr.appendChild(td)}
+else if(!on&&ex){ex.remove()}});
+document.querySelectorAll('#sources thead tr').forEach(function(tr){
+var ex=tr.querySelector('.src-th');
+if(on&&!ex){var th=document.createElement('th');th.className='src-th';th.textContent='Source';tr.appendChild(th)}
+else if(!on&&ex){ex.remove()}});
+}st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}
 })();
 </script>
 <script src="/search.js"></script>

@@ -18,6 +18,10 @@ CRAFTS   = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing','cloth
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
 
+LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()['v']
+LSB_SHORT  = LSB_COMMIT[:10]
+LSB_URL    = f'https://github.com/LandSandBoat/server/tree/{LSB_COMMIT}'
+
 # ─── Helpers ────────────────────────────────────────────────────────────────
 
 def slug(name):
@@ -136,7 +140,7 @@ SOURCE_ORDER = [
 ]
 
 def _src_attr(s):
-    return f' title="{escape(s["file"])}"' if s.get('file') else ''
+    return f' data-src="{escape(s["file"])}"' if s.get('file') else ''
 
 def _gate(s):
     return f' <span class="pill">{escape(s["gate"])}</span>' if s.get('gate') else ''
@@ -145,7 +149,7 @@ def render_sources(item_sources):
     rows = [s for s in item_sources if s['type'] not in ('synthesis','desynthesis')]
     if not rows:
         return ''
-    h = '<section class="panel pad"><h2>Where to get it</h2>'
+    h = '<section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2>'
     for label, types in SOURCE_ORDER:
         group = [s for s in rows if s['type'] in types]
         if not group:
@@ -361,6 +365,9 @@ td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
 .pill.wotg{border-color:var(--gil);color:var(--gil)}
 .act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
 .act:hover{color:var(--ink);border-color:var(--frame)}
+.src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
+.src-toggle:hover{color:var(--ink-soft)}
+.src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
 @media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}.site-nav{gap:10px}}"""
 
 THEME_JS = """\
@@ -374,6 +381,17 @@ var n=c==='dark'?'light':c==='light'?null:'dark';
 if(n){document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
 else{document.documentElement.removeAttribute('data-theme');try{localStorage.removeItem('theme')}catch(e){}}
 };
+var st=document.getElementById('srcToggle');
+if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
+document.querySelectorAll('#sources tr[data-src]').forEach(function(tr){
+var ex=tr.querySelector('.src-cell');
+if(on&&!ex){var td=document.createElement('td');td.className='src-cell';td.textContent=tr.getAttribute('data-src');tr.appendChild(td)}
+else if(!on&&ex){ex.remove()}});
+document.querySelectorAll('#sources thead tr').forEach(function(tr){
+var ex=tr.querySelector('.src-th');
+if(on&&!ex){var th=document.createElement('th');th.className='src-th';th.textContent='Source';tr.appendChild(th)}
+else if(!on&&ex){ex.remove()}});
+}st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}
 })();"""
 
 # ─── Page builder ───────────────────────────────────────────────────────────
@@ -446,7 +464,7 @@ def build_page(iid):
         f' {sec}\n'
         ' <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">\n'
         '  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>\n'
-        '  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p>\n'
+        f'  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{LSB_URL}" rel="noopener"><code style="font-size:.85em">{LSB_SHORT}</code></a>. <a href="/about-the-data">About the data</a>.</p>\n'
         ' </footer>\n'
         '</div>\n'
         f'<script>\n{THEME_JS}\n</script>\n'

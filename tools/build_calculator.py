@@ -20,6 +20,9 @@ SUB = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
 
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()
+LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()[0]
+LSB_SHORT = LSB_COMMIT[:10]
+LSB_URL = f'https://github.com/LandSandBoat/server/tree/{LSB_COMMIT}'
 
 def pretty(n):
     w = n.replace('_', ' ').title().split()
@@ -91,6 +94,7 @@ for title, craft in crafts.items():
 read = lambda f: open(os.path.join(TPL, f), encoding='utf-8').read()
 html = (read('calc_head.html') + read('calc_body.html') +
         '\n<script>\n' + read('calc_app.js') + '\n</script>\n<script src="/search.js"></script>\n</body></html>\n')
+html = html.replace('__LSB_URL__', LSB_URL).replace('__LSB_SHORT__', LSB_SHORT)
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html)

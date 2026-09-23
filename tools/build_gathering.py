@@ -14,6 +14,9 @@ ABYSSEA_ZONES = {'abyssea_attohwa', 'abyssea_konschtat', 'abyssea_la_theine',
                  'abyssea_vunkerl', 'abyssea_uleguerand', 'abyssea_empyreal'}
 
 db = sqlite3.connect(DB)
+LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()[0]
+LSB_SHORT = LSB_COMMIT[:10]
+LSB_URL = f'https://github.com/LandSandBoat/server/tree/{LSB_COMMIT}'
 db.row_factory = sqlite3.Row
 
 ITEMS = {}
@@ -153,10 +156,10 @@ def subnav(current):
         links.append(f'<a href="/gathering/{slug}"{cls}>{label}</a>')
     return '<div class="sub-nav">' + ''.join(links) + '</div>'
 
-FOOTER = """\
+FOOTER = f"""\
 <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
- <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p>
+ <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{LSB_URL}" rel="noopener"><code style="font-size:.85em">{LSB_SHORT}</code></a>. <a href="/about-the-data">About the data</a>.</p>
 </footer>"""
 
 THEME_JS = """\

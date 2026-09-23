@@ -10,6 +10,9 @@ DATA_DIR = os.path.join(ROOT, 'public', 'data')
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 
 db = sqlite3.connect(DB)
+LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()[0]
+LSB_SHORT = LSB_COMMIT[:10]
+LSB_URL = f'https://github.com/LandSandBoat/server/tree/{LSB_COMMIT}'
 
 def pretty(z):
     if not z: return ''
@@ -177,7 +180,7 @@ BODY = """\
  </section>
  <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
   <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
-  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3).</p>
+  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="__LSB_URL__" rel="noopener"><code style="font-size:.85em">__LSB_SHORT__</code></a>. <a href="/about-the-data">About the data</a>.</p>
  </footer>
 </div>"""
 
@@ -427,6 +430,7 @@ HEAD = """\
 """
 
 html = HEAD + CSS + '\n</style>\n</head>\n<body>\n' + SVG + '\n' + BODY + '\n<script>\n' + JS + '\n</script>\n<script src="/search.js"></script>\n</body>\n</html>\n'
+html = html.replace('__LSB_URL__', LSB_URL).replace('__LSB_SHORT__', LSB_SHORT)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html)
 print(f"shopping.html: {os.path.getsize(OUT)/1024:.0f} KB")

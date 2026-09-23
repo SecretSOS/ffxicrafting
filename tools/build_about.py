@@ -1,0 +1,221 @@
+#!/usr/bin/env python3
+"""Generate public/about-the-data.html — methodology and provenance page."""
+import sqlite3, os, sys
+from collections import Counter
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
+OUT = os.path.join(ROOT, 'public', 'about-the-data.html')
+
+db = sqlite3.connect(DB)
+db.row_factory = sqlite3.Row
+
+lsb_commit = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()['v']
+short_hash = lsb_commit[:10]
+item_count = db.execute("SELECT COUNT(*) FROM items").fetchone()[0]
+recipe_count = db.execute("SELECT COUNT(*) FROM recipes").fetchone()[0]
+source_count = db.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
+
+type_counts = {}
+for r in db.execute("SELECT type, COUNT(*) as c FROM sources GROUP BY type ORDER BY c DESC"):
+    type_counts[r['type']] = r['c']
+
+file_counts = Counter()
+for r in db.execute("SELECT file FROM sources WHERE file IS NOT NULL"):
+    base = r['file'].split('/')[-1]
+    file_counts[base] += 1
+
+CSS = """\
+:root{
+ --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
+ --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
+ --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
+ --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
+:root[data-theme="light"]{
+ --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
+ --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
+a:hover{border-bottom-color:var(--link)}
+:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
+.wrap{max-width:800px;width:92%;margin:0 auto;padding:22px 14px 70px}
+.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
+.site-nav .logo:hover{color:var(--gil)}
+.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
+.site-nav .links a{color:var(--ink-soft);border-bottom:none}
+.site-nav .links a:hover{color:var(--ink)}
+.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
+#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
+#search:focus{border-color:var(--gil);outline:none}
+#search::placeholder{color:var(--ink-faint)}
+.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
+.search-wrap:focus-within .kbd{display:none}
+.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
+ max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+a.sr-item{display:flex;align-items:baseline;gap:8px;padding:8px 12px;color:var(--ink);
+ border-bottom:1px solid var(--rule);font-size:.88rem}
+a.sr-item:last-child{border-bottom:none}
+a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
+.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
+ box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
+.pad{padding:20px 22px}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:1.4em 0 .5em;color:var(--ink)}
+h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
+p{max-width:66ch;line-height:1.65}
+.lede{color:var(--ink-soft);margin:0}
+.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
+.act:hover{color:var(--ink);border-color:var(--frame)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
+ padding:8px 10px;border-bottom:2px solid var(--rule)}
+td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+code{font-family:ui-monospace,monospace;font-size:.88em;background:color-mix(in srgb,var(--bg) 55%,transparent);padding:2px 6px;border-radius:3px}
+ul{padding-left:1.4em}li{margin-bottom:.4em}
+.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
+@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}"""
+
+NAV = '<nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>'
+
+THEME_JS = '(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();'
+
+COMMIT_URL = f'https://github.com/LandSandBoat/server/tree/{lsb_commit}'
+
+source_type_rows = ''
+for stype, count in sorted(type_counts.items()):
+    source_type_rows += f'<tr><td><code>{stype}</code></td><td style="text-align:right">{count:,}</td></tr>\n'
+
+html = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About the data · FFXI Crafting</title>
+<meta name="description" content="How every number on this site is traced back to the LandSandBoat server source code.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+{CSS}
+</style>
+</head>
+<body>
+<div class="wrap">
+ {NAV}
+ <header class="panel pad">
+  <h1>About the data</h1>
+  <p class="lede">Every number on this site is read from the <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat server source</a>, not from a wiki. This page explains the method so you can verify anything you see.</p>
+ </header>
+
+ <section class="panel pad">
+  <h2>The source</h2>
+  <p>The data comes from commit <a href="{COMMIT_URL}" rel="noopener"><code>{short_hash}</code></a> of the LandSandBoat project, an open-source FFXI server emulator. A build script (<code>tools/build_db.py</code>) parses the server’s SQL, Lua, YAML, and C++ files into a SQLite database. A second set of scripts generates this site’s pages from that database.</p>
+  <p>Nothing is hand-written. If a number appears on an item or zone page, it was read from a specific file in the server source, and that file path is shown alongside it.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>What’s parsed</h2>
+  <table>
+   <thead><tr><th>Source type</th><th style="text-align:right">Rows</th></tr></thead>
+   <tbody>
+{source_type_rows}
+   </tbody>
+  </table>
+  <p style="margin-top:1em">Total: <strong>{source_count:,}</strong> source rows across <strong>{item_count:,}</strong> items and <strong>{recipe_count:,}</strong> recipes.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>Where the files live</h2>
+  <p>Each source row records the file it was parsed from. The main file types and what they contain:</p>
+  <ul>
+   <li><code>mobs.yaml</code> — mob drops, steal tables, and crystal drops, from <code>settings/default/maps/zones/*/mobs.yaml</code></li>
+   <li><code>synth_recipes.sql</code> — all crafting recipes (skills, ingredients, results, HQ tiers)</li>
+   <li><code>guild_shops.lua</code> — guild vendor inventories and prices</li>
+   <li><code>shop.lua</code> — NPC shop inventories per zone</li>
+   <li><code>treasure.lua</code> — chest and coffer loot tables</li>
+   <li><code>casket_loot.lua</code> — field casket drop tables</li>
+   <li><code>data.lua</code> — HELM gathering point tables (mining, logging, harvesting, excavation)</li>
+   <li><code>fishing_catch.sql</code> — fishing areas, catch tables, rod and bait data</li>
+   <li><code>gardening_results.sql</code> — gardening seed × crystal result tables</li>
+   <li><code>mob_entity.cpp</code> — mob crystal drop assignments (signet/sanction/sigil)</li>
+   <li><code>*.lua</code> (per-NPC) — individual vendor shop scripts</li>
+   <li><code>*.lua</code> (per-BCNM) — battlefield loot crate tables</li>
+  </ul>
+ </section>
+
+ <section class="panel pad">
+  <h2>How rates work</h2>
+  <h3>Drop rates</h3>
+  <p>Mob drop rates are the server’s configured percentage per kill. The server rolls each drop independently, so a mob with a 24% and a 15% drop gives you those exact chances per kill. Some servers apply a <code>DROP_RATE_MULTIPLIER</code> — the rates shown here are the base values before any multiplier.</p>
+  <h3>Gathering rates</h3>
+  <p>HELM (mining, logging, harvesting, excavation) rates are per-swing chances from the zone’s <code>data.lua</code>. Each swing rolls against the full table; the percentages shown are the relative weights normalized to 100%.</p>
+  <h3>Crafting math</h3>
+  <p>Skill-up chances, success rates, and HQ odds are computed from the formulas in <code>synthutils.cpp</code>. The specific rules: 60% skill-up chance under skill 50, 25% at 50+. HQ rates: 1.56% (0–10 gap), 6.25% (11–30), 25% (31–50), 50% (51+), with 25% chance to upgrade each tier.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>Era scope</h2>
+  <p>This site targets era-75 private servers. Content included: base game, Rise of the Zilart, Chains of Promathia, Treasures of Aht Urhgan, and Wings of the Goddess (flagged). Excluded: Abyssea, Seekers of Adoulin, Rhapsodies of Vana’diel.</p>
+  <p>Content tagged as WotG is marked with a badge because not all era servers enable the same WotG content.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>What’s not here</h2>
+  <p>Honest gaps in the data:</p>
+  <ul>
+   <li>Quest turn-ins (what you trade <em>to</em> a quest) aren’t parsed, only rewards</li>
+   <li>Mob aggro, link, and detection behaviour aren’t in the parsed YAML — they live in Lua mob pool files</li>
+   <li>Respawn timers, for the same reason</li>
+   <li>Zone maps — these live in the game client, not the server source</li>
+   <li>Crafting food effects — not in upstream <code>item_mods</code></li>
+   <li>About 7 crafting ingredients have no source in any parsed table</li>
+  </ul>
+  <p>When data is missing, the site says so rather than guessing.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>Phoenix-specific unknowns</h2>
+  <p>Phoenix runs a private fork of LandSandBoat. These settings may differ from the upstream defaults shown here:</p>
+  <ul>
+   <li><code>DROP_RATE_MULTIPLIER</code> — could scale all drop rates</li>
+   <li><code>CRAFT_HQ_CHANCE_MULTIPLIER</code> — could change HQ odds</li>
+   <li><code>CRAFT_MODERN_SYSTEM</code> — upstream defaults to true (retail rules); era servers typically set false</li>
+   <li><code>CRAFT_COMMON_CAP</code> — 600 (era) or 700 (retail)</li>
+   <li>Which WotG content is enabled</li>
+   <li>Conquest standings (affects Signet crystals and regional vendors)</li>
+  </ul>
+  <p>Where any of these would change an answer, the site notes it rather than assuming Phoenix’s value.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2>Verify it yourself</h2>
+  <p>The full source is at <a href="https://github.com/LandSandBoat/server" rel="noopener">github.com/LandSandBoat/server</a>. Every source annotation on item pages links to the file path — navigate to it in the repo at commit <a href="{COMMIT_URL}" rel="noopener"><code>{short_hash}</code></a> to see the raw data this site parsed.</p>
+ </section>
+
+ <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
+  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
+  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{COMMIT_URL}" rel="noopener"><code>{short_hash}</code></a>.</p>
+ </footer>
+</div>
+<script>{THEME_JS}</script>
+<script src="/search.js"></script>
+</body>
+</html>
+"""
+
+with open(OUT, 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print(f'about-the-data.html: {os.path.getsize(OUT) / 1024:.0f} KB')
+print(f'LSB commit: {short_hash}')
