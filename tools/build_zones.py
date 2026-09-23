@@ -148,7 +148,8 @@ FOOTER = f'<footer class="panel pad" style="color:var(--ink-faint);font-size:.85
 
 THEME_JS = '(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();'
 
-def page_html(title, desc, body):
+def page_html(title, desc, body, slug=''):
+    og_path = f'zone/{slug}' if slug else 'zone/'
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -156,6 +157,11 @@ def page_html(title, desc, body):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(title)} · Phoenix era 75</title>
 <meta name="description" content="{esc(desc)}">
+<meta property="og:title" content="{esc(title)} — FFXI Crafting">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/{og_path}">
+<meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -429,7 +435,7 @@ def build_zone_page(zone_name, sources):
     body += 'No respawn timers for the same reason.</p></section>\n'
 
     desc = f'{zn}: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.'
-    return page_html(zn, desc, body)
+    return page_html(zn, desc, body, slugify(zone_name))
 
 # ─── Zone index page ────────────────────────────────────────────────
 

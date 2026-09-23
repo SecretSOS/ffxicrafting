@@ -279,6 +279,11 @@ HEAD = """\
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Profit finder · Phoenix era 75</title>
 <meta name="description" content="Every era recipe ranked by profit margin. Uses your custom prices and skill levels to find the most profitable crafts in FFXI.">
+<meta property="og:title" content="Profit Finder — FFXI Crafting">
+<meta property="og:description" content="Every era recipe ranked by profit margin. Uses your custom prices and skill levels.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/profit">
+<meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>

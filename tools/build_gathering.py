@@ -172,6 +172,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 })();"""
 
 def page(title, desc, nav_id, body):
+    og_path = f'gathering/{nav_id}' if nav_id else 'gathering/'
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -179,6 +180,11 @@ def page(title, desc, nav_id, body):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(title)} · Phoenix era 75</title>
 <meta name="description" content="{esc(desc)}">
+<meta property="og:title" content="{esc(title)} — FFXI Crafting">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/{og_path}">
+<meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>

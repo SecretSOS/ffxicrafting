@@ -441,6 +441,9 @@ def build_page(iid):
         f'<meta name="description" content="Where to get {ne} in FFXI — sources, recipes, prices">\n'
         f'<meta property="og:title" content="{ne} — FFXI Crafting">\n'
         f'<meta property="og:description" content="Sources, recipes and prices for {ne} on era-75 FFXI servers.">\n'
+        '<meta property="og:type" content="website">\n'
+        f'<meta property="og:url" content="https://ffxicrafting.com/item/{iid}-{slug(it["name"])}">\n'
+        '<meta name="theme-color" content="#0c1728">\n'
         '<link rel="preconnect" href="https://fonts.googleapis.com">'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         '<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">\n'
@@ -496,7 +499,10 @@ sm += f'<url><loc>{SITE}/</loc></url>\n'
 sm += f'<url><loc>{SITE}/calculator</loc></url>\n'
 sm += f'<url><loc>{SITE}/profit</loc></url>\n'
 sm += f'<url><loc>{SITE}/shopping</loc></url>\n'
+sm += f'<url><loc>{SITE}/about-the-data</loc></url>\n'
 sm += f'<url><loc>{SITE}/gathering/</loc></url>\n'
+for gp in ('mining', 'logging', 'harvesting', 'excavation', 'gardening', 'digging', 'fishing', 'clamming'):
+    sm += f'<url><loc>{SITE}/gathering/{gp}</loc></url>\n'
 sm += f'<url><loc>{SITE}/zone/</loc></url>\n'
 for zf in sorted(os.listdir(os.path.join(ROOT, 'public', 'zone'))):
     if zf.endswith('.html') and zf != 'index.html':
