@@ -46,6 +46,14 @@
 input[type=number]{width:7rem;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--rule);
  border-radius:5px;padding:6px 8px;text-align:right}
 input[type=number].set{border-color:var(--gil);color:var(--gil)}
+.sell-row{grid-template-columns:minmax(0,1fr) auto}
+.sell-prices{display:flex;align-items:center;gap:10px}
+.sell-npc{color:var(--ink-faint);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:4.5rem;text-align:right}
+.ah-input{width:6rem!important;font-size:.88rem!important}
+.ah-input::placeholder{color:var(--ink-faint);font-size:.78rem}
+.gain{color:var(--best)}
+.loss{color:var(--loss)}
+.profit-src{color:var(--ink-faint);font-weight:400;margin-left:2px}
 .filter{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 14px;align-items:center}
 th{position:sticky;top:0;background:var(--panel-bot);text-align:left;font-weight:400;font-size:.76rem;
  padding:7px 10px;border-bottom:1px solid var(--rule);z-index:1;text-transform:none;letter-spacing:0}

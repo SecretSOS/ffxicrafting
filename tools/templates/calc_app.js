@@ -19,7 +19,9 @@ function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&am
 function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
 function gil(n,cls){ return '<span class="gil '+(cls||'')+'"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>'; }
 function price(id){ var p=prices[id]; if(p!==undefined&&p!=='') return Number(p); var it=I[id]; return it?(it.v||0):0; }
-function sell(id){ var p=prices['s'+id]; if(p!==undefined&&p!=='') return Number(p); var it=I[id]; return it?(it.b||0):0; }
+function npcSell(id){ var it=I[id]; return it?(it.b||0):0; }
+function ahPrice(id){ var p=prices['s'+id]; return (p!==undefined&&p!=='')?Number(p):0; }
+function bestSell(id){ return ahPrice(id)||npcSell(id); }
 function crystalOf(id){ var n=(I[id]&&I[id].n||'').toLowerCase().replace(' crystal',''); return ELEM.indexOf(n)>=0?n:'light'; }
 function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
 function itemUrl(id){ var it=I[id]; return it?'/item/'+id+'-'+slugify(it.n):'#'; }
@@ -32,7 +34,10 @@ function perLevel(r,skill){
   var diff=r.lv-skill; if(diff<=0) return null;
   var chance=(skill<50?0.6:0.25), gain=avgGain(diff,skill);
   var synths=1/(chance*gain)*1.05;
-  return {synths:synths, cost:costEach(r)*synths, out:sell(r.res)*r.rq*synths};
+  var cost=costEach(r)*synths;
+  var npc=npcSell(r.res)*r.rq*synths;
+  var ah=ahPrice(r.res)?ahPrice(r.res)*r.rq*synths:0;
+  return {synths:synths, cost:cost, npc:npc, ah:ah, best:(ah||npc)};
 }
 function bracketsFor(){
   var out=[];
@@ -63,29 +68,44 @@ function renderPrices(){
     r.ing.concat([[r.cry,1]]).forEach(function(p){ if(!seen[p[0]]){seen[p[0]]=1;ing.push(p[0]);} });
     if(!seen['s'+r.res]){ seen['s'+r.res]=1; outs.push(r.res); }
   });
-  function row(id,isSell){
+  function buyRow(id){
     var it=I[id]; if(!it) return '';
-    var key=isSell?('s'+id):id, set=prices[key]!==undefined&&prices[key]!=='';
-    if(onlyMissing && (set || (!isSell && it.v))) return '';
-    var hint=isSell?('NPC pays '+fmt(it.b||0)+(it.x?' · Ex, unsellable':'')):
-      (it.v?('vendor '+fmt(it.v)):(it.g?('gathered: '+it.g):(it.m?('drops at '+it.m+'%'):(it.c!==null&&it.c!==undefined?('craftable at lv '+it.c):'no vendor'))));
+    var set=prices[id]!==undefined&&prices[id]!=='';
+    if(onlyMissing && (set || it.v)) return '';
+    var hint=it.v?('vendor '+fmt(it.v)):(it.g?('gathered: '+it.g):(it.m?('drops at '+it.m+'%'):(it.c!==null&&it.c!==undefined?('craftable at lv '+it.c):'no vendor')));
     return '<div class="price-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a><small>'+hint+'</small></div>'+
-      '<input type="number" min="0" inputmode="numeric" '+(isSell?'data-sid':'data-id')+'="'+id+'" value="'+(set?prices[key]:'')+'" placeholder="'+(isSell?(it.b||0):(it.v||0))+'" class="'+(set?'set':'')+'" aria-label="'+esc(it.n)+(isSell?' sell price':' buy price')+'"></div>';
+      '<input type="number" min="0" inputmode="numeric" data-id="'+id+'" value="'+(set?prices[id]:'')+'" placeholder="'+(it.v||0)+'" class="'+(set?'set':'')+'" aria-label="'+esc(it.n)+' buy price"></div>';
+  }
+  function sellRow(id){
+    var it=I[id]; if(!it) return '';
+    var ahSet=prices['s'+id]!==undefined&&prices['s'+id]!=='';
+    var npc=it.b||0;
+    var exTag=it.x?' <span style="color:var(--loss);font-size:.75rem">Ex</span>':'';
+    return '<div class="price-row sell-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a>'+
+      '<small>Vendor sell: '+fmt(npc)+'g'+exTag+'</small></div>'+
+      '<div class="sell-prices">'+
+      '<span class="sell-npc" title="NPC vendor sell price">'+fmt(npc)+'g</span>'+
+      '<input type="number" min="0" inputmode="numeric" data-sid="'+id+'" value="'+(ahSet?prices['s'+id]:'')+'" placeholder="AH price" class="ah-input'+(ahSet?' set':'')+'" aria-label="'+esc(it.n)+' AH price">'+
+      '</div></div>';
   }
   document.getElementById('prices').innerHTML=
-    '<div><h3 style="font:400 1rem var(--font-display);margin:10px 0 4px">Materials</h3>'+ing.map(function(i){return row(i,false);}).join('')+'</div>'+
-    '<div><h3 style="font:400 1rem var(--font-display);margin:10px 0 4px">Results you might sell</h3>'+outs.map(function(i){return row(i,true);}).join('')+'</div>';
+    '<div><h3 style="font:400 1rem var(--font-display);margin:10px 0 4px">Materials <span style="color:var(--ink-faint);font-weight:400;font-size:.82rem">— buy prices</span></h3>'+ing.map(function(i){return buyRow(i);}).join('')+'</div>'+
+    '<div><h3 style="font:400 1rem var(--font-display);margin:10px 0 4px">Results <span style="color:var(--ink-faint);font-weight:400;font-size:.82rem">— vendor sell &amp; AH prices</span></h3>'+
+    '<div style="display:flex;justify-content:flex-end;gap:18px;padding:0 0 6px;font-size:.72rem;color:var(--ink-faint)"><span>NPC sell</span><span style="width:7rem;text-align:center">AH price</span></div>'+
+    outs.map(function(i){return sellRow(i);}).join('')+'</div>';
   var n=Object.keys(prices).filter(function(k){return prices[k]!=='';}).length;
   document.getElementById('priceMeta').textContent=n?(n+' saved'):'using vendor prices';
 }
 function renderBrackets(){
   if(!C[cur]) return;
-  var html='', totalCost=0, totalSynths=0, totalOut=0, missing=0;
+  var hasAnyAH=false;
+  C[cur].forEach(function(r){ if(ahPrice(r.res)) hasAnyAH=true; });
+  var html='', totalCost=0, totalSynths=0, totalNpc=0, totalAh=0, missing=0;
   bracketsFor().forEach(function(b){
     var rows=rowsFor(cur,b);
     var usable=rows.filter(function(x){ return x.up.length===0 && !x.r.ki; });
     var best=usable.slice().sort(function(a,z){ return a.pl.cost-z.pl.cost; })[0];
-    if(best){ var levels=b.hi-b.lo+1; totalCost+=best.pl.cost*levels; totalSynths+=best.pl.synths*levels; totalOut+=best.pl.out*levels; }
+    if(best){ var levels=b.hi-b.lo+1; totalCost+=best.pl.cost*levels; totalSynths+=best.pl.synths*levels; totalNpc+=best.pl.npc*levels; totalAh+=best.pl.ah*levels; }
     rows.sort(function(a,z){
       if(!!a.up.length!==!!z.up.length) return a.up.length?1:-1;
       if(a.up.length) return a.r.lv-z.r.lv;
@@ -94,7 +114,7 @@ function renderBrackets(){
     rows.forEach(function(x){ missing+=x.up.length?1:0; });
     html+='<details class="panel"'+(b.lo===1?' open':'')+'><summary><span class="chev"></span>Skill '+b.lo+'–'+b.hi+
       '<span class="meta"><span>'+rows.length+' recipes</span>'+(best?'<span>cheapest '+gil(best.pl.cost)+' per level</span>':'<span class="noprice">nothing priced</span>')+'</span></summary>'+
-      '<table><thead><tr><th>Recipe</th><th class="hide-sm">Crystal</th><th class="num">Cost each</th><th class="num hide-sm">Synths/level</th><th class="num">Per level</th><th class="num hide-sm">Output back</th></tr></thead><tbody>'+
+      '<table><thead><tr><th>Recipe</th><th class="hide-sm">Crystal</th><th class="num">Cost each</th><th class="num hide-sm">Synths/level</th><th class="num">Per level</th><th class="num hide-sm">Vendor sell</th>'+(hasAnyAH?'<th class="num hide-sm">AH sell</th>':'')+'<th class="num">Profit/level</th></tr></thead><tbody>'+
       rows.map(function(x){
         var r=x.r, cls=[];
         if(best&&r.id===best.r.id) cls.push('best');
@@ -109,22 +129,33 @@ function renderBrackets(){
           return '<a href="'+itemUrl(p[0])+'">'+icoHtml(p[0])+esc(it.n)+'</a>'+(p[1]>1?' ×'+p[1]:'')+
             (pr?' <span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(pr*p[1])+'</span>':' <span class="noprice">no price</span>');
         }).join(' · ');
+        var net=x.pl.best-x.pl.cost;
+        var profitCls=net>=0?'gain':'loss';
+        var profitLabel=ahPrice(r.res)?'AH':'NPC';
         return '<tr class="'+cls.join(' ')+'"><td><div class="rname">'+icoHtml(r.res)+esc(I[r.res].n)+(r.rq>1?' ×'+r.rq:'')+pills+'</div>'+
           '<div class="tagline">recipe level '+r.lv+'</div><div class="ings">'+ings+'</div></td>'+
           '<td class="hide-sm"><span class="crystal" style="--ce:var(--'+ce+')"><span class="dot"></span>'+ce+'</span></td>'+
           '<td class="num">'+(x.up.length?'<span class="noprice">—</span>':gil(x.cost))+'</td><td class="num hide-sm">'+fmt(x.pl.synths)+'</td>'+
-          '<td class="num">'+(x.up.length?'<span class="noprice">—</span>':gil(x.pl.cost))+'</td><td class="num hide-sm">'+(sell(r.res)?gil(x.pl.out):'<span class="noprice">—</span>')+'</td></tr>';
+          '<td class="num">'+(x.up.length?'<span class="noprice">—</span>':gil(x.pl.cost))+'</td>'+
+          '<td class="num hide-sm">'+(npcSell(r.res)?gil(x.pl.npc):'<span class="noprice">—</span>')+'</td>'+
+          (hasAnyAH?'<td class="num hide-sm">'+(ahPrice(r.res)?gil(x.pl.ah):'<span class="noprice">—</span>')+'</td>':'')+
+          '<td class="num">'+(x.up.length?'<span class="noprice">—</span>':'<span class="'+profitCls+'">'+(net>=0?'+':'−')+fmt(Math.abs(net))+'<small class="profit-src"> '+profitLabel+'</small></span>')+'</td></tr>';
       }).join('')+'</tbody></table></details>';
   });
   document.getElementById('brackets').innerHTML=html;
-  var net=totalOut-totalCost;
-  document.getElementById('summary').innerHTML=
+  var netNpc=totalNpc-totalCost, netAh=totalAh-totalCost;
+  var sumHtml=
     '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 60, cheapest path</span></div>'+
     '<div class="stat"><b>'+fmt(totalSynths)+'</b><span>synths</span></div>'+
-    '<div class="stat"><b>'+gil(totalOut)+'</b><span>output value at normal quality</span></div>'+
-    '<div class="stat"><b class="'+(net>=0?'gain':'loss')+'">'+(net>=0?'+':'−')+fmt(Math.abs(net))+'</b><span>net if you sell it all</span></div>'+
-    '<div class="stat"><b>'+gil(totalCost/59)+'</b><span>per skill level, average</span></div>'+
-    (missing?'<div class="warn">'+missing+' recipes have unpriced materials and are greyed out. Price them in the panel above to bring them into the comparison.</div>':'');
+    '<div class="stat"><b>'+gil(totalNpc)+'</b><span>vendor sell recovery</span></div>'+
+    '<div class="stat"><b class="'+(netNpc>=0?'gain':'loss')+'">'+(netNpc>=0?'+':'−')+fmt(Math.abs(netNpc))+'</b><span>net (vendor)</span></div>';
+  if(hasAnyAH){
+    sumHtml+='<div class="stat"><b>'+gil(totalAh)+'</b><span>AH sell recovery</span></div>'+
+      '<div class="stat"><b class="'+(netAh>=0?'gain':'loss')+'">'+(netAh>=0?'+':'−')+fmt(Math.abs(netAh))+'</b><span>net (AH)</span></div>';
+  }
+  sumHtml+='<div class="stat"><b>'+gil(totalCost/59)+'</b><span>per skill level, average</span></div>';
+  if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials and are greyed out. Price them in the panel above to bring them into the comparison.</div>';
+  document.getElementById('summary').innerHTML=sumHtml;
 }
 function renderAll(){ renderCrafts(); renderPrices(); renderBrackets(); }
 function fetchJSON(url,cb){
@@ -188,7 +219,7 @@ function onBothLoaded(){
   btn.addEventListener('click',function(e){ e.stopPropagation(); menu.hidden?open():close(); });
   menu.addEventListener('click',function(e){
     var o=e.target.closest('.combo-opt'); if(!o) return;
-    if(o.classList.contains('off')) return;   // coming soon: not selectable
+    if(o.classList.contains('off')) return;
     close();
   });
   document.addEventListener('click',function(e){ if(!menu.hidden && !menu.contains(e.target) && e.target!==btn) close(); });
