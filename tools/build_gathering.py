@@ -141,7 +141,7 @@ details.zone .zone-body{padding:8px 0 16px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}"""
 
 NAV = """\
-<nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>"""
+<nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>"""
 
 SUBNAV_ITEMS = [
     ('mining', 'Mining'), ('logging', 'Logging'), ('harvesting', 'Harvesting'),
