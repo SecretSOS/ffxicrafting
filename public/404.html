@@ -9,54 +9,10 @@
 <meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 <style>
-:root{--bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;--ink:#ece6d6;--ink-soft:#a9b5cb;
- --ink-faint:#74829e;--link:#9fd0ff;--gil:#e8c44a;--best:#7fd6a2;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a}}
-:root[data-theme="light"]{--bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1400px;width:92%;margin:0 auto;padding:30px 16px 70px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:16px;padding:26px}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.1rem,5vw,3.2rem);margin:0 0 .2em;line-height:1.05}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.45rem;margin:0 0 .5em}
-footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
-.made{font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .6em}
-.made strong{font-weight:400;color:var(--gil)}
 .not-found{text-align:center;padding:60px 26px}
-.not-found h1{color:var(--gil);margin-bottom:.3em}
+.not-found h1{color:var(--gil);margin-bottom:.3em;font-size:clamp(2.1rem,5vw,3.2rem)}
 .not-found p{color:var(--ink-soft);max-width:44ch;margin:0 auto .8em}
 .not-found .search-big{max-width:420px;margin:1.4em auto 0}
 .not-found .search-big input{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
@@ -68,8 +24,47 @@ footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
 </style>
 </head>
 <body>
-<div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">By Craft</div>
+  <a href="/crafts#wood"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--wood)"></span>Woodworking</span></a>
+  <a href="/crafts#smith"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--smith)"></span>Smithing</span></a>
+  <a href="/crafts#gold"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--gold)"></span>Goldsmithing</span></a>
+  <a href="/crafts#cloth"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cloth)"></span>Clothcraft</span></a>
+  <a href="/crafts#leather"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--leather)"></span>Leathercraft</span></a>
+  <a href="/crafts#bone"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--bone)"></span>Bonecraft</span></a>
+  <a href="/crafts#alchemy"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--alchemy)"></span>Alchemy</span></a>
+  <a href="/crafts#cook"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cook)"></span>Cooking</span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+ <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Not Found</nav>
 
  <section class="panel not-found">
   <h1>Page not found</h1>
@@ -80,10 +75,11 @@ footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
   <p class="quick">Or try: <a href="/calculator">Calculator</a> <a href="/profit">Profit Finder</a> <a href="/gathering/">Gathering</a> <a href="/zone/">Zones</a></p>
  </section>
 
- <footer class="panel">
+ <footer class="site-footer panel pad">
   <p class="made">Made by <strong>Secretsos</strong></p>
-  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3). <a href="/about-the-data">About the data</a>.</p>
  </footer>
+</main>
 </div>
 <script>
 (function(){var r=document.documentElement;
@@ -92,6 +88,9 @@ document.getElementById('themeBtn').addEventListener('click',function(){
  var now=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
  var next=now==='light'?'dark':'light';r.setAttribute('data-theme',next);
  try{localStorage.setItem('phoenix-theme',next);}catch(e){}});
+var btn=document.getElementById('menuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
+if(btn){btn.addEventListener('click',function(){sb.classList.toggle('open');ov.classList.toggle('open')});
+ov.addEventListener('click',function(){sb.classList.remove('open');ov.classList.remove('open')});}
 var s4=document.getElementById('search404');
 if(s4)s4.addEventListener('input',function(){
 var q=s4.value.trim();if(!q){document.getElementById('search').value='';return;}

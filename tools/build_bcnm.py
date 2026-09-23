@@ -11,6 +11,9 @@ DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_craf
 OUT = os.path.join(ROOT, 'public', 'bcnm.html')
 ICON_DIR = os.path.join(ROOT, 'public', 'img', 'item')
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from page_template import html_head, layout_open, layout_close, page_end
+
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
 
@@ -196,61 +199,12 @@ for bf in battlefields:
         f'<td class="r">{gil_fmt(bf["drop_value"])}</td></tr>\n'
     )
 
-CSS = r"""
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--best:#7fd6a2;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1400px;width:92%;margin:0 auto;padding:30px 16px 70px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:16px;padding:26px}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.1rem,5vw,3.2rem);margin:0 0 .2em;line-height:1.05}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.45rem;margin:0 0 .5em}
-h3{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:1.2em 0 .3em;padding-bottom:.3em;border-bottom:1px solid var(--rule)}
-footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
-.made{font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .6em}
-.made strong{font-weight:400;color:var(--gil)}
+EXTRA_CSS = r"""
 .intro{color:var(--ink-soft);max-width:68ch;margin:0 0 1em;font-size:.95rem}
 .jump-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
 .jump{display:inline-block;font-size:.82rem;padding:4px 12px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);border-bottom:1px solid var(--rule)}
 .jump:hover{border-color:var(--gil);color:var(--ink)}
+.arena-section h2{border-left:none;padding-left:0}
 
 /* Summary table */
 .summary-wrap{overflow-x:auto;margin:0 0 6px}
@@ -295,7 +249,7 @@ footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
 /* Seal info */
 .seal-info{margin:0 0 16px}
 .seal-table{border-collapse:collapse;font-size:.88rem}
-.seal-table th{text-align:left;padding:5px 12px 5px 0;color:var(--ink-faint);font-weight:400}
+.seal-table th{text-align:left;padding:5px 12px 5px 0;color:var(--ink-faint);font-weight:400;border-bottom:none;background:none;text-transform:none;letter-spacing:0}
 .seal-table td{padding:5px 12px 5px 0}
 
 /* Filter */
@@ -305,36 +259,24 @@ footer{color:var(--ink-faint);font-size:.85rem;max-width:74ch}
 .filters select:focus{border-color:var(--gil);outline:none}
 
 @media(max-width:700px){
- .site-nav .links{gap:10px;font-size:.78rem}
  .bf-meta{gap:4px}
  .loot-pct{width:70px}
  .summary-table{font-size:.72rem}
 }
 """
 
-html = f'''<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BCNM Loot Tables — FFXI Crafting</title>
-<meta name="description" content="All 61 BCNM battlefields with crate rolls, drop odds, entry costs and seal prices — from the LandSandBoat server source.">
-<meta name="theme-color" content="#0c1728">
-<meta property="og:title" content="BCNM Loot Tables — FFXI Crafting">
-<meta property="og:description" content="All 61 orb battlefields with exact crate rolls and loot odds, read from the server source.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ffxicrafting.com/bcnm">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<style>
-{CSS}
-</style>
-</head>
-<body>
-<div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+html = html_head(
+    'BCNM Loot Tables — FFXI Crafting',
+    'All 61 BCNM battlefields with crate rolls, drop odds, entry costs and seal prices — from the LandSandBoat server source.',
+    'https://ffxicrafting.com/bcnm',
+    extra_css=EXTRA_CSS)
 
- <header class="panel">
+html += layout_open(
+    active='bcnm',
+    crumbs=[('Home', '/'), ('BCNMs', None)])
+
+html += f'''\
+ <header class="panel pad">
   <h1>BCNM Loot Tables</h1>
   <p class="intro">All {len(battlefields)} orb battlefields with their crate rolls, exact drop odds, entry costs and seal prices — read from the LandSandBoat server source. Each crate roll picks one item from its pool; multi-roll crates give you that many picks.</p>
   <div class="seal-info">
@@ -351,8 +293,8 @@ html = f'''<!doctype html>
   </div>
  </header>
 
- <div class="panel">
-  <h2>Summary</h2>
+ <div class="panel pad">
+  <h2 style="border-left:none;padding-left:0">Summary</h2>
   <div class="filters">
    <label>Arena: <select id="filterArena"><option value="">All</option>{''.join(f'<option value="{esc(a)}">{esc(a)}</option>' for a in ARENAS)}</select></label>
    <label>Level cap: <select id="filterCap"><option value="">All</option><option value="20">Lv.20</option><option value="30">Lv.30</option><option value="40">Lv.40</option><option value="50">Lv.50</option><option value="60">Lv.60</option><option value="0">Uncapped</option></select></label>
@@ -369,21 +311,14 @@ html = f'''<!doctype html>
  <div class="jump-nav">{jump_links}</div>
 
  {sections}
+'''
 
- <footer class="panel">
-  <p class="made">Made by <strong>Secretsos</strong></p>
-  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{LSB_URL}" rel="noopener"><code style="font-size:.85em">{LSB_SHORT}</code></a>. <a href="/about-the-data">About the data</a>.</p>
- </footer>
-</div>
+html += layout_close(LSB_COMMIT)
+
+# Add the filter JS before the closing page_end scripts
+html += f'''\
 <script>
 (function(){{
-var r=document.documentElement;
-try{{var t=localStorage.getItem('phoenix-theme');if(t)r.setAttribute('data-theme',t);}}catch(e){{}}
-document.getElementById('themeBtn').addEventListener('click',function(){{
- var now=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
- var next=now==='light'?'dark':'light';r.setAttribute('data-theme',next);
- try{{localStorage.setItem('phoenix-theme',next);}}catch(e){{}}}});
-
 var tbl=document.getElementById('summaryTable');
 var rows=Array.from(tbl.tBodies[0].rows);
 var fA=document.getElementById('filterArena');
@@ -406,10 +341,9 @@ function applyFilters(){{
 fA.onchange=fC.onchange=fS.onchange=applyFilters;
 }})();
 </script>
-<script src="/search.js"></script>
-<script defer src="/_vercel/insights/script.js"></script>
-</body>
-</html>'''
+'''
+
+html += page_end()
 
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:

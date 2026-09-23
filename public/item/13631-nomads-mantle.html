@@ -2,115 +2,94 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nomads Mantle — FFXI Crafting</title>
 <meta name="description" content="Where to get Nomads Mantle in FFXI — sources, recipes, prices">
 <meta property="og:title" content="Nomads Mantle — FFXI Crafting">
-<meta property="og:description" content="Sources, recipes and prices for Nomads Mantle on era-75 FFXI servers.">
+<meta property="og:description" content="Where to get Nomads Mantle in FFXI — sources, recipes, prices">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/item/13631-nomads-mantle">
 <meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 <style>
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--best:#7fd6a2;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a;
-}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a;
-}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1400px;width:92%;margin:0 auto;padding:22px 16px 70px}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
-.pad{padding:20px 22px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
 .item-head{display:flex;align-items:center;gap:14px}
 .item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
-h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
+h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
+h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
+h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
 h3:first-child{margin-top:0}
 .meta{color:var(--ink-soft);margin:.15em 0 0;font-size:.9rem}
 .flag{display:inline-block;font-size:.72rem;border-radius:4px;padding:1px 7px;margin-right:4px;border:1px solid var(--rule);color:var(--ink-faint)}
 .flag.ex{border-color:var(--gil);color:var(--gil)}
 .flag.rare{border-color:var(--best);color:var(--best)}
-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:.4em}
-th{text-align:left;color:var(--ink-faint);font-weight:400;font-size:.74rem;padding:6px 10px;border-bottom:1px solid var(--rule)}
-td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-.num{text-align:right;white-space:nowrap}
+table{font-size:.88rem;margin-bottom:.4em}
 .soft{color:var(--ink-soft);font-size:.85rem}
 .ings{font-size:.84rem;color:var(--ink-soft)}
-.pill{display:inline-block;font-size:.68rem;border-radius:4px;padding:0 5px;margin-left:4px;border:1px solid var(--rule);color:var(--ink-faint)}
-.pill.ki{border-color:#c9a0ff;color:#c9a0ff}
-.pill.wotg{border-color:var(--gil);color:var(--gil)}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
 .src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
 .src-toggle:hover{color:var(--ink-soft)}
 .src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
-@media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}.site-nav{gap:10px}}
+@media(max-width:700px){table{font-size:.8rem}}
 </style>
 </head>
 <body>
-<div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">By Craft</div>
+  <a href="/crafts#wood"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--wood)"></span>Woodworking</span></a>
+  <a href="/crafts#smith"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--smith)"></span>Smithing</span></a>
+  <a href="/crafts#gold"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--gold)"></span>Goldsmithing</span></a>
+  <a href="/crafts#cloth"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cloth)"></span>Clothcraft</span></a>
+  <a href="/crafts#leather"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--leather)"></span>Leathercraft</span></a>
+  <a href="/crafts#bone"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--bone)"></span>Bonecraft</span></a>
+  <a href="/crafts#alchemy"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--alchemy)"></span>Alchemy</span></a>
+  <a href="/crafts#cook"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cook)"></span>Cooking</span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Nomads Mantle</nav>
  <header class="panel pad">
+  <div class="infobox"><div class="infobox-head">Nomads Mantle</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">13631</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">1</span></div><div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">650 gil</span></div></div>
   <div class="item-head"><img class="item-icon" src="/img/item/13631.png" alt="" width="32" height="32"><div>
   <h1>Nomads Mantle</h1>
   <p class="meta">Stack: 1 · NPC: 650g · <a href="https://horizonffxi.wiki/w/index.php?search=Nomads+Mantle&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
   </div></div>
  </header>
  <section class="panel pad"><h2>Used in</h2><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Leathercraft 84 <span class="pill wotg">WotG</span></td><td><a href="/item/11537-kinesis-mantle">Kinesis Mantle</a> <span class="soft">HQ: <a href="/item/11542-kinesis-mantle-1">Kinesis Mantle +1</a> / <a href="/item/11542-kinesis-mantle-1">Kinesis Mantle +1</a> / <a href="/item/11542-kinesis-mantle-1">Kinesis Mantle +1</a></span></td><td class="ings hide-sm"><a href="/item/4099-earth-crystal">Earth Crystal</a> · <a href="/item/2837-ratatoskr-pelt">Ratatoskr Pelt</a> · <a href="/item/13631-nomads-mantle">Nomads Mantle</a></td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Leathercraft 82 <span class="pill">ROTZ</span></td><td><a href="/item/13631-nomads-mantle">Nomads Mantle</a> <span class="soft">HQ: <a href="/item/13632-nomads-mantle-1">Nomads Mantle +1</a> / <a href="/item/13632-nomads-mantle-1">Nomads Mantle +1</a> / <a href="/item/13632-nomads-mantle-1">Nomads Mantle +1</a></span></td><td class="ings hide-sm"><a href="/item/4099-earth-crystal">Earth Crystal</a> · <a href="/item/856-rabbit-hide">Rabbit Hide</a> · <a href="/item/13613-travelers-mantle">Travelers Mantle</a></td></tr></tbody></table></section>
- <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
-  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
-  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
- </footer>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
 </div>
 <script>
-(function(){
-var t;try{t=localStorage.getItem('phoenix-theme')}catch(e){}
-if(t)document.documentElement.setAttribute('data-theme',t);
-var b=document.getElementById('themeBtn');
-if(b)b.onclick=function(){
-var c=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
-var n=c==='light'?'dark':'light';
-document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('phoenix-theme',n)}catch(e){}
-};
 var st=document.getElementById('srcToggle');
 if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
 document.querySelectorAll('#sources tr[data-src]').forEach(function(tr){
@@ -122,8 +101,9 @@ var ex=tr.querySelector('.src-th');
 if(on&&!ex){var th=document.createElement('th');th.className='src-th';th.textContent='Source';tr.appendChild(th)}
 else if(!on&&ex){ex.remove()}});
 }st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}
-})();
 </script>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
 <script src="/search.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

@@ -15,6 +15,9 @@ ERA_SQL  = "('ROTZ','COP','TOAU','WOTG')"
 CRAFTS   = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing','cloth':'Clothcraft',
             'leather':'Leathercraft','bone':'Bonecraft','alchemy':'Alchemy','cook':'Cooking'}
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from page_template import html_head, layout_open, layout_close, page_end, SIDEBAR_JS
+
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
 
@@ -297,91 +300,28 @@ def render_can_desynth(recs):
     h += '</tbody></table></section>'
     return h
 
-# ─── CSS ────────────────────────────────────────────────────────────────────
+# ─── Page-specific CSS (kept inline, shared CSS comes from /style.css) ─────
 
-CSS = """\
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--best:#7fd6a2;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a;
-}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--best:#12734a;
-}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1400px;width:92%;margin:0 auto;padding:22px 16px 70px}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
-.pad{padding:20px 22px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
+ITEM_CSS = """\
 .item-head{display:flex;align-items:center;gap:14px}
 .item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 .15em;line-height:1.1}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:0 0 .6em;padding-bottom:.4em;border-bottom:1px solid var(--rule)}
-h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
+h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
+h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
+h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
 h3:first-child{margin-top:0}
 .meta{color:var(--ink-soft);margin:.15em 0 0;font-size:.9rem}
 .flag{display:inline-block;font-size:.72rem;border-radius:4px;padding:1px 7px;margin-right:4px;border:1px solid var(--rule);color:var(--ink-faint)}
 .flag.ex{border-color:var(--gil);color:var(--gil)}
 .flag.rare{border-color:var(--best);color:var(--best)}
-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:.4em}
-th{text-align:left;color:var(--ink-faint);font-weight:400;font-size:.74rem;padding:6px 10px;border-bottom:1px solid var(--rule)}
-td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-.num{text-align:right;white-space:nowrap}
+table{font-size:.88rem;margin-bottom:.4em}
 .soft{color:var(--ink-soft);font-size:.85rem}
 .ings{font-size:.84rem;color:var(--ink-soft)}
-.pill{display:inline-block;font-size:.68rem;border-radius:4px;padding:0 5px;margin-left:4px;border:1px solid var(--rule);color:var(--ink-faint)}
-.pill.ki{border-color:#c9a0ff;color:#c9a0ff}
-.pill.wotg{border-color:var(--gil);color:var(--gil)}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:5px 11px;font:inherit;font-size:.82rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
 .src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
 .src-toggle:hover{color:var(--ink-soft)}
 .src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
-@media(max-width:700px){.pad{padding:16px}.hide-sm{display:none}table{font-size:.8rem}td,th{padding:5px 6px}.site-nav{gap:10px}}"""
+@media(max-width:700px){table{font-size:.8rem}}"""
 
-THEME_JS = """\
-(function(){
-var t;try{t=localStorage.getItem('phoenix-theme')}catch(e){}
-if(t)document.documentElement.setAttribute('data-theme',t);
-var b=document.getElementById('themeBtn');
-if(b)b.onclick=function(){
-var c=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
-var n=c==='light'?'dark':'light';
-document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('phoenix-theme',n)}catch(e){}
-};
+SRC_TOGGLE_JS = """\
 var st=document.getElementById('srcToggle');
 if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
 document.querySelectorAll('#sources tr[data-src]').forEach(function(tr){
@@ -392,8 +332,7 @@ document.querySelectorAll('#sources thead tr').forEach(function(tr){
 var ex=tr.querySelector('.src-th');
 if(on&&!ex){var th=document.createElement('th');th.className='src-th';th.textContent='Source';tr.appendChild(th)}
 else if(!on&&ex){ex.remove()}});
-}st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}
-})();"""
+}st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}"""
 
 # ─── Page builder ───────────────────────────────────────────────────────────
 
@@ -401,6 +340,21 @@ def build_page(iid):
     it = items[iid]
     name = pretty(it['name'])
     ne = escape(name)
+    item_slug = slug(it['name'])
+
+    page = html_head(
+        f'{ne} — FFXI Crafting',
+        f'Where to get {ne} in FFXI — sources, recipes, prices',
+        f'https://ffxicrafting.com/item/{iid}-{item_slug}',
+        extra_css=ITEM_CSS)
+
+    page += layout_open(
+        active='',
+        crumbs=[('Home', '/'), (ne, None)])
+
+    # Icon
+    icon_path = os.path.join(ROOT, 'public', 'img', 'item', f'{iid}.png')
+    icon_img = f'<img class="item-icon" src="/img/item/{iid}.png" alt="" width="32" height="32">' if os.path.exists(icon_path) else ''
 
     # Flags line
     flags = ''
@@ -422,6 +376,32 @@ def build_page(iid):
     if it['wiki_url']:
         wiki += f' · <a href="{escape(it["wiki_url"])}" target="_blank" rel="noopener">Wiki ↗</a>'
 
+    sep = ' ' if flags and meta_text else ''
+
+    # Infobox
+    infobox = f'<div class="infobox"><div class="infobox-head">{ne}</div>'
+    infobox += f'<div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">{iid}</span></div>'
+    if it['stack']:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">{it["stack"]}</span></div>'
+    flag_parts = []
+    if it['ex']: flag_parts.append('Ex')
+    if it['rare']: flag_parts.append('Rare')
+    if it['no_auction']: flag_parts.append('No AH')
+    if flag_parts:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Flags</span><span class="infobox-val">{", ".join(flag_parts)}</span></div>'
+    if it['base_price']:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">{it["base_price"]:,} gil</span></div>'
+    infobox += '</div>'
+
+    # Header
+    page += f' <header class="panel pad">\n'
+    page += f'  {infobox}\n'
+    page += f'  <div class="item-head">{icon_img}<div>\n'
+    page += f'  <h1>{ne}</h1>\n'
+    page += f'  <p class="meta">{flags}{sep}{meta_text}{wiki}</p>\n'
+    page += '  </div></div>\n'
+    page += ' </header>\n'
+
     # Sections
     sec  = render_sources(sources_by_item.get(iid, []))
     sec += render_recipe_section(used_in.get(iid, []), 'Used in')
@@ -432,56 +412,13 @@ def build_page(iid):
     if not sec:
         sec = '<section class="panel pad"><p class="soft">No source, recipe, or desynth data in the current era scope.</p></section>'
 
-    sep = ' ' if flags and meta_text else ''
+    page += f' {sec}\n'
 
-    icon_path = os.path.join(ROOT, 'public', 'img', 'item', f'{iid}.png')
-    icon_img = f'<img class="item-icon" src="/img/item/{iid}.png" alt="" width="32" height="32">' if os.path.exists(icon_path) else ''
+    page += layout_close(LSB_COMMIT)
+    page += f'<script>\n{SRC_TOGGLE_JS}\n</script>\n'
+    page += page_end()
 
-    return (
-        '<!doctype html>\n<html lang="en">\n<head>\n'
-        '<meta charset="utf-8">\n'
-        '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
-        f'<title>{ne} — FFXI Crafting</title>\n'
-        f'<meta name="description" content="Where to get {ne} in FFXI — sources, recipes, prices">\n'
-        f'<meta property="og:title" content="{ne} — FFXI Crafting">\n'
-        f'<meta property="og:description" content="Sources, recipes and prices for {ne} on era-75 FFXI servers.">\n'
-        '<meta property="og:type" content="website">\n'
-        f'<meta property="og:url" content="https://ffxicrafting.com/item/{iid}-{slug(it["name"])}">\n'
-        '<meta name="theme-color" content="#0c1728">\n'
-        '<link rel="preconnect" href="https://fonts.googleapis.com">'
-        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-        '<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">\n'
-        f'<style>\n{CSS}\n</style>\n'
-        '</head>\n<body>\n'
-        '<div class="wrap">\n'
-        ' <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a>'
-        '<div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span>'
-        '<div id="searchResults" class="search-results" hidden></div></div>'
-        '<div class="links"><a href="/calculator">Calculator</a>'
-        '<a href="/profit">Profit Finder</a>'
-        '<a href="/shopping">Shopping List</a>'
-        '<a href="/gathering/">Gathering</a>'
-        '<a href="/zone/">Zones</a>'
-        '<a href="/bcnm">BCNMs</a>'
-        '<button class="act" id="themeBtn" type="button">Theme</button>'
-        '</div></nav>\n'
-        ' <header class="panel pad">\n'
-        f'  <div class="item-head">{icon_img}<div>\n'
-        f'  <h1>{ne}</h1>\n'
-        f'  <p class="meta">{flags}{sep}{meta_text}{wiki}</p>\n'
-        '  </div></div>\n'
-        ' </header>\n'
-        f' {sec}\n'
-        ' <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">\n'
-        '  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>\n'
-        f'  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{LSB_URL}" rel="noopener"><code style="font-size:.85em">{LSB_SHORT}</code></a>. <a href="/about-the-data">About the data</a>.</p>\n'
-        ' </footer>\n'
-        '</div>\n'
-        f'<script>\n{THEME_JS}\n</script>\n'
-        '<script src="/search.js"></script>\n'
-        '<script defer src="/_vercel/insights/script.js"></script>\n'
-        '</body>\n</html>\n'
-    )
+    return page
 
 # ─── Generate pages ────────────────────────────────────────────────────────
 
@@ -509,6 +446,7 @@ sm += f'<url><loc>{SITE}/profit</loc></url>\n'
 sm += f'<url><loc>{SITE}/shopping</loc></url>\n'
 sm += f'<url><loc>{SITE}/about-the-data</loc></url>\n'
 sm += f'<url><loc>{SITE}/bcnm</loc></url>\n'
+sm += f'<url><loc>{SITE}/crafts</loc></url>\n'
 sm += f'<url><loc>{SITE}/gathering/</loc></url>\n'
 for gp in ('mining', 'logging', 'harvesting', 'excavation', 'gardening', 'digging', 'fishing', 'clamming'):
     sm += f'<url><loc>{SITE}/gathering/{gp}</loc></url>\n'

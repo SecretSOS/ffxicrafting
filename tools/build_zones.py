@@ -8,6 +8,9 @@ DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_craf
 OUT = os.path.join(ROOT, 'public', 'zone')
 os.makedirs(OUT, exist_ok=True)
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from page_template import html_head, layout_open, layout_close, page_end
+
 ERA_CONTENT = (None, '', 'rotz', 'cop', 'toau', 'wotg')
 EXCLUDE_PREFIXES = ('abyssea', 'dynamis', 'walk_of_echoes', 'escha_', 'reisenjima')
 EXCLUDE_ZONES = {
@@ -57,64 +60,8 @@ def fmt_pct(p):
     if p >= 1: return f'{p:.2f}%'
     return f'{p:.3f}%'
 
-CSS = """\
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
- --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1000px;width:92%;margin:0 auto;padding:22px 14px 70px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
-.pad{padding:20px 22px}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:0 0 .5em;color:var(--ink)}
-h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
-.lede{color:var(--ink-soft);max-width:66ch;margin:0}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
- padding:8px 10px;border-bottom:2px solid var(--rule)}
-td{padding:7px 10px;border-bottom:1px solid var(--rule)}
-tr:last-child td{border-bottom:none}
+ZONE_CSS = """\
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
-.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
 .jump{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
@@ -132,54 +79,11 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 .mob-spawns{font-size:.82rem;color:var(--ink-faint)}
 .drop{display:flex;align-items:baseline;gap:8px;padding:3px 0;font-size:.88rem}
 .drop-rate{min-width:55px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
-.gil{color:var(--gil)}
-.note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
 .vendor-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;font-size:.88rem}
 .vendor-price{margin-left:auto;white-space:nowrap}
-@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}"""
-
-NAV = '<nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>'
+.note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}"""
 
 lsb_commit = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()['v']
-lsb_short = lsb_commit[:10]
-lsb_url = f'https://github.com/LandSandBoat/server/tree/{lsb_commit}'
-FOOTER = f'<footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p><p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{lsb_url}" rel="noopener"><code style="font-size:.85em">{lsb_short}</code></a>. <a href="/about-the-data">About the data</a>.</p></footer>'
-
-THEME_JS = '(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();'
-
-def page_html(title, desc, body, slug=''):
-    og_path = f'zone/{slug}' if slug else 'zone/'
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{esc(title)} · Phoenix era 75</title>
-<meta name="description" content="{esc(desc)}">
-<meta property="og:title" content="{esc(title)} — FFXI Crafting">
-<meta property="og:description" content="{esc(desc)}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ffxicrafting.com/{og_path}">
-<meta name="theme-color" content="#0c1728">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<style>
-{CSS}
-</style>
-</head>
-<body>
-<div class="wrap">
- {NAV}
- {body}
- {FOOTER}
-</div>
-<script>{THEME_JS}</script>
-<script src="/search.js"></script>
-<script defer src="/_vercel/insights/script.js"></script>
-</body>
-</html>
-"""
 
 CRYSTAL_ELEMENT = {
     4096: 'Fire', 4097: 'Ice', 4098: 'Wind', 4099: 'Earth',
@@ -415,41 +319,83 @@ def build_zone_page(zone_name, sources):
     if not sections:
         return None
 
-    # Build page body
-    body = f'<header class="panel pad"><h1>{esc(zn)}</h1>'
-    body += f'<p class="lede"><a href="/zone/">← All zones</a></p></header>\n'
+    # Build infobox
+    nms_count = len(nms)
+    regulars_count = len(regulars)
+    section_labels = [label for _, label, _ in sections]
+    infobox = '<div class="infobox"><div class="infobox-head">Zone Information</div>\n'
+    if nms_count or regulars_count:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">{regulars_count + nms_count} ({nms_count} NM)</span></div>\n'
+    if vendors:
+        total_items = sum(len(v) for v in vendors.values())
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">{len(vendors)} NPCs, {total_items} items</span></div>\n'
+    if helm:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Gathering</span><span class="infobox-val">{", ".join(ht.title() for ht in ("mining","logging","harvesting","excavation") if ht in helm)}</span></div>\n'
+    if digging:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Digging</span><span class="infobox-val">{len(digging)} items</span></div>\n'
+    if fishing_rows:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>\n'
+    if caskets:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Caskets</span><span class="infobox-val">{len(caskets)} items</span></div>\n'
+    if chests:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Chests</span><span class="infobox-val">{len(chests)} items</span></div>\n'
+    if coffers:
+        infobox += f'<div class="infobox-row"><span class="infobox-label">Coffers</span><span class="infobox-val">{len(coffers)} items</span></div>\n'
+    data_sources = len(sources)
+    infobox += f'<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">{data_sources:,} rows</span></div>\n'
+    infobox += '</div>\n'
+
+    # Build page
+    desc = f'{zn}: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.'
+    og_url = f'https://ffxicrafting.com/zone/{slug}'
+
+    page = html_head(f'{esc(zn)} · Phoenix era 75', desc, og_url, extra_css=ZONE_CSS)
+    page += layout_open(active='zones', crumbs=[('Home', '/'), ('Zones', '/zone/'), (zn, None)])
+
+    page += f'<header class="panel pad"><h1>{esc(zn)}</h1>\n'
+    page += infobox
+    page += '<div style="clear:both"></div></header>\n'
 
     if len(sections) > 2:
-        body += '<div class="jump">'
+        page += '<div class="jump">'
         for sid, label, _ in sections:
-            body += f'<a href="#{sid}">{label}</a>'
-        body += '</div>\n'
+            page += f'<a href="#{sid}">{label}</a>'
+        page += '</div>\n'
 
     for sid, label, html in sections:
-        body += f'<section class="panel pad" id="{sid}"><h2>{label}</h2>\n{html}</section>\n'
+        page += f'<section class="panel pad" id="{sid}"><h2>{label}</h2>\n{html}</section>\n'
 
     # Honest gaps
-    body += '<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem">'
-    body += '<h2>What this page doesn’t have</h2>'
-    body += '<p>No map — maps live in the game client, not the server source. '
-    body += 'No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. '
-    body += 'No respawn timers for the same reason.</p></section>\n'
+    page += '<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem">'
+    page += '<h2>What this page doesn’t have</h2>'
+    page += '<p>No map — maps live in the game client, not the server source. '
+    page += 'No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. '
+    page += 'No respawn timers for the same reason.</p></section>\n'
 
-    desc = f'{zn}: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.'
-    return page_html(zn, desc, body, slugify(zone_name))
+    page += layout_close(lsb_commit)
+    page += page_end()
+    return page
 
 # ─── Zone index page ────────────────────────────────────────────────
 
 def build_index(zone_list):
-    body = '<header class="panel pad"><h1>Zones</h1>'
-    body += f'<p class="lede">{len(zone_list)} zones with data from the server source. Each page shows every mob drop, vendor, gathering point, and treasure chest in the zone.</p></header>\n'
+    page = html_head('Zones · Phoenix era 75',
+                     'Every zone with mob drops, vendors, gathering, and chests.',
+                     'https://ffxicrafting.com/zone/',
+                     extra_css=ZONE_CSS)
+    page += layout_open(active='zones', crumbs=[('Home', '/'), ('Zones', None)])
 
-    body += '<section class="panel pad"><div style="columns:2 220px;column-gap:18px">\n'
+    page += f'<header class="panel pad"><h1>Zones</h1>'
+    page += f'<p class="lede">{len(zone_list)} zones with data from the server source. Each page shows every mob drop, vendor, gathering point, and treasure chest in the zone.</p></header>\n'
+
+    page += '<section class="panel pad"><div style="columns:2 220px;column-gap:18px">\n'
     for zname, slug, count in sorted(zone_list, key=lambda x: x[0]):
-        body += f'<div style="break-inside:avoid;padding:3px 0"><a href="/zone/{slug}">{esc(pretty(zname))}</a> <span class="badge">{count}</span></div>\n'
-    body += '</div></section>\n'
+        page += f'<div style="break-inside:avoid;padding:3px 0"><a href="/zone/{slug}">{esc(pretty(zname))}</a> <span class="badge">{count}</span></div>\n'
+    page += '</div></section>\n'
 
-    return page_html('Zones', 'Every zone with mob drops, vendors, gathering, and chests.', body)
+    page += layout_close(lsb_commit)
+    page += page_end()
+    return page
 
 # ─── Main ───────────────────────────────────────────────────────────
 

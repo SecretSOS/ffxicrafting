@@ -8,6 +8,9 @@ DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_craf
 OUT = os.path.join(ROOT, 'public', 'gathering')
 os.makedirs(OUT, exist_ok=True)
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from page_template import html_head, layout_open, layout_close, page_end
+
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 ABYSSEA_ZONES = {'abyssea_attohwa', 'abyssea_konschtat', 'abyssea_la_theine',
                  'abyssea_altepa', 'abyssea_grauberg', 'abyssea_misareaux',
@@ -56,71 +59,15 @@ SEED_NAMES = {
     8: ('Cactus Stems', 1236),
 }
 
-CSS = """\
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
- --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1000px;width:92%;margin:0 auto;padding:22px 14px 70px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
-.pad{padding:20px 22px}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.2rem;margin:0 0 .6em;color:var(--ink)}
-h3{font-family:var(--font-display);font-weight:400;font-size:1.05rem;margin:1.2em 0 .4em;color:var(--ink)}
-.lede{color:var(--ink-soft);max-width:66ch;margin:0}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
+EXTRA_CSS = """\
 .sub-nav{display:flex;gap:8px;overflow-x:auto;flex-wrap:wrap;padding:10px 0 0}
 .sub-nav a{flex:0 0 auto;padding:5px 11px;border:1px solid var(--rule);border-radius:999px;
  color:var(--ink-soft);font-size:.82rem;white-space:nowrap}
 .sub-nav a:hover{border-color:var(--frame);color:var(--ink)}
 .sub-nav a.cur{border-color:var(--gil);color:var(--gil);font-weight:700}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
- padding:8px 10px;border-bottom:2px solid var(--rule)}
-td{padding:7px 10px;border-bottom:1px solid var(--rule)}
-tr:last-child td{border-bottom:none}
 .zone-head{font-family:var(--font-display);font-size:1.05rem;margin:1.4em 0 .5em;padding-bottom:6px;border-bottom:1px solid var(--rule);color:var(--ink)}
 .zone-head:first-child{margin-top:0}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
-.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
 .el{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.82rem;font-weight:700}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
 .card{display:block;border:1px solid var(--rule);border-radius:8px;padding:18px;color:inherit;background:color-mix(in srgb,var(--bg) 35%,transparent)}
@@ -137,11 +84,8 @@ details.zone[open] summary::before{transform:rotate(90deg)}
 details.zone .zone-body{padding:8px 0 16px}
 .note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
 .tier{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.75rem;border:1px solid var(--rule);color:var(--ink-faint);margin-right:4px}
-@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
+@media(max-width:600px){details.zone summary{font-size:.9rem}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}"""
-
-NAV = """\
-<nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>"""
 
 SUBNAV_ITEMS = [
     ('mining', 'Mining'), ('logging', 'Logging'), ('harvesting', 'Harvesting'),
@@ -156,56 +100,25 @@ def subnav(current):
         links.append(f'<a href="/gathering/{slug}"{cls}>{label}</a>')
     return '<div class="sub-nav">' + ''.join(links) + '</div>'
 
-FOOTER = f"""\
-<footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
- <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
- <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="{LSB_URL}" rel="noopener"><code style="font-size:.85em">{LSB_SHORT}</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>"""
-
-THEME_JS = """\
-(function(){var r=document.documentElement;
-try{var t=localStorage.getItem('phoenix-theme');if(t)r.setAttribute('data-theme',t);}catch(e){}
-document.getElementById('themeBtn').addEventListener('click',function(){
- var now=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
- var next=now==='light'?'dark':'light';r.setAttribute('data-theme',next);
- try{localStorage.setItem('phoenix-theme',next);}catch(e){}});
-})();"""
 
 def page(title, desc, nav_id, body):
     og_path = f'gathering/{nav_id}' if nav_id else 'gathering/'
-    return f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{esc(title)} · Phoenix era 75</title>
-<meta name="description" content="{esc(desc)}">
-<meta property="og:title" content="{esc(title)} — FFXI Crafting">
-<meta property="og:description" content="{esc(desc)}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ffxicrafting.com/{og_path}">
-<meta name="theme-color" content="#0c1728">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<style>
-{CSS}
-</style>
-</head>
-<body>
-<div class="wrap">
- {NAV}
- {subnav(nav_id)}
- {body}
- {FOOTER}
-</div>
-<script>
-{THEME_JS}
-</script>
-<script src="/search.js"></script>
-<script defer src="/_vercel/insights/script.js"></script>
-</body>
-</html>
-"""
+    if nav_id:
+        crumbs = [('Home', '/'), ('Gathering', '/gathering/'), (title, None)]
+    else:
+        crumbs = [('Home', '/'), ('Gathering', None)]
+
+    html = html_head(
+        f'{esc(title)} — FFXI Crafting',
+        desc,
+        f'https://ffxicrafting.com/{og_path}',
+        extra_css=EXTRA_CSS)
+    html += layout_open(active='gathering', crumbs=crumbs)
+    html += subnav(nav_id)
+    html += body
+    html += layout_close(LSB_COMMIT)
+    html += page_end()
+    return html
 
 # ─── HELM pages (mining, logging, harvesting, excavation) ───────────
 

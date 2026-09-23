@@ -5,79 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>About the data · FFXI Crafting</title>
 <meta name="description" content="How every number on this site is traced back to the LandSandBoat server source code.">
-<meta property="og:title" content="About the Data — FFXI Crafting">
-<meta property="og:description" content="How every number is traced back to the LandSandBoat server source code.">
+<meta property="og:title" content="About the data · FFXI Crafting">
+<meta property="og:description" content="How every number on this site is traced back to the LandSandBoat server source code.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/about-the-data">
 <meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<style>
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:800px;width:92%;margin:0 auto;padding:22px 14px 70px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
-.pad{padding:20px 22px}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
-h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;margin:1.4em 0 .5em;color:var(--ink)}
-h3{font-family:var(--font-display);font-weight:400;font-size:1rem;margin:1em 0 .4em;color:var(--ink)}
-p{max-width:66ch;line-height:1.65}
-.lede{color:var(--ink-soft);margin:0}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-th{text-align:left;font-weight:700;color:var(--ink-faint);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;
- padding:8px 10px;border-bottom:2px solid var(--rule)}
-td{padding:7px 10px;border-bottom:1px solid var(--rule)}
-tr:last-child td{border-bottom:none}
-code{font-family:ui-monospace,monospace;font-size:.88em;background:color-mix(in srgb,var(--bg) 55%,transparent);padding:2px 6px;border-radius:3px}
-ul{padding-left:1.4em}li{margin-bottom:.4em}
-.badge{display:inline-block;font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--rule);color:var(--ink-faint);margin-left:6px}
-@media(max-width:600px){.pad{padding:16px}.site-nav{gap:10px}th,td{padding:5px 6px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">By Craft</div>
+  <a href="/crafts#wood"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--wood)"></span>Woodworking</span></a>
+  <a href="/crafts#smith"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--smith)"></span>Smithing</span></a>
+  <a href="/crafts#gold"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--gold)"></span>Goldsmithing</span></a>
+  <a href="/crafts#cloth"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cloth)"></span>Clothcraft</span></a>
+  <a href="/crafts#leather"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--leather)"></span>Leathercraft</span></a>
+  <a href="/crafts#bone"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--bone)"></span>Bonecraft</span></a>
+  <a href="/crafts#alchemy"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--alchemy)"></span>Alchemy</span></a>
+  <a href="/crafts#cook"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cook)"></span>Cooking</span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data" class="active">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>About the Data</nav>
  <header class="panel pad">
   <h1>About the data</h1>
   <p class="lede">Every number on this site is read from the <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat server source</a>, not from a wiki. This page explains the method so you can verify anything you see.</p>
@@ -85,12 +63,12 @@ ul{padding-left:1.4em}li{margin-bottom:.4em}
 
  <section class="panel pad">
   <h2>The source</h2>
-  <p>The data comes from commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code>73cb1ffc60</code></a> of the LandSandBoat project, an open-source FFXI server emulator. A build script (<code>tools/build_db.py</code>) parses the server’s SQL, Lua, YAML, and C++ files into a SQLite database. A second set of scripts generates this site’s pages from that database.</p>
+  <p>The data comes from commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code>73cb1ffc60</code></a> of the LandSandBoat project, an open-source FFXI server emulator. A build script (<code>tools/build_db.py</code>) parses the server's SQL, Lua, YAML, and C++ files into a SQLite database. A second set of scripts generates this site's pages from that database.</p>
   <p>Nothing is hand-written. If a number appears on an item or zone page, it was read from a specific file in the server source, and that file path is shown alongside it.</p>
  </section>
 
  <section class="panel pad">
-  <h2>What’s parsed</h2>
+  <h2>What's parsed</h2>
   <table>
    <thead><tr><th>Source type</th><th style="text-align:right">Rows</th></tr></thead>
    <tbody>
@@ -138,7 +116,7 @@ ul{padding-left:1.4em}li{margin-bottom:.4em}
    <li><code>casket_loot.lua</code> — field casket drop tables</li>
    <li><code>data.lua</code> — HELM gathering point tables (mining, logging, harvesting, excavation)</li>
    <li><code>fishing_catch.sql</code> — fishing areas, catch tables, rod and bait data</li>
-   <li><code>gardening_results.sql</code> — gardening seed × crystal result tables</li>
+   <li><code>gardening_results.sql</code> — gardening seed &times; crystal result tables</li>
    <li><code>mob_entity.cpp</code> — mob crystal drop assignments (signet/sanction/sigil)</li>
    <li><code>*.lua</code> (per-NPC) — individual vendor shop scripts</li>
    <li><code>*.lua</code> (per-BCNM) — battlefield loot crate tables</li>
@@ -148,25 +126,25 @@ ul{padding-left:1.4em}li{margin-bottom:.4em}
  <section class="panel pad">
   <h2>How rates work</h2>
   <h3>Drop rates</h3>
-  <p>Mob drop rates are the server’s configured percentage per kill. The server rolls each drop independently, so a mob with a 24% and a 15% drop gives you those exact chances per kill. Some servers apply a <code>DROP_RATE_MULTIPLIER</code> — the rates shown here are the base values before any multiplier.</p>
+  <p>Mob drop rates are the server's configured percentage per kill. The server rolls each drop independently, so a mob with a 24% and a 15% drop gives you those exact chances per kill. Some servers apply a <code>DROP_RATE_MULTIPLIER</code> — the rates shown here are the base values before any multiplier.</p>
   <h3>Gathering rates</h3>
-  <p>HELM (mining, logging, harvesting, excavation) rates are per-swing chances from the zone’s <code>data.lua</code>. Each swing rolls against the full table; the percentages shown are the relative weights normalized to 100%.</p>
+  <p>HELM (mining, logging, harvesting, excavation) rates are per-swing chances from the zone's <code>data.lua</code>. Each swing rolls against the full table; the percentages shown are the relative weights normalized to 100%.</p>
   <h3>Crafting math</h3>
   <p>Skill-up chances, success rates, and HQ odds are computed from the formulas in <code>synthutils.cpp</code>. The specific rules: 60% skill-up chance under skill 50, 25% at 50+. HQ rates: 1.56% (0–10 gap), 6.25% (11–30), 25% (31–50), 50% (51+), with 25% chance to upgrade each tier.</p>
  </section>
 
  <section class="panel pad">
   <h2>Era scope</h2>
-  <p>This site targets era-75 private servers. Content included: base game, Rise of the Zilart, Chains of Promathia, Treasures of Aht Urhgan, and Wings of the Goddess (flagged). Excluded: Abyssea, Seekers of Adoulin, Rhapsodies of Vana’diel.</p>
+  <p>This site targets era-75 private servers. Content included: base game, Rise of the Zilart, Chains of Promathia, Treasures of Aht Urhgan, and Wings of the Goddess (flagged). Excluded: Abyssea, Seekers of Adoulin, Rhapsodies of Vana'diel.</p>
   <p>Content tagged as WotG is marked with a badge because not all era servers enable the same WotG content.</p>
  </section>
 
  <section class="panel pad">
-  <h2>What’s not here</h2>
+  <h2>What's not here</h2>
   <p>Honest gaps in the data:</p>
   <ul>
-   <li>Quest turn-ins (what you trade <em>to</em> a quest) aren’t parsed, only rewards</li>
-   <li>Mob aggro, link, and detection behaviour aren’t in the parsed YAML — they live in Lua mob pool files</li>
+   <li>Quest turn-ins (what you trade <em>to</em> a quest) aren't parsed, only rewards</li>
+   <li>Mob aggro, link, and detection behaviour aren't in the parsed YAML — they live in Lua mob pool files</li>
    <li>Respawn timers, for the same reason</li>
    <li>Zone maps — these live in the game client, not the server source</li>
    <li>Crafting food effects — not in upstream <code>item_mods</code></li>
@@ -186,20 +164,21 @@ ul{padding-left:1.4em}li{margin-bottom:.4em}
    <li>Which WotG content is enabled</li>
    <li>Conquest standings (affects Signet crystals and regional vendors)</li>
   </ul>
-  <p>Where any of these would change an answer, the site notes it rather than assuming Phoenix’s value.</p>
+  <p>Where any of these would change an answer, the site notes it rather than assuming Phoenix's value.</p>
  </section>
 
  <section class="panel pad">
   <h2>Verify it yourself</h2>
   <p>The full source is at <a href="https://github.com/LandSandBoat/server" rel="noopener">github.com/LandSandBoat/server</a>. Every source annotation on item pages links to the file path — navigate to it in the repo at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code>73cb1ffc60</code></a> to see the raw data this site parsed.</p>
  </section>
-
- <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
-  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
-  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code>73cb1ffc60</code></a>.</p>
- </footer>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
 </div>
 <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
 <script src="/search.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

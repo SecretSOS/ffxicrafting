@@ -5,72 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Profit finder · Phoenix era 75</title>
 <meta name="description" content="Every era recipe ranked by profit margin. Uses your custom prices and skill levels to find the most profitable crafts in FFXI.">
-<meta property="og:title" content="Profit Finder — FFXI Crafting">
-<meta property="og:description" content="Every era recipe ranked by profit margin. Uses your custom prices and skill levels.">
+<meta property="og:title" content="Profit finder · Phoenix era 75">
+<meta property="og:description" content="Every era recipe ranked by profit margin. Uses your custom prices and skill levels to find the most profitable crafts in FFXI.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/profit">
 <meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 <style>
-:root{
- --bg:#0c1728;--panel-top:#1b3257;--panel-bot:#11223c;--frame:#8ea6cc;--rule:#31496f;
- --ink:#ece6d6;--ink-soft:#a9b5cb;--ink-faint:#74829e;--link:#9fd0ff;
- --gil:#e8c44a;--gain:#74d3a0;--loss:#ff8f7d;--best:#7fd6a2;
- --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
- --wood:#8a6a3f;--smith:#8d94a3;--gold:#e0b64c;--cloth:#c98fb5;--leather:#b5763f;--bone:#ded3bb;--alchemy:#7fc4a8;--cook:#e08f6a;
- --font-display:"Marcellus",Georgia,serif;--font-body:"Atkinson Hyperlegible",system-ui,sans-serif;
- box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a;
- --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34}}
-:root[data-theme="light"]{
- --bg:#eceff5;--panel-top:#fff;--panel-bot:#f3f6fb;--frame:#2f4570;--rule:#ccd6e6;
- --ink:#16213a;--ink-soft:#43506b;--ink-faint:#6e7a94;--link:#1a5cb0;--gil:#a8791a;--gain:#12734a;--loss:#b23a2a;--best:#12734a;
- --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
-a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--link) 35%,transparent)}
-a:hover{border-bottom-color:var(--link)}
-:focus-visible{outline:2px solid var(--gil);outline-offset:2px;border-radius:3px}
-.wrap{max-width:1400px;width:92%;margin:0 auto;padding:22px 14px 70px}
-.site-nav{display:flex;align-items:center;gap:18px;padding:14px 0;margin-bottom:14px;border-bottom:1px solid var(--rule)}
-.site-nav .logo{font-family:var(--font-display);font-size:1.15rem;color:var(--ink);border-bottom:none;white-space:nowrap;text-decoration:none}
-.site-nav .logo:hover{color:var(--gil)}
-.site-nav .links{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:.88rem}
-.site-nav .links a{color:var(--ink-soft);border-bottom:none}
-.site-nav .links a:hover{color:var(--ink)}
-.search-wrap{position:relative;flex:1;max-width:360px;min-width:0}
-#search{width:100%;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
- border:1px solid var(--rule);border-radius:6px;padding:7px 30px 7px 12px;font-size:.88rem}
-#search:focus{border-color:var(--gil);outline:none}
-#search::placeholder{color:var(--ink-faint)}
-.search-wrap .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.68rem;
- color:var(--ink-faint);border:1px solid var(--rule);border-radius:3px;padding:0 5px;pointer-events:none;line-height:1.6}
-.search-wrap:focus-within .kbd{display:none}
-.search-results{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:50;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;
- max-height:min(400px,60vh);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-a.sr-item{display:flex;align-items:center;gap:8px;padding:8px 12px;color:var(--ink);
- border-bottom:1px solid var(--rule);font-size:.88rem}
-a.sr-item:last-child{border-bottom:none}
-a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,transparent)}
-.sr-type{color:var(--ink-faint);font-size:.7rem;margin-left:auto;white-space:nowrap}
-.panel{background:linear-gradient(180deg,var(--panel-top),var(--panel-bot));border:1px solid var(--frame);border-radius:8px;
- box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px var(--rule);margin-bottom:14px}
-.pad{padding:20px 22px}
-h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:0 0 .25em;line-height:1.1}
-.lede{color:var(--ink-soft);max-width:66ch;margin:0}
-.act{background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:7px 13px;font:inherit;font-size:.86rem;cursor:pointer}
-.act:hover{color:var(--ink);border-color:var(--frame)}
-.act.on{border-color:var(--gil);color:var(--gil)}
-.crafts{display:flex;gap:8px;overflow-x:auto;flex-wrap:wrap;padding:14px 0 0}
-.craft{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:7px 12px 7px 8px;border:1px solid var(--rule);border-radius:999px;
- background:transparent;color:var(--ink);font:inherit;font-size:.86rem;cursor:pointer;white-space:nowrap}
-.craft:hover{border-color:var(--c,var(--frame))}
-.craft[aria-pressed="true"]{border-color:var(--c,var(--gil));background:color-mix(in srgb,var(--c,var(--gil)) 16%,transparent);font-weight:700}
-.craft svg{width:20px;height:20px;flex:0 0 20px;color:var(--c)}
 .skills{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--rule);align-items:center}
 .skill{display:flex;align-items:center;gap:4px;font-size:.82rem}
 .skill svg{width:16px;height:16px;color:var(--c)}
@@ -78,29 +21,18 @@ h1{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,3.6vw,
  border-radius:4px;padding:3px 4px;text-align:center;font-size:.82rem}
 .skill input:focus{border-color:var(--gil);outline:none}
 .filter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
-table{width:100%;border-collapse:collapse;font-size:.91rem}
-th{position:sticky;top:0;background:var(--panel-bot);text-align:left;color:var(--ink-faint);font-weight:400;font-size:.76rem;
+th{position:sticky;top:0;background:var(--panel-bot);font-weight:400;text-transform:none;letter-spacing:0;
  padding:7px 10px;border-bottom:1px solid var(--rule);z-index:1;cursor:pointer;user-select:none}
 th:hover{color:var(--ink)}th.sorted{color:var(--gil)}
 th .arr{font-size:.6rem;margin-left:2px}
-td{padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
-.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .rname a{font-family:var(--font-display);font-size:.98rem;border-bottom:none}
 .rname a:hover{border-bottom:1px solid var(--link)}
 .rmeta{color:var(--ink-faint);font-size:.75rem;margin-top:1px}
 .craft-tag{display:inline-block;font-size:.68rem;border:1px solid;border-radius:4px;padding:0 4px;margin-left:5px;color:var(--c)}
 .ings{color:var(--ink-soft);font-size:.8rem;margin-top:2px;line-height:1.35}
 tr.unpriced{opacity:.45}
-.positive{color:var(--gain)}.negative{color:var(--loss)}
-.gil{display:inline-flex;align-items:center;gap:4px;color:var(--gil);font-variant-numeric:tabular-nums}
-.gil svg{width:12px;height:12px}
-.pill{display:inline-block;font-size:.68rem;border:1px solid var(--rule);border-radius:4px;padding:0 4px;margin-left:4px;color:var(--ink-faint)}
-.pill.ki{border-color:var(--lightning);color:var(--lightning)}
-.pill.wotg{border-color:var(--gil);color:var(--gil)}
 .count{color:var(--ink-faint);font-size:.85rem;padding:10px 22px 0}
 .loading{padding:30px 22px;color:var(--ink-faint)}
-@media(max-width:820px){.hide-sm{display:none}.pad{padding:16px}.skills{gap:6px}.site-nav{gap:10px}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -115,8 +47,47 @@ tr.unpriced{opacity:.45}
  <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
  <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
 </svg>
-<div class="wrap">
- <nav class="site-nav"><a href="/" class="logo">FFXI Crafting</a><div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div><div class="links"><a href="/calculator">Calculator</a><a href="/profit">Profit Finder</a><a href="/shopping">Shopping List</a><a href="/gathering/">Gathering</a><a href="/zone/">Zones</a><a href="/bcnm">BCNMs</a><button class="act" id="themeBtn" type="button">Theme</button></div></nav>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit" class="active">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">By Craft</div>
+  <a href="/crafts#wood"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--wood)"></span>Woodworking</span></a>
+  <a href="/crafts#smith"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--smith)"></span>Smithing</span></a>
+  <a href="/crafts#gold"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--gold)"></span>Goldsmithing</span></a>
+  <a href="/crafts#cloth"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cloth)"></span>Clothcraft</span></a>
+  <a href="/crafts#leather"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--leather)"></span>Leathercraft</span></a>
+  <a href="/crafts#bone"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--bone)"></span>Bonecraft</span></a>
+  <a href="/crafts#alchemy"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--alchemy)"></span>Alchemy</span></a>
+  <a href="/crafts#cook"><span class="sb-craft"><span class="sb-craft-dot" style="background:var(--cook)"></span>Cooking</span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Profit Finder</nav>
  <header class="panel pad">
   <h1>Profit finder</h1>
   <p class="lede">Every era recipe ranked by expected profit. Uses the same prices you set in the <a href="/calculator">calculator</a>. Adjust your skill levels to see accurate HQ chances.</p>
@@ -133,10 +104,11 @@ tr.unpriced{opacity:.45}
    <table><thead id="thead"></thead><tbody id="results"></tbody></table>
   </div>
  </section>
- <footer class="panel pad" style="color:var(--ink-faint);font-size:.85rem">
-  <p style="font-family:var(--font-display);font-size:1.05rem;color:var(--ink);margin:0 0 .5em">Made by <strong style="font-weight:400;color:var(--gil)">Secretsos</strong></p>
-  <p style="margin:0;max-width:74ch">A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
- </footer>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
 </div>
 <script>
 (function(){
@@ -152,12 +124,6 @@ try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e)
 try{skills=JSON.parse(localStorage.getItem('phoenix-skills')||'{}');}catch(e){}
 CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=60;});
 function saveSkills(){try{localStorage.setItem('phoenix-skills',JSON.stringify(skills));}catch(e){}}
-var root=document.documentElement;
-try{var th=localStorage.getItem('phoenix-theme');if(th)root.setAttribute('data-theme',th);}catch(e){}
-document.getElementById('themeBtn').addEventListener('click',function(){
-  var now=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
-  var next=now==='light'?'dark':'light';root.setAttribute('data-theme',next);
-  try{localStorage.setItem('phoenix-theme',next);}catch(e){}});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
@@ -240,6 +206,8 @@ function setupListeners(){
   document.getElementById('hideUnpriced').addEventListener('click',function(){hideUnpricedOn=!hideUnpricedOn;this.classList.toggle('on',hideUnpricedOn);renderResults();});}
 })();
 </script>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
 <script src="/search.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

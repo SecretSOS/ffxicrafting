@@ -18,6 +18,9 @@ CRAFTS = {'wood': 'Woodworking', 'smith': 'Smithing', 'gold': 'Goldsmithing', 'c
           'leather': 'Leathercraft', 'bone': 'Bonecraft', 'alchemy': 'Alchemy', 'cook': 'Cooking'}
 SUB = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from page_template import html_head, SVG_DEFS, layout_open, layout_close, page_end
+
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()
 LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()[0]
@@ -92,9 +95,22 @@ for title, craft in crafts.items():
 
 # Write HTML shell (no inline data — JS fetches it)
 read = lambda f: open(os.path.join(TPL, f), encoding='utf-8').read()
-html = (read('calc_head.html') + read('calc_body.html') +
-        '\n<script>\n' + read('calc_app.js') + '\n</script>\n<script src="/search.js"></script>\n<script defer src="/_vercel/insights/script.js"></script>\n</body></html>\n')
+extra_css = read('calc_head.html')
+body_content = read('calc_body.html')
+
+html = html_head(
+    'Crafting cost calculator · Phoenix era 75',
+    'Compare every era recipe by cost per skill level. Eight crafts, 1 to 60, priced with your own server numbers.',
+    'https://ffxicrafting.com/calculator',
+    extra_css=extra_css)
+html += SVG_DEFS + '\n'
+html += layout_open(active='calculator', crumbs=[('Home', '/'), ('Calculator', None)])
+html += body_content + '\n'
+html += layout_close(LSB_COMMIT)
+html += '\n<script>\n' + read('calc_app.js') + '\n</script>\n'
+html += page_end()
 html = html.replace('__LSB_URL__', LSB_URL).replace('__LSB_SHORT__', LSB_SHORT)
+
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html)
