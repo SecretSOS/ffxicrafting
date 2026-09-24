@@ -31,19 +31,36 @@ THEME_JS = '(function(){var r=document.documentElement;try{var t=localStorage.ge
 SIDEBAR_JS = '''(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();'''
 
 VANA_CLOCK_JS = '''(function(){
-var EPOCH=1009810800,DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+var EPOCH=1009810800,
+DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
 DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7]};
 function pad(n){return n<10?"0"+n:""+n}
 function tick(){
  var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
  vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
  vmo=Math.floor(vd/30),vy=Math.floor(vmo/12)+886,
- mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8,
- el=document.getElementById("vanaClock");
- if(!el)return;
- el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
- el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\\u2019diel Time";
+ mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8;
+ var el=document.getElementById("vanaClock");
+ if(el){
+  el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
+  el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\\u2019diel Time";
+ }
+ var wk=document.getElementById("vanaWeek");
+ if(wk){
+  var ml=1440-(hr*60+mn),rs=ml*2.4;
+  var h='<div class="vw-head"><span>Vana\\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
+  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
+   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
+   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  wk.innerHTML=h;
+ }
+ var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook"];
+ for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
+  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
+  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();'''
@@ -71,13 +88,48 @@ def html_head(title, description='', og_url='', extra_css=''):
 '''
 
 
-def top_bar():
-    return '''\
+GATHERING_PAGES = [
+    ('/gathering/mining', 'Mining'), ('/gathering/logging', 'Logging'),
+    ('/gathering/harvesting', 'Harvesting'), ('/gathering/excavation', 'Excavation'),
+    ('/gathering/gardening', 'Gardening'), ('/gathering/fishing', 'Fishing'),
+    ('/gathering/digging', 'Chocobo Digging'), ('/gathering/clamming', 'Clamming'),
+]
+
+
+def _nav_dropdown(label, landing_href, items, active):
+    is_active = any(active == k for _, _, k in items) or active == label.lower()
+    btn_cls = ' active' if is_active else ''
+    links = f'   <a href="{landing_href}" class="nav-dd-all">All {label}</a>\n'
+    for href, name, key in items:
+        acls = ' class="active"' if key == active else ''
+        links += f'   <a href="{href}"{acls}>{name}</a>\n'
+    return f'''\
+ <div class="nav-dd">
+  <span class="nav-dd-btn{btn_cls}">{label} <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+{links}  </div>
+ </div>'''
+
+
+def top_bar(active=''):
+    gathering_items = [(href, name, 'gathering') for href, name in GATHERING_PAGES]
+    craft_items = [(f'/crafts/{name.lower()}', name, f'craft-{code}') for code, name, _ in CRAFTS_ORDERED]
+    zones_cls = ' active' if active == 'zones' else ''
+    bcnm_cls = ' active' if active == 'bcnm' else ''
+    gathering_dd = _nav_dropdown('Gathering', '/gathering/', gathering_items, active)
+    crafts_dd = _nav_dropdown('Crafts', '/crafts', craft_items, active)
+    return f'''\
 <nav class="top-bar">
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
+ <div class="nav-links">
+  <a href="/zone/" class="nav-link{zones_cls}">Zones</a>
+{gathering_dd}
+  <a href="/bcnm" class="nav-link{bcnm_cls}">BCNMs</a>
+{crafts_dd}
+ </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
- <span class="vana-clock" id="vanaClock" title="Vana\'diel Time"></span>
+ <span class="vana-clock" id="vanaClock" title="Vana'diel Time"></span>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
 '''
@@ -92,19 +144,20 @@ def sidebar(active=''):
     for code, name, var in CRAFTS_ORDERED:
         cls = ' class="active"' if f'craft-{code}' == active else ''
         slug = name.lower()
-        craft_links += f'  <a href="/crafts/{slug}"{cls}><span class="sb-craft" style="--c:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg>{name}</span></a>\n'
+        craft_links += f'  <a href="/crafts/{slug}"{cls}><span class="sb-craft" style="--c:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg>{name}<span id="guild-{code}" class="sb-guild"></span></span></a>\n'
 
     return f'''\
 <aside class="sidebar" id="sidebar">
+ <div class="vana-week" id="vanaWeek"></div>
  <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
 {link("/calculator", "Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")} </div>
- <div class="sb-section">
+ <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
 {link("/zone/", "Zones", "zones")}{link("/gathering/", "Gathering", "gathering")}{link("/bcnm", "BCNMs", "bcnm")}{link("/crafts", "Crafts", "crafts")} </div>
  <div class="sb-section">
-  <div class="sb-heading">By Craft</div>
+  <div class="sb-heading">Guilds</div>
 {craft_links} </div>
  <div class="sb-section">
   <div class="sb-heading">Info</div>
@@ -153,7 +206,7 @@ def page_end():
 
 def layout_open(active='', crumbs=None):
     html = SVG_DEFS + '\n'
-    html += top_bar()
+    html += top_bar(active)
     html += '<div class="site-layout">\n'
     html += sidebar(active)
     html += '<main class="main">\n'
