@@ -85,7 +85,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  </div>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
- <span class="vana-clock" id="vanaClock" title="Vana'diel Time"></span>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
 <div class="site-layout">
@@ -326,19 +325,12 @@ var EPOCH=1009810800,
 DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
 ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
 DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-MONTHS=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
 GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7]};
 function pad(n){return n<10?"0"+n:""+n}
 function tick(){
  var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
  vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- vmo=Math.floor(vd/30),vy=Math.floor(vmo/12)+886,
- mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8;
- var el=document.getElementById("vanaClock");
- if(el){
-  el.innerHTML='<span class="vana-dot" style="background:'+DCOL[wd]+'"></span><span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
-  el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\u2019diel Time";
- }
+ hr=vh%24,mn=vm%60,wd=vd%8;
  var wk=document.getElementById("vanaWeek");
  if(wk){
   var ml=1440-(hr*60+mn),rs=ml*2.4;

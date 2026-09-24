@@ -45,13 +45,6 @@ img{max-width:100%}
 .hamburger:hover{color:var(--ink);border-color:var(--frame)}
 .top-bar .act{margin-left:auto;flex-shrink:0}
 
-/* --- Vana'diel clock --- */
-.vana-clock{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--ink-faint);white-space:nowrap;flex-shrink:0;
- border:1px solid var(--rule);border-radius:999px;padding:4px 10px;font-variant-numeric:tabular-nums}
-.vana-clock .vana-day{display:inline-flex;align-items:center;gap:4px}
-.vana-clock .vana-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.vana-clock .vana-time{color:var(--ink-soft);font-weight:700}
-
 /* --- Top nav links --- */
 .nav-links{display:flex;align-items:center;gap:2px;flex-shrink:0}
 .nav-link{display:block;color:var(--ink-soft);border-bottom:none;font-size:.86rem;white-space:nowrap;padding:6px 10px;border-radius:4px}
