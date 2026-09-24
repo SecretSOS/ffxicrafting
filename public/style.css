@@ -113,7 +113,7 @@ a.sr-item:hover,a.sr-item.active{background:color-mix(in srgb,var(--gil) 14%,tra
 .sb-craft svg{width:16px;height:16px;flex-shrink:0;color:var(--c)}
 
 /* --- Guild status dot --- */
-.sb-guild{width:6px;height:6px;border-radius:50%;margin-left:auto;flex:0 0 6px}
+.sb-guild{width:7px;height:7px;border-radius:50%;margin-left:auto;flex:0 0 7px}
 .sb-guild.open{background:var(--gain);box-shadow:0 0 4px color-mix(in srgb,var(--gain) 60%,transparent)}
 .sb-guild.closed{background:var(--loss);opacity:.5}
 
