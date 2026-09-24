@@ -770,7 +770,7 @@ function tick(){
  mo=(vmo%12)+1,day=(vd%30)+1,hr=vh%24,mn=vm%60,wd=vd%8;
  var el=document.getElementById("vanaClock");
  if(el){
-  el.innerHTML='<span class="vana-day"><span class="vana-dot" style="background:'+DCOL[wd]+'"></span>'+DAYS[wd].slice(0,-3)+'.</span> <span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
+  el.innerHTML='<span class="vana-dot" style="background:'+DCOL[wd]+'"></span><span class="vana-time">'+pad(hr)+":"+pad(mn)+'</span>';
   el.title=DAYS[wd]+", "+MONTHS[mo]+" "+day+", "+vy+" C.E. — "+pad(hr)+":"+pad(mn)+" Vana\u2019diel Time";
  }
  var wk=document.getElementById("vanaWeek");
