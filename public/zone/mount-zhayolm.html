@@ -134,7 +134,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="jump"><a href="#gathering">Gathering</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Mining</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/643-chunk-of-iron-ore">Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">11.7%</td></tr>
 <tr><td><a href="/item/928-pinch-of-bomb-ash">Pinch Of Bomb Ash</a></td><td class="pct" style="text-align:right">10.1%</td></tr>
 <tr><td><a href="/item/1155-handful-of-iron-sand">Handful Of Iron Sand</a></td><td class="pct" style="text-align:right">9.87%</td></tr>
@@ -277,7 +277,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -322,6 +322,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

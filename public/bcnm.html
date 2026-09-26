@@ -193,7 +193,7 @@
   </div>
   <div class="summary-wrap">
    <table class="summary-table" id="summaryTable">
-    <thead><tr><th>Battlefield</th><th>Arena</th><th>Cap</th><th>Entry</th><th>Party</th><th>Time</th><th>Rolls</th><th class="r">Crate gil</th><th class="r">Avg. value</th></tr></thead>
+    <thead><tr><th data-sort="text">Battlefield</th><th data-sort="text">Arena</th><th data-sort="num">Cap</th><th>Entry</th><th>Party</th><th>Time</th><th data-sort="num">Rolls</th><th data-sort="num" class="r">Crate gil</th><th data-sort="num" class="r">Avg. value</th></tr></thead>
     <tbody><tr><td><a href="#charming_trio">Charming Trio</a></td><td>Balgas Dais</td><td>20</td><td>20 BS</td><td>3p</td><td>15m</td><td>7</td><td class="r">1,500</td><td class="r">2,078</td></tr>
 <tr><td><a href="#creeping_doom">Creeping Doom</a></td><td>Balgas Dais</td><td>30</td><td>30 BS</td><td>3p</td><td>15m</td><td>5</td><td class="r">3,000</td><td class="r">3,292</td></tr>
 <tr><td><a href="#harem_scarem">Harem Scarem</a></td><td>Balgas Dais</td><td>30</td><td>30 BS</td><td>6p</td><td>30m</td><td>9</td><td class="r">4,000</td><td class="r">3,846</td></tr>
@@ -5427,6 +5427,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

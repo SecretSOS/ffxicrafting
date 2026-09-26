@@ -302,7 +302,7 @@ html += f'''\
   </div>
   <div class="summary-wrap">
    <table class="summary-table" id="summaryTable">
-    <thead><tr><th>Battlefield</th><th>Arena</th><th>Cap</th><th>Entry</th><th>Party</th><th>Time</th><th>Rolls</th><th class="r">Crate gil</th><th class="r">Avg. value</th></tr></thead>
+    <thead><tr><th data-sort="text">Battlefield</th><th data-sort="text">Arena</th><th data-sort="num">Cap</th><th>Entry</th><th>Party</th><th>Time</th><th data-sort="num">Rolls</th><th data-sort="num" class="r">Crate gil</th><th data-sort="num" class="r">Avg. value</th></tr></thead>
     <tbody>{summary_rows}</tbody>
    </table>
   </div>

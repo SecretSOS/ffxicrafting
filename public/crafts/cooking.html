@@ -145,8 +145,17 @@
   </div>
  </header>
 
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>5:00</b> – <b>20:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Darksday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -156,9 +165,10 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(229 items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(229 items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the cooking guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
    <div class="shop-row"><span class="nm"><a href="/item/17396-little-worm">Little Worm</a></span><span class="pr">20g</span><span class="st">120–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/17395-lugworm">Lugworm</a></span><span class="pr">60g</span><span class="st">120–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/4394-ginger-cookie">Ginger Cookie</a></span><span class="pr">60g</span><span class="st">0–180</span></div>
@@ -392,7 +402,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -406,187 +416,187 @@
   </div>
   <div class="turnin-pattern" id="pat-0">
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/17016-pet-food-alpha-biscuit">Pet Food Alpha Biscuit</a></td><td>0</td><td>4</td><td>3,360</td></tr>
-    <tr><td><a href="/item/4437-slice-of-roast-mutton">Slice of Roast Mutton</a></td><td>1</td><td>270</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4335-slice-of-juicy-mutton">Slice of Juicy Mutton</a></td><td>1</td><td>300</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4380-smoked-salmon">Smoked Salmon</a></td><td>2</td><td>82</td><td>6,000</td></tr>
-    <tr><td><a href="/item/4419-bowl-of-mushroom-soup">Bowl of Mushroom Soup</a></td><td>3</td><td>1500</td><td>15,600</td></tr>
-    <tr><td><a href="/item/4333-bowl-of-witch-soup">Bowl of Witch Soup</a></td><td>3</td><td>1740</td><td>15,600</td></tr>
-    <tr><td><a href="/item/4420-bowl-of-tomato-soup">Bowl of Tomato Soup</a></td><td>4</td><td>441</td><td>10,800</td></tr>
-    <tr><td><a href="/item/4341-bowl-of-sunset-soup">Bowl of Sunset Soup</a></td><td>4</td><td>1341</td><td>10,800</td></tr>
-    <tr><td><a href="/item/4572-serving-of-beaugreen-saute">Serving of Beaugreen Saute</a></td><td>5</td><td>247</td><td>9,600</td></tr>
-    <tr><td><a href="/item/4293-serving-of-monastic-saute">Serving of Monastic Saute</a></td><td>5</td><td>865</td><td>9,600</td></tr>
-    <tr><td><a href="/item/4546-piece-of-raisin-bread">Piece of Raisin Bread</a></td><td>6</td><td>525</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4547-bowl-of-boiled-cockatrice">Bowl of Boiled Cockatrice</a></td><td>7</td><td>693</td><td>13,200</td></tr>
-    <tr><td><a href="/item/4544-bowl-of-mushroom-stew">Bowl of Mushroom Stew</a></td><td>8</td><td>1120</td><td>5,040</td></tr>
-    <tr><td><a href="/item/4344-bowl-of-witch-stew">Bowl of Witch Stew</a></td><td>8</td><td>1680</td><td>5,040</td></tr>
-    <tr><td><a href="/item/4297-serving-of-black-curry">Serving of Black Curry</a></td><td>9</td><td>730</td><td>4,640</td></tr>
+    <tr><td><a href="/item/17016-pet-food-alpha-biscuit">Pet Food Alpha Biscuit</a></td><td>0</td><td>3</td><td>373</td></tr>
+    <tr><td><a href="/item/4437-slice-of-roast-mutton">Slice of Roast Mutton</a></td><td>1</td><td>180</td><td>746</td></tr>
+    <tr><td><a href="/item/4335-slice-of-juicy-mutton">Slice of Juicy Mutton</a></td><td>1</td><td>200</td><td>746</td></tr>
+    <tr><td><a href="/item/4380-smoked-salmon">Smoked Salmon</a></td><td>2</td><td>55</td><td>640</td></tr>
+    <tr><td><a href="/item/4419-bowl-of-mushroom-soup">Bowl of Mushroom Soup</a></td><td>3</td><td>1000</td><td>1,520</td></tr>
+    <tr><td><a href="/item/4333-bowl-of-witch-soup">Bowl of Witch Soup</a></td><td>3</td><td>1160</td><td>1,520</td></tr>
+    <tr><td><a href="/item/4420-bowl-of-tomato-soup">Bowl of Tomato Soup</a></td><td>4</td><td>294</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4341-bowl-of-sunset-soup">Bowl of Sunset Soup</a></td><td>4</td><td>894</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4572-serving-of-beaugreen-saute">Serving of Beaugreen Saute</a></td><td>5</td><td>165</td><td>986</td></tr>
+    <tr><td><a href="/item/4293-serving-of-monastic-saute">Serving of Monastic Saute</a></td><td>5</td><td>577</td><td>986</td></tr>
+    <tr><td><a href="/item/4546-piece-of-raisin-bread">Piece of Raisin Bread</a></td><td>6</td><td>350</td><td>1,200</td></tr>
+    <tr><td><a href="/item/4547-bowl-of-boiled-cockatrice">Bowl of Boiled Cockatrice</a></td><td>7</td><td>462</td><td>1,333</td></tr>
+    <tr><td><a href="/item/4544-bowl-of-mushroom-stew">Bowl of Mushroom Stew</a></td><td>8</td><td>1120</td><td>1,680</td></tr>
+    <tr><td><a href="/item/4344-bowl-of-witch-stew">Bowl of Witch Stew</a></td><td>8</td><td>1680</td><td>1,680</td></tr>
+    <tr><td><a href="/item/4297-serving-of-black-curry">Serving of Black Curry</a></td><td>9</td><td>730</td><td>1,546</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-1" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4415-ear-of-roasted-corn">Ear of Roasted Corn</a></td><td>0</td><td>46</td><td>4,080</td></tr>
-    <tr><td><a href="/item/4334-ear-of-grilled-corn">Ear of Grilled Corn</a></td><td>0</td><td>55</td><td>4,080</td></tr>
-    <tr><td><a href="/item/4416-bowl-of-pea-soup">Bowl of Pea Soup</a></td><td>1</td><td>420</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4327-bowl-of-emerald-soup">Bowl of Emerald Soup</a></td><td>1</td><td>541</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4438-dhalmel-steak">Dhalmel Steak</a></td><td>2</td><td>540</td><td>10,800</td></tr>
-    <tr><td><a href="/item/4519-wild-steak">Wild Steak</a></td><td>2</td><td>585</td><td>10,800</td></tr>
-    <tr><td><a href="/item/4555-windurst-salad">Windurst Salad</a></td><td>3</td><td>558</td><td>11,280</td></tr>
-    <tr><td><a href="/item/4321-timbre-timbers-salad">Timbre Timbers Salad</a></td><td>3</td><td>613</td><td>11,280</td></tr>
-    <tr><td><a href="/item/4413-apple-pie">Apple Pie</a></td><td>4</td><td>120</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4320-apple-pie-+1">Apple Pie +1</a></td><td>4</td><td>132</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4563-pamama-tart">Pamama Tart</a></td><td>5</td><td>384</td><td>10,560</td></tr>
-    <tr><td><a href="/item/4287-opo-opo-tart">Opo-Opo Tart</a></td><td>5</td><td>918</td><td>10,560</td></tr>
-    <tr><td><a href="/item/4494-pot-of-san-dorian-tea">Pot of San Dorian Tea</a></td><td>6</td><td>198</td><td>3,200</td></tr>
-    <tr><td><a href="/item/4524-pot-of-royal-tea">Pot of Royal Tea</a></td><td>6</td><td>240</td><td>3,200</td></tr>
-    <tr><td><a href="/item/4552-serving-of-herb-crawler-eggs">Serving of Herb Crawler Eggs</a></td><td>7</td><td>637</td><td>12,960</td></tr>
-    <tr><td><a href="/item/4561-bowl-of-seafood-stew">Bowl of Seafood Stew</a></td><td>8</td><td>1980</td><td>17,280</td></tr>
-    <tr><td><a href="/item/4271-rice-dumpling">Rice Dumpling</a></td><td>9</td><td>210</td><td>10,800</td></tr>
+    <tr><td><a href="/item/4415-ear-of-roasted-corn">Ear of Roasted Corn</a></td><td>0</td><td>31</td><td>426</td></tr>
+    <tr><td><a href="/item/4334-ear-of-grilled-corn">Ear of Grilled Corn</a></td><td>0</td><td>37</td><td>426</td></tr>
+    <tr><td><a href="/item/4416-bowl-of-pea-soup">Bowl of Pea Soup</a></td><td>1</td><td>280</td><td>880</td></tr>
+    <tr><td><a href="/item/4327-bowl-of-emerald-soup">Bowl of Emerald Soup</a></td><td>1</td><td>361</td><td>880</td></tr>
+    <tr><td><a href="/item/4438-dhalmel-steak">Dhalmel Steak</a></td><td>2</td><td>360</td><td>1,013</td></tr>
+    <tr><td><a href="/item/4519-wild-steak">Wild Steak</a></td><td>2</td><td>390</td><td>1,013</td></tr>
+    <tr><td><a href="/item/4555-windurst-salad">Windurst Salad</a></td><td>3</td><td>372</td><td>1,093</td></tr>
+    <tr><td><a href="/item/4321-timbre-timbers-salad">Timbre Timbers Salad</a></td><td>3</td><td>409</td><td>1,093</td></tr>
+    <tr><td><a href="/item/4413-apple-pie">Apple Pie</a></td><td>4</td><td>80</td><td>826</td></tr>
+    <tr><td><a href="/item/4320-apple-pie-+1">Apple Pie +1</a></td><td>4</td><td>88</td><td>826</td></tr>
+    <tr><td><a href="/item/4563-pamama-tart">Pamama Tart</a></td><td>5</td><td>256</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4287-opo-opo-tart">Opo-Opo Tart</a></td><td>5</td><td>612</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4494-pot-of-san-dorian-tea">Pot of San Dorian Tea</a></td><td>6</td><td>198</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4524-pot-of-royal-tea">Pot of Royal Tea</a></td><td>6</td><td>240</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4552-serving-of-herb-crawler-eggs">Serving of Herb Crawler Eggs</a></td><td>7</td><td>425</td><td>1,306</td></tr>
+    <tr><td><a href="/item/4561-bowl-of-seafood-stew">Bowl of Seafood Stew</a></td><td>8</td><td>1320</td><td>1,760</td></tr>
+    <tr><td><a href="/item/4271-rice-dumpling">Rice Dumpling</a></td><td>9</td><td>140</td><td>1,146</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-2" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4455-bowl-of-pebble-soup">Bowl of Pebble Soup</a></td><td>0</td><td>50</td><td>1,360</td></tr>
-    <tr><td><a href="/item/4592-bowl-of-wisdom-soup">Bowl of Wisdom Soup</a></td><td>0</td><td>55</td><td>1,360</td></tr>
-    <tr><td><a href="/item/4437-slice-of-roast-mutton">Slice of Roast Mutton</a></td><td>1</td><td>270</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4335-slice-of-juicy-mutton">Slice of Juicy Mutton</a></td><td>1</td><td>300</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4492-bowl-of-puls">Bowl of Puls</a></td><td>2</td><td>225</td><td>7,920</td></tr>
-    <tr><td><a href="/item/4533-bowl-of-delicious-puls">Bowl of Delicious Puls</a></td><td>2</td><td>450</td><td>7,920</td></tr>
-    <tr><td><a href="/item/4510-acorn-cookie">Acorn Cookie</a></td><td>3</td><td>9</td><td>5,760</td></tr>
-    <tr><td><a href="/item/4577-wild-cookie">Wild Cookie</a></td><td>3</td><td>10</td><td>5,760</td></tr>
-    <tr><td><a href="/item/4413-apple-pie">Apple Pie</a></td><td>4</td><td>120</td><td>7,680</td></tr>
-    <tr><td><a href="/item/4320-apple-pie-+1">Apple Pie +1</a></td><td>4</td><td>132</td><td>7,680</td></tr>
-    <tr><td><a href="/item/5168-bataquiche">Bataquiche</a></td><td>5</td><td>184</td><td>8,880</td></tr>
-    <tr><td><a href="/item/5169-bataquiche-+1">Bataquiche +1</a></td><td>5</td><td>276</td><td>8,880</td></tr>
-    <tr><td><a href="/item/5572-irmik-helvasi">Irmik Helvasi</a></td><td>6</td><td>622</td><td>12,480</td></tr>
-    <tr><td><a href="/item/5573-irmik-helvasi-+1">Irmik Helvasi +1</a></td><td>6</td><td>661</td><td>12,480</td></tr>
-    <tr><td><a href="/item/4583-serving-of-salmon-meuniere">Serving of Salmon Meuniere</a></td><td>7</td><td>382</td><td>11,280</td></tr>
-    <tr><td><a href="/item/4347-serving-of-salmon-meuniere-+1">Serving of Salmon Meuniere +1</a></td><td>7</td><td>382</td><td>11,280</td></tr>
-    <tr><td><a href="/item/4564-royal-omelette">Royal Omelette</a></td><td>8</td><td>1836</td><td>5,680</td></tr>
-    <tr><td><a href="/item/4331-imperial-omelette">Imperial Omelette</a></td><td>8</td><td>2516</td><td>5,680</td></tr>
-    <tr><td><a href="/item/4279-tavnazian-salad">Tavnazian Salad</a></td><td>9</td><td>4375</td><td>6,720</td></tr>
-    <tr><td><a href="/item/5185-leremieu-salad">Leremieu Salad</a></td><td>9</td><td>6475</td><td>6,720</td></tr>
+    <tr><td><a href="/item/4455-bowl-of-pebble-soup">Bowl of Pebble Soup</a></td><td>0</td><td>50</td><td>453</td></tr>
+    <tr><td><a href="/item/4592-bowl-of-wisdom-soup">Bowl of Wisdom Soup</a></td><td>0</td><td>55</td><td>453</td></tr>
+    <tr><td><a href="/item/4437-slice-of-roast-mutton">Slice of Roast Mutton</a></td><td>1</td><td>180</td><td>746</td></tr>
+    <tr><td><a href="/item/4335-slice-of-juicy-mutton">Slice of Juicy Mutton</a></td><td>1</td><td>200</td><td>746</td></tr>
+    <tr><td><a href="/item/4492-bowl-of-puls">Bowl of Puls</a></td><td>2</td><td>150</td><td>773</td></tr>
+    <tr><td><a href="/item/4533-bowl-of-delicious-puls">Bowl of Delicious Puls</a></td><td>2</td><td>150</td><td>773</td></tr>
+    <tr><td><a href="/item/4510-acorn-cookie">Acorn Cookie</a></td><td>3</td><td>6</td><td>640</td></tr>
+    <tr><td><a href="/item/4577-wild-cookie">Wild Cookie</a></td><td>3</td><td>7</td><td>640</td></tr>
+    <tr><td><a href="/item/4413-apple-pie">Apple Pie</a></td><td>4</td><td>80</td><td>826</td></tr>
+    <tr><td><a href="/item/4320-apple-pie-+1">Apple Pie +1</a></td><td>4</td><td>88</td><td>826</td></tr>
+    <tr><td><a href="/item/5168-bataquiche">Bataquiche</a></td><td>5</td><td>123</td><td>933</td></tr>
+    <tr><td><a href="/item/5169-bataquiche-+1">Bataquiche +1</a></td><td>5</td><td>184</td><td>933</td></tr>
+    <tr><td><a href="/item/5572-irmik-helvasi">Irmik Helvasi</a></td><td>6</td><td>415</td><td>1,253</td></tr>
+    <tr><td><a href="/item/5573-irmik-helvasi-+1">Irmik Helvasi +1</a></td><td>6</td><td>441</td><td>1,253</td></tr>
+    <tr><td><a href="/item/4583-serving-of-salmon-meuniere">Serving of Salmon Meuniere</a></td><td>7</td><td>255</td><td>1,173</td></tr>
+    <tr><td><a href="/item/4347-serving-of-salmon-meuniere-+1">Serving of Salmon Meuniere +1</a></td><td>7</td><td>510</td><td>1,173</td></tr>
+    <tr><td><a href="/item/4564-royal-omelette">Royal Omelette</a></td><td>8</td><td>1836</td><td>1,893</td></tr>
+    <tr><td><a href="/item/4331-imperial-omelette">Imperial Omelette</a></td><td>8</td><td>2516</td><td>1,893</td></tr>
+    <tr><td><a href="/item/4279-tavnazian-salad">Tavnazian Salad</a></td><td>9</td><td>4375</td><td>2,240</td></tr>
+    <tr><td><a href="/item/5185-leremieu-salad">Leremieu Salad</a></td><td>9</td><td>6475</td><td>2,240</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-3" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4535-boiled-crayfish">Boiled Crayfish</a></td><td>0</td><td>150</td><td>5,760</td></tr>
-    <tr><td><a href="/item/4338-steamed-crayfish">Steamed Crayfish</a></td><td>0</td><td>180</td><td>5,760</td></tr>
-    <tr><td><a href="/item/4408-tortilla">Tortilla</a></td><td>1</td><td>52</td><td>5,040</td></tr>
-    <tr><td><a href="/item/5181-tortilla-buena">Tortilla Buena</a></td><td>1</td><td>78</td><td>5,040</td></tr>
-    <tr><td><a href="/item/4406-baked-apple">Baked Apple</a></td><td>2</td><td>165</td><td>7,200</td></tr>
-    <tr><td><a href="/item/4336-sweet-baked-apple">Sweet Baked Apple</a></td><td>2</td><td>195</td><td>7,200</td></tr>
-    <tr><td><a href="/item/4499-loaf-of-iron-bread">Loaf of Iron Bread</a></td><td>3</td><td>37</td><td>6,240</td></tr>
-    <tr><td><a href="/item/4573-loaf-of-steel-bread">Loaf of Steel Bread</a></td><td>3</td><td>114</td><td>6,240</td></tr>
-    <tr><td><a href="/item/4398-fish-mithkabob">Fish Mithkabob</a></td><td>4</td><td>270</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4575-fish-chiefkabob">Fish Chiefkabob</a></td><td>4</td><td>306</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4417-bowl-of-egg-soup">Bowl of Egg Soup</a></td><td>5</td><td>450</td><td>11,040</td></tr>
-    <tr><td><a href="/item/4521-bowl-of-humpty-soup">Bowl of Humpty Soup</a></td><td>5</td><td>525</td><td>11,040</td></tr>
-    <tr><td><a href="/item/4559-serving-of-herb-quus">Serving of Herb Quus</a></td><td>6</td><td>534</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4294-serving-of-medicinal-quus">Serving of Medicinal Quus</a></td><td>6</td><td>879</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4439-bowl-of-navarin">Bowl of Navarin</a></td><td>7</td><td>175</td><td>3,280</td></tr>
-    <tr><td><a href="/item/4284-bowl-of-tender-navarin">Bowl of Tender Navarin</a></td><td>7</td><td>525</td><td>3,280</td></tr>
-    <tr><td><a href="/item/4550-plate-of-bream-risotto">Plate of Bream Risotto</a></td><td>8</td><td>2208</td><td>17,760</td></tr>
-    <tr><td><a href="/item/4268-plate-of-sea-spray-risotto">Plate of Sea Spray Risotto</a></td><td>8</td><td>2688</td><td>17,760</td></tr>
-    <tr><td><a href="/item/4353-sea-bass-croute">Sea Bass Croute</a></td><td>9</td><td>2727</td><td>18,480</td></tr>
+    <tr><td><a href="/item/4535-boiled-crayfish">Boiled Crayfish</a></td><td>0</td><td>100</td><td>533</td></tr>
+    <tr><td><a href="/item/4338-steamed-crayfish">Steamed Crayfish</a></td><td>0</td><td>120</td><td>533</td></tr>
+    <tr><td><a href="/item/4408-tortilla">Tortilla</a></td><td>1</td><td>35</td><td>533</td></tr>
+    <tr><td><a href="/item/5181-tortilla-buena">Tortilla Buena</a></td><td>1</td><td>52</td><td>533</td></tr>
+    <tr><td><a href="/item/4406-baked-apple">Baked Apple</a></td><td>2</td><td>110</td><td>720</td></tr>
+    <tr><td><a href="/item/4336-sweet-baked-apple">Sweet Baked Apple</a></td><td>2</td><td>130</td><td>720</td></tr>
+    <tr><td><a href="/item/4499-loaf-of-iron-bread">Loaf of Iron Bread</a></td><td>3</td><td>25</td><td>666</td></tr>
+    <tr><td><a href="/item/4573-loaf-of-steel-bread">Loaf of Steel Bread</a></td><td>3</td><td>76</td><td>666</td></tr>
+    <tr><td><a href="/item/4398-fish-mithkabob">Fish Mithkabob</a></td><td>4</td><td>180</td><td>933</td></tr>
+    <tr><td><a href="/item/4575-fish-chiefkabob">Fish Chiefkabob</a></td><td>4</td><td>204</td><td>933</td></tr>
+    <tr><td><a href="/item/4417-bowl-of-egg-soup">Bowl of Egg Soup</a></td><td>5</td><td>300</td><td>1,120</td></tr>
+    <tr><td><a href="/item/4521-bowl-of-humpty-soup">Bowl of Humpty Soup</a></td><td>5</td><td>350</td><td>1,120</td></tr>
+    <tr><td><a href="/item/4559-serving-of-herb-quus">Serving of Herb Quus</a></td><td>6</td><td>356</td><td>1,200</td></tr>
+    <tr><td><a href="/item/4294-serving-of-medicinal-quus">Serving of Medicinal Quus</a></td><td>6</td><td>586</td><td>1,200</td></tr>
+    <tr><td><a href="/item/4439-bowl-of-navarin">Bowl of Navarin</a></td><td>7</td><td>175</td><td>1,093</td></tr>
+    <tr><td><a href="/item/4284-bowl-of-tender-navarin">Bowl of Tender Navarin</a></td><td>7</td><td>525</td><td>1,093</td></tr>
+    <tr><td><a href="/item/4550-plate-of-bream-risotto">Plate of Bream Risotto</a></td><td>8</td><td>1472</td><td>1,786</td></tr>
+    <tr><td><a href="/item/4268-plate-of-sea-spray-risotto">Plate of Sea Spray Risotto</a></td><td>8</td><td>1792</td><td>1,786</td></tr>
+    <tr><td><a href="/item/4353-sea-bass-croute">Sea Bass Croute</a></td><td>9</td><td>1818</td><td>1,893</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-4" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4455-bowl-of-pebble-soup">Bowl of Pebble Soup</a></td><td>0</td><td>50</td><td>1,360</td></tr>
-    <tr><td><a href="/item/4592-bowl-of-wisdom-soup">Bowl of Wisdom Soup</a></td><td>0</td><td>55</td><td>1,360</td></tr>
-    <tr><td><a href="/item/4416-bowl-of-pea-soup">Bowl of Pea Soup</a></td><td>1</td><td>420</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4327-bowl-of-emerald-soup">Bowl of Emerald Soup</a></td><td>1</td><td>541</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4560-bowl-of-vegetable-soup">Bowl of Vegetable Soup</a></td><td>2</td><td>376</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4323-bowl-of-vegetable-broth">Bowl of Vegetable Broth</a></td><td>2</td><td>664</td><td>9,360</td></tr>
-    <tr><td><a href="/item/4459-nebimonite-bake">Nebimonite Bake</a></td><td>3</td><td>450</td><td>10,320</td></tr>
-    <tr><td><a href="/item/4267-buttered-nebimonite">Buttered Nebimonite</a></td><td>3</td><td>675</td><td>10,320</td></tr>
-    <tr><td><a href="/item/4490-pickled-herring">Pickled Herring</a></td><td>4</td><td>180</td><td>8,400</td></tr>
-    <tr><td><a href="/item/5183-viking-herring">Viking Herring</a></td><td>4</td><td>270</td><td>8,400</td></tr>
-    <tr><td><a href="/item/5598-sis-kebabi">Sis Kebabi</a></td><td>5</td><td>600</td><td>12,000</td></tr>
-    <tr><td><a href="/item/5599-sis-kebabi-+1">Sis Kebabi +1</a></td><td>5</td><td>750</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4433-bowl-of-dhalmel-stew">Bowl of Dhalmel Stew</a></td><td>6</td><td>778</td><td>13,440</td></tr>
-    <tr><td><a href="/item/4589-bowl-of-wild-stew">Bowl of Wild Stew</a></td><td>6</td><td>855</td><td>13,440</td></tr>
-    <tr><td><a href="/item/4411-dhalmel-pie">Dhalmel Pie</a></td><td>7</td><td>120</td><td>3,120</td></tr>
-    <tr><td><a href="/item/4322-dhalmel-pie-+1">Dhalmel Pie +1</a></td><td>7</td><td>160</td><td>3,120</td></tr>
-    <tr><td><a href="/item/4582-serving-of-bass-meuniere">Serving of Bass Meuniere</a></td><td>8</td><td>457</td><td>12,240</td></tr>
-    <tr><td><a href="/item/4346-serving-of-bass-meuniere-+1">Serving of Bass Meuniere +1</a></td><td>8</td><td>915</td><td>12,240</td></tr>
-    <tr><td><a href="/item/4584-serving-of-flounder-meuniere">Serving of Flounder Meuniere</a></td><td>9</td><td>2395</td><td>18,000</td></tr>
-    <tr><td><a href="/item/4345-serving-of-flounder-meuniere-+1">Serving of Flounder Meuniere +1</a></td><td>9</td><td>3195</td><td>18,000</td></tr>
+    <tr><td><a href="/item/4455-bowl-of-pebble-soup">Bowl of Pebble Soup</a></td><td>0</td><td>50</td><td>453</td></tr>
+    <tr><td><a href="/item/4592-bowl-of-wisdom-soup">Bowl of Wisdom Soup</a></td><td>0</td><td>55</td><td>453</td></tr>
+    <tr><td><a href="/item/4416-bowl-of-pea-soup">Bowl of Pea Soup</a></td><td>1</td><td>280</td><td>880</td></tr>
+    <tr><td><a href="/item/4327-bowl-of-emerald-soup">Bowl of Emerald Soup</a></td><td>1</td><td>361</td><td>880</td></tr>
+    <tr><td><a href="/item/4560-bowl-of-vegetable-soup">Bowl of Vegetable Soup</a></td><td>2</td><td>251</td><td>906</td></tr>
+    <tr><td><a href="/item/4323-bowl-of-vegetable-broth">Bowl of Vegetable Broth</a></td><td>2</td><td>443</td><td>906</td></tr>
+    <tr><td><a href="/item/4459-nebimonite-bake">Nebimonite Bake</a></td><td>3</td><td>300</td><td>1,013</td></tr>
+    <tr><td><a href="/item/4267-buttered-nebimonite">Buttered Nebimonite</a></td><td>3</td><td>450</td><td>1,013</td></tr>
+    <tr><td><a href="/item/4490-pickled-herring">Pickled Herring</a></td><td>4</td><td>120</td><td>853</td></tr>
+    <tr><td><a href="/item/5183-viking-herring">Viking Herring</a></td><td>4</td><td>180</td><td>853</td></tr>
+    <tr><td><a href="/item/5598-sis-kebabi">Sis Kebabi</a></td><td>5</td><td>400</td><td>1,200</td></tr>
+    <tr><td><a href="/item/5599-sis-kebabi-+1">Sis Kebabi +1</a></td><td>5</td><td>500</td><td>1,200</td></tr>
+    <tr><td><a href="/item/4433-bowl-of-dhalmel-stew">Bowl of Dhalmel Stew</a></td><td>6</td><td>519</td><td>1,333</td></tr>
+    <tr><td><a href="/item/4589-bowl-of-wild-stew">Bowl of Wild Stew</a></td><td>6</td><td>570</td><td>1,333</td></tr>
+    <tr><td><a href="/item/4411-dhalmel-pie">Dhalmel Pie</a></td><td>7</td><td>120</td><td>1,040</td></tr>
+    <tr><td><a href="/item/4322-dhalmel-pie-+1">Dhalmel Pie +1</a></td><td>7</td><td>160</td><td>1,040</td></tr>
+    <tr><td><a href="/item/4582-serving-of-bass-meuniere">Serving of Bass Meuniere</a></td><td>8</td><td>305</td><td>1,253</td></tr>
+    <tr><td><a href="/item/4346-serving-of-bass-meuniere-+1">Serving of Bass Meuniere +1</a></td><td>8</td><td>610</td><td>1,253</td></tr>
+    <tr><td><a href="/item/4584-serving-of-flounder-meuniere">Serving of Flounder Meuniere</a></td><td>9</td><td>1597</td><td>1,840</td></tr>
+    <tr><td><a href="/item/4345-serving-of-flounder-meuniere-+1">Serving of Flounder Meuniere +1</a></td><td>9</td><td>2130</td><td>1,840</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-5" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4355-salmon-sub-sandwich">Salmon Sub Sandwich</a></td><td>0</td><td>417</td><td>8,880</td></tr>
-    <tr><td><a href="/item/4266-fulm-long-salmon-sub">Fulm-Long Salmon Sub</a></td><td>0</td><td>432</td><td>8,880</td></tr>
-    <tr><td><a href="/item/4537-roast-carp">Roast Carp</a></td><td>1</td><td>195</td><td>6,960</td></tr>
-    <tr><td><a href="/item/4586-broiled-carp">Broiled Carp</a></td><td>1</td><td>240</td><td>6,960</td></tr>
-    <tr><td><a href="/item/4376-strip-of-meat-jerky">Strip of Meat Jerky</a></td><td>2</td><td>45</td><td>5,520</td></tr>
-    <tr><td><a href="/item/4518-strip-of-sheep-jerky">Strip of Sheep Jerky</a></td><td>2</td><td>63</td><td>5,520</td></tr>
-    <tr><td><a href="/item/4364-loaf-of-black-bread">Loaf of Black Bread</a></td><td>3</td><td>45</td><td>6,240</td></tr>
-    <tr><td><a href="/item/4591-loaf-of-pumpernickel">Loaf of Pumpernickel</a></td><td>3</td><td>60</td><td>6,240</td></tr>
-    <tr><td><a href="/item/4490-pickled-herring">Pickled Herring</a></td><td>4</td><td>180</td><td>8,400</td></tr>
-    <tr><td><a href="/item/5183-viking-herring">Viking Herring</a></td><td>4</td><td>270</td><td>8,400</td></tr>
-    <tr><td><a href="/item/4457-eel-kabob">Eel Kabob</a></td><td>5</td><td>750</td><td>12,960</td></tr>
-    <tr><td><a href="/item/4588-broiled-eel">Broiled Eel</a></td><td>5</td><td>825</td><td>12,960</td></tr>
-    <tr><td><a href="/item/4487-colored-egg">Colored Egg</a></td><td>6</td><td>156</td><td>9,120</td></tr>
-    <tr><td><a href="/item/4595-party-egg">Party Egg</a></td><td>6</td><td>345</td><td>9,120</td></tr>
-    <tr><td><a href="/item/4507-rarab-meatball">Rarab Meatball</a></td><td>7</td><td>480</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4349-bunny-ball">Bunny Ball</a></td><td>7</td><td>810</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4557-steamed-catfish">Steamed Catfish</a></td><td>8</td><td>783</td><td>13,920</td></tr>
-    <tr><td><a href="/item/4542-bowl-of-brain-stew">Bowl of Brain Stew</a></td><td>9</td><td>3330</td><td>19,200</td></tr>
-    <tr><td><a href="/item/5180-bowl-of-sophic-stew">Bowl of Sophic Stew</a></td><td>9</td><td>4995</td><td>19,200</td></tr>
+    <tr><td><a href="/item/4355-salmon-sub-sandwich">Salmon Sub Sandwich</a></td><td>0</td><td>278</td><td>800</td></tr>
+    <tr><td><a href="/item/4266-fulm-long-salmon-sub">Fulm-Long Salmon Sub</a></td><td>0</td><td>288</td><td>800</td></tr>
+    <tr><td><a href="/item/4537-roast-carp">Roast Carp</a></td><td>1</td><td>130</td><td>666</td></tr>
+    <tr><td><a href="/item/4586-broiled-carp">Broiled Carp</a></td><td>1</td><td>160</td><td>666</td></tr>
+    <tr><td><a href="/item/4376-strip-of-meat-jerky">Strip of Meat Jerky</a></td><td>2</td><td>30</td><td>586</td></tr>
+    <tr><td><a href="/item/4518-strip-of-sheep-jerky">Strip of Sheep Jerky</a></td><td>2</td><td>42</td><td>586</td></tr>
+    <tr><td><a href="/item/4364-loaf-of-black-bread">Loaf of Black Bread</a></td><td>3</td><td>30</td><td>666</td></tr>
+    <tr><td><a href="/item/4591-loaf-of-pumpernickel">Loaf of Pumpernickel</a></td><td>3</td><td>40</td><td>666</td></tr>
+    <tr><td><a href="/item/4490-pickled-herring">Pickled Herring</a></td><td>4</td><td>120</td><td>853</td></tr>
+    <tr><td><a href="/item/5183-viking-herring">Viking Herring</a></td><td>4</td><td>180</td><td>853</td></tr>
+    <tr><td><a href="/item/4457-eel-kabob">Eel Kabob</a></td><td>5</td><td>500</td><td>1,280</td></tr>
+    <tr><td><a href="/item/4588-broiled-eel">Broiled Eel</a></td><td>5</td><td>550</td><td>1,280</td></tr>
+    <tr><td><a href="/item/4487-colored-egg">Colored Egg</a></td><td>6</td><td>104</td><td>960</td></tr>
+    <tr><td><a href="/item/4595-party-egg">Party Egg</a></td><td>6</td><td>230</td><td>960</td></tr>
+    <tr><td><a href="/item/4507-rarab-meatball">Rarab Meatball</a></td><td>7</td><td>320</td><td>1,226</td></tr>
+    <tr><td><a href="/item/4349-bunny-ball">Bunny Ball</a></td><td>7</td><td>540</td><td>1,226</td></tr>
+    <tr><td><a href="/item/4557-steamed-catfish">Steamed Catfish</a></td><td>8</td><td>522</td><td>1,386</td></tr>
+    <tr><td><a href="/item/4542-bowl-of-brain-stew">Bowl of Brain Stew</a></td><td>9</td><td>2220</td><td>1,973</td></tr>
+    <tr><td><a href="/item/5180-bowl-of-sophic-stew">Bowl of Sophic Stew</a></td><td>9</td><td>3330</td><td>1,973</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-6" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4355-salmon-sub-sandwich">Salmon Sub Sandwich</a></td><td>0</td><td>417</td><td>8,880</td></tr>
-    <tr><td><a href="/item/4266-fulm-long-salmon-sub">Fulm-Long Salmon Sub</a></td><td>0</td><td>432</td><td>8,880</td></tr>
-    <tr><td><a href="/item/4537-roast-carp">Roast Carp</a></td><td>1</td><td>195</td><td>6,960</td></tr>
-    <tr><td><a href="/item/4586-broiled-carp">Broiled Carp</a></td><td>1</td><td>240</td><td>6,960</td></tr>
-    <tr><td><a href="/item/4456-boiled-crab">Boiled Crab</a></td><td>2</td><td>675</td><td>11,760</td></tr>
-    <tr><td><a href="/item/4342-steamed-crab">Steamed Crab</a></td><td>2</td><td>825</td><td>11,760</td></tr>
-    <tr><td><a href="/item/5196-strip-of-buffalo-jerky">Strip of Buffalo Jerky</a></td><td>3</td><td>252</td><td>8,640</td></tr>
-    <tr><td><a href="/item/5207-strip-of-bison-jerky">Strip of Bison Jerky</a></td><td>3</td><td>567</td><td>8,640</td></tr>
-    <tr><td><a href="/item/4397-cinna-cookie">Cinna-Cookie</a></td><td>4</td><td>6</td><td>6,480</td></tr>
-    <tr><td><a href="/item/4520-coin-cookie">Coin Cookie</a></td><td>4</td><td>7</td><td>6,480</td></tr>
-    <tr><td><a href="/item/5598-sis-kebabi">Sis Kebabi</a></td><td>5</td><td>600</td><td>12,000</td></tr>
-    <tr><td><a href="/item/5599-sis-kebabi-+1">Sis Kebabi +1</a></td><td>5</td><td>750</td><td>12,000</td></tr>
-    <tr><td><a href="/item/4506-mutton-tortilla">Mutton Tortilla</a></td><td>6</td><td>607</td><td>12,480</td></tr>
-    <tr><td><a href="/item/4348-mutton-enchilada">Mutton Enchilada</a></td><td>6</td><td>880</td><td>12,480</td></tr>
-    <tr><td><a href="/item/4554-serving-of-shallops-tropicale">Serving of Shallops Tropicale</a></td><td>7</td><td>2106</td><td>17,520</td></tr>
-    <tr><td><a href="/item/4548-plate-of-coeurl-saute">Plate of Coeurl Saute</a></td><td>8</td><td>924</td><td>14,400</td></tr>
-    <tr><td><a href="/item/4295-plate-of-royal-saute">Plate of Royal Saute</a></td><td>8</td><td>1449</td><td>14,400</td></tr>
-    <tr><td><a href="/item/4270-sweet-rice-cake">Sweet Rice Cake</a></td><td>9</td><td>147</td><td>10,320</td></tr>
+    <tr><td><a href="/item/4355-salmon-sub-sandwich">Salmon Sub Sandwich</a></td><td>0</td><td>278</td><td>800</td></tr>
+    <tr><td><a href="/item/4266-fulm-long-salmon-sub">Fulm-Long Salmon Sub</a></td><td>0</td><td>288</td><td>800</td></tr>
+    <tr><td><a href="/item/4537-roast-carp">Roast Carp</a></td><td>1</td><td>130</td><td>666</td></tr>
+    <tr><td><a href="/item/4586-broiled-carp">Broiled Carp</a></td><td>1</td><td>160</td><td>666</td></tr>
+    <tr><td><a href="/item/4456-boiled-crab">Boiled Crab</a></td><td>2</td><td>450</td><td>1,120</td></tr>
+    <tr><td><a href="/item/4342-steamed-crab">Steamed Crab</a></td><td>2</td><td>550</td><td>1,120</td></tr>
+    <tr><td><a href="/item/5196-strip-of-buffalo-jerky">Strip of Buffalo Jerky</a></td><td>3</td><td>168</td><td>853</td></tr>
+    <tr><td><a href="/item/5207-strip-of-bison-jerky">Strip of Bison Jerky</a></td><td>3</td><td>378</td><td>853</td></tr>
+    <tr><td><a href="/item/4397-cinna-cookie">Cinna-Cookie</a></td><td>4</td><td>4</td><td>720</td></tr>
+    <tr><td><a href="/item/4520-coin-cookie">Coin Cookie</a></td><td>4</td><td>5</td><td>720</td></tr>
+    <tr><td><a href="/item/5598-sis-kebabi">Sis Kebabi</a></td><td>5</td><td>400</td><td>1,200</td></tr>
+    <tr><td><a href="/item/5599-sis-kebabi-+1">Sis Kebabi +1</a></td><td>5</td><td>500</td><td>1,200</td></tr>
+    <tr><td><a href="/item/4506-mutton-tortilla">Mutton Tortilla</a></td><td>6</td><td>405</td><td>1,253</td></tr>
+    <tr><td><a href="/item/4348-mutton-enchilada">Mutton Enchilada</a></td><td>6</td><td>587</td><td>1,253</td></tr>
+    <tr><td><a href="/item/4554-serving-of-shallops-tropicale">Serving of Shallops Tropicale</a></td><td>7</td><td>1404</td><td>1,760</td></tr>
+    <tr><td><a href="/item/4548-plate-of-coeurl-saute">Plate of Coeurl Saute</a></td><td>8</td><td>616</td><td>1,440</td></tr>
+    <tr><td><a href="/item/4295-plate-of-royal-saute">Plate of Royal Saute</a></td><td>8</td><td>966</td><td>1,440</td></tr>
+    <tr><td><a href="/item/4270-sweet-rice-cake">Sweet Rice Cake</a></td><td>9</td><td>98</td><td>1,120</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-7" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/4415-ear-of-roasted-corn">Ear of Roasted Corn</a></td><td>0</td><td>46</td><td>4,080</td></tr>
-    <tr><td><a href="/item/4334-ear-of-grilled-corn">Ear of Grilled Corn</a></td><td>0</td><td>55</td><td>4,080</td></tr>
-    <tr><td><a href="/item/4408-tortilla">Tortilla</a></td><td>1</td><td>52</td><td>5,040</td></tr>
-    <tr><td><a href="/item/5181-tortilla-buena">Tortilla Buena</a></td><td>1</td><td>78</td><td>5,040</td></tr>
-    <tr><td><a href="/item/4436-baked-popoto">Baked Popoto</a></td><td>2</td><td>120</td><td>6,720</td></tr>
-    <tr><td><a href="/item/4282-pipin-hot-popoto">Pipin Hot Popoto</a></td><td>2</td><td>127</td><td>6,720</td></tr>
-    <tr><td><a href="/item/4404-roast-trout">Roast Trout</a></td><td>3</td><td>225</td><td>8,400</td></tr>
-    <tr><td><a href="/item/4587-broiled-trout">Broiled Trout</a></td><td>3</td><td>247</td><td>8,400</td></tr>
-    <tr><td><a href="/item/4420-bowl-of-tomato-soup">Bowl of Tomato Soup</a></td><td>4</td><td>294</td><td>3,200</td></tr>
-    <tr><td><a href="/item/4341-bowl-of-sunset-soup">Bowl of Sunset Soup</a></td><td>4</td><td>894</td><td>3,200</td></tr>
-    <tr><td><a href="/item/4391-bretzel">Bretzel</a></td><td>5</td><td>9</td><td>7,200</td></tr>
-    <tr><td><a href="/item/5182-salty-bretzel">Salty Bretzel</a></td><td>5</td><td>13</td><td>7,200</td></tr>
-    <tr><td><a href="/item/5600-balik-sis">Balik Sis</a></td><td>6</td><td>900</td><td>13,920</td></tr>
-    <tr><td><a href="/item/5601-balik-sis-+1">Balik Sis +1</a></td><td>6</td><td>975</td><td>13,920</td></tr>
-    <tr><td><a href="/item/4418-bowl-of-turtle-soup">Bowl of Turtle Soup</a></td><td>7</td><td>1800</td><td>16,800</td></tr>
-    <tr><td><a href="/item/4337-bowl-of-stamina-soup">Bowl of Stamina Soup</a></td><td>7</td><td>2100</td><td>16,800</td></tr>
-    <tr><td><a href="/item/4452-bowl-of-shark-fin-soup">Bowl of Shark Fin Soup</a></td><td>8</td><td>1725</td><td>16,800</td></tr>
-    <tr><td><a href="/item/4285-bowl-of-ocean-soup">Bowl of Ocean Soup</a></td><td>8</td><td>2100</td><td>16,800</td></tr>
-    <tr><td><a href="/item/4551-salmon-croute">Salmon Croute</a></td><td>9</td><td>1350</td><td>16,080</td></tr>
+    <tr><td><a href="/item/4415-ear-of-roasted-corn">Ear of Roasted Corn</a></td><td>0</td><td>31</td><td>426</td></tr>
+    <tr><td><a href="/item/4334-ear-of-grilled-corn">Ear of Grilled Corn</a></td><td>0</td><td>37</td><td>426</td></tr>
+    <tr><td><a href="/item/4408-tortilla">Tortilla</a></td><td>1</td><td>35</td><td>533</td></tr>
+    <tr><td><a href="/item/5181-tortilla-buena">Tortilla Buena</a></td><td>1</td><td>52</td><td>533</td></tr>
+    <tr><td><a href="/item/4436-baked-popoto">Baked Popoto</a></td><td>2</td><td>80</td><td>666</td></tr>
+    <tr><td><a href="/item/4282-pipin-hot-popoto">Pipin Hot Popoto</a></td><td>2</td><td>85</td><td>666</td></tr>
+    <tr><td><a href="/item/4404-roast-trout">Roast Trout</a></td><td>3</td><td>150</td><td>853</td></tr>
+    <tr><td><a href="/item/4587-broiled-trout">Broiled Trout</a></td><td>3</td><td>165</td><td>853</td></tr>
+    <tr><td><a href="/item/4420-bowl-of-tomato-soup">Bowl of Tomato Soup</a></td><td>4</td><td>294</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4341-bowl-of-sunset-soup">Bowl of Sunset Soup</a></td><td>4</td><td>894</td><td>1,066</td></tr>
+    <tr><td><a href="/item/4391-bretzel">Bretzel</a></td><td>5</td><td>6</td><td>773</td></tr>
+    <tr><td><a href="/item/5182-salty-bretzel">Salty Bretzel</a></td><td>5</td><td>9</td><td>773</td></tr>
+    <tr><td><a href="/item/5600-balik-sis">Balik Sis</a></td><td>6</td><td>600</td><td>1,386</td></tr>
+    <tr><td><a href="/item/5601-balik-sis-+1">Balik Sis +1</a></td><td>6</td><td>650</td><td>1,386</td></tr>
+    <tr><td><a href="/item/4418-bowl-of-turtle-soup">Bowl of Turtle Soup</a></td><td>7</td><td>1200</td><td>1,680</td></tr>
+    <tr><td><a href="/item/4337-bowl-of-stamina-soup">Bowl of Stamina Soup</a></td><td>7</td><td>1400</td><td>1,680</td></tr>
+    <tr><td><a href="/item/4452-bowl-of-shark-fin-soup">Bowl of Shark Fin Soup</a></td><td>8</td><td>1150</td><td>1,680</td></tr>
+    <tr><td><a href="/item/4285-bowl-of-ocean-soup">Bowl of Ocean Soup</a></td><td>8</td><td>1400</td><td>1,680</td></tr>
+    <tr><td><a href="/item/4551-salmon-croute">Salmon Croute</a></td><td>9</td><td>900</td><td>1,600</td></tr>
    </tbody></table>
   </div>
  </section>
 
  <section class="panel pad">
-  <h2>Guild point rewards</h2>
+  <h2 id="gp-rewards">Guild point rewards</h2>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15451-culinarians-belt">Culinarians Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -606,7 +616,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild vendor</h2>
+  <h2 id="vendor">Guild vendor</h2>
   <p class="vendor-note">Rank-gated items sold by the cooking guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></span><span class="rk">rank amateur</span><span class="pr">12g</span></div>
@@ -649,7 +659,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>222</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>379</b><span>total</span></div>
@@ -746,6 +756,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

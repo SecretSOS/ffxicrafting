@@ -230,7 +230,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/825-square-of-cotton-cloth">Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
@@ -272,6 +272,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

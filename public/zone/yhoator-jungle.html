@@ -136,7 +136,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="jump"><a href="#gathering">Gathering</a><a href="#digging">Chocobo digging</a><a href="#caskets">Field caskets</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Logging</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">15.1%</td></tr>
 <tr><td><a href="/item/721-piece-of-rattan-lumber">Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">14.8%</td></tr>
 <tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">9.92%</td></tr>
@@ -147,7 +147,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">1.08%</td></tr>
 </tbody></table>
 <h3>Harvesting</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/4373-woozyshroom">Woozyshroom</a></td><td class="pct" style="text-align:right">20.3%</td></tr>
 <tr><td><a href="/item/1983-mushroom-locust">Mushroom Locust</a></td><td class="pct" style="text-align:right">14.7%</td></tr>
 <tr><td><a href="/item/4374-sleepshroom">Sleepshroom</a></td><td class="pct" style="text-align:right">14.3%</td></tr>
@@ -159,7 +159,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="digging"><h2>Chocobo digging</h2>
 <h3>Regular — requires dig rank amateur</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
 <tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">0</td></tr>
 <tr><td><a href="/item/700-mahogany-log">Mahogany Log</a></td><td class="pct" style="text-align:right">0</td></tr>
 <tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">0</td></tr>
@@ -172,7 +172,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </tbody></table>
 </section>
 <section class="panel pad" id="caskets"><h2>Field caskets</h2>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/4114-potion-2">Potion +2</a></td><td class="pct" style="text-align:right">10.9%</td></tr>
 <tr><td><a href="/item/4129-ether-1">Ether +1</a></td><td class="pct" style="text-align:right">10.7%</td></tr>
 <tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">8.47%</td></tr>
@@ -369,7 +369,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/605-pickaxe">Pickaxe</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -435,6 +435,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

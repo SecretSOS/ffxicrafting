@@ -135,7 +135,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="jump"><a href="#gathering">Gathering</a><a href="#digging">Chocobo digging</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Logging</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">14.8%</td></tr>
 <tr><td><a href="/item/696-yew-log">Yew Log</a></td><td class="pct" style="text-align:right">14.8%</td></tr>
 <tr><td><a href="/item/695-willow-log">Willow Log</a></td><td class="pct" style="text-align:right">10.5%</td></tr>
@@ -148,7 +148,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="digging"><h2>Chocobo digging</h2>
 <h3>Regular — requires dig rank amateur, dig rank journeyman</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">0</td></tr>
 <tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">0</td></tr>
 <tr><td><a href="/item/695-willow-log">Willow Log</a></td><td class="pct" style="text-align:right">0</td></tr>
@@ -305,7 +305,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -372,6 +372,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

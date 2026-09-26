@@ -296,8 +296,17 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
 
     # Guild hours info
     html += f'''\
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>{guild['open']}:00</b> – <b>{guild['close']}:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>{holiday_name} <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -312,9 +321,10 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
     if shop_items:
         html += f'''\
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">({len(shop_items)} items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">({len(shop_items)} items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the {craft_name.lower()} guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
 '''
         for it in shop_items:
             name = pretty(it['name'])
@@ -327,7 +337,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
     if patterns:
         html += f'''\
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
 '''
@@ -349,7 +359,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
 
     # GP rewards
     if reward_items or reward_ki:
-        html += ' <section class="panel pad">\n  <h2>Guild point rewards</h2>\n'
+        html += ' <section class="panel pad">\n  <h2 id="gp-rewards">Guild point rewards</h2>\n'
         if reward_items:
             html += '  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>\n'
             html += '  <div class="reward-grid">\n'
@@ -371,7 +381,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
     if vendor_items:
         html += f'''\
  <section class="panel pad">
-  <h2>Guild vendor</h2>
+  <h2 id="vendor">Guild vendor</h2>
   <p class="vendor-note">Rank-gated items sold by the {craft_name.lower()} guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
 '''
@@ -384,7 +394,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
     # Recipe overview
     html += f'''\
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>{era_60}</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>{total}</b><span>total</span></div>

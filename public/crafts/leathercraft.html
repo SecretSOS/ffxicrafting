@@ -145,8 +145,17 @@
   </div>
  </header>
 
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>3:00</b> – <b>18:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Iceday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -156,9 +165,10 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(71 items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(71 items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the leathercraft guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
    <div class="shop-row"><span class="nm"><a href="/item/4509-flask-of-distilled-water">Flask of Distilled Water</a></span><span class="pr">60g</span><span class="st">120–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/856-rabbit-hide">Rabbit Hide</a></span><span class="pr">314g</span><span class="st">12–120</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/505-sheepskin">Sheepskin</a></span><span class="pr">397g</span><span class="st">12–120</span></div>
@@ -234,7 +244,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -248,199 +258,199 @@
   </div>
   <div class="turnin-pattern" id="pat-0">
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12568-leather-vest">Leather Vest</a></td><td>0</td><td>92</td><td>4,800</td></tr>
-    <tr><td><a href="/item/12599-leather-vest-+1">Leather Vest +1</a></td><td>0</td><td>153</td><td>4,800</td></tr>
-    <tr><td><a href="/item/12992-solea">Solea</a></td><td>1</td><td>121</td><td>6,000</td></tr>
-    <tr><td><a href="/item/13037-solea-+1">Solea +1</a></td><td>1</td><td>152</td><td>6,000</td></tr>
-    <tr><td><a href="/item/12442-studded-bandana">Studded Bandana</a></td><td>2</td><td>1102</td><td>13,920</td></tr>
-    <tr><td><a href="/item/13824-strong-bandana">Strong Bandana</a></td><td>2</td><td>1140</td><td>13,920</td></tr>
-    <tr><td><a href="/item/15312-mist-pumps">Mist Pumps</a></td><td>3</td><td>1305</td><td>14,880</td></tr>
-    <tr><td><a href="/item/13271-corsette">Corsette</a></td><td>4</td><td>3250</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13272-corsette-+1">Corsette +1</a></td><td>4</td><td>3750</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12444-raptor-helm">Raptor Helm</a></td><td>5</td><td>2240</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13835-dino-helm">Dino Helm</a></td><td>5</td><td>2400</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13698-beak-helm">Beak Helm</a></td><td>6</td><td>2687</td><td>18,240</td></tr>
-    <tr><td><a href="/item/13701-beak-helm-+1">Beak Helm +1</a></td><td>6</td><td>2795</td><td>18,240</td></tr>
-    <tr><td><a href="/item/12996-silk-pumps">Silk Pumps</a></td><td>7</td><td>4485</td><td>20,160</td></tr>
-    <tr><td><a href="/item/14115-silk-pumps-+1">Silk Pumps +1</a></td><td>7</td><td>5635</td><td>20,160</td></tr>
-    <tr><td><a href="/item/13705-ogre-jerkin">Ogre Jerkin</a></td><td>8</td><td>4560</td><td>20,160</td></tr>
-    <tr><td><a href="/item/14366-ogre-jerkin-+1">Ogre Jerkin +1</a></td><td>8</td><td>5760</td><td>20,160</td></tr>
-    <tr><td><a href="/item/15307-bison-gamashes">Bison Gamashes</a></td><td>9</td><td>6492</td><td>21,120</td></tr>
-    <tr><td><a href="/item/15308-braves-gamashes">Braves Gamashes</a></td><td>9</td><td>7717</td><td>21,120</td></tr>
+    <tr><td><a href="/item/12568-leather-vest">Leather Vest</a></td><td>0</td><td>168</td><td>666</td></tr>
+    <tr><td><a href="/item/12599-leather-vest-+1">Leather Vest +1</a></td><td>0</td><td>244</td><td>666</td></tr>
+    <tr><td><a href="/item/12992-solea">Solea</a></td><td>1</td><td>121</td><td>2,000</td></tr>
+    <tr><td><a href="/item/13037-solea-+1">Solea +1</a></td><td>1</td><td>152</td><td>2,000</td></tr>
+    <tr><td><a href="/item/12442-studded-bandana">Studded Bandana</a></td><td>2</td><td>1102</td><td>4,640</td></tr>
+    <tr><td><a href="/item/13824-strong-bandana">Strong Bandana</a></td><td>2</td><td>1140</td><td>4,640</td></tr>
+    <tr><td><a href="/item/15312-mist-pumps">Mist Pumps</a></td><td>3</td><td>1305</td><td>4,960</td></tr>
+    <tr><td><a href="/item/13271-corsette">Corsette</a></td><td>4</td><td>3250</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13272-corsette-+1">Corsette +1</a></td><td>4</td><td>3750</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12444-raptor-helm">Raptor Helm</a></td><td>5</td><td>2240</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13835-dino-helm">Dino Helm</a></td><td>5</td><td>2400</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13698-beak-helm">Beak Helm</a></td><td>6</td><td>2687</td><td>6,080</td></tr>
+    <tr><td><a href="/item/13701-beak-helm-+1">Beak Helm +1</a></td><td>6</td><td>2795</td><td>6,080</td></tr>
+    <tr><td><a href="/item/12996-silk-pumps">Silk Pumps</a></td><td>7</td><td>4485</td><td>6,720</td></tr>
+    <tr><td><a href="/item/14115-silk-pumps-+1">Silk Pumps +1</a></td><td>7</td><td>5635</td><td>6,720</td></tr>
+    <tr><td><a href="/item/13705-ogre-jerkin">Ogre Jerkin</a></td><td>8</td><td>4560</td><td>6,720</td></tr>
+    <tr><td><a href="/item/14366-ogre-jerkin-+1">Ogre Jerkin +1</a></td><td>8</td><td>5760</td><td>6,720</td></tr>
+    <tr><td><a href="/item/15307-bison-gamashes">Bison Gamashes</a></td><td>9</td><td>6492</td><td>7,040</td></tr>
+    <tr><td><a href="/item/15308-braves-gamashes">Braves Gamashes</a></td><td>9</td><td>7717</td><td>7,040</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-1" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12696-leather-gloves">Leather Gloves</a></td><td>0</td><td>90</td><td>4,800</td></tr>
-    <tr><td><a href="/item/12784-leather-gloves-+1">Leather Gloves +1</a></td><td>0</td><td>110</td><td>4,800</td></tr>
-    <tr><td><a href="/item/12441-lizard-helm">Lizard Helm</a></td><td>1</td><td>177</td><td>6,270</td></tr>
-    <tr><td><a href="/item/12480-lizard-helm-+1">Lizard Helm +1</a></td><td>1</td><td>177</td><td>6,270</td></tr>
-    <tr><td><a href="/item/12698-studded-gloves">Studded Gloves</a></td><td>2</td><td>1710</td><td>16,090</td></tr>
-    <tr><td><a href="/item/12786-strong-gloves">Strong Gloves</a></td><td>2</td><td>2090</td><td>16,090</td></tr>
-    <tr><td><a href="/item/13089-wolf-gorget">Wolf Gorget</a></td><td>3</td><td>608</td><td>11,520</td></tr>
-    <tr><td><a href="/item/13070-wolf-gorget-+1">Wolf Gorget +1</a></td><td>3</td><td>684</td><td>11,520</td></tr>
-    <tr><td><a href="/item/13570-ram-mantle">Ram Mantle</a></td><td>4</td><td>900</td><td>13,440</td></tr>
-    <tr><td><a href="/item/13575-ram-mantle-+1">Ram Mantle +1</a></td><td>4</td><td>1000</td><td>13,440</td></tr>
-    <tr><td><a href="/item/12700-raptor-gloves">Raptor Gloves</a></td><td>5</td><td>3600</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12795-dino-gloves">Dino Gloves</a></td><td>5</td><td>3760</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13700-beak-gloves">Beak Gloves</a></td><td>6</td><td>3600</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13960-beak-gloves-+1">Beak Gloves +1</a></td><td>6</td><td>3760</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12702-tiger-gloves">Tiger Gloves</a></td><td>7</td><td>1912</td><td>17,040</td></tr>
-    <tr><td><a href="/item/13992-feral-gloves">Feral Gloves</a></td><td>7</td><td>2040</td><td>17,040</td></tr>
-    <tr><td><a href="/item/13704-ogre-mask">Ogre Mask</a></td><td>8</td><td>4200</td><td>19,920</td></tr>
-    <tr><td><a href="/item/13907-ogre-mask-+1">Ogre Mask +1</a></td><td>8</td><td>5400</td><td>19,920</td></tr>
-    <tr><td><a href="/item/14319-bison-kecks">Bison Kecks</a></td><td>9</td><td>6247</td><td>21,120</td></tr>
-    <tr><td><a href="/item/14320-braves-kecks">Braves Kecks</a></td><td>9</td><td>7472</td><td>21,120</td></tr>
+    <tr><td><a href="/item/12696-leather-gloves">Leather Gloves</a></td><td>0</td><td>90</td><td>1,600</td></tr>
+    <tr><td><a href="/item/12784-leather-gloves-+1">Leather Gloves +1</a></td><td>0</td><td>110</td><td>1,600</td></tr>
+    <tr><td><a href="/item/12441-lizard-helm">Lizard Helm</a></td><td>1</td><td>177</td><td>746</td></tr>
+    <tr><td><a href="/item/12480-lizard-helm-+1">Lizard Helm +1</a></td><td>1</td><td>177</td><td>2,090</td></tr>
+    <tr><td><a href="/item/12698-studded-gloves">Studded Gloves</a></td><td>2</td><td>1710</td><td>1,786</td></tr>
+    <tr><td><a href="/item/12786-strong-gloves">Strong Gloves</a></td><td>2</td><td>2090</td><td>5,363</td></tr>
+    <tr><td><a href="/item/13089-wolf-gorget">Wolf Gorget</a></td><td>3</td><td>608</td><td>3,840</td></tr>
+    <tr><td><a href="/item/13070-wolf-gorget-+1">Wolf Gorget +1</a></td><td>3</td><td>684</td><td>3,840</td></tr>
+    <tr><td><a href="/item/13570-ram-mantle">Ram Mantle</a></td><td>4</td><td>900</td><td>4,480</td></tr>
+    <tr><td><a href="/item/13575-ram-mantle-+1">Ram Mantle +1</a></td><td>4</td><td>1000</td><td>4,480</td></tr>
+    <tr><td><a href="/item/12700-raptor-gloves">Raptor Gloves</a></td><td>5</td><td>3600</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12795-dino-gloves">Dino Gloves</a></td><td>5</td><td>3760</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13700-beak-gloves">Beak Gloves</a></td><td>6</td><td>3600</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13960-beak-gloves-+1">Beak Gloves +1</a></td><td>6</td><td>3547</td><td>2,133</td></tr>
+    <tr><td><a href="/item/12702-tiger-gloves">Tiger Gloves</a></td><td>7</td><td>1912</td><td>5,680</td></tr>
+    <tr><td><a href="/item/13992-feral-gloves">Feral Gloves</a></td><td>7</td><td>2040</td><td>5,680</td></tr>
+    <tr><td><a href="/item/13704-ogre-mask">Ogre Mask</a></td><td>8</td><td>4200</td><td>6,640</td></tr>
+    <tr><td><a href="/item/13907-ogre-mask-+1">Ogre Mask +1</a></td><td>8</td><td>5400</td><td>6,640</td></tr>
+    <tr><td><a href="/item/14319-bison-kecks">Bison Kecks</a></td><td>9</td><td>6247</td><td>7,040</td></tr>
+    <tr><td><a href="/item/14320-braves-kecks">Braves Kecks</a></td><td>9</td><td>7472</td><td>7,040</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-2" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/14068-vagabonds-gloves">Vagabonds Gloves</a></td><td>0</td><td>63</td><td>4,320</td></tr>
-    <tr><td><a href="/item/14069-nomads-gloves">Nomads Gloves</a></td><td>0</td><td>71</td><td>4,320</td></tr>
-    <tr><td><a href="/item/13192-leather-belt">Leather Belt</a></td><td>1</td><td>85</td><td>5,520</td></tr>
-    <tr><td><a href="/item/13210-leather-belt-+1">Leather Belt +1</a></td><td>1</td><td>111</td><td>5,520</td></tr>
-    <tr><td><a href="/item/14072-chocobo-gloves">Chocobo Gloves</a></td><td>2</td><td>519</td><td>10,560</td></tr>
-    <tr><td><a href="/item/14073-riders-gloves">Riders Gloves</a></td><td>2</td><td>570</td><td>10,560</td></tr>
-    <tr><td><a href="/item/13571-wolf-mantle">Wolf Mantle</a></td><td>3</td><td>1224</td><td>14,640</td></tr>
-    <tr><td><a href="/item/13609-wolf-mantle-+1">Wolf Mantle +1</a></td><td>3</td><td>1564</td><td>14,640</td></tr>
-    <tr><td><a href="/item/12955-cuir-highboots">Cuir Highboots</a></td><td>4</td><td>1736</td><td>16,320</td></tr>
-    <tr><td><a href="/item/13041-cuir-highboots-+1">Cuir Highboots +1</a></td><td>4</td><td>1792</td><td>16,320</td></tr>
-    <tr><td><a href="/item/16388-himantes">Himantes</a></td><td>5</td><td>1140</td><td>14,640</td></tr>
-    <tr><td><a href="/item/16699-himantes-+1">Himantes +1</a></td><td>5</td><td>1720</td><td>14,640</td></tr>
-    <tr><td><a href="/item/13597-beak-mantle">Beak Mantle</a></td><td>6</td><td>1612</td><td>16,320</td></tr>
-    <tr><td><a href="/item/13621-beak-mantle-+1">Beak Mantle +1</a></td><td>6</td><td>1720</td><td>16,320</td></tr>
-    <tr><td><a href="/item/16389-coeurl-cesti">Coeurl Cesti</a></td><td>7</td><td>1980</td><td>17,280</td></tr>
-    <tr><td><a href="/item/17473-torama-cesti">Torama Cesti</a></td><td>7</td><td>2070</td><td>17,280</td></tr>
-    <tr><td><a href="/item/13595-coeurl-mantle">Coeurl Mantle</a></td><td>8</td><td>2100</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13603-torama-mantle">Torama Mantle</a></td><td>8</td><td>2800</td><td>17,520</td></tr>
-    <tr><td><a href="/item/14372-cardinal-vest">Cardinal Vest</a></td><td>9</td><td>4800</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14373-bachelor-vest">Bachelor Vest</a></td><td>9</td><td>6000</td><td>20,400</td></tr>
+    <tr><td><a href="/item/14068-vagabonds-gloves">Vagabonds Gloves</a></td><td>0</td><td>63</td><td>1,440</td></tr>
+    <tr><td><a href="/item/14069-nomads-gloves">Nomads Gloves</a></td><td>0</td><td>71</td><td>1,440</td></tr>
+    <tr><td><a href="/item/13192-leather-belt">Leather Belt</a></td><td>1</td><td>85</td><td>1,840</td></tr>
+    <tr><td><a href="/item/13210-leather-belt-+1">Leather Belt +1</a></td><td>1</td><td>111</td><td>1,840</td></tr>
+    <tr><td><a href="/item/14072-chocobo-gloves">Chocobo Gloves</a></td><td>2</td><td>519</td><td>3,520</td></tr>
+    <tr><td><a href="/item/14073-riders-gloves">Riders Gloves</a></td><td>2</td><td>570</td><td>3,520</td></tr>
+    <tr><td><a href="/item/13571-wolf-mantle">Wolf Mantle</a></td><td>3</td><td>1224</td><td>4,880</td></tr>
+    <tr><td><a href="/item/13609-wolf-mantle-+1">Wolf Mantle +1</a></td><td>3</td><td>1564</td><td>4,880</td></tr>
+    <tr><td><a href="/item/12955-cuir-highboots">Cuir Highboots</a></td><td>4</td><td>1736</td><td>5,440</td></tr>
+    <tr><td><a href="/item/13041-cuir-highboots-+1">Cuir Highboots +1</a></td><td>4</td><td>1792</td><td>5,440</td></tr>
+    <tr><td><a href="/item/16388-himantes">Himantes</a></td><td>5</td><td>1140</td><td>4,880</td></tr>
+    <tr><td><a href="/item/16699-himantes-+1">Himantes +1</a></td><td>5</td><td>1200</td><td>1,626</td></tr>
+    <tr><td><a href="/item/13597-beak-mantle">Beak Mantle</a></td><td>6</td><td>1612</td><td>5,440</td></tr>
+    <tr><td><a href="/item/13621-beak-mantle-+1">Beak Mantle +1</a></td><td>6</td><td>1720</td><td>5,440</td></tr>
+    <tr><td><a href="/item/16389-coeurl-cesti">Coeurl Cesti</a></td><td>7</td><td>1980</td><td>5,760</td></tr>
+    <tr><td><a href="/item/17473-torama-cesti">Torama Cesti</a></td><td>7</td><td>2070</td><td>5,760</td></tr>
+    <tr><td><a href="/item/13595-coeurl-mantle">Coeurl Mantle</a></td><td>8</td><td>2100</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13603-torama-mantle">Torama Mantle</a></td><td>8</td><td>2800</td><td>5,840</td></tr>
+    <tr><td><a href="/item/14372-cardinal-vest">Cardinal Vest</a></td><td>9</td><td>4800</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14373-bachelor-vest">Bachelor Vest</a></td><td>9</td><td>6000</td><td>6,800</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-3" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12952-leather-highboots">Leather Highboots</a></td><td>0</td><td>84</td><td>4,560</td></tr>
-    <tr><td><a href="/item/12971-leather-highboots-+1">Leather Highboots +1</a></td><td>0</td><td>104</td><td>4,560</td></tr>
-    <tr><td><a href="/item/16386-lizard-cesti">Lizard Cesti</a></td><td>1</td><td>252</td><td>7,680</td></tr>
-    <tr><td><a href="/item/16398-burning-cesti">Burning Cesti</a></td><td>1</td><td>333</td><td>7,680</td></tr>
-    <tr><td><a href="/item/13588-dhalmel-mantle">Dhalmel Mantle</a></td><td>2</td><td>552</td><td>10,800</td></tr>
-    <tr><td><a href="/item/13600-dhalmel-mantle-+1">Dhalmel Mantle +1</a></td><td>2</td><td>706</td><td>10,800</td></tr>
-    <tr><td><a href="/item/13081-leather-gorget">Leather Gorget</a></td><td>3</td><td>66</td><td>2,160</td></tr>
-    <tr><td><a href="/item/13069-leather-gorget-+1">Leather Gorget +1</a></td><td>3</td><td>86</td><td>2,160</td></tr>
-    <tr><td><a href="/item/12571-cuir-bouilli">Cuir Bouilli</a></td><td>4</td><td>1960</td><td>16,800</td></tr>
-    <tr><td><a href="/item/13709-cuir-bouilli-+1">Cuir Bouilli +1</a></td><td>4</td><td>2072</td><td>16,800</td></tr>
-    <tr><td><a href="/item/12956-raptor-ledelsens">Raptor Ledelsens</a></td><td>5</td><td>3360</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13049-dino-ledelsens">Dino Ledelsens</a></td><td>5</td><td>4160</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12980-battle-boots">Battle Boots</a></td><td>6</td><td>2860</td><td>18,480</td></tr>
-    <tr><td><a href="/item/14104-battle-boots-+1">Battle Boots +1</a></td><td>6</td><td>3190</td><td>18,480</td></tr>
-    <tr><td><a href="/item/13589-tiger-mantle">Tiger Mantle</a></td><td>7</td><td>1250</td><td>15,360</td></tr>
-    <tr><td><a href="/item/13602-feral-mantle">Feral Mantle</a></td><td>7</td><td>1375</td><td>15,360</td></tr>
-    <tr><td><a href="/item/13197-koenigs-belt">Koenigs Belt</a></td><td>8</td><td>4785</td><td>20,400</td></tr>
-    <tr><td><a href="/item/13239-kaiser-belt">Kaiser Belt</a></td><td>8</td><td>6235</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14850-bison-wristbands">Bison Wristbands</a></td><td>9</td><td>4042</td><td>19,920</td></tr>
-    <tr><td><a href="/item/14851-braves-wristbands">Braves Wristbands</a></td><td>9</td><td>5267</td><td>19,920</td></tr>
+    <tr><td><a href="/item/12952-leather-highboots">Leather Highboots</a></td><td>0</td><td>84</td><td>1,520</td></tr>
+    <tr><td><a href="/item/12971-leather-highboots-+1">Leather Highboots +1</a></td><td>0</td><td>104</td><td>1,520</td></tr>
+    <tr><td><a href="/item/16386-lizard-cesti">Lizard Cesti</a></td><td>1</td><td>252</td><td>2,560</td></tr>
+    <tr><td><a href="/item/16398-burning-cesti">Burning Cesti</a></td><td>1</td><td>333</td><td>2,560</td></tr>
+    <tr><td><a href="/item/13588-dhalmel-mantle">Dhalmel Mantle</a></td><td>2</td><td>552</td><td>3,600</td></tr>
+    <tr><td><a href="/item/13600-dhalmel-mantle-+1">Dhalmel Mantle +1</a></td><td>2</td><td>706</td><td>3,600</td></tr>
+    <tr><td><a href="/item/13081-leather-gorget">Leather Gorget</a></td><td>3</td><td>66</td><td>720</td></tr>
+    <tr><td><a href="/item/13069-leather-gorget-+1">Leather Gorget +1</a></td><td>3</td><td>86</td><td>720</td></tr>
+    <tr><td><a href="/item/12571-cuir-bouilli">Cuir Bouilli</a></td><td>4</td><td>1960</td><td>5,600</td></tr>
+    <tr><td><a href="/item/13709-cuir-bouilli-+1">Cuir Bouilli +1</a></td><td>4</td><td>2072</td><td>5,600</td></tr>
+    <tr><td><a href="/item/12956-raptor-ledelsens">Raptor Ledelsens</a></td><td>5</td><td>3360</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13049-dino-ledelsens">Dino Ledelsens</a></td><td>5</td><td>4160</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12980-battle-boots">Battle Boots</a></td><td>6</td><td>3300</td><td>2,106</td></tr>
+    <tr><td><a href="/item/14104-battle-boots-+1">Battle Boots +1</a></td><td>6</td><td>3410</td><td>2,106</td></tr>
+    <tr><td><a href="/item/13589-tiger-mantle">Tiger Mantle</a></td><td>7</td><td>1250</td><td>5,120</td></tr>
+    <tr><td><a href="/item/13602-feral-mantle">Feral Mantle</a></td><td>7</td><td>1375</td><td>5,120</td></tr>
+    <tr><td><a href="/item/13197-koenigs-belt">Koenigs Belt</a></td><td>8</td><td>4785</td><td>6,800</td></tr>
+    <tr><td><a href="/item/13239-kaiser-belt">Kaiser Belt</a></td><td>8</td><td>6235</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14850-bison-wristbands">Bison Wristbands</a></td><td>9</td><td>4042</td><td>6,640</td></tr>
+    <tr><td><a href="/item/14851-braves-wristbands">Braves Wristbands</a></td><td>9</td><td>5267</td><td>6,640</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-4" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12440-leather-bandana">Leather Bandana</a></td><td>0</td><td>52</td><td>4,080</td></tr>
-    <tr><td><a href="/item/12542-leather-bandana-+1">Leather Bandana +1</a></td><td>0</td><td>120</td><td>4,080</td></tr>
-    <tr><td><a href="/item/13592-lizard-mantle">Lizard Mantle</a></td><td>1</td><td>81</td><td>5,280</td></tr>
-    <tr><td><a href="/item/13608-lizard-mantle-+1">Lizard Mantle +1</a></td><td>1</td><td>95</td><td>5,280</td></tr>
-    <tr><td><a href="/item/13194-warriors-belt">Warriors Belt</a></td><td>2</td><td>330</td><td>8,880</td></tr>
-    <tr><td><a href="/item/13240-warriors-belt-+1">Warriors Belt +1</a></td><td>2</td><td>400</td><td>8,880</td></tr>
-    <tr><td><a href="/item/12994-shoes">Shoes</a></td><td>3</td><td>1104</td><td>14,160</td></tr>
-    <tr><td><a href="/item/13040-shoes-+1">Shoes +1</a></td><td>3</td><td>1196</td><td>14,160</td></tr>
-    <tr><td><a href="/item/13200-waistbelt">Waistbelt</a></td><td>4</td><td>1680</td><td>16,080</td></tr>
-    <tr><td><a href="/item/13214-waistbelt-+1">Waistbelt +1</a></td><td>4</td><td>1740</td><td>16,080</td></tr>
-    <tr><td><a href="/item/13593-raptor-mantle">Raptor Mantle</a></td><td>5</td><td>1280</td><td>15,120</td></tr>
-    <tr><td><a href="/item/13612-dino-mantle">Dino Mantle</a></td><td>5</td><td>1440</td><td>15,120</td></tr>
-    <tr><td><a href="/item/12829-beak-trousers">Beak Trousers</a></td><td>6</td><td>3225</td><td>18,960</td></tr>
-    <tr><td><a href="/item/14213-beak-trousers-+1">Beak Trousers +1</a></td><td>6</td><td>3225</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12852-battle-hose">Battle Hose</a></td><td>7</td><td>3680</td><td>19,440</td></tr>
-    <tr><td><a href="/item/14237-battle-hose-+1">Battle Hose +1</a></td><td>7</td><td>3795</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13708-ogre-ledelsens">Ogre Ledelsens</a></td><td>8</td><td>5040</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14159-ogre-ledelsens-+1">Ogre Ledelsens +1</a></td><td>8</td><td>6240</td><td>20,400</td></tr>
-    <tr><td><a href="/item/13918-tiger-mask">Tiger Mask</a></td><td>9</td><td>1080</td><td>15,120</td></tr>
-    <tr><td><a href="/item/13919-feral-mask">Feral Mask</a></td><td>9</td><td>2280</td><td>15,120</td></tr>
+    <tr><td><a href="/item/12440-leather-bandana">Leather Bandana</a></td><td>0</td><td>110</td><td>560</td></tr>
+    <tr><td><a href="/item/12542-leather-bandana-+1">Leather Bandana +1</a></td><td>0</td><td>120</td><td>1,360</td></tr>
+    <tr><td><a href="/item/13592-lizard-mantle">Lizard Mantle</a></td><td>1</td><td>81</td><td>580</td></tr>
+    <tr><td><a href="/item/13608-lizard-mantle-+1">Lizard Mantle +1</a></td><td>1</td><td>95</td><td>1,760</td></tr>
+    <tr><td><a href="/item/13194-warriors-belt">Warriors Belt</a></td><td>2</td><td>330</td><td>2,960</td></tr>
+    <tr><td><a href="/item/13240-warriors-belt-+1">Warriors Belt +1</a></td><td>2</td><td>400</td><td>2,960</td></tr>
+    <tr><td><a href="/item/12994-shoes">Shoes</a></td><td>3</td><td>1104</td><td>4,720</td></tr>
+    <tr><td><a href="/item/13040-shoes-+1">Shoes +1</a></td><td>3</td><td>1196</td><td>4,720</td></tr>
+    <tr><td><a href="/item/13200-waistbelt">Waistbelt</a></td><td>4</td><td>1680</td><td>5,360</td></tr>
+    <tr><td><a href="/item/13214-waistbelt-+1">Waistbelt +1</a></td><td>4</td><td>1740</td><td>5,360</td></tr>
+    <tr><td><a href="/item/13593-raptor-mantle">Raptor Mantle</a></td><td>5</td><td>1280</td><td>5,040</td></tr>
+    <tr><td><a href="/item/13612-dino-mantle">Dino Mantle</a></td><td>5</td><td>1440</td><td>5,040</td></tr>
+    <tr><td><a href="/item/12829-beak-trousers">Beak Trousers</a></td><td>6</td><td>3225</td><td>6,320</td></tr>
+    <tr><td><a href="/item/14213-beak-trousers-+1">Beak Trousers +1</a></td><td>6</td><td>3332</td><td>2,106</td></tr>
+    <tr><td><a href="/item/12852-battle-hose">Battle Hose</a></td><td>7</td><td>3680</td><td>6,480</td></tr>
+    <tr><td><a href="/item/14237-battle-hose-+1">Battle Hose +1</a></td><td>7</td><td>3795</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13708-ogre-ledelsens">Ogre Ledelsens</a></td><td>8</td><td>5040</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14159-ogre-ledelsens-+1">Ogre Ledelsens +1</a></td><td>8</td><td>5040</td><td>2,266</td></tr>
+    <tr><td><a href="/item/13918-tiger-mask">Tiger Mask</a></td><td>9</td><td>1080</td><td>5,040</td></tr>
+    <tr><td><a href="/item/13919-feral-mask">Feral Mask</a></td><td>9</td><td>2280</td><td>5,040</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-5" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13594-rabbit-mantle">Rabbit Mantle</a></td><td>0</td><td>44</td><td>1,360</td></tr>
-    <tr><td><a href="/item/13599-rabbit-mantle-+1">Rabbit Mantle +1</a></td><td>0</td><td>56</td><td>1,360</td></tr>
-    <tr><td><a href="/item/14171-fishermans-boots">Fishermans Boots</a></td><td>1</td><td>180</td><td>6,720</td></tr>
-    <tr><td><a href="/item/14172-anglers-boots">Anglers Boots</a></td><td>1</td><td>519</td><td>6,720</td></tr>
-    <tr><td><a href="/item/14173-chocobo-boots">Chocobo Boots</a></td><td>2</td><td>519</td><td>10,560</td></tr>
-    <tr><td><a href="/item/14174-riders-boots">Riders Boots</a></td><td>2</td><td>570</td><td>10,560</td></tr>
-    <tr><td><a href="/item/13195-magic-belt">Magic Belt</a></td><td>3</td><td>506</td><td>10,800</td></tr>
-    <tr><td><a href="/item/13219-magic-belt-+1">Magic Belt +1</a></td><td>3</td><td>660</td><td>10,800</td></tr>
-    <tr><td><a href="/item/12827-cuir-trousers">Cuir Trousers</a></td><td>4</td><td>1008</td><td>13,920</td></tr>
-    <tr><td><a href="/item/12911-cuir-trousers-+1">Cuir Trousers +1</a></td><td>4</td><td>1232</td><td>13,920</td></tr>
-    <tr><td><a href="/item/12828-raptor-trousers">Raptor Trousers</a></td><td>5</td><td>2160</td><td>17,280</td></tr>
-    <tr><td><a href="/item/12919-dino-trousers">Dino Trousers</a></td><td>5</td><td>2320</td><td>17,280</td></tr>
-    <tr><td><a href="/item/13702-beak-ledelsens">Beak Ledelsens</a></td><td>6</td><td>4515</td><td>20,160</td></tr>
-    <tr><td><a href="/item/14088-beak-ledelsens-+1">Beak Ledelsens +1</a></td><td>6</td><td>4622</td><td>20,160</td></tr>
-    <tr><td><a href="/item/12830-tiger-trousers">Tiger Trousers</a></td><td>7</td><td>2040</td><td>17,280</td></tr>
-    <tr><td><a href="/item/14232-feral-trousers">Feral Trousers</a></td><td>7</td><td>2160</td><td>17,280</td></tr>
-    <tr><td><a href="/item/12447-coeurl-mask">Coeurl Mask</a></td><td>8</td><td>3500</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13862-torama-mask">Torama Mask</a></td><td>8</td><td>4200</td><td>19,440</td></tr>
-    <tr><td><a href="/item/14317-barone-cosciales">Barone Cosciales</a></td><td>9</td><td>6737</td><td>21,360</td></tr>
-    <tr><td><a href="/item/14318-conte-cosciales">Conte Cosciales</a></td><td>9</td><td>7962</td><td>21,360</td></tr>
+    <tr><td><a href="/item/13594-rabbit-mantle">Rabbit Mantle</a></td><td>0</td><td>44</td><td>453</td></tr>
+    <tr><td><a href="/item/13599-rabbit-mantle-+1">Rabbit Mantle +1</a></td><td>0</td><td>56</td><td>453</td></tr>
+    <tr><td><a href="/item/14171-fishermans-boots">Fishermans Boots</a></td><td>1</td><td>180</td><td>2,240</td></tr>
+    <tr><td><a href="/item/14172-anglers-boots">Anglers Boots</a></td><td>1</td><td>519</td><td>2,240</td></tr>
+    <tr><td><a href="/item/14173-chocobo-boots">Chocobo Boots</a></td><td>2</td><td>519</td><td>3,520</td></tr>
+    <tr><td><a href="/item/14174-riders-boots">Riders Boots</a></td><td>2</td><td>570</td><td>3,520</td></tr>
+    <tr><td><a href="/item/13195-magic-belt">Magic Belt</a></td><td>3</td><td>506</td><td>3,600</td></tr>
+    <tr><td><a href="/item/13219-magic-belt-+1">Magic Belt +1</a></td><td>3</td><td>660</td><td>3,600</td></tr>
+    <tr><td><a href="/item/12827-cuir-trousers">Cuir Trousers</a></td><td>4</td><td>1680</td><td>1,786</td></tr>
+    <tr><td><a href="/item/12911-cuir-trousers-+1">Cuir Trousers +1</a></td><td>4</td><td>1792</td><td>1,786</td></tr>
+    <tr><td><a href="/item/12828-raptor-trousers">Raptor Trousers</a></td><td>5</td><td>5200</td><td>2,266</td></tr>
+    <tr><td><a href="/item/12919-dino-trousers">Dino Trousers</a></td><td>5</td><td>5360</td><td>2,266</td></tr>
+    <tr><td><a href="/item/13702-beak-ledelsens">Beak Ledelsens</a></td><td>6</td><td>4515</td><td>6,720</td></tr>
+    <tr><td><a href="/item/14088-beak-ledelsens-+1">Beak Ledelsens +1</a></td><td>6</td><td>4622</td><td>6,720</td></tr>
+    <tr><td><a href="/item/12830-tiger-trousers">Tiger Trousers</a></td><td>7</td><td>2040</td><td>5,760</td></tr>
+    <tr><td><a href="/item/14232-feral-trousers">Feral Trousers</a></td><td>7</td><td>2160</td><td>5,760</td></tr>
+    <tr><td><a href="/item/12447-coeurl-mask">Coeurl Mask</a></td><td>8</td><td>3500</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13862-torama-mask">Torama Mask</a></td><td>8</td><td>4200</td><td>6,480</td></tr>
+    <tr><td><a href="/item/14317-barone-cosciales">Barone Cosciales</a></td><td>9</td><td>6737</td><td>7,120</td></tr>
+    <tr><td><a href="/item/14318-conte-cosciales">Conte Cosciales</a></td><td>9</td><td>7962</td><td>7,120</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-6" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/14169-vagabonds-boots">Vagabonds Boots</a></td><td>0</td><td>63</td><td>4,320</td></tr>
-    <tr><td><a href="/item/14170-nomads-boots">Nomads Boots</a></td><td>0</td><td>71</td><td>4,320</td></tr>
-    <tr><td><a href="/item/12569-lizard-jerkin">Lizard Jerkin</a></td><td>1</td><td>245</td><td>7,440</td></tr>
-    <tr><td><a href="/item/13697-fine-jerkin">Fine Jerkin</a></td><td>1</td><td>259</td><td>7,440</td></tr>
-    <tr><td><a href="/item/12993-sandals">Sandals</a></td><td>2</td><td>748</td><td>12,000</td></tr>
-    <tr><td><a href="/item/13048-mages-sandals">Mages Sandals</a></td><td>2</td><td>939</td><td>12,000</td></tr>
-    <tr><td><a href="/item/12699-cuir-gloves">Cuir Gloves</a></td><td>3</td><td>1624</td><td>15,840</td></tr>
-    <tr><td><a href="/item/12787-cuir-gloves-+1">Cuir Gloves +1</a></td><td>3</td><td>1680</td><td>15,840</td></tr>
-    <tr><td><a href="/item/13810-chocobo-jack-coat">Chocobo Jack Coat</a></td><td>4</td><td>1297</td><td>15,120</td></tr>
-    <tr><td><a href="/item/13811-riders-jack-coat">Riders Jack Coat</a></td><td>4</td><td>1349</td><td>15,120</td></tr>
-    <tr><td><a href="/item/14166-desert-boots">Desert Boots</a></td><td>5</td><td>1000</td><td>4,720</td></tr>
-    <tr><td><a href="/item/14167-desert-boots-+1">Desert Boots +1</a></td><td>5</td><td>2000</td><td>4,720</td></tr>
-    <tr><td><a href="/item/13699-beak-jerkin">Beak Jerkin</a></td><td>6</td><td>2150</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13739-beak-jerkin-+1">Beak Jerkin +1</a></td><td>6</td><td>2257</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13641-black-mantle">Black Mantle</a></td><td>7</td><td>2200</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13642-black-mantle-+1">Black Mantle +1</a></td><td>7</td><td>3300</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13706-ogre-gloves">Ogre Gloves</a></td><td>8</td><td>3600</td><td>19,440</td></tr>
-    <tr><td><a href="/item/14057-ogre-gloves-+1">Ogre Gloves +1</a></td><td>8</td><td>4800</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13918-tiger-mask">Tiger Mask</a></td><td>9</td><td>1080</td><td>15,120</td></tr>
-    <tr><td><a href="/item/13919-feral-mask">Feral Mask</a></td><td>9</td><td>2280</td><td>15,120</td></tr>
+    <tr><td><a href="/item/14169-vagabonds-boots">Vagabonds Boots</a></td><td>0</td><td>63</td><td>1,440</td></tr>
+    <tr><td><a href="/item/14170-nomads-boots">Nomads Boots</a></td><td>0</td><td>71</td><td>1,440</td></tr>
+    <tr><td><a href="/item/12569-lizard-jerkin">Lizard Jerkin</a></td><td>1</td><td>245</td><td>2,480</td></tr>
+    <tr><td><a href="/item/13697-fine-jerkin">Fine Jerkin</a></td><td>1</td><td>259</td><td>2,480</td></tr>
+    <tr><td><a href="/item/12993-sandals">Sandals</a></td><td>2</td><td>748</td><td>4,000</td></tr>
+    <tr><td><a href="/item/13048-mages-sandals">Mages Sandals</a></td><td>2</td><td>939</td><td>4,000</td></tr>
+    <tr><td><a href="/item/12699-cuir-gloves">Cuir Gloves</a></td><td>3</td><td>1624</td><td>5,280</td></tr>
+    <tr><td><a href="/item/12787-cuir-gloves-+1">Cuir Gloves +1</a></td><td>3</td><td>1680</td><td>5,280</td></tr>
+    <tr><td><a href="/item/13810-chocobo-jack-coat">Chocobo Jack Coat</a></td><td>4</td><td>1297</td><td>5,040</td></tr>
+    <tr><td><a href="/item/13811-riders-jack-coat">Riders Jack Coat</a></td><td>4</td><td>1349</td><td>5,040</td></tr>
+    <tr><td><a href="/item/14166-desert-boots">Desert Boots</a></td><td>5</td><td>1000</td><td>1,573</td></tr>
+    <tr><td><a href="/item/14167-desert-boots-+1">Desert Boots +1</a></td><td>5</td><td>2000</td><td>1,573</td></tr>
+    <tr><td><a href="/item/13699-beak-jerkin">Beak Jerkin</a></td><td>6</td><td>2150</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13739-beak-jerkin-+1">Beak Jerkin +1</a></td><td>6</td><td>2257</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13641-black-mantle">Black Mantle</a></td><td>7</td><td>2200</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13642-black-mantle-+1">Black Mantle +1</a></td><td>7</td><td>3300</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13706-ogre-gloves">Ogre Gloves</a></td><td>8</td><td>3600</td><td>6,480</td></tr>
+    <tr><td><a href="/item/14057-ogre-gloves-+1">Ogre Gloves +1</a></td><td>8</td><td>4800</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13918-tiger-mask">Tiger Mask</a></td><td>9</td><td>1080</td><td>5,040</td></tr>
+    <tr><td><a href="/item/13919-feral-mask">Feral Mask</a></td><td>9</td><td>2280</td><td>5,040</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-7" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16385-cesti">Cesti</a></td><td>0</td><td>24</td><td>3,600</td></tr>
-    <tr><td><a href="/item/16690-cesti-+1">Cesti +1</a></td><td>0</td><td>32</td><td>3,600</td></tr>
-    <tr><td><a href="/item/14070-fishermans-gloves">Fishermans Gloves</a></td><td>1</td><td>360</td><td>8,640</td></tr>
-    <tr><td><a href="/item/14071-anglers-gloves">Anglers Gloves</a></td><td>1</td><td>986</td><td>8,640</td></tr>
-    <tr><td><a href="/item/13469-leather-ring">Leather Ring</a></td><td>2</td><td>250</td><td>8,160</td></tr>
-    <tr><td><a href="/item/13499-leather-ring-+1">Leather Ring +1</a></td><td>2</td><td>350</td><td>8,160</td></tr>
-    <tr><td><a href="/item/12570-studded-vest">Studded Vest</a></td><td>3</td><td>2280</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13707-strong-vest">Strong Vest</a></td><td>3</td><td>2318</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13203-barbarians-belt">Barbarians Belt</a></td><td>4</td><td>506</td><td>11,280</td></tr>
-    <tr><td><a href="/item/13225-brave-belt">Brave Belt</a></td><td>4</td><td>660</td><td>11,280</td></tr>
-    <tr><td><a href="/item/12294-leather-shield">Leather Shield</a></td><td>5</td><td>1280</td><td>15,120</td></tr>
-    <tr><td><a href="/item/12329-leather-shield-+1">Leather Shield +1</a></td><td>5</td><td>1360</td><td>15,120</td></tr>
-    <tr><td><a href="/item/13546-hard-leather-ring">Hard Leather Ring</a></td><td>6</td><td>770</td><td>13,200</td></tr>
-    <tr><td><a href="/item/13547-tiger-ring">Tiger Ring</a></td><td>6</td><td>880</td><td>13,200</td></tr>
-    <tr><td><a href="/item/13198-swordbelt">Swordbelt</a></td><td>7</td><td>2178</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13232-swordbelt-+1">Swordbelt +1</a></td><td>7</td><td>2838</td><td>17,520</td></tr>
-    <tr><td><a href="/item/12880-ogre-trousers">Ogre Trousers</a></td><td>8</td><td>4800</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14279-ogre-trousers-+1">Ogre Trousers +1</a></td><td>8</td><td>6000</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14182-errant-pigaches">Errant Pigaches</a></td><td>9</td><td>2500</td><td>18,240</td></tr>
-    <tr><td><a href="/item/14183-mahatma-pigaches">Mahatma Pigaches</a></td><td>9</td><td>3750</td><td>18,240</td></tr>
+    <tr><td><a href="/item/16385-cesti">Cesti</a></td><td>0</td><td>24</td><td>1,200</td></tr>
+    <tr><td><a href="/item/16690-cesti-+1">Cesti +1</a></td><td>0</td><td>32</td><td>1,200</td></tr>
+    <tr><td><a href="/item/14070-fishermans-gloves">Fishermans Gloves</a></td><td>1</td><td>360</td><td>2,880</td></tr>
+    <tr><td><a href="/item/14071-anglers-gloves">Anglers Gloves</a></td><td>1</td><td>986</td><td>2,880</td></tr>
+    <tr><td><a href="/item/13469-leather-ring">Leather Ring</a></td><td>2</td><td>250</td><td>2,720</td></tr>
+    <tr><td><a href="/item/13499-leather-ring-+1">Leather Ring +1</a></td><td>2</td><td>350</td><td>2,720</td></tr>
+    <tr><td><a href="/item/12570-studded-vest">Studded Vest</a></td><td>3</td><td>2280</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13707-strong-vest">Strong Vest</a></td><td>3</td><td>2318</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13203-barbarians-belt">Barbarians Belt</a></td><td>4</td><td>506</td><td>3,760</td></tr>
+    <tr><td><a href="/item/13225-brave-belt">Brave Belt</a></td><td>4</td><td>660</td><td>3,760</td></tr>
+    <tr><td><a href="/item/12294-leather-shield">Leather Shield</a></td><td>5</td><td>1280</td><td>5,040</td></tr>
+    <tr><td><a href="/item/12329-leather-shield-+1">Leather Shield +1</a></td><td>5</td><td>1360</td><td>5,040</td></tr>
+    <tr><td><a href="/item/13546-hard-leather-ring">Hard Leather Ring</a></td><td>6</td><td>770</td><td>4,400</td></tr>
+    <tr><td><a href="/item/13547-tiger-ring">Tiger Ring</a></td><td>6</td><td>880</td><td>4,400</td></tr>
+    <tr><td><a href="/item/13198-swordbelt">Swordbelt</a></td><td>7</td><td>2178</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13232-swordbelt-+1">Swordbelt +1</a></td><td>7</td><td>2838</td><td>5,840</td></tr>
+    <tr><td><a href="/item/12880-ogre-trousers">Ogre Trousers</a></td><td>8</td><td>4800</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14279-ogre-trousers-+1">Ogre Trousers +1</a></td><td>8</td><td>6000</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14182-errant-pigaches">Errant Pigaches</a></td><td>9</td><td>2500</td><td>6,080</td></tr>
+    <tr><td><a href="/item/14183-mahatma-pigaches">Mahatma Pigaches</a></td><td>9</td><td>3750</td><td>6,080</td></tr>
    </tbody></table>
   </div>
  </section>
 
  <section class="panel pad">
-  <h2>Guild point rewards</h2>
+  <h2 id="gp-rewards">Guild point rewards</h2>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15448-tanners-belt">Tanners Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -459,7 +469,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild vendor</h2>
+  <h2 id="vendor">Guild vendor</h2>
   <p class="vendor-note">Rank-gated items sold by the leathercraft guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/2129-tanning-vat">Tanning Vat</a></span><span class="rk">rank amateur</span><span class="pr">75g</span></div>
@@ -491,7 +501,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>173</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>355</b><span>total</span></div>
@@ -588,6 +598,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

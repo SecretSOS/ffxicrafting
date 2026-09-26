@@ -145,8 +145,17 @@
   </div>
  </header>
 
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>8:00</b> – <b>23:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Windsday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -156,9 +165,10 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(62 items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(62 items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the bonecraft guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
    <div class="shop-row"><span class="nm"><a href="/item/17319-bone-arrow">Bone Arrow</a></span><span class="pr">25g</span><span class="st">0–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/898-chicken-bone">Chicken Bone</a></span><span class="pr">200g</span><span class="st">7–45</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/880-bone-chip">Bone Chip</a></span><span class="pr">397g</span><span class="st">12–120</span></div>
@@ -225,7 +235,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -239,200 +249,200 @@
   </div>
   <div class="turnin-pattern" id="pat-0">
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12505-bone-hairpin">Bone Hairpin</a></td><td>0</td><td>112</td><td>5,040</td></tr>
-    <tr><td><a href="/item/13825-bone-hairpin-+1">Bone Hairpin +1</a></td><td>0</td><td>187</td><td>5,040</td></tr>
-    <tr><td><a href="/item/12710-bone-mittens">Bone Mittens</a></td><td>1</td><td>544</td><td>10,320</td></tr>
-    <tr><td><a href="/item/12788-bone-mittens-+1">Bone Mittens +1</a></td><td>1</td><td>664</td><td>10,320</td></tr>
-    <tr><td><a href="/item/12582-bone-harness">Bone Harness</a></td><td>2</td><td>362</td><td>9,120</td></tr>
-    <tr><td><a href="/item/13716-bone-harness-+1">Bone Harness +1</a></td><td>2</td><td>374</td><td>9,120</td></tr>
-    <tr><td><a href="/item/13459-horn-ring">Horn Ring</a></td><td>3</td><td>1200</td><td>14,400</td></tr>
-    <tr><td><a href="/item/13502-horn-ring-+1">Horn Ring +1</a></td><td>3</td><td>1680</td><td>14,400</td></tr>
-    <tr><td><a href="/item/17352-horn">Horn</a></td><td>4</td><td>780</td><td>12,960</td></tr>
-    <tr><td><a href="/item/17371-horn-+1">Horn +1</a></td><td>4</td><td>840</td><td>12,960</td></tr>
-    <tr><td><a href="/item/16794-bone-scythe">Bone Scythe</a></td><td>5</td><td>825</td><td>13,440</td></tr>
-    <tr><td><a href="/item/16795-bone-scythe-+1">Bone Scythe +1</a></td><td>5</td><td>907</td><td>13,440</td></tr>
-    <tr><td><a href="/item/17361-crumhorn">Crumhorn</a></td><td>6</td><td>1845</td><td>16,800</td></tr>
-    <tr><td><a href="/item/17377-crumhorn-+1">Crumhorn +1</a></td><td>6</td><td>1947</td><td>16,800</td></tr>
-    <tr><td><a href="/item/12453-coral-cap">Coral Cap</a></td><td>7</td><td>2992</td><td>18,720</td></tr>
-    <tr><td><a href="/item/13864-mermans-cap">Mermans Cap</a></td><td>7</td><td>3150</td><td>18,720</td></tr>
-    <tr><td><a href="/item/12436-dragon-mask">Dragon Mask</a></td><td>8</td><td>7840</td><td>21,600</td></tr>
-    <tr><td><a href="/item/13860-dragon-mask-+1">Dragon Mask +1</a></td><td>8</td><td>8120</td><td>21,600</td></tr>
-    <tr><td><a href="/item/12693-gavial-finger-gauntlets">Gavial Finger Gauntlets</a></td><td>9</td><td>2000</td><td>17,520</td></tr>
-    <tr><td><a href="/item/14829-gavial-finger-gauntlets-+1">Gavial Finger Gauntlets +1</a></td><td>9</td><td>2625</td><td>17,520</td></tr>
+    <tr><td><a href="/item/12505-bone-hairpin">Bone Hairpin</a></td><td>0</td><td>112</td><td>1,680</td></tr>
+    <tr><td><a href="/item/13825-bone-hairpin-+1">Bone Hairpin +1</a></td><td>0</td><td>187</td><td>1,680</td></tr>
+    <tr><td><a href="/item/12710-bone-mittens">Bone Mittens</a></td><td>1</td><td>544</td><td>3,440</td></tr>
+    <tr><td><a href="/item/12788-bone-mittens-+1">Bone Mittens +1</a></td><td>1</td><td>664</td><td>3,440</td></tr>
+    <tr><td><a href="/item/12582-bone-harness">Bone Harness</a></td><td>2</td><td>362</td><td>3,040</td></tr>
+    <tr><td><a href="/item/13716-bone-harness-+1">Bone Harness +1</a></td><td>2</td><td>374</td><td>3,040</td></tr>
+    <tr><td><a href="/item/13459-horn-ring">Horn Ring</a></td><td>3</td><td>1200</td><td>4,800</td></tr>
+    <tr><td><a href="/item/13502-horn-ring-+1">Horn Ring +1</a></td><td>3</td><td>1680</td><td>4,800</td></tr>
+    <tr><td><a href="/item/17352-horn">Horn</a></td><td>4</td><td>780</td><td>4,320</td></tr>
+    <tr><td><a href="/item/17371-horn-+1">Horn +1</a></td><td>4</td><td>840</td><td>4,320</td></tr>
+    <tr><td><a href="/item/16794-bone-scythe">Bone Scythe</a></td><td>5</td><td>825</td><td>4,480</td></tr>
+    <tr><td><a href="/item/16795-bone-scythe-+1">Bone Scythe +1</a></td><td>5</td><td>907</td><td>4,480</td></tr>
+    <tr><td><a href="/item/17361-crumhorn">Crumhorn</a></td><td>6</td><td>1845</td><td>5,600</td></tr>
+    <tr><td><a href="/item/17377-crumhorn-+1">Crumhorn +1</a></td><td>6</td><td>1947</td><td>5,600</td></tr>
+    <tr><td><a href="/item/12453-coral-cap">Coral Cap</a></td><td>7</td><td>2992</td><td>6,240</td></tr>
+    <tr><td><a href="/item/13864-mermans-cap">Mermans Cap</a></td><td>7</td><td>3150</td><td>6,240</td></tr>
+    <tr><td><a href="/item/12436-dragon-mask">Dragon Mask</a></td><td>8</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/13860-dragon-mask-+1">Dragon Mask +1</a></td><td>8</td><td>8120</td><td>7,200</td></tr>
+    <tr><td><a href="/item/12693-gavial-finger-gauntlets">Gavial Finger Gauntlets</a></td><td>9</td><td>2000</td><td>5,840</td></tr>
+    <tr><td><a href="/item/14829-gavial-finger-gauntlets-+1">Gavial Finger Gauntlets +1</a></td><td>9</td><td>2625</td><td>5,840</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-1" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13442-shell-ring">Shell Ring</a></td><td>0</td><td>151</td><td>5,760</td></tr>
-    <tr><td><a href="/item/13494-shell-ring-+1">Shell Ring +1</a></td><td>0</td><td>212</td><td>5,760</td></tr>
-    <tr><td><a href="/item/12454-bone-mask">Bone Mask</a></td><td>1</td><td>652</td><td>11,280</td></tr>
-    <tr><td><a href="/item/13826-bone-mask-+1">Bone Mask +1</a></td><td>1</td><td>773</td><td>11,280</td></tr>
-    <tr><td><a href="/item/12507-horn-hairpin">Horn Hairpin</a></td><td>2</td><td>950</td><td>13,200</td></tr>
-    <tr><td><a href="/item/13828-horn-hairpin-+1">Horn Hairpin +1</a></td><td>2</td><td>988</td><td>13,200</td></tr>
-    <tr><td><a href="/item/17026-bone-cudgel">Bone Cudgel</a></td><td>3</td><td>768</td><td>12,480</td></tr>
-    <tr><td><a href="/item/17033-bone-cudgel-+1">Bone Cudgel +1</a></td><td>3</td><td>1088</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12837-carapace-subligar">Carapace Subligar</a></td><td>4</td><td>1540</td><td>15,840</td></tr>
-    <tr><td><a href="/item/12914-carapace-subligar-+1">Carapace Subligar +1</a></td><td>4</td><td>1610</td><td>15,840</td></tr>
-    <tr><td><a href="/item/13199-blood-stone">Blood Stone</a></td><td>5</td><td>26</td><td>2,400</td></tr>
-    <tr><td><a href="/item/13226-blood-stone-+1">Blood Stone +1</a></td><td>5</td><td>26</td><td>2,400</td></tr>
-    <tr><td><a href="/item/12838-scorpion-subligar">Scorpion Subligar</a></td><td>6</td><td>1575</td><td>16,080</td></tr>
-    <tr><td><a href="/item/14208-scorpion-subligar-+1">Scorpion Subligar +1</a></td><td>6</td><td>1680</td><td>16,080</td></tr>
-    <tr><td><a href="/item/13108-coral-gorget">Coral Gorget</a></td><td>7</td><td>1560</td><td>16,320</td></tr>
-    <tr><td><a href="/item/13123-mermans-gorget">Mermans Gorget</a></td><td>7</td><td>1690</td><td>16,320</td></tr>
-    <tr><td><a href="/item/13987-coral-bangles">Coral Bangles</a></td><td>8</td><td>3600</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13988-mermans-bangles">Mermans Bangles</a></td><td>8</td><td>4162</td><td>19,440</td></tr>
-    <tr><td><a href="/item/12751-scorpion-gauntlets">Scorpion Gauntlets</a></td><td>9</td><td>5940</td><td>20,880</td></tr>
-    <tr><td><a href="/item/12717-scorpion-gauntlets-+1">Scorpion Gauntlets +1</a></td><td>9</td><td>7040</td><td>20,880</td></tr>
+    <tr><td><a href="/item/13442-shell-ring">Shell Ring</a></td><td>0</td><td>151</td><td>1,920</td></tr>
+    <tr><td><a href="/item/13494-shell-ring-+1">Shell Ring +1</a></td><td>0</td><td>212</td><td>1,920</td></tr>
+    <tr><td><a href="/item/12454-bone-mask">Bone Mask</a></td><td>1</td><td>652</td><td>3,760</td></tr>
+    <tr><td><a href="/item/13826-bone-mask-+1">Bone Mask +1</a></td><td>1</td><td>773</td><td>3,760</td></tr>
+    <tr><td><a href="/item/12507-horn-hairpin">Horn Hairpin</a></td><td>2</td><td>950</td><td>4,400</td></tr>
+    <tr><td><a href="/item/13828-horn-hairpin-+1">Horn Hairpin +1</a></td><td>2</td><td>988</td><td>4,400</td></tr>
+    <tr><td><a href="/item/17026-bone-cudgel">Bone Cudgel</a></td><td>3</td><td>768</td><td>4,160</td></tr>
+    <tr><td><a href="/item/17033-bone-cudgel-+1">Bone Cudgel +1</a></td><td>3</td><td>1088</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12837-carapace-subligar">Carapace Subligar</a></td><td>4</td><td>1540</td><td>5,280</td></tr>
+    <tr><td><a href="/item/12914-carapace-subligar-+1">Carapace Subligar +1</a></td><td>4</td><td>1610</td><td>5,280</td></tr>
+    <tr><td><a href="/item/13199-blood-stone">Blood Stone</a></td><td>5</td><td>26</td><td>800</td></tr>
+    <tr><td><a href="/item/13226-blood-stone-+1">Blood Stone +1</a></td><td>5</td><td>26</td><td>800</td></tr>
+    <tr><td><a href="/item/12838-scorpion-subligar">Scorpion Subligar</a></td><td>6</td><td>1575</td><td>5,360</td></tr>
+    <tr><td><a href="/item/14208-scorpion-subligar-+1">Scorpion Subligar +1</a></td><td>6</td><td>1680</td><td>5,360</td></tr>
+    <tr><td><a href="/item/13108-coral-gorget">Coral Gorget</a></td><td>7</td><td>1560</td><td>5,440</td></tr>
+    <tr><td><a href="/item/13123-mermans-gorget">Mermans Gorget</a></td><td>7</td><td>1690</td><td>5,440</td></tr>
+    <tr><td><a href="/item/13987-coral-bangles">Coral Bangles</a></td><td>8</td><td>3600</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13988-mermans-bangles">Mermans Bangles</a></td><td>8</td><td>4162</td><td>6,480</td></tr>
+    <tr><td><a href="/item/12751-scorpion-gauntlets">Scorpion Gauntlets</a></td><td>9</td><td>5940</td><td>6,960</td></tr>
+    <tr><td><a href="/item/12717-scorpion-gauntlets-+1">Scorpion Gauntlets +1</a></td><td>9</td><td>7040</td><td>6,960</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-2" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12505-bone-hairpin">Bone Hairpin</a></td><td>0</td><td>112</td><td>5,040</td></tr>
-    <tr><td><a href="/item/13825-bone-hairpin-+1">Bone Hairpin +1</a></td><td>0</td><td>187</td><td>5,040</td></tr>
-    <tr><td><a href="/item/13076-fang-necklace">Fang Necklace</a></td><td>1</td><td>141</td><td>6,240</td></tr>
-    <tr><td><a href="/item/13061-spike-necklace">Spike Necklace</a></td><td>1</td><td>235</td><td>6,240</td></tr>
-    <tr><td><a href="/item/12966-bone-leggings">Bone Leggings</a></td><td>2</td><td>495</td><td>10,320</td></tr>
-    <tr><td><a href="/item/13042-bone-leggings-+1">Bone Leggings +1</a></td><td>2</td><td>616</td><td>10,320</td></tr>
-    <tr><td><a href="/item/12967-beetle-leggings">Beetle Leggings</a></td><td>3</td><td>966</td><td>13,440</td></tr>
-    <tr><td><a href="/item/13043-beetle-leggings-+1">Beetle Leggings +1</a></td><td>3</td><td>1202</td><td>13,440</td></tr>
-    <tr><td><a href="/item/13461-carapace-ring">Carapace Ring</a></td><td>4</td><td>1812</td><td>16,560</td></tr>
-    <tr><td><a href="/item/13503-carapace-ring-+1">Carapace Ring +1</a></td><td>4</td><td>2537</td><td>16,560</td></tr>
-    <tr><td><a href="/item/17257-bandits-gun">Bandits Gun</a></td><td>5</td><td>2000</td><td>17,040</td></tr>
-    <tr><td><a href="/item/17258-bandits-gun-+1">Bandits Gun +1</a></td><td>5</td><td>2100</td><td>17,040</td></tr>
-    <tr><td><a href="/item/17259-pirates-gun">Pirates Gun</a></td><td>6</td><td>4320</td><td>19,920</td></tr>
-    <tr><td><a href="/item/17260-pirates-gun-+1">Pirates Gun +1</a></td><td>6</td><td>4352</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12819-coral-cuisses">Coral Cuisses</a></td><td>7</td><td>4375</td><td>19,920</td></tr>
-    <tr><td><a href="/item/14230-coral-cuisses-+1">Coral Cuisses +1</a></td><td>7</td><td>4500</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12820-dragon-cuisses">Dragon Cuisses</a></td><td>8</td><td>9487</td><td>21,840</td></tr>
-    <tr><td><a href="/item/14231-dragon-cuisses-+1">Dragon Cuisses +1</a></td><td>8</td><td>9762</td><td>21,840</td></tr>
-    <tr><td><a href="/item/14008-carapace-gauntlets">Carapace Gauntlets</a></td><td>9</td><td>5850</td><td>20,880</td></tr>
-    <tr><td><a href="/item/14009-carapace-gauntlets-+1">Carapace Gauntlets +1</a></td><td>9</td><td>6825</td><td>20,880</td></tr>
+    <tr><td><a href="/item/12505-bone-hairpin">Bone Hairpin</a></td><td>0</td><td>112</td><td>1,680</td></tr>
+    <tr><td><a href="/item/13825-bone-hairpin-+1">Bone Hairpin +1</a></td><td>0</td><td>187</td><td>1,680</td></tr>
+    <tr><td><a href="/item/13076-fang-necklace">Fang Necklace</a></td><td>1</td><td>636</td><td>1,226</td></tr>
+    <tr><td><a href="/item/13061-spike-necklace">Spike Necklace</a></td><td>1</td><td>872</td><td>1,226</td></tr>
+    <tr><td><a href="/item/12966-bone-leggings">Bone Leggings</a></td><td>2</td><td>495</td><td>3,440</td></tr>
+    <tr><td><a href="/item/13042-bone-leggings-+1">Bone Leggings +1</a></td><td>2</td><td>616</td><td>3,440</td></tr>
+    <tr><td><a href="/item/12967-beetle-leggings">Beetle Leggings</a></td><td>3</td><td>966</td><td>4,480</td></tr>
+    <tr><td><a href="/item/13043-beetle-leggings-+1">Beetle Leggings +1</a></td><td>3</td><td>1202</td><td>4,480</td></tr>
+    <tr><td><a href="/item/13461-carapace-ring">Carapace Ring</a></td><td>4</td><td>1812</td><td>5,520</td></tr>
+    <tr><td><a href="/item/13503-carapace-ring-+1">Carapace Ring +1</a></td><td>4</td><td>2537</td><td>5,520</td></tr>
+    <tr><td><a href="/item/17257-bandits-gun">Bandits Gun</a></td><td>5</td><td>2000</td><td>5,680</td></tr>
+    <tr><td><a href="/item/17258-bandits-gun-+1">Bandits Gun +1</a></td><td>5</td><td>2100</td><td>5,680</td></tr>
+    <tr><td><a href="/item/17259-pirates-gun">Pirates Gun</a></td><td>6</td><td>4320</td><td>6,640</td></tr>
+    <tr><td><a href="/item/17260-pirates-gun-+1">Pirates Gun +1</a></td><td>6</td><td>4352</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12819-coral-cuisses">Coral Cuisses</a></td><td>7</td><td>4375</td><td>6,640</td></tr>
+    <tr><td><a href="/item/14230-coral-cuisses-+1">Coral Cuisses +1</a></td><td>7</td><td>4500</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12820-dragon-cuisses">Dragon Cuisses</a></td><td>8</td><td>7280</td><td>2,426</td></tr>
+    <tr><td><a href="/item/14231-dragon-cuisses-+1">Dragon Cuisses +1</a></td><td>8</td><td>7280</td><td>2,426</td></tr>
+    <tr><td><a href="/item/14008-carapace-gauntlets">Carapace Gauntlets</a></td><td>9</td><td>5850</td><td>6,960</td></tr>
+    <tr><td><a href="/item/14009-carapace-gauntlets-+1">Carapace Gauntlets +1</a></td><td>9</td><td>6825</td><td>6,960</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-3" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13313-shell-earring">Shell Earring</a></td><td>0</td><td>151</td><td>5,760</td></tr>
-    <tr><td><a href="/item/13314-shell-earring-+1">Shell Earring +1</a></td><td>0</td><td>212</td><td>5,760</td></tr>
-    <tr><td><a href="/item/12454-bone-mask">Bone Mask</a></td><td>1</td><td>652</td><td>11,280</td></tr>
-    <tr><td><a href="/item/13826-bone-mask-+1">Bone Mask +1</a></td><td>1</td><td>773</td><td>11,280</td></tr>
-    <tr><td><a href="/item/17351-gemshorn">Gemshorn</a></td><td>2</td><td>860</td><td>12,720</td></tr>
-    <tr><td><a href="/item/17370-gemshorn-+1">Gemshorn +1</a></td><td>2</td><td>1032</td><td>12,720</td></tr>
-    <tr><td><a href="/item/12583-beetle-harness">Beetle Harness</a></td><td>3</td><td>471</td><td>10,560</td></tr>
-    <tr><td><a href="/item/13717-beetle-harness-+1">Beetle Harness +1</a></td><td>3</td><td>495</td><td>10,560</td></tr>
-    <tr><td><a href="/item/13715-carapace-leggings">Carapace Leggings</a></td><td>4</td><td>1470</td><td>15,600</td></tr>
-    <tr><td><a href="/item/13044-carapace-leggings-+1">Carapace Leggings +1</a></td><td>4</td><td>1540</td><td>15,600</td></tr>
-    <tr><td><a href="/item/13324-tortoise-earring">Tortoise Earring</a></td><td>5</td><td>1750</td><td>16,560</td></tr>
-    <tr><td><a href="/item/13363-tortoise-earring-+1">Tortoise Earring +1</a></td><td>5</td><td>2450</td><td>16,560</td></tr>
-    <tr><td><a href="/item/12963-scorpion-leggings">Scorpion Leggings</a></td><td>6</td><td>1575</td><td>16,080</td></tr>
-    <tr><td><a href="/item/14083-scorpion-leggings-+1">Scorpion Leggings +1</a></td><td>6</td><td>1680</td><td>16,080</td></tr>
-    <tr><td><a href="/item/12435-coral-visor">Coral Visor</a></td><td>7</td><td>3000</td><td>18,720</td></tr>
-    <tr><td><a href="/item/13859-coral-visor-+1">Coral Visor +1</a></td><td>7</td><td>3120</td><td>18,720</td></tr>
-    <tr><td><a href="/item/12948-dragon-greaves">Dragon Greaves</a></td><td>8</td><td>6090</td><td>20,880</td></tr>
-    <tr><td><a href="/item/14107-dragon-greaves-+1">Dragon Greaves +1</a></td><td>8</td><td>7200</td><td>20,880</td></tr>
-    <tr><td><a href="/item/13846-scorpion-helm">Scorpion Helm</a></td><td>9</td><td>6490</td><td>21,120</td></tr>
-    <tr><td><a href="/item/12461-scorpion-helm-+1">Scorpion Helm +1</a></td><td>9</td><td>7590</td><td>21,120</td></tr>
+    <tr><td><a href="/item/13313-shell-earring">Shell Earring</a></td><td>0</td><td>151</td><td>1,920</td></tr>
+    <tr><td><a href="/item/13314-shell-earring-+1">Shell Earring +1</a></td><td>0</td><td>212</td><td>1,920</td></tr>
+    <tr><td><a href="/item/12454-bone-mask">Bone Mask</a></td><td>1</td><td>652</td><td>3,760</td></tr>
+    <tr><td><a href="/item/13826-bone-mask-+1">Bone Mask +1</a></td><td>1</td><td>773</td><td>3,760</td></tr>
+    <tr><td><a href="/item/17351-gemshorn">Gemshorn</a></td><td>2</td><td>860</td><td>4,240</td></tr>
+    <tr><td><a href="/item/17370-gemshorn-+1">Gemshorn +1</a></td><td>2</td><td>1032</td><td>4,240</td></tr>
+    <tr><td><a href="/item/12583-beetle-harness">Beetle Harness</a></td><td>3</td><td>471</td><td>3,520</td></tr>
+    <tr><td><a href="/item/13717-beetle-harness-+1">Beetle Harness +1</a></td><td>3</td><td>495</td><td>3,520</td></tr>
+    <tr><td><a href="/item/13715-carapace-leggings">Carapace Leggings</a></td><td>4</td><td>1470</td><td>5,200</td></tr>
+    <tr><td><a href="/item/13044-carapace-leggings-+1">Carapace Leggings +1</a></td><td>4</td><td>1540</td><td>5,200</td></tr>
+    <tr><td><a href="/item/13324-tortoise-earring">Tortoise Earring</a></td><td>5</td><td>1750</td><td>5,520</td></tr>
+    <tr><td><a href="/item/13363-tortoise-earring-+1">Tortoise Earring +1</a></td><td>5</td><td>2450</td><td>5,520</td></tr>
+    <tr><td><a href="/item/12963-scorpion-leggings">Scorpion Leggings</a></td><td>6</td><td>1575</td><td>5,360</td></tr>
+    <tr><td><a href="/item/14083-scorpion-leggings-+1">Scorpion Leggings +1</a></td><td>6</td><td>1680</td><td>5,360</td></tr>
+    <tr><td><a href="/item/12435-coral-visor">Coral Visor</a></td><td>7</td><td>3000</td><td>6,240</td></tr>
+    <tr><td><a href="/item/13859-coral-visor-+1">Coral Visor +1</a></td><td>7</td><td>3120</td><td>6,240</td></tr>
+    <tr><td><a href="/item/12948-dragon-greaves">Dragon Greaves</a></td><td>8</td><td>6090</td><td>6,960</td></tr>
+    <tr><td><a href="/item/14107-dragon-greaves-+1">Dragon Greaves +1</a></td><td>8</td><td>7200</td><td>6,960</td></tr>
+    <tr><td><a href="/item/13846-scorpion-helm">Scorpion Helm</a></td><td>9</td><td>6490</td><td>7,040</td></tr>
+    <tr><td><a href="/item/12461-scorpion-helm-+1">Scorpion Helm +1</a></td><td>9</td><td>7590</td><td>7,040</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-4" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13442-shell-ring">Shell Ring</a></td><td>0</td><td>151</td><td>5,760</td></tr>
-    <tr><td><a href="/item/13494-shell-ring-+1">Shell Ring +1</a></td><td>0</td><td>212</td><td>5,760</td></tr>
-    <tr><td><a href="/item/13076-fang-necklace">Fang Necklace</a></td><td>1</td><td>141</td><td>6,240</td></tr>
-    <tr><td><a href="/item/13061-spike-necklace">Spike Necklace</a></td><td>1</td><td>235</td><td>6,240</td></tr>
-    <tr><td><a href="/item/16649-bone-pick">Bone Pick</a></td><td>2</td><td>362</td><td>9,120</td></tr>
-    <tr><td><a href="/item/16668-bone-pick-+1">Bone Pick +1</a></td><td>2</td><td>374</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12835-beetle-subligar">Beetle Subligar</a></td><td>3</td><td>471</td><td>10,560</td></tr>
-    <tr><td><a href="/item/12913-beetle-subligar-+1">Beetle Subligar +1</a></td><td>3</td><td>495</td><td>10,560</td></tr>
-    <tr><td><a href="/item/13713-carapace-mittens">Carapace Mittens</a></td><td>4</td><td>1050</td><td>14,160</td></tr>
-    <tr><td><a href="/item/12790-carapace-mittens-+1">Carapace Mittens +1</a></td><td>4</td><td>1120</td><td>14,160</td></tr>
-    <tr><td><a href="/item/12506-shell-hairpin">Shell Hairpin</a></td><td>5</td><td>750</td><td>12,960</td></tr>
-    <tr><td><a href="/item/13836-shell-hairpin-+1">Shell Hairpin +1</a></td><td>5</td><td>850</td><td>12,960</td></tr>
-    <tr><td><a href="/item/12707-scorpion-mittens">Scorpion Mittens</a></td><td>6</td><td>1050</td><td>14,400</td></tr>
-    <tr><td><a href="/item/13956-scorpion-mittens-+1">Scorpion Mittens +1</a></td><td>6</td><td>1155</td><td>14,400</td></tr>
-    <tr><td><a href="/item/12709-coral-mittens">Coral Mittens</a></td><td>7</td><td>6412</td><td>21,120</td></tr>
-    <tr><td><a href="/item/13995-mermans-mittens">Mermans Mittens</a></td><td>7</td><td>7837</td><td>21,120</td></tr>
-    <tr><td><a href="/item/12692-dragon-finger-gauntlets">Dragon Finger Gauntlets</a></td><td>8</td><td>6900</td><td>21,360</td></tr>
-    <tr><td><a href="/item/13991-dragon-finger-gauntlets-+1">Dragon Finger Gauntlets +1</a></td><td>8</td><td>7200</td><td>21,360</td></tr>
-    <tr><td><a href="/item/13878-carapace-helm">Carapace Helm</a></td><td>9</td><td>6337</td><td>21,120</td></tr>
-    <tr><td><a href="/item/13879-carapace-helm-+1">Carapace Helm +1</a></td><td>9</td><td>7312</td><td>21,120</td></tr>
+    <tr><td><a href="/item/13442-shell-ring">Shell Ring</a></td><td>0</td><td>151</td><td>1,920</td></tr>
+    <tr><td><a href="/item/13494-shell-ring-+1">Shell Ring +1</a></td><td>0</td><td>212</td><td>1,920</td></tr>
+    <tr><td><a href="/item/13076-fang-necklace">Fang Necklace</a></td><td>1</td><td>636</td><td>1,226</td></tr>
+    <tr><td><a href="/item/13061-spike-necklace">Spike Necklace</a></td><td>1</td><td>872</td><td>1,226</td></tr>
+    <tr><td><a href="/item/16649-bone-pick">Bone Pick</a></td><td>2</td><td>362</td><td>3,040</td></tr>
+    <tr><td><a href="/item/16668-bone-pick-+1">Bone Pick +1</a></td><td>2</td><td>374</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12835-beetle-subligar">Beetle Subligar</a></td><td>3</td><td>471</td><td>3,520</td></tr>
+    <tr><td><a href="/item/12913-beetle-subligar-+1">Beetle Subligar +1</a></td><td>3</td><td>495</td><td>3,520</td></tr>
+    <tr><td><a href="/item/13713-carapace-mittens">Carapace Mittens</a></td><td>4</td><td>1050</td><td>4,720</td></tr>
+    <tr><td><a href="/item/12790-carapace-mittens-+1">Carapace Mittens +1</a></td><td>4</td><td>1120</td><td>4,720</td></tr>
+    <tr><td><a href="/item/12506-shell-hairpin">Shell Hairpin</a></td><td>5</td><td>750</td><td>4,320</td></tr>
+    <tr><td><a href="/item/13836-shell-hairpin-+1">Shell Hairpin +1</a></td><td>5</td><td>850</td><td>4,320</td></tr>
+    <tr><td><a href="/item/12707-scorpion-mittens">Scorpion Mittens</a></td><td>6</td><td>1050</td><td>4,800</td></tr>
+    <tr><td><a href="/item/13956-scorpion-mittens-+1">Scorpion Mittens +1</a></td><td>6</td><td>1155</td><td>4,800</td></tr>
+    <tr><td><a href="/item/12709-coral-mittens">Coral Mittens</a></td><td>7</td><td>6412</td><td>7,040</td></tr>
+    <tr><td><a href="/item/13995-mermans-mittens">Mermans Mittens</a></td><td>7</td><td>7837</td><td>7,040</td></tr>
+    <tr><td><a href="/item/12692-dragon-finger-gauntlets">Dragon Finger Gauntlets</a></td><td>8</td><td>6900</td><td>7,120</td></tr>
+    <tr><td><a href="/item/13991-dragon-finger-gauntlets-+1">Dragon Finger Gauntlets +1</a></td><td>8</td><td>7200</td><td>7,120</td></tr>
+    <tr><td><a href="/item/13878-carapace-helm">Carapace Helm</a></td><td>9</td><td>6337</td><td>7,040</td></tr>
+    <tr><td><a href="/item/13879-carapace-helm-+1">Carapace Helm +1</a></td><td>9</td><td>7040</td><td>2,346</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-5" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16405-cat-baghnakhs">Cat Baghnakhs</a></td><td>0</td><td>29</td><td>3,840</td></tr>
-    <tr><td><a href="/item/17476-cat-baghnakhs-+1">Cat Baghnakhs +1</a></td><td>0</td><td>35</td><td>3,840</td></tr>
-    <tr><td><a href="/item/13441-bone-ring">Bone Ring</a></td><td>1</td><td>302</td><td>8,160</td></tr>
-    <tr><td><a href="/item/13500-bone-ring-+1">Bone Ring +1</a></td><td>1</td><td>423</td><td>8,160</td></tr>
-    <tr><td><a href="/item/12834-bone-subligar">Bone Subligar</a></td><td>2</td><td>362</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12912-bone-subligar-+1">Bone Subligar +1</a></td><td>2</td><td>374</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12414-turtle-shield">Turtle Shield</a></td><td>3</td><td>615</td><td>11,520</td></tr>
-    <tr><td><a href="/item/12413-turtle-shield-+1">Turtle Shield +1</a></td><td>3</td><td>735</td><td>11,520</td></tr>
-    <tr><td><a href="/item/13711-carapace-mask">Carapace Mask</a></td><td>4</td><td>1050</td><td>14,160</td></tr>
-    <tr><td><a href="/item/13829-carapace-mask-+1">Carapace Mask +1</a></td><td>4</td><td>1120</td><td>14,160</td></tr>
-    <tr><td><a href="/item/13981-turtle-bangles">Turtle Bangles</a></td><td>5</td><td>3332</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13982-turtle-bangles-+1">Turtle Bangles +1</a></td><td>5</td><td>4107</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12451-scorpion-mask">Scorpion Mask</a></td><td>6</td><td>1050</td><td>14,400</td></tr>
-    <tr><td><a href="/item/12482-scorpion-mask-+1">Scorpion Mask +1</a></td><td>6</td><td>1150</td><td>14,400</td></tr>
-    <tr><td><a href="/item/12508-coral-hairpin">Coral Hairpin</a></td><td>7</td><td>3262</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13850-mermans-hairpin">Mermans Hairpin</a></td><td>7</td><td>3375</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13312-coral-earring">Coral Earring</a></td><td>8</td><td>3750</td><td>19,680</td></tr>
-    <tr><td><a href="/item/13406-mermans-earring">Mermans Earring</a></td><td>8</td><td>5250</td><td>19,680</td></tr>
-    <tr><td><a href="/item/13789-carapace-breastplate">Carapace Breastplate</a></td><td>9</td><td>13455</td><td>22,560</td></tr>
-    <tr><td><a href="/item/13790-carapace-breastplate-+1">Carapace Breastplate +1</a></td><td>9</td><td>14430</td><td>22,560</td></tr>
+    <tr><td><a href="/item/16405-cat-baghnakhs">Cat Baghnakhs</a></td><td>0</td><td>29</td><td>1,280</td></tr>
+    <tr><td><a href="/item/17476-cat-baghnakhs-+1">Cat Baghnakhs +1</a></td><td>0</td><td>35</td><td>1,280</td></tr>
+    <tr><td><a href="/item/13441-bone-ring">Bone Ring</a></td><td>1</td><td>302</td><td>2,720</td></tr>
+    <tr><td><a href="/item/13500-bone-ring-+1">Bone Ring +1</a></td><td>1</td><td>423</td><td>2,720</td></tr>
+    <tr><td><a href="/item/12834-bone-subligar">Bone Subligar</a></td><td>2</td><td>362</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12912-bone-subligar-+1">Bone Subligar +1</a></td><td>2</td><td>374</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12414-turtle-shield">Turtle Shield</a></td><td>3</td><td>1290</td><td>1,653</td></tr>
+    <tr><td><a href="/item/12413-turtle-shield-+1">Turtle Shield +1</a></td><td>3</td><td>1590</td><td>1,653</td></tr>
+    <tr><td><a href="/item/13711-carapace-mask">Carapace Mask</a></td><td>4</td><td>1050</td><td>4,720</td></tr>
+    <tr><td><a href="/item/13829-carapace-mask-+1">Carapace Mask +1</a></td><td>4</td><td>1120</td><td>4,720</td></tr>
+    <tr><td><a href="/item/13981-turtle-bangles">Turtle Bangles</a></td><td>5</td><td>3332</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13982-turtle-bangles-+1">Turtle Bangles +1</a></td><td>5</td><td>4107</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12451-scorpion-mask">Scorpion Mask</a></td><td>6</td><td>1050</td><td>4,800</td></tr>
+    <tr><td><a href="/item/12482-scorpion-mask-+1">Scorpion Mask +1</a></td><td>6</td><td>1155</td><td>1,600</td></tr>
+    <tr><td><a href="/item/12508-coral-hairpin">Coral Hairpin</a></td><td>7</td><td>3262</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13850-mermans-hairpin">Mermans Hairpin</a></td><td>7</td><td>3375</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13312-coral-earring">Coral Earring</a></td><td>8</td><td>3750</td><td>6,560</td></tr>
+    <tr><td><a href="/item/13406-mermans-earring">Mermans Earring</a></td><td>8</td><td>5250</td><td>6,560</td></tr>
+    <tr><td><a href="/item/13789-carapace-breastplate">Carapace Breastplate</a></td><td>9</td><td>13455</td><td>7,520</td></tr>
+    <tr><td><a href="/item/13790-carapace-breastplate-+1">Carapace Breastplate +1</a></td><td>9</td><td>14430</td><td>7,520</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-6" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16405-cat-baghnakhs">Cat Baghnakhs</a></td><td>0</td><td>29</td><td>3,840</td></tr>
-    <tr><td><a href="/item/17476-cat-baghnakhs-+1">Cat Baghnakhs +1</a></td><td>0</td><td>35</td><td>3,840</td></tr>
-    <tr><td><a href="/item/12710-bone-mittens">Bone Mittens</a></td><td>1</td><td>544</td><td>10,320</td></tr>
-    <tr><td><a href="/item/12788-bone-mittens-+1">Bone Mittens +1</a></td><td>1</td><td>664</td><td>10,320</td></tr>
-    <tr><td><a href="/item/12711-beetle-mittens">Beetle Mittens</a></td><td>2</td><td>282</td><td>8,400</td></tr>
-    <tr><td><a href="/item/12789-beetle-mittens-+1">Beetle Mittens +1</a></td><td>2</td><td>306</td><td>8,400</td></tr>
-    <tr><td><a href="/item/15315-shade-leggings">Shade Leggings</a></td><td>3</td><td>3797</td><td>19,440</td></tr>
-    <tr><td><a href="/item/15319-shade-leggings-+1">Shade Leggings +1</a></td><td>3</td><td>3989</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13091-carapace-gorget">Carapace Gorget</a></td><td>4</td><td>2310</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13063-blue-gorget">Blue Gorget</a></td><td>4</td><td>3010</td><td>17,520</td></tr>
-    <tr><td><a href="/item/17612-beetle-knife">Beetle Knife</a></td><td>5</td><td>1025</td><td>14,160</td></tr>
-    <tr><td><a href="/item/17613-beetle-knife-+1">Beetle Knife +1</a></td><td>5</td><td>1127</td><td>14,160</td></tr>
-    <tr><td><a href="/item/16420-bone-patas">Bone Patas</a></td><td>6</td><td>1230</td><td>15,120</td></tr>
-    <tr><td><a href="/item/17477-bone-patas-+1">Bone Patas +1</a></td><td>6</td><td>1332</td><td>15,120</td></tr>
-    <tr><td><a href="/item/16422-tigerfangs">Tigerfangs</a></td><td>7</td><td>3625</td><td>19,440</td></tr>
-    <tr><td><a href="/item/17490-feral-fangs">Feral Fangs</a></td><td>7</td><td>3770</td><td>19,440</td></tr>
-    <tr><td><a href="/item/16548-coral-sword">Coral Sword</a></td><td>8</td><td>16280</td><td>22,800</td></tr>
-    <tr><td><a href="/item/16620-mermans-sword">Mermans Sword</a></td><td>8</td><td>16280</td><td>22,800</td></tr>
-    <tr><td><a href="/item/12621-scorpion-breastplate">Scorpion Breastplate</a></td><td>9</td><td>13860</td><td>22,560</td></tr>
-    <tr><td><a href="/item/12589-scorpion-breastplate-+1">Scorpion Breastplate +1</a></td><td>9</td><td>14960</td><td>22,560</td></tr>
+    <tr><td><a href="/item/16405-cat-baghnakhs">Cat Baghnakhs</a></td><td>0</td><td>29</td><td>1,280</td></tr>
+    <tr><td><a href="/item/17476-cat-baghnakhs-+1">Cat Baghnakhs +1</a></td><td>0</td><td>35</td><td>1,280</td></tr>
+    <tr><td><a href="/item/12710-bone-mittens">Bone Mittens</a></td><td>1</td><td>544</td><td>3,440</td></tr>
+    <tr><td><a href="/item/12788-bone-mittens-+1">Bone Mittens +1</a></td><td>1</td><td>664</td><td>3,440</td></tr>
+    <tr><td><a href="/item/12711-beetle-mittens">Beetle Mittens</a></td><td>2</td><td>282</td><td>2,800</td></tr>
+    <tr><td><a href="/item/12789-beetle-mittens-+1">Beetle Mittens +1</a></td><td>2</td><td>306</td><td>2,800</td></tr>
+    <tr><td><a href="/item/15315-shade-leggings">Shade Leggings</a></td><td>3</td><td>3797</td><td>6,480</td></tr>
+    <tr><td><a href="/item/15319-shade-leggings-+1">Shade Leggings +1</a></td><td>3</td><td>3989</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13091-carapace-gorget">Carapace Gorget</a></td><td>4</td><td>2310</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13063-blue-gorget">Blue Gorget</a></td><td>4</td><td>3010</td><td>5,840</td></tr>
+    <tr><td><a href="/item/17612-beetle-knife">Beetle Knife</a></td><td>5</td><td>1025</td><td>4,720</td></tr>
+    <tr><td><a href="/item/17613-beetle-knife-+1">Beetle Knife +1</a></td><td>5</td><td>1127</td><td>4,720</td></tr>
+    <tr><td><a href="/item/16420-bone-patas">Bone Patas</a></td><td>6</td><td>1230</td><td>5,040</td></tr>
+    <tr><td><a href="/item/17477-bone-patas-+1">Bone Patas +1</a></td><td>6</td><td>1332</td><td>5,040</td></tr>
+    <tr><td><a href="/item/16422-tigerfangs">Tigerfangs</a></td><td>7</td><td>3625</td><td>6,480</td></tr>
+    <tr><td><a href="/item/17490-feral-fangs">Feral Fangs</a></td><td>7</td><td>3770</td><td>6,480</td></tr>
+    <tr><td><a href="/item/16548-coral-sword">Coral Sword</a></td><td>8</td><td>16280</td><td>7,600</td></tr>
+    <tr><td><a href="/item/16620-mermans-sword">Mermans Sword</a></td><td>8</td><td>16280</td><td>7,600</td></tr>
+    <tr><td><a href="/item/12621-scorpion-breastplate">Scorpion Breastplate</a></td><td>9</td><td>13860</td><td>7,520</td></tr>
+    <tr><td><a href="/item/12589-scorpion-breastplate-+1">Scorpion Breastplate +1</a></td><td>9</td><td>14960</td><td>7,520</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-7" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13313-shell-earring">Shell Earring</a></td><td>0</td><td>151</td><td>5,760</td></tr>
-    <tr><td><a href="/item/13314-shell-earring-+1">Shell Earring +1</a></td><td>0</td><td>212</td><td>5,760</td></tr>
-    <tr><td><a href="/item/13321-bone-earring">Bone Earring</a></td><td>1</td><td>302</td><td>8,160</td></tr>
-    <tr><td><a href="/item/13362-bone-earring-+1">Bone Earring +1</a></td><td>1</td><td>423</td><td>8,160</td></tr>
-    <tr><td><a href="/item/16642-bone-axe">Bone Axe</a></td><td>2</td><td>205</td><td>7,680</td></tr>
-    <tr><td><a href="/item/16666-bone-axe-+1">Bone Axe +1</a></td><td>2</td><td>317</td><td>7,680</td></tr>
-    <tr><td><a href="/item/13090-beetle-gorget">Beetle Gorget</a></td><td>3</td><td>448</td><td>10,320</td></tr>
-    <tr><td><a href="/item/13062-green-gorget">Green Gorget</a></td><td>3</td><td>542</td><td>10,320</td></tr>
-    <tr><td><a href="/item/17610-bone-knife">Bone Knife</a></td><td>4</td><td>750</td><td>12,720</td></tr>
-    <tr><td><a href="/item/17611-bone-knife-+1">Bone Knife +1</a></td><td>4</td><td>825</td><td>12,720</td></tr>
-    <tr><td><a href="/item/17062-bone-rod">Bone Rod</a></td><td>5</td><td>1122</td><td>14,640</td></tr>
-    <tr><td><a href="/item/17410-bone-rod-+1">Bone Rod +1</a></td><td>5</td><td>1782</td><td>14,640</td></tr>
-    <tr><td><a href="/item/13325-fang-earring">Fang Earring</a></td><td>6</td><td>2500</td><td>18,000</td></tr>
-    <tr><td><a href="/item/13369-spike-earring">Spike Earring</a></td><td>6</td><td>3500</td><td>18,000</td></tr>
-    <tr><td><a href="/item/16525-hornet-fleuret">Hornet Fleuret</a></td><td>7</td><td>3840</td><td>19,680</td></tr>
-    <tr><td><a href="/item/17634-wasp-fleuret">Wasp Fleuret</a></td><td>7</td><td>3960</td><td>19,680</td></tr>
-    <tr><td><a href="/item/12308-darksteel-shield">Darksteel Shield</a></td><td>8</td><td>5400</td><td>20,640</td></tr>
-    <tr><td><a href="/item/12346-darksteel-shield-+1">Darksteel Shield +1</a></td><td>8</td><td>6525</td><td>20,640</td></tr>
-    <tr><td><a href="/item/13922-demon-helm">Demon Helm</a></td><td>9</td><td>3570</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13923-demon-helm-+1">Demon Helm +1</a></td><td>9</td><td>4845</td><td>19,440</td></tr>
+    <tr><td><a href="/item/13313-shell-earring">Shell Earring</a></td><td>0</td><td>151</td><td>1,920</td></tr>
+    <tr><td><a href="/item/13314-shell-earring-+1">Shell Earring +1</a></td><td>0</td><td>212</td><td>1,920</td></tr>
+    <tr><td><a href="/item/13321-bone-earring">Bone Earring</a></td><td>1</td><td>302</td><td>2,720</td></tr>
+    <tr><td><a href="/item/13362-bone-earring-+1">Bone Earring +1</a></td><td>1</td><td>423</td><td>2,720</td></tr>
+    <tr><td><a href="/item/16642-bone-axe">Bone Axe</a></td><td>2</td><td>933</td><td>1,466</td></tr>
+    <tr><td><a href="/item/16666-bone-axe-+1">Bone Axe +1</a></td><td>2</td><td>1026</td><td>1,466</td></tr>
+    <tr><td><a href="/item/13090-beetle-gorget">Beetle Gorget</a></td><td>3</td><td>778</td><td>1,386</td></tr>
+    <tr><td><a href="/item/13062-green-gorget">Green Gorget</a></td><td>3</td><td>1013</td><td>1,386</td></tr>
+    <tr><td><a href="/item/17610-bone-knife">Bone Knife</a></td><td>4</td><td>750</td><td>4,240</td></tr>
+    <tr><td><a href="/item/17611-bone-knife-+1">Bone Knife +1</a></td><td>4</td><td>825</td><td>4,240</td></tr>
+    <tr><td><a href="/item/17062-bone-rod">Bone Rod</a></td><td>5</td><td>1122</td><td>4,880</td></tr>
+    <tr><td><a href="/item/17410-bone-rod-+1">Bone Rod +1</a></td><td>5</td><td>1782</td><td>4,880</td></tr>
+    <tr><td><a href="/item/13325-fang-earring">Fang Earring</a></td><td>6</td><td>2500</td><td>6,000</td></tr>
+    <tr><td><a href="/item/13369-spike-earring">Spike Earring</a></td><td>6</td><td>3500</td><td>6,000</td></tr>
+    <tr><td><a href="/item/16525-hornet-fleuret">Hornet Fleuret</a></td><td>7</td><td>3840</td><td>6,560</td></tr>
+    <tr><td><a href="/item/17634-wasp-fleuret">Wasp Fleuret</a></td><td>7</td><td>3960</td><td>6,560</td></tr>
+    <tr><td><a href="/item/12308-darksteel-shield">Darksteel Shield</a></td><td>8</td><td>5400</td><td>6,880</td></tr>
+    <tr><td><a href="/item/12346-darksteel-shield-+1">Darksteel Shield +1</a></td><td>8</td><td>6525</td><td>6,880</td></tr>
+    <tr><td><a href="/item/13922-demon-helm">Demon Helm</a></td><td>9</td><td>3570</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13923-demon-helm-+1">Demon Helm +1</a></td><td>9</td><td>4845</td><td>6,480</td></tr>
    </tbody></table>
   </div>
  </section>
 
  <section class="panel pad">
-  <h2>Guild point rewards</h2>
+  <h2 id="gp-rewards">Guild point rewards</h2>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15449-boneworkers-belt">Boneworkers Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -451,7 +461,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild vendor</h2>
+  <h2 id="vendor">Guild vendor</h2>
   <p class="vendor-note">Rank-gated items sold by the bonecraft guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/2130-shagreen-file">Shagreen File</a></span><span class="rk">rank amateur</span><span class="pr">75g</span></div>
@@ -484,7 +494,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>116</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>252</b><span>total</span></div>
@@ -581,6 +591,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -145,8 +145,17 @@
   </div>
  </header>
 
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>8:00</b> – <b>23:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Iceday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -156,9 +165,10 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(128 items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(128 items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the goldsmithing guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
    <div class="shop-row"><span class="nm"><a href="/item/640-chunk-of-copper-ore">Chunk of Copper Ore</a></span><span class="pr">60g</span><span class="st">120–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/13454-copper-ring">Copper Ring</a></span><span class="pr">380g</span><span class="st">0–18</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/2144-workshop-anvil">Workshop Anvil</a></span><span class="pr">500g</span><span class="st">0–180</span></div>
@@ -291,7 +301,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -305,199 +315,199 @@
   </div>
   <div class="turnin-pattern" id="pat-0">
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12449-brass-cap">Brass Cap</a></td><td>0</td><td>327</td><td>7,920</td></tr>
-    <tr><td><a href="/item/12528-brass-cap-+1">Brass Cap +1</a></td><td>0</td><td>388</td><td>7,920</td></tr>
-    <tr><td><a href="/item/12497-brass-hairpin">Brass Hairpin</a></td><td>1</td><td>259</td><td>7,680</td></tr>
-    <tr><td><a href="/item/12529-brass-hairpin-+1">Brass Hairpin +1</a></td><td>1</td><td>264</td><td>7,680</td></tr>
-    <tr><td><a href="/item/12473-poets-circlet">Poets Circlet</a></td><td>2</td><td>414</td><td>9,600</td></tr>
-    <tr><td><a href="/item/12530-sages-circlet">Sages Circlet</a></td><td>2</td><td>495</td><td>9,600</td></tr>
-    <tr><td><a href="/item/13083-chain-choker">Chain Choker</a></td><td>3</td><td>810</td><td>12,720</td></tr>
-    <tr><td><a href="/item/13066-red-choker">Red Choker</a></td><td>3</td><td>1110</td><td>12,720</td></tr>
-    <tr><td><a href="/item/12426-banded-helm">Banded Helm</a></td><td>4</td><td>4275</td><td>19,920</td></tr>
-    <tr><td><a href="/item/13832-banded-helm-+1">Banded Helm +1</a></td><td>4</td><td>5025</td><td>19,920</td></tr>
-    <tr><td><a href="/item/13445-gold-ring">Gold Ring</a></td><td>5</td><td>1750</td><td>16,560</td></tr>
-    <tr><td><a href="/item/13520-gold-ring-+1">Gold Ring +1</a></td><td>5</td><td>2450</td><td>16,560</td></tr>
-    <tr><td><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></td><td>6</td><td>3547</td><td>19,200</td></tr>
-    <tr><td><a href="/item/14211-mythril-cuisses-+1">Mythril Cuisses +1</a></td><td>6</td><td>3630</td><td>19,200</td></tr>
-    <tr><td><a href="/item/16421-gold-patas">Gold Patas</a></td><td>7</td><td>6370</td><td>21,120</td></tr>
-    <tr><td><a href="/item/17489-gold-patas-+1">Gold Patas +1</a></td><td>7</td><td>6492</td><td>21,120</td></tr>
-    <tr><td><a href="/item/16972-kazaridachi">Kazaridachi</a></td><td>8</td><td>7950</td><td>21,600</td></tr>
-    <tr><td><a href="/item/17805-kazaridachi-+1">Kazaridachi +1</a></td><td>8</td><td>7950</td><td>21,600</td></tr>
-    <tr><td><a href="/item/16520-verdun">Verdun</a></td><td>9</td><td>17340</td><td>22,800</td></tr>
-    <tr><td><a href="/item/17656-verdun-+1">Verdun +1</a></td><td>9</td><td>17977</td><td>22,800</td></tr>
+    <tr><td><a href="/item/12449-brass-cap">Brass Cap</a></td><td>0</td><td>327</td><td>2,640</td></tr>
+    <tr><td><a href="/item/12528-brass-cap-+1">Brass Cap +1</a></td><td>0</td><td>388</td><td>2,640</td></tr>
+    <tr><td><a href="/item/12497-brass-hairpin">Brass Hairpin</a></td><td>1</td><td>259</td><td>2,560</td></tr>
+    <tr><td><a href="/item/12529-brass-hairpin-+1">Brass Hairpin +1</a></td><td>1</td><td>264</td><td>2,560</td></tr>
+    <tr><td><a href="/item/12473-poets-circlet">Poets Circlet</a></td><td>2</td><td>414</td><td>3,200</td></tr>
+    <tr><td><a href="/item/12530-sages-circlet">Sages Circlet</a></td><td>2</td><td>495</td><td>3,200</td></tr>
+    <tr><td><a href="/item/13083-chain-choker">Chain Choker</a></td><td>3</td><td>810</td><td>4,240</td></tr>
+    <tr><td><a href="/item/13066-red-choker">Red Choker</a></td><td>3</td><td>1110</td><td>4,240</td></tr>
+    <tr><td><a href="/item/12426-banded-helm">Banded Helm</a></td><td>4</td><td>4275</td><td>6,640</td></tr>
+    <tr><td><a href="/item/13832-banded-helm-+1">Banded Helm +1</a></td><td>4</td><td>5025</td><td>6,640</td></tr>
+    <tr><td><a href="/item/13445-gold-ring">Gold Ring</a></td><td>5</td><td>1750</td><td>5,520</td></tr>
+    <tr><td><a href="/item/13520-gold-ring-+1">Gold Ring +1</a></td><td>5</td><td>2450</td><td>5,520</td></tr>
+    <tr><td><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></td><td>6</td><td>3547</td><td>6,400</td></tr>
+    <tr><td><a href="/item/14211-mythril-cuisses-+1">Mythril Cuisses +1</a></td><td>6</td><td>3630</td><td>6,400</td></tr>
+    <tr><td><a href="/item/16421-gold-patas">Gold Patas</a></td><td>7</td><td>6370</td><td>7,040</td></tr>
+    <tr><td><a href="/item/17489-gold-patas-+1">Gold Patas +1</a></td><td>7</td><td>6492</td><td>7,040</td></tr>
+    <tr><td><a href="/item/16972-kazaridachi">Kazaridachi</a></td><td>8</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/17805-kazaridachi-+1">Kazaridachi +1</a></td><td>8</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/16520-verdun">Verdun</a></td><td>9</td><td>7600</td><td>2,533</td></tr>
+    <tr><td><a href="/item/17656-verdun-+1">Verdun +1</a></td><td>9</td><td>7600</td><td>2,533</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-1" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16551-sapara">Sapara</a></td><td>0</td><td>194</td><td>6,240</td></tr>
-    <tr><td><a href="/item/16801-sapara-+1">Sapara +1</a></td><td>0</td><td>214</td><td>6,240</td></tr>
-    <tr><td><a href="/item/16407-brass-baghnakhs">Brass Baghnakhs</a></td><td>1</td><td>338</td><td>8,400</td></tr>
-    <tr><td><a href="/item/16441-brass-baghnakhs-+1">Brass Baghnakhs +1</a></td><td>1</td><td>338</td><td>8,400</td></tr>
-    <tr><td><a href="/item/12433-brass-mask">Brass Mask</a></td><td>2</td><td>800</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12532-brass-mask-+1">Brass Mask +1</a></td><td>2</td><td>832</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12817-brass-cuisses">Brass Cuisses</a></td><td>3</td><td>672</td><td>12,000</td></tr>
-    <tr><td><a href="/item/12893-brass-cuisses-+1">Brass Cuisses +1</a></td><td>3</td><td>752</td><td>12,000</td></tr>
-    <tr><td><a href="/item/12301-buckler">Buckler</a></td><td>4</td><td>3117</td><td>18,270</td></tr>
-    <tr><td><a href="/item/12327-buckler-+1">Buckler +1</a></td><td>4</td><td>3842</td><td>18,270</td></tr>
-    <tr><td><a href="/item/17988-spark-kris">Spark Kris</a></td><td>5</td><td>6037</td><td>20,880</td></tr>
-    <tr><td><a href="/item/17989-spark-kris-+1">Spark Kris +1</a></td><td>5</td><td>6912</td><td>20,880</td></tr>
-    <tr><td><a href="/item/13983-gold-bangles">Gold Bangles</a></td><td>6</td><td>3870</td><td>19,680</td></tr>
-    <tr><td><a href="/item/13984-gold-bangles-+1">Gold Bangles +1</a></td><td>6</td><td>4470</td><td>19,680</td></tr>
-    <tr><td><a href="/item/16395-diamond-knuckles">Diamond Knuckles</a></td><td>7</td><td>5637</td><td>20,640</td></tr>
-    <tr><td><a href="/item/17480-diamond-knuckles-+1">Diamond Knuckles +1</a></td><td>7</td><td>5775</td><td>20,640</td></tr>
-    <tr><td><a href="/item/12310-diamond-shield">Diamond Shield</a></td><td>8</td><td>5640</td><td>20,880</td></tr>
-    <tr><td><a href="/item/12355-diamond-shield-+1">Diamond Shield +1</a></td><td>8</td><td>6815</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16453-orichalcum-dagger">Orichalcum Dagger</a></td><td>9</td><td>22200</td><td>23,040</td></tr>
-    <tr><td><a href="/item/17992-tritons-dagger">Tritons Dagger</a></td><td>9</td><td>22800</td><td>23,040</td></tr>
+    <tr><td><a href="/item/16551-sapara">Sapara</a></td><td>0</td><td>194</td><td>2,080</td></tr>
+    <tr><td><a href="/item/16801-sapara-+1">Sapara +1</a></td><td>0</td><td>214</td><td>2,080</td></tr>
+    <tr><td><a href="/item/16407-brass-baghnakhs">Brass Baghnakhs</a></td><td>1</td><td>338</td><td>2,800</td></tr>
+    <tr><td><a href="/item/16441-brass-baghnakhs-+1">Brass Baghnakhs +1</a></td><td>1</td><td>338</td><td>2,800</td></tr>
+    <tr><td><a href="/item/12433-brass-mask">Brass Mask</a></td><td>2</td><td>800</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12532-brass-mask-+1">Brass Mask +1</a></td><td>2</td><td>832</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12817-brass-cuisses">Brass Cuisses</a></td><td>3</td><td>768</td><td>1,386</td></tr>
+    <tr><td><a href="/item/12893-brass-cuisses-+1">Brass Cuisses +1</a></td><td>3</td><td>800</td><td>1,386</td></tr>
+    <tr><td><a href="/item/12301-buckler">Buckler</a></td><td>4</td><td>3117</td><td>2,080</td></tr>
+    <tr><td><a href="/item/12327-buckler-+1">Buckler +1</a></td><td>4</td><td>3842</td><td>6,090</td></tr>
+    <tr><td><a href="/item/17988-spark-kris">Spark Kris</a></td><td>5</td><td>6037</td><td>6,960</td></tr>
+    <tr><td><a href="/item/17989-spark-kris-+1">Spark Kris +1</a></td><td>5</td><td>6912</td><td>6,960</td></tr>
+    <tr><td><a href="/item/13983-gold-bangles">Gold Bangles</a></td><td>6</td><td>3870</td><td>6,560</td></tr>
+    <tr><td><a href="/item/13984-gold-bangles-+1">Gold Bangles +1</a></td><td>6</td><td>4470</td><td>6,560</td></tr>
+    <tr><td><a href="/item/16395-diamond-knuckles">Diamond Knuckles</a></td><td>7</td><td>5637</td><td>6,880</td></tr>
+    <tr><td><a href="/item/17480-diamond-knuckles-+1">Diamond Knuckles +1</a></td><td>7</td><td>5775</td><td>6,880</td></tr>
+    <tr><td><a href="/item/12310-diamond-shield">Diamond Shield</a></td><td>8</td><td>5640</td><td>6,960</td></tr>
+    <tr><td><a href="/item/12355-diamond-shield-+1">Diamond Shield +1</a></td><td>8</td><td>6815</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16453-orichalcum-dagger">Orichalcum Dagger</a></td><td>9</td><td>22200</td><td>7,680</td></tr>
+    <tr><td><a href="/item/17992-tritons-dagger">Tritons Dagger</a></td><td>9</td><td>22800</td><td>7,680</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-2" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12496-copper-hairpin">Copper Hairpin</a></td><td>0</td><td>39</td><td>3,840</td></tr>
-    <tr><td><a href="/item/12526-copper-hairpin-+1">Copper Hairpin +1</a></td><td>0</td><td>79</td><td>3,840</td></tr>
-    <tr><td><a href="/item/16449-brass-dagger">Brass Dagger</a></td><td>1</td><td>186</td><td>6,720</td></tr>
-    <tr><td><a href="/item/16740-brass-dagger-+1">Brass Dagger +1</a></td><td>1</td><td>221</td><td>6,720</td></tr>
-    <tr><td><a href="/item/17081-brass-rod">Brass Rod</a></td><td>2</td><td>138</td><td>6,720</td></tr>
-    <tr><td><a href="/item/17148-brass-rod-+1">Brass Rod +1</a></td><td>2</td><td>219</td><td>6,720</td></tr>
-    <tr><td><a href="/item/13209-chain-belt">Chain Belt</a></td><td>3</td><td>1020</td><td>13,680</td></tr>
-    <tr><td><a href="/item/13213-chain-belt-+1">Chain Belt +1</a></td><td>3</td><td>1320</td><td>13,680</td></tr>
-    <tr><td><a href="/item/16456-mythril-baselard">Mythril Baselard</a></td><td>4</td><td>1976</td><td>16,800</td></tr>
-    <tr><td><a href="/item/16752-fine-baselard">Fine Baselard</a></td><td>4</td><td>2028</td><td>16,800</td></tr>
-    <tr><td><a href="/item/13084-mythril-gorget">Mythril Gorget</a></td><td>5</td><td>2805</td><td>18,480</td></tr>
-    <tr><td><a href="/item/13067-nobles-gorget">Nobles Gorget</a></td><td>5</td><td>3630</td><td>18,480</td></tr>
-    <tr><td><a href="/item/12929-mythril-leggings">Mythril Leggings</a></td><td>6</td><td>3630</td><td>19,440</td></tr>
-    <tr><td><a href="/item/14086-mythril-leggings-+1">Mythril Leggings +1</a></td><td>6</td><td>4455</td><td>19,440</td></tr>
-    <tr><td><a href="/item/16569-gold-sword">Gold Sword</a></td><td>7</td><td>14640</td><td>22,560</td></tr>
-    <tr><td><a href="/item/17641-gold-sword-+1">Gold Sword +1</a></td><td>7</td><td>14792</td><td>22,560</td></tr>
-    <tr><td><a href="/item/16842-golden-spear">Golden Spear</a></td><td>8</td><td>5460</td><td>20,640</td></tr>
-    <tr><td><a href="/item/16875-golden-spear-+1">Golden Spear +1</a></td><td>8</td><td>6435</td><td>20,640</td></tr>
-    <tr><td><a href="/item/13185-muscle-belt">Muscle Belt</a></td><td>9</td><td>1800</td><td>17,040</td></tr>
-    <tr><td><a href="/item/13279-muscle-belt-+1">Muscle Belt +1</a></td><td>9</td><td>2925</td><td>17,040</td></tr>
+    <tr><td><a href="/item/12496-copper-hairpin">Copper Hairpin</a></td><td>0</td><td>39</td><td>1,280</td></tr>
+    <tr><td><a href="/item/12526-copper-hairpin-+1">Copper Hairpin +1</a></td><td>0</td><td>79</td><td>1,280</td></tr>
+    <tr><td><a href="/item/16449-brass-dagger">Brass Dagger</a></td><td>1</td><td>186</td><td>2,240</td></tr>
+    <tr><td><a href="/item/16740-brass-dagger-+1">Brass Dagger +1</a></td><td>1</td><td>221</td><td>2,240</td></tr>
+    <tr><td><a href="/item/17081-brass-rod">Brass Rod</a></td><td>2</td><td>138</td><td>2,240</td></tr>
+    <tr><td><a href="/item/17148-brass-rod-+1">Brass Rod +1</a></td><td>2</td><td>219</td><td>2,240</td></tr>
+    <tr><td><a href="/item/13209-chain-belt">Chain Belt</a></td><td>3</td><td>1020</td><td>4,560</td></tr>
+    <tr><td><a href="/item/13213-chain-belt-+1">Chain Belt +1</a></td><td>3</td><td>1340</td><td>1,520</td></tr>
+    <tr><td><a href="/item/16456-mythril-baselard">Mythril Baselard</a></td><td>4</td><td>1976</td><td>5,600</td></tr>
+    <tr><td><a href="/item/16752-fine-baselard">Fine Baselard</a></td><td>4</td><td>2028</td><td>5,600</td></tr>
+    <tr><td><a href="/item/13084-mythril-gorget">Mythril Gorget</a></td><td>5</td><td>2805</td><td>6,160</td></tr>
+    <tr><td><a href="/item/13067-nobles-gorget">Nobles Gorget</a></td><td>5</td><td>3630</td><td>6,160</td></tr>
+    <tr><td><a href="/item/12929-mythril-leggings">Mythril Leggings</a></td><td>6</td><td>3630</td><td>6,480</td></tr>
+    <tr><td><a href="/item/14086-mythril-leggings-+1">Mythril Leggings +1</a></td><td>6</td><td>4455</td><td>6,480</td></tr>
+    <tr><td><a href="/item/16569-gold-sword">Gold Sword</a></td><td>7</td><td>14640</td><td>7,520</td></tr>
+    <tr><td><a href="/item/17641-gold-sword-+1">Gold Sword +1</a></td><td>7</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/16842-golden-spear">Golden Spear</a></td><td>8</td><td>5460</td><td>6,880</td></tr>
+    <tr><td><a href="/item/16875-golden-spear-+1">Golden Spear +1</a></td><td>8</td><td>6435</td><td>6,880</td></tr>
+    <tr><td><a href="/item/13185-muscle-belt">Muscle Belt</a></td><td>9</td><td>1800</td><td>5,680</td></tr>
+    <tr><td><a href="/item/13279-muscle-belt-+1">Muscle Belt +1</a></td><td>9</td><td>2925</td><td>5,680</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-3" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12496-copper-hairpin">Copper Hairpin</a></td><td>0</td><td>39</td><td>3,840</td></tr>
-    <tr><td><a href="/item/12526-copper-hairpin-+1">Copper Hairpin +1</a></td><td>0</td><td>79</td><td>3,840</td></tr>
-    <tr><td><a href="/item/16769-brass-zaghnal">Brass Zaghnal</a></td><td>1</td><td>140</td><td>6,240</td></tr>
-    <tr><td><a href="/item/16772-brass-zaghnal-+1">Brass Zaghnal +1</a></td><td>1</td><td>181</td><td>6,240</td></tr>
-    <tr><td><a href="/item/12495-silver-hairpin">Silver Hairpin</a></td><td>2</td><td>345</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12531-silver-hairpin-+1">Silver Hairpin +1</a></td><td>2</td><td>364</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12425-silver-mask">Silver Mask</a></td><td>3</td><td>2850</td><td>18,240</td></tr>
-    <tr><td><a href="/item/12533-silver-mask-+1">Silver Mask +1</a></td><td>3</td><td>3350</td><td>18,240</td></tr>
-    <tr><td><a href="/item/13446-mythril-ring">Mythril Ring</a></td><td>4</td><td>750</td><td>12,720</td></tr>
-    <tr><td><a href="/item/13519-mythril-ring-+1">Mythril Ring +1</a></td><td>4</td><td>1050</td><td>12,720</td></tr>
-    <tr><td><a href="/item/14725-melody-earring">Melody Earring</a></td><td>5</td><td>5250</td><td>6,800</td></tr>
-    <tr><td><a href="/item/14726-melody-earring-+1">Melody Earring +1</a></td><td>5</td><td>6000</td><td>6,800</td></tr>
-    <tr><td><a href="/item/13447-platinum-ring">Platinum Ring</a></td><td>6</td><td>6200</td><td>20,880</td></tr>
-    <tr><td><a href="/item/13498-platinum-ring-+1">Platinum Ring +1</a></td><td>6</td><td>8800</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16962-ashura">Ashura</a></td><td>7</td><td>3250</td><td>18,960</td></tr>
-    <tr><td><a href="/item/16979-ashura-+1">Ashura +1</a></td><td>7</td><td>3300</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13985-platinum-bangles">Platinum Bangles</a></td><td>8</td><td>5697</td><td>20,880</td></tr>
-    <tr><td><a href="/item/13986-platinum-bangles-+1">Platinum Bangles +1</a></td><td>8</td><td>7022</td><td>20,880</td></tr>
-    <tr><td><a href="/item/13097-brisingamen">Brisingamen</a></td><td>9</td><td>21105</td><td>23,040</td></tr>
-    <tr><td><a href="/item/13162-brisingamen-+1">Brisingamen +1</a></td><td>9</td><td>22680</td><td>23,040</td></tr>
+    <tr><td><a href="/item/12496-copper-hairpin">Copper Hairpin</a></td><td>0</td><td>39</td><td>1,280</td></tr>
+    <tr><td><a href="/item/12526-copper-hairpin-+1">Copper Hairpin +1</a></td><td>0</td><td>79</td><td>1,280</td></tr>
+    <tr><td><a href="/item/16769-brass-zaghnal">Brass Zaghnal</a></td><td>1</td><td>565</td><td>1,173</td></tr>
+    <tr><td><a href="/item/16772-brass-zaghnal-+1">Brass Zaghnal +1</a></td><td>1</td><td>565</td><td>1,173</td></tr>
+    <tr><td><a href="/item/12495-silver-hairpin">Silver Hairpin</a></td><td>2</td><td>345</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12531-silver-hairpin-+1">Silver Hairpin +1</a></td><td>2</td><td>364</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12425-silver-mask">Silver Mask</a></td><td>3</td><td>2850</td><td>6,080</td></tr>
+    <tr><td><a href="/item/12533-silver-mask-+1">Silver Mask +1</a></td><td>3</td><td>3350</td><td>6,080</td></tr>
+    <tr><td><a href="/item/13446-mythril-ring">Mythril Ring</a></td><td>4</td><td>750</td><td>4,240</td></tr>
+    <tr><td><a href="/item/13519-mythril-ring-+1">Mythril Ring +1</a></td><td>4</td><td>750</td><td>1,413</td></tr>
+    <tr><td><a href="/item/14725-melody-earring">Melody Earring</a></td><td>5</td><td>5250</td><td>2,266</td></tr>
+    <tr><td><a href="/item/14726-melody-earring-+1">Melody Earring +1</a></td><td>5</td><td>6000</td><td>2,266</td></tr>
+    <tr><td><a href="/item/13447-platinum-ring">Platinum Ring</a></td><td>6</td><td>6200</td><td>6,960</td></tr>
+    <tr><td><a href="/item/13498-platinum-ring-+1">Platinum Ring +1</a></td><td>6</td><td>6960</td><td>2,320</td></tr>
+    <tr><td><a href="/item/16962-ashura">Ashura</a></td><td>7</td><td>3250</td><td>6,320</td></tr>
+    <tr><td><a href="/item/16979-ashura-+1">Ashura +1</a></td><td>7</td><td>3300</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13985-platinum-bangles">Platinum Bangles</a></td><td>8</td><td>5697</td><td>6,960</td></tr>
+    <tr><td><a href="/item/13986-platinum-bangles-+1">Platinum Bangles +1</a></td><td>8</td><td>7022</td><td>6,960</td></tr>
+    <tr><td><a href="/item/13097-brisingamen">Brisingamen</a></td><td>9</td><td>7680</td><td>2,560</td></tr>
+    <tr><td><a href="/item/13162-brisingamen-+1">Brisingamen +1</a></td><td>9</td><td>7680</td><td>2,560</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-4" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16551-sapara">Sapara</a></td><td>0</td><td>194</td><td>6,240</td></tr>
-    <tr><td><a href="/item/16801-sapara-+1">Sapara +1</a></td><td>0</td><td>214</td><td>6,240</td></tr>
-    <tr><td><a href="/item/16391-brass-knuckles">Brass Knuckles</a></td><td>1</td><td>180</td><td>6,720</td></tr>
-    <tr><td><a href="/item/16689-brass-knuckles-+1">Brass Knuckles +1</a></td><td>1</td><td>222</td><td>6,720</td></tr>
-    <tr><td><a href="/item/17043-brass-hammer">Brass Hammer</a></td><td>2</td><td>463</td><td>10,080</td></tr>
-    <tr><td><a href="/item/17149-brass-hammer-+1">Brass Hammer +1</a></td><td>2</td><td>544</td><td>10,080</td></tr>
-    <tr><td><a href="/item/17686-spark-bilbo">Spark Bilbo</a></td><td>3</td><td>669</td><td>12,000</td></tr>
-    <tr><td><a href="/item/17687-spark-bilbo-+1">Spark Bilbo +1</a></td><td>3</td><td>706</td><td>12,000</td></tr>
-    <tr><td><a href="/item/12553-silver-mail">Silver Mail</a></td><td>4</td><td>4400</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12666-silver-mail-+1">Silver Mail +1</a></td><td>4</td><td>4900</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12307-heater-shield">Heater Shield</a></td><td>5</td><td>3168</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12328-heater-shield-+1">Heater Shield +1</a></td><td>5</td><td>3828</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12673-mythril-gauntlets">Mythril Gauntlets</a></td><td>6</td><td>3960</td><td>19,680</td></tr>
-    <tr><td><a href="/item/13958-mythril-gauntlets-+1">Mythril Gauntlets +1</a></td><td>6</td><td>4785</td><td>19,680</td></tr>
-    <tr><td><a href="/item/17285-moonring-blade">Moonring Blade</a></td><td>7</td><td>3990</td><td>19,680</td></tr>
-    <tr><td><a href="/item/17279-moonring-blade-+1">Moonring Blade +1</a></td><td>7</td><td>4095</td><td>19,680</td></tr>
-    <tr><td><a href="/item/17039-platinum-mace">Platinum Mace</a></td><td>8</td><td>8342</td><td>21,600</td></tr>
-    <tr><td><a href="/item/17431-platinum-mace-+1">Platinum Mace +1</a></td><td>8</td><td>8697</td><td>21,600</td></tr>
-    <tr><td><a href="/item/13466-orichalcum-ring">Orichalcum Ring</a></td><td>9</td><td>29750</td><td>23,280</td></tr>
-    <tr><td><a href="/item/14616-triton-ring">Triton Ring</a></td><td>9</td><td>31450</td><td>23,280</td></tr>
+    <tr><td><a href="/item/16551-sapara">Sapara</a></td><td>0</td><td>194</td><td>2,080</td></tr>
+    <tr><td><a href="/item/16801-sapara-+1">Sapara +1</a></td><td>0</td><td>214</td><td>2,080</td></tr>
+    <tr><td><a href="/item/16391-brass-knuckles">Brass Knuckles</a></td><td>1</td><td>180</td><td>2,240</td></tr>
+    <tr><td><a href="/item/16689-brass-knuckles-+1">Brass Knuckles +1</a></td><td>1</td><td>227</td><td>746</td></tr>
+    <tr><td><a href="/item/17043-brass-hammer">Brass Hammer</a></td><td>2</td><td>463</td><td>3,360</td></tr>
+    <tr><td><a href="/item/17149-brass-hammer-+1">Brass Hammer +1</a></td><td>2</td><td>544</td><td>3,360</td></tr>
+    <tr><td><a href="/item/17686-spark-bilbo">Spark Bilbo</a></td><td>3</td><td>669</td><td>4,000</td></tr>
+    <tr><td><a href="/item/17687-spark-bilbo-+1">Spark Bilbo +1</a></td><td>3</td><td>706</td><td>4,000</td></tr>
+    <tr><td><a href="/item/12553-silver-mail">Silver Mail</a></td><td>4</td><td>4400</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12666-silver-mail-+1">Silver Mail +1</a></td><td>4</td><td>4900</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12307-heater-shield">Heater Shield</a></td><td>5</td><td>3168</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12328-heater-shield-+1">Heater Shield +1</a></td><td>5</td><td>3828</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12673-mythril-gauntlets">Mythril Gauntlets</a></td><td>6</td><td>3960</td><td>6,560</td></tr>
+    <tr><td><a href="/item/13958-mythril-gauntlets-+1">Mythril Gauntlets +1</a></td><td>6</td><td>4785</td><td>6,560</td></tr>
+    <tr><td><a href="/item/17285-moonring-blade">Moonring Blade</a></td><td>7</td><td>3990</td><td>6,560</td></tr>
+    <tr><td><a href="/item/17279-moonring-blade-+1">Moonring Blade +1</a></td><td>7</td><td>4095</td><td>6,560</td></tr>
+    <tr><td><a href="/item/17039-platinum-mace">Platinum Mace</a></td><td>8</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/17431-platinum-mace-+1">Platinum Mace +1</a></td><td>8</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/13466-orichalcum-ring">Orichalcum Ring</a></td><td>9</td><td>29750</td><td>7,760</td></tr>
+    <tr><td><a href="/item/14616-triton-ring">Triton Ring</a></td><td>9</td><td>31450</td><td>7,760</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-5" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>0</td><td>19</td><td>3,600</td></tr>
-    <tr><td><a href="/item/13492-copper-ring-+1">Copper Ring +1</a></td><td>0</td><td>27</td><td>3,600</td></tr>
-    <tr><td><a href="/item/13465-brass-ring">Brass Ring</a></td><td>1</td><td>50</td><td>1,600</td></tr>
-    <tr><td><a href="/item/13493-brass-ring-+1">Brass Ring +1</a></td><td>1</td><td>70</td><td>1,600</td></tr>
-    <tr><td><a href="/item/13196-silver-belt">Silver Belt</a></td><td>2</td><td>357</td><td>9,120</td></tr>
-    <tr><td><a href="/item/13223-silver-belt-+1">Silver Belt +1</a></td><td>2</td><td>441</td><td>9,120</td></tr>
-    <tr><td><a href="/item/13082-chain-gorget">Chain Gorget</a></td><td>3</td><td>1020</td><td>13,680</td></tr>
-    <tr><td><a href="/item/13059-fine-gorget">Fine Gorget</a></td><td>3</td><td>1320</td><td>13,680</td></tr>
-    <tr><td><a href="/item/12938-sollerets">Sollerets</a></td><td>4</td><td>3225</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13047-sollerets-+1">Sollerets +1</a></td><td>4</td><td>3975</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13315-gold-earring">Gold Earring</a></td><td>5</td><td>1750</td><td>16,560</td></tr>
-    <tr><td><a href="/item/13372-gold-earring-+1">Gold Earring +1</a></td><td>5</td><td>2450</td><td>16,560</td></tr>
-    <tr><td><a href="/item/12545-mythril-breastplate">Mythril Breastplate</a></td><td>6</td><td>7507</td><td>21,360</td></tr>
-    <tr><td><a href="/item/13737-mythril-breastplate-+1">Mythril Breastplate +1</a></td><td>6</td><td>8332</td><td>21,360</td></tr>
-    <tr><td><a href="/item/12930-gold-sabatons">Gold Sabatons</a></td><td>7</td><td>4950</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14087-gilt-sabatons">Gilt Sabatons</a></td><td>7</td><td>6075</td><td>20,400</td></tr>
-    <tr><td><a href="/item/16527-epee">Epee</a></td><td>8</td><td>10920</td><td>22,080</td></tr>
-    <tr><td><a href="/item/16619-epee-+1">Epee +1</a></td><td>8</td><td>11895</td><td>22,080</td></tr>
-    <tr><td><a href="/item/12387-koenig-shield">Koenig Shield</a></td><td>9</td><td>22312</td><td>23,040</td></tr>
-    <tr><td><a href="/item/12388-kaiser-shield">Kaiser Shield</a></td><td>9</td><td>23587</td><td>23,040</td></tr>
+    <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>0</td><td>19</td><td>1,200</td></tr>
+    <tr><td><a href="/item/13492-copper-ring-+1">Copper Ring +1</a></td><td>0</td><td>21</td><td>400</td></tr>
+    <tr><td><a href="/item/13465-brass-ring">Brass Ring</a></td><td>1</td><td>50</td><td>533</td></tr>
+    <tr><td><a href="/item/13493-brass-ring-+1">Brass Ring +1</a></td><td>1</td><td>70</td><td>533</td></tr>
+    <tr><td><a href="/item/13196-silver-belt">Silver Belt</a></td><td>2</td><td>798</td><td>1,386</td></tr>
+    <tr><td><a href="/item/13223-silver-belt-+1">Silver Belt +1</a></td><td>2</td><td>840</td><td>1,386</td></tr>
+    <tr><td><a href="/item/13082-chain-gorget">Chain Gorget</a></td><td>3</td><td>1020</td><td>4,560</td></tr>
+    <tr><td><a href="/item/13059-fine-gorget">Fine Gorget</a></td><td>3</td><td>1320</td><td>4,560</td></tr>
+    <tr><td><a href="/item/12938-sollerets">Sollerets</a></td><td>4</td><td>3225</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13047-sollerets-+1">Sollerets +1</a></td><td>4</td><td>3975</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13315-gold-earring">Gold Earring</a></td><td>5</td><td>1750</td><td>5,520</td></tr>
+    <tr><td><a href="/item/13372-gold-earring-+1">Gold Earring +1</a></td><td>5</td><td>2450</td><td>5,520</td></tr>
+    <tr><td><a href="/item/12545-mythril-breastplate">Mythril Breastplate</a></td><td>6</td><td>7507</td><td>7,120</td></tr>
+    <tr><td><a href="/item/13737-mythril-breastplate-+1">Mythril Breastplate +1</a></td><td>6</td><td>8332</td><td>7,120</td></tr>
+    <tr><td><a href="/item/12930-gold-sabatons">Gold Sabatons</a></td><td>7</td><td>4950</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14087-gilt-sabatons">Gilt Sabatons</a></td><td>7</td><td>6075</td><td>6,800</td></tr>
+    <tr><td><a href="/item/16527-epee">Epee</a></td><td>8</td><td>7360</td><td>2,453</td></tr>
+    <tr><td><a href="/item/16619-epee-+1">Epee +1</a></td><td>8</td><td>7360</td><td>2,453</td></tr>
+    <tr><td><a href="/item/12387-koenig-shield">Koenig Shield</a></td><td>9</td><td>22312</td><td>7,680</td></tr>
+    <tr><td><a href="/item/12388-kaiser-shield">Kaiser Shield</a></td><td>9</td><td>23587</td><td>7,680</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-6" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12449-brass-cap">Brass Cap</a></td><td>0</td><td>327</td><td>7,920</td></tr>
-    <tr><td><a href="/item/12528-brass-cap-+1">Brass Cap +1</a></td><td>0</td><td>388</td><td>7,920</td></tr>
-    <tr><td><a href="/item/12577-brass-harness">Brass Harness</a></td><td>1</td><td>497</td><td>10,080</td></tr>
-    <tr><td><a href="/item/12664-brass-harness-+1">Brass Harness +1</a></td><td>1</td><td>558</td><td>10,080</td></tr>
-    <tr><td><a href="/item/12689-brass-finger-gauntlets">Brass Finger Gauntlets</a></td><td>2</td><td>432</td><td>9,840</td></tr>
-    <tr><td><a href="/item/12771-brass-finger-gauntlets-+1">Brass Finger Gauntlets +1</a></td><td>2</td><td>544</td><td>9,840</td></tr>
-    <tr><td><a href="/item/12681-silver-mittens">Silver Mittens</a></td><td>3</td><td>2350</td><td>17,520</td></tr>
-    <tr><td><a href="/item/12772-silver-mittens-+1">Silver Mittens +1</a></td><td>3</td><td>2850</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13979-silver-bangles">Silver Bangles</a></td><td>4</td><td>992</td><td>13,920</td></tr>
-    <tr><td><a href="/item/13980-silver-bangles-+1">Silver Bangles +1</a></td><td>4</td><td>1054</td><td>13,920</td></tr>
-    <tr><td><a href="/item/16518-mythril-degen">Mythril Degen</a></td><td>5</td><td>3100</td><td>18,720</td></tr>
-    <tr><td><a href="/item/16815-mythril-degen-+1">Mythril Degen +1</a></td><td>5</td><td>3150</td><td>18,720</td></tr>
-    <tr><td><a href="/item/16514-mailbreaker">Mailbreaker</a></td><td>6</td><td>3037</td><td>18,720</td></tr>
-    <tr><td><a href="/item/16618-mailbreaker-+1">Mailbreaker +1</a></td><td>6</td><td>3150</td><td>18,720</td></tr>
-    <tr><td><a href="/item/12303-gold-buckler">Gold Buckler</a></td><td>7</td><td>4080</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12353-gilt-buckler">Gilt Buckler</a></td><td>7</td><td>4207</td><td>19,920</td></tr>
-    <tr><td><a href="/item/13087-jeweled-collar">Jeweled Collar</a></td><td>8</td><td>3780</td><td>19,680</td></tr>
-    <tr><td><a href="/item/13130-jeweled-collar-+1">Jeweled Collar +1</a></td><td>8</td><td>4060</td><td>19,680</td></tr>
-    <tr><td><a href="/item/33-millionaire-desk">Millionaire Desk</a></td><td>9</td><td>24500</td><td>23,280</td></tr>
+    <tr><td><a href="/item/12449-brass-cap">Brass Cap</a></td><td>0</td><td>327</td><td>2,640</td></tr>
+    <tr><td><a href="/item/12528-brass-cap-+1">Brass Cap +1</a></td><td>0</td><td>388</td><td>2,640</td></tr>
+    <tr><td><a href="/item/12577-brass-harness">Brass Harness</a></td><td>1</td><td>497</td><td>3,360</td></tr>
+    <tr><td><a href="/item/12664-brass-harness-+1">Brass Harness +1</a></td><td>1</td><td>558</td><td>3,360</td></tr>
+    <tr><td><a href="/item/12689-brass-finger-gauntlets">Brass Finger Gauntlets</a></td><td>2</td><td>736</td><td>1,333</td></tr>
+    <tr><td><a href="/item/12771-brass-finger-gauntlets-+1">Brass Finger Gauntlets +1</a></td><td>2</td><td>768</td><td>1,333</td></tr>
+    <tr><td><a href="/item/12681-silver-mittens">Silver Mittens</a></td><td>3</td><td>2350</td><td>5,840</td></tr>
+    <tr><td><a href="/item/12772-silver-mittens-+1">Silver Mittens +1</a></td><td>3</td><td>2850</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13979-silver-bangles">Silver Bangles</a></td><td>4</td><td>992</td><td>4,640</td></tr>
+    <tr><td><a href="/item/13980-silver-bangles-+1">Silver Bangles +1</a></td><td>4</td><td>1054</td><td>4,640</td></tr>
+    <tr><td><a href="/item/16518-mythril-degen">Mythril Degen</a></td><td>5</td><td>3100</td><td>6,240</td></tr>
+    <tr><td><a href="/item/16815-mythril-degen-+1">Mythril Degen +1</a></td><td>5</td><td>3150</td><td>6,240</td></tr>
+    <tr><td><a href="/item/16514-mailbreaker">Mailbreaker</a></td><td>6</td><td>3037</td><td>6,240</td></tr>
+    <tr><td><a href="/item/16618-mailbreaker-+1">Mailbreaker +1</a></td><td>6</td><td>3150</td><td>6,240</td></tr>
+    <tr><td><a href="/item/12303-gold-buckler">Gold Buckler</a></td><td>7</td><td>4080</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12353-gilt-buckler">Gilt Buckler</a></td><td>7</td><td>4207</td><td>6,640</td></tr>
+    <tr><td><a href="/item/13087-jeweled-collar">Jeweled Collar</a></td><td>8</td><td>3780</td><td>6,560</td></tr>
+    <tr><td><a href="/item/13130-jeweled-collar-+1">Jeweled Collar +1</a></td><td>8</td><td>4060</td><td>6,560</td></tr>
+    <tr><td><a href="/item/33-millionaire-desk">Millionaire Desk</a></td><td>9</td><td>24500</td><td>7,760</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-7" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>0</td><td>19</td><td>3,600</td></tr>
-    <tr><td><a href="/item/13492-copper-ring-+1">Copper Ring +1</a></td><td>0</td><td>27</td><td>3,600</td></tr>
-    <tr><td><a href="/item/16641-brass-axe">Brass Axe</a></td><td>1</td><td>312</td><td>8,160</td></tr>
-    <tr><td><a href="/item/16661-brass-axe-+1">Brass Axe +1</a></td><td>1</td><td>343</td><td>8,160</td></tr>
-    <tr><td><a href="/item/13327-silver-earring">Silver Earring</a></td><td>2</td><td>250</td><td>8,160</td></tr>
-    <tr><td><a href="/item/13370-silver-earring-+1">Silver Earring +1</a></td><td>2</td><td>350</td><td>8,160</td></tr>
-    <tr><td><a href="/item/18076-spark-spear">Spark Spear</a></td><td>3</td><td>240</td><td>8,640</td></tr>
-    <tr><td><a href="/item/18077-spark-spear-+1">Spark Spear +1</a></td><td>3</td><td>390</td><td>8,640</td></tr>
-    <tr><td><a href="/item/13328-mythril-earring">Mythril Earring</a></td><td>4</td><td>750</td><td>12,720</td></tr>
-    <tr><td><a href="/item/13371-mythril-earring-+1">Mythril Earring +1</a></td><td>4</td><td>1050</td><td>12,720</td></tr>
-    <tr><td><a href="/item/17281-wingedge">Wingedge</a></td><td>5</td><td>1260</td><td>15,120</td></tr>
-    <tr><td><a href="/item/17288-wingedge-+1">Wingedge +1</a></td><td>5</td><td>1560</td><td>15,120</td></tr>
-    <tr><td><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></td><td>6</td><td>3547</td><td>19,200</td></tr>
-    <tr><td><a href="/item/14211-mythril-cuisses-+1">Mythril Cuisses +1</a></td><td>6</td><td>3630</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12802-gold-cuisses">Gold Cuisses</a></td><td>7</td><td>3937</td><td>19,680</td></tr>
-    <tr><td><a href="/item/14212-gilt-cuisses">Gilt Cuisses</a></td><td>7</td><td>4050</td><td>19,680</td></tr>
-    <tr><td><a href="/item/16541-jagdplaute">Jagdplaute</a></td><td>8</td><td>13545</td><td>22,560</td></tr>
-    <tr><td><a href="/item/17636-jagdplaute-+1">Jagdplaute +1</a></td><td>8</td><td>13702</td><td>22,560</td></tr>
-    <tr><td><a href="/item/13329-orichalcum-earring">Orichalcum Earring</a></td><td>9</td><td>29750</td><td>23,280</td></tr>
-    <tr><td><a href="/item/13434-triton-earring">Triton Earring</a></td><td>9</td><td>31450</td><td>23,280</td></tr>
+    <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>0</td><td>19</td><td>1,200</td></tr>
+    <tr><td><a href="/item/13492-copper-ring-+1">Copper Ring +1</a></td><td>0</td><td>21</td><td>400</td></tr>
+    <tr><td><a href="/item/16641-brass-axe">Brass Axe</a></td><td>1</td><td>312</td><td>2,720</td></tr>
+    <tr><td><a href="/item/16661-brass-axe-+1">Brass Axe +1</a></td><td>1</td><td>343</td><td>2,720</td></tr>
+    <tr><td><a href="/item/13327-silver-earring">Silver Earring</a></td><td>2</td><td>250</td><td>2,720</td></tr>
+    <tr><td><a href="/item/13370-silver-earring-+1">Silver Earring +1</a></td><td>2</td><td>350</td><td>2,720</td></tr>
+    <tr><td><a href="/item/18076-spark-spear">Spark Spear</a></td><td>3</td><td>240</td><td>2,880</td></tr>
+    <tr><td><a href="/item/18077-spark-spear-+1">Spark Spear +1</a></td><td>3</td><td>390</td><td>2,880</td></tr>
+    <tr><td><a href="/item/13328-mythril-earring">Mythril Earring</a></td><td>4</td><td>750</td><td>4,240</td></tr>
+    <tr><td><a href="/item/13371-mythril-earring-+1">Mythril Earring +1</a></td><td>4</td><td>1050</td><td>4,240</td></tr>
+    <tr><td><a href="/item/17281-wingedge">Wingedge</a></td><td>5</td><td>1260</td><td>5,040</td></tr>
+    <tr><td><a href="/item/17288-wingedge-+1">Wingedge +1</a></td><td>5</td><td>1560</td><td>5,040</td></tr>
+    <tr><td><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></td><td>6</td><td>3547</td><td>6,400</td></tr>
+    <tr><td><a href="/item/14211-mythril-cuisses-+1">Mythril Cuisses +1</a></td><td>6</td><td>3630</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12802-gold-cuisses">Gold Cuisses</a></td><td>7</td><td>3937</td><td>6,560</td></tr>
+    <tr><td><a href="/item/14212-gilt-cuisses">Gilt Cuisses</a></td><td>7</td><td>4050</td><td>6,560</td></tr>
+    <tr><td><a href="/item/16541-jagdplaute">Jagdplaute</a></td><td>8</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/17636-jagdplaute-+1">Jagdplaute +1</a></td><td>8</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/13329-orichalcum-earring">Orichalcum Earring</a></td><td>9</td><td>29750</td><td>7,760</td></tr>
+    <tr><td><a href="/item/13434-triton-earring">Triton Earring</a></td><td>9</td><td>31450</td><td>7,760</td></tr>
    </tbody></table>
   </div>
  </section>
 
  <section class="panel pad">
-  <h2>Guild point rewards</h2>
+  <h2 id="gp-rewards">Guild point rewards</h2>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15446-goldsmiths-belt">Goldsmiths Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -518,7 +528,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild vendor</h2>
+  <h2 id="vendor">Guild vendor</h2>
   <p class="vendor-note">Rank-gated items sold by the goldsmithing guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/640-chunk-of-copper-ore">Chunk of Copper Ore</a></span><span class="rk">rank amateur</span><span class="pr">12g</span></div>
@@ -568,7 +578,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>259</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>481</b><span>total</span></div>
@@ -665,6 +675,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

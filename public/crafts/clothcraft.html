@@ -145,8 +145,17 @@
   </div>
  </header>
 
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>6:00</b> – <b>21:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Firesday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -156,9 +165,10 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(189 items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(189 items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the clothcraft guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
    <div class="shop-row"><span class="nm"><a href="/item/847-bird-feather">Bird Feather</a></span><span class="pr">40g</span><span class="st">0–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/17320-iron-arrow">Iron Arrow</a></span><span class="pr">40g</span><span class="st">0–25</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/833-clump-of-moko-grass">Clump of Moko Grass</a></span><span class="pr">100g</span><span class="st">120–180</span></div>
@@ -352,7 +362,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -366,197 +376,197 @@
   </div>
   <div class="turnin-pattern" id="pat-0">
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12720-gloves">Gloves</a></td><td>0</td><td>303</td><td>7,680</td></tr>
-    <tr><td><a href="/item/12773-gloves-+1">Gloves +1</a></td><td>0</td><td>373</td><td>7,680</td></tr>
-    <tr><td><a href="/item/12608-tunic">Tunic</a></td><td>1</td><td>280</td><td>7,920</td></tr>
-    <tr><td><a href="/item/12616-tunic-+1">Tunic +1</a></td><td>1</td><td>312</td><td>7,920</td></tr>
-    <tr><td><a href="/item/12713-cotton-tekko">Cotton Tekko</a></td><td>2</td><td>675</td><td>11,760</td></tr>
-    <tr><td><a href="/item/12777-cotton-tekko-+1">Cotton Tekko +1</a></td><td>2</td><td>829</td><td>11,760</td></tr>
-    <tr><td><a href="/item/12970-soil-kyahan">Soil Kyahan</a></td><td>3</td><td>1836</td><td>16,560</td></tr>
-    <tr><td><a href="/item/13035-soil-kyahan-+1">Soil Kyahan +1</a></td><td>3</td><td>1872</td><td>16,560</td></tr>
-    <tr><td><a href="/item/12723-wool-bracers">Wool Bracers</a></td><td>4</td><td>3440</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12783-wool-bracers-+1">Wool Bracers +1</a></td><td>4</td><td>4240</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12739-black-mitts">Black Mitts</a></td><td>5</td><td>2550</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12794-mages-mitts">Mages Mitts</a></td><td>5</td><td>2720</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12604-silk-coat">Silk Coat</a></td><td>6</td><td>7030</td><td>21,360</td></tr>
-    <tr><td><a href="/item/12652-silk-coat-+1">Silk Coat +1</a></td><td>6</td><td>7030</td><td>21,360</td></tr>
-    <tr><td><a href="/item/12468-green-beret">Green Beret</a></td><td>7</td><td>3055</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13866-green-beret-+1">Green Beret +1</a></td><td>7</td><td>3250</td><td>18,960</td></tr>
-    <tr><td><a href="/item/14023-arhats-tekko">Arhats Tekko</a></td><td>8</td><td>3225</td><td>19,200</td></tr>
-    <tr><td><a href="/item/14028-arhats-tekko-+1">Arhats Tekko +1</a></td><td>8</td><td>3762</td><td>19,200</td></tr>
-    <tr><td><a href="/item/14819-rasetsu-tekko">Rasetsu Tekko</a></td><td>9</td><td>15000</td><td>22,560</td></tr>
-    <tr><td><a href="/item/14820-rasetsu-tekko-+1">Rasetsu Tekko +1</a></td><td>9</td><td>16250</td><td>22,560</td></tr>
+    <tr><td><a href="/item/12720-gloves">Gloves</a></td><td>0</td><td>303</td><td>2,560</td></tr>
+    <tr><td><a href="/item/12773-gloves-+1">Gloves +1</a></td><td>0</td><td>373</td><td>2,560</td></tr>
+    <tr><td><a href="/item/12608-tunic">Tunic</a></td><td>1</td><td>280</td><td>2,640</td></tr>
+    <tr><td><a href="/item/12616-tunic-+1">Tunic +1</a></td><td>1</td><td>312</td><td>2,640</td></tr>
+    <tr><td><a href="/item/12713-cotton-tekko">Cotton Tekko</a></td><td>2</td><td>675</td><td>3,920</td></tr>
+    <tr><td><a href="/item/12777-cotton-tekko-+1">Cotton Tekko +1</a></td><td>2</td><td>829</td><td>3,920</td></tr>
+    <tr><td><a href="/item/12970-soil-kyahan">Soil Kyahan</a></td><td>3</td><td>1836</td><td>5,520</td></tr>
+    <tr><td><a href="/item/13035-soil-kyahan-+1">Soil Kyahan +1</a></td><td>3</td><td>1872</td><td>5,520</td></tr>
+    <tr><td><a href="/item/12723-wool-bracers">Wool Bracers</a></td><td>4</td><td>3440</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12783-wool-bracers-+1">Wool Bracers +1</a></td><td>4</td><td>4240</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12739-black-mitts">Black Mitts</a></td><td>5</td><td>2720</td><td>2,026</td></tr>
+    <tr><td><a href="/item/12794-mages-mitts">Mages Mitts</a></td><td>5</td><td>2805</td><td>2,026</td></tr>
+    <tr><td><a href="/item/12604-silk-coat">Silk Coat</a></td><td>6</td><td>7030</td><td>7,120</td></tr>
+    <tr><td><a href="/item/12652-silk-coat-+1">Silk Coat +1</a></td><td>6</td><td>7030</td><td>7,120</td></tr>
+    <tr><td><a href="/item/12468-green-beret">Green Beret</a></td><td>7</td><td>3055</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13866-green-beret-+1">Green Beret +1</a></td><td>7</td><td>3250</td><td>6,320</td></tr>
+    <tr><td><a href="/item/14023-arhats-tekko">Arhats Tekko</a></td><td>8</td><td>3225</td><td>6,400</td></tr>
+    <tr><td><a href="/item/14028-arhats-tekko-+1">Arhats Tekko +1</a></td><td>8</td><td>3762</td><td>6,400</td></tr>
+    <tr><td><a href="/item/14819-rasetsu-tekko">Rasetsu Tekko</a></td><td>9</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/14820-rasetsu-tekko-+1">Rasetsu Tekko +1</a></td><td>9</td><td>16250</td><td>7,520</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-1" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12848-brais">Brais</a></td><td>0</td><td>211</td><td>6,480</td></tr>
-    <tr><td><a href="/item/12896-brais-+1">Brais +1</a></td><td>0</td><td>282</td><td>6,480</td></tr>
-    <tr><td><a href="/item/12593-cotton-doublet">Cotton Doublet</a></td><td>1</td><td>858</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12669-great-doublet">Great Doublet</a></td><td>1</td><td>2518</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12969-cotton-kyahan">Cotton Kyahan</a></td><td>2</td><td>629</td><td>11,280</td></tr>
-    <tr><td><a href="/item/13033-cotton-kyahan-+1">Cotton Kyahan +1</a></td><td>2</td><td>783</td><td>11,280</td></tr>
-    <tr><td><a href="/item/14423-mist-tunic">Mist Tunic</a></td><td>3</td><td>3120</td><td>18,720</td></tr>
-    <tr><td><a href="/item/12979-wool-socks">Wool Socks</a></td><td>4</td><td>3200</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13036-wool-socks-+1">Wool Socks +1</a></td><td>4</td><td>4000</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12603-velvet-robe">Velvet Robe</a></td><td>5</td><td>4256</td><td>19,920</td></tr>
-    <tr><td><a href="/item/13726-mages-robe">Mages Robe</a></td><td>5</td><td>4816</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12503-silk-headband">Silk Headband</a></td><td>6</td><td>2280</td><td>17,760</td></tr>
-    <tr><td><a href="/item/13851-silk-headband-+1">Silk Headband +1</a></td><td>6</td><td>2375</td><td>17,760</td></tr>
-    <tr><td><a href="/item/12612-silk-cloak">Silk Cloak</a></td><td>7</td><td>6375</td><td>21,120</td></tr>
-    <tr><td><a href="/item/13777-silk-cloak-+1">Silk Cloak +1</a></td><td>7</td><td>6500</td><td>21,120</td></tr>
-    <tr><td><a href="/item/13208-rainbow-obi">Rainbow Obi</a></td><td>8</td><td>3840</td><td>19,680</td></tr>
-    <tr><td><a href="/item/13235-prism-obi">Prism Obi</a></td><td>8</td><td>3840</td><td>19,680</td></tr>
-    <tr><td><a href="/item/14299-rasetsu-hakama">Rasetsu Hakama</a></td><td>9</td><td>12375</td><td>22,320</td></tr>
-    <tr><td><a href="/item/14300-rasetsu-hakama-+1">Rasetsu Hakama +1</a></td><td>9</td><td>13625</td><td>22,320</td></tr>
+    <tr><td><a href="/item/12848-brais">Brais</a></td><td>0</td><td>211</td><td>2,160</td></tr>
+    <tr><td><a href="/item/12896-brais-+1">Brais +1</a></td><td>0</td><td>282</td><td>2,160</td></tr>
+    <tr><td><a href="/item/12593-cotton-doublet">Cotton Doublet</a></td><td>1</td><td>858</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12669-great-doublet">Great Doublet</a></td><td>1</td><td>2518</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12969-cotton-kyahan">Cotton Kyahan</a></td><td>2</td><td>629</td><td>3,760</td></tr>
+    <tr><td><a href="/item/13033-cotton-kyahan-+1">Cotton Kyahan +1</a></td><td>2</td><td>783</td><td>3,760</td></tr>
+    <tr><td><a href="/item/14423-mist-tunic">Mist Tunic</a></td><td>3</td><td>3120</td><td>6,240</td></tr>
+    <tr><td><a href="/item/12979-wool-socks">Wool Socks</a></td><td>4</td><td>3200</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13036-wool-socks-+1">Wool Socks +1</a></td><td>4</td><td>4000</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12603-velvet-robe">Velvet Robe</a></td><td>5</td><td>4256</td><td>6,640</td></tr>
+    <tr><td><a href="/item/13726-mages-robe">Mages Robe</a></td><td>5</td><td>4816</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12503-silk-headband">Silk Headband</a></td><td>6</td><td>2280</td><td>5,920</td></tr>
+    <tr><td><a href="/item/13851-silk-headband-+1">Silk Headband +1</a></td><td>6</td><td>2375</td><td>5,920</td></tr>
+    <tr><td><a href="/item/12612-silk-cloak">Silk Cloak</a></td><td>7</td><td>6375</td><td>7,040</td></tr>
+    <tr><td><a href="/item/13777-silk-cloak-+1">Silk Cloak +1</a></td><td>7</td><td>6500</td><td>7,040</td></tr>
+    <tr><td><a href="/item/13208-rainbow-obi">Rainbow Obi</a></td><td>8</td><td>3840</td><td>6,560</td></tr>
+    <tr><td><a href="/item/13235-prism-obi">Prism Obi</a></td><td>8</td><td>3840</td><td>6,560</td></tr>
+    <tr><td><a href="/item/14299-rasetsu-hakama">Rasetsu Hakama</a></td><td>9</td><td>12375</td><td>7,440</td></tr>
+    <tr><td><a href="/item/14300-rasetsu-hakama-+1">Rasetsu Hakama +1</a></td><td>9</td><td>13625</td><td>7,440</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-2" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13583-cape">Cape</a></td><td>0</td><td>85</td><td>4,800</td></tr>
-    <tr><td><a href="/item/13605-cape-+1">Cape +1</a></td><td>0</td><td>111</td><td>4,800</td></tr>
-    <tr><td><a href="/item/12584-kenpogi">Kenpogi</a></td><td>1</td><td>249</td><td>7,440</td></tr>
-    <tr><td><a href="/item/12668-kenpogi-+1">Kenpogi +1</a></td><td>1</td><td>280</td><td>7,440</td></tr>
-    <tr><td><a href="/item/12585-cotton-dogi">Cotton Dogi</a></td><td>2</td><td>460</td><td>10,080</td></tr>
-    <tr><td><a href="/item/12624-cotton-dogi-+1">Cotton Dogi +1</a></td><td>2</td><td>476</td><td>10,080</td></tr>
-    <tr><td><a href="/item/14855-mist-mitts">Mist Mitts</a></td><td>3</td><td>1395</td><td>15,120</td></tr>
-    <tr><td><a href="/item/12858-wool-slops">Wool Slops</a></td><td>4</td><td>2108</td><td>17,280</td></tr>
-    <tr><td><a href="/item/12906-wool-slops-+1">Wool Slops +1</a></td><td>4</td><td>2448</td><td>17,280</td></tr>
-    <tr><td><a href="/item/13568-scarlet-ribbon">Scarlet Ribbon</a></td><td>5</td><td>250</td><td>9,600</td></tr>
-    <tr><td><a href="/item/13833-nobles-ribbon">Nobles Ribbon</a></td><td>5</td><td>350</td><td>9,600</td></tr>
-    <tr><td><a href="/item/12867-white-slacks">White Slacks</a></td><td>6</td><td>5100</td><td>20,400</td></tr>
-    <tr><td><a href="/item/12926-white-slacks-+1">White Slacks +1</a></td><td>6</td><td>5950</td><td>20,400</td></tr>
-    <tr><td><a href="/item/12972-shinobi-kyahan">Shinobi Kyahan</a></td><td>7</td><td>3382</td><td>19,200</td></tr>
-    <tr><td><a href="/item/14082-shinobi-kyahan-+1">Shinobi Kyahan +1</a></td><td>7</td><td>4207</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12861-nobles-slacks">Nobles Slacks</a></td><td>8</td><td>7750</td><td>21,600</td></tr>
-    <tr><td><a href="/item/14239-aristocrats-slacks">Aristocrats Slacks</a></td><td>8</td><td>9000</td><td>21,600</td></tr>
-    <tr><td><a href="/item/13212-tarutaru-sash">Tarutaru Sash</a></td><td>9</td><td>3600</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13188-star-sash">Star Sash</a></td><td>9</td><td>4200</td><td>19,440</td></tr>
+    <tr><td><a href="/item/13583-cape">Cape</a></td><td>0</td><td>85</td><td>1,600</td></tr>
+    <tr><td><a href="/item/13605-cape-+1">Cape +1</a></td><td>0</td><td>111</td><td>1,600</td></tr>
+    <tr><td><a href="/item/12584-kenpogi">Kenpogi</a></td><td>1</td><td>249</td><td>2,480</td></tr>
+    <tr><td><a href="/item/12668-kenpogi-+1">Kenpogi +1</a></td><td>1</td><td>280</td><td>2,480</td></tr>
+    <tr><td><a href="/item/12585-cotton-dogi">Cotton Dogi</a></td><td>2</td><td>460</td><td>3,360</td></tr>
+    <tr><td><a href="/item/12624-cotton-dogi-+1">Cotton Dogi +1</a></td><td>2</td><td>476</td><td>3,360</td></tr>
+    <tr><td><a href="/item/14855-mist-mitts">Mist Mitts</a></td><td>3</td><td>1395</td><td>5,040</td></tr>
+    <tr><td><a href="/item/12858-wool-slops">Wool Slops</a></td><td>4</td><td>2108</td><td>5,760</td></tr>
+    <tr><td><a href="/item/12906-wool-slops-+1">Wool Slops +1</a></td><td>4</td><td>2448</td><td>5,760</td></tr>
+    <tr><td><a href="/item/13568-scarlet-ribbon">Scarlet Ribbon</a></td><td>5</td><td>250</td><td>3,200</td></tr>
+    <tr><td><a href="/item/13833-nobles-ribbon">Nobles Ribbon</a></td><td>5</td><td>350</td><td>3,200</td></tr>
+    <tr><td><a href="/item/12867-white-slacks">White Slacks</a></td><td>6</td><td>5100</td><td>6,800</td></tr>
+    <tr><td><a href="/item/12926-white-slacks-+1">White Slacks +1</a></td><td>6</td><td>5950</td><td>6,800</td></tr>
+    <tr><td><a href="/item/12972-shinobi-kyahan">Shinobi Kyahan</a></td><td>7</td><td>3382</td><td>6,400</td></tr>
+    <tr><td><a href="/item/14082-shinobi-kyahan-+1">Shinobi Kyahan +1</a></td><td>7</td><td>4207</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12861-nobles-slacks">Nobles Slacks</a></td><td>8</td><td>7750</td><td>7,200</td></tr>
+    <tr><td><a href="/item/14239-aristocrats-slacks">Aristocrats Slacks</a></td><td>8</td><td>9000</td><td>7,200</td></tr>
+    <tr><td><a href="/item/13212-tarutaru-sash">Tarutaru Sash</a></td><td>9</td><td>3600</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13188-star-sash">Star Sash</a></td><td>9</td><td>4200</td><td>6,480</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-3" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12976-gaiters">Gaiters</a></td><td>0</td><td>282</td><td>7,440</td></tr>
-    <tr><td><a href="/item/13030-gaiters-+1">Gaiters +1</a></td><td>0</td><td>352</td><td>7,440</td></tr>
-    <tr><td><a href="/item/12600-robe">Robe</a></td><td>1</td><td>60</td><td>1,680</td></tr>
-    <tr><td><a href="/item/12615-robe-+1">Robe +1</a></td><td>1</td><td>60</td><td>1,680</td></tr>
-    <tr><td><a href="/item/12457-cotton-hachimaki">Cotton Hachimaki</a></td><td>2</td><td>814</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12537-cotton-hachimaki-+1">Cotton Hachimaki +1</a></td><td>2</td><td>967</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12610-cloak">Cloak</a></td><td>3</td><td>1748</td><td>16,320</td></tr>
-    <tr><td><a href="/item/12670-cloak-+1">Cloak +1</a></td><td>3</td><td>1794</td><td>16,320</td></tr>
-    <tr><td><a href="/item/12467-wool-cap">Wool Cap</a></td><td>4</td><td>1155</td><td>14,640</td></tr>
-    <tr><td><a href="/item/12541-wool-cap-+1">Wool Cap +1</a></td><td>4</td><td>1251</td><td>14,640</td></tr>
-    <tr><td><a href="/item/13586-red-cape">Red Cape</a></td><td>5</td><td>2178</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13611-red-cape-+1">Red Cape +1</a></td><td>5</td><td>2838</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13752-wool-doublet">Wool Doublet</a></td><td>6</td><td>4992</td><td>20,400</td></tr>
-    <tr><td><a href="/item/13753-wool-doublet-+1">Wool Doublet +1</a></td><td>6</td><td>5632</td><td>20,400</td></tr>
-    <tr><td><a href="/item/12716-shinobi-tekko">Shinobi Tekko</a></td><td>7</td><td>3630</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13955-shinobi-tekko-+1">Shinobi Tekko +1</a></td><td>7</td><td>4455</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12504-rainbow-headband">Rainbow Headband</a></td><td>8</td><td>5300</td><td>20,640</td></tr>
-    <tr><td><a href="/item/13858-prism-headband">Prism Headband</a></td><td>8</td><td>5962</td><td>20,640</td></tr>
-    <tr><td><a href="/item/14301-errant-slops">Errant Slops</a></td><td>9</td><td>3750</td><td>19,680</td></tr>
-    <tr><td><a href="/item/14302-mahatma-slops">Mahatma Slops</a></td><td>9</td><td>5000</td><td>19,680</td></tr>
+    <tr><td><a href="/item/12976-gaiters">Gaiters</a></td><td>0</td><td>282</td><td>2,480</td></tr>
+    <tr><td><a href="/item/13030-gaiters-+1">Gaiters +1</a></td><td>0</td><td>352</td><td>2,480</td></tr>
+    <tr><td><a href="/item/12600-robe">Robe</a></td><td>1</td><td>60</td><td>560</td></tr>
+    <tr><td><a href="/item/12615-robe-+1">Robe +1</a></td><td>1</td><td>60</td><td>560</td></tr>
+    <tr><td><a href="/item/12457-cotton-hachimaki">Cotton Hachimaki</a></td><td>2</td><td>814</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12537-cotton-hachimaki-+1">Cotton Hachimaki +1</a></td><td>2</td><td>967</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12610-cloak">Cloak</a></td><td>3</td><td>1748</td><td>5,440</td></tr>
+    <tr><td><a href="/item/12670-cloak-+1">Cloak +1</a></td><td>3</td><td>1794</td><td>5,440</td></tr>
+    <tr><td><a href="/item/12467-wool-cap">Wool Cap</a></td><td>4</td><td>4160</td><td>2,186</td></tr>
+    <tr><td><a href="/item/12541-wool-cap-+1">Wool Cap +1</a></td><td>4</td><td>4960</td><td>2,186</td></tr>
+    <tr><td><a href="/item/13586-red-cape">Red Cape</a></td><td>5</td><td>2178</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13611-red-cape-+1">Red Cape +1</a></td><td>5</td><td>2838</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13752-wool-doublet">Wool Doublet</a></td><td>6</td><td>4992</td><td>6,800</td></tr>
+    <tr><td><a href="/item/13753-wool-doublet-+1">Wool Doublet +1</a></td><td>6</td><td>5632</td><td>6,800</td></tr>
+    <tr><td><a href="/item/12716-shinobi-tekko">Shinobi Tekko</a></td><td>7</td><td>3630</td><td>2,160</td></tr>
+    <tr><td><a href="/item/13955-shinobi-tekko-+1">Shinobi Tekko +1</a></td><td>7</td><td>4455</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12504-rainbow-headband">Rainbow Headband</a></td><td>8</td><td>5300</td><td>6,880</td></tr>
+    <tr><td><a href="/item/13858-prism-headband">Prism Headband</a></td><td>8</td><td>5962</td><td>6,880</td></tr>
+    <tr><td><a href="/item/14301-errant-slops">Errant Slops</a></td><td>9</td><td>3750</td><td>6,560</td></tr>
+    <tr><td><a href="/item/14302-mahatma-slops">Mahatma Slops</a></td><td>9</td><td>5000</td><td>6,560</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-4" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12592-doublet">Doublet</a></td><td>0</td><td>549</td><td>5,280</td></tr>
-    <tr><td><a href="/item/12591-doublet-+1">Doublet +1</a></td><td>0</td><td>549</td><td>5,280</td></tr>
-    <tr><td><a href="/item/12712-tekko">Tekko</a></td><td>1</td><td>137</td><td>6,240</td></tr>
-    <tr><td><a href="/item/12774-tekko-+1">Tekko +1</a></td><td>1</td><td>168</td><td>6,240</td></tr>
-    <tr><td><a href="/item/12594-gambison">Gambison</a></td><td>2</td><td>2500</td><td>17,760</td></tr>
-    <tr><td><a href="/item/12625-gambison-+1">Gambison +1</a></td><td>2</td><td>2550</td><td>17,760</td></tr>
-    <tr><td><a href="/item/12714-soil-tekko">Soil Tekko</a></td><td>3</td><td>1584</td><td>15,840</td></tr>
-    <tr><td><a href="/item/12781-soil-tekko-+1">Soil Tekko +1</a></td><td>3</td><td>1944</td><td>15,840</td></tr>
-    <tr><td><a href="/item/12602-wool-robe">Wool Robe</a></td><td>4</td><td>2584</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12627-wool-robe-+1">Wool Robe +1</a></td><td>4</td><td>2584</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12865-black-slacks">Black Slacks</a></td><td>5</td><td>1150</td><td>14,640</td></tr>
-    <tr><td><a href="/item/12917-mages-slacks">Mages Slacks</a></td><td>5</td><td>1342</td><td>14,640</td></tr>
-    <tr><td><a href="/item/13590-green-ribbon">Green Ribbon</a></td><td>6</td><td>2025</td><td>17,280</td></tr>
-    <tr><td><a href="/item/13854-green-ribbon-+1">Green Ribbon +1</a></td><td>6</td><td>2137</td><td>17,280</td></tr>
-    <tr><td><a href="/item/13579-jesters-cape">Jesters Cape</a></td><td>7</td><td>3217</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13620-jesters-cape-+1">Jesters Cape +1</a></td><td>7</td><td>4192</td><td>18,960</td></tr>
-    <tr><td><a href="/item/12733-nobles-mitts">Nobles Mitts</a></td><td>8</td><td>5590</td><td>20,640</td></tr>
-    <tr><td><a href="/item/13999-aristocrats-mitts">Aristocrats Mitts</a></td><td>8</td><td>6880</td><td>20,640</td></tr>
-    <tr><td><a href="/item/13929-errant-hat">Errant Hat</a></td><td>9</td><td>4500</td><td>20,160</td></tr>
-    <tr><td><a href="/item/13930-mahatma-hat">Mahatma Hat</a></td><td>9</td><td>5750</td><td>20,160</td></tr>
+    <tr><td><a href="/item/12592-doublet">Doublet</a></td><td>0</td><td>549</td><td>1,120</td></tr>
+    <tr><td><a href="/item/12591-doublet-+1">Doublet +1</a></td><td>0</td><td>549</td><td>1,760</td></tr>
+    <tr><td><a href="/item/12712-tekko">Tekko</a></td><td>1</td><td>137</td><td>2,080</td></tr>
+    <tr><td><a href="/item/12774-tekko-+1">Tekko +1</a></td><td>1</td><td>168</td><td>2,080</td></tr>
+    <tr><td><a href="/item/12594-gambison">Gambison</a></td><td>2</td><td>2500</td><td>5,920</td></tr>
+    <tr><td><a href="/item/12625-gambison-+1">Gambison +1</a></td><td>2</td><td>2550</td><td>5,920</td></tr>
+    <tr><td><a href="/item/12714-soil-tekko">Soil Tekko</a></td><td>3</td><td>1584</td><td>5,280</td></tr>
+    <tr><td><a href="/item/12781-soil-tekko-+1">Soil Tekko +1</a></td><td>3</td><td>1944</td><td>5,280</td></tr>
+    <tr><td><a href="/item/12602-wool-robe">Wool Robe</a></td><td>4</td><td>2584</td><td>6,000</td></tr>
+    <tr><td><a href="/item/12627-wool-robe-+1">Wool Robe +1</a></td><td>4</td><td>2584</td><td>6,000</td></tr>
+    <tr><td><a href="/item/12865-black-slacks">Black Slacks</a></td><td>5</td><td>1150</td><td>4,880</td></tr>
+    <tr><td><a href="/item/12917-mages-slacks">Mages Slacks</a></td><td>5</td><td>1342</td><td>4,880</td></tr>
+    <tr><td><a href="/item/13590-green-ribbon">Green Ribbon</a></td><td>6</td><td>2025</td><td>5,760</td></tr>
+    <tr><td><a href="/item/13854-green-ribbon-+1">Green Ribbon +1</a></td><td>6</td><td>2137</td><td>5,760</td></tr>
+    <tr><td><a href="/item/13579-jesters-cape">Jesters Cape</a></td><td>7</td><td>3217</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13620-jesters-cape-+1">Jesters Cape +1</a></td><td>7</td><td>4192</td><td>6,320</td></tr>
+    <tr><td><a href="/item/12733-nobles-mitts">Nobles Mitts</a></td><td>8</td><td>5590</td><td>6,880</td></tr>
+    <tr><td><a href="/item/13999-aristocrats-mitts">Aristocrats Mitts</a></td><td>8</td><td>6880</td><td>6,880</td></tr>
+    <tr><td><a href="/item/13929-errant-hat">Errant Hat</a></td><td>9</td><td>4500</td><td>6,720</td></tr>
+    <tr><td><a href="/item/13930-mahatma-hat">Mahatma Hat</a></td><td>9</td><td>5750</td><td>6,720</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-5" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/13583-cape">Cape</a></td><td>0</td><td>85</td><td>4,800</td></tr>
-    <tr><td><a href="/item/13605-cape-+1">Cape +1</a></td><td>0</td><td>111</td><td>4,800</td></tr>
-    <tr><td><a href="/item/12728-cuffs">Cuffs</a></td><td>1</td><td>33</td><td>1,520</td></tr>
-    <tr><td><a href="/item/12744-cuffs-+1">Cuffs +1</a></td><td>1</td><td>41</td><td>1,520</td></tr>
-    <tr><td><a href="/item/12729-linen-cuffs">Linen Cuffs</a></td><td>2</td><td>349</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12778-linen-cuffs-+1">Linen Cuffs +1</a></td><td>2</td><td>430</td><td>9,120</td></tr>
-    <tr><td><a href="/item/12842-soil-sitabaki">Soil Sitabaki</a></td><td>3</td><td>2304</td><td>17,520</td></tr>
-    <tr><td><a href="/item/12905-soil-sitabaki-+1">Soil Sitabaki +1</a></td><td>3</td><td>2664</td><td>17,520</td></tr>
-    <tr><td><a href="/item/13085-hemp-gorget">Hemp Gorget</a></td><td>4</td><td>180</td><td>8,400</td></tr>
-    <tr><td><a href="/item/13068-hemp-gorget-+1">Hemp Gorget +1</a></td><td>4</td><td>320</td><td>8,400</td></tr>
-    <tr><td><a href="/item/13577-black-cape">Black Cape</a></td><td>5</td><td>1386</td><td>15,600</td></tr>
-    <tr><td><a href="/item/13610-black-cape-+1">Black Cape +1</a></td><td>5</td><td>1806</td><td>15,600</td></tr>
-    <tr><td><a href="/item/12611-white-cloak">White Cloak</a></td><td>6</td><td>7200</td><td>21,600</td></tr>
-    <tr><td><a href="/item/12651-white-cloak-+1">White Cloak +1</a></td><td>6</td><td>7650</td><td>21,600</td></tr>
-    <tr><td><a href="/item/12740-silk-mitts">Silk Mitts</a></td><td>7</td><td>4830</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14000-silk-mitts-+1">Silk Mitts +1</a></td><td>7</td><td>5980</td><td>20,400</td></tr>
-    <tr><td><a href="/item/14129-arhats-sune-ate">Arhats Sune-Ate</a></td><td>8</td><td>3762</td><td>19,680</td></tr>
-    <tr><td><a href="/item/14136-arhats-sune-ate-+1">Arhats Sune-Ate +1</a></td><td>8</td><td>4300</td><td>19,680</td></tr>
-    <tr><td><a href="/item/14178-rasetsu-sune-ate">Rasetsu Sune-Ate</a></td><td>9</td><td>12000</td><td>22,320</td></tr>
-    <tr><td><a href="/item/14179-rasetsu-sune-ate-+1">Rasetsu Sune-Ate +1</a></td><td>9</td><td>13250</td><td>22,320</td></tr>
+    <tr><td><a href="/item/13583-cape">Cape</a></td><td>0</td><td>85</td><td>1,600</td></tr>
+    <tr><td><a href="/item/13605-cape-+1">Cape +1</a></td><td>0</td><td>111</td><td>1,600</td></tr>
+    <tr><td><a href="/item/12728-cuffs">Cuffs</a></td><td>1</td><td>33</td><td>506</td></tr>
+    <tr><td><a href="/item/12744-cuffs-+1">Cuffs +1</a></td><td>1</td><td>41</td><td>506</td></tr>
+    <tr><td><a href="/item/12729-linen-cuffs">Linen Cuffs</a></td><td>2</td><td>349</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12778-linen-cuffs-+1">Linen Cuffs +1</a></td><td>2</td><td>430</td><td>3,040</td></tr>
+    <tr><td><a href="/item/12842-soil-sitabaki">Soil Sitabaki</a></td><td>3</td><td>2304</td><td>5,840</td></tr>
+    <tr><td><a href="/item/12905-soil-sitabaki-+1">Soil Sitabaki +1</a></td><td>3</td><td>2664</td><td>5,840</td></tr>
+    <tr><td><a href="/item/13085-hemp-gorget">Hemp Gorget</a></td><td>4</td><td>180</td><td>2,800</td></tr>
+    <tr><td><a href="/item/13068-hemp-gorget-+1">Hemp Gorget +1</a></td><td>4</td><td>320</td><td>2,800</td></tr>
+    <tr><td><a href="/item/13577-black-cape">Black Cape</a></td><td>5</td><td>1386</td><td>5,200</td></tr>
+    <tr><td><a href="/item/13610-black-cape-+1">Black Cape +1</a></td><td>5</td><td>1806</td><td>5,200</td></tr>
+    <tr><td><a href="/item/12611-white-cloak">White Cloak</a></td><td>6</td><td>7200</td><td>7,200</td></tr>
+    <tr><td><a href="/item/12651-white-cloak-+1">White Cloak +1</a></td><td>6</td><td>7650</td><td>7,200</td></tr>
+    <tr><td><a href="/item/12740-silk-mitts">Silk Mitts</a></td><td>7</td><td>4830</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14000-silk-mitts-+1">Silk Mitts +1</a></td><td>7</td><td>5980</td><td>6,800</td></tr>
+    <tr><td><a href="/item/14129-arhats-sune-ate">Arhats Sune-Ate</a></td><td>8</td><td>3762</td><td>6,560</td></tr>
+    <tr><td><a href="/item/14136-arhats-sune-ate-+1">Arhats Sune-Ate +1</a></td><td>8</td><td>4300</td><td>6,560</td></tr>
+    <tr><td><a href="/item/14178-rasetsu-sune-ate">Rasetsu Sune-Ate</a></td><td>9</td><td>7440</td><td>2,480</td></tr>
+    <tr><td><a href="/item/14179-rasetsu-sune-ate-+1">Rasetsu Sune-Ate +1</a></td><td>9</td><td>13250</td><td>7,440</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-6" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/12464-headgear">Headgear</a></td><td>0</td><td>176</td><td>4,560</td></tr>
-    <tr><td><a href="/item/12471-headgear-+1">Headgear +1</a></td><td>0</td><td>183</td><td>4,560</td></tr>
-    <tr><td><a href="/item/13584-cotton-cape">Cotton Cape</a></td><td>1</td><td>506</td><td>10,080</td></tr>
-    <tr><td><a href="/item/13601-cotton-cape-+1">Cotton Cape +1</a></td><td>1</td><td>660</td><td>10,080</td></tr>
-    <tr><td><a href="/item/13204-heko-obi">Heko Obi</a></td><td>2</td><td>99</td><td>6,240</td></tr>
-    <tr><td><a href="/item/13190-heko-obi-+1">Heko Obi +1</a></td><td>2</td><td>131</td><td>6,240</td></tr>
-    <tr><td><a href="/item/14324-mist-slacks">Mist Slacks</a></td><td>3</td><td>2460</td><td>17,760</td></tr>
-    <tr><td><a href="/item/12851-wool-hose">Wool Hose</a></td><td>4</td><td>4800</td><td>20,160</td></tr>
-    <tr><td><a href="/item/12907-wool-hose-+1">Wool Hose +1</a></td><td>4</td><td>4880</td><td>20,160</td></tr>
-    <tr><td><a href="/item/13750-linen-doublet">Linen Doublet</a></td><td>5</td><td>2508</td><td>18,000</td></tr>
-    <tr><td><a href="/item/13751-linen-doublet-+1">Linen Doublet +1</a></td><td>5</td><td>2552</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12860-silk-slops">Silk Slops</a></td><td>6</td><td>5735</td><td>20,880</td></tr>
-    <tr><td><a href="/item/12927-silk-slops-+1">Silk Slops +1</a></td><td>6</td><td>6660</td><td>20,880</td></tr>
-    <tr><td><a href="/item/12844-shinobi-hakama">Shinobi Hakama</a></td><td>7</td><td>3465</td><td>19,200</td></tr>
-    <tr><td><a href="/item/12925-shinobi-hakama-+1">Shinobi Hakama +1</a></td><td>7</td><td>3547</td><td>19,200</td></tr>
-    <tr><td><a href="/item/14253-arhats-hakama">Arhats Hakama</a></td><td>8</td><td>4300</td><td>19,920</td></tr>
-    <tr><td><a href="/item/14256-arhats-hakama-+1">Arhats Hakama +1</a></td><td>8</td><td>4837</td><td>19,920</td></tr>
-    <tr><td><a href="/item/14078-errant-cuffs">Errant Cuffs</a></td><td>9</td><td>6875</td><td>21,360</td></tr>
-    <tr><td><a href="/item/14079-mahatma-cuffs">Mahatma Cuffs</a></td><td>9</td><td>8125</td><td>21,360</td></tr>
+    <tr><td><a href="/item/12464-headgear">Headgear</a></td><td>0</td><td>176</td><td>666</td></tr>
+    <tr><td><a href="/item/12471-headgear-+1">Headgear +1</a></td><td>0</td><td>183</td><td>1,520</td></tr>
+    <tr><td><a href="/item/13584-cotton-cape">Cotton Cape</a></td><td>1</td><td>506</td><td>3,360</td></tr>
+    <tr><td><a href="/item/13601-cotton-cape-+1">Cotton Cape +1</a></td><td>1</td><td>660</td><td>3,360</td></tr>
+    <tr><td><a href="/item/13204-heko-obi">Heko Obi</a></td><td>2</td><td>99</td><td>2,080</td></tr>
+    <tr><td><a href="/item/13190-heko-obi-+1">Heko Obi +1</a></td><td>2</td><td>131</td><td>2,080</td></tr>
+    <tr><td><a href="/item/14324-mist-slacks">Mist Slacks</a></td><td>3</td><td>2460</td><td>5,920</td></tr>
+    <tr><td><a href="/item/12851-wool-hose">Wool Hose</a></td><td>4</td><td>4800</td><td>6,720</td></tr>
+    <tr><td><a href="/item/12907-wool-hose-+1">Wool Hose +1</a></td><td>4</td><td>4880</td><td>6,720</td></tr>
+    <tr><td><a href="/item/13750-linen-doublet">Linen Doublet</a></td><td>5</td><td>2508</td><td>6,000</td></tr>
+    <tr><td><a href="/item/13751-linen-doublet-+1">Linen Doublet +1</a></td><td>5</td><td>2552</td><td>6,000</td></tr>
+    <tr><td><a href="/item/12860-silk-slops">Silk Slops</a></td><td>6</td><td>5735</td><td>6,960</td></tr>
+    <tr><td><a href="/item/12927-silk-slops-+1">Silk Slops +1</a></td><td>6</td><td>6660</td><td>6,960</td></tr>
+    <tr><td><a href="/item/12844-shinobi-hakama">Shinobi Hakama</a></td><td>7</td><td>3465</td><td>6,400</td></tr>
+    <tr><td><a href="/item/12925-shinobi-hakama-+1">Shinobi Hakama +1</a></td><td>7</td><td>3547</td><td>6,400</td></tr>
+    <tr><td><a href="/item/14253-arhats-hakama">Arhats Hakama</a></td><td>8</td><td>4300</td><td>6,640</td></tr>
+    <tr><td><a href="/item/14256-arhats-hakama-+1">Arhats Hakama +1</a></td><td>8</td><td>4837</td><td>6,640</td></tr>
+    <tr><td><a href="/item/14078-errant-cuffs">Errant Cuffs</a></td><td>9</td><td>6875</td><td>7,120</td></tr>
+    <tr><td><a href="/item/14079-mahatma-cuffs">Mahatma Cuffs</a></td><td>9</td><td>8125</td><td>7,120</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-7" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/14290-vagabonds-hose">Vagabonds Hose</a></td><td>0</td><td>110</td><td>5,040</td></tr>
-    <tr><td><a href="/item/14291-nomads-hose">Nomads Hose</a></td><td>0</td><td>118</td><td>5,040</td></tr>
-    <tr><td><a href="/item/13806-vagabonds-tunica">Vagabonds Tunica</a></td><td>1</td><td>118</td><td>6,000</td></tr>
-    <tr><td><a href="/item/13807-nomads-tunica">Nomads Tunica</a></td><td>1</td><td>126</td><td>6,000</td></tr>
-    <tr><td><a href="/item/12601-linen-robe">Linen Robe</a></td><td>2</td><td>617</td><td>11,280</td></tr>
-    <tr><td><a href="/item/12626-linen-robe-+1">Linen Robe +1</a></td><td>2</td><td>617</td><td>11,280</td></tr>
-    <tr><td><a href="/item/12458-soil-hachimaki">Soil Hachimaki</a></td><td>3</td><td>1116</td><td>14,160</td></tr>
-    <tr><td><a href="/item/12539-soil-hachimaki-+1">Soil Hachimaki +1</a></td><td>3</td><td>1152</td><td>14,160</td></tr>
-    <tr><td><a href="/item/12730-wool-cuffs">Wool Cuffs</a></td><td>4</td><td>1462</td><td>15,600</td></tr>
-    <tr><td><a href="/item/12782-wool-cuffs-+1">Wool Cuffs +1</a></td><td>4</td><td>1802</td><td>15,600</td></tr>
-    <tr><td><a href="/item/13205-silver-obi">Silver Obi</a></td><td>5</td><td>613</td><td>12,240</td></tr>
-    <tr><td><a href="/item/13224-silver-obi-+1">Silver Obi +1</a></td><td>5</td><td>824</td><td>12,240</td></tr>
-    <tr><td><a href="/item/12731-velvet-cuffs">Velvet Cuffs</a></td><td>6</td><td>2408</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12793-mages-cuffs">Mages Cuffs</a></td><td>6</td><td>2968</td><td>18,000</td></tr>
-    <tr><td><a href="/item/12716-shinobi-tekko">Shinobi Tekko</a></td><td>7</td><td>3630</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13955-shinobi-tekko-+1">Shinobi Tekko +1</a></td><td>7</td><td>4455</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13881-arhats-jinpachi">Arhats Jinpachi</a></td><td>8</td><td>3225</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13886-arhats-jinpachi-+1">Arhats Jinpachi +1</a></td><td>8</td><td>3762</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13925-rasetsu-jinpachi">Rasetsu Jinpachi</a></td><td>9</td><td>13750</td><td>22,560</td></tr>
-    <tr><td><a href="/item/13926-rasetsu-jinpachi-+1">Rasetsu Jinpachi +1</a></td><td>9</td><td>15000</td><td>22,560</td></tr>
+    <tr><td><a href="/item/14290-vagabonds-hose">Vagabonds Hose</a></td><td>0</td><td>110</td><td>1,680</td></tr>
+    <tr><td><a href="/item/14291-nomads-hose">Nomads Hose</a></td><td>0</td><td>118</td><td>1,680</td></tr>
+    <tr><td><a href="/item/13806-vagabonds-tunica">Vagabonds Tunica</a></td><td>1</td><td>118</td><td>2,000</td></tr>
+    <tr><td><a href="/item/13807-nomads-tunica">Nomads Tunica</a></td><td>1</td><td>126</td><td>2,000</td></tr>
+    <tr><td><a href="/item/12601-linen-robe">Linen Robe</a></td><td>2</td><td>617</td><td>3,760</td></tr>
+    <tr><td><a href="/item/12626-linen-robe-+1">Linen Robe +1</a></td><td>2</td><td>617</td><td>3,760</td></tr>
+    <tr><td><a href="/item/12458-soil-hachimaki">Soil Hachimaki</a></td><td>3</td><td>1116</td><td>4,720</td></tr>
+    <tr><td><a href="/item/12539-soil-hachimaki-+1">Soil Hachimaki +1</a></td><td>3</td><td>1152</td><td>4,720</td></tr>
+    <tr><td><a href="/item/12730-wool-cuffs">Wool Cuffs</a></td><td>4</td><td>1462</td><td>5,200</td></tr>
+    <tr><td><a href="/item/12782-wool-cuffs-+1">Wool Cuffs +1</a></td><td>4</td><td>1802</td><td>5,200</td></tr>
+    <tr><td><a href="/item/13205-silver-obi">Silver Obi</a></td><td>5</td><td>613</td><td>4,080</td></tr>
+    <tr><td><a href="/item/13224-silver-obi-+1">Silver Obi +1</a></td><td>5</td><td>824</td><td>4,080</td></tr>
+    <tr><td><a href="/item/12731-velvet-cuffs">Velvet Cuffs</a></td><td>6</td><td>2408</td><td>6,000</td></tr>
+    <tr><td><a href="/item/12793-mages-cuffs">Mages Cuffs</a></td><td>6</td><td>2968</td><td>6,000</td></tr>
+    <tr><td><a href="/item/12716-shinobi-tekko">Shinobi Tekko</a></td><td>7</td><td>3630</td><td>2,160</td></tr>
+    <tr><td><a href="/item/13955-shinobi-tekko-+1">Shinobi Tekko +1</a></td><td>7</td><td>4455</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13881-arhats-jinpachi">Arhats Jinpachi</a></td><td>8</td><td>3225</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13886-arhats-jinpachi-+1">Arhats Jinpachi +1</a></td><td>8</td><td>3762</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13925-rasetsu-jinpachi">Rasetsu Jinpachi</a></td><td>9</td><td>13750</td><td>7,520</td></tr>
+    <tr><td><a href="/item/13926-rasetsu-jinpachi-+1">Rasetsu Jinpachi +1</a></td><td>9</td><td>15000</td><td>7,520</td></tr>
    </tbody></table>
   </div>
  </section>
 
  <section class="panel pad">
-  <h2>Guild point rewards</h2>
+  <h2 id="gp-rewards">Guild point rewards</h2>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15447-weavers-belt">Weavers Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -576,7 +586,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild vendor</h2>
+  <h2 id="vendor">Guild vendor</h2>
   <p class="vendor-note">Rank-gated items sold by the clothcraft guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/833-clump-of-moko-grass">Clump of Moko Grass</a></span><span class="rk">rank amateur</span><span class="pr">20g</span></div>
@@ -605,7 +615,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>217</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>412</b><span>total</span></div>
@@ -702,6 +712,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

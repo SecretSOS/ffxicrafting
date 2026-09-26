@@ -135,7 +135,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="jump"><a href="#gathering">Gathering</a><a href="#digging">Chocobo digging</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Harvesting</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/1522-sprig-of-fresh-marjoram">Sprig Of Fresh Marjoram</a></td><td class="pct" style="text-align:right">16.0%</td></tr>
 <tr><td><a href="/item/2164-pephredo-hive-chip">Pephredo Hive Chip</a></td><td class="pct" style="text-align:right">13.3%</td></tr>
 <tr><td><a href="/item/2295-clump-of-mohbwa-grass">Clump Of Mohbwa Grass</a></td><td class="pct" style="text-align:right">11.0%</td></tr>
@@ -150,7 +150,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="digging"><h2>Chocobo digging</h2>
 <h3>Regular — requires dig rank amateur, dig rank journeyman</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
 <tr><td><a href="/item/646-chunk-of-adaman-ore">Chunk Of Adaman Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
 <tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">0</td></tr>
 <tr><td><a href="/item/770-blue-rock">Blue Rock</a></td><td class="pct" style="text-align:right">0</td></tr>
@@ -329,7 +329,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/825-square-of-cotton-cloth">Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/838-spider-web">Spider Web</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -377,6 +377,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

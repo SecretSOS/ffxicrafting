@@ -135,7 +135,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="jump"><a href="#gathering">Gathering</a><a href="#caskets">Field caskets</a><a href="#coffers">Treasure coffers</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Mining</h3>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/768-flint-stone">Flint Stone</a></td><td class="pct" style="text-align:right">13.7%</td></tr>
 <tr><td><a href="/item/1108-pinch-of-sulfur">Pinch Of Sulfur</a></td><td class="pct" style="text-align:right">12.5%</td></tr>
 <tr><td><a href="/item/643-chunk-of-iron-ore">Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">10.6%</td></tr>
@@ -150,7 +150,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </tbody></table>
 </section>
 <section class="panel pad" id="caskets"><h2>Field caskets</h2>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/4119-hi-potion-3">Hi-Potion +3</a></td><td class="pct" style="text-align:right">9.09%</td></tr>
 <tr><td><a href="/item/4133-hi-ether-1">Hi-Ether +1</a></td><td class="pct" style="text-align:right">8.91%</td></tr>
 <tr><td><a href="/item/1222-bag-of-yagudo-fletchings">Bag Of Yagudo Fletchings</a></td><td class="pct" style="text-align:right">8.55%</td></tr>
@@ -308,7 +308,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/4468-bunch-of-pamamas">Bunch Of Pamamas</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -353,6 +353,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -167,7 +167,7 @@ def build_zone_page(zone_name, sources):
         if ht not in helm: continue
         items = sorted(helm[ht], key=lambda x: -(x[1] or 0))
         helm_html += f'<h3>{ht.title()}</h3>\n'
-        helm_html += '<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>\n'
+        helm_html += '<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>\n'
         for iid, pct in items:
             helm_html += f'<tr><td>{item_link(iid)}</td><td class="pct" style="text-align:right">{fmt_pct(pct)}</td></tr>\n'
         helm_html += '</tbody></table>\n'
@@ -185,7 +185,7 @@ def build_zone_page(zone_name, sources):
             ranks = set(d['rank'] for d in items if d['rank'])
             rank_note = f' — requires {", ".join(sorted(ranks))}' if ranks else ''
             dig_html += f'<h3>{layer.title()}{rank_note}</h3>\n'
-            dig_html += '<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Weight</th></tr></thead><tbody>\n'
+            dig_html += '<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>\n'
             for d in items:
                 dig_html += f'<tr><td>{item_link(d["id"])}</td><td class="pct" style="text-align:right">{d["weight"]:.0f}</td></tr>\n'
             dig_html += '</tbody></table>\n'
@@ -197,7 +197,7 @@ def build_zone_page(zone_name, sources):
             FROM fishing_areas fa JOIN fish f ON f.item_id = fa.fish_item_id
             WHERE fa.zone = ? ORDER BY f.skill, f.name""", (zone_name,)).fetchall()
         if fish_data:
-            fish_html = '<table><thead><tr><th>Fish</th><th>Skill</th><th>Area</th><th style="text-align:right">Rarity</th></tr></thead><tbody>\n'
+            fish_html = '<table><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Area</th><th data-sort="num" style="text-align:right">Rarity</th></tr></thead><tbody>\n'
             for fd in fish_data:
                 fish_html += f'<tr><td>{item_link(fd["fish_item_id"])}</td><td>{fd["skill"]}</td><td style="color:var(--ink-faint);font-size:.85rem">{esc(fd["area"] or "")}</td><td class="pct" style="text-align:right">{fd["rarity"]}</td></tr>\n'
             fish_html += '</tbody></table>\n'
@@ -206,7 +206,7 @@ def build_zone_page(zone_name, sources):
     # Field caskets
     if caskets:
         caskets.sort(key=lambda x: -(x[1] or 0))
-        cas_html = '<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>\n'
+        cas_html = '<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>\n'
         for iid, pct in caskets:
             cas_html += f'<tr><td>{item_link(iid)}</td><td class="pct" style="text-align:right">{fmt_pct(pct)}</td></tr>\n'
         cas_html += '</tbody></table>\n'
@@ -301,7 +301,7 @@ def build_zone_page(zone_name, sources):
     if steals:
         steals.sort(key=lambda x: -(x[1] or 0))
         st_html = '<p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>\n'
-        st_html += '<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>\n'
+        st_html += '<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>\n'
         for iid, pct in steals:
             st_html += f'<tr><td>{item_link(iid)}</td><td class="pct" style="text-align:right">{fmt_pct(pct)}</td></tr>\n'
         st_html += '</tbody></table>\n'
@@ -309,7 +309,7 @@ def build_zone_page(zone_name, sources):
 
     # Crystal drops
     if crystals:
-        cr_html = '<table><thead><tr><th>Crystal</th><th>Buff required</th><th style="width:80px;text-align:right">Rate</th></tr></thead><tbody>\n'
+        cr_html = '<table><thead><tr><th data-sort="text">Crystal</th><th data-sort="text">Buff required</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>\n'
         for c in sorted(crystals, key=lambda x: x['id']):
             el = CRYSTAL_ELEMENT.get(c['id'], '?')
             cr_html += f'<tr><td>{item_link(c["id"])}</td><td>{esc(c["buff"].title())}</td><td class="pct" style="text-align:right">{fmt_pct(c["pct"])}</td></tr>\n'

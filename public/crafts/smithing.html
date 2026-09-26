@@ -145,8 +145,17 @@
   </div>
  </header>
 
+ <nav class="section-toc" data-toc>
+  <a href="#hours">Hours</a>
+  <a href="#shop">Shop</a>
+  <a href="#gp-turnins">GP Turn-ins</a>
+  <a href="#gp-rewards">GP Rewards</a>
+  <a href="#vendor">Vendor</a>
+  <a href="#recipes">Recipes</a>
+ </nav>
+
  <section class="panel pad">
-  <h2>Guild hours</h2>
+  <h2 id="hours">Guild hours</h2>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>8:00</b> – <b>23:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Watersday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
@@ -156,9 +165,10 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(136 items)</span></h2>
+  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(136 items)</span></h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the smithing guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
-  <div class="shop-grid">
+  <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
+  <div class="shop-grid" id="shopGrid">
    <div class="shop-row"><span class="nm"><a href="/item/17336-crossbow-bolt">Crossbow Bolt</a></span><span class="pr">30g</span><span class="st">0–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/640-chunk-of-copper-ore">Chunk of Copper Ore</a></span><span class="pr">60g</span><span class="st">120–180</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/17337-mythril-bolt">Mythril Bolt</a></span><span class="pr">120g</span><span class="st">0–180</span></div>
@@ -299,7 +309,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Guild point turn-ins</h2>
+  <h2 id="gp-turnins">Guild point turn-ins</h2>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -313,200 +323,200 @@
   </div>
   <div class="turnin-pattern" id="pat-0">
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16390-bronze-knuckles">Bronze Knuckles</a></td><td>0</td><td>61</td><td>4,320</td></tr>
-    <tr><td><a href="/item/16440-bronze-knuckles-+1">Bronze Knuckles +1</a></td><td>0</td><td>61</td><td>4,320</td></tr>
-    <tr><td><a href="/item/12816-scale-cuisses">Scale Cuisses</a></td><td>1</td><td>358</td><td>8,640</td></tr>
-    <tr><td><a href="/item/12863-solid-cuisses">Solid Cuisses</a></td><td>1</td><td>410</td><td>8,640</td></tr>
-    <tr><td><a href="/item/17035-mace">Mace</a></td><td>2</td><td>808</td><td>12,480</td></tr>
-    <tr><td><a href="/item/17145-mace-+1">Mace +1</a></td><td>2</td><td>980</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12300-targe">Targe</a></td><td>3</td><td>680</td><td>12,000</td></tr>
-    <tr><td><a href="/item/12335-targe-+1">Targe +1</a></td><td>3</td><td>1000</td><td>12,000</td></tr>
-    <tr><td><a href="/item/16919-shinobi-gatana">Shinobi-Gatana</a></td><td>4</td><td>933</td><td>13,680</td></tr>
-    <tr><td><a href="/item/16920-shinobi-gatana-+1">Shinobi-Gatana +1</a></td><td>4</td><td>942</td><td>13,680</td></tr>
-    <tr><td><a href="/item/16413-darksteel-claws">Darksteel Claws</a></td><td>5</td><td>4320</td><td>19,920</td></tr>
-    <tr><td><a href="/item/16697-darksteel-claws-+1">Darksteel Claws +1</a></td><td>5</td><td>5220</td><td>19,920</td></tr>
-    <tr><td><a href="/item/12715-kote">Kote</a></td><td>6</td><td>3300</td><td>18,960</td></tr>
-    <tr><td><a href="/item/13996-kote-+1">Kote +1</a></td><td>6</td><td>3300</td><td>18,960</td></tr>
-    <tr><td><a href="/item/16577-bastard-sword">Bastard Sword</a></td><td>7</td><td>12150</td><td>22,320</td></tr>
-    <tr><td><a href="/item/16828-bastard-sword-+1">Bastard Sword +1</a></td><td>7</td><td>13257</td><td>22,320</td></tr>
-    <tr><td><a href="/item/12684-thick-mufflers">Thick Mufflers</a></td><td>8</td><td>6345</td><td>21,120</td></tr>
-    <tr><td><a href="/item/14012-thick-mufflers-+1">Thick Mufflers +1</a></td><td>8</td><td>6480</td><td>21,120</td></tr>
-    <tr><td><a href="/item/12309-ritter-shield">Ritter Shield</a></td><td>9</td><td>6440</td><td>21,120</td></tr>
-    <tr><td><a href="/item/12358-ritter-shield-+1">Ritter Shield +1</a></td><td>9</td><td>7840</td><td>21,120</td></tr>
+    <tr><td><a href="/item/16390-bronze-knuckles">Bronze Knuckles</a></td><td>0</td><td>61</td><td>1,440</td></tr>
+    <tr><td><a href="/item/16440-bronze-knuckles-+1">Bronze Knuckles +1</a></td><td>0</td><td>61</td><td>1,440</td></tr>
+    <tr><td><a href="/item/12816-scale-cuisses">Scale Cuisses</a></td><td>1</td><td>358</td><td>2,880</td></tr>
+    <tr><td><a href="/item/12863-solid-cuisses">Solid Cuisses</a></td><td>1</td><td>410</td><td>2,880</td></tr>
+    <tr><td><a href="/item/17035-mace">Mace</a></td><td>2</td><td>808</td><td>4,160</td></tr>
+    <tr><td><a href="/item/17145-mace-+1">Mace +1</a></td><td>2</td><td>980</td><td>4,160</td></tr>
+    <tr><td><a href="/item/12300-targe">Targe</a></td><td>3</td><td>1720</td><td>1,786</td></tr>
+    <tr><td><a href="/item/12335-targe-+1">Targe +1</a></td><td>3</td><td>2120</td><td>1,786</td></tr>
+    <tr><td><a href="/item/16919-shinobi-gatana">Shinobi-Gatana</a></td><td>4</td><td>933</td><td>4,560</td></tr>
+    <tr><td><a href="/item/16920-shinobi-gatana-+1">Shinobi-Gatana +1</a></td><td>4</td><td>942</td><td>4,560</td></tr>
+    <tr><td><a href="/item/16413-darksteel-claws">Darksteel Claws</a></td><td>5</td><td>4320</td><td>6,640</td></tr>
+    <tr><td><a href="/item/16697-darksteel-claws-+1">Darksteel Claws +1</a></td><td>5</td><td>5220</td><td>6,640</td></tr>
+    <tr><td><a href="/item/12715-kote">Kote</a></td><td>6</td><td>3300</td><td>6,320</td></tr>
+    <tr><td><a href="/item/13996-kote-+1">Kote +1</a></td><td>6</td><td>3300</td><td>6,320</td></tr>
+    <tr><td><a href="/item/16577-bastard-sword">Bastard Sword</a></td><td>7</td><td>7440</td><td>2,480</td></tr>
+    <tr><td><a href="/item/16828-bastard-sword-+1">Bastard Sword +1</a></td><td>7</td><td>7440</td><td>2,480</td></tr>
+    <tr><td><a href="/item/12684-thick-mufflers">Thick Mufflers</a></td><td>8</td><td>6345</td><td>7,040</td></tr>
+    <tr><td><a href="/item/14012-thick-mufflers-+1">Thick Mufflers +1</a></td><td>8</td><td>6480</td><td>7,040</td></tr>
+    <tr><td><a href="/item/12309-ritter-shield">Ritter Shield</a></td><td>9</td><td>6440</td><td>7,040</td></tr>
+    <tr><td><a href="/item/12358-ritter-shield-+1">Ritter Shield +1</a></td><td>9</td><td>7040</td><td>7,040</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-1" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16535-bronze-sword">Bronze Sword</a></td><td>0</td><td>67</td><td>4,320</td></tr>
-    <tr><td><a href="/item/16623-bronze-sword-+1">Bronze Sword +1</a></td><td>0</td><td>75</td><td>4,320</td></tr>
-    <tr><td><a href="/item/12944-scale-greaves">Scale Greaves</a></td><td>1</td><td>217</td><td>7,200</td></tr>
-    <tr><td><a href="/item/13024-solid-greaves">Solid Greaves</a></td><td>1</td><td>269</td><td>7,200</td></tr>
-    <tr><td><a href="/item/13871-iron-visor">Iron Visor</a></td><td>2</td><td>3024</td><td>18,480</td></tr>
-    <tr><td><a href="/item/13872-iron-visor-+1">Iron Visor +1</a></td><td>2</td><td>3078</td><td>18,480</td></tr>
-    <tr><td><a href="/item/16524-fleuret">Fleuret</a></td><td>3</td><td>2128</td><td>17,040</td></tr>
-    <tr><td><a href="/item/16803-fleuret-+1">Fleuret +1</a></td><td>3</td><td>3648</td><td>17,040</td></tr>
-    <tr><td><a href="/item/16775-mythril-scythe">Mythril Scythe</a></td><td>4</td><td>6900</td><td>21,120</td></tr>
-    <tr><td><a href="/item/16782-mythril-scythe-+1">Mythril Scythe +1</a></td><td>4</td><td>6900</td><td>21,120</td></tr>
-    <tr><td><a href="/item/12544-breastplate">Breastplate</a></td><td>5</td><td>5460</td><td>20,640</td></tr>
-    <tr><td><a href="/item/13724-breastplate-+1">Breastplate +1</a></td><td>5</td><td>6060</td><td>20,640</td></tr>
-    <tr><td><a href="/item/12459-zunari-kabuto">Zunari Kabuto</a></td><td>6</td><td>3604</td><td>19,440</td></tr>
-    <tr><td><a href="/item/13865-zunari-kabuto-+1">Zunari Kabuto +1</a></td><td>6</td><td>3604</td><td>19,440</td></tr>
-    <tr><td><a href="/item/16789-darksteel-scythe">Darksteel Scythe</a></td><td>7</td><td>12535</td><td>22,320</td></tr>
-    <tr><td><a href="/item/16790-darksteel-scythe-+1">Darksteel Scythe +1</a></td><td>7</td><td>12650</td><td>22,320</td></tr>
-    <tr><td><a href="/item/12547-darksteel-cuirass">Darksteel Cuirass</a></td><td>8</td><td>11830</td><td>22,320</td></tr>
-    <tr><td><a href="/item/13756-darksteel-cuirass-+1">Darksteel Cuirass +1</a></td><td>8</td><td>13130</td><td>22,320</td></tr>
-    <tr><td><a href="/item/17038-buzdygan">Buzdygan</a></td><td>9</td><td>11925</td><td>22,320</td></tr>
-    <tr><td><a href="/item/17460-buzdygan-+1">Buzdygan +1</a></td><td>9</td><td>13250</td><td>22,320</td></tr>
+    <tr><td><a href="/item/16535-bronze-sword">Bronze Sword</a></td><td>0</td><td>67</td><td>1,440</td></tr>
+    <tr><td><a href="/item/16623-bronze-sword-+1">Bronze Sword +1</a></td><td>0</td><td>67</td><td>480</td></tr>
+    <tr><td><a href="/item/12944-scale-greaves">Scale Greaves</a></td><td>1</td><td>217</td><td>2,400</td></tr>
+    <tr><td><a href="/item/13024-solid-greaves">Solid Greaves</a></td><td>1</td><td>269</td><td>2,400</td></tr>
+    <tr><td><a href="/item/13871-iron-visor">Iron Visor</a></td><td>2</td><td>3024</td><td>6,160</td></tr>
+    <tr><td><a href="/item/13872-iron-visor-+1">Iron Visor +1</a></td><td>2</td><td>3078</td><td>6,160</td></tr>
+    <tr><td><a href="/item/16524-fleuret">Fleuret</a></td><td>3</td><td>2128</td><td>5,680</td></tr>
+    <tr><td><a href="/item/16803-fleuret-+1">Fleuret +1</a></td><td>3</td><td>3648</td><td>5,680</td></tr>
+    <tr><td><a href="/item/16775-mythril-scythe">Mythril Scythe</a></td><td>4</td><td>6900</td><td>7,040</td></tr>
+    <tr><td><a href="/item/16782-mythril-scythe-+1">Mythril Scythe +1</a></td><td>4</td><td>6900</td><td>7,040</td></tr>
+    <tr><td><a href="/item/12544-breastplate">Breastplate</a></td><td>5</td><td>5460</td><td>6,880</td></tr>
+    <tr><td><a href="/item/13724-breastplate-+1">Breastplate +1</a></td><td>5</td><td>6060</td><td>6,880</td></tr>
+    <tr><td><a href="/item/12459-zunari-kabuto">Zunari Kabuto</a></td><td>6</td><td>3604</td><td>6,480</td></tr>
+    <tr><td><a href="/item/13865-zunari-kabuto-+1">Zunari Kabuto +1</a></td><td>6</td><td>3604</td><td>6,480</td></tr>
+    <tr><td><a href="/item/16789-darksteel-scythe">Darksteel Scythe</a></td><td>7</td><td>7440</td><td>2,480</td></tr>
+    <tr><td><a href="/item/16790-darksteel-scythe-+1">Darksteel Scythe +1</a></td><td>7</td><td>12650</td><td>7,440</td></tr>
+    <tr><td><a href="/item/12547-darksteel-cuirass">Darksteel Cuirass</a></td><td>8</td><td>7440</td><td>2,480</td></tr>
+    <tr><td><a href="/item/13756-darksteel-cuirass-+1">Darksteel Cuirass +1</a></td><td>8</td><td>13130</td><td>7,440</td></tr>
+    <tr><td><a href="/item/17038-buzdygan">Buzdygan</a></td><td>9</td><td>11925</td><td>7,440</td></tr>
+    <tr><td><a href="/item/17460-buzdygan-+1">Buzdygan +1</a></td><td>9</td><td>13250</td><td>7,440</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-2" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16530-xiphos">Xiphos</a></td><td>0</td><td>168</td><td>6,000</td></tr>
-    <tr><td><a href="/item/16624-xiphos-+1">Xiphos +1</a></td><td>0</td><td>188</td><td>6,000</td></tr>
-    <tr><td><a href="/item/12299-aspis">Aspis</a></td><td>1</td><td>189</td><td>6,960</td></tr>
-    <tr><td><a href="/item/12325-aspis-+1">Aspis +1</a></td><td>1</td><td>233</td><td>6,960</td></tr>
-    <tr><td><a href="/item/16466-knife">Knife</a></td><td>2</td><td>485</td><td>10,320</td></tr>
-    <tr><td><a href="/item/16614-knife-+1">Knife +1</a></td><td>2</td><td>578</td><td>10,320</td></tr>
-    <tr><td><a href="/item/16513-tuck">Tuck</a></td><td>3</td><td>2146</td><td>17,040</td></tr>
-    <tr><td><a href="/item/16617-tuck-+1">Tuck +1</a></td><td>3</td><td>2432</td><td>17,040</td></tr>
-    <tr><td><a href="/item/16553-tulwar">Tulwar</a></td><td>4</td><td>4850</td><td>20,160</td></tr>
-    <tr><td><a href="/item/16636-tulwar-+1">Tulwar +1</a></td><td>4</td><td>5330</td><td>20,160</td></tr>
-    <tr><td><a href="/item/16590-greatsword">Greatsword</a></td><td>5</td><td>6758</td><td>21,120</td></tr>
-    <tr><td><a href="/item/16932-greatsword-+1">Greatsword +1</a></td><td>5</td><td>7562</td><td>21,120</td></tr>
-    <tr><td><a href="/item/16902-sakurafubuki">Sakurafubuki</a></td><td>6</td><td>2310</td><td>17,760</td></tr>
-    <tr><td><a href="/item/16922-sakurafubuki-+1">Sakurafubuki +1</a></td><td>6</td><td>2442</td><td>17,760</td></tr>
-    <tr><td><a href="/item/16759-darksteel-kris">Darksteel Kris</a></td><td>7</td><td>5670</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16760-darksteel-kris-+1">Darksteel Kris +1</a></td><td>7</td><td>6720</td><td>20,880</td></tr>
-    <tr><td><a href="/item/17046-darksteel-maul">Darksteel Maul</a></td><td>8</td><td>5880</td><td>20,880</td></tr>
-    <tr><td><a href="/item/17432-darksteel-maul-+1">Darksteel Maul +1</a></td><td>8</td><td>6492</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16452-misericorde">Misericorde</a></td><td>9</td><td>4637</td><td>20,160</td></tr>
-    <tr><td><a href="/item/17620-misericorde-+1">Misericorde +1</a></td><td>9</td><td>5962</td><td>20,160</td></tr>
+    <tr><td><a href="/item/16530-xiphos">Xiphos</a></td><td>0</td><td>168</td><td>2,000</td></tr>
+    <tr><td><a href="/item/16624-xiphos-+1">Xiphos +1</a></td><td>0</td><td>188</td><td>2,000</td></tr>
+    <tr><td><a href="/item/12299-aspis">Aspis</a></td><td>1</td><td>189</td><td>2,320</td></tr>
+    <tr><td><a href="/item/12325-aspis-+1">Aspis +1</a></td><td>1</td><td>233</td><td>2,320</td></tr>
+    <tr><td><a href="/item/16466-knife">Knife</a></td><td>2</td><td>485</td><td>3,440</td></tr>
+    <tr><td><a href="/item/16614-knife-+1">Knife +1</a></td><td>2</td><td>578</td><td>3,440</td></tr>
+    <tr><td><a href="/item/16513-tuck">Tuck</a></td><td>3</td><td>2146</td><td>5,680</td></tr>
+    <tr><td><a href="/item/16617-tuck-+1">Tuck +1</a></td><td>3</td><td>2432</td><td>5,680</td></tr>
+    <tr><td><a href="/item/16553-tulwar">Tulwar</a></td><td>4</td><td>4850</td><td>6,720</td></tr>
+    <tr><td><a href="/item/16636-tulwar-+1">Tulwar +1</a></td><td>4</td><td>5330</td><td>6,720</td></tr>
+    <tr><td><a href="/item/16590-greatsword">Greatsword</a></td><td>5</td><td>6758</td><td>7,040</td></tr>
+    <tr><td><a href="/item/16932-greatsword-+1">Greatsword +1</a></td><td>5</td><td>7040</td><td>2,346</td></tr>
+    <tr><td><a href="/item/16902-sakurafubuki">Sakurafubuki</a></td><td>6</td><td>2310</td><td>5,920</td></tr>
+    <tr><td><a href="/item/16922-sakurafubuki-+1">Sakurafubuki +1</a></td><td>6</td><td>2442</td><td>5,920</td></tr>
+    <tr><td><a href="/item/16759-darksteel-kris">Darksteel Kris</a></td><td>7</td><td>5670</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16760-darksteel-kris-+1">Darksteel Kris +1</a></td><td>7</td><td>6720</td><td>6,960</td></tr>
+    <tr><td><a href="/item/17046-darksteel-maul">Darksteel Maul</a></td><td>8</td><td>5880</td><td>6,960</td></tr>
+    <tr><td><a href="/item/17432-darksteel-maul-+1">Darksteel Maul +1</a></td><td>8</td><td>6492</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16452-misericorde">Misericorde</a></td><td>9</td><td>4637</td><td>6,720</td></tr>
+    <tr><td><a href="/item/17620-misericorde-+1">Misericorde +1</a></td><td>9</td><td>5962</td><td>6,720</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-3" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16448-bronze-dagger">Bronze Dagger</a></td><td>0</td><td>39</td><td>1,280</td></tr>
-    <tr><td><a href="/item/16492-bronze-dagger-+1">Bronze Dagger +1</a></td><td>0</td><td>47</td><td>1,280</td></tr>
-    <tr><td><a href="/item/17042-bronze-hammer">Bronze Hammer</a></td><td>1</td><td>85</td><td>5,520</td></tr>
-    <tr><td><a href="/item/17144-bronze-hammer-+1">Bronze Hammer +1</a></td><td>1</td><td>100</td><td>5,520</td></tr>
-    <tr><td><a href="/item/16552-scimitar">Scimitar</a></td><td>2</td><td>905</td><td>12,960</td></tr>
-    <tr><td><a href="/item/16625-scimitar-+1">Scimitar +1</a></td><td>2</td><td>998</td><td>12,960</td></tr>
-    <tr><td><a href="/item/16900-wakizashi">Wakizashi</a></td><td>3</td><td>300</td><td>9,120</td></tr>
-    <tr><td><a href="/item/16918-wakizashi-+1">Wakizashi +1</a></td><td>3</td><td>302</td><td>9,120</td></tr>
-    <tr><td><a href="/item/16475-mythril-kukri">Mythril Kukri</a></td><td>4</td><td>2484</td><td>17,760</td></tr>
-    <tr><td><a href="/item/16750-mythril-kukri-+1">Mythril Kukri +1</a></td><td>4</td><td>2944</td><td>17,760</td></tr>
-    <tr><td><a href="/item/12416-sallet">Sallet</a></td><td>5</td><td>3540</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13831-sallet-+1">Sallet +1</a></td><td>5</td><td>4140</td><td>19,200</td></tr>
-    <tr><td><a href="/item/13111-nodowa">Nodowa</a></td><td>6</td><td>2722</td><td>18,480</td></tr>
-    <tr><td><a href="/item/13124-nodowa-+1">Nodowa +1</a></td><td>6</td><td>3547</td><td>18,480</td></tr>
-    <tr><td><a href="/item/16967-mikazuki">Mikazuki</a></td><td>7</td><td>3740</td><td>19,440</td></tr>
-    <tr><td><a href="/item/16989-mikazuki-+1">Mikazuki +1</a></td><td>7</td><td>3808</td><td>19,440</td></tr>
-    <tr><td><a href="/item/12931-darksteel-sabatons">Darksteel Sabatons</a></td><td>8</td><td>5720</td><td>20,880</td></tr>
-    <tr><td><a href="/item/14105-darksteel-sabatons-+1">Darksteel Sabatons +1</a></td><td>8</td><td>7020</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16547-anelace">Anelace</a></td><td>9</td><td>8820</td><td>21,840</td></tr>
-    <tr><td><a href="/item/17657-anelace-+1">Anelace +1</a></td><td>9</td><td>10220</td><td>21,840</td></tr>
+    <tr><td><a href="/item/16448-bronze-dagger">Bronze Dagger</a></td><td>0</td><td>39</td><td>426</td></tr>
+    <tr><td><a href="/item/16492-bronze-dagger-+1">Bronze Dagger +1</a></td><td>0</td><td>47</td><td>426</td></tr>
+    <tr><td><a href="/item/17042-bronze-hammer">Bronze Hammer</a></td><td>1</td><td>85</td><td>1,840</td></tr>
+    <tr><td><a href="/item/17144-bronze-hammer-+1">Bronze Hammer +1</a></td><td>1</td><td>100</td><td>1,840</td></tr>
+    <tr><td><a href="/item/16552-scimitar">Scimitar</a></td><td>2</td><td>905</td><td>4,320</td></tr>
+    <tr><td><a href="/item/16625-scimitar-+1">Scimitar +1</a></td><td>2</td><td>998</td><td>4,320</td></tr>
+    <tr><td><a href="/item/16900-wakizashi">Wakizashi</a></td><td>3</td><td>300</td><td>3,040</td></tr>
+    <tr><td><a href="/item/16918-wakizashi-+1">Wakizashi +1</a></td><td>3</td><td>302</td><td>3,040</td></tr>
+    <tr><td><a href="/item/16475-mythril-kukri">Mythril Kukri</a></td><td>4</td><td>2484</td><td>5,920</td></tr>
+    <tr><td><a href="/item/16750-mythril-kukri-+1">Mythril Kukri +1</a></td><td>4</td><td>2944</td><td>5,920</td></tr>
+    <tr><td><a href="/item/12416-sallet">Sallet</a></td><td>5</td><td>3540</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13831-sallet-+1">Sallet +1</a></td><td>5</td><td>4140</td><td>6,400</td></tr>
+    <tr><td><a href="/item/13111-nodowa">Nodowa</a></td><td>6</td><td>2722</td><td>6,160</td></tr>
+    <tr><td><a href="/item/13124-nodowa-+1">Nodowa +1</a></td><td>6</td><td>3547</td><td>6,160</td></tr>
+    <tr><td><a href="/item/16967-mikazuki">Mikazuki</a></td><td>7</td><td>3740</td><td>6,480</td></tr>
+    <tr><td><a href="/item/16989-mikazuki-+1">Mikazuki +1</a></td><td>7</td><td>3808</td><td>6,480</td></tr>
+    <tr><td><a href="/item/12931-darksteel-sabatons">Darksteel Sabatons</a></td><td>8</td><td>5720</td><td>6,960</td></tr>
+    <tr><td><a href="/item/14105-darksteel-sabatons-+1">Darksteel Sabatons +1</a></td><td>8</td><td>7020</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16547-anelace">Anelace</a></td><td>9</td><td>7280</td><td>2,426</td></tr>
+    <tr><td><a href="/item/17657-anelace-+1">Anelace +1</a></td><td>9</td><td>8820</td><td>2,426</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-4" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16768-bronze-zaghnal">Bronze Zaghnal</a></td><td>0</td><td>86</td><td>4,800</td></tr>
-    <tr><td><a href="/item/16778-bronze-zaghnal-+1">Bronze Zaghnal +1</a></td><td>0</td><td>93</td><td>4,800</td></tr>
-    <tr><td><a href="/item/17059-bronze-rod">Bronze Rod</a></td><td>1</td><td>25</td><td>1,520</td></tr>
-    <tr><td><a href="/item/17111-bronze-rod-+1">Bronze Rod +1</a></td><td>1</td><td>25</td><td>1,520</td></tr>
-    <tr><td><a href="/item/16406-baghnakhs">Baghnakhs</a></td><td>2</td><td>1440</td><td>15,120</td></tr>
-    <tr><td><a href="/item/16444-baghnakhs-+1">Baghnakhs +1</a></td><td>2</td><td>1740</td><td>15,120</td></tr>
-    <tr><td><a href="/item/17060-rod">Rod</a></td><td>3</td><td>442</td><td>10,320</td></tr>
-    <tr><td><a href="/item/17146-rod-+1">Rod +1</a></td><td>3</td><td>702</td><td>10,320</td></tr>
-    <tr><td><a href="/item/16706-heavy-axe">Heavy Axe</a></td><td>4</td><td>5152</td><td>20,400</td></tr>
-    <tr><td><a href="/item/16718-heavy-axe-+1">Heavy Axe +1</a></td><td>4</td><td>5612</td><td>20,400</td></tr>
-    <tr><td><a href="/item/16960-uchigatana">Uchigatana</a></td><td>5</td><td>667</td><td>12,480</td></tr>
-    <tr><td><a href="/item/16978-uchigatana-+1">Uchigatana +1</a></td><td>5</td><td>728</td><td>12,480</td></tr>
-    <tr><td><a href="/item/12683-darksteel-mufflers">Darksteel Mufflers</a></td><td>6</td><td>5170</td><td>20,400</td></tr>
-    <tr><td><a href="/item/13976-darksteel-mufflers-+1">Darksteel Mufflers +1</a></td><td>6</td><td>6270</td><td>20,400</td></tr>
-    <tr><td><a href="/item/12452-darksteel-cap">Darksteel Cap</a></td><td>7</td><td>7020</td><td>21,360</td></tr>
-    <tr><td><a href="/item/13863-darksteel-cap-+1">Darksteel Cap +1</a></td><td>7</td><td>7020</td><td>21,360</td></tr>
-    <tr><td><a href="/item/16658-darksteel-tabar">Darksteel Tabar</a></td><td>8</td><td>8287</td><td>21,600</td></tr>
-    <tr><td><a href="/item/16683-darksteel-tabar-+1">Darksteel Tabar +1</a></td><td>8</td><td>8925</td><td>21,600</td></tr>
-    <tr><td><a href="/item/17252-culverin">Culverin</a></td><td>9</td><td>8082</td><td>21,840</td></tr>
-    <tr><td><a href="/item/18147-culverin-+1">Culverin +1</a></td><td>9</td><td>9407</td><td>21,840</td></tr>
+    <tr><td><a href="/item/16768-bronze-zaghnal">Bronze Zaghnal</a></td><td>0</td><td>86</td><td>1,600</td></tr>
+    <tr><td><a href="/item/16778-bronze-zaghnal-+1">Bronze Zaghnal +1</a></td><td>0</td><td>93</td><td>1,600</td></tr>
+    <tr><td><a href="/item/17059-bronze-rod">Bronze Rod</a></td><td>1</td><td>25</td><td>506</td></tr>
+    <tr><td><a href="/item/17111-bronze-rod-+1">Bronze Rod +1</a></td><td>1</td><td>25</td><td>506</td></tr>
+    <tr><td><a href="/item/16406-baghnakhs">Baghnakhs</a></td><td>2</td><td>1440</td><td>5,040</td></tr>
+    <tr><td><a href="/item/16444-baghnakhs-+1">Baghnakhs +1</a></td><td>2</td><td>1740</td><td>5,040</td></tr>
+    <tr><td><a href="/item/17060-rod">Rod</a></td><td>3</td><td>442</td><td>3,440</td></tr>
+    <tr><td><a href="/item/17146-rod-+1">Rod +1</a></td><td>3</td><td>702</td><td>3,440</td></tr>
+    <tr><td><a href="/item/16706-heavy-axe">Heavy Axe</a></td><td>4</td><td>5152</td><td>6,800</td></tr>
+    <tr><td><a href="/item/16718-heavy-axe-+1">Heavy Axe +1</a></td><td>4</td><td>5612</td><td>6,800</td></tr>
+    <tr><td><a href="/item/16960-uchigatana">Uchigatana</a></td><td>5</td><td>667</td><td>4,160</td></tr>
+    <tr><td><a href="/item/16978-uchigatana-+1">Uchigatana +1</a></td><td>5</td><td>667</td><td>1,386</td></tr>
+    <tr><td><a href="/item/12683-darksteel-mufflers">Darksteel Mufflers</a></td><td>6</td><td>5170</td><td>6,800</td></tr>
+    <tr><td><a href="/item/13976-darksteel-mufflers-+1">Darksteel Mufflers +1</a></td><td>6</td><td>6270</td><td>6,800</td></tr>
+    <tr><td><a href="/item/12452-darksteel-cap">Darksteel Cap</a></td><td>7</td><td>7020</td><td>7,120</td></tr>
+    <tr><td><a href="/item/13863-darksteel-cap-+1">Darksteel Cap +1</a></td><td>7</td><td>7020</td><td>7,120</td></tr>
+    <tr><td><a href="/item/16658-darksteel-tabar">Darksteel Tabar</a></td><td>8</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/16683-darksteel-tabar-+1">Darksteel Tabar +1</a></td><td>8</td><td>8925</td><td>7,200</td></tr>
+    <tr><td><a href="/item/17252-culverin">Culverin</a></td><td>9</td><td>8082</td><td>2,400</td></tr>
+    <tr><td><a href="/item/18147-culverin-+1">Culverin +1</a></td><td>9</td><td>9407</td><td>2,400</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-5" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16465-bronze-knife">Bronze Knife</a></td><td>0</td><td>41</td><td>1,360</td></tr>
-    <tr><td><a href="/item/16491-bronze-knife-+1">Bronze Knife +1</a></td><td>0</td><td>48</td><td>1,360</td></tr>
-    <tr><td><a href="/item/12560-scale-mail">Scale Mail</a></td><td>1</td><td>446</td><td>9,600</td></tr>
-    <tr><td><a href="/item/12661-solid-mail">Solid Mail</a></td><td>1</td><td>498</td><td>9,600</td></tr>
-    <tr><td><a href="/item/16566-longsword">Longsword</a></td><td>2</td><td>1536</td><td>15,600</td></tr>
-    <tr><td><a href="/item/16628-longsword-+1">Longsword +1</a></td><td>2</td><td>1689</td><td>15,600</td></tr>
-    <tr><td><a href="/item/13783-iron-scale-mail">Iron Scale Mail</a></td><td>3</td><td>4644</td><td>20,160</td></tr>
-    <tr><td><a href="/item/13784-iron-scale-mail-+1">Iron Scale Mail +1</a></td><td>3</td><td>5184</td><td>20,160</td></tr>
-    <tr><td><a href="/item/16644-mythril-axe">Mythril Axe</a></td><td>4</td><td>5400</td><td>20,640</td></tr>
-    <tr><td><a href="/item/16665-mythril-axe-+1">Mythril Axe +1</a></td><td>4</td><td>5940</td><td>20,640</td></tr>
-    <tr><td><a href="/item/17265-tanegashima">Tanegashima</a></td><td>5</td><td>1866</td><td>16,800</td></tr>
-    <tr><td><a href="/item/17266-tanegashima-+1">Tanegashima +1</a></td><td>5</td><td>1875</td><td>16,800</td></tr>
-    <tr><td><a href="/item/16476-darksteel-kukri">Darksteel Kukri</a></td><td>6</td><td>5940</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16763-darksteel-kukri-+1">Darksteel Kukri +1</a></td><td>6</td><td>7040</td><td>20,880</td></tr>
-    <tr><td><a href="/item/12839-darksteel-subligar">Darksteel Subligar</a></td><td>7</td><td>8580</td><td>21,840</td></tr>
-    <tr><td><a href="/item/14234-darksteel-subligar-+1">Darksteel Subligar +1</a></td><td>7</td><td>9880</td><td>21,840</td></tr>
-    <tr><td><a href="/item/16950-mythril-heart">Mythril Heart</a></td><td>8</td><td>7520</td><td>7,520</td></tr>
-    <tr><td><a href="/item/16951-mythril-heart-+1">Mythril Heart +1</a></td><td>8</td><td>7520</td><td>7,520</td></tr>
-    <tr><td><a href="/item/16653-nadziak">Nadziak</a></td><td>9</td><td>5565</td><td>20,880</td></tr>
-    <tr><td><a href="/item/16685-nadziak-+1">Nadziak +1</a></td><td>9</td><td>6890</td><td>20,880</td></tr>
+    <tr><td><a href="/item/16465-bronze-knife">Bronze Knife</a></td><td>0</td><td>41</td><td>453</td></tr>
+    <tr><td><a href="/item/16491-bronze-knife-+1">Bronze Knife +1</a></td><td>0</td><td>48</td><td>453</td></tr>
+    <tr><td><a href="/item/12560-scale-mail">Scale Mail</a></td><td>1</td><td>446</td><td>3,200</td></tr>
+    <tr><td><a href="/item/12661-solid-mail">Solid Mail</a></td><td>1</td><td>498</td><td>3,200</td></tr>
+    <tr><td><a href="/item/16566-longsword">Longsword</a></td><td>2</td><td>1536</td><td>5,200</td></tr>
+    <tr><td><a href="/item/16628-longsword-+1">Longsword +1</a></td><td>2</td><td>1689</td><td>5,200</td></tr>
+    <tr><td><a href="/item/13783-iron-scale-mail">Iron Scale Mail</a></td><td>3</td><td>4644</td><td>6,720</td></tr>
+    <tr><td><a href="/item/13784-iron-scale-mail-+1">Iron Scale Mail +1</a></td><td>3</td><td>5184</td><td>6,720</td></tr>
+    <tr><td><a href="/item/16644-mythril-axe">Mythril Axe</a></td><td>4</td><td>5400</td><td>6,880</td></tr>
+    <tr><td><a href="/item/16665-mythril-axe-+1">Mythril Axe +1</a></td><td>4</td><td>5940</td><td>6,880</td></tr>
+    <tr><td><a href="/item/17265-tanegashima">Tanegashima</a></td><td>5</td><td>1866</td><td>5,600</td></tr>
+    <tr><td><a href="/item/17266-tanegashima-+1">Tanegashima +1</a></td><td>5</td><td>1875</td><td>5,600</td></tr>
+    <tr><td><a href="/item/16476-darksteel-kukri">Darksteel Kukri</a></td><td>6</td><td>5940</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16763-darksteel-kukri-+1">Darksteel Kukri +1</a></td><td>6</td><td>6960</td><td>2,320</td></tr>
+    <tr><td><a href="/item/12839-darksteel-subligar">Darksteel Subligar</a></td><td>7</td><td>7280</td><td>2,426</td></tr>
+    <tr><td><a href="/item/14234-darksteel-subligar-+1">Darksteel Subligar +1</a></td><td>7</td><td>9880</td><td>7,280</td></tr>
+    <tr><td><a href="/item/16950-mythril-heart">Mythril Heart</a></td><td>8</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/16951-mythril-heart-+1">Mythril Heart +1</a></td><td>8</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/16653-nadziak">Nadziak</a></td><td>9</td><td>5565</td><td>6,960</td></tr>
+    <tr><td><a href="/item/16685-nadziak-+1">Nadziak +1</a></td><td>9</td><td>6890</td><td>6,960</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-6" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/17034-bronze-mace">Bronze Mace</a></td><td>0</td><td>47</td><td>4,080</td></tr>
-    <tr><td><a href="/item/17086-bronze-mace-+1">Bronze Mace +1</a></td><td>0</td><td>57</td><td>4,080</td></tr>
-    <tr><td><a href="/item/12688-scale-finger-gauntlets">Scale Finger Gauntlets</a></td><td>1</td><td>238</td><td>7,440</td></tr>
-    <tr><td><a href="/item/12768-solid-finger-gauntlets">Solid Finger Gauntlets</a></td><td>1</td><td>290</td><td>7,440</td></tr>
-    <tr><td><a href="/item/16704-butterfly-axe">Butterfly Axe</a></td><td>2</td><td>168</td><td>7,200</td></tr>
-    <tr><td><a href="/item/16716-butterfly-axe-+1">Butterfly Axe +1</a></td><td>2</td><td>183</td><td>7,200</td></tr>
-    <tr><td><a href="/item/17036-mythril-mace">Mythril Mace</a></td><td>3</td><td>2256</td><td>17,280</td></tr>
-    <tr><td><a href="/item/17147-mythril-mace-+1">Mythril Mace +1</a></td><td>3</td><td>2736</td><td>17,280</td></tr>
-    <tr><td><a href="/item/16567-knights-sword">Knights Sword</a></td><td>4</td><td>7750</td><td>21,600</td></tr>
-    <tr><td><a href="/item/16800-knights-sword-+1">Knights Sword +1</a></td><td>4</td><td>8525</td><td>21,600</td></tr>
-    <tr><td><a href="/item/16519-schlaeger">Schlaeger</a></td><td>5</td><td>8600</td><td>21,600</td></tr>
-    <tr><td><a href="/item/16813-schlaeger-+1">Schlaeger +1</a></td><td>5</td><td>9675</td><td>21,600</td></tr>
-    <tr><td><a href="/item/16915-hien">Hien</a></td><td>6</td><td>2325</td><td>17,760</td></tr>
-    <tr><td><a href="/item/16916-hien-+1">Hien +1</a></td><td>6</td><td>2402</td><td>17,760</td></tr>
-    <tr><td><a href="/item/13812-holy-breastplate">Holy Breastplate</a></td><td>7</td><td>9000</td><td>21,840</td></tr>
-    <tr><td><a href="/item/13813-divine-breastplate">Divine Breastplate</a></td><td>7</td><td>9500</td><td>21,840</td></tr>
-    <tr><td><a href="/item/16596-flamberge">Flamberge</a></td><td>8</td><td>14850</td><td>22,560</td></tr>
-    <tr><td><a href="/item/16941-flamberge-+1">Flamberge +1</a></td><td>8</td><td>14987</td><td>22,560</td></tr>
-    <tr><td><a href="/item/16659-tabarzin">Tabarzin</a></td><td>9</td><td>7440</td><td>22,320</td></tr>
-    <tr><td><a href="/item/17935-tabarzin-+1">Tabarzin +1</a></td><td>9</td><td>7440</td><td>22,320</td></tr>
+    <tr><td><a href="/item/17034-bronze-mace">Bronze Mace</a></td><td>0</td><td>47</td><td>1,360</td></tr>
+    <tr><td><a href="/item/17086-bronze-mace-+1">Bronze Mace +1</a></td><td>0</td><td>57</td><td>1,360</td></tr>
+    <tr><td><a href="/item/12688-scale-finger-gauntlets">Scale Finger Gauntlets</a></td><td>1</td><td>238</td><td>2,480</td></tr>
+    <tr><td><a href="/item/12768-solid-finger-gauntlets">Solid Finger Gauntlets</a></td><td>1</td><td>290</td><td>2,480</td></tr>
+    <tr><td><a href="/item/16704-butterfly-axe">Butterfly Axe</a></td><td>2</td><td>168</td><td>2,400</td></tr>
+    <tr><td><a href="/item/16716-butterfly-axe-+1">Butterfly Axe +1</a></td><td>2</td><td>183</td><td>2,400</td></tr>
+    <tr><td><a href="/item/17036-mythril-mace">Mythril Mace</a></td><td>3</td><td>2256</td><td>5,760</td></tr>
+    <tr><td><a href="/item/17147-mythril-mace-+1">Mythril Mace +1</a></td><td>3</td><td>2736</td><td>5,760</td></tr>
+    <tr><td><a href="/item/16567-knights-sword">Knights Sword</a></td><td>4</td><td>7750</td><td>7,200</td></tr>
+    <tr><td><a href="/item/16800-knights-sword-+1">Knights Sword +1</a></td><td>4</td><td>8525</td><td>7,200</td></tr>
+    <tr><td><a href="/item/16519-schlaeger">Schlaeger</a></td><td>5</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/16813-schlaeger-+1">Schlaeger +1</a></td><td>5</td><td>7200</td><td>2,400</td></tr>
+    <tr><td><a href="/item/16915-hien">Hien</a></td><td>6</td><td>2325</td><td>5,920</td></tr>
+    <tr><td><a href="/item/16916-hien-+1">Hien +1</a></td><td>6</td><td>2402</td><td>5,920</td></tr>
+    <tr><td><a href="/item/13812-holy-breastplate">Holy Breastplate</a></td><td>7</td><td>9000</td><td>7,280</td></tr>
+    <tr><td><a href="/item/13813-divine-breastplate">Divine Breastplate</a></td><td>7</td><td>9500</td><td>7,280</td></tr>
+    <tr><td><a href="/item/16596-flamberge">Flamberge</a></td><td>8</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/16941-flamberge-+1">Flamberge +1</a></td><td>8</td><td>7520</td><td>2,506</td></tr>
+    <tr><td><a href="/item/16659-tabarzin">Tabarzin</a></td><td>9</td><td>7440</td><td>7,440</td></tr>
+    <tr><td><a href="/item/17935-tabarzin-+1">Tabarzin +1</a></td><td>9</td><td>7440</td><td>7,440</td></tr>
    </tbody></table>
   </div>
   <div class="turnin-pattern" id="pat-7" hidden>
    <table class="turnin-table"><thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead><tbody>
-    <tr><td><a href="/item/16640-bronze-axe">Bronze Axe</a></td><td>0</td><td>79</td><td>4,560</td></tr>
-    <tr><td><a href="/item/16646-bronze-axe-+1">Bronze Axe +1</a></td><td>0</td><td>86</td><td>4,560</td></tr>
-    <tr><td><a href="/item/12576-bronze-harness">Bronze Harness</a></td><td>1</td><td>64</td><td>5,040</td></tr>
-    <tr><td><a href="/item/12607-bronze-harness-+1">Bronze Harness +1</a></td><td>1</td><td>64</td><td>5,040</td></tr>
-    <tr><td><a href="/item/16392-metal-knuckles">Metal Knuckles</a></td><td>2</td><td>873</td><td>12,720</td></tr>
-    <tr><td><a href="/item/16437-metal-knuckles-+1">Metal Knuckles +1</a></td><td>2</td><td>873</td><td>12,720</td></tr>
-    <tr><td><a href="/item/16705-greataxe">Greataxe</a></td><td>3</td><td>910</td><td>13,200</td></tr>
-    <tr><td><a href="/item/16717-greataxe-+1">Greataxe +1</a></td><td>3</td><td>991</td><td>13,200</td></tr>
-    <tr><td><a href="/item/16584-mythril-claymore">Mythril Claymore</a></td><td>4</td><td>5250</td><td>20,400</td></tr>
-    <tr><td><a href="/item/16639-fine-claymore">Fine Claymore</a></td><td>4</td><td>5275</td><td>20,400</td></tr>
-    <tr><td><a href="/item/16545-broadsword">Broadsword</a></td><td>5</td><td>3344</td><td>18,960</td></tr>
-    <tr><td><a href="/item/16634-broadsword-+1">Broadsword +1</a></td><td>5</td><td>3572</td><td>18,960</td></tr>
-    <tr><td><a href="/item/16796-mythril-zaghnal">Mythril Zaghnal</a></td><td>6</td><td>6976</td><td>21,360</td></tr>
-    <tr><td><a href="/item/16797-mythril-zaghnal-+1">Mythril Zaghnal +1</a></td><td>6</td><td>7616</td><td>21,360</td></tr>
-    <tr><td><a href="/item/16526-schwert">Schwert</a></td><td>7</td><td>9100</td><td>21,840</td></tr>
-    <tr><td><a href="/item/17635-schwert-+1">Schwert +1</a></td><td>7</td><td>9262</td><td>21,840</td></tr>
-    <tr><td><a href="/item/12803-darksteel-cuisses">Darksteel Cuisses</a></td><td>8</td><td>6500</td><td>21,120</td></tr>
-    <tr><td><a href="/item/14229-darksteel-cuisses-+1">Darksteel Cuisses +1</a></td><td>8</td><td>7150</td><td>21,120</td></tr>
-    <tr><td><a href="/item/16470-gully">Gully</a></td><td>9</td><td>2890</td><td>18,720</td></tr>
-    <tr><td><a href="/item/17621-gully-+1">Gully +1</a></td><td>9</td><td>4590</td><td>18,720</td></tr>
+    <tr><td><a href="/item/16640-bronze-axe">Bronze Axe</a></td><td>0</td><td>79</td><td>1,520</td></tr>
+    <tr><td><a href="/item/16646-bronze-axe-+1">Bronze Axe +1</a></td><td>0</td><td>86</td><td>1,520</td></tr>
+    <tr><td><a href="/item/12576-bronze-harness">Bronze Harness</a></td><td>1</td><td>64</td><td>1,680</td></tr>
+    <tr><td><a href="/item/12607-bronze-harness-+1">Bronze Harness +1</a></td><td>1</td><td>64</td><td>1,680</td></tr>
+    <tr><td><a href="/item/16392-metal-knuckles">Metal Knuckles</a></td><td>2</td><td>873</td><td>4,240</td></tr>
+    <tr><td><a href="/item/16437-metal-knuckles-+1">Metal Knuckles +1</a></td><td>2</td><td>873</td><td>4,240</td></tr>
+    <tr><td><a href="/item/16705-greataxe">Greataxe</a></td><td>3</td><td>910</td><td>4,400</td></tr>
+    <tr><td><a href="/item/16717-greataxe-+1">Greataxe +1</a></td><td>3</td><td>991</td><td>4,400</td></tr>
+    <tr><td><a href="/item/16584-mythril-claymore">Mythril Claymore</a></td><td>4</td><td>5250</td><td>6,800</td></tr>
+    <tr><td><a href="/item/16639-fine-claymore">Fine Claymore</a></td><td>4</td><td>5275</td><td>6,800</td></tr>
+    <tr><td><a href="/item/16545-broadsword">Broadsword</a></td><td>5</td><td>3344</td><td>6,320</td></tr>
+    <tr><td><a href="/item/16634-broadsword-+1">Broadsword +1</a></td><td>5</td><td>3572</td><td>6,320</td></tr>
+    <tr><td><a href="/item/16796-mythril-zaghnal">Mythril Zaghnal</a></td><td>6</td><td>6976</td><td>7,120</td></tr>
+    <tr><td><a href="/item/16797-mythril-zaghnal-+1">Mythril Zaghnal +1</a></td><td>6</td><td>7120</td><td>2,373</td></tr>
+    <tr><td><a href="/item/16526-schwert">Schwert</a></td><td>7</td><td>7280</td><td>2,426</td></tr>
+    <tr><td><a href="/item/17635-schwert-+1">Schwert +1</a></td><td>7</td><td>7280</td><td>2,426</td></tr>
+    <tr><td><a href="/item/12803-darksteel-cuisses">Darksteel Cuisses</a></td><td>8</td><td>6500</td><td>2,466</td></tr>
+    <tr><td><a href="/item/14229-darksteel-cuisses-+1">Darksteel Cuisses +1</a></td><td>8</td><td>7150</td><td>7,040</td></tr>
+    <tr><td><a href="/item/16470-gully">Gully</a></td><td>9</td><td>2890</td><td>6,240</td></tr>
+    <tr><td><a href="/item/17621-gully-+1">Gully +1</a></td><td>9</td><td>3000</td><td>2,080</td></tr>
    </tbody></table>
   </div>
  </section>
 
  <section class="panel pad">
-  <h2>Guild point rewards</h2>
+  <h2 id="gp-rewards">Guild point rewards</h2>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15445-blacksmiths-belt">Blacksmiths Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -526,7 +536,7 @@
  </section>
 
  <section class="panel pad">
-  <h2>Recipes</h2>
+  <h2 id="recipes">Recipes</h2>
   <div class="stat-row">
    <div class="stat"><b>236</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>425</b><span>total</span></div>
@@ -623,6 +633,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

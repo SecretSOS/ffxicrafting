@@ -197,7 +197,7 @@ def build_helm(helm_type):
         items = sorted(by_zone[z], key=lambda x: -x[1])
         total_items += len(items)
         body += f'<details class="zone"><summary>{esc(pretty(z))} <span class="badge">{len(items)} items</span></summary>\n'
-        body += '<div class="zone-body"><table><thead><tr><th>Item</th><th style="width:90px;text-align:right">Chance</th></tr></thead><tbody>\n'
+        body += '<div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>\n'
         for iid, pct in items:
             body += f'<tr><td>{item_link(iid)}</td><td class="pct" style="text-align:right">{pct:.2f}%</td></tr>\n'
         body += '</tbody></table></div></details>\n'
@@ -237,7 +237,7 @@ def build_clamming():
     for cap in sorted(by_kit.keys(), key=lambda x: int(x)):
         items = by_kit[cap]
         body += f'<h3>Kit capacity: {cap} <span class="badge">{len(items)} items</span></h3>\n'
-        body += '<table><thead><tr><th>Item</th><th style="width:90px;text-align:right">Chance</th></tr></thead><tbody>\n'
+        body += '<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>\n'
         for iid, pct in items:
             body += f'<tr><td>{item_link(iid)}</td><td class="pct" style="text-align:right">{pct:.2f}%</td></tr>\n'
         body += '</tbody></table>\n'
@@ -306,7 +306,7 @@ def build_digging():
             ranks = set(it['rank'] for it in layer_items if it['rank'])
             rank_note = f' — requires {", ".join(sorted(ranks))}' if ranks else ''
             body += f'<h3 style="margin-top:.8em">{esc(layer.title())}{rank_note}</h3>\n'
-            body += '<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Weight</th></tr></thead><tbody>\n'
+            body += '<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>\n'
             for it in sorted(layer_items, key=lambda x: -x['weight']):
                 body += f'<tr><td>{item_link(it["id"])}</td><td class="pct" style="text-align:right">{it["weight"]:.0f}</td></tr>\n'
             body += '</tbody></table>\n'
@@ -430,9 +430,17 @@ def build_fishing():
     body += 'species at different rarities. Some fish are quest targets, some are Cooking ingredients, and legendary fish are rare trophies. '
     body += 'Rods can break on big fish, and bait is consumed on each catch (or miss, for losable baits), so matching your gear to your target matters.</p></header>\n'
 
-    # Fish table
-    body += '<section class="panel pad"><h2>Fish</h2>\n'
-    body += '<div style="overflow-x:auto"><table><thead><tr><th>Fish</th><th>Skill</th><th>Size</th><th>Water</th><th>Zones</th><th>Baits</th></tr></thead><tbody>\n'
+    # Tabbed fishing data
+    body += '<section class="panel pad">\n'
+    body += f'<div class="tab-bar" data-tabs>'
+    body += f'<button class="active" data-tab="tab-fish">Fish ({len(fish)})</button>'
+    body += f'<button data-tab="tab-rods">Rods ({len(rods)})</button>'
+    body += f'<button data-tab="tab-baits">Baits ({len(baits)})</button>'
+    body += f'<button data-tab="tab-areas">Areas ({len(zone_fish)} zones)</button>'
+    body += '</div>\n'
+    body += '<div id="tab-fish"><h2>Fish</h2>\n'
+    body += '<div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter fish…" data-filter-target="fishTable" data-filter-count="fishCount"><span class="filter-count" id="fishCount"></span></div>\n'
+    body += '<div style="overflow-x:auto"><table id="fishTable"><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th><th>Zones</th><th>Baits</th></tr></thead><tbody>\n'
     for f in fish:
         fid = f['item_id']
         zones = sorted(fish_zones.get(fid, set()))
@@ -453,31 +461,31 @@ def build_fishing():
         body += f'<td style="font-size:.82rem;color:var(--ink-soft)">{esc(zone_str)}</td>'
         body += f'<td style="font-size:.82rem;color:var(--ink-soft)">{esc(bait_str)}</td></tr>\n'
 
-    body += '</tbody></table></div></section>\n'
+    body += '</tbody></table></div></div>\n'
 
-    # Rods table
-    body += '<section class="panel pad"><h2>Fishing rods</h2>\n'
-    body += '<div style="overflow-x:auto"><table><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th>Attack</th><th>Recovery</th><th>Time</th><th>Breakable</th></tr></thead><tbody>\n'
+    # Rods tab
+    body += '<div id="tab-rods" hidden><h2>Fishing rods</h2>\n'
+    body += '<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th><th data-sort="num">Attack</th><th data-sort="num">Recovery</th><th data-sort="num">Time</th><th>Breakable</th></tr></thead><tbody>\n'
     for r in rods:
         rank_str = f'{r["min_rank"]}–{r["max_rank"]}' if r['min_rank'] != r['max_rank'] else str(r['min_rank'])
         brk = 'Yes' if r['breakable'] else 'No'
         body += f'<tr><td>{item_link(r["item_id"])}</td><td>{r["size_type"] or ""}</td><td>{rank_str}</td>'
         body += f'<td>{r["fish_attack"]}</td><td>{r["fish_recovery"]}</td><td>{r["fish_time"]}</td><td>{brk}</td></tr>\n'
 
-    body += '</tbody></table></div></section>\n'
+    body += '</tbody></table></div></div>\n'
 
-    # Baits table
-    body += '<section class="panel pad"><h2>Baits &amp; lures</h2>\n'
-    body += '<div style="overflow-x:auto"><table><thead><tr><th>Bait</th><th>Type</th><th>Max Hook</th><th>Losable</th><th>Rank Mod</th></tr></thead><tbody>\n'
+    # Baits tab
+    body += '<div id="tab-baits" hidden><h2>Baits &amp; lures</h2>\n'
+    body += '<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Bait</th><th data-sort="text">Type</th><th data-sort="num">Max Hook</th><th>Losable</th><th data-sort="num">Rank Mod</th></tr></thead><tbody>\n'
     for b in baits:
         losable = 'Yes' if b['losable'] else 'No'
         body += f'<tr><td>{item_link(b["item_id"])}</td><td>{b["type"] or ""}</td><td>{b["max_hook"]}</td>'
         body += f'<td>{losable}</td><td>{b["rank_mod"]:+d}</td></tr>\n'
 
-    body += '</tbody></table></div></section>\n'
+    body += '</tbody></table></div></div>\n'
 
-    # Fishing areas by zone
-    body += '<section class="panel pad"><h2>Fishing areas by zone</h2>\n'
+    # Areas tab
+    body += '<div id="tab-areas" hidden><h2>Fishing areas by zone</h2>\n'
     zones = defaultdict(list)
     for a in areas:
         zones[a['zone']].append(a)
@@ -485,12 +493,12 @@ def build_fishing():
     for z in sorted(zones.keys()):
         zone_areas = zones[z]
         body += f'<details class="zone"><summary>{esc(pretty(z))} <span class="badge">{len(zone_areas)} fish</span></summary>\n'
-        body += '<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>\n'
+        body += '<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>\n'
         for a in sorted(zone_areas, key=lambda x: x['rarity']):
             body += f'<tr><td>{item_link(a["fish_item_id"])}</td><td>{esc(a["area"] or "")}</td><td class="pct">{a["rarity"]}</td></tr>\n'
         body += '</tbody></table></div></details>\n'
 
-    body += '</section>\n'
+    body += '</div></section>\n'
 
     out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body)
     fp = os.path.join(OUT, 'fishing.html')

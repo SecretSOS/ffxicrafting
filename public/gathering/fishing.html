@@ -129,8 +129,11 @@ details.zone .zone-body{padding:8px 0 16px}
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/gathering/">Gathering</a><span class="sep">&rsaquo;</span>Fishing</nav>
 <div class="sub-nav"><a href="/gathering/mining">Mining</a><a href="/gathering/logging">Logging</a><a href="/gathering/harvesting">Harvesting</a><a href="/gathering/excavation">Excavation</a><a href="/gathering/gardening">Gardening</a><a href="/gathering/digging">Digging</a><a href="/gathering/fishing" class="cur">Fishing</a><a href="/gathering/clamming">Clamming</a></div><header class="panel pad"><h1>Fishing</h1><p class="lede">Fish, rods, baits, and fishing areas from the server source. Skill is the minimum to hook; difficulty affects the fight.</p><p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">Fishing is a standalone skill that works differently from crafting. Equip a rod and bait, then cast your line at any body of water with the <code>/fish</code> command. When a fish bites, a stamina minigame begins — you must fight the fish by pressing the right arrow key when the prompt appears and releasing when it doesn't. Your rod determines what size fish you can handle and how fast you tire it, while your bait determines what species you can attract. Fishing skill increases with successful catches, and higher skill lets you hook tougher fish. Each zone has its own set of fishable areas with different species at different rarities. Some fish are quest targets, some are Cooking ingredients, and legendary fish are rare trophies. Rods can break on big fish, and bait is consumed on each catch (or miss, for losable baits), so matching your gear to your target matters.</p></header>
-<section class="panel pad"><h2>Fish</h2>
-<div style="overflow-x:auto"><table><thead><tr><th>Fish</th><th>Skill</th><th>Size</th><th>Water</th><th>Zones</th><th>Baits</th></tr></thead><tbody>
+<section class="panel pad">
+<div class="tab-bar" data-tabs><button class="active" data-tab="tab-fish">Fish (138)</button><button data-tab="tab-rods">Rods (18)</button><button data-tab="tab-baits">Baits (39)</button><button data-tab="tab-areas">Areas (95 zones)</button></div>
+<div id="tab-fish"><h2>Fish</h2>
+<div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter fish…" data-filter-target="fishTable" data-filter-count="fishCount"><span class="filter-count" id="fishCount"></span></div>
+<div style="overflow-x:auto"><table id="fishTable"><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th><th>Zones</th><th>Baits</th></tr></thead><tbody>
 <tr><td><a href="/item/65535-gil">Gil</a></td><td>1</td><td>small</td><td>sea/ocean</td><td style="font-size:.82rem;color:var(--ink-soft)">Port Windurst</td><td style="font-size:.82rem;color:var(--ink-soft)"></td></tr>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>1</td><td>small</td><td>sea/ocean</td><td style="font-size:.82rem;color:var(--ink-soft)">Al Zahbi, Bastok Markets, Bastok Mines, Bhaflau Thickets, Bibiki Bay +42 more</td><td style="font-size:.82rem;color:var(--ink-soft)"></td></tr>
 <tr><td><a href="/item/4318-bibiki-urchin">Bibiki Urchin</a></td><td>3</td><td>small</td><td>freshwater</td><td style="font-size:.82rem;color:var(--ink-soft)">Bibiki Bay, Manaclipper</td><td style="font-size:.82rem;color:var(--ink-soft)"></td></tr>
@@ -269,9 +272,9 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5476-abaia">Abaia</a> <span class="tier">legendary</span></td><td>150</td><td>large</td><td>sea/ocean</td><td style="font-size:.82rem;color:var(--ink-soft)"></td><td style="font-size:.82rem;color:var(--ink-soft)">Ball Of Sardine Paste, Ball Of Trout Paste, Frog Lure, Minnow +3</td></tr>
 <tr><td><a href="/item/5468-matsya">Matsya</a> <span class="tier">legendary</span></td><td>150</td><td>large</td><td>sea/ocean</td><td style="font-size:.82rem;color:var(--ink-soft)"></td><td style="font-size:.82rem;color:var(--ink-soft)">Drill Calamary</td></tr>
 <tr><td><a href="/item/4305-ryugu-titan">Ryugu Titan</a> <span class="tier">legendary</span></td><td>150</td><td>large</td><td>freshwater</td><td style="font-size:.82rem;color:var(--ink-soft)">Den of Rancor, Manaclipper, Ship Bound for Mhaura, Ship Bound for Mhaura Pirates, Ship Bound for Selbina +1 more</td><td style="font-size:.82rem;color:var(--ink-soft)">Frog Lure, Lizard Lure, Meatball, Minnow +6</td></tr>
-</tbody></table></div></section>
-<section class="panel pad"><h2>Fishing rods</h2>
-<div style="overflow-x:auto"><table><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th>Attack</th><th>Recovery</th><th>Time</th><th>Breakable</th></tr></thead><tbody>
+</tbody></table></div></div>
+<div id="tab-rods" hidden><h2>Fishing rods</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th><th data-sort="num">Attack</th><th data-sort="num">Recovery</th><th data-sort="num">Time</th><th>Breakable</th></tr></thead><tbody>
 <tr><td><a href="/item/17011-ebisu-fishing-rod">Ebisu Fishing Rod</a></td><td>small</td><td>1–30</td><td>100</td><td>50</td><td>30</td><td>No</td></tr>
 <tr><td><a href="/item/17012-judges-rod">Judges Rod</a></td><td>small</td><td>1–40</td><td>200</td><td>100</td><td>60</td><td>No</td></tr>
 <tr><td><a href="/item/17013-goldfish-basket">Goldfish Basket</a></td><td>small</td><td>1–5</td><td>100</td><td>50</td><td>20</td><td>No</td></tr>
@@ -290,9 +293,9 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/17381-composite-fishing-rod">Composite Fishing Rod</a></td><td>large</td><td>11–24</td><td>100</td><td>70</td><td>43</td><td>Yes</td></tr>
 <tr><td><a href="/item/17383-clothespole">Clothespole</a></td><td>large</td><td>12</td><td>170</td><td>50</td><td>30</td><td>Yes</td></tr>
 <tr><td><a href="/item/17382-single-hook-fishing-rod">Single Hook Fishing Rod</a></td><td>large</td><td>14–13</td><td>100</td><td>80</td><td>45</td><td>Yes</td></tr>
-</tbody></table></div></section>
-<section class="panel pad"><h2>Baits &amp; lures</h2>
-<div style="overflow-x:auto"><table><thead><tr><th>Bait</th><th>Type</th><th>Max Hook</th><th>Losable</th><th>Rank Mod</th></tr></thead><tbody>
+</tbody></table></div></div>
+<div id="tab-baits" hidden><h2>Baits &amp; lures</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Bait</th><th data-sort="text">Type</th><th data-sort="num">Max Hook</th><th>Losable</th><th data-sort="num">Rank Mod</th></tr></thead><tbody>
 <tr><td><a href="/item/16997-ball-of-crayfish-paste">Ball Of Crayfish Paste</a></td><td>bait</td><td>1</td><td>Yes</td><td>+0</td></tr>
 <tr><td><a href="/item/16998-ball-of-insect-paste">Ball Of Insect Paste</a></td><td>bait</td><td>1</td><td>Yes</td><td>+0</td></tr>
 <tr><td><a href="/item/16996-ball-of-sardine-paste">Ball Of Sardine Paste</a></td><td>bait</td><td>1</td><td>Yes</td><td>+0</td></tr>
@@ -332,10 +335,10 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/17392-slice-of-sardine">Slice Of Sardine</a></td><td>bait</td><td>1</td><td>Yes</td><td>+0</td></tr>
 <tr><td><a href="/item/17003-super-scoop">Super Scoop</a></td><td>bait</td><td>3</td><td>Yes</td><td>+0</td></tr>
 <tr><td><a href="/item/17404-worm-lure">Worm Lure</a></td><td>lure</td><td>1</td><td>Yes</td><td>+0</td></tr>
-</tbody></table></div></section>
-<section class="panel pad"><h2>Fishing areas by zone</h2>
+</tbody></table></div></div>
+<div id="tab-areas" hidden><h2>Fishing areas by zone</h2>
 <details class="zone"><summary>Aht Urhgan Whitegate <span class="badge">5 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5448-kalamar">Kalamar</a></td><td>Whole Zone</td><td class="pct">850</td></tr>
 <tr><td><a href="/item/2341-hydrogauge">Hydrogauge</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
@@ -343,7 +346,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5449-hamsi">Hamsi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Al Zahbi <span class="badge">10 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5459-sazanbaligi">Sazanbaligi</a></td><td>Whole Zone</td><td class="pct">650</td></tr>
@@ -356,7 +359,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Arrapago Reef <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5454-mercanbaligi">Mercanbaligi</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/5135-rhinochimera">Rhinochimera</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/5455-ahtapot">Ahtapot</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -366,7 +369,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5453-istakoz">Istakoz</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Aydeewa Subterrane <span class="badge">5 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4309-cave-cherax">Cave Cherax</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -374,7 +377,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/2216-lamp-marimo">Lamp Marimo</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Bastok Markets <span class="badge">17 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>North Side</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>North Side</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>South Side</td><td class="pct">500</td></tr>
@@ -394,7 +397,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4428-dark-bass">Dark Bass</a></td><td>South Side</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Bastok Mines <span class="badge">6 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
@@ -403,7 +406,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Batallia Downs <span class="badge">26 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>North Seaside</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>South Seaside</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>North Seaside</td><td class="pct">300</td></tr>
@@ -432,7 +435,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4483-tiger-cod">Tiger Cod</a></td><td>South Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Beaucedine Glacier <span class="badge">18 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Seaside</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/16451-mythril-dagger">Mythril Dagger</a></td><td>Ponds</td><td class="pct">80</td></tr>
 <tr><td><a href="/item/4474-gigant-squid">Gigant Squid</a></td><td>Seaside</td><td class="pct">100</td></tr>
@@ -453,7 +456,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4483-tiger-cod">Tiger Cod</a></td><td>Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Bhaflau Thickets <span class="badge">9 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5137-turnabaligi">Turnabaligi</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/5462-morinabaligi">Morinabaligi</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -465,7 +468,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5461-alabaligi">Alabaligi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Bibiki Bay <span class="badge">77 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4318-bibiki-urchin">Bibiki Urchin</a></td><td>PI - East Beach</td><td class="pct">100</td></tr>
 <tr><td><a href="/item/4318-bibiki-urchin">Bibiki Urchin</a></td><td>PI - North Beach</td><td class="pct">100</td></tr>
 <tr><td><a href="/item/4318-bibiki-urchin">Bibiki Urchin</a></td><td>PI - South Beach</td><td class="pct">100</td></tr>
@@ -545,7 +548,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>PI - West Beach</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Bostaunieux Oubliette <span class="badge">5 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Whole Zone</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -553,7 +556,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Buburimu Peninsula <span class="badge">12 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/16655-rusty-pick">Rusty Pick</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
@@ -568,7 +571,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4403-yellow-globe">Yellow Globe</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Caedarva Mire <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5138-black-ghost">Black Ghost</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5464-kaplumbaga">Kaplumbaga</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
@@ -578,7 +581,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5465-caedarva-frog">Caedarva Frog</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Cape Teriggan <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4484-shall-shell">Shall Shell</a></td><td>Whole Zone</td><td class="pct">600</td></tr>
 <tr><td><a href="/item/4360-bastore-sardine">Bastore Sardine</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
@@ -588,7 +591,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Carpenters Landing <span class="badge">37 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Central Landing</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>North Landing</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>North Landing</td><td class="pct">500</td></tr>
@@ -628,16 +631,16 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5126-muddy-siredon">Muddy Siredon</a></td><td>South Landing</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Castle Oztroja <span class="badge">1 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Dangruf Wadi <span class="badge">2 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Davoi <span class="badge">28 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Basin of a Waterfall</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Pond</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Wailing Pond</td><td class="pct">200</td></tr>
@@ -668,7 +671,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Pond</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Den of Rancor <span class="badge">24 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Misc Water</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Pool E-8</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Pool E-8</td><td class="pct">200</td></tr>
@@ -695,7 +698,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Pool F-11</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Dragons Aery <span class="badge">9 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Whole Zone</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/16451-mythril-dagger">Mythril Dagger</a></td><td>Whole Zone</td><td class="pct">80</td></tr>
 <tr><td><a href="/item/4473-crescent-fish">Crescent Fish</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
@@ -707,7 +710,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>East Ronfaure <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
@@ -717,7 +720,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>East Sarutabaruta <span class="badge">25 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4461-bastore-bream">Bastore Bream</a></td><td>Seaside</td><td class="pct">250</td></tr>
 <tr><td><a href="/item/4473-crescent-fish">Crescent Fish</a></td><td>Lake Tepokalipuka</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Lake Tepokalipuka</td><td class="pct">500</td></tr>
@@ -745,7 +748,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Eastern Altepa Desert <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16606-rusty-greatsword">Rusty Greatsword</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 <tr><td><a href="/item/4306-giant-donko">Giant Donko</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
@@ -755,12 +758,12 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Feiyin <span class="badge">2 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ghelsba Outpost <span class="badge">11 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4402-red-terrapin">Red Terrapin</a></td><td>Pond North</td><td class="pct">750</td></tr>
 <tr><td><a href="/item/4402-red-terrapin">Red Terrapin</a></td><td>Pond South</td><td class="pct">750</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>River</td><td class="pct">750</td></tr>
@@ -774,7 +777,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>River</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Giddeus <span class="badge">25 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Giddeus Spring</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Misc Puddles</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Pond - North</td><td class="pct">300</td></tr>
@@ -802,7 +805,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Pond - West</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Gusgen Mines <span class="badge">57 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Interior Pool Center</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Interior Pool East</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Interior Pool West</td><td class="pct">60</td></tr>
@@ -862,13 +865,13 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Pool Upper West</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Heavens Tower <span class="badge">3 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Jugner Forest <span class="badge">47 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Lake Mechieume - Main</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/4454-emperor-fish">Emperor Fish</a></td><td>Lake Mechieume - Mouth</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Lake Mechieume - Mouth</td><td class="pct">200</td></tr>
@@ -918,7 +921,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>River</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Kazham <span class="badge">11 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -932,7 +935,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Korroloka Tunnel <span class="badge">19 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Fresh Water</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Fresh Water</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Salt Water</td><td class="pct">200</td></tr>
@@ -954,7 +957,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Salt Water</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Kuftal Tunnel <span class="badge">6 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/4309-cave-cherax">Cave Cherax</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -963,7 +966,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4291-sandfish">Sandfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>La Theine Plateau <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/4402-red-terrapin">Red Terrapin</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
@@ -973,16 +976,16 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Labyrinth of Onzozo <span class="badge">2 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Lower Delkfutts Tower <span class="badge">1 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Lower Jeuno <span class="badge">10 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4384-black-sole">Black Sole</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -995,7 +998,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4483-tiger-cod">Tiger Cod</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Lufaise Meadows <span class="badge">11 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4454-emperor-fish">Emperor Fish</a></td><td>Leremieu Lagoon</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Leremieu Lagoon</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Rafeloux River</td><td class="pct">500</td></tr>
@@ -1009,7 +1012,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Mamook <span class="badge">10 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Pond</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Pond</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5139-betta">Betta</a></td><td>Pond</td><td class="pct">600</td></tr>
@@ -1022,7 +1025,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5461-alabaligi">Alabaligi</a></td><td>Pond</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Manaclipper <span class="badge">20 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4318-bibiki-urchin">Bibiki Urchin</a></td><td>Dhalmel Rock</td><td class="pct">100</td></tr>
 <tr><td><a href="/item/4476-titanictus">Titanictus</a></td><td>Dhalmel Rock</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4399-bluetail">Bluetail</a></td><td>Dhalmel Rock</td><td class="pct">650</td></tr>
@@ -1045,7 +1048,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Dhalmel Rock</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Mhaura <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1055,11 +1058,11 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4403-yellow-globe">Yellow Globe</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Middle Delkfutts Tower <span class="badge">1 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Misareaux Coast <span class="badge">12 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Cascade Edellaine</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/4463-takitaro">Takitaro</a></td><td>Cascade Edellaine</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Rafeloux River</td><td class="pct">500</td></tr>
@@ -1074,14 +1077,14 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Mount Zhayolm <span class="badge">4 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5448-kalamar">Kalamar</a></td><td>Whole Zone</td><td class="pct">850</td></tr>
 <tr><td><a href="/item/5447-denizanasi">Denizanasi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 <tr><td><a href="/item/5449-hamsi">Hamsi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Nashmau <span class="badge">8 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5133-pterygotus">Pterygotus</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/5454-mercanbaligi">Mercanbaligi</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/5455-ahtapot">Ahtapot</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1092,7 +1095,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5453-istakoz">Istakoz</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Norg <span class="badge">10 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
@@ -1105,7 +1108,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>North Gustaberg <span class="badge">17 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Basin of Waterfall</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Basin of Waterfall</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>River</td><td class="pct">500</td></tr>
@@ -1125,7 +1128,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>River</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Northern San Doria <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -1135,7 +1138,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Oldton Movalpolos <span class="badge">10 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16606-rusty-greatsword">Rusty Greatsword</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/16655-rusty-pick">Rusty Pick</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/4316-armored-pisces">Armored Pisces</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1148,7 +1151,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Open Sea Route to Al Zahbi <span class="badge">11 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5141-veydal-wrasse">Veydal Wrasse</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/5134-mola-mola">Mola Mola</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1162,7 +1165,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4443-cobalt-jellyfish">Cobalt Jellyfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Open Sea Route to Mhaura <span class="badge">11 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5141-veydal-wrasse">Veydal Wrasse</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/5134-mola-mola">Mola Mola</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1176,7 +1179,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4443-cobalt-jellyfish">Cobalt Jellyfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ordelles Caves <span class="badge">6 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1185,7 +1188,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Palborough Mines <span class="badge">5 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4429-black-eel">Black Eel</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
 <tr><td><a href="/item/4426-tricolored-carp">Tricolored Carp</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
@@ -1193,7 +1196,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Pashhow Marshlands <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/16655-rusty-pick">Rusty Pick</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
@@ -1203,7 +1206,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Phanauet Channel <span class="badge">12 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4315-lungfish">Lungfish</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/4319-tricorn">Tricorn</a></td><td>Whole Zone</td><td class="pct">650</td></tr>
 <tr><td><a href="/item/4402-red-terrapin">Red Terrapin</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -1218,11 +1221,11 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5126-muddy-siredon">Muddy Siredon</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Phomiuna Aqueducts <span class="badge">1 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Port Bastok <span class="badge">8 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4461-bastore-bream">Bastore Bream</a></td><td>Whole Zone</td><td class="pct">250</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1233,7 +1236,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Port Jeuno <span class="badge">12 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16451-mythril-dagger">Mythril Dagger</a></td><td>Whole Zone</td><td class="pct">80</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1248,7 +1251,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4483-tiger-cod">Tiger Cod</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Port San Doria <span class="badge">8 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -1259,7 +1262,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Port Windurst <span class="badge">8 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4461-bastore-bream">Bastore Bream</a></td><td>Whole Zone</td><td class="pct">250</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1270,7 +1273,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/65535-gil">Gil</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Qufim Island <span class="badge">30 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Southwest Seaside</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/4474-gigant-squid">Gigant Squid</a></td><td>Northwest Seaside</td><td class="pct">100</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Northwest Seaside</td><td class="pct">300</td></tr>
@@ -1303,13 +1306,13 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4483-tiger-cod">Tiger Cod</a></td><td>Southwest Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Quicksand Caves <span class="badge">3 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4309-cave-cherax">Cave Cherax</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Rabao <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
@@ -1319,16 +1322,16 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ranguemont Pass <span class="badge">1 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Romaeve <span class="badge">2 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Rolanberry Fields <span class="badge">30 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Fountain of Promises</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Small Fountain 1</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Small Fountain 2</td><td class="pct">200</td></tr>
@@ -1361,13 +1364,13 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Small Fountain 2</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ruaun Gardens <span class="badge">3 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Sauromugue Champaign <span class="badge">9 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/16537-mythril-sword">Mythril Sword</a></td><td>Whole Zone</td><td class="pct">60</td></tr>
 <tr><td><a href="/item/4451-silver-shark">Silver Shark</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1379,7 +1382,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4483-tiger-cod">Tiger Cod</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Sea Serpent Grotto <span class="badge">47 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Interior of Hidden Door - Mythril</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Other Seaside</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td>Pond Under a Bridge</td><td class="pct">200</td></tr>
@@ -1429,7 +1432,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Pond Under a Bridge</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Selbina <span class="badge">9 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
@@ -1441,7 +1444,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ship Bound for Mhaura <span class="badge">12 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4451-silver-shark">Silver Shark</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4476-titanictus">Titanictus</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1456,7 +1459,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ship Bound for Mhaura Pirates <span class="badge">14 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4451-silver-shark">Silver Shark</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4476-titanictus">Titanictus</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1473,7 +1476,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ship Bound for Selbina <span class="badge">12 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4451-silver-shark">Silver Shark</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4476-titanictus">Titanictus</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1488,7 +1491,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ship Bound for Selbina Pirates <span class="badge">14 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4451-silver-shark">Silver Shark</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4476-titanictus">Titanictus</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1505,7 +1508,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Silver Sea Route to Al Zahbi <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5140-kalkanbaligi">Kalkanbaligi</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5452-uskumru">Uskumru</a></td><td>Whole Zone</td><td class="pct">550</td></tr>
 <tr><td><a href="/item/5451-kilicbaligi">Kilicbaligi</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
@@ -1515,7 +1518,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5449-hamsi">Hamsi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Silver Sea Route to Nashmau <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5140-kalkanbaligi">Kalkanbaligi</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/5452-uskumru">Uskumru</a></td><td>Whole Zone</td><td class="pct">550</td></tr>
 <tr><td><a href="/item/5451-kilicbaligi">Kilicbaligi</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
@@ -1525,7 +1528,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5449-hamsi">Hamsi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>South Gustaberg <span class="badge">15 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Hot Springs</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/4461-bastore-bream">Bastore Bream</a></td><td>Seaside</td><td class="pct">250</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Hot Springs</td><td class="pct">300</td></tr>
@@ -1543,7 +1546,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Talacca Cove <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5454-mercanbaligi">Mercanbaligi</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
 <tr><td><a href="/item/5455-ahtapot">Ahtapot</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1553,18 +1556,18 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5453-istakoz">Istakoz</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Tavnazian Safehold <span class="badge">2 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/90-rusty-bucket">Rusty Bucket</a></td><td>Whole Zone</td><td class="pct">900</td></tr>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Temple of Uggalepih <span class="badge">3 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 <tr><td><a href="/item/4401-moat-carp">Moat Carp</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>The Boyahda Tree <span class="badge">20 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4454-emperor-fish">Emperor Fish</a></td><td>Waterfall Basin - Hidden</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Other Waterside</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Other Waterside</td><td class="pct">500</td></tr>
@@ -1587,24 +1590,24 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Waterfall Basin - Hidden</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>The Sanctuary of Zitah <span class="badge">4 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4402-red-terrapin">Red Terrapin</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
 <tr><td><a href="/item/4428-dark-bass">Dark Bass</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 <tr><td><a href="/item/4528-crystal-bass">Crystal Bass</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>The Shrine of Ruavitau <span class="badge">3 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/13454-copper-ring">Copper Ring</a></td><td>Whole Zone</td><td class="pct">800</td></tr>
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Upper Delkfutts Tower <span class="badge">1 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Valkurm Dunes <span class="badge">14 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1621,7 +1624,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Wajaom Woodlands <span class="badge">10 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/5137-turnabaligi">Turnabaligi</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/5462-morinabaligi">Morinabaligi</a></td><td>Whole Zone</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
@@ -1634,7 +1637,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/5461-alabaligi">Alabaligi</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>West Ronfaure <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Knightwell</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Knightwell</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4402-red-terrapin">Red Terrapin</a></td><td>Knightwell</td><td class="pct">750</td></tr>
@@ -1644,7 +1647,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Knightwell</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>West Sarutabaruta <span class="badge">17 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4461-bastore-bream">Bastore Bream</a></td><td>Seaside</td><td class="pct">250</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Pond</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Seaside</td><td class="pct">500</td></tr>
@@ -1664,7 +1667,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4514-quus">Quus</a></td><td>Seaside</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Western Altepa Desert <span class="badge">15 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Central Spring</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Oasis of Hubol</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Central Spring</td><td class="pct">500</td></tr>
@@ -1682,7 +1685,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Oasis of Hubol</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Windurst Walls <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -1692,7 +1695,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Windurst Waters <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -1702,7 +1705,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Windurst Woods <span class="badge">7 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Whole Zone</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/4427-gold-carp">Gold Carp</a></td><td>Whole Zone</td><td class="pct">750</td></tr>
@@ -1712,7 +1715,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Yhoator Jungle <span class="badge">50 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Teardrop Spring</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Bloodlet Spring</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Bloodlet Spring</td><td class="pct">500</td></tr>
@@ -1765,7 +1768,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4290-elshimo-frog">Elshimo Frog</a></td><td>Underground Pool 3</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Yughott Grotto <span class="badge">5 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/12522-rusty-cap">Rusty Cap</a></td><td>Whole Zone</td><td class="pct">200</td></tr>
 <tr><td><a href="/item/13456-silver-ring">Silver Ring</a></td><td>Whole Zone</td><td class="pct">300</td></tr>
 <tr><td><a href="/item/16655-rusty-pick">Rusty Pick</a></td><td>Whole Zone</td><td class="pct">400</td></tr>
@@ -1773,7 +1776,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Whole Zone</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Yuhtunga Jungle <span class="badge">62 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/4473-crescent-fish">Crescent Fish</a></td><td>Gremini Falls</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/4473-crescent-fish">Crescent Fish</a></td><td>Northeast Pond</td><td class="pct">450</td></tr>
 <tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td>Gremini Falls</td><td class="pct">500</td></tr>
@@ -1838,7 +1841,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>Southwest Waterfall - South</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Zeruhn Mines <span class="badge">15 fish</span></summary>
-<div class="zone-body"><table><thead><tr><th>Fish</th><th>Area</th><th>Rarity</th></tr></thead><tbody>
+<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>Pool</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14242-rusty-subligar">Rusty Subligar</a></td><td>Pool</td><td class="pct">500</td></tr>
 <tr><td><a href="/item/14117-rusty-leggings">Rusty Leggings</a></td><td>River</td><td class="pct">500</td></tr>
@@ -1855,7 +1858,7 @@ details.zone .zone-body{padding:8px 0 16px}
 <tr><td><a href="/item/4472-crayfish">Crayfish</a></td><td>River</td><td class="pct">1000</td></tr>
 <tr><td><a href="/item/4515-copper-frog">Copper Frog</a></td><td>River</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
-</section>
+</div></section>
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
@@ -1892,6 +1895,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

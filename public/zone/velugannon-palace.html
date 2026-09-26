@@ -133,7 +133,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div style="clear:both"></div></header>
 <div class="jump"><a href="#caskets">Field caskets</a><a href="#coffers">Treasure coffers</a><a href="#mobs">Monsters</a></div>
 <section class="panel pad" id="caskets"><h2>Field caskets</h2>
-<table><thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
+<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
 <tr><td><a href="/item/852-lizard-skin">Lizard Skin</a></td><td class="pct" style="text-align:right">5.90%</td></tr>
 <tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">5.89%</td></tr>
 <tr><td><a href="/item/4117-hi-potion-1">Hi-Potion +1</a></td><td class="pct" style="text-align:right">5.70%</td></tr>
@@ -268,6 +268,7 @@ function tick(){
 tick();setInterval(tick,2400);
 })();</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

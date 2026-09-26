@@ -25,6 +25,7 @@
 <url><loc>https://ffxicrafting.com/gathering/fishing</loc></url>
 <url><loc>https://ffxicrafting.com/gathering/clamming</loc></url>
 <url><loc>https://ffxicrafting.com/zone/</loc></url>
+<url><loc>https://ffxicrafting.com/zone/aht-urhgan-whitegate</loc></url>
 <url><loc>https://ffxicrafting.com/zone/altaieu</loc></url>
 <url><loc>https://ffxicrafting.com/zone/alzadaal-undersea-ruins</loc></url>
 <url><loc>https://ffxicrafting.com/zone/arrapago-reef</loc></url>
@@ -1660,6 +1661,7 @@
 <url><loc>https://ffxicrafting.com/item/4174-vile-elixir</loc></url>
 <url><loc>https://ffxicrafting.com/item/4175-vile-elixir-1</loc></url>
 <url><loc>https://ffxicrafting.com/item/4181-scroll-of-instant-warp</loc></url>
+<url><loc>https://ffxicrafting.com/item/4182-scroll-of-instant-reraise</loc></url>
 <url><loc>https://ffxicrafting.com/item/4183-konron-hassen</loc></url>
 <url><loc>https://ffxicrafting.com/item/4184-kongou-inaho</loc></url>
 <url><loc>https://ffxicrafting.com/item/4185-meifu-goma</loc></url>
@@ -2423,6 +2425,7 @@
 <url><loc>https://ffxicrafting.com/item/5907-winterflower</loc></url>
 <url><loc>https://ffxicrafting.com/item/5963-senroh-sardine</loc></url>
 <url><loc>https://ffxicrafting.com/item/6058-klimaform-schema</loc></url>
+<url><loc>https://ffxicrafting.com/item/6380-refined-chair-set</loc></url>
 <url><loc>https://ffxicrafting.com/item/8800-azuki-bean</loc></url>
 <url><loc>https://ffxicrafting.com/item/8805-woodworking-kit-5</loc></url>
 <url><loc>https://ffxicrafting.com/item/8806-woodworking-kit-10</loc></url>
@@ -4590,6 +4593,8 @@
 <url><loc>https://ffxicrafting.com/item/15526-regen-collar</loc></url>
 <url><loc>https://ffxicrafting.com/item/15539-orochi-nodowa</loc></url>
 <url><loc>https://ffxicrafting.com/item/15540-orochi-nodowa-1</loc></url>
+<url><loc>https://ffxicrafting.com/item/15541-homing-ring</loc></url>
+<url><loc>https://ffxicrafting.com/item/15542-return-ring</loc></url>
 <url><loc>https://ffxicrafting.com/item/15558-mighty-ring</loc></url>
 <url><loc>https://ffxicrafting.com/item/15559-vision-ring</loc></url>
 <url><loc>https://ffxicrafting.com/item/15578-crow-hose</loc></url>
@@ -4632,6 +4637,8 @@
 <url><loc>https://ffxicrafting.com/item/15732-stout-gamashes</loc></url>
 <url><loc>https://ffxicrafting.com/item/15738-tabin-boots</loc></url>
 <url><loc>https://ffxicrafting.com/item/15739-tabin-boots-1</loc></url>
+<url><loc>https://ffxicrafting.com/item/15761-chariot-band</loc></url>
+<url><loc>https://ffxicrafting.com/item/15762-empress-band</loc></url>
 <url><loc>https://ffxicrafting.com/item/15770-random-ring</loc></url>
 <url><loc>https://ffxicrafting.com/item/15771-shining-ring</loc></url>
 <url><loc>https://ffxicrafting.com/item/15772-scintillant-ring</loc></url>

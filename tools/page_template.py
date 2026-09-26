@@ -188,6 +188,7 @@ def page_scripts():
 <script>{SIDEBAR_JS}</script>
 <script>{VANA_CLOCK_JS}</script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 '''
 
