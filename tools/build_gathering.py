@@ -129,6 +129,11 @@ HELM_INFO = {
         'tool_id': 605,
         'desc': 'Mining point drops by zone. Chance shows the per-swing probability of obtaining each item.',
         'source': 'scripts/globals/hobbies/helm/data.lua',
+        'intro': 'Mining lets you extract ores, stones, and minerals from designated mining points found in caves, mountains, and underground areas. '
+                 'Equip a Pickaxe and target a mining point (a glowing vein on the ground or wall) to swing at it. '
+                 'Each swing has a chance to break the pickaxe, and each point disappears after a set number of successful swings. '
+                 'Mining points respawn on a timer. The drops you receive are random, weighted by the zone you are in. '
+                 'Many ores and stones obtained from mining are key ingredients for Smithing, Goldsmithing, and Alchemy recipes.',
     },
     'logging': {
         'title': 'Logging',
@@ -136,6 +141,11 @@ HELM_INFO = {
         'tool_id': 1021,
         'desc': 'Logging point drops by zone. Chance shows the per-swing probability of obtaining each item.',
         'source': 'scripts/globals/hobbies/helm/data.lua',
+        'intro': 'Logging lets you chop logs and harvest wood from designated logging points in forested zones. '
+                 'Equip a Hatchet and target a logging point (a tree stump or marked tree) to swing at it. '
+                 'Each swing has a chance to break the hatchet, and each point disappears after a set number of successful swings. '
+                 'Logging points respawn on a timer. The logs and lumber obtained are essential materials for Woodworking recipes, '
+                 'and some zones yield rare woods that are highly valued for high-level crafts.',
     },
     'harvesting': {
         'title': 'Harvesting',
@@ -143,6 +153,10 @@ HELM_INFO = {
         'tool_id': 1020,
         'desc': 'Harvesting point drops by zone. Chance shows the per-swing probability of obtaining each item.',
         'source': 'scripts/globals/hobbies/helm/data.lua',
+        'intro': 'Harvesting lets you gather herbs, fibers, and plant materials from designated harvesting points in open fields and grasslands. '
+                 'Equip a Sickle and target a harvesting point (a patch of tall grass or flowers) to swing at it. '
+                 'Each swing has a chance to break the sickle, and each point disappears after a set number of successful swings. '
+                 'Harvesting points respawn on a timer. The grasses, cotton, and ingredients obtained are used in Clothcraft, Cooking, and Alchemy.',
     },
     'excavation': {
         'title': 'Excavation',
@@ -150,6 +164,10 @@ HELM_INFO = {
         'tool_id': 605,
         'desc': 'Excavation point drops by zone. Chance shows the per-swing probability of obtaining each item.',
         'source': 'scripts/globals/hobbies/helm/data.lua',
+        'intro': 'Excavation lets you dig up bones, fossils, and buried artifacts from designated excavation points found in specific zones like Attohwa Chasm, '
+                 'Maze of Shakhrami, and the Korroloka Tunnel. Equip a Pickaxe and target an excavation point to swing at it. '
+                 'Each swing has a chance to break the pickaxe. Excavation points yield different items from mining points even when using the same tool. '
+                 'Excavated materials are commonly used in Bonecraft and sometimes Alchemy.',
     },
 }
 
@@ -168,7 +186,10 @@ def build_helm(helm_type):
     zones = sorted(by_zone.keys(), key=lambda z: (-len(by_zone[z]), z))
 
     body = f'<header class="panel pad"><h1>{info["title"]}</h1>'
-    body += f'<p class="lede">{info["desc"]} Tool: {item_link(info["tool_id"])}.</p></header>\n'
+    body += f'<p class="lede">{info["desc"]} Tool: {item_link(info["tool_id"])}.</p>'
+    if info.get('intro'):
+        body += f'<p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">{info["intro"]}</p>'
+    body += '</header>\n'
     body += '<section class="panel pad">\n'
 
     total_items = 0
@@ -205,6 +226,11 @@ def build_clamming():
 
     body = '<header class="panel pad"><h1>Clamming</h1>'
     body += '<p class="lede">Clamming in Bibiki Bay. Items available depend on your clamming kit capacity. Requires the Clamming Kit key item.</p>'
+    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">'
+    body += 'Clamming is a gathering activity exclusive to Bibiki Bay. To get started, obtain a Clamming Kit from the NPC Toh Zonikki near the zone entrance. '
+    body += 'Once equipped, target a bubbling clam point along the shoreline and select it to dig. Each dig pulls a random item from the loot table, and each item '
+    body += 'has a weight value that fills your bucket. If the bucket overflows, it breaks and you lose everything inside. The key is knowing when to stop and trade '
+    body += 'the kit back to the NPC to collect your items. Upgrading your kit increases its capacity, letting you hold heavier (and rarer) finds.</p>'
     body += '<p class="note">In current LandSandBoat code, tide level has no effect on clamming results.</p></header>\n'
     body += '<section class="panel pad">\n'
 
@@ -252,7 +278,14 @@ def build_digging():
     layer_order = {'regular': 0, 'burrow': 1, 'bore': 2, 'treasure': 3}
 
     body = '<header class="panel pad"><h1>Chocobo digging</h1>'
-    body += '<p class="lede">Items obtainable by chocobo digging, grouped by zone. Deeper layers (burrow, bore, treasure) require higher dig ranks. Weight indicates relative rarity within a layer.</p></header>\n'
+    body += '<p class="lede">Items obtainable by chocobo digging, grouped by zone. Weight indicates relative drop chance within the zone.</p>'
+    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">'
+    body += 'Chocobo digging lets you unearth items while riding your chocobo in the field. Simply call your chocobo, mount up, and use the Dig command (available via '
+    body += 'the ability menu or a macro: <code>/dig</code>). Your chocobo will scratch at the ground and may find an item buried beneath. '
+    body += 'Your digging skill improves with use, unlocking higher ranks from Amateur through Expert. Higher ranks give access to rarer items and improve your chance of '
+    body += 'finding something on each dig. Each zone has its own loot table, so different areas yield different materials. '
+    body += 'Some items only appear at night, and certain zones have day-dependent elemental ore drops tied to the current Vana\'diel day element. '
+    body += 'There is a limit on how many times you can dig per Vana\'diel day before your chocobo tires out.</p></header>\n'
     body += '<section class="panel pad">\n'
 
     total_items = 0
@@ -316,7 +349,13 @@ def build_gardening():
         })
 
     body = '<header class="panel pad"><h1>Gardening</h1>'
-    body += '<p class="lede">Plant a seed in a flowerpot, feed it crystals, and harvest the result. Two-crystal seeds (herb, tree cuttings, tree saplings, wildgrass) accept two crystals fed over time; single-crystal seeds only use one.</p></header>\n'
+    body += '<p class="lede">Plant a seed in a flowerpot, feed it crystals, and harvest the result. Two-crystal seeds (herb, tree cuttings, tree saplings, wildgrass) accept two crystals fed over time; single-crystal seeds only use one.</p>'
+    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">'
+    body += 'Gardening is done inside your Mog House using flowerpots. Buy a flowerpot from the Mog House furnishing NPC, place it in your house, and plant a seed. '
+    body += 'Over real-world time your plant will grow through several stages. Feeding it elemental crystals during growth determines what it produces at harvest. '
+    body += 'Different seed and crystal combinations yield different items — the tables below show every possible outcome with exact weights. '
+    body += 'Gardening is a popular way to obtain crafting materials, rare seeds, and elemental ores without leaving town. '
+    body += 'You can tend up to 10 flowerpots across your Mog House and storage, making it a reliable passive income source.</p></header>\n'
 
     for seed_num in sorted(data.keys()):
         sname, sid = SEED_NAMES.get(seed_num, (f'Seed Type {seed_num}', None))
@@ -382,7 +421,14 @@ def build_fishing():
         fish_zones[a['fish_item_id']].add(a['zone'])
 
     body = '<header class="panel pad"><h1>Fishing</h1>'
-    body += '<p class="lede">Fish, rods, baits, and fishing areas from the server source. Skill is the minimum to hook; difficulty affects the fight.</p></header>\n'
+    body += '<p class="lede">Fish, rods, baits, and fishing areas from the server source. Skill is the minimum to hook; difficulty affects the fight.</p>'
+    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">'
+    body += 'Fishing is a standalone skill that works differently from crafting. Equip a rod and bait, then cast your line at any body of water with the <code>/fish</code> command. '
+    body += 'When a fish bites, a stamina minigame begins — you must fight the fish by pressing the right arrow key when the prompt appears and releasing when it doesn\'t. '
+    body += 'Your rod determines what size fish you can handle and how fast you tire it, while your bait determines what species you can attract. '
+    body += 'Fishing skill increases with successful catches, and higher skill lets you hook tougher fish. Each zone has its own set of fishable areas with different '
+    body += 'species at different rarities. Some fish are quest targets, some are Cooking ingredients, and legendary fish are rare trophies. '
+    body += 'Rods can break on big fish, and bait is consumed on each catch (or miss, for losable baits), so matching your gear to your target matters.</p></header>\n'
 
     # Fish table
     body += '<section class="panel pad"><h2>Fish</h2>\n'

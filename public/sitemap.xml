@@ -220,6 +220,7 @@
 <url><loc>https://ffxicrafting.com/item/102-flower-stand</loc></url>
 <url><loc>https://ffxicrafting.com/item/103-goldfish-bowl</loc></url>
 <url><loc>https://ffxicrafting.com/item/104-tarutaru-folding-screen</loc></url>
+<url><loc>https://ffxicrafting.com/item/106-red-jar</loc></url>
 <url><loc>https://ffxicrafting.com/item/120-freshwater-aquarium</loc></url>
 <url><loc>https://ffxicrafting.com/item/121-saltwater-aquarium</loc></url>
 <url><loc>https://ffxicrafting.com/item/122-amir-bed</loc></url>
@@ -383,6 +384,7 @@
 <url><loc>https://ffxicrafting.com/item/557-ahriman-lens</loc></url>
 <url><loc>https://ffxicrafting.com/item/572-bag-of-herb-seeds</loc></url>
 <url><loc>https://ffxicrafting.com/item/573-bag-of-vegetable-seeds</loc></url>
+<url><loc>https://ffxicrafting.com/item/574-bag-of-fruit-seeds</loc></url>
 <url><loc>https://ffxicrafting.com/item/575-bag-of-grain-seeds</loc></url>
 <url><loc>https://ffxicrafting.com/item/582-meteorite</loc></url>
 <url><loc>https://ffxicrafting.com/item/583-smooth-stone</loc></url>
@@ -508,7 +510,6 @@
 <url><loc>https://ffxicrafting.com/item/729-bloodwood-log</loc></url>
 <url><loc>https://ffxicrafting.com/item/730-piece-of-bloodwood-lumber</loc></url>
 <url><loc>https://ffxicrafting.com/item/731-aquilaria-log</loc></url>
-<url><loc>https://ffxicrafting.com/item/732-kapor-log</loc></url>
 <url><loc>https://ffxicrafting.com/item/736-chunk-of-silver-ore</loc></url>
 <url><loc>https://ffxicrafting.com/item/737-chunk-of-gold-ore</loc></url>
 <url><loc>https://ffxicrafting.com/item/738-chunk-of-platinum-ore</loc></url>
@@ -685,6 +686,7 @@
 <url><loc>https://ffxicrafting.com/item/935-ahriman-wing</loc></url>
 <url><loc>https://ffxicrafting.com/item/936-chunk-of-rock-salt</loc></url>
 <url><loc>https://ffxicrafting.com/item/937-block-of-animal-glue</loc></url>
+<url><loc>https://ffxicrafting.com/item/938-sprig-of-papaka-grass</loc></url>
 <url><loc>https://ffxicrafting.com/item/939-hecteyes-eye</loc></url>
 <url><loc>https://ffxicrafting.com/item/940-revival-tree-root</loc></url>
 <url><loc>https://ffxicrafting.com/item/941-red-rose</loc></url>
@@ -2419,10 +2421,8 @@
 <url><loc>https://ffxicrafting.com/item/5784-coconut-rusk</loc></url>
 <url><loc>https://ffxicrafting.com/item/5789-moat-carp</loc></url>
 <url><loc>https://ffxicrafting.com/item/5907-winterflower</loc></url>
-<url><loc>https://ffxicrafting.com/item/5908-butterpear</loc></url>
 <url><loc>https://ffxicrafting.com/item/5963-senroh-sardine</loc></url>
 <url><loc>https://ffxicrafting.com/item/6058-klimaform-schema</loc></url>
-<url><loc>https://ffxicrafting.com/item/6416-hunk-of-behemoth-meat</loc></url>
 <url><loc>https://ffxicrafting.com/item/8800-azuki-bean</loc></url>
 <url><loc>https://ffxicrafting.com/item/8805-woodworking-kit-5</loc></url>
 <url><loc>https://ffxicrafting.com/item/8806-woodworking-kit-10</loc></url>

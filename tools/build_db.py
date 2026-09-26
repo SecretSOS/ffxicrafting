@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Build ffxi_crafting.db (SQLite) from a LandSandBoat checkout.
 Scope: every item used in or produced by a synth recipe, plus every known way to acquire it.
-Usage: python build_db.py <lsb_root> <out.db>      (needs: pip install pyyaml)"""
+Usage: python build_db.py <lsb_root> <out.db> [<phoenix_modules>]   (needs: pip install pyyaml)"""
 import re, sys, os, glob, json, csv, sqlite3, collections, yaml
 ROOT, OUT = sys.argv[1], sys.argv[2]
+PXI = sys.argv[3] if len(sys.argv) > 3 else None
 P = lambda *a: os.path.join(ROOT, *a)
 rd = lambda f: open(f, encoding='utf-8', errors='ignore').read()
 rel = lambda f: os.path.relpath(f, ROOT).replace('\\', '/')
@@ -24,8 +25,26 @@ const_of = {v: k for k, v in enum.items()}
 items = {}
 for m in re.finditer(r"INSERT INTO `item_basic` VALUES \((\d+),\d+,'((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)','[^']*',[^,]+,(\d+),([^,]+),[^,]+,(\d+)\)", rd(P('sql/item_basic.sql'))):
     i = int(m[1]); fl = m[5]
-    items[i] = (i, m[2], m[3], const_of.get(i), int(m[4]), int('FLAG_EX' in fl), int('FLAG_RARE' in fl), int('FLAG_NOAUCTION' in fl), int(m[6]))
+    items[i] = [i, m[2], m[3], const_of.get(i), int(m[4]), int('FLAG_EX' in fl), int('FLAG_RARE' in fl), int('FLAG_NOAUCTION' in fl), int(m[6])]
 byname = {v[1]: k for k, v in items.items()}
+# ---------- Phoenix item overlays (flags, stacks, baseSell)
+if PXI:
+    _FLAG = {'FLAG_EX': 5, 'FLAG_RARE': 6, 'FLAG_NOAUCTION': 7}
+    pxi_sql = rd(os.path.join(PXI, 'phoenix/sql/pxi_item_basic.sql'))
+    for m in re.finditer(r"SET `flags` = `flags` \| .*?WHERE `itemid` = (\d+)", pxi_sql):
+        iid = int(m[1])
+        if iid in items:
+            line = m[0]
+            for flag, col in _FLAG.items():
+                if flag in line: items[iid][col] = 1
+    for m in re.finditer(r"SET `stackSize` = (\d+) WHERE `itemid` = (\d+)", pxi_sql):
+        iid = int(m[2])
+        if iid in items: items[iid][4] = int(m[1])
+    rmt_sql = rd(os.path.join(PXI, 'phoenix/sql/pre_rmt_basesell_vendor_revert.sql'))
+    for m in re.finditer(r"SET baseSell = (\d+) WHERE itemid = (\d+)", rmt_sql):
+        iid = int(m[2])
+        if iid in items: items[iid][8] = int(m[1])
+    print(f"  Phoenix: applied item overlays from pxi_item_basic.sql + pre_rmt_basesell_vendor_revert.sql")
 # ---------- recipes
 SK = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
 craft_items = set()
@@ -118,11 +137,56 @@ for f in sorted(glob.glob(P('scripts/battlefields/*/*.lua'))):
         S(ii, 'battlefield', arena.lower(), os.path.basename(f)[:-4], round((1 - m) * 100, 2), None, int(lc.group(1)) if lc else None, rq.group(1) if rq else None, notes='hi = level cap; gate = entry item', file=rel(f))
 # ---------- 4. guild shops (stock-based)
 gs = rd(P('scripts/data/guild_shops.lua'))
+_GS_RE = r"id\s*=\s*xi\.item\.(\w+),\s*initial\s*=\s*(\d+),\s*maxStock\s*=\s*(\d+),\s*targetStock\s*=\s*(\d+),\s*buyMax\s*=\s*(\d+),\s*restockRate\s*=\s*(\d+)"
+guild_shops = {}
 for sm in re.finditer(r"\n    \['([^']+)'\] =\s*\{(.*?)\n    \},", gs, re.S):
-    shop, body = sm.groups()
-    for m in re.finditer(r"id = xi\.item\.(\w+),\s*initial = (\d+),\s*maxStock = (\d+),\s*targetStock = (\d+),\s*buyMax = (\d+),\s*restockRate = (\d+)", body):
-        ini, mx, tg, bm, rr = map(int, m.groups()[1:])
-        S(enum.get(m[1]), 'guild_shop', None, shop, None, gate=('player-sold only' if ini == 0 and rr == 0 else None), price=bm, qlo=ini, qhi=tg, notes=f'price is at empty shelf; restock {rr}/day', file='scripts/data/guild_shops.lua')
+    shop, body = sm.groups(); stock = []
+    for m in re.finditer(_GS_RE, body):
+        iid = enum.get(m[1])
+        if iid is not None: stock.append({'id': iid, 'initial': int(m[2]), 'maxStock': int(m[3]), 'targetStock': int(m[4]), 'buyMax': int(m[5]), 'restockRate': int(m[6])})
+    guild_shops[shop] = stock
+if PXI:
+    _gs_f = os.path.join(PXI, 'phoenix/lua/data/era_guild_shops.lua')
+    if os.path.exists(_gs_f):
+        egs = rd(_gs_f)
+        for m in re.finditer(r"patchStock\('([^']+)',\s*xi\.item\.(\w+),\s*\{([^}]+)\}", egs):
+            shop, ic, props = m[1], m[2], m[3]; iid = enum.get(ic)
+            if iid is not None and shop in guild_shops:
+                for e in guild_shops[shop]:
+                    if e['id'] == iid:
+                        for pm in re.finditer(r"(\w+)\s*=\s*([\d.]+)", props):
+                            if pm[1] in e: e[pm[1]] = int(float(pm[2]))
+                        break
+        for m in re.finditer(r"removeStock\('([^']+)',\s*xi\.item\.(\w+)\)", egs):
+            iid = enum.get(m[2])
+            if iid is not None and m[1] in guild_shops:
+                guild_shops[m[1]] = [e for e in guild_shops[m[1]] if e['id'] != iid]
+        for m in re.finditer(r"table\.insert\(xi\.data\.guildShops\['([^']+)'\]\.stock,\s*(?:\d+,\s*)?\{([^}]+)\}\)", egs):
+            shop, props = m[1], m[2]
+            if shop not in guild_shops: continue
+            im = re.search(r"id\s*=\s*xi\.item\.(\w+)", props)
+            if not im: continue
+            iid = enum.get(im[1])
+            if iid is None: continue
+            entry = {'id': iid, 'initial': 0, 'maxStock': 0, 'targetStock': 0, 'buyMax': 0, 'restockRate': 0}
+            for pm in re.finditer(r"(\w+)\s*=\s*([\d.]+)", props):
+                if pm[1] in entry and pm[1] != 'id': entry[pm[1]] = int(float(pm[2]))
+            if not any(e['id'] == iid for e in guild_shops[shop]): guild_shops[shop].append(entry)
+        shared = {}
+        for m in re.finditer(r"xi\.data\.guildShops\['([^']+)'\]\s*=\s*\{\s*sharedStock\s*=\s*'([^']+)'", egs):
+            shared[m[1]] = m[2]
+        for sm in re.finditer(r"xi\.data\.guildShops\['(\w+)'\]\s*=\n    \{.+?stock\s*=\n        \{(.+?)\n        \},", egs, re.S):
+            shop, body = sm[1], sm[2]; stock = []
+            for m in re.finditer(_GS_RE, body):
+                iid = enum.get(m[1])
+                if iid is not None: stock.append({'id': iid, 'initial': int(m[2]), 'maxStock': int(m[3]), 'targetStock': int(m[4]), 'buyMax': int(m[5]), 'restockRate': int(m[6])})
+            if stock: guild_shops[shop] = stock
+        for alias, primary in shared.items():
+            if primary in guild_shops: guild_shops[alias] = [dict(e) for e in guild_shops[primary]]
+        print(f"  Phoenix: applied guild shop overlays from era_guild_shops.lua")
+for shop, stock in guild_shops.items():
+    for e in stock:
+        S(e['id'], 'guild_shop', None, shop, None, gate=('player-sold only' if e['initial'] == 0 and e['restockRate'] == 0 else None), price=e['buyMax'], qlo=e['initial'], qhi=e['targetStock'], notes=f"price is at empty shelf; restock {e['restockRate']}/day", file='scripts/data/guild_shops.lua')
 # ---------- 5. rank-gated guild vendors (xi.shop.generalGuildStock)
 sh = rd(P('scripts/globals/shop.lua'))
 i0 = sh.index('xi.shop.generalGuildStock'); i1 = sh.index('\n}\n', i0)
@@ -139,6 +203,27 @@ for f in glob.glob(P('scripts/zones/*/npcs/*.lua')):
         g = None
         if nation and m[3]: g = {'1': 'own nation 1st in conquest', '2': 'nation top-2 in conquest', '3': None}.get(m[3])
         S(enum.get(m[1]), 'npc_shop', zone, npc, None, gate=g, price=int(m[2]), file=rel(f))
+# ---------- Phoenix NPC vendor overrides (complete shop replacements)
+if PXI:
+    _pxi_vendor_done = set()
+    for f in sorted(glob.glob(os.path.join(PXI, 'era/lua/zones/*/npcs/*.lua'))):
+        s = rd(f)
+        for om in re.finditer(r"addOverride(?:ByEra)?\('xi\.zones\.(\w+)\.npcs\.(\w+)\.on\w+',\s*\{(.*?)\n\}\)", s, re.S):
+            zone = om[1].lower()
+            npc = om[2].lower()
+            block = om[3]
+            stock = re.findall(r"\{\s*xi\.item\.(\w+),\s*(\d+)(?:,\s*(\d+))?\s*\}", block)
+            if not stock: continue
+            if (zone, npc) not in _pxi_vendor_done:
+                cur.execute("DELETE FROM sources WHERE type='npc_shop' AND zone=? AND where_=?", (zone, npc))
+                _pxi_vendor_done.add((zone, npc))
+            nation = 'xi.shop.nation' in block
+            pf = 'pxi:' + os.path.relpath(f, PXI).replace('\\', '/')
+            for ic, pr, cq in stock:
+                g = None
+                if nation and cq: g = {'1': 'own nation 1st in conquest', '2': 'nation top-2 in conquest', '3': None}.get(cq)
+                S(enum.get(ic), 'npc_shop', zone, npc, None, gate=g, price=int(pr), file=pf)
+    print(f"  Phoenix: replaced {len(_pxi_vendor_done)} NPC vendor stocks")
 # ---------- 7. HELM
 hs = rd(P('scripts/globals/hobbies/helm/data.lua'))
 for tm in re.finditer(r"\[xi\.helmType\.(\w+)\]\s*=", hs):
@@ -171,6 +256,11 @@ for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),'([^']*)',(\d+)
 cq = rd(P('scripts/globals/conquest.lua'))
 for m in re.finditer(r"rank\s*=\s*(\d+),\s*cp\s*=\s*(\d+),\s*lvl\s*=\s*(\d+),\s*item\s*=\s*xi\.item\.(\w+)", cq):
     S(enum.get(m[4]), 'conquest_vendor', None, 'nation overseer', None, int(m[3]), gate=f'nation rank {m[1]}', price=int(m[2]), notes='price in conquest points; lo = level req', file='scripts/globals/conquest.lua')
+ci0 = cq.index('overseerInvCommon'); ci1 = cq.index('\n}\n', ci0)
+for m in re.finditer(r"\[(\d+)\]\s*=\s*\{([^}]+)\}", cq[ci0:ci1]):
+    body = m[2]; cp = re.search(r"cp\s*=\s*(\d+)", body); lvl = re.search(r"lvl\s*=\s*(\d+)", body); itm = re.search(r"item\s*=\s*xi\.item\.(\w+)", body); rk = re.search(r"rank\s*=\s*(\d+)", body)
+    if not (cp and lvl and itm): continue
+    S(enum.get(itm[1]), 'conquest_vendor', None, 'nation overseer', None, int(lvl[1]), gate=(f'nation rank {rk[1]}' if rk else None), price=int(cp[1]), notes='price in conquest points; lo = level req', file='scripts/globals/conquest.lua')
 bs = rd(P('scripts/globals/besieged.lua'))
 for m in re.finditer(r"id\s*=\s*xi\.item\.(\w+),\s*price\s*=\s*(\d+),\s*rank\s*=\s*(\d+)", bs):
     S(enum.get(m[1]), 'besieged_vendor', 'aht_urhgan_whitegate', None, None, gate=f'imperial rank {m[3]}', price=int(m[2]), content='toau', notes='price in Imperial Standing', file='scripts/globals/besieged.lua')
@@ -222,7 +312,7 @@ CREATE TABLE gp_rewards(guild TEXT, kind TEXT, name TEXT, item_id INT, min_rank 
 GUILDS = ['fishing','woodworking','smithing','goldsmithing','clothcraft','leathercraft','bonecraft','alchemy','cooking']
 def add_item(i):
     if i in items and not cur.execute("SELECT 1 FROM items WHERE id=?", (i,)).fetchone():
-        cur.execute("INSERT INTO items VALUES (?,?,?,?,?,?,?,?,?)", items[i])
+        cur.execute("INSERT INTO items(id,name,sortname,constant,stack,ex,rare,no_auction,base_price) VALUES (?,?,?,?,?,?,?,?,?)", items[i])
 for m in re.finditer(r"INSERT INTO `guild_item_points` VALUES \((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)\)", rd(P('sql/guild_item_points.sql'))):
     g, it, tier, pts, mx, pat = map(int, m.groups()); add_item(it)
     cur.execute("INSERT INTO gp_turnins VALUES (?,?,?,?,?,?)", (GUILDS[g], it, tier, pts, mx, pat))
@@ -409,6 +499,187 @@ cur.executescript("ALTER TABLE items ADD COLUMN wiki_title TEXT; ALTER TABLE ite
 for iid, nm, sn in cur.execute("SELECT id, name, sortname FROM items").fetchall():
     t = wiki_title(nm, sn)
     cur.execute("UPDATE items SET wiki_title=?, wiki_url=?, horizonxi_url=? WHERE id=?", (t, wiki_url(t), db_url(nm), iid))
+# ========== Phoenix module overlays ==========
+if PXI:
+    print("Applying Phoenix module overlays...")
+    _pxi = lambda *a: os.path.join(PXI, *a)
+    _pxi_rd = lambda *a: rd(_pxi(*a))
+    # --- fishing rods ---
+    rod_sql = _pxi_rd('phoenix/sql/fishing_rod.sql')
+    _rod_n = 0
+    for m in re.finditer(r"SET max_rank = (\d+) where name = '([^']+)'", rod_sql):
+        cur.execute("UPDATE fishing_rods SET max_rank=? WHERE name=?", (int(m[1]), m[2]))
+        _rod_n += cur.rowcount
+    print(f"  fishing_rods: {_rod_n} max_rank updates")
+    # --- GP turn-ins (abyssea era corrections, then rov /3) ---
+    GUILDS_I = {0:'fishing',1:'woodworking',2:'smithing',3:'goldsmithing',4:'clothcraft',5:'leathercraft',6:'bonecraft',7:'alchemy',8:'cooking'}
+    gp_sql = _pxi_rd('era/sql/abyssea/guild_item_points.sql')
+    _gp_u, _gp_d, _gp_i = 0, 0, 0
+    for m in re.finditer(r"UPDATE `guild_item_points` SET `itemid`=(\d+),\s*`points`=(\d+),\s*`max_points`=(\d+)\s+WHERE `guildid`=(\d+) AND `itemid`=(\d+) AND `pattern`=(\d+)", gp_sql):
+        new_item, pts, mx, gid, old_item, pat = int(m[1]), int(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6])
+        add_item(new_item)
+        cur.execute("UPDATE gp_turnins SET item_id=?, points=?, max_points=? WHERE guild=? AND item_id=? AND pattern=?",
+                    (new_item, pts, mx, GUILDS_I[gid], old_item, pat))
+        _gp_u += cur.rowcount
+    for m in re.finditer(r"DELETE FROM `guild_item_points` WHERE `guildid`=(\d+) AND `itemid`=(\d+) AND `pattern`=(\d+)", gp_sql):
+        cur.execute("DELETE FROM gp_turnins WHERE guild=? AND item_id=? AND pattern=?",
+                    (GUILDS_I[int(m[1])], int(m[2]), int(m[3])))
+        _gp_d += cur.rowcount
+    for m in re.finditer(r"INSERT INTO `guild_item_points` VALUES \((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)\)", gp_sql):
+        gid, iid, tier, pts, mx, pat = map(int, m.groups())
+        add_item(iid)
+        cur.execute("INSERT INTO gp_turnins VALUES (?,?,?,?,?,?)", (GUILDS_I[gid], iid, tier, pts, mx, pat))
+        _gp_i += 1
+    for m in re.finditer(r"UPDATE `guild_item_points` SET `points`=(\d+),\s*`max_points`=(\d+)\s+WHERE `guildid`=(\d+) AND `itemid`=(\d+) AND `pattern`=(\d+)", gp_sql):
+        cur.execute("UPDATE gp_turnins SET points=?, max_points=? WHERE guild=? AND item_id=? AND pattern=?",
+                    (int(m[1]), int(m[2]), GUILDS_I[int(m[3])], int(m[4]), int(m[5])))
+        _gp_u += cur.rowcount
+    for m in re.finditer(r"UPDATE `guild_item_points` SET `max_points`=(\d+)\s+WHERE `guildid`=(\d+) AND `itemid`=(\d+) AND `pattern`=(\d+)", gp_sql):
+        cur.execute("UPDATE gp_turnins SET max_points=? WHERE guild=? AND item_id=? AND pattern=?",
+                    (int(m[1]), GUILDS_I[int(m[2])], int(m[3]), int(m[4])))
+        _gp_u += cur.rowcount
+    rov_gp = _pxi_rd('era/sql/rov/guild_item_points.sql')
+    if 'max_points / 3' in rov_gp or 'max_points/3' in rov_gp:
+        cur.execute("UPDATE gp_turnins SET max_points = max_points / 3")
+    print(f"  gp_turnins: {_gp_u} updates, {_gp_d} deletes, {_gp_i} inserts, then max_points /= 3")
+    # --- GP rewards (guild_point_shop.lua) ---
+    for cn in ('AURORA_CRYSTAL', 'TWILIGHT_CRYSTAL'):
+        cur.execute("UPDATE sources SET price=500 WHERE type='guild_points' AND item_id=?", (enum.get(cn),))
+    _disabled_ki = ['anglers_almanac','way_of_the_carpenter','way_of_the_blacksmith','way_of_the_goldsmith',
+                    'way_of_the_weaver','way_of_the_tanner','way_of_the_boneworker','way_of_the_alchemist','way_of_the_culinarian']
+    _disabled_items = ['net_and_lure','fishermens_emblem','carpenters_kit','carpenters_emblem',
+                       'stone_hearth','blacksmiths_emblem','gemscope','goldsmiths_emblem',
+                       'spinning_wheel','weavers_emblem','hide_stretcher','tanners_emblem',
+                       'set_of_bonecrafting_tools','boneworkers_emblem','alembic','alchemists_emblem',
+                       'brass_crock','culinarians_emblem']
+    for nm in _disabled_ki + _disabled_items:
+        cur.execute("DELETE FROM gp_rewards WHERE name=?", (nm,))
+    for nm in _disabled_items:
+        iid = enum.get(nm.upper())
+        if iid: cur.execute("DELETE FROM sources WHERE type='guild_points' AND item_id=?", (iid,))
+    print(f"  gp_rewards: Aurora/Twilight -> 500 GP, disabled {len(_disabled_ki)} key items + {len(_disabled_items)} items")
+    # --- HELM removals ---
+    _helm_rm = {
+        'logging': {
+            'yhoator_jungle': ['BUTTERPEAR','AQUILARIA_LOG','KAPOR_LOG'],
+            'yuhtunga_jungle': ['BUTTERPEAR','AQUILARIA_LOG','KAPOR_LOG'],
+        },
+        'harvesting': {
+            'bhaflau_thickets': ['EASTERN_GINGER_ROOT'],
+            'giddeus': ['SPRIG_OF_DYERS_WOAD'],
+            'wajaom_woodlands': ['EASTERN_GINGER_ROOT'],
+            'west_sarutabaruta': ['SPRIG_OF_DYERS_WOAD'],
+        },
+        'mining': {
+            'halvung': ['SLAB_OF_PLUMBAGO'],
+            'mount_zhayolm': ['SLAB_OF_PLUMBAGO'],
+        },
+    }
+    _helm_n = 0
+    for helm_type, zones in _helm_rm.items():
+        for zone, item_names in zones.items():
+            for iname in item_names:
+                iid = enum.get(iname)
+                if iid:
+                    cur.execute("DELETE FROM sources WHERE type=? AND zone=? AND item_id=?", (helm_type, zone, iid))
+                    _helm_n += cur.rowcount
+    print(f"  HELM: removed {_helm_n} post-era gathering entries")
+    # --- conquest vendor changes ---
+    _cq_price = {'SCROLL_OF_INSTANT_RERAISE': 500, 'SCROLL_OF_INSTANT_WARP': 750}
+    for cn_name, price in _cq_price.items():
+        iid = enum.get(cn_name)
+        if iid: cur.execute("UPDATE sources SET price=? WHERE type='conquest_vendor' AND item_id=?", (price, iid))
+    _cq_rm = ['EMPEROR_BAND','WARP_RING','CIPHER_OF_TENZENS_ALTER_EGO','CIPHER_OF_RAHALS_ALTER_EGO',
+              'CIPHER_OF_KUKKIS_ALTER_EGO','CIPHER_OF_MAKKIS_ALTER_EGO']
+    for cn_name in _cq_rm:
+        iid = enum.get(cn_name)
+        if iid: cur.execute("DELETE FROM sources WHERE type='conquest_vendor' AND item_id=?", (iid,))
+    print(f"  conquest: 2 price updates, {len(_cq_rm)} items removed")
+    # --- battlefield: Kraken Club in Up in Arms (weight 1->10, 10x more common) ---
+    cur.execute("UPDATE battlefield_loot SET weight=10 WHERE battlefield_id='up_in_arms' AND item_id=?", (enum.get('KRAKEN_CLUB'),))
+    _kc_roll = cur.execute("SELECT roll FROM battlefield_loot WHERE battlefield_id='up_in_arms' AND item_id=?", (enum.get('KRAKEN_CLUB'),)).fetchone()
+    if _kc_roll:
+        _tot = cur.execute("SELECT SUM(weight) FROM battlefield_loot WHERE battlefield_id='up_in_arms' AND roll=?", (_kc_roll[0],)).fetchone()[0]
+        if _tot:
+            for row in cur.execute("SELECT rowid, weight FROM battlefield_loot WHERE battlefield_id='up_in_arms' AND roll=?", (_kc_roll[0],)).fetchall():
+                cur.execute("UPDATE battlefield_loot SET pct=? WHERE rowid=?", (round(row[1] / _tot * 100, 3), row[0]))
+    print(f"  battlefield: Kraken Club weight -> 10 (Up in Arms)")
+    # --- chocobo digging (pxi_digging_data.lua replaces base) ---
+    _dig_file = _pxi('phoenix/lua/globals/hobbies/chocobo_digging/pxi_digging_data.lua')
+    if os.path.exists(_dig_file):
+        cur.execute("DELETE FROM sources WHERE type='chocobo_dig'")
+        _dig_src = rd(_dig_file)
+        _DIG_RANKS = ['AMATEUR','RECRUIT','INITIATE','NOVICE','APPRENTICE','JOURNEYMAN','CRAFTSMAN','ARTISAN','ADEPT','VETERAN','EXPERT']
+        _dig_pf = 'pxi:phoenix/lua/globals/hobbies/chocobo_digging/pxi_digging_data.lua'
+        _night_only = set()
+        for m in re.finditer(r'xi\.item\.(\w+)', _dig_src[_dig_src.find('nightOnlyItems'):_dig_src.find('}', _dig_src.find('nightOnlyItems'))]):
+            nid = enum.get(m[1])
+            if nid: _night_only.add(nid)
+        _ore_zones = set()
+        for m in re.finditer(r'xi\.zone\.(\w+)', _dig_src[_dig_src.find('elementalOreZones'):_dig_src.find('}', _dig_src.find('elementalOreZones'))]):
+            _ore_zones.add(m[1].lower())
+        _dig_n = 0
+        zt_start = _dig_src.find('xi.chocoboDig.zoneTable')
+        for zm in re.finditer(r"\[xi\.zone\.(\w+)\]\s*=\s*\{(.*?)\n    \}", _dig_src[zt_start:], re.S):
+            zone = zm[1].lower()
+            for m in re.finditer(r"\{\s*xi\.item\.(\w+),\s*xi\.craftRank\.(\w+),\s*([\d,\s]+)\}", zm[2]):
+                iid = enum.get(m[1])
+                if not iid: continue
+                add_item(iid)
+                weights = [int(w.strip()) for w in m[3].split(',') if w.strip()]
+                max_w = max(weights)
+                if max_w == 0: continue
+                min_rank_idx = next(i for i, w in enumerate(weights) if w > 0)
+                min_rank = _DIG_RANKS[min_rank_idx].lower() if min_rank_idx < len(_DIG_RANKS) else m[2].lower()
+                extra = '; night only' if iid in _night_only else ''
+                S(iid, 'chocobo_dig', zone, None, None, gate='dig rank ' + min_rank, notes=f'weight {max_w}{extra}', file=_dig_pf)
+                _dig_n += 1
+            if zone in _ore_zones:
+                _ore_items = {'CHUNK_OF_FIRE_ORE','CHUNK_OF_ICE_ORE','CHUNK_OF_WIND_ORE','CHUNK_OF_EARTH_ORE',
+                              'CHUNK_OF_LIGHTNING_ORE','CHUNK_OF_WATER_ORE','CHUNK_OF_LIGHT_ORE','CHUNK_OF_DARK_ORE'}
+                for ore in _ore_items:
+                    oid = enum.get(ore)
+                    if oid:
+                        add_item(oid)
+                        S(oid, 'chocobo_dig', zone, None, None, gate='dig rank journeyman', notes='weight 80; day-dependent elemental ore', file=_dig_pf)
+                        _dig_n += 1
+        print(f"  chocobo_dig: replaced with Phoenix data ({_dig_n} entries)")
+    # --- mob drop YAML overlays ---
+    _yaml_dirs = [
+        ('era/data/abyssea/mob_droplist_removal/zones', 'era: remove post-Abyssea drops'),
+        ('era/data/toau/pre_rmt_drops/zones', 'era: pre-RMT drop reverts'),
+        ('era/data/soa/mob_droplist_adjust/zones', 'era: SoA drop adjust'),
+        ('era/data/wotg/mob_droplist_removal/zones', 'era: remove post-WotG drops'),
+        ('phoenix/data/drops/zones', 'phoenix: drop overrides'),
+    ]
+    _yaml_n = 0
+    for subdir, label in _yaml_dirs:
+        for f in sorted(glob.glob(os.path.join(PXI, subdir, '*/mobs.yaml'))):
+            zone = f.replace('\\', '/').split('/')[-2]
+            mod = yaml.load(rd(f), Loader=L) or {}
+            templates = mod.get('templates') or {}
+            for tn, tp in templates.items():
+                if not isinstance(tp, dict): continue
+                loot = tp.get('loot')
+                if loot is None: continue
+                cur.execute("DELETE FROM sources WHERE (type='mob_drop' OR type='mob_steal') AND zone=? AND where_=?", (zone, tn))
+                _yaml_n += cur.rowcount
+                if not loot:
+                    continue
+                for r in loot.get('drops') or []:
+                    c = r.get('chance'); pct = RATE[c] / 10 if isinstance(c, str) else float(c)
+                    if r.get('item') in byname:
+                        S(byname[r['item']], 'mob_drop', zone, tn, pct, content=tp.get('content'), notes=label, file=os.path.relpath(f, PXI).replace('\\', '/'))
+                    oo = r.get('one_of')
+                    if oo:
+                        w = {k: 100 / len(oo) for k in oo} if isinstance(oo, list) else oo
+                        for k, v in w.items():
+                            if k in byname: S(byname[k], 'mob_drop', zone, tn, round(pct * v / 100, 3), content=tp.get('content'), notes=label + ' (one_of)', file=os.path.relpath(f, PXI).replace('\\', '/'))
+                st = loot.get('steal'); st = [st] if isinstance(st, str) else (st or [])
+                for k in st:
+                    if k in byname: S(byname[k], 'mob_steal', zone, tn, None, content=tp.get('content'), file=os.path.relpath(f, PXI).replace('\\', '/'))
+    print(f"  mob_drops: {_yaml_n} base entries replaced/removed by module YAML overlays")
+    print("Phoenix overlays complete.")
 cur.execute("CREATE TABLE meta(k TEXT, v TEXT)")
 cur.execute("INSERT INTO meta VALUES ('lsb_commit', ?)", (os.popen(f'git -C "{ROOT}" log -1 --format=%H').read().strip(),))
 db.commit()
