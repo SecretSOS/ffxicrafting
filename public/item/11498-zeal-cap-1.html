@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="/style.css">
 <style>
 .item-head{display:flex;align-items:center;gap:14px}
-.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
+.item-icon{image-rendering:pixelated;flex-shrink:0;vertical-align:middle;border-radius:2px}
+.icon-link{display:inline-flex;align-items:center;gap:4px}
 h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
 h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
 h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -49,22 +50,6 @@ table{font-size:.88rem;margin-bottom:.4em}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -79,6 +64,23 @@ table{font-size:.88rem;margin-bottom:.4em}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -96,6 +98,7 @@ table{font-size:.88rem;margin-bottom:.4em}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -121,12 +124,12 @@ table{font-size:.88rem;margin-bottom:.4em}
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Zeal Cap +1</nav>
  <header class="panel pad">
   <div class="infobox"><div class="infobox-head">Zeal Cap +1</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">11498</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">1</span></div><div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">1,531 gil</span></div></div>
-  <div class="item-head"><img class="item-icon" src="/img/item/11498.png" alt="" width="32" height="32"><div>
+  <div class="item-head"><img class="item-icon" src="/icons/11498.png" alt="" width="32" height="32"><div>
   <h1>Zeal Cap +1</h1>
   <p class="meta">Stack: 1 · NPC: 1,531g · <a href="https://horizonffxi.wiki/w/index.php?search=Zeal+Cap+%2B1&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
   </div></div>
  </header>
- <section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Bonecraft 78 <span class="pill wotg">WotG</span></td><td><a href="/item/11495-zeal-cap">Zeal Cap</a> <span class="soft">HQ: <a href="/item/11498-zeal-cap-1">Zeal Cap +1</a> / <a href="/item/11498-zeal-cap-1">Zeal Cap +1</a> / <a href="/item/11498-zeal-cap-1">Zeal Cap +1</a></span></td><td class="ings hide-sm"><a href="/item/4099-earth-crystal">Earth Crystal</a> · <a href="/item/2833-piece-of-thunder-coral">Piece of Thunder Coral</a> · <a href="/item/12452-darksteel-cap">Darksteel Cap</a></td></tr></tbody></table></section>
+ <section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Bonecraft 78 <span class="pill wotg">WotG</span></td><td><a href="/item/11495-zeal-cap" class="icon-link"><img src="/icons/11495.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Zeal Cap</a> <span class="soft">HQ: <a href="/item/11498-zeal-cap-1" class="icon-link"><img src="/icons/11498.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Zeal Cap +1</a> / <a href="/item/11498-zeal-cap-1" class="icon-link"><img src="/icons/11498.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Zeal Cap +1</a> / <a href="/item/11498-zeal-cap-1" class="icon-link"><img src="/icons/11498.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Zeal Cap +1</a></span></td><td class="ings hide-sm"><a href="/item/4099-earth-crystal" class="icon-link"><img src="/icons/4099.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Earth Crystal</a> · <a href="/item/2833-piece-of-thunder-coral" class="icon-link"><img src="/icons/2833.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Piece of Thunder Coral</a> · <a href="/item/12452-darksteel-cap" class="icon-link"><img src="/icons/12452.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Darksteel Cap</a></td></tr></tbody></table></section>
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>

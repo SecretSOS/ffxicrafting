@@ -58,22 +58,6 @@ details.zone .zone-body{padding:8px 0 16px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining" class="active">Mining</a>
-   <a href="/gathering/logging" class="active">Logging</a>
-   <a href="/gathering/harvesting" class="active">Harvesting</a>
-   <a href="/gathering/excavation" class="active">Excavation</a>
-   <a href="/gathering/gardening" class="active">Gardening</a>
-   <a href="/gathering/fishing" class="active">Fishing</a>
-   <a href="/gathering/digging" class="active">Chocobo Digging</a>
-   <a href="/gathering/clamming" class="active">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -88,6 +72,23 @@ details.zone .zone-body{padding:8px 0 16px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining" class="active">Mining</a>
+   <a href="/gathering/logging" class="active">Logging</a>
+   <a href="/gathering/harvesting" class="active">Harvesting</a>
+   <a href="/gathering/excavation" class="active">Excavation</a>
+   <a href="/gathering/gardening" class="active">Gardening</a>
+   <a href="/fishing/" class="active">Fishing</a>
+   <a href="/gathering/digging" class="active">Chocobo Digging</a>
+   <a href="/gathering/clamming" class="active">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -105,6 +106,7 @@ details.zone .zone-body{padding:8px 0 16px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/" class="active">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -128,161 +130,161 @@ details.zone .zone-body{padding:8px 0 16px}
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/gathering/">Gathering</a><span class="sep">&rsaquo;</span>Logging</nav>
-<div class="sub-nav"><a href="/gathering/mining">Mining</a><a href="/gathering/logging" class="cur">Logging</a><a href="/gathering/harvesting">Harvesting</a><a href="/gathering/excavation">Excavation</a><a href="/gathering/gardening">Gardening</a><a href="/gathering/digging">Digging</a><a href="/gathering/fishing">Fishing</a><a href="/gathering/clamming">Clamming</a></div><header class="panel pad"><h1>Logging</h1><p class="lede">Logging point drops by zone. Chance shows the per-swing probability of obtaining each item. Tool: <a href="/item/1021-hatchet">Hatchet</a>.</p><p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">Logging lets you chop logs and harvest wood from designated logging points in forested zones. Equip a Hatchet and target a logging point (a tree stump or marked tree) to swing at it. Each swing has a chance to break the hatchet, and each point disappears after a set number of successful swings. Logging points respawn on a timer. The logs and lumber obtained are essential materials for Woodworking recipes, and some zones yield rare woods that are highly valued for high-level crafts.</p></header>
+<div class="sub-nav"><a href="/gathering/mining">Mining</a><a href="/gathering/logging" class="cur">Logging</a><a href="/gathering/harvesting">Harvesting</a><a href="/gathering/excavation">Excavation</a><a href="/gathering/gardening">Gardening</a><a href="/gathering/digging">Digging</a><a href="/gathering/fishing">Fishing</a><a href="/gathering/clamming">Clamming</a></div><header class="panel pad"><h1>Logging</h1><p class="lede">Logging point drops by zone. Chance shows the per-swing probability of obtaining each item. Tool: <a href="/item/1021-hatchet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1021.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hatchet</a>.</p><p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">Logging lets you chop logs and harvest wood from designated logging points in forested zones. Equip a Hatchet and target a logging point (a tree stump or marked tree) to swing at it. Each swing has a chance to break the hatchet, and each point disappears after a set number of successful swings. Logging points respawn on a timer. The logs and lumber obtained are essential materials for Woodworking recipes, and some zones yield rare woods that are highly valued for high-level crafts.</p></header>
 <section class="panel pad">
 <details class="zone"><summary>Caedarva Mire <span class="badge">10 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/727-dogwood-log">Dogwood Log</a></td><td class="pct" style="text-align:right">20.34%</td></tr>
-<tr><td><a href="/item/2213-handful-of-pine-nuts">Handful Of Pine Nuts</a></td><td class="pct" style="text-align:right">11.72%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">9.83%</td></tr>
-<tr><td><a href="/item/2503-handful-of-almonds">Handful Of Almonds</a></td><td class="pct" style="text-align:right">9.68%</td></tr>
-<tr><td><a href="/item/5566-date">Date</a></td><td class="pct" style="text-align:right">8.62%</td></tr>
-<tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">4.99%</td></tr>
-<tr><td><a href="/item/701-rosewood-log">Rosewood Log</a></td><td class="pct" style="text-align:right">3.63%</td></tr>
-<tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
-<tr><td><a href="/item/694-chestnut-log">Chestnut Log</a></td><td class="pct" style="text-align:right">2.87%</td></tr>
-<tr><td><a href="/item/729-bloodwood-log">Bloodwood Log</a></td><td class="pct" style="text-align:right">0.83%</td></tr>
+<tr><td><a href="/item/727-dogwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/727.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dogwood Log</a></td><td class="pct" style="text-align:right">20.34%</td></tr>
+<tr><td><a href="/item/2213-handful-of-pine-nuts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2213.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pine Nuts</a></td><td class="pct" style="text-align:right">11.72%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">9.83%</td></tr>
+<tr><td><a href="/item/2503-handful-of-almonds" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2503.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Almonds</a></td><td class="pct" style="text-align:right">9.68%</td></tr>
+<tr><td><a href="/item/5566-date" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5566.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Date</a></td><td class="pct" style="text-align:right">8.62%</td></tr>
+<tr><td><a href="/item/689-lauan-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/689.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lauan Log</a></td><td class="pct" style="text-align:right">4.99%</td></tr>
+<tr><td><a href="/item/701-rosewood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/701.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rosewood Log</a></td><td class="pct" style="text-align:right">3.63%</td></tr>
+<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
+<tr><td><a href="/item/694-chestnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/694.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chestnut Log</a></td><td class="pct" style="text-align:right">2.87%</td></tr>
+<tr><td><a href="/item/729-bloodwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/729.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bloodwood Log</a></td><td class="pct" style="text-align:right">0.83%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Mamook <span class="badge">10 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/727-dogwood-log">Dogwood Log</a></td><td class="pct" style="text-align:right">20.39%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">15.10%</td></tr>
-<tr><td><a href="/item/2503-handful-of-almonds">Handful Of Almonds</a></td><td class="pct" style="text-align:right">11.07%</td></tr>
-<tr><td><a href="/item/2213-handful-of-pine-nuts">Handful Of Pine Nuts</a></td><td class="pct" style="text-align:right">9.17%</td></tr>
-<tr><td><a href="/item/5566-date">Date</a></td><td class="pct" style="text-align:right">7.90%</td></tr>
-<tr><td><a href="/item/694-chestnut-log">Chestnut Log</a></td><td class="pct" style="text-align:right">4.11%</td></tr>
-<tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">3.87%</td></tr>
-<tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">3.56%</td></tr>
-<tr><td><a href="/item/701-rosewood-log">Rosewood Log</a></td><td class="pct" style="text-align:right">1.98%</td></tr>
-<tr><td><a href="/item/729-bloodwood-log">Bloodwood Log</a></td><td class="pct" style="text-align:right">1.90%</td></tr>
+<tr><td><a href="/item/727-dogwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/727.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dogwood Log</a></td><td class="pct" style="text-align:right">20.39%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">15.10%</td></tr>
+<tr><td><a href="/item/2503-handful-of-almonds" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2503.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Almonds</a></td><td class="pct" style="text-align:right">11.07%</td></tr>
+<tr><td><a href="/item/2213-handful-of-pine-nuts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2213.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pine Nuts</a></td><td class="pct" style="text-align:right">9.17%</td></tr>
+<tr><td><a href="/item/5566-date" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5566.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Date</a></td><td class="pct" style="text-align:right">7.90%</td></tr>
+<tr><td><a href="/item/694-chestnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/694.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chestnut Log</a></td><td class="pct" style="text-align:right">4.11%</td></tr>
+<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">3.87%</td></tr>
+<tr><td><a href="/item/689-lauan-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/689.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lauan Log</a></td><td class="pct" style="text-align:right">3.56%</td></tr>
+<tr><td><a href="/item/701-rosewood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/701.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rosewood Log</a></td><td class="pct" style="text-align:right">1.98%</td></tr>
+<tr><td><a href="/item/729-bloodwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/729.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bloodwood Log</a></td><td class="pct" style="text-align:right">1.90%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Buburimu Peninsula <span class="badge">9 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">14.28%</td></tr>
-<tr><td><a href="/item/4445-yagudo-cherry">Yagudo Cherry</a></td><td class="pct" style="text-align:right">12.09%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">10.02%</td></tr>
-<tr><td><a href="/item/4503-bunch-of-buburimu-grapes">Bunch Of Buburimu Grapes</a></td><td class="pct" style="text-align:right">8.46%</td></tr>
-<tr><td><a href="/item/923-dryad-root">Dryad Root</a></td><td class="pct" style="text-align:right">6.70%</td></tr>
-<tr><td><a href="/item/697-holly-log">Holly Log</a></td><td class="pct" style="text-align:right">4.95%</td></tr>
-<tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">1.13%</td></tr>
-<tr><td><a href="/item/701-rosewood-log">Rosewood Log</a></td><td class="pct" style="text-align:right">1.00%</td></tr>
-<tr><td><a href="/item/700-mahogany-log">Mahogany Log</a></td><td class="pct" style="text-align:right">0.81%</td></tr>
+<tr><td><a href="/item/689-lauan-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/689.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lauan Log</a></td><td class="pct" style="text-align:right">14.28%</td></tr>
+<tr><td><a href="/item/4445-yagudo-cherry" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4445.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yagudo Cherry</a></td><td class="pct" style="text-align:right">12.09%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">10.02%</td></tr>
+<tr><td><a href="/item/4503-bunch-of-buburimu-grapes" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4503.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bunch Of Buburimu Grapes</a></td><td class="pct" style="text-align:right">8.46%</td></tr>
+<tr><td><a href="/item/923-dryad-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/923.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dryad Root</a></td><td class="pct" style="text-align:right">6.70%</td></tr>
+<tr><td><a href="/item/697-holly-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/697.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Log</a></td><td class="pct" style="text-align:right">4.95%</td></tr>
+<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">1.13%</td></tr>
+<tr><td><a href="/item/701-rosewood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/701.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rosewood Log</a></td><td class="pct" style="text-align:right">1.00%</td></tr>
+<tr><td><a href="/item/700-mahogany-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/700.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mahogany Log</a></td><td class="pct" style="text-align:right">0.81%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>East Ronfaure S <span class="badge">9 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">13.99%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">12.24%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">12.10%</td></tr>
-<tr><td><a href="/item/5661-walnut">Walnut</a></td><td class="pct" style="text-align:right">9.76%</td></tr>
-<tr><td><a href="/item/694-chestnut-log">Chestnut Log</a></td><td class="pct" style="text-align:right">5.98%</td></tr>
-<tr><td><a href="/item/639-ronfaure-chestnut">Ronfaure Chestnut</a></td><td class="pct" style="text-align:right">5.03%</td></tr>
-<tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">4.81%</td></tr>
-<tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">3.86%</td></tr>
-<tr><td><a href="/item/2532-teak-log">Teak Log</a></td><td class="pct" style="text-align:right">2.26%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">13.99%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">12.24%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">12.10%</td></tr>
+<tr><td><a href="/item/5661-walnut" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5661.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut</a></td><td class="pct" style="text-align:right">9.76%</td></tr>
+<tr><td><a href="/item/694-chestnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/694.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chestnut Log</a></td><td class="pct" style="text-align:right">5.98%</td></tr>
+<tr><td><a href="/item/639-ronfaure-chestnut" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/639.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ronfaure Chestnut</a></td><td class="pct" style="text-align:right">5.03%</td></tr>
+<tr><td><a href="/item/693-walnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/693.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut Log</a></td><td class="pct" style="text-align:right">4.81%</td></tr>
+<tr><td><a href="/item/699-oak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Oak Log</a></td><td class="pct" style="text-align:right">3.86%</td></tr>
+<tr><td><a href="/item/2532-teak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2532.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Teak Log</a></td><td class="pct" style="text-align:right">2.26%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Jugner Forest S <span class="badge">9 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">12.21%</td></tr>
-<tr><td><a href="/item/5661-walnut">Walnut</a></td><td class="pct" style="text-align:right">10.84%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">10.71%</td></tr>
-<tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">10.03%</td></tr>
-<tr><td><a href="/item/695-willow-log">Willow Log</a></td><td class="pct" style="text-align:right">9.28%</td></tr>
-<tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">6.96%</td></tr>
-<tr><td><a href="/item/4504-acorn">Acorn</a></td><td class="pct" style="text-align:right">5.18%</td></tr>
-<tr><td><a href="/item/2532-teak-log">Teak Log</a></td><td class="pct" style="text-align:right">2.66%</td></tr>
-<tr><td><a href="/item/2534-jacaranda-log">Jacaranda Log</a></td><td class="pct" style="text-align:right">0.34%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">12.21%</td></tr>
+<tr><td><a href="/item/5661-walnut" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5661.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut</a></td><td class="pct" style="text-align:right">10.84%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">10.71%</td></tr>
+<tr><td><a href="/item/693-walnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/693.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut Log</a></td><td class="pct" style="text-align:right">10.03%</td></tr>
+<tr><td><a href="/item/695-willow-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/695.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Log</a></td><td class="pct" style="text-align:right">9.28%</td></tr>
+<tr><td><a href="/item/699-oak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Oak Log</a></td><td class="pct" style="text-align:right">6.96%</td></tr>
+<tr><td><a href="/item/4504-acorn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4504.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Acorn</a></td><td class="pct" style="text-align:right">5.18%</td></tr>
+<tr><td><a href="/item/2532-teak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2532.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Teak Log</a></td><td class="pct" style="text-align:right">2.66%</td></tr>
+<tr><td><a href="/item/2534-jacaranda-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2534.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jacaranda Log</a></td><td class="pct" style="text-align:right">0.34%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Carpenters Landing <span class="badge">8 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">14.82%</td></tr>
-<tr><td><a href="/item/696-yew-log">Yew Log</a></td><td class="pct" style="text-align:right">14.75%</td></tr>
-<tr><td><a href="/item/695-willow-log">Willow Log</a></td><td class="pct" style="text-align:right">10.47%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">10.12%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">10.05%</td></tr>
-<tr><td><a href="/item/4504-acorn">Acorn</a></td><td class="pct" style="text-align:right">5.13%</td></tr>
-<tr><td><a href="/item/923-dryad-root">Dryad Root</a></td><td class="pct" style="text-align:right">4.07%</td></tr>
-<tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">0.84%</td></tr>
+<tr><td><a href="/item/693-walnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/693.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut Log</a></td><td class="pct" style="text-align:right">14.82%</td></tr>
+<tr><td><a href="/item/696-yew-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/696.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Log</a></td><td class="pct" style="text-align:right">14.75%</td></tr>
+<tr><td><a href="/item/695-willow-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/695.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Log</a></td><td class="pct" style="text-align:right">10.47%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">10.12%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">10.05%</td></tr>
+<tr><td><a href="/item/4504-acorn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4504.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Acorn</a></td><td class="pct" style="text-align:right">5.13%</td></tr>
+<tr><td><a href="/item/923-dryad-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/923.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dryad Root</a></td><td class="pct" style="text-align:right">4.07%</td></tr>
+<tr><td><a href="/item/699-oak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Oak Log</a></td><td class="pct" style="text-align:right">0.84%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Jugner Forest <span class="badge">8 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">15.40%</td></tr>
-<tr><td><a href="/item/696-yew-log">Yew Log</a></td><td class="pct" style="text-align:right">14.98%</td></tr>
-<tr><td><a href="/item/695-willow-log">Willow Log</a></td><td class="pct" style="text-align:right">10.13%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">10.06%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">9.71%</td></tr>
-<tr><td><a href="/item/4504-acorn">Acorn</a></td><td class="pct" style="text-align:right">5.06%</td></tr>
-<tr><td><a href="/item/923-dryad-root">Dryad Root</a></td><td class="pct" style="text-align:right">4.01%</td></tr>
-<tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">0.98%</td></tr>
+<tr><td><a href="/item/693-walnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/693.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut Log</a></td><td class="pct" style="text-align:right">15.40%</td></tr>
+<tr><td><a href="/item/696-yew-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/696.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Log</a></td><td class="pct" style="text-align:right">14.98%</td></tr>
+<tr><td><a href="/item/695-willow-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/695.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Log</a></td><td class="pct" style="text-align:right">10.13%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">10.06%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">9.71%</td></tr>
+<tr><td><a href="/item/4504-acorn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4504.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Acorn</a></td><td class="pct" style="text-align:right">5.06%</td></tr>
+<tr><td><a href="/item/923-dryad-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/923.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dryad Root</a></td><td class="pct" style="text-align:right">4.01%</td></tr>
+<tr><td><a href="/item/699-oak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Oak Log</a></td><td class="pct" style="text-align:right">0.98%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Lufaise Meadows <span class="badge">8 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">20.20%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">14.85%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">14.15%</td></tr>
-<tr><td><a href="/item/4363-faerie-apple">Faerie Apple</a></td><td class="pct" style="text-align:right">9.85%</td></tr>
-<tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">6.62%</td></tr>
-<tr><td><a href="/item/4504-acorn">Acorn</a></td><td class="pct" style="text-align:right">2.74%</td></tr>
-<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">1.20%</td></tr>
-<tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">0.77%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">20.20%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">14.85%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">14.15%</td></tr>
+<tr><td><a href="/item/4363-faerie-apple" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4363.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Faerie Apple</a></td><td class="pct" style="text-align:right">9.85%</td></tr>
+<tr><td><a href="/item/693-walnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/693.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut Log</a></td><td class="pct" style="text-align:right">6.62%</td></tr>
+<tr><td><a href="/item/4504-acorn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4504.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Acorn</a></td><td class="pct" style="text-align:right">2.74%</td></tr>
+<tr><td><a href="/item/690-elm-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/690.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elm Log</a></td><td class="pct" style="text-align:right">1.20%</td></tr>
+<tr><td><a href="/item/699-oak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Oak Log</a></td><td class="pct" style="text-align:right">0.77%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Misareaux Coast <span class="badge">8 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">15.20%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">15.07%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">14.20%</td></tr>
-<tr><td><a href="/item/4363-faerie-apple">Faerie Apple</a></td><td class="pct" style="text-align:right">10.33%</td></tr>
-<tr><td><a href="/item/693-walnut-log">Walnut Log</a></td><td class="pct" style="text-align:right">7.73%</td></tr>
-<tr><td><a href="/item/4504-acorn">Acorn</a></td><td class="pct" style="text-align:right">2.80%</td></tr>
-<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">0.73%</td></tr>
-<tr><td><a href="/item/699-oak-log">Oak Log</a></td><td class="pct" style="text-align:right">0.60%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">15.20%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">15.07%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">14.20%</td></tr>
+<tr><td><a href="/item/4363-faerie-apple" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4363.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Faerie Apple</a></td><td class="pct" style="text-align:right">10.33%</td></tr>
+<tr><td><a href="/item/693-walnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/693.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Walnut Log</a></td><td class="pct" style="text-align:right">7.73%</td></tr>
+<tr><td><a href="/item/4504-acorn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4504.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Acorn</a></td><td class="pct" style="text-align:right">2.80%</td></tr>
+<tr><td><a href="/item/690-elm-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/690.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elm Log</a></td><td class="pct" style="text-align:right">0.73%</td></tr>
+<tr><td><a href="/item/699-oak-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Oak Log</a></td><td class="pct" style="text-align:right">0.60%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Yhoator Jungle <span class="badge">8 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">15.09%</td></tr>
-<tr><td><a href="/item/721-piece-of-rattan-lumber">Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">14.76%</td></tr>
-<tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">9.92%</td></tr>
-<tr><td><a href="/item/912-beehive-chip">Beehive Chip</a></td><td class="pct" style="text-align:right">7.17%</td></tr>
-<tr><td><a href="/item/940-revival-tree-root">Revival Tree Root</a></td><td class="pct" style="text-align:right">5.42%</td></tr>
-<tr><td><a href="/item/923-dryad-root">Dryad Root</a></td><td class="pct" style="text-align:right">5.00%</td></tr>
-<tr><td><a href="/item/700-mahogany-log">Mahogany Log</a></td><td class="pct" style="text-align:right">2.08%</td></tr>
-<tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">1.08%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">15.09%</td></tr>
+<tr><td><a href="/item/721-piece-of-rattan-lumber" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/721.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">14.76%</td></tr>
+<tr><td><a href="/item/689-lauan-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/689.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lauan Log</a></td><td class="pct" style="text-align:right">9.92%</td></tr>
+<tr><td><a href="/item/912-beehive-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/912.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beehive Chip</a></td><td class="pct" style="text-align:right">7.17%</td></tr>
+<tr><td><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></td><td class="pct" style="text-align:right">5.42%</td></tr>
+<tr><td><a href="/item/923-dryad-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/923.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dryad Root</a></td><td class="pct" style="text-align:right">5.00%</td></tr>
+<tr><td><a href="/item/700-mahogany-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/700.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mahogany Log</a></td><td class="pct" style="text-align:right">2.08%</td></tr>
+<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">1.08%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Yuhtunga Jungle <span class="badge">8 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/721-piece-of-rattan-lumber">Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">15.23%</td></tr>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">14.48%</td></tr>
-<tr><td><a href="/item/689-lauan-log">Lauan Log</a></td><td class="pct" style="text-align:right">9.60%</td></tr>
-<tr><td><a href="/item/912-beehive-chip">Beehive Chip</a></td><td class="pct" style="text-align:right">7.20%</td></tr>
-<tr><td><a href="/item/940-revival-tree-root">Revival Tree Root</a></td><td class="pct" style="text-align:right">4.97%</td></tr>
-<tr><td><a href="/item/697-holly-log">Holly Log</a></td><td class="pct" style="text-align:right">4.88%</td></tr>
-<tr><td><a href="/item/701-rosewood-log">Rosewood Log</a></td><td class="pct" style="text-align:right">1.99%</td></tr>
-<tr><td><a href="/item/702-ebony-log">Ebony Log</a></td><td class="pct" style="text-align:right">1.16%</td></tr>
+<tr><td><a href="/item/721-piece-of-rattan-lumber" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/721.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">15.23%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">14.48%</td></tr>
+<tr><td><a href="/item/689-lauan-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/689.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lauan Log</a></td><td class="pct" style="text-align:right">9.60%</td></tr>
+<tr><td><a href="/item/912-beehive-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/912.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beehive Chip</a></td><td class="pct" style="text-align:right">7.20%</td></tr>
+<tr><td><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></td><td class="pct" style="text-align:right">4.97%</td></tr>
+<tr><td><a href="/item/697-holly-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/697.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Log</a></td><td class="pct" style="text-align:right">4.88%</td></tr>
+<tr><td><a href="/item/701-rosewood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/701.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rosewood Log</a></td><td class="pct" style="text-align:right">1.99%</td></tr>
+<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">1.16%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>East Ronfaure <span class="badge">6 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">20.06%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">20.06%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">15.08%</td></tr>
-<tr><td><a href="/item/696-yew-log">Yew Log</a></td><td class="pct" style="text-align:right">7.03%</td></tr>
-<tr><td><a href="/item/639-ronfaure-chestnut">Ronfaure Chestnut</a></td><td class="pct" style="text-align:right">5.13%</td></tr>
-<tr><td><a href="/item/694-chestnut-log">Chestnut Log</a></td><td class="pct" style="text-align:right">2.93%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">20.06%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">20.06%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">15.08%</td></tr>
+<tr><td><a href="/item/696-yew-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/696.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Log</a></td><td class="pct" style="text-align:right">7.03%</td></tr>
+<tr><td><a href="/item/639-ronfaure-chestnut" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/639.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ronfaure Chestnut</a></td><td class="pct" style="text-align:right">5.13%</td></tr>
+<tr><td><a href="/item/694-chestnut-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/694.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chestnut Log</a></td><td class="pct" style="text-align:right">2.93%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Ghelsba Outpost <span class="badge">6 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/688-arrowwood-log">Arrowwood Log</a></td><td class="pct" style="text-align:right">18.61%</td></tr>
-<tr><td><a href="/item/698-ash-log">Ash Log</a></td><td class="pct" style="text-align:right">14.23%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">13.86%</td></tr>
-<tr><td><a href="/item/695-willow-log">Willow Log</a></td><td class="pct" style="text-align:right">7.09%</td></tr>
-<tr><td><a href="/item/697-holly-log">Holly Log</a></td><td class="pct" style="text-align:right">4.74%</td></tr>
-<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">3.08%</td></tr>
+<tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">18.61%</td></tr>
+<tr><td><a href="/item/698-ash-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Log</a></td><td class="pct" style="text-align:right">14.23%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">13.86%</td></tr>
+<tr><td><a href="/item/695-willow-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/695.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Log</a></td><td class="pct" style="text-align:right">7.09%</td></tr>
+<tr><td><a href="/item/697-holly-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/697.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Log</a></td><td class="pct" style="text-align:right">4.74%</td></tr>
+<tr><td><a href="/item/690-elm-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/690.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elm Log</a></td><td class="pct" style="text-align:right">3.08%</td></tr>
 </tbody></table></div></details>
 <details class="zone"><summary>Fort Karugo Narugo S <span class="badge">5 items</span></summary>
 <div class="zone-body"><table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/4154-flask-of-holy-water">Flask Of Holy Water</a></td><td class="pct" style="text-align:right">14.18%</td></tr>
-<tr><td><a href="/item/5650-pair-of-nopales">Pair Of Nopales</a></td><td class="pct" style="text-align:right">12.71%</td></tr>
-<tr><td><a href="/item/5662-dragon-fruit">Dragon Fruit</a></td><td class="pct" style="text-align:right">9.77%</td></tr>
-<tr><td><a href="/item/847-bird-feather">Bird Feather</a></td><td class="pct" style="text-align:right">7.88%</td></tr>
-<tr><td><a href="/item/4570-bird-egg">Bird Egg</a></td><td class="pct" style="text-align:right">6.93%</td></tr>
+<tr><td><a href="/item/4154-flask-of-holy-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4154.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Holy Water</a></td><td class="pct" style="text-align:right">14.18%</td></tr>
+<tr><td><a href="/item/5650-pair-of-nopales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5650.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pair Of Nopales</a></td><td class="pct" style="text-align:right">12.71%</td></tr>
+<tr><td><a href="/item/5662-dragon-fruit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5662.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dragon Fruit</a></td><td class="pct" style="text-align:right">9.77%</td></tr>
+<tr><td><a href="/item/847-bird-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/847.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bird Feather</a></td><td class="pct" style="text-align:right">7.88%</td></tr>
+<tr><td><a href="/item/4570-bird-egg" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4570.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bird Egg</a></td><td class="pct" style="text-align:right">6.93%</td></tr>
 </tbody></table></div></details>
 </section>
 <footer class="site-footer panel pad">

@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -137,252 +139,252 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Mining</h3>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/642-chunk-of-zinc-ore">Chunk Of Zinc Ore</a></td><td class="pct" style="text-align:right">8.39%</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">8.39%</td></tr>
-<tr><td><a href="/item/641-chunk-of-tin-ore">Chunk Of Tin Ore</a></td><td class="pct" style="text-align:right">7.84%</td></tr>
-<tr><td><a href="/item/640-chunk-of-copper-ore">Chunk Of Copper Ore</a></td><td class="pct" style="text-align:right">7.71%</td></tr>
-<tr><td><a href="/item/643-chunk-of-iron-ore">Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">7.23%</td></tr>
-<tr><td><a href="/item/736-chunk-of-silver-ore">Chunk Of Silver Ore</a></td><td class="pct" style="text-align:right">7.23%</td></tr>
-<tr><td><a href="/item/1638-moblin-mask">Moblin Mask</a></td><td class="pct" style="text-align:right">4.02%</td></tr>
-<tr><td><a href="/item/1625-moblin-helm">Moblin Helm</a></td><td class="pct" style="text-align:right">3.89%</td></tr>
-<tr><td><a href="/item/1632-moblin-mail">Moblin Mail</a></td><td class="pct" style="text-align:right">3.82%</td></tr>
-<tr><td><a href="/item/1631-moblin-armor">Moblin Armor</a></td><td class="pct" style="text-align:right">3.61%</td></tr>
-<tr><td><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></td><td class="pct" style="text-align:right">0.550%</td></tr>
-<tr><td><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></td><td class="pct" style="text-align:right">0.550%</td></tr>
-<tr><td><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></td><td class="pct" style="text-align:right">0.550%</td></tr>
-<tr><td><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">0.480%</td></tr>
+<tr><td><a href="/item/642-chunk-of-zinc-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/642.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Zinc Ore</a></td><td class="pct" style="text-align:right">8.39%</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">8.39%</td></tr>
+<tr><td><a href="/item/641-chunk-of-tin-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/641.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Tin Ore</a></td><td class="pct" style="text-align:right">7.84%</td></tr>
+<tr><td><a href="/item/640-chunk-of-copper-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/640.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Copper Ore</a></td><td class="pct" style="text-align:right">7.71%</td></tr>
+<tr><td><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">7.23%</td></tr>
+<tr><td><a href="/item/736-chunk-of-silver-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/736.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Silver Ore</a></td><td class="pct" style="text-align:right">7.23%</td></tr>
+<tr><td><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></td><td class="pct" style="text-align:right">4.02%</td></tr>
+<tr><td><a href="/item/1625-moblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1625.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Helm</a></td><td class="pct" style="text-align:right">3.89%</td></tr>
+<tr><td><a href="/item/1632-moblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1632.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mail</a></td><td class="pct" style="text-align:right">3.82%</td></tr>
+<tr><td><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></td><td class="pct" style="text-align:right">3.61%</td></tr>
+<tr><td><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></td><td class="pct" style="text-align:right">0.550%</td></tr>
+<tr><td><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></td><td class="pct" style="text-align:right">0.550%</td></tr>
+<tr><td><a href="/item/738-chunk-of-platinum-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/738.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Platinum Ore</a></td><td class="pct" style="text-align:right">0.550%</td></tr>
+<tr><td><a href="/item/737-chunk-of-gold-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/737.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">0.480%</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="chests"><h2>Treasure chests</h2>
 <p style="font-size:.88rem;color:var(--ink-soft)">Key: Oldton Chest Key · Level 40</p>
 <table><thead><tr><th>Item</th></tr></thead><tbody>
-<tr><td><a href="/item/788-peridot">Peridot</a></td></tr>
-<tr><td><a href="/item/796-light-opal">Light Opal</a></td></tr>
-<tr><td><a href="/item/798-turquoise">Turquoise</a></td></tr>
-<tr><td><a href="/item/799-onyx">Onyx</a></td></tr>
-<tr><td><a href="/item/808-goshenite">Goshenite</a></td></tr>
-<tr><td><a href="/item/811-ametrine">Ametrine</a></td></tr>
-<tr><td><a href="/item/815-sphene">Sphene</a></td></tr>
+<tr><td><a href="/item/788-peridot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/788.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Peridot</a></td></tr>
+<tr><td><a href="/item/796-light-opal" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/796.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Light Opal</a></td></tr>
+<tr><td><a href="/item/798-turquoise" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/798.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Turquoise</a></td></tr>
+<tr><td><a href="/item/799-onyx" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/799.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Onyx</a></td></tr>
+<tr><td><a href="/item/808-goshenite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/808.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goshenite</a></td></tr>
+<tr><td><a href="/item/811-ametrine" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/811.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ametrine</a></td></tr>
+<tr><td><a href="/item/815-sphene" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/815.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sphene</a></td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Bartabaq <span class="badge">5 items</span></h3>
-<div class="vendor-row"><a href="/item/1230-copper-nugget">Copper Nugget</a><span class="vendor-price gil">105g</span></div>
-<div class="vendor-row"><a href="/item/1239-goblin-doll">Goblin Doll</a><span class="vendor-price gil">500g</span></div>
-<div class="vendor-row"><a href="/item/4450-coral-fungus">Coral Fungus</a><span class="vendor-price gil">755g</span></div>
-<div class="vendor-row"><a href="/item/1650-chunk-of-kopparnickel-ore">Chunk Of Kopparnickel Ore</a><span class="vendor-price gil">800g</span></div>
-<div class="vendor-row"><a href="/item/5165-bottle-of-movalpolos-water">Bottle Of Movalpolos Water</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="/item/1230-copper-nugget" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1230.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Copper Nugget</a><span class="vendor-price gil">105g</span></div>
+<div class="vendor-row"><a href="/item/1239-goblin-doll" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1239.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Doll</a><span class="vendor-price gil">500g</span></div>
+<div class="vendor-row"><a href="/item/4450-coral-fungus" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4450.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coral Fungus</a><span class="vendor-price gil">755g</span></div>
+<div class="vendor-row"><a href="/item/1650-chunk-of-kopparnickel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1650.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Kopparnickel Ore</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="/item/5165-bottle-of-movalpolos-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5165.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Movalpolos Water</a><span class="vendor-price gil">800g</span></div>
 </section>
 <section class="panel pad" id="nms"><h2>Notorious monsters</h2>
 <details class="mob"><summary><span class="mob-name">Bugbear Muscleman</span> <span class="badge badge-nm">NM</span> <span class="badge badge-wotg">WotG</span> <span class="mob-lv">Lv 52–53</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2827-spool-of-rugged-gold-thread">Spool Of Rugged Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2827-spool-of-rugged-gold-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2827.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Rugged Gold Thread</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bugbear Strongman</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 50</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">2 spawns</p>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask">Bugbear Mask</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bugbear Mask</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Wolfman</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 50</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Amoebic Nodule</span> <span class="mob-lv">Lv 34–36</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/637-vial-of-slime-oil">Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Blind Crab</span> <span class="mob-lv">Lv 21–24</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bugbear Bondman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore">Chunk Of Kopparnickel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask">Bugbear Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock">Igneous Rock</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1650.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Kopparnickel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bugbear Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bugbear Bondman noroam</span> <span class="mob-lv">Lv 43–45</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore">Chunk Of Kopparnickel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask">Bugbear Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock">Igneous Rock</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1650.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Kopparnickel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bugbear Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bugbear Servingman</span> <span class="mob-lv">Lv 32–35</span> <span class="mob-spawns">11 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore">Chunk Of Kopparnickel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask">Bugbear Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock">Igneous Rock</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1650.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Kopparnickel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bugbear Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bugbear Servingman 2</span> <span class="mob-lv">Lv 32–35</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore">Chunk Of Kopparnickel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask">Bugbear Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock">Igneous Rock</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1650-chunk-of-kopparnickel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1650.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Kopparnickel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1624-bugbear-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bugbear Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Cutter fished</span> <span class="mob-lv">Lv 25–29</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Dark Bats Oldton Movalpolos</span> <span class="mob-lv">Lv 31–35</span> <span class="mob-spawns">14 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/930.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Beastman Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Earth Elemental</span> <span class="mob-lv">Lv 45–50</span> <span class="mob-flags">weather</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4107-earth-cluster">Earth Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster">Earth Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster">Earth Cluster</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4107-earth-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4107.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4107.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4107.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Cluster</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Ghost Crab fished</span> <span class="mob-lv">Lv 30–32</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Craftsman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Doorman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Freelance</span> <span class="mob-lv">Lv 46–47</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1858-moblumin-ingot">Moblumin Ingot</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1858-moblumin-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1858.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblumin Ingot</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Gutterman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">7 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Hammerman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Leadman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Oilman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Shovelman</span> <span class="mob-lv">Lv 42–43</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Tollman</span> <span class="mob-lv">Lv 42–43</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Ashman</span> <span class="mob-lv">Lv 45</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1858-moblumin-ingot">Moblumin Ingot</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1632-moblin-mail">Moblin Mail</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1625-moblin-helm">Moblin Helm</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1858-moblumin-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1858.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblumin Ingot</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1632-moblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1632.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mail</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1625-moblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1625.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Helm</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Chapman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1651-spool-of-moblin-thread">Spool Of Moblin Thread</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1861-moblin-sheepskin">Moblin Sheepskin</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1651-spool-of-moblin-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1651.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Moblin Thread</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1861-moblin-sheepskin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1861.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Sheepskin</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Coalman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Coalman 2</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">0 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Gasman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Gasman 2</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">0 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Gurneyman</span> <span class="mob-lv">Lv 46–47</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Pickman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Pikeman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Pikeman 2</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">0 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Ragman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Repairman</span> <span class="mob-lv">Lv 42–44</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Rodman</span> <span class="mob-lv">Lv 41–43</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Moblin Witchman</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1651-spool-of-moblin-thread">Spool Of Moblin Thread</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1638-moblin-mask">Moblin Mask</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1861-moblin-sheepskin">Moblin Sheepskin</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor">Moblin Armor</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1651-spool-of-moblin-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1651.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Moblin Thread</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1638-moblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1638.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Mask</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1861-moblin-sheepskin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1861.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Sheepskin</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1631-moblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Snipper fished</span> <span class="mob-lv">Lv 21–24</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Stirge Oldton Movalpolos</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">11 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang">Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood">Vial Of Fiend Blood</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood">Vial Of Beastman Blood</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/930.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Beastman Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Thunder Elemental</span> <span class="mob-lv">Lv 45–50</span> <span class="mob-flags">weather</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4108-lightning-cluster">Lightning Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster">Lightning Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster">Lightning Cluster</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4108-lightning-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4108.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lightning Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4108.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lightning Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4108.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lightning Cluster</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/750-silver-beastcoin">Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/751-platinum-beastcoin">Platinum Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/751-platinum-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/751.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Platinum Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>

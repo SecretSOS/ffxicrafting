@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="/style.css">
 <style>
 .item-head{display:flex;align-items:center;gap:14px}
-.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
+.item-icon{image-rendering:pixelated;flex-shrink:0;vertical-align:middle;border-radius:2px}
+.icon-link{display:inline-flex;align-items:center;gap:4px}
 h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
 h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
 h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -49,22 +50,6 @@ table{font-size:.88rem;margin-bottom:.4em}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -79,6 +64,23 @@ table{font-size:.88rem;margin-bottom:.4em}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -96,6 +98,7 @@ table{font-size:.88rem;margin-bottom:.4em}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -121,12 +124,12 @@ table{font-size:.88rem;margin-bottom:.4em}
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Elshimo Coconut</nav>
  <header class="panel pad">
   <div class="infobox"><div class="infobox-head">Elshimo Coconut</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">5187</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">1</span></div><div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">43 gil</span></div></div>
-  <div class="item-head"><img class="item-icon" src="/img/item/5187.png" alt="" width="32" height="32"><div>
+  <div class="item-head"><img class="item-icon" src="/icons/5187.png" alt="" width="32" height="32"><div>
   <h1>Elshimo Coconut</h1>
   <p class="meta">Stack: 1 · NPC: 43g · <a href="https://horizonffxi.wiki/w/index.php?search=Elshimo+Coconut&amp;title=Special%3ASearch&amp;go=Go" target="_blank" rel="noopener">Wiki ↗</a></p>
   </div></div>
  </header>
- <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Vendors</h3><table><thead><tr><th>NPC</th><th>Zone</th><th class="num">Price</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/zones/Kazham/npcs/Ghemi_Sinterilo.lua"><td>Ghemi_Sinterilo</td><td>Kazham</td><td class="num">172</td><td class="soft hide-sm"></td></tr></tbody></table><h3>Mob Drops</h3><table><thead><tr><th>Monster</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Level</th><th class="hide-sm">Info</th></tr></thead><tbody><tr data-src="data/zones/bibiki_bay/mobs.yaml"><td>Coastal_Opo-opo</td><td>Bibiki Bay</td><td class="num">5%</td><td class="hide-sm">37–39</td><td class="soft hide-sm">21 spawns</td></tr><tr data-src="data/zones/den_of_rancor/mobs.yaml"><td>Bullbeggar</td><td>Den Of Rancor</td><td class="num">5%</td><td class="hide-sm">78–80</td><td class="soft hide-sm">26 spawns</td></tr><tr data-src="data/zones/yhoator_jungle/mobs.yaml"><td>Young_Opo-opo</td><td>Yhoator Jungle</td><td class="num">5%</td><td class="hide-sm">40–44</td><td class="soft hide-sm">69 spawns</td></tr><tr data-src="data/zones/yuhtunga_jungle/mobs.yaml"><td>Young_Opo-opo</td><td>Yuhtunga Jungle</td><td class="num">5%</td><td class="hide-sm">34–36</td><td class="soft hide-sm">90 spawns</td></tr></tbody></table><h3>Clamming</h3><table><thead><tr><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/globals/hobbies/clamming/data.lua"><td>Bibiki Bay</td><td class="num">2.7%</td><td class="soft hide-sm">per dig; tide has no effect (code bug)</td></tr><tr data-src="scripts/globals/hobbies/clamming/data.lua"><td>Bibiki Bay</td><td class="num">2.5%</td><td class="soft hide-sm">per dig; tide has no effect (code bug)</td></tr></tbody></table></section><section class="panel pad"><h2>Used in</h2><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Cooking 85 <span class="pill ki">key item</span> <span class="pill wotg">WotG</span></td><td><a href="/item/5784-coconut-rusk">Coconut Rusk</a> ×2</td><td class="ings hide-sm"><a href="/item/4096-fire-crystal">Fire Crystal</a> · <a href="/item/615-stick-of-selbina-butter">Stick of Selbina Butter</a> · <a href="/item/4499-loaf-of-iron-bread">Loaf of Iron Bread</a> · <a href="/item/4570-bird-egg">Bird Egg</a> · <a href="/item/5187-elshimo-coconut">Elshimo Coconut</a></td></tr><tr><td>Woodworking 83 <span class="pill">COP</span></td><td><a href="/item/99-elshimo-palm">Elshimo Palm</a></td><td class="ings hide-sm"><a href="/item/4101-water-crystal">Water Crystal</a> · <a href="/item/695-willow-log">Willow Log</a> · <a href="/item/721-piece-of-rattan-lumber">Piece of Rattan Lumber</a> · <a href="/item/1774-pile-of-red-gravel">Pile of Red Gravel</a> · <a href="/item/5187-elshimo-coconut">Elshimo Coconut</a> · <a href="/item/17868-jug-of-humus">Jug of Humus</a></td></tr></tbody></table></section>
+ <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Vendors</h3><table><thead><tr><th>NPC</th><th>Zone</th><th class="num">Price</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/zones/Kazham/npcs/Ghemi_Sinterilo.lua"><td>Ghemi_Sinterilo</td><td>Kazham</td><td class="num">172</td><td class="soft hide-sm"></td></tr></tbody></table><h3>Mob Drops</h3><table><thead><tr><th>Monster</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Level</th><th class="hide-sm">Info</th></tr></thead><tbody><tr data-src="data/zones/bibiki_bay/mobs.yaml"><td>Coastal_Opo-opo</td><td>Bibiki Bay</td><td class="num">5%</td><td class="hide-sm">37–39</td><td class="soft hide-sm">21 spawns</td></tr><tr data-src="data/zones/den_of_rancor/mobs.yaml"><td>Bullbeggar</td><td>Den Of Rancor</td><td class="num">5%</td><td class="hide-sm">78–80</td><td class="soft hide-sm">26 spawns</td></tr><tr data-src="data/zones/yhoator_jungle/mobs.yaml"><td>Young_Opo-opo</td><td>Yhoator Jungle</td><td class="num">5%</td><td class="hide-sm">40–44</td><td class="soft hide-sm">69 spawns</td></tr><tr data-src="data/zones/yuhtunga_jungle/mobs.yaml"><td>Young_Opo-opo</td><td>Yuhtunga Jungle</td><td class="num">5%</td><td class="hide-sm">34–36</td><td class="soft hide-sm">90 spawns</td></tr></tbody></table><h3>Clamming</h3><table><thead><tr><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/globals/hobbies/clamming/data.lua"><td>Bibiki Bay</td><td class="num">2.7%</td><td class="soft hide-sm">per dig; tide has no effect (code bug)</td></tr><tr data-src="scripts/globals/hobbies/clamming/data.lua"><td>Bibiki Bay</td><td class="num">2.5%</td><td class="soft hide-sm">per dig; tide has no effect (code bug)</td></tr></tbody></table></section><section class="panel pad"><h2>Used in</h2><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Cooking 85 <span class="pill ki">key item</span> <span class="pill wotg">WotG</span></td><td><a href="/item/5784-coconut-rusk" class="icon-link"><img src="/icons/5784.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Coconut Rusk</a> ×2</td><td class="ings hide-sm"><a href="/item/4096-fire-crystal" class="icon-link"><img src="/icons/4096.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Fire Crystal</a> · <a href="/item/615-stick-of-selbina-butter" class="icon-link"><img src="/icons/615.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Stick of Selbina Butter</a> · <a href="/item/4499-loaf-of-iron-bread" class="icon-link"><img src="/icons/4499.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Loaf of Iron Bread</a> · <a href="/item/4570-bird-egg" class="icon-link"><img src="/icons/4570.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Bird Egg</a> · <a href="/item/5187-elshimo-coconut" class="icon-link"><img src="/icons/5187.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Elshimo Coconut</a></td></tr><tr><td>Woodworking 83 <span class="pill">COP</span></td><td><a href="/item/99-elshimo-palm" class="icon-link"><img src="/icons/99.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Elshimo Palm</a></td><td class="ings hide-sm"><a href="/item/4101-water-crystal" class="icon-link"><img src="/icons/4101.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Water Crystal</a> · <a href="/item/695-willow-log" class="icon-link"><img src="/icons/695.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Willow Log</a> · <a href="/item/721-piece-of-rattan-lumber" class="icon-link"><img src="/icons/721.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Piece of Rattan Lumber</a> · <a href="/item/1774-pile-of-red-gravel" class="icon-link"><img src="/icons/1774.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Pile of Red Gravel</a> · <a href="/item/5187-elshimo-coconut" class="icon-link"><img src="/icons/5187.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Elshimo Coconut</a> · <a href="/item/17868-jug-of-humus" class="icon-link"><img src="/icons/17868.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Jug of Humus</a></td></tr></tbody></table></section>
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>

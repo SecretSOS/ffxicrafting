@@ -50,9 +50,16 @@ def esc(s):
 def item_name(iid):
     return ITEMS.get(iid, f'Item #{iid}')
 
+ICON_DIR = os.path.join(ROOT, 'public', 'icons')
+
+def _icon(iid, size=20):
+    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
+        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
+    return ''
+
 def item_link(iid):
     n = item_name(iid)
-    return f'<a href="/item/{iid}-{slugify(n)}">{esc(n)}</a>'
+    return f'<a href="/item/{iid}-{slugify(n)}" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
 
 def fmt_pct(p):
     if p is None: return '—'

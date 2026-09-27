@@ -41,9 +41,16 @@ def esc(s):
 def item_name(iid):
     return ITEMS.get(iid, f'Item #{iid}')
 
+ICON_DIR = os.path.join(ROOT, 'public', 'icons')
+
+def _icon(iid, size=20):
+    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
+        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
+    return ''
+
 def item_link(iid):
     n = item_name(iid)
-    return f'<a href="/item/{iid}-{slugify(n)}">{esc(n)}</a>'
+    return f'<a href="/item/{iid}-{slugify(n)}" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
 
 ELEMENTS = {0:'None', 1:'Fire', 2:'Ice', 3:'Wind', 4:'Earth', 5:'Lightning', 6:'Water', 7:'Light', 8:'Dark'}
 EL_CSS = {0:'', 1:'--fire', 2:'--ice', 3:'--wind', 4:'--earth', 5:'--lightning', 6:'--water', 7:'--light', 8:'--dark'}

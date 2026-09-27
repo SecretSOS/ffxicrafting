@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -134,56 +136,56 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <section class="panel pad" id="nms"><h2>Notorious monsters</h2>
 <details class="mob"><summary><span class="mob-name">Cyclopean Conch</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 55</span> <span class="mob-flags">fished · scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1618-uragnite-shell">Uragnite Shell</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1618-uragnite-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1618.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Uragnite Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Harajnite</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 51</span> <span class="mob-flags">fished · scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1618-uragnite-shell">Uragnite Shell</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1719-harajnite-shell">Harajnite Shell</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1618-uragnite-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1618.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Uragnite Shell</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1719-harajnite-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1719.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Harajnite Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Zoredonite</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 61–62</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/888-seashell">Seashell</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Clot</span> <span class="mob-lv">Lv 31–37</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1633-handful-of-clot-plasma">Handful Of Clot Plasma</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1633-handful-of-clot-plasma" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1633.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Clot Plasma</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Colossal Calamari</span> <span class="mob-lv">Lv 41–42</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/888-seashell">Seashell</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4484-shall-shell">Shall Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4484-shall-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Cutter Manaclipper</span> <span class="mob-lv">Lv 31–34</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Fatty Pugil</span> <span class="mob-lv">Lv 25–34</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales">Handful Of Pugil Scales</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4484-shall-shell">Shall Shell</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/868.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pugil Scales</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4484-shall-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Ghost Crab fished</span> <span class="mob-lv">Lv 30–34</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat">Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell">Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Kraken fished</span> <span class="mob-lv">Lv 40–42</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/888-seashell">Seashell</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4484-shall-shell">Shall Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4484-shall-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Uragnite</span> <span class="mob-lv">Lv 31–40</span> <span class="mob-flags">scripted</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/888-seashell">Seashell</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1618-uragnite-shell">Uragnite Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1618-uragnite-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1618.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Uragnite Shell</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>

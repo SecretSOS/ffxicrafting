@@ -260,7 +260,10 @@ ci0 = cq.index('overseerInvCommon'); ci1 = cq.index('\n}\n', ci0)
 for m in re.finditer(r"\[(\d+)\]\s*=\s*\{([^}]+)\}", cq[ci0:ci1]):
     body = m[2]; cp = re.search(r"cp\s*=\s*(\d+)", body); lvl = re.search(r"lvl\s*=\s*(\d+)", body); itm = re.search(r"item\s*=\s*xi\.item\.(\w+)", body); rk = re.search(r"rank\s*=\s*(\d+)", body)
     if not (cp and lvl and itm): continue
-    S(enum.get(itm[1]), 'conquest_vendor', None, 'nation overseer', None, int(lvl[1]), gate=(f'nation rank {rk[1]}' if rk else None), price=int(cp[1]), notes='price in conquest points; lo = level req', file='scripts/globals/conquest.lua')
+    iid = enum.get(itm[1])
+    if iid and iid in items and not cur.execute("SELECT 1 FROM items WHERE id=?", (iid,)).fetchone():
+        cur.execute("INSERT INTO items VALUES (?,?,?,?,?,?,?,?,?)", items[iid])
+    S(iid, 'conquest_vendor', None, 'nation overseer', None, int(lvl[1]), gate=(f'nation rank {rk[1]}' if rk else None), price=int(cp[1]), notes='price in conquest points; lo = level req', file='scripts/globals/conquest.lua')
 bs = rd(P('scripts/globals/besieged.lua'))
 for m in re.finditer(r"id\s*=\s*xi\.item\.(\w+),\s*price\s*=\s*(\d+),\s*rank\s*=\s*(\d+)", bs):
     S(enum.get(m[1]), 'besieged_vendor', 'aht_urhgan_whitegate', None, None, gate=f'imperial rank {m[3]}', price=int(m[2]), content='toau', notes='price in Imperial Standing', file='scripts/globals/besieged.lua')
@@ -539,7 +542,7 @@ if PXI:
                     (int(m[1]), GUILDS_I[int(m[2])], int(m[3]), int(m[4])))
         _gp_u += cur.rowcount
     rov_gp = _pxi_rd('era/sql/rov/guild_item_points.sql')
-    if 'max_points / 3' in rov_gp or 'max_points/3' in rov_gp:
+    if '/ 3' in rov_gp:
         cur.execute("UPDATE gp_turnins SET max_points = max_points / 3")
     print(f"  gp_turnins: {_gp_u} updates, {_gp_d} deletes, {_gp_i} inserts, then max_points /= 3")
     # --- GP rewards (guild_point_shop.lua) ---

@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -133,100 +135,100 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <section class="panel pad" id="nms"><h2>Notorious monsters</h2>
 <details class="mob"><summary><span class="mob-name">Ethniu</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 80</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/2275-scintillant-ingot">Scintillant Ingot</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/747-orichalcum-ingot">Orichalcum Ingot</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/2275-scintillant-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2275.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scintillant Ingot</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/747-orichalcum-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/747.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Orichalcum Ingot</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Tethra</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 80</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/2275-scintillant-ingot">Scintillant Ingot</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/747-orichalcum-ingot">Orichalcum Ingot</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/2275-scintillant-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2275.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scintillant Ingot</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/747-orichalcum-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/747.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Orichalcum Ingot</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Earth Elemental</span> <span class="mob-lv">Lv 70–75</span> <span class="mob-flags">weather</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4107-earth-cluster">Earth Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster">Earth Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster">Earth Cluster</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4107-earth-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4107.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4107.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4107-earth-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4107.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Cluster</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Eastern Spriggan</span> <span class="mob-lv">Lv 66–69</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Gazer</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/914-vial-of-mercury">Vial Of Mercury</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/939-hecteyes-eye">Hecteyes Eye</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/914-vial-of-mercury" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/914.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Mercury</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/939-hecteyes-eye" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/939.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hecteyes Eye</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Blastmaster</span> <span class="mob-lv">Lv 62–64</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Corpsman</span> <span class="mob-lv">Lv 62–64</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask">Goblin Mask</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor">Goblin Armor</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Freesword</span> <span class="mob-lv">Lv 62–64</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm">Goblin Helm</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail">Goblin Mail</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/508-goblin-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Helm</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Goblin Pioneer</span> <span class="mob-lv">Lv 62–64</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/2542-goblin-mess-tin">Goblin Mess Tin</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/2543-goblin-weel">Goblin Weel</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/2542-goblin-mess-tin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2542.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mess Tin</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/2543-goblin-weel" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2543.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Weel</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Hell Hound</span> <span class="mob-lv">Lv 64–66</span> <span class="mob-spawns">48 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/858-wolf-hide">Wolf Hide</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/858-wolf-hide" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/858.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wolf Hide</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Ice Elemental</span> <span class="mob-lv">Lv 72–75</span> <span class="mob-flags">weather</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4105-ice-cluster">Ice Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4105-ice-cluster">Ice Cluster</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4105-ice-cluster">Ice Cluster</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/4105-ice-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4105.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ice Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4105-ice-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4105.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ice Cluster</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4105-ice-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4105.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ice Cluster</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Ignis Djinn</span> <span class="mob-lv">Lv 68–72</span> <span class="mob-spawns">19 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/2549-pinch-of-djinn-ash">Pinch Of Djinn Ash</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/2549-pinch-of-djinn-ash" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2549.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Djinn Ash</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Lich ENS</span> <span class="mob-lv">Lv 65–69</span> <span class="mob-spawns">41 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Lost Soul war ENS</span> <span class="mob-lv">Lv 65–69</span> <span class="mob-spawns">39 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip">Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Northern Spriggan</span> <span class="mob-lv">Lv 66–69</span> <span class="mob-spawns">10 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Trooper past</span> <span class="mob-lv">Lv 67–69</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/2510-orc-helmet">Orc Helmet</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/2510-orc-helmet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Orc Helmet</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Revenant SoZ ENS FY</span> <span class="mob-lv">Lv 68–70</span> <span class="mob-spawns">18 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/825-square-of-cotton-cloth">Square Of Cotton Cloth</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/529-luminicloth">Luminicloth</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/825-square-of-cotton-cloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/825.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Cotton Cloth</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/529-luminicloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/529.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Luminicloth</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Southern Spriggan</span> <span class="mob-lv">Lv 66–69</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">War Smilodon</span> <span class="mob-lv">Lv 61–64</span> <span class="mob-spawns">21 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2518-smilodon-hide">Smilodon Hide</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2518-smilodon-hide" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2518.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Smilodon Hide</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Western Spriggan</span> <span class="mob-lv">Lv 66–69</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root">Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/825-square-of-cotton-cloth">Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip">Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/4372-slice-of-giant-sheep-meat">Slice Of Giant Sheep Meat</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/825-square-of-cotton-cloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/825.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/4372-slice-of-giant-sheep-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4372.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Giant Sheep Meat</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>

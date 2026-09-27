@@ -57,8 +57,10 @@ img{max-width:100%}
 .nav-dd-btn.active{color:var(--gil)}
 .nav-dd:hover .nav-dd-btn{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
 .nav-dd-arr{font-size:.7em;margin-left:1px;opacity:.5}
-.nav-dd-menu{display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:50;min-width:160px;padding:4px 0;
- background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.nav-dd-menu{display:none;position:absolute;top:100%;left:0;z-index:50;min-width:160px;padding:8px 0 4px;
+ background:var(--panel-top);border:1px solid var(--frame);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4);
+ margin-top:0}
+.nav-dd-menu::before{content:'';position:absolute;top:-8px;left:0;right:0;height:8px}
 .nav-dd:hover .nav-dd-menu{display:block}
 .nav-dd-menu a{display:block;padding:7px 14px;color:var(--ink-soft);font-size:.86rem;border-bottom:none;border-radius:0}
 .nav-dd-menu a:hover{background:color-mix(in srgb,var(--gil) 14%,transparent);color:var(--ink)}

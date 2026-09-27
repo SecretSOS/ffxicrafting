@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -132,27 +134,27 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div style="clear:both"></div></header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>dwago <span class="badge">5 items</span></h3>
-<div class="vendor-row"><a href="/item/17396-little-worm">Little Worm</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/17016-pet-food-alpha-biscuit">Pet Food Alpha Biscuit</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17395-lugworm">Lugworm</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17017-pet-food-beta-biscuit">Pet Food Beta Biscuit</a><span class="vendor-price gil">93g</span></div>
-<div class="vendor-row"><a href="/item/17862-jug-of-bug-broth">Jug Of Bug Broth</a><span class="vendor-price gil">786g</span></div>
+<div class="vendor-row"><a href="/item/17396-little-worm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17396.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Little Worm</a><span class="vendor-price gil">4g</span></div>
+<div class="vendor-row"><a href="/item/17016-pet-food-alpha-biscuit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17016.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pet Food Alpha Biscuit</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="/item/17395-lugworm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17395.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lugworm</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="/item/17017-pet-food-beta-biscuit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17017.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pet Food Beta Biscuit</a><span class="vendor-price gil">93g</span></div>
+<div class="vendor-row"><a href="/item/17862-jug-of-bug-broth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17862.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jug Of Bug Broth</a><span class="vendor-price gil">786g</span></div>
 <h3>gavrie <span class="badge">10 items</span></h3>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water">Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/18731-can-of-automaton-oil">Can Of Automaton Oil</a><span class="vendor-price gil">200g</span></div>
-<div class="vendor-row"><a href="/item/4148-antidote">Antidote</a><span class="vendor-price gil">316g</span></div>
-<div class="vendor-row"><a href="/item/18732-can-of-automaton-oil-1">Can Of Automaton Oil +1</a><span class="vendor-price gil">500g</span></div>
-<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops">Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
-<div class="vendor-row"><a href="/item/4112-potion">Potion</a><span class="vendor-price gil">910g</span></div>
-<div class="vendor-row"><a href="/item/18733-can-of-automaton-oil-2">Can Of Automaton Oil +2</a><span class="vendor-price gil">1,000g</span></div>
-<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops">Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
-<div class="vendor-row"><a href="/item/4128-ether">Ether</a><span class="vendor-price gil">4,832g</span></div>
-<div class="vendor-row"><a href="/item/4155-remedy">Remedy</a><span class="vendor-price gil">22,400g</span></div>
+<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="/item/18731-can-of-automaton-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/18731.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Can Of Automaton Oil</a><span class="vendor-price gil">200g</span></div>
+<div class="vendor-row"><a href="/item/4148-antidote" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4148.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="/item/18732-can-of-automaton-oil-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/18732.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Can Of Automaton Oil +1</a><span class="vendor-price gil">500g</span></div>
+<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4151.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="/item/4112-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4112.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="/item/18733-can-of-automaton-oil-2" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/18733.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Can Of Automaton Oil +2</a><span class="vendor-price gil">1,000g</span></div>
+<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4150.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="/item/4128-ether" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4128.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ether</a><span class="vendor-price gil">4,832g</span></div>
+<div class="vendor-row"><a href="/item/4155-remedy" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4155.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Remedy</a><span class="vendor-price gil">22,400g</span></div>
 <h3>khaf jhifanm <span class="badge">4 items</span></h3>
-<div class="vendor-row"><a href="/item/5567-dried-date">Dried Date</a><span class="vendor-price gil">200g</span></div>
-<div class="vendor-row"><a href="/item/2235-bag-of-wildgrass-seeds">Bag Of Wildgrass Seeds</a><span class="vendor-price gil">320g</span></div>
-<div class="vendor-row"><a href="/item/5576-flask-of-ayran">Flask Of Ayran</a><span class="vendor-price gil">800g</span></div>
-<div class="vendor-row"><a href="/item/5590-balik-sandvici">Balik Sandvici</a><span class="vendor-price gil">3,750g</span></div>
+<div class="vendor-row"><a href="/item/5567-dried-date" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5567.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dried Date</a><span class="vendor-price gil">200g</span></div>
+<div class="vendor-row"><a href="/item/2235-bag-of-wildgrass-seeds" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2235.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Wildgrass Seeds</a><span class="vendor-price gil">320g</span></div>
+<div class="vendor-row"><a href="/item/5576-flask-of-ayran" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5576.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Ayran</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="/item/5590-balik-sandvici" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5590.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Balik Sandvici</a><span class="vendor-price gil">3,750g</span></div>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
 <footer class="site-footer panel pad">

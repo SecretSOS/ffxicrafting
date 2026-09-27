@@ -112,13 +112,21 @@ print(f'{len(qualifying)} qualifying items', flush=True)
 
 # ─── HTML helpers ───────────────────────────────────────────────────────────
 
-def item_link(iid):
+ICON_DIR = os.path.join(ROOT, 'public', 'icons')
+
+def _icon(iid, size=20):
+    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
+        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" class="item-icon" loading="lazy"> '
+    return ''
+
+def item_link(iid, icon=True):
     if iid not in items:
         return f'[{iid}]'
     name = escape(pretty(items[iid]['name']))
+    ico = _icon(iid) if icon else ''
     if iid in item_urls:
-        return f'<a href="{item_urls[iid]}">{name}</a>'
-    return name
+        return f'<a href="{item_urls[iid]}" class="icon-link">{ico}{name}</a>'
+    return f'{ico}{name}'
 
 SOURCE_ORDER = [
     ('Vendors',        ['npc_shop','guild_shop','guild_vendor','regional_vendor',
@@ -304,7 +312,8 @@ def render_can_desynth(recs):
 
 ITEM_CSS = """\
 .item-head{display:flex;align-items:center;gap:14px}
-.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
+.item-icon{image-rendering:pixelated;flex-shrink:0;vertical-align:middle;border-radius:2px}
+.icon-link{display:inline-flex;align-items:center;gap:4px}
 h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
 h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
 h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -353,8 +362,8 @@ def build_page(iid):
         crumbs=[('Home', '/'), (ne, None)])
 
     # Icon
-    icon_path = os.path.join(ROOT, 'public', 'img', 'item', f'{iid}.png')
-    icon_img = f'<img class="item-icon" src="/img/item/{iid}.png" alt="" width="32" height="32">' if os.path.exists(icon_path) else ''
+    icon_path = os.path.join(ROOT, 'public', 'icons', f'{iid}.png')
+    icon_img = f'<img class="item-icon" src="/icons/{iid}.png" alt="" width="32" height="32">' if os.path.exists(icon_path) else ''
 
     # Flags line
     flags = ''

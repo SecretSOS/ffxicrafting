@@ -95,9 +95,16 @@ def pretty(n):
     return ' '.join(x.lower() if k and x in ('Of', 'The', 'And', 'A') else x for k, x in enumerate(w))
 
 
+ICON_DIR = os.path.join(ROOT, 'public', 'icons')
+
+def _icon(iid, size=20):
+    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
+        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
+    return ''
+
 def item_link(item_id, name):
     slug = name.lower().replace(' ', '-').replace("'", '')
-    return f'<a href="/item/{item_id}-{slug}">{escape(name)}</a>'
+    return f'<a href="/item/{item_id}-{slug}" style="display:inline-flex;align-items:center;gap:4px">{_icon(item_id)}{escape(name)}</a>'
 
 
 def format_gil(g):

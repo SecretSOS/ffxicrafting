@@ -84,7 +84,7 @@ def html_head(title, description='', og_url='', extra_css=''):
 GATHERING_PAGES = [
     ('/gathering/mining', 'Mining'), ('/gathering/logging', 'Logging'),
     ('/gathering/harvesting', 'Harvesting'), ('/gathering/excavation', 'Excavation'),
-    ('/gathering/gardening', 'Gardening'), ('/gathering/fishing', 'Fishing'),
+    ('/gathering/gardening', 'Gardening'), ('/fishing/', 'Fishing'),
     ('/gathering/digging', 'Chocobo Digging'), ('/gathering/clamming', 'Clamming'),
 ]
 
@@ -109,6 +109,7 @@ def top_bar(active=''):
     craft_items = [(f'/crafts/{name.lower()}', name, f'craft-{code}') for code, name, _ in CRAFTS_ORDERED]
     zones_cls = ' active' if active == 'zones' else ''
     bcnm_cls = ' active' if active == 'bcnm' else ''
+    guides_cls = ' active' if active == 'guides' else ''
     gathering_dd = _nav_dropdown('Gathering', '/gathering/', gathering_items, active)
     crafts_dd = _nav_dropdown('Crafts', '/crafts', craft_items, active)
     return f'''\
@@ -116,10 +117,11 @@ def top_bar(active=''):
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link{zones_cls}">Zones</a>
-{gathering_dd}
-  <a href="/bcnm" class="nav-link{bcnm_cls}">BCNMs</a>
 {crafts_dd}
+{gathering_dd}
+  <a href="/zone/" class="nav-link{zones_cls}">Zones</a>
+  <a href="/bcnm" class="nav-link{bcnm_cls}">BCNMs</a>
+  <a href="/guides/" class="nav-link{guides_cls}">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -147,7 +149,7 @@ def sidebar(active=''):
 {link("/calculator", "Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")} </div>
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
-{link("/zone/", "Zones", "zones")}{link("/gathering/", "Gathering", "gathering")}{link("/bcnm", "BCNMs", "bcnm")}{link("/crafts", "Crafts", "crafts")} </div>
+{link("/zone/", "Zones", "zones")}{link("/fishing/", "Fishing", "fishing")}{link("/gathering/", "Gathering", "gathering")}{link("/bcnm", "BCNMs", "bcnm")}{link("/crafts", "Crafts", "crafts")} </div>
  <div class="sb-section">
   <div class="sb-heading">Guilds</div>
 {craft_links} </div>

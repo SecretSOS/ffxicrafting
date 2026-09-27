@@ -58,22 +58,6 @@ details.zone .zone-body{padding:8px 0 16px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining" class="active">Mining</a>
-   <a href="/gathering/logging" class="active">Logging</a>
-   <a href="/gathering/harvesting" class="active">Harvesting</a>
-   <a href="/gathering/excavation" class="active">Excavation</a>
-   <a href="/gathering/gardening" class="active">Gardening</a>
-   <a href="/gathering/fishing" class="active">Fishing</a>
-   <a href="/gathering/digging" class="active">Chocobo Digging</a>
-   <a href="/gathering/clamming" class="active">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -88,6 +72,23 @@ details.zone .zone-body{padding:8px 0 16px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining" class="active">Mining</a>
+   <a href="/gathering/logging" class="active">Logging</a>
+   <a href="/gathering/harvesting" class="active">Harvesting</a>
+   <a href="/gathering/excavation" class="active">Excavation</a>
+   <a href="/gathering/gardening" class="active">Gardening</a>
+   <a href="/fishing/" class="active">Fishing</a>
+   <a href="/gathering/digging" class="active">Chocobo Digging</a>
+   <a href="/gathering/clamming" class="active">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -105,6 +106,7 @@ details.zone .zone-body{padding:8px 0 16px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/" class="active">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -132,87 +134,87 @@ details.zone .zone-body{padding:8px 0 16px}
 <section class="panel pad">
 <h3>Kit capacity: 50 <span class="badge">14 items</span></h3>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/5123-jacknife">Jacknife</a></td><td class="pct" style="text-align:right">33.80%</td></tr>
-<tr><td><a href="/item/5122-bibiki-slug">Bibiki Slug</a></td><td class="pct" style="text-align:right">29.90%</td></tr>
-<tr><td><a href="/item/17296-pebble">Pebble</a></td><td class="pct" style="text-align:right">17.20%</td></tr>
-<tr><td><a href="/item/4484-shall-shell">Shall Shell</a></td><td class="pct" style="text-align:right">4.60%</td></tr>
-<tr><td><a href="/item/624-clump-of-pamtam-kelp">Clump Of Pamtam Kelp</a></td><td class="pct" style="text-align:right">3.70%</td></tr>
-<tr><td><a href="/item/864-handful-of-fish-scales">Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">2.90%</td></tr>
-<tr><td><a href="/item/881-crab-shell">Crab Shell</a></td><td class="pct" style="text-align:right">2.70%</td></tr>
-<tr><td><a href="/item/4318-bibiki-urchin">Bibiki Urchin</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
-<tr><td><a href="/item/5124-tropical-clam">Tropical Clam</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
-<tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
-<tr><td><a href="/item/1193-high-quality-crab-shell">High-Quality Crab Shell</a></td><td class="pct" style="text-align:right">0.30%</td></tr>
-<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales">Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">0.30%</td></tr>
-<tr><td><a href="/item/885-turtle-shell">Turtle Shell</a></td><td class="pct" style="text-align:right">0.20%</td></tr>
+<tr><td><a href="/item/5123-jacknife" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5123.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jacknife</a></td><td class="pct" style="text-align:right">33.80%</td></tr>
+<tr><td><a href="/item/5122-bibiki-slug" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5122.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bibiki Slug</a></td><td class="pct" style="text-align:right">29.90%</td></tr>
+<tr><td><a href="/item/17296-pebble" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17296.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pebble</a></td><td class="pct" style="text-align:right">17.20%</td></tr>
+<tr><td><a href="/item/4484-shall-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></td><td class="pct" style="text-align:right">4.60%</td></tr>
+<tr><td><a href="/item/624-clump-of-pamtam-kelp" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></td><td class="pct" style="text-align:right">3.70%</td></tr>
+<tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">2.90%</td></tr>
+<tr><td><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></td><td class="pct" style="text-align:right">2.70%</td></tr>
+<tr><td><a href="/item/4318-bibiki-urchin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4318.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bibiki Urchin</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
+<tr><td><a href="/item/5124-tropical-clam" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5124.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tropical Clam</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
+<tr><td><a href="/item/887-coral-fragment" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/887.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coral Fragment</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
+<tr><td><a href="/item/1193-high-quality-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1193.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> High-Quality Crab Shell</a></td><td class="pct" style="text-align:right">0.30%</td></tr>
+<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1587.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">0.30%</td></tr>
+<tr><td><a href="/item/885-turtle-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/885.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Turtle Shell</a></td><td class="pct" style="text-align:right">0.20%</td></tr>
 </tbody></table>
 <h3>Kit capacity: 100 <span class="badge">19 items</span></h3>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/5123-jacknife">Jacknife</a></td><td class="pct" style="text-align:right">30.20%</td></tr>
-<tr><td><a href="/item/5122-bibiki-slug">Bibiki Slug</a></td><td class="pct" style="text-align:right">28.70%</td></tr>
-<tr><td><a href="/item/17296-pebble">Pebble</a></td><td class="pct" style="text-align:right">13.30%</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">6.30%</td></tr>
-<tr><td><a href="/item/485-broken-willow-fishing-rod">Broken Willow Fishing Rod</a></td><td class="pct" style="text-align:right">2.60%</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">2.50%</td></tr>
-<tr><td><a href="/item/5187-elshimo-coconut">Elshimo Coconut</a></td><td class="pct" style="text-align:right">2.50%</td></tr>
-<tr><td><a href="/item/4361-nebimonite">Nebimonite</a></td><td class="pct" style="text-align:right">2.30%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">1.90%</td></tr>
-<tr><td><a href="/item/4328-loaf-of-hobgoblin-bread">Loaf Of Hobgoblin Bread</a></td><td class="pct" style="text-align:right">1.80%</td></tr>
-<tr><td><a href="/item/4325-hobgoblin-pie">Hobgoblin Pie</a></td><td class="pct" style="text-align:right">1.80%</td></tr>
-<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales">Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">1.30%</td></tr>
-<tr><td><a href="/item/507-goblin-mail">Goblin Mail</a></td><td class="pct" style="text-align:right">0.80%</td></tr>
-<tr><td><a href="/item/510-goblin-armor">Goblin Armor</a></td><td class="pct" style="text-align:right">0.80%</td></tr>
-<tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td class="pct" style="text-align:right">0.80%</td></tr>
-<tr><td><a href="/item/5124-tropical-clam">Tropical Clam</a></td><td class="pct" style="text-align:right">0.70%</td></tr>
-<tr><td><a href="/item/1586-titanictus-shell">Titanictus Shell</a></td><td class="pct" style="text-align:right">0.70%</td></tr>
-<tr><td><a href="/item/703-petrified-log">Petrified Log</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
-<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
+<tr><td><a href="/item/5123-jacknife" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5123.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jacknife</a></td><td class="pct" style="text-align:right">30.20%</td></tr>
+<tr><td><a href="/item/5122-bibiki-slug" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5122.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bibiki Slug</a></td><td class="pct" style="text-align:right">28.70%</td></tr>
+<tr><td><a href="/item/17296-pebble" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17296.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pebble</a></td><td class="pct" style="text-align:right">13.30%</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">6.30%</td></tr>
+<tr><td><a href="/item/485-broken-willow-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/485.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Broken Willow Fishing Rod</a></td><td class="pct" style="text-align:right">2.60%</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">2.50%</td></tr>
+<tr><td><a href="/item/5187-elshimo-coconut" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5187.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elshimo Coconut</a></td><td class="pct" style="text-align:right">2.50%</td></tr>
+<tr><td><a href="/item/4361-nebimonite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4361.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Nebimonite</a></td><td class="pct" style="text-align:right">2.30%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">1.90%</td></tr>
+<tr><td><a href="/item/4328-loaf-of-hobgoblin-bread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4328.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Loaf Of Hobgoblin Bread</a></td><td class="pct" style="text-align:right">1.80%</td></tr>
+<tr><td><a href="/item/4325-hobgoblin-pie" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4325.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hobgoblin Pie</a></td><td class="pct" style="text-align:right">1.80%</td></tr>
+<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1587.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">1.30%</td></tr>
+<tr><td><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></td><td class="pct" style="text-align:right">0.80%</td></tr>
+<tr><td><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></td><td class="pct" style="text-align:right">0.80%</td></tr>
+<tr><td><a href="/item/887-coral-fragment" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/887.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coral Fragment</a></td><td class="pct" style="text-align:right">0.80%</td></tr>
+<tr><td><a href="/item/5124-tropical-clam" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5124.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tropical Clam</a></td><td class="pct" style="text-align:right">0.70%</td></tr>
+<tr><td><a href="/item/1586-titanictus-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1586.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Titanictus Shell</a></td><td class="pct" style="text-align:right">0.70%</td></tr>
+<tr><td><a href="/item/703-petrified-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/703.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Petrified Log</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
+<tr><td><a href="/item/690-elm-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/690.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elm Log</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
 </tbody></table>
 <h3>Kit capacity: 150 <span class="badge">23 items</span></h3>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/5122-bibiki-slug">Bibiki Slug</a></td><td class="pct" style="text-align:right">25.70%</td></tr>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">16.20%</td></tr>
-<tr><td><a href="/item/17296-pebble">Pebble</a></td><td class="pct" style="text-align:right">15.40%</td></tr>
-<tr><td><a href="/item/5123-jacknife">Jacknife</a></td><td class="pct" style="text-align:right">8.10%</td></tr>
-<tr><td><a href="/item/507-goblin-mail">Goblin Mail</a></td><td class="pct" style="text-align:right">3.20%</td></tr>
-<tr><td><a href="/item/4361-nebimonite">Nebimonite</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
-<tr><td><a href="/item/510-goblin-armor">Goblin Armor</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
-<tr><td><a href="/item/888-seashell">Seashell</a></td><td class="pct" style="text-align:right">2.80%</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">2.70%</td></tr>
-<tr><td><a href="/item/5187-elshimo-coconut">Elshimo Coconut</a></td><td class="pct" style="text-align:right">2.70%</td></tr>
-<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">2.30%</td></tr>
-<tr><td><a href="/item/703-petrified-log">Petrified Log</a></td><td class="pct" style="text-align:right">2.30%</td></tr>
-<tr><td><a href="/item/4468-bunch-of-pamamas">Bunch Of Pamamas</a></td><td class="pct" style="text-align:right">2.00%</td></tr>
-<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales">Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">1.90%</td></tr>
-<tr><td><a href="/item/691-maple-log">Maple Log</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
-<tr><td><a href="/item/4328-loaf-of-hobgoblin-bread">Loaf Of Hobgoblin Bread</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
-<tr><td><a href="/item/4325-hobgoblin-pie">Hobgoblin Pie</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
-<tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td class="pct" style="text-align:right">1.20%</td></tr>
-<tr><td><a href="/item/1586-titanictus-shell">Titanictus Shell</a></td><td class="pct" style="text-align:right">1.10%</td></tr>
-<tr><td><a href="/item/5124-tropical-clam">Tropical Clam</a></td><td class="pct" style="text-align:right">0.70%</td></tr>
-<tr><td><a href="/item/1446-lacquer-tree-log">Lacquer Tree Log</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
-<tr><td><a href="/item/1311-piece-of-oxblood">Piece Of Oxblood</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
-<tr><td><a href="/item/485-broken-willow-fishing-rod">Broken Willow Fishing Rod</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
+<tr><td><a href="/item/5122-bibiki-slug" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5122.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bibiki Slug</a></td><td class="pct" style="text-align:right">25.70%</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">16.20%</td></tr>
+<tr><td><a href="/item/17296-pebble" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17296.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pebble</a></td><td class="pct" style="text-align:right">15.40%</td></tr>
+<tr><td><a href="/item/5123-jacknife" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5123.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jacknife</a></td><td class="pct" style="text-align:right">8.10%</td></tr>
+<tr><td><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></td><td class="pct" style="text-align:right">3.20%</td></tr>
+<tr><td><a href="/item/4361-nebimonite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4361.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Nebimonite</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
+<tr><td><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></td><td class="pct" style="text-align:right">3.10%</td></tr>
+<tr><td><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></td><td class="pct" style="text-align:right">2.80%</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">2.70%</td></tr>
+<tr><td><a href="/item/5187-elshimo-coconut" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5187.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elshimo Coconut</a></td><td class="pct" style="text-align:right">2.70%</td></tr>
+<tr><td><a href="/item/690-elm-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/690.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elm Log</a></td><td class="pct" style="text-align:right">2.30%</td></tr>
+<tr><td><a href="/item/703-petrified-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/703.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Petrified Log</a></td><td class="pct" style="text-align:right">2.30%</td></tr>
+<tr><td><a href="/item/4468-bunch-of-pamamas" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4468.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bunch Of Pamamas</a></td><td class="pct" style="text-align:right">2.00%</td></tr>
+<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1587.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">1.90%</td></tr>
+<tr><td><a href="/item/691-maple-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/691.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Log</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
+<tr><td><a href="/item/4328-loaf-of-hobgoblin-bread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4328.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Loaf Of Hobgoblin Bread</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
+<tr><td><a href="/item/4325-hobgoblin-pie" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4325.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hobgoblin Pie</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
+<tr><td><a href="/item/887-coral-fragment" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/887.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coral Fragment</a></td><td class="pct" style="text-align:right">1.20%</td></tr>
+<tr><td><a href="/item/1586-titanictus-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1586.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Titanictus Shell</a></td><td class="pct" style="text-align:right">1.10%</td></tr>
+<tr><td><a href="/item/5124-tropical-clam" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5124.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tropical Clam</a></td><td class="pct" style="text-align:right">0.70%</td></tr>
+<tr><td><a href="/item/1446-lacquer-tree-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1446.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lacquer Tree Log</a></td><td class="pct" style="text-align:right">0.50%</td></tr>
+<tr><td><a href="/item/1311-piece-of-oxblood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1311.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Oxblood</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
+<tr><td><a href="/item/485-broken-willow-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/485.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Broken Willow Fishing Rod</a></td><td class="pct" style="text-align:right">0.40%</td></tr>
 </tbody></table>
 <h3>Kit capacity: 200 <span class="badge">16 items</span></h3>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:90px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/1654-igneous-rock">Igneous Rock</a></td><td class="pct" style="text-align:right">18.80%</td></tr>
-<tr><td><a href="/item/5122-bibiki-slug">Bibiki Slug</a></td><td class="pct" style="text-align:right">10.40%</td></tr>
-<tr><td><a href="/item/4468-bunch-of-pamamas">Bunch Of Pamamas</a></td><td class="pct" style="text-align:right">9.30%</td></tr>
-<tr><td><a href="/item/510-goblin-armor">Goblin Armor</a></td><td class="pct" style="text-align:right">7.50%</td></tr>
-<tr><td><a href="/item/887-coral-fragment">Coral Fragment</a></td><td class="pct" style="text-align:right">7.50%</td></tr>
-<tr><td><a href="/item/507-goblin-mail">Goblin Mail</a></td><td class="pct" style="text-align:right">7.30%</td></tr>
-<tr><td><a href="/item/888-seashell">Seashell</a></td><td class="pct" style="text-align:right">7.10%</td></tr>
-<tr><td><a href="/item/703-petrified-log">Petrified Log</a></td><td class="pct" style="text-align:right">7.00%</td></tr>
-<tr><td><a href="/item/690-elm-log">Elm Log</a></td><td class="pct" style="text-align:right">6.50%</td></tr>
-<tr><td><a href="/item/1586-titanictus-shell">Titanictus Shell</a></td><td class="pct" style="text-align:right">4.60%</td></tr>
-<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales">Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">4.20%</td></tr>
-<tr><td><a href="/item/5123-jacknife">Jacknife</a></td><td class="pct" style="text-align:right">3.70%</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">2.10%</td></tr>
-<tr><td><a href="/item/1311-piece-of-oxblood">Piece Of Oxblood</a></td><td class="pct" style="text-align:right">1.70%</td></tr>
-<tr><td><a href="/item/1446-lacquer-tree-log">Lacquer Tree Log</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
-<tr><td><a href="/item/5124-tropical-clam">Tropical Clam</a></td><td class="pct" style="text-align:right">0.90%</td></tr>
+<tr><td><a href="/item/1654-igneous-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1654.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Igneous Rock</a></td><td class="pct" style="text-align:right">18.80%</td></tr>
+<tr><td><a href="/item/5122-bibiki-slug" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5122.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bibiki Slug</a></td><td class="pct" style="text-align:right">10.40%</td></tr>
+<tr><td><a href="/item/4468-bunch-of-pamamas" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4468.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bunch Of Pamamas</a></td><td class="pct" style="text-align:right">9.30%</td></tr>
+<tr><td><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></td><td class="pct" style="text-align:right">7.50%</td></tr>
+<tr><td><a href="/item/887-coral-fragment" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/887.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coral Fragment</a></td><td class="pct" style="text-align:right">7.50%</td></tr>
+<tr><td><a href="/item/507-goblin-mail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/507.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mail</a></td><td class="pct" style="text-align:right">7.30%</td></tr>
+<tr><td><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></td><td class="pct" style="text-align:right">7.10%</td></tr>
+<tr><td><a href="/item/703-petrified-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/703.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Petrified Log</a></td><td class="pct" style="text-align:right">7.00%</td></tr>
+<tr><td><a href="/item/690-elm-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/690.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Elm Log</a></td><td class="pct" style="text-align:right">6.50%</td></tr>
+<tr><td><a href="/item/1586-titanictus-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1586.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Titanictus Shell</a></td><td class="pct" style="text-align:right">4.60%</td></tr>
+<tr><td><a href="/item/1587-handful-of-high-quality-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1587.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of High-Quality Pugil Scales</a></td><td class="pct" style="text-align:right">4.20%</td></tr>
+<tr><td><a href="/item/5123-jacknife" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5123.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jacknife</a></td><td class="pct" style="text-align:right">3.70%</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">2.10%</td></tr>
+<tr><td><a href="/item/1311-piece-of-oxblood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1311.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Oxblood</a></td><td class="pct" style="text-align:right">1.70%</td></tr>
+<tr><td><a href="/item/1446-lacquer-tree-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1446.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lacquer Tree Log</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
+<tr><td><a href="/item/5124-tropical-clam" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5124.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tropical Clam</a></td><td class="pct" style="text-align:right">0.90%</td></tr>
 </tbody></table>
 </section>
 <footer class="site-footer panel pad">

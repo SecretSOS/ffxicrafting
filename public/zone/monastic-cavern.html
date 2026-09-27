@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -134,126 +136,126 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <section class="panel pad" id="coffers"><h2>Treasure coffers</h2>
 <p style="font-size:.88rem;color:var(--ink-soft)">Key: Davoi Coffer Key · Level 60</p>
 <table><thead><tr><th>Item</th></tr></thead><tbody>
-<tr><td><a href="/item/784-jadeite">Jadeite</a></td></tr>
-<tr><td><a href="/item/797-painite">Painite</a></td></tr>
-<tr><td><a href="/item/801-chrysoberyl">Chrysoberyl</a></td></tr>
-<tr><td><a href="/item/802-moonstone">Moonstone</a></td></tr>
-<tr><td><a href="/item/803-sunstone">Sunstone</a></td></tr>
-<tr><td><a href="/item/810-fluorite">Fluorite</a></td></tr>
+<tr><td><a href="/item/784-jadeite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/784.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jadeite</a></td></tr>
+<tr><td><a href="/item/797-painite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/797.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Painite</a></td></tr>
+<tr><td><a href="/item/801-chrysoberyl" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chrysoberyl</a></td></tr>
+<tr><td><a href="/item/802-moonstone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/802.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moonstone</a></td></tr>
+<tr><td><a href="/item/803-sunstone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/803.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sunstone</a></td></tr>
+<tr><td><a href="/item/810-fluorite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/810.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fluorite</a></td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="nms"><h2>Notorious monsters</h2>
 <details class="mob"><summary><span class="mob-name">Orcish Overlord</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 75</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">2 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/554-gold-orcmask">Gold Orcmask</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/751-platinum-beastcoin">Platinum Beastcoin</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/554-gold-orcmask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/554.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Orcmask</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/751-platinum-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/751.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Platinum Beastcoin</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Overlord Bakgodek</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 85</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">30.0%</span><a href="/item/844-phoenix-feather">Phoenix Feather</a></div>
-<div class="drop"><span class="drop-rate">30.0%</span><a href="/item/942-philosophers-stone">Philosophers Stone</a></div>
-<div class="drop"><span class="drop-rate">15.5%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1132-square-of-raxa">Square Of Raxa</a></div>
-<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/658-damascus-ingot">Damascus Ingot</a></div>
-<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/836-square-of-damascene-cloth">Square Of Damascene Cloth</a></div>
-<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/837-spool-of-malboro-fiber">Spool Of Malboro Fiber</a></div>
-<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/1110-vial-of-black-beetle-blood">Vial Of Black Beetle Blood</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/644-chunk-of-mythril-ore">Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/700-mahogany-log">Mahogany Log</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/702-ebony-log">Ebony Log</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/703-petrified-log">Petrified Log</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/737-chunk-of-gold-ore">Chunk Of Gold Ore</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/738-chunk-of-platinum-ore">Chunk Of Platinum Ore</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/823-spool-of-gold-thread">Spool Of Gold Thread</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/830-square-of-rainbow-cloth">Square Of Rainbow Cloth</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/866-handful-of-wyvern-scales">Handful Of Wyvern Scales</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/887-coral-fragment">Coral Fragment</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/895-ram-horn">Ram Horn</a></div>
-<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/902-demon-horn">Demon Horn</a></div>
+<div class="drop"><span class="drop-rate">30.0%</span><a href="/item/844-phoenix-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/844.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Phoenix Feather</a></div>
+<div class="drop"><span class="drop-rate">30.0%</span><a href="/item/942-philosophers-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/942.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Philosophers Stone</a></div>
+<div class="drop"><span class="drop-rate">15.5%</span><a href="/item/1132-square-of-raxa" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1132.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1132-square-of-raxa" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1132.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Raxa</a></div>
+<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/658-damascus-ingot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/658.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Damascus Ingot</a></div>
+<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/836-square-of-damascene-cloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Damascene Cloth</a></div>
+<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/837-spool-of-malboro-fiber" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/837.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Malboro Fiber</a></div>
+<div class="drop"><span class="drop-rate">7.50%</span><a href="/item/1110-vial-of-black-beetle-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1110.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Black Beetle Blood</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/700-mahogany-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/700.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mahogany Log</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/703-petrified-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/703.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Petrified Log</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/737-chunk-of-gold-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/737.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Gold Ore</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/738-chunk-of-platinum-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/738.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Platinum Ore</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/823-spool-of-gold-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/823.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Gold Thread</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/830-square-of-rainbow-cloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/830.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Rainbow Cloth</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/866-handful-of-wyvern-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/866.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Wyvern Scales</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/887-coral-fragment" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/887.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coral Fragment</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/895-ram-horn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/895.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ram Horn</a></div>
+<div class="drop"><span class="drop-rate">6.50%</span><a href="/item/902-demon-horn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/902.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Demon Horn</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Orcish Bowshooter</span> <span class="mob-lv">Lv 42–46</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12443-cuir-bandana">Cuir Bandana</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12699-cuir-gloves">Cuir Gloves</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12827-cuir-trousers">Cuir Trousers</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12955-cuir-highboots">Cuir Highboots</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12443-cuir-bandana" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Bandana</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12699-cuir-gloves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Gloves</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12827-cuir-trousers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12827.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Trousers</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12955-cuir-highboots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12955.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Highboots</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Champion</span> <span class="mob-lv">Lv 64–72</span> <span class="mob-spawns">16 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12450-padded-cap">Padded Cap</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12706-iron-mittens">Iron Mittens</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12836-iron-subligar">Iron Subligar</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12962-leggings">Leggings</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12450-padded-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12450.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Padded Cap</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12706-iron-mittens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12706.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Mittens</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12836-iron-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Subligar</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12962-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12962.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leggings</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Dreadnought</span> <span class="mob-lv">Lv 63–72</span> <span class="mob-spawns">18 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet">Mythril Sallet</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets">Mythril Gauntlets</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings">Mythril Leggings</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12417.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Sallet</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12673.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Gauntlets</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Cuisses</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12929.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Leggings</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Footsoldier</span> <span class="mob-lv">Lv 43–47</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12425-silver-mask">Silver Mask</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12681-silver-mittens">Silver Mittens</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12809-silver-hose">Silver Hose</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12937-silver-greaves">Silver Greaves</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12425-silver-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12425.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Mask</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12681-silver-mittens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12681.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Mittens</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12809-silver-hose" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12809.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Hose</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12937-silver-greaves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12937.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Greaves</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Gladiator</span> <span class="mob-lv">Lv 44–48</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12450-padded-cap">Padded Cap</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12706-iron-mittens">Iron Mittens</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12836-iron-subligar">Iron Subligar</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12962-leggings">Leggings</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12450-padded-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12450.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Padded Cap</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12706-iron-mittens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12706.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Mittens</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12836-iron-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Subligar</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12962-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12962.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leggings</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Predator</span> <span class="mob-lv">Lv 53–57</span> <span class="mob-spawns">20 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12443-cuir-bandana">Cuir Bandana</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12699-cuir-gloves">Cuir Gloves</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12827-cuir-trousers">Cuir Trousers</a></div>
-<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12955-cuir-highboots">Cuir Highboots</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12443-cuir-bandana" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Bandana</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12699-cuir-gloves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12699.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Gloves</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12827-cuir-trousers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12827.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Trousers</a></div>
+<div class="drop"><span class="drop-rate">0.500%</span><a href="/item/12955-cuir-highboots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12955.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Highboots</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Trooper</span> <span class="mob-lv">Lv 45–49</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/554-gold-orcmask">Gold Orcmask</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12416-sallet">Sallet</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12672-gauntlets">Gauntlets</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12800-cuisses">Cuisses</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12928-plate-leggings">Plate Leggings</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/554-gold-orcmask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/554.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Orcmask</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12416-sallet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12416.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sallet</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12672-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12672.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gauntlets</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12800-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12800.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuisses</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12928-plate-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12928.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Plate Leggings</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Veteran</span> <span class="mob-lv">Lv 52–56</span> <span class="mob-spawns">20 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet">Mythril Sallet</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets">Mythril Gauntlets</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings">Mythril Leggings</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12417.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Sallet</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12673.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Gauntlets</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Cuisses</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12929.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Leggings</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Warchief</span> <span class="mob-lv">Lv 55–59</span> <span class="mob-spawns">20 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet">Mythril Sallet</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets">Mythril Gauntlets</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings">Mythril Leggings</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12417.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Sallet</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12673.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Gauntlets</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Cuisses</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12929.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Leggings</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Orcish Zerker</span> <span class="mob-lv">Lv 54–58</span> <span class="mob-spawns">20 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet">Mythril Sallet</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets">Mythril Gauntlets</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses">Mythril Cuisses</a></div>
-<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings">Mythril Leggings</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12417-mythril-sallet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12417.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Sallet</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12673-mythril-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12673.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Gauntlets</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12801-mythril-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Cuisses</a></div>
+<div class="drop"><span class="drop-rate">0.100%</span><a href="/item/12929-mythril-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12929.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Leggings</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/656-beastcoin">Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin">Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin">Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/751-platinum-beastcoin">Platinum Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/656.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/656.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/751-platinum-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/751.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Platinum Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>

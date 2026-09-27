@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -132,36 +134,36 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div style="clear:both"></div></header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Challoux <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/840-chocobo-feather">Chocobo Feather</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/17307-dart">Dart</a><span class="vendor-price gil">10g</span></div>
-<div class="vendor-row"><a href="/item/4545-bunch-of-gysahl-greens">Bunch Of Gysahl Greens</a><span class="vendor-price gil">68g</span></div>
+<div class="vendor-row"><a href="/item/840-chocobo-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/840.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chocobo Feather</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="/item/17307-dart" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17307.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dart</a><span class="vendor-price gil">10g</span></div>
+<div class="vendor-row"><a href="/item/4545-bunch-of-gysahl-greens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4545.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bunch Of Gysahl Greens</a><span class="vendor-price gil">68g</span></div>
 <h3>Gekko <span class="badge">6 items</span></h3>
-<div class="vendor-row"><a href="/item/4365-rolanberry">Rolanberry</a><span class="vendor-price gil">120g</span></div>
-<div class="vendor-row"><a href="/item/4148-antidote">Antidote</a><span class="vendor-price gil">316g</span></div>
-<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops">Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
-<div class="vendor-row"><a href="/item/4112-potion">Potion</a><span class="vendor-price gil">910g</span></div>
-<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops">Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
-<div class="vendor-row"><a href="/item/4128-ether">Ether</a><span class="vendor-price gil">4,832g</span></div>
+<div class="vendor-row"><a href="/item/4365-rolanberry" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4365.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rolanberry</a><span class="vendor-price gil">120g</span></div>
+<div class="vendor-row"><a href="/item/4148-antidote" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4148.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4151.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="/item/4112-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4112.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4150.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="/item/4128-ether" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4128.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ether</a><span class="vendor-price gil">4,832g</span></div>
 <h3>Kindlix <span class="badge">9 items</span></h3>
-<div class="vendor-row"><a href="/item/4167-cracker">Cracker</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4168-twinkle-shower">Twinkle Shower</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4169-little-comet">Little Comet</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4217-sparkling-hand">Sparkling Hand</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4215-popstar">Popstar</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4216-brilliant-snow">Brilliant Snow</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4186-airborne">Airborne</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/4218-air-rider">Air Rider</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/4257-papillion">Papillion</a><span class="vendor-price gil">300g</span></div>
+<div class="vendor-row"><a href="/item/4167-cracker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4167.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cracker</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="/item/4168-twinkle-shower" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4168.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Twinkle Shower</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="/item/4169-little-comet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4169.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Little Comet</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="/item/4217-sparkling-hand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4217.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sparkling Hand</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="/item/4215-popstar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4215.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Popstar</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="/item/4216-brilliant-snow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4216.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brilliant Snow</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="/item/4186-airborne" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4186.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Airborne</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="/item/4218-air-rider" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4218.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Air Rider</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="/item/4257-papillion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4257.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Papillion</a><span class="vendor-price gil">300g</span></div>
 <h3>Leyla <span class="badge">4 items</span></h3>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt">Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow">Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water">Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17308-hawkeye">Hawkeye</a><span class="vendor-price gil">60g</span></div>
+<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="/item/17308-hawkeye" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17308.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hawkeye</a><span class="vendor-price gil">60g</span></div>
 <h3>Pyropox <span class="badge">4 items</span></h3>
-<div class="vendor-row"><a href="/item/4256-ouka-ranman">Ouka Ranman</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4184-kongou-inaho">Kongou Inaho</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4185-meifu-goma">Meifu Goma</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4183-konron-hassen">Konron Hassen</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="/item/4256-ouka-ranman" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4256.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ouka Ranman</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="/item/4184-kongou-inaho" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4184.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kongou Inaho</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="/item/4185-meifu-goma" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4185.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Meifu Goma</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="/item/4183-konron-hassen" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4183.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Konron Hassen</a><span class="vendor-price gil">100g</span></div>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
 <footer class="site-footer panel pad">

@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -135,27 +137,27 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <section class="panel pad" id="gathering"><h2>Gathering</h2>
 <h3>Mining</h3>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/643-chunk-of-iron-ore">Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">20.3%</td></tr>
-<tr><td><a href="/item/640-chunk-of-copper-ore">Chunk Of Copper Ore</a></td><td class="pct" style="text-align:right">15.2%</td></tr>
-<tr><td><a href="/item/1984-snapping-mole">Snapping Mole</a></td><td class="pct" style="text-align:right">15.2%</td></tr>
-<tr><td><a href="/item/642-chunk-of-zinc-ore">Chunk Of Zinc Ore</a></td><td class="pct" style="text-align:right">12.4%</td></tr>
-<tr><td><a href="/item/641-chunk-of-tin-ore">Chunk Of Tin Ore</a></td><td class="pct" style="text-align:right">9.98%</td></tr>
-<tr><td><a href="/item/736-chunk-of-silver-ore">Chunk Of Silver Ore</a></td><td class="pct" style="text-align:right">1.62%</td></tr>
-<tr><td><a href="/item/645-chunk-of-darksteel-ore">Chunk Of Darksteel Ore</a></td><td class="pct" style="text-align:right">0.450%</td></tr>
+<tr><td><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></td><td class="pct" style="text-align:right">20.3%</td></tr>
+<tr><td><a href="/item/640-chunk-of-copper-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/640.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Copper Ore</a></td><td class="pct" style="text-align:right">15.2%</td></tr>
+<tr><td><a href="/item/1984-snapping-mole" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1984.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Snapping Mole</a></td><td class="pct" style="text-align:right">15.2%</td></tr>
+<tr><td><a href="/item/642-chunk-of-zinc-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/642.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Zinc Ore</a></td><td class="pct" style="text-align:right">12.4%</td></tr>
+<tr><td><a href="/item/641-chunk-of-tin-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/641.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Tin Ore</a></td><td class="pct" style="text-align:right">9.98%</td></tr>
+<tr><td><a href="/item/736-chunk-of-silver-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/736.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Silver Ore</a></td><td class="pct" style="text-align:right">1.62%</td></tr>
+<tr><td><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></td><td class="pct" style="text-align:right">0.450%</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Ding Bats</span> <span class="mob-lv">Lv 1–2</span> <span class="mob-spawns">9 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing">Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">River Crab</span> <span class="mob-lv">Lv 2–4</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/936-chunk-of-rock-salt">Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>

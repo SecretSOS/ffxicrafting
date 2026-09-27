@@ -53,22 +53,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link active">Zones</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-   <a href="/gathering/mining">Mining</a>
-   <a href="/gathering/logging">Logging</a>
-   <a href="/gathering/harvesting">Harvesting</a>
-   <a href="/gathering/excavation">Excavation</a>
-   <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
-   <a href="/gathering/digging">Chocobo Digging</a>
-   <a href="/gathering/clamming">Clamming</a>
-  </div>
- </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -83,6 +67,23 @@ details.mob .mob-body{padding:6px 0 14px 18px}
    <a href="/crafts/cooking">Cooking</a>
   </div>
  </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link active">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -100,6 +101,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/" class="active">Zones</a>
+  <a href="/fishing/">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -132,40 +134,40 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div style="clear:both"></div></header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Dohdjuma <span class="badge">9 items</span></h3>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water">Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17395-lugworm">Lugworm</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/611-bag-of-rye-flour">Bag Of Rye Flour</a><span class="vendor-price gil">40g</span></div>
-<div class="vendor-row"><a href="/item/4378-jug-of-selbina-milk">Jug Of Selbina Milk</a><span class="vendor-price gil">61g</span></div>
-<div class="vendor-row"><a href="/item/4148-antidote">Antidote</a><span class="vendor-price gil">316g</span></div>
-<div class="vendor-row"><a href="/item/4490-pickled-herring">Pickled Herring</a><span class="vendor-price gil">480g</span></div>
-<div class="vendor-row"><a href="/item/4112-potion">Potion</a><span class="vendor-price gil">910g</span></div>
-<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops">Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
-<div class="vendor-row"><a href="/item/4559-serving-of-herb-quus">Serving Of Herb Quus</a><span class="vendor-price gil">4,984g</span></div>
+<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="/item/17395-lugworm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17395.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lugworm</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="/item/611-bag-of-rye-flour" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/611.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Rye Flour</a><span class="vendor-price gil">40g</span></div>
+<div class="vendor-row"><a href="/item/4378-jug-of-selbina-milk" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4378.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jug Of Selbina Milk</a><span class="vendor-price gil">61g</span></div>
+<div class="vendor-row"><a href="/item/4148-antidote" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4148.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="/item/4490-pickled-herring" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4490.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pickled Herring</a><span class="vendor-price gil">480g</span></div>
+<div class="vendor-row"><a href="/item/4112-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4112.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4150.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="/item/4559-serving-of-herb-quus" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4559.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Serving Of Herb Quus</a><span class="vendor-price gil">4,984g</span></div>
 <h3>Herminia <span class="badge">8 items</span></h3>
-<div class="vendor-row"><a href="/item/12992-solea">Solea</a><span class="vendor-price gil">605g</span></div>
-<div class="vendor-row"><a href="/item/12968-kyahan">Kyahan</a><span class="vendor-price gil">635g</span></div>
-<div class="vendor-row"><a href="/item/12736-mitts">Mitts</a><span class="vendor-price gil">655g</span></div>
-<div class="vendor-row"><a href="/item/12712-tekko">Tekko</a><span class="vendor-price gil">685g</span></div>
-<div class="vendor-row"><a href="/item/12456-hachimaki">Hachimaki</a><span class="vendor-price gil">825g</span></div>
-<div class="vendor-row"><a href="/item/12840-sitabaki">Sitabaki</a><span class="vendor-price gil">995g</span></div>
-<div class="vendor-row"><a href="/item/12584-kenpogi">Kenpogi</a><span class="vendor-price gil">1,245g</span></div>
-<div class="vendor-row"><a href="/item/12608-tunic">Tunic</a><span class="vendor-price gil">1,400g</span></div>
+<div class="vendor-row"><a href="/item/12992-solea" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12992.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Solea</a><span class="vendor-price gil">605g</span></div>
+<div class="vendor-row"><a href="/item/12968-kyahan" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12968.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kyahan</a><span class="vendor-price gil">635g</span></div>
+<div class="vendor-row"><a href="/item/12736-mitts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12736.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mitts</a><span class="vendor-price gil">655g</span></div>
+<div class="vendor-row"><a href="/item/12712-tekko" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12712.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tekko</a><span class="vendor-price gil">685g</span></div>
+<div class="vendor-row"><a href="/item/12456-hachimaki" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12456.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hachimaki</a><span class="vendor-price gil">825g</span></div>
+<div class="vendor-row"><a href="/item/12840-sitabaki" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12840.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sitabaki</a><span class="vendor-price gil">995g</span></div>
+<div class="vendor-row"><a href="/item/12584-kenpogi" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12584.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kenpogi</a><span class="vendor-price gil">1,245g</span></div>
+<div class="vendor-row"><a href="/item/12608-tunic" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12608.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tunic</a><span class="vendor-price gil">1,400g</span></div>
 <h3>Quelpia <span class="badge">1 items</span></h3>
-<div class="vendor-row"><a href="/item/4665-scroll-of-haste">Scroll Of Haste</a><span class="vendor-price gil">20,000g</span></div>
+<div class="vendor-row"><a href="/item/4665-scroll-of-haste" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4665.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Haste</a><span class="vendor-price gil">20,000g</span></div>
 <h3>Torapiont <span class="badge">13 items</span></h3>
-<div class="vendor-row"><a href="/item/17318-wooden-arrow">Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt">Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow">Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/17307-dart">Dart</a><span class="vendor-price gil">10g</span></div>
-<div class="vendor-row"><a href="/item/17050-willow-wand">Willow Wand</a><span class="vendor-price gil">370g</span></div>
-<div class="vendor-row"><a href="/item/17089-holly-staff">Holly Staff</a><span class="vendor-price gil">635g</span></div>
-<div class="vendor-row"><a href="/item/17051-yew-wand">Yew Wand</a><span class="vendor-price gil">1,566g</span></div>
-<div class="vendor-row"><a href="/item/16705-greataxe">Greataxe</a><span class="vendor-price gil">4,550g</span></div>
-<div class="vendor-row"><a href="/item/16451-mythril-dagger">Mythril Dagger</a><span class="vendor-price gil">8,586g</span></div>
-<div class="vendor-row"><a href="/item/16643-battleaxe">Battleaxe</a><span class="vendor-price gil">12,267g</span></div>
-<div class="vendor-row"><a href="/item/16411-claws">Claws</a><span class="vendor-price gil">12,768g</span></div>
-<div class="vendor-row"><a href="/item/16513-tuck">Tuck</a><span class="vendor-price gil">12,876g</span></div>
-<div class="vendor-row"><a href="/item/16584-mythril-claymore">Mythril Claymore</a><span class="vendor-price gil">42,000g</span></div>
+<div class="vendor-row"><a href="/item/17318-wooden-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17318.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
+<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="/item/17307-dart" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17307.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dart</a><span class="vendor-price gil">10g</span></div>
+<div class="vendor-row"><a href="/item/17050-willow-wand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17050.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Wand</a><span class="vendor-price gil">370g</span></div>
+<div class="vendor-row"><a href="/item/17089-holly-staff" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17089.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Staff</a><span class="vendor-price gil">635g</span></div>
+<div class="vendor-row"><a href="/item/17051-yew-wand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17051.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Wand</a><span class="vendor-price gil">1,566g</span></div>
+<div class="vendor-row"><a href="/item/16705-greataxe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16705.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Greataxe</a><span class="vendor-price gil">4,550g</span></div>
+<div class="vendor-row"><a href="/item/16451-mythril-dagger" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16451.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Dagger</a><span class="vendor-price gil">8,586g</span></div>
+<div class="vendor-row"><a href="/item/16643-battleaxe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Battleaxe</a><span class="vendor-price gil">12,267g</span></div>
+<div class="vendor-row"><a href="/item/16411-claws" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16411.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Claws</a><span class="vendor-price gil">12,768g</span></div>
+<div class="vendor-row"><a href="/item/16513-tuck" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16513.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tuck</a><span class="vendor-price gil">12,876g</span></div>
+<div class="vendor-row"><a href="/item/16584-mythril-claymore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16584.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Claymore</a><span class="vendor-price gil">42,000g</span></div>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
 <footer class="site-footer panel pad">

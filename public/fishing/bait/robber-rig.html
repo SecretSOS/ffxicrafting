@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Robber Rig — Bait</title>
+<meta name="description" content="Robber Rig: catches 54 fish species. Type: lure, max hook: 1.">
+<meta property="og:title" content="Robber Rig — Bait">
+<meta property="og:description" content="Robber Rig: catches 54 fish species. Type: lure, max hook: 1.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/fishing/bait/robber-rig">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.fish-icon{vertical-align:middle;image-rendering:pixelated;border-radius:3px}
+.icon-link{display:inline-flex;align-items:center;gap:6px}
+.header-icon{image-rendering:pixelated;border-radius:4px;border:2px solid var(--rule);background:var(--bg);flex-shrink:0}
+.fish-header{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:1.2em}
+.fish-title h1{margin:0;font-size:1.6rem}
+.fish-title .desc{color:var(--ink-soft);margin:.3em 0 0;font-size:.92rem;line-height:1.5}
+.fish-badges{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5em}
+.stat-card{border:1px solid var(--rule);border-radius:8px;padding:14px 16px;background:color-mix(in srgb,var(--bg) 50%,transparent)}
+.stat-card .label{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:2px}
+.stat-card .value{font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+.pw{font-size:.88rem;letter-spacing:1px;white-space:nowrap}
+.pw3{color:var(--gil)}
+.pw2{color:var(--water)}
+.pw1{color:var(--ink-faint)}
+.wt{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.wt-sea{background:color-mix(in srgb,var(--water) 18%,transparent);color:var(--water)}
+.wt-fresh{background:color-mix(in srgb,var(--wind) 18%,transparent);color:var(--wind)}
+.sz{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.sz-sm{background:color-mix(in srgb,var(--ice) 15%,transparent);color:var(--ice)}
+.sz-lg{background:color-mix(in srgb,var(--fire) 15%,transparent);color:var(--fire)}
+.legendary-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700;background:color-mix(in srgb,var(--gil) 20%,transparent);color:var(--gil)}
+.detail-section{margin-bottom:1.8em}
+.detail-section h2{font-family:var(--font-display);font-size:1.15rem;margin:0 0 .6em;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.detail-section table{width:100%}
+.detail-section td,.detail-section th{padding:6px 10px}
+.zone-rarity{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.88rem}
+.rod-compat .ok{color:var(--wind)}
+.rod-compat .warn{color:var(--gil)}
+.rod-compat .bad{color:var(--fire)}
+.bait-type{display:inline-block;padding:1px 8px;border-radius:4px;font-size:.78rem;font-weight:700;background:color-mix(in srgb,var(--ink-faint) 15%,transparent)}
+.idx-count{color:var(--ink-faint);font-size:.88rem;margin-left:4px}
+
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+ <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
+ <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
+ <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
+ <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
+ <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
+ <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
+ <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
+ <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+</svg>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="nav-links">
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/crafts" class="nav-dd-all">All Crafts</a>
+   <a href="/crafts/woodworking">Woodworking</a>
+   <a href="/crafts/smithing">Smithing</a>
+   <a href="/crafts/goldsmithing">Goldsmithing</a>
+   <a href="/crafts/clothcraft">Clothcraft</a>
+   <a href="/crafts/leathercraft">Leathercraft</a>
+   <a href="/crafts/bonecraft">Bonecraft</a>
+   <a href="/crafts/alchemy">Alchemy</a>
+   <a href="/crafts/cooking">Cooking</a>
+  </div>
+ </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining" class="active">Mining</a>
+   <a href="/gathering/logging" class="active">Logging</a>
+   <a href="/gathering/harvesting" class="active">Harvesting</a>
+   <a href="/gathering/excavation" class="active">Excavation</a>
+   <a href="/gathering/gardening" class="active">Gardening</a>
+   <a href="/fishing/" class="active">Fishing</a>
+   <a href="/gathering/digging" class="active">Chocobo Digging</a>
+   <a href="/gathering/clamming" class="active">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
+ </div>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="vana-week" id="vanaWeek"></div>
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section sb-explore">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/fishing/">Fishing</a>
+  <a href="/gathering/" class="active">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Guilds</div>
+  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span id="guild-wood" class="sb-guild"></span></span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span id="guild-smith" class="sb-guild"></span></span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span id="guild-gold" class="sb-guild"></span></span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span id="guild-cloth" class="sb-guild"></span></span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span id="guild-leather" class="sb-guild"></span></span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span id="guild-bone" class="sb-guild"></span></span></a>
+  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span id="guild-alchemy" class="sb-guild"></span></span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span id="guild-cook" class="sb-guild"></span></span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/fishing/">Fishing</a><span class="sep">&rsaquo;</span><a href="/fishing/#tab-baits">Bait</a><span class="sep">&rsaquo;</span>Robber Rig</nav>
+<header class="panel pad">
+<div class="fish-header">
+<img src="/icons/17002.png" width="48" height="48" alt="" class="header-icon" loading="lazy">
+<div class="fish-title">
+<h1>Robber Rig</h1>
+<div class="fish-badges">
+<span class="bait-type">Lure</span>
+</div>
+</div></div>
+<div class="stat-grid">
+<div class="stat-card"><div class="label">Type</div><div class="value">Lure</div></div>
+<div class="stat-card"><div class="label">Max Hook</div><div class="value">1</div></div>
+<div class="stat-card"><div class="label">Consumed on Miss</div><div class="value">Yes</div></div>
+<div class="stat-card"><div class="label">Rank Modifier</div><div class="value">+0</div></div>
+</div>
+</header>
+<section class="panel pad detail-section">
+<h2>Catches (54)</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Power</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th></tr></thead><tbody>
+<tr><td><a href="/fishing/fish/shall-shell" class="icon-link"><img src="/icons/4484.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Shall Shell</a></td><td data-v="3"><span class="pw pw3" title="Best affinity">&#9733;&#9733;&#9733;</span></td><td>53</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/cobalt-jellyfish" class="icon-link"><img src="/icons/4443.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Cobalt Jellyfish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>5</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/denizanasi" class="icon-link"><img src="/icons/5447.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Denizanasi</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>5</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/crayfish" class="icon-link"><img src="/icons/4472.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Crayfish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>7</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/bibikibo" class="icon-link"><img src="/icons/4314.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bibikibo</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>8</td><td>small</td><td>freshwater</td></tr>
+<tr><td><a href="/fishing/fish/bastore-sardine" class="icon-link"><img src="/icons/4360.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bastore Sardine</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>9</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/hamsi" class="icon-link"><img src="/icons/5449.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Hamsi</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>9</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/moat-carp" class="icon-link"><img src="/icons/4401.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Moat Carp</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>11</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/bastore-sweeper" class="icon-link"><img src="/icons/5473.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bastore Sweeper</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>12</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/greedie" class="icon-link"><img src="/icons/4500.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Greedie</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>14</td><td>small</td><td>freshwater</td></tr>
+<tr><td><a href="/fishing/fish/copper-frog" class="icon-link"><img src="/icons/4515.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Copper Frog</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>16</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/yellow-globe" class="icon-link"><img src="/icons/4403.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Yellow Globe</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>17</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/quus" class="icon-link"><img src="/icons/4514.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Quus</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>19</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/forest-carp" class="icon-link"><img src="/icons/4289.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Forest Carp</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>20</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/cheval-salmon" class="icon-link"><img src="/icons/4379.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Cheval Salmon</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>21</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/fat-greedie" class="icon-link"><img src="/icons/4501.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Fat Greedie</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>24</td><td>small</td><td>freshwater</td></tr>
+<tr><td><a href="/fishing/fish/blindfish" class="icon-link"><img src="/icons/4313.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Blindfish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>27</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/tricolored-carp" class="icon-link"><img src="/icons/4426.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Tricolored Carp</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>27</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/pipira" class="icon-link"><img src="/icons/4464.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Pipira</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>29</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/tiger-cod" class="icon-link"><img src="/icons/4483.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Tiger Cod</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>29</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/elshimo-frog" class="icon-link"><img src="/icons/4290.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Elshimo Frog</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>30</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/giant-catfish" class="icon-link"><img src="/icons/4469.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Giant Catfish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>31</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/dark-bass" class="icon-link"><img src="/icons/4428.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Dark Bass</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>33</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/ogre-eel" class="icon-link"><img src="/icons/4481.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Ogre Eel</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>35</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/zafmlug-bass" class="icon-link"><img src="/icons/4385.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Zafmlug Bass</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>43</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/istakoz" class="icon-link"><img src="/icons/5453.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Istakoz</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>46</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/black-eel" class="icon-link"><img src="/icons/4429.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Black Eel</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>47</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/giant-donko" class="icon-link"><img src="/icons/4306.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Giant Donko</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>50</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/sandfish" class="icon-link"><img src="/icons/4291.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Sandfish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>50</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/istiridye" class="icon-link"><img src="/icons/5456.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Istiridye</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>53</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/kaplumbaga" class="icon-link"><img src="/icons/5464.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Kaplumbaga</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>53</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/vongola-clam" class="icon-link"><img src="/icons/5131.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Vongola Clam</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>53</td><td>small</td><td>freshwater</td></tr>
+<tr><td><a href="/fishing/fish/bluetail" class="icon-link"><img src="/icons/4399.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bluetail</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>55</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/gold-carp" class="icon-link"><img src="/icons/4427.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Gold Carp</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>56</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/trilobite" class="icon-link"><img src="/icons/4317.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Trilobite</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>59</td><td>small</td><td>freshwater</td></tr>
+<tr><td><a href="/fishing/fish/elshimo-newt" class="icon-link"><img src="/icons/4579.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Elshimo Newt</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>60</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/bhefhel-marlin" class="icon-link"><img src="/icons/4479.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bhefhel Marlin</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>61</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/kilicbaligi" class="icon-link"><img src="/icons/5451.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Kilicbaligi</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>61</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/trumpet-shell" class="icon-link"><img src="/icons/5466.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Trumpet Shell</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>63</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/noble-lady" class="icon-link"><img src="/icons/4485.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Noble Lady</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>66</td><td>small</td><td>freshwater</td></tr>
+<tr><td><a href="/fishing/fish/bladefish" class="icon-link"><img src="/icons/4471.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bladefish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>71</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/silver-shark" class="icon-link"><img src="/icons/4451.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Silver Shark</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>76</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/gigant-octopus" class="icon-link"><img src="/icons/5475.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Gigant Octopus</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>80</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/gavial-fish" class="icon-link"><img src="/icons/4477.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Gavial Fish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>81</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/pirarucu" class="icon-link"><img src="/icons/5470.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Pirarucu</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>81</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/garpike" class="icon-link"><img src="/icons/5472.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Garpike</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>83</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/bastore-bream" class="icon-link"><img src="/icons/4461.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bastore Bream</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>86</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/mercanbaligi" class="icon-link"><img src="/icons/5454.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Mercanbaligi</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>86</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/grimmonite" class="icon-link"><img src="/icons/4304.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Grimmonite</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>90</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/emperor-fish" class="icon-link"><img src="/icons/4454.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Emperor Fish</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>91</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/megalodon" class="icon-link"><img src="/icons/5467.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Megalodon</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>93</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/dil" class="icon-link"><img src="/icons/5457.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Dil</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>96</td><td>small</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/gerrothorax" class="icon-link"><img src="/icons/5471.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Gerrothorax</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>134</td><td>large</td><td>sea/ocean</td></tr>
+<tr><td><a href="/fishing/fish/abaia" class="icon-link"><img src="/icons/5476.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Abaia</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>150</td><td>large</td><td>sea/ocean</td></tr>
+</tbody></table></div></section>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
+</div>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
+<script>(function(){
+var EPOCH=1009810800,
+DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7]};
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ hr=vh%24,mn=vm%60,wd=vd%8;
+ var wk=document.getElementById("vanaWeek");
+ if(wk){
+  var ml=1440-(hr*60+mn),rs=ml*2.4;
+  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
+  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
+   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
+   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  wk.innerHTML=h;
+ }
+ var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook"];
+ for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
+  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
+  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

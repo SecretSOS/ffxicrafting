@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lik — Fishing Database</title>
+<meta name="description" content="Lik: skill 140 large fish. Bait affinities, zones, and rod compatibility.">
+<meta property="og:title" content="Lik — Fishing Database">
+<meta property="og:description" content="Lik: skill 140 large fish. Bait affinities, zones, and rod compatibility.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/fishing/fish/lik">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.fish-icon{vertical-align:middle;image-rendering:pixelated;border-radius:3px}
+.icon-link{display:inline-flex;align-items:center;gap:6px}
+.header-icon{image-rendering:pixelated;border-radius:4px;border:2px solid var(--rule);background:var(--bg);flex-shrink:0}
+.fish-header{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:1.2em}
+.fish-title h1{margin:0;font-size:1.6rem}
+.fish-title .desc{color:var(--ink-soft);margin:.3em 0 0;font-size:.92rem;line-height:1.5}
+.fish-badges{display:flex;gap:8px;flex-wrap:wrap;margin:.6em 0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:1.5em}
+.stat-card{border:1px solid var(--rule);border-radius:8px;padding:14px 16px;background:color-mix(in srgb,var(--bg) 50%,transparent)}
+.stat-card .label{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:2px}
+.stat-card .value{font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+.pw{font-size:.88rem;letter-spacing:1px;white-space:nowrap}
+.pw3{color:var(--gil)}
+.pw2{color:var(--water)}
+.pw1{color:var(--ink-faint)}
+.wt{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.wt-sea{background:color-mix(in srgb,var(--water) 18%,transparent);color:var(--water)}
+.wt-fresh{background:color-mix(in srgb,var(--wind) 18%,transparent);color:var(--wind)}
+.sz{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.sz-sm{background:color-mix(in srgb,var(--ice) 15%,transparent);color:var(--ice)}
+.sz-lg{background:color-mix(in srgb,var(--fire) 15%,transparent);color:var(--fire)}
+.legendary-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700;background:color-mix(in srgb,var(--gil) 20%,transparent);color:var(--gil)}
+.detail-section{margin-bottom:1.8em}
+.detail-section h2{font-family:var(--font-display);font-size:1.15rem;margin:0 0 .6em;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.detail-section table{width:100%}
+.detail-section td,.detail-section th{padding:6px 10px}
+.zone-rarity{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.88rem}
+.rod-compat .ok{color:var(--wind)}
+.rod-compat .warn{color:var(--gil)}
+.rod-compat .bad{color:var(--fire)}
+.bait-type{display:inline-block;padding:1px 8px;border-radius:4px;font-size:.78rem;font-weight:700;background:color-mix(in srgb,var(--ink-faint) 15%,transparent)}
+.idx-count{color:var(--ink-faint);font-size:.88rem;margin-left:4px}
+
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+ <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
+ <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
+ <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
+ <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
+ <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
+ <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
+ <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
+ <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+</svg>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="nav-links">
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/crafts" class="nav-dd-all">All Crafts</a>
+   <a href="/crafts/woodworking">Woodworking</a>
+   <a href="/crafts/smithing">Smithing</a>
+   <a href="/crafts/goldsmithing">Goldsmithing</a>
+   <a href="/crafts/clothcraft">Clothcraft</a>
+   <a href="/crafts/leathercraft">Leathercraft</a>
+   <a href="/crafts/bonecraft">Bonecraft</a>
+   <a href="/crafts/alchemy">Alchemy</a>
+   <a href="/crafts/cooking">Cooking</a>
+  </div>
+ </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining" class="active">Mining</a>
+   <a href="/gathering/logging" class="active">Logging</a>
+   <a href="/gathering/harvesting" class="active">Harvesting</a>
+   <a href="/gathering/excavation" class="active">Excavation</a>
+   <a href="/gathering/gardening" class="active">Gardening</a>
+   <a href="/fishing/" class="active">Fishing</a>
+   <a href="/gathering/digging" class="active">Chocobo Digging</a>
+   <a href="/gathering/clamming" class="active">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
+ </div>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="vana-week" id="vanaWeek"></div>
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+ </div>
+ <div class="sb-section sb-explore">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/fishing/">Fishing</a>
+  <a href="/gathering/" class="active">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Guilds</div>
+  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span id="guild-wood" class="sb-guild"></span></span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span id="guild-smith" class="sb-guild"></span></span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span id="guild-gold" class="sb-guild"></span></span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span id="guild-cloth" class="sb-guild"></span></span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span id="guild-leather" class="sb-guild"></span></span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span id="guild-bone" class="sb-guild"></span></span></a>
+  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span id="guild-alchemy" class="sb-guild"></span></span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span id="guild-cook" class="sb-guild"></span></span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/fishing/">Fishing</a><span class="sep">&rsaquo;</span>Lik</nav>
+<header class="panel pad">
+<div class="fish-header">
+<img src="/icons/5129.png" width="48" height="48" alt="" class="header-icon" loading="lazy">
+<div class="fish-title">
+<h1>Lik</h1>
+<p class="desc">Lik</p>
+<div class="fish-badges">
+<span class="wt wt-sea">Saltwater</span><span class="sz sz-lg">Large</span><span class="legendary-badge">Legendary</span></div>
+</div></div>
+<div class="stat-grid">
+<div class="stat-card"><div class="label">Skill Cap</div><div class="value">140</div></div>
+<div class="stat-card"><div class="label">Difficulty</div><div class="value">48</div></div>
+<div class="stat-card"><div class="label">Size</div><div class="value">Large</div></div>
+<div class="stat-card"><div class="label">Active Hours</div><div class="value" style="font-size:.95rem">Any time</div></div>
+<div class="stat-card"><div class="label">Moon Phase</div><div class="value" style="font-size:.95rem">Any phase</div></div>
+<div class="stat-card"><div class="label">Zones</div><div class="value">1</div></div>
+</div>
+</header>
+<section class="panel pad detail-section">
+<h2>Bait Affinity (3)</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Bait</th><th data-sort="num">Power</th><th data-sort="text">Type</th><th data-sort="num">Max Hook</th></tr></thead><tbody>
+<tr><td><a href="/fishing/bait/dwarf-pugil" class="icon-link"><img src="/icons/17007.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Dwarf Pugil</a></td><td data-v="2"><span class="pw pw2" title="Good affinity">&#9733;&#9733;</span></td><td>bait</td><td>1</td></tr>
+<tr><td><a href="/fishing/bait/minnow" class="icon-link"><img src="/icons/17407.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Minnow</a></td><td data-v="2"><span class="pw pw2" title="Good affinity">&#9733;&#9733;</span></td><td>lure</td><td>1</td></tr>
+<tr><td><a href="/fishing/bait/sinking-minnow" class="icon-link"><img src="/icons/17400.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Sinking Minnow</a></td><td data-v="2"><span class="pw pw2" title="Good affinity">&#9733;&#9733;</span></td><td>lure</td><td>1</td></tr>
+</tbody></table></div></section>
+<section class="panel pad detail-section">
+<h2>Fishing Locations (1 zones)</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Zone</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
+<tr><td><a href="/zone/lufaise-meadows">Lufaise Meadows</a></td><td>Leremieu Lagoon</td><td class="zone-rarity">850</td></tr>
+</tbody></table></div></section>
+<section class="panel pad detail-section rod-compat">
+<h2>Rod Compatibility</h2>
+<p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:.8em">Rods have a size class (small/large) and rank window. Fish outside the window have increased break/fail chance. Legendary rods are exempt from size penalties.</p>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank Window</th><th>Breakable</th><th>Notes</th></tr></thead><tbody>
+<tr><td><a href="/fishing/rod/bamboo-fishing-rod" class="icon-link"><img src="/icons/17389.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bamboo Fishing Rod</a></td><td>small</td><td>1–7</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/carbon-fishing-rod" class="icon-link"><img src="/icons/17384.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Carbon Fishing Rod</a></td><td>small</td><td>1–13</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/ebisu-fishing-rod" class="icon-link"><img src="/icons/17011.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Ebisu Fishing Rod</a></td><td>small</td><td>1–30</td><td>No</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/ebisu-fishing-rod-1" class="icon-link"><img src="/icons/19321.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Ebisu Fishing Rod +1</a></td><td>small</td><td>1–30</td><td>No</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/fastwater-fishing-rod" class="icon-link"><img src="/icons/17388.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Fastwater Fishing Rod</a></td><td>small</td><td>1–8</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/glass-fiber-fishing-rod" class="icon-link"><img src="/icons/17385.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Glass Fiber Fishing Rod</a></td><td>small</td><td>1–12</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/goldfish-basket" class="icon-link"><img src="/icons/17013.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Goldfish Basket</a></td><td>small</td><td>1–5</td><td>No</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/halcyon-rod" class="icon-link"><img src="/icons/17015.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Halcyon Rod</a></td><td>small</td><td>1–18</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/hume-fishing-rod" class="icon-link"><img src="/icons/17014.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Hume Fishing Rod</a></td><td>small</td><td>1–15</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/judges-rod" class="icon-link"><img src="/icons/17012.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Judges Rod</a></td><td>small</td><td>1–40</td><td>No</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/maze-monger-fishing-rod" class="icon-link"><img src="/icons/19319.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Maze Monger Fishing Rod</a></td><td>small</td><td>1–25</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/tarutaru-fishing-rod" class="icon-link"><img src="/icons/17387.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Tarutaru Fishing Rod</a></td><td>small</td><td>1–9</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/willow-fishing-rod" class="icon-link"><img src="/icons/17391.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Willow Fishing Rod</a></td><td>small</td><td>1–5</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/yew-fishing-rod" class="icon-link"><img src="/icons/17390.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Yew Fishing Rod</a></td><td>small</td><td>1–6</td><td>Yes</td><td><span class="bad">Fish too large for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/mithran-fishing-rod" class="icon-link"><img src="/icons/17380.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Mithran Fishing Rod</a></td><td>large</td><td>8–18</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+<tr><td><a href="/fishing/rod/composite-fishing-rod" class="icon-link"><img src="/icons/17381.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Composite Fishing Rod</a></td><td>large</td><td>11–24</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+<tr><td><a href="/fishing/rod/clothespole" class="icon-link"><img src="/icons/17383.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Clothespole</a></td><td>large</td><td>12–12</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+<tr><td><a href="/fishing/rod/single-hook-fishing-rod" class="icon-link"><img src="/icons/17382.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Single Hook Fishing Rod</a></td><td>large</td><td>14–13</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+</tbody></table></div></section>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
+</div>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
+<script>(function(){
+var EPOCH=1009810800,
+DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7]};
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ hr=vh%24,mn=vm%60,wd=vd%8;
+ var wk=document.getElementById("vanaWeek");
+ if(wk){
+  var ml=1440-(hr*60+mn),rs=ml*2.4;
+  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
+  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
+   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
+   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  wk.innerHTML=h;
+ }
+ var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook"];
+ for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
+  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
+  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

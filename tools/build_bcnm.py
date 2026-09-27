@@ -9,7 +9,7 @@ from html import escape
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT = os.path.join(ROOT, 'public', 'bcnm.html')
-ICON_DIR = os.path.join(ROOT, 'public', 'img', 'item')
+ICON_DIR = os.path.join(ROOT, 'public', 'icons')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end
@@ -37,11 +37,11 @@ def icon_exists(iid):
 def icon_html(iid, size=16):
     if not icon_exists(iid):
         return ''
-    return f'<img src="/img/item/{iid}.png" width="{size}" height="{size}" alt="" style="image-rendering:pixelated;vertical-align:-2px;margin-right:3px" onerror="this.style.display=\'none\'">'
+    return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="image-rendering:pixelated;vertical-align:middle;border-radius:2px" loading="lazy"> '
 
 def item_link(iid, name):
     pn = pretty(name)
-    return f'{icon_html(iid)}<a href="/item/{iid}-{slug(name)}">{esc(pn)}</a>'
+    return f'<a href="/item/{iid}-{slug(name)}" style="display:inline-flex;align-items:center;gap:4px">{icon_html(iid, 20)}{esc(pn)}</a>'
 
 def gil_fmt(g):
     if g is None:
