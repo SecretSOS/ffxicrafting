@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  rows: Array<{ label: string; value: string }>;
+}
+
+const { title, rows } = Astro.props;
+---
+
+<div class="infobox">
+  <div class="infobox-head">{title}</div>
+  <div class="infobox-body">
+    {rows.map(row => (
+      <div class="info-row">
+        <span class="muted">{row.label}</span>
+        <span>{row.value}</span>
+      </div>
+    ))}
+  </div>
+</div>

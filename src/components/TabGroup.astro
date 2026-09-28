@@ -1,0 +1,40 @@
+---
+interface Props {
+  tabs: Array<{ id: string; label: string }>;
+  activeTab?: string;
+}
+
+const { tabs, activeTab } = Astro.props;
+const defaultActive = activeTab ?? tabs[0]?.id;
+---
+
+<div class="tabs" role="tablist">
+  {tabs.map(tab => (
+    <button
+      class:list={['tab-btn', { active: tab.id === defaultActive }]}
+      data-tab={tab.id}
+      role="tab"
+      aria-selected={tab.id === defaultActive ? 'true' : undefined}
+    >
+      {tab.label}
+    </button>
+  ))}
+</div>
+
+<script is:inline>
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(function(b) {
+        b.classList.remove('active');
+        b.removeAttribute('aria-selected');
+      });
+      document.querySelectorAll('.panel-sub').forEach(function(p) {
+        p.classList.remove('active');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      var panel = document.querySelector('.panel-sub[data-panel="' + btn.dataset.tab + '"]');
+      if (panel) panel.classList.add('active');
+    });
+  });
+</script>

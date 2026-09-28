@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zone page reference — North Gustaberg</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0f16; --surface:#141a26; --surface-2:#1b2333; --border:#2b3448;
+    --text:#f2eee3; --text-muted:#9aa2b6; --accent:#e3a75e; --accent-soft:#3a2f22; --link:#8ec1e8;
+    --serif:'Fraunces',Georgia,serif; --sans:'Public Sans',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--ink);color:var(--text);font-family:var(--sans);}
+  a{color:var(--link);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  table{border-collapse:collapse;width:100%;}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 12px 10px;border-bottom:1px solid var(--border);}
+  td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:14px;}
+  tr:last-child td{border-bottom:none;}
+  .wrap{max-width:1280px;margin:0 auto;padding:48px 56px;display:flex;flex-direction:column;gap:28px;}
+  .chrome{display:flex;align-items:center;gap:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+  .brand{font-family:var(--serif);font-weight:700;font-size:19px;}
+  .nav{display:flex;gap:22px;font-size:14px;color:var(--text-muted);flex-grow:1;}
+  .nav .active{color:var(--accent);}
+  .search{font-family:var(--mono);font-size:12px;color:var(--text-muted);border:1px solid var(--border);border-radius:6px;padding:7px 14px;}
+  .crumb{font-size:13px;color:var(--text-muted);}
+  .hero{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+  h1{font-family:var(--serif);font-weight:700;font-size:56px;line-height:1.05;margin:0 0 14px;}
+  .dek{font-size:17px;line-height:1.6;color:var(--text-muted);max-width:560px;margin:0;}
+  .infobox{width:340px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  .infobox-head{background:var(--accent-soft);color:var(--accent);font-family:var(--serif);font-weight:600;font-size:15px;padding:12px 18px;}
+  .infobox-body{padding:6px 18px 14px;}
+  .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+  .row:last-child{border-bottom:none;}
+  .row span:last-child{font-family:var(--mono);}
+  .row .muted{color:var(--text-muted);}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .tab{font-family:var(--sans);font-size:13.5px;font-weight:500;padding:10px 18px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;}
+  .tab.active{font-weight:600;border-color:var(--accent);background:var(--accent-soft);color:var(--accent);}
+  .content-row{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
+  .panel{flex:1 1 700px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 28px 8px;min-height:400px;}
+  .panel-sub{display:none;}
+  .panel-sub.active{display:block;}
+  .panel-note{font-size:14px;color:var(--text-muted);margin-bottom:16px;}
+  .callout{margin-top:16px;padding:12px 14px;background:var(--accent-soft);border-radius:8px;font-size:13px;color:var(--accent);line-height:1.5;}
+  .rail{width:340px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;}
+  .rail-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;}
+  .rail-card h3{font-family:var(--serif);font-weight:600;font-size:15px;margin:0 0 12px;}
+  .rail-card p{font-size:13.5px;line-height:1.6;color:var(--text-muted);margin:0;}
+  .rail-list{display:flex;flex-direction:column;gap:10px;}
+  .rail-list a{font-size:14px;}
+  .footer{font-size:12px;color:var(--text-muted);padding-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="chrome">
+    <div class="brand">FFXI Crafting</div>
+    <div class="nav"><span>Crafts</span><span>Gathering</span><span class="active">Zones</span><span>BCNMs</span><span>Guides</span></div>
+    <div class="search">Search items…</div>
+  </div>
+
+  <div class="crumb">Home <span style="opacity:.5">/</span> Zones <span style="opacity:.5">/</span> <span style="color:var(--text)">North Gustaberg</span></div>
+
+  <div class="hero">
+    <div style="flex:1 1 480px;">
+      <div class="eyebrow">San d'Oria region · Level 10–20</div>
+      <h1>North Gustaberg</h1>
+      <p class="dek">One of Bastok's earliest ore-and-loot loops — chocobo digging, field caskets, and a mob table thick with cloth, leather, and low-tier ore drops.</p>
+    </div>
+    <div class="infobox">
+      <div class="infobox-head">Zone information</div>
+      <div class="infobox-body">
+        <div class="row"><span class="muted">Monsters</span><span>34 (4 NM)</span></div>
+        <div class="row"><span class="muted">Digging</span><span>18 items</span></div>
+        <div class="row"><span class="muted">Fishing</span><span>Yes</span></div>
+        <div class="row"><span class="muted">Caskets</span><span>41 items</span></div>
+        <div class="row"><span class="muted">Sources</span><span>375 rows</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" data-tab="digging" role="tab">Chocobo Digging</button>
+    <button class="tab" data-tab="caskets" role="tab">Field Caskets</button>
+    <button class="tab" data-tab="nm" role="tab">Notorious Monsters</button>
+    <button class="tab active" data-tab="monsters" role="tab" aria-selected="true">Monsters</button>
+    <button class="tab" data-tab="steals" role="tab">Steals</button>
+  </div>
+
+  <div class="content-row">
+    <div class="panel">
+
+      <div class="panel-sub" data-panel="digging">
+        <div class="panel-note">Regular layer — requires dig rank amateur, dig rank journeyman</div>
+        <table>
+          <thead><tr><th>Item</th><th style="text-align:right">Pool weight</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">Chunk Of Darksteel Ore</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Mythril Beastcoin</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Flint Stone</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Insect Wing</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Bird Feather</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Handful Of Fish Scales</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Lizard Molt</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Bone Chip</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+            <tr><td><a href="#">Chunk Of Fire Ore</a></td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">—</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">Field note — the live site currently shows every weight in this table as "0", which reads like a display rounding bug rather than a real rate. Worth a data-layer fix alongside the page redesign.</div>
+      </div>
+
+      <div class="panel-sub" data-panel="caskets">
+        <div class="panel-note">Field caskets — 41 items tracked for this zone</div>
+        <table>
+          <thead><tr><th>Item</th><th style="text-align:right">Chance</th></tr></thead>
+          <tbody>
+            <tr><td>[Casket item]</td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">[—%]</td></tr>
+            <tr><td>[Casket item]</td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">[—%]</td></tr>
+          </tbody>
+        </table>
+        <div class="panel-note" style="margin-top:16px;margin-bottom:0;">Shown here as layout only — real rows pull from the server's chest loot tables.</div>
+      </div>
+
+      <div class="panel-sub" data-panel="nm">
+        <div class="panel-note">4 notorious monsters spawn in this zone</div>
+        <table>
+          <thead><tr><th>Notorious monster</th><th style="text-align:right">Notes</th></tr></thead>
+          <tbody>
+            <tr><td>[NM name]</td><td style="text-align:right;color:var(--text-muted)">[spawn condition]</td></tr>
+          </tbody>
+        </table>
+        <div class="panel-note" style="margin-top:16px;margin-bottom:0;">Shown here as layout only — real rows pull from the server's mob spawn tables.</div>
+      </div>
+
+      <div class="panel-sub active" data-panel="monsters">
+        <div class="panel-note">Aggregated mob drop pool — 34 monsters (4 NM)</div>
+        <table>
+          <thead><tr><th>Item</th><th style="text-align:right">Chance</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">Flint Stone</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">8.60%</td></tr>
+            <tr><td><a href="#">Potion</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">8.43%</td></tr>
+            <tr><td><a href="#">Chunk Of Copper Ore</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">7.74%</td></tr>
+            <tr><td><a href="#">Beastcoin</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">7.22%</td></tr>
+            <tr><td><a href="#">Insect Wing</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">6.19%</td></tr>
+            <tr><td><a href="#">Antidote</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">6.17%</td></tr>
+            <tr><td><a href="#">Chunk Of Zinc Ore</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">5.93%</td></tr>
+            <tr><td><a href="#">Beehive Chip</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">5.16%</td></tr>
+            <tr><td><a href="#">Pot Of Honey</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">4.99%</td></tr>
+            <tr><td><a href="#">Chunk Of Tin Ore</a></td><td style="text-align:right;color:var(--accent);font-family:var(--mono)">4.30%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel-sub" data-panel="steals">
+        <div class="panel-note">Steal table for this zone's monster family</div>
+        <table>
+          <thead><tr><th>Item</th><th style="text-align:right">Chance</th></tr></thead>
+          <tbody>
+            <tr><td>[Stealable item]</td><td style="text-align:right;color:var(--text-muted);font-family:var(--mono)">[—%]</td></tr>
+          </tbody>
+        </table>
+        <div class="panel-note" style="margin-top:16px;margin-bottom:0;">Shown here as layout only — real rows pull from the server's steal tables.</div>
+      </div>
+
+    </div>
+
+    <div class="rail">
+      <div class="rail-card">
+        <h3 style="color:var(--accent)">Why this page design</h3>
+        <p>On the live site, these five tabs are anchor links — every section is stacked on one long page. Here they're real tab state: one panel renders at a time, so a 375-row zone stops reading as a wall of text.</p>
+      </div>
+      <div class="rail-card">
+        <h3>Related zones</h3>
+        <div class="rail-list">
+          <a href="#">North Gustaberg S <span style="color:var(--text-muted);font-family:var(--mono);font-size:12px">334</span></a>
+          <a href="#">Bastok Mines <span style="color:var(--text-muted);font-family:var(--mono);font-size:12px">82</span></a>
+          <a href="#">Palborough Mines <span style="color:var(--text-muted);font-family:var(--mono);font-size:12px">86</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Redesign concept · content sourced from the live ffxicrafting.com North Gustaberg page</div>
+
+</div>
+<script>
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-selected'); });
+      document.querySelectorAll('.panel-sub').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      document.querySelector('.panel-sub[data-panel="' + btn.dataset.tab + '"]').classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

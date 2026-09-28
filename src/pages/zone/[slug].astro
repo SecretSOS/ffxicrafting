@@ -1,0 +1,445 @@
+---
+import Layout from '@components/Layout.astro';
+import TabGroup from '@components/TabGroup.astro';
+import InfoboxCard from '@components/InfoboxCard.astro';
+import ItemLink from '@components/ItemLink.astro';
+import { getAllItems, getAllZones, getZoneSources, getZoneFishing, isEra, type SourceRow } from '@lib/db';
+import { pretty, slugify, fmtPct } from '@lib/utils';
+
+export function getStaticPaths() {
+  const zones = getAllZones();
+  const items = getAllItems();
+
+  return zones.map(zone => {
+    const slug = slugify(zone);
+    return { params: { slug }, props: { zoneName: zone, items } };
+  });
+}
+
+interface MobData {
+  drops: Array<{ id: number; pct: number | null }>;
+  level: [number, number];
+  flags: Set<string>;
+  spawns: string;
+  content: Set<string>;
+}
+
+const FLAG_LABELS: Record<string, string> = {
+  notorious: 'NM', lottery: 'lottery', scripted: 'scripted',
+  at_night: 'night only', at_evening: 'evening', weather: 'weather',
+  fog: 'fog', fished: 'fished', battlefield: 'battlefield', called: 'called',
+};
+
+const { zoneName, items } = Astro.props;
+const zn = pretty(zoneName);
+const sources = getZoneSources(zoneName);
+
+function itemName(id: number): string {
+  const raw = items.get(id);
+  if (!raw) return `Item #${id}`;
+  return pretty(raw);
+}
+
+function parseFlags(gate: string | null): string[] {
+  if (!gate) return [];
+  return gate.split(',').map(f => f.trim()).filter(Boolean);
+}
+
+// --- Organize sources into sections ---
+type HelmType = 'mining' | 'logging' | 'harvesting' | 'excavation';
+const helm = new Map<HelmType, Array<{ id: number; pct: number | null }>>();
+const digging: Array<{ id: number; layer: string; rank: string; weight: number }> = [];
+const caskets: Array<{ id: number; pct: number | null }> = [];
+const chests: Array<{ id: number; key: string; level: number }> = [];
+const coffers: Array<{ id: number; key: string; level: number }> = [];
+const vendors = new Map<string, Array<{ id: number; price: number }>>();
+const mobs = new Map<string, MobData>();
+const steals: Array<{ id: number; pct: number | null }> = [];
+const crystals: Array<{ id: number; buff: string; pct: number | null }> = [];
+
+for (const s of sources) {
+  const stype = s.type;
+  const content = s.content;
+  if (!isEra(content) && !['mining','logging','harvesting','excavation','chocobo_dig','clamming','fishing'].includes(stype)) {
+    continue;
+  }
+
+  if (['mining','logging','harvesting','excavation'].includes(stype)) {
+    const ht = stype as HelmType;
+    if (!helm.has(ht)) helm.set(ht, []);
+    helm.get(ht)!.push({ id: s.item_id, pct: s.pct });
+  } else if (stype === 'chocobo_dig') {
+    let w = 0;
+    if (s.notes) {
+      const m = s.notes.match(/(\d+)/);
+      w = m ? parseInt(m[1], 10) : 0;
+    }
+    digging.push({ id: s.item_id, layer: s.where_ || 'regular', rank: s.gate || '', weight: w });
+  } else if (stype === 'field_casket') {
+    caskets.push({ id: s.item_id, pct: s.pct });
+  } else if (stype === 'treasure_chest') {
+    chests.push({ id: s.item_id, key: s.gate || '', level: s.level_lo || 0 });
+  } else if (stype === 'treasure_coffer') {
+    coffers.push({ id: s.item_id, key: s.gate || '', level: s.level_lo || 0 });
+  } else if (stype === 'npc_shop') {
+    const npc = (s.where_ || 'Unknown').replace(/_/g, ' ');
+    if (!vendors.has(npc)) vendors.set(npc, []);
+    vendors.get(npc)!.push({ id: s.item_id, price: s.price || 0 });
+  } else if (stype === 'mob_drop') {
+    const mob = (s.where_ || 'Unknown Mob').replace(/_/g, ' ');
+    if (!mobs.has(mob)) mobs.set(mob, { drops: [], level: [999, 0], flags: new Set(), spawns: '', content: new Set() });
+    const m = mobs.get(mob)!;
+    m.drops.push({ id: s.item_id, pct: s.pct });
+    const lo = s.level_lo || 0;
+    const hi = s.level_hi || lo;
+    if (lo > 0) { m.level = [Math.min(m.level[0], lo), Math.max(m.level[1], hi)]; }
+    for (const f of parseFlags(s.gate)) m.flags.add(f);
+    if (s.notes && String(s.notes).includes('spawn')) m.spawns = s.notes;
+    if (content?.toLowerCase() === 'wotg') m.content.add('wotg');
+  } else if (stype === 'mob_steal') {
+    steals.push({ id: s.item_id, pct: s.pct });
+  } else if (stype === 'mob_crystal') {
+    crystals.push({ id: s.item_id, buff: s.where_ || '', pct: s.pct });
+  }
+}
+
+const fishData = getZoneFishing(zoneName);
+
+// Split mobs into NMs and regulars
+const nms = new Map<string, MobData>();
+const regulars = new Map<string, MobData>();
+for (const [name, data] of mobs) {
+  if (data.flags.has('notorious')) nms.set(name, data);
+  else regulars.set(name, data);
+}
+
+// Build section list
+interface Section { id: string; label: string }
+const sections: Section[] = [];
+const helmTypes: HelmType[] = ['mining', 'logging', 'harvesting', 'excavation'];
+if (helmTypes.some(t => helm.has(t))) sections.push({ id: 'gathering', label: 'Gathering' });
+if (digging.length > 0) sections.push({ id: 'digging', label: 'Chocobo Digging' });
+if (fishData.length > 0) sections.push({ id: 'fishing', label: 'Fishing' });
+if (caskets.length > 0) sections.push({ id: 'caskets', label: 'Field Caskets' });
+if (chests.length > 0) sections.push({ id: 'chests', label: 'Treasure Chests' });
+if (coffers.length > 0) sections.push({ id: 'coffers', label: 'Treasure Coffers' });
+if (vendors.size > 0) sections.push({ id: 'vendors', label: 'NPCs & Vendors' });
+if (nms.size > 0) sections.push({ id: 'nms', label: 'Notorious Monsters' });
+if (regulars.size > 0) sections.push({ id: 'mobs', label: 'Monsters' });
+if (steals.length > 0) sections.push({ id: 'steals', label: 'Steals' });
+if (crystals.length > 0) sections.push({ id: 'crystals', label: 'Crystal Drops' });
+
+// Pick default active tab: prefer monsters, then first available
+const defaultTab = sections.find(s => s.id === 'mobs')?.id ?? sections[0]?.id ?? '';
+
+// Infobox data
+const infoRows: Array<{ label: string; value: string }> = [];
+if (regulars.size + nms.size > 0) infoRows.push({ label: 'Monsters', value: `${regulars.size + nms.size} (${nms.size} NM)` });
+if (vendors.size > 0) {
+  const totalItems = Array.from(vendors.values()).reduce((a, v) => a + v.length, 0);
+  infoRows.push({ label: 'Vendors', value: `${vendors.size} NPCs, ${totalItems} items` });
+}
+if (helm.size > 0) infoRows.push({ label: 'Gathering', value: helmTypes.filter(t => helm.has(t)).map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ') });
+if (digging.length > 0) infoRows.push({ label: 'Digging', value: `${digging.length} items` });
+if (fishData.length > 0) infoRows.push({ label: 'Fishing', value: 'Yes' });
+if (caskets.length > 0) infoRows.push({ label: 'Caskets', value: `${caskets.length} items` });
+if (chests.length > 0) infoRows.push({ label: 'Chests', value: `${chests.length} items` });
+if (coffers.length > 0) infoRows.push({ label: 'Coffers', value: `${coffers.length} items` });
+infoRows.push({ label: 'Sources', value: `${sources.length.toLocaleString()} rows` });
+
+// Sort helpers
+const sortedCaskets = [...caskets].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
+const sortedSteals = [...steals].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
+
+// Group digging by layer
+const digByLayer = new Map<string, typeof digging>();
+for (const d of digging) {
+  if (!digByLayer.has(d.layer)) digByLayer.set(d.layer, []);
+  digByLayer.get(d.layer)!.push(d);
+}
+for (const items of digByLayer.values()) items.sort((a, b) => b.weight - a.weight);
+
+const CRYSTAL_ELEMENT: Record<number, string> = {
+  4096: 'Fire', 4097: 'Ice', 4098: 'Wind', 4099: 'Earth',
+  4100: 'Lightning', 4101: 'Water', 4102: 'Light', 4103: 'Dark',
+};
+
+const desc = `${zn}: every mob drop, vendor, gathering point, and chest in this zone with exact rates from the server source.`;
+---
+
+<Layout title={`${zn} · Phoenix era 75`} description={desc} activeNav="zones"
+  breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Zones', href: '/zone/' }, { label: zn }]}>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1>{zn}</h1>
+      <p class="dek">{desc}</p>
+    </div>
+    <InfoboxCard title="Zone information" rows={infoRows} />
+  </div>
+
+  {sections.length > 1 && (
+    <TabGroup tabs={sections.map(s => ({ id: s.id, label: s.label }))} activeTab={defaultTab} />
+  )}
+
+  <div class="content-row">
+    <div class="panel">
+
+      {/* --- Gathering --- */}
+      {helm.size > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'gathering' }]} data-panel="gathering">
+          {helmTypes.filter(t => helm.has(t)).map(ht => {
+            const items_list = [...helm.get(ht)!].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
+            return (
+              <>
+                <h3>{ht.charAt(0).toUpperCase() + ht.slice(1)}</h3>
+                <table>
+                  <thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead>
+                  <tbody>
+                    {items_list.map(i => (
+                      <tr>
+                        <td><ItemLink id={i.id} name={itemName(i.id)} /></td>
+                        <td class="pct" style="text-align:right">{fmtPct(i.pct)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            );
+          })}
+        </div>
+      )}
+
+      {/* --- Chocobo Digging --- */}
+      {digging.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'digging' }]} data-panel="digging">
+          {['regular','burrow','bore','treasure'].filter(l => digByLayer.has(l)).map(layer => {
+            const layerItems = digByLayer.get(layer)!;
+            const ranks = new Set(layerItems.map(d => d.rank).filter(Boolean));
+            const rankNote = ranks.size > 0 ? ` — requires ${[...ranks].sort().join(', ')}` : '';
+            return (
+              <>
+                <h3>{layer.charAt(0).toUpperCase() + layer.slice(1)}{rankNote}</h3>
+                <table>
+                  <thead><tr><th>Item</th><th style="width:80px;text-align:right">Weight</th></tr></thead>
+                  <tbody>
+                    {layerItems.map(d => (
+                      <tr>
+                        <td><ItemLink id={d.id} name={itemName(d.id)} /></td>
+                        <td class="pct" style="text-align:right">{d.weight.toFixed(0)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            );
+          })}
+        </div>
+      )}
+
+      {/* --- Fishing --- */}
+      {fishData.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'fishing' }]} data-panel="fishing">
+          <table>
+            <thead><tr><th>Fish</th><th>Skill</th><th>Area</th><th style="text-align:right">Rarity</th></tr></thead>
+            <tbody>
+              {fishData.map(fd => (
+                <tr>
+                  <td><ItemLink id={fd.fish_item_id} name={pretty(fd.name)} /></td>
+                  <td>{fd.skill}</td>
+                  <td style="color:var(--ink-faint);font-size:.85rem">{fd.area || ''}</td>
+                  <td class="pct" style="text-align:right">{fd.rarity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* --- Field Caskets --- */}
+      {caskets.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'caskets' }]} data-panel="caskets">
+          <table>
+            <thead><tr><th>Item</th><th style="width:80px;text-align:right">Chance</th></tr></thead>
+            <tbody>
+              {sortedCaskets.map(c => (
+                <tr>
+                  <td><ItemLink id={c.id} name={itemName(c.id)} /></td>
+                  <td class="pct" style="text-align:right">{fmtPct(c.pct)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* --- Treasure Chests --- */}
+      {chests.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'chests' }]} data-panel="chests">
+          <div class="panel-note">
+            Key: {pretty((chests[0].key || 'unknown_key').replace(/_/g, ' '))}
+            {Math.max(...chests.map(c => c.level)) > 0 && ` · Level ${Math.max(...chests.map(c => c.level))}`}
+          </div>
+          <table>
+            <thead><tr><th>Item</th></tr></thead>
+            <tbody>
+              {chests.map(c => (
+                <tr><td><ItemLink id={c.id} name={itemName(c.id)} /></td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* --- Treasure Coffers --- */}
+      {coffers.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'coffers' }]} data-panel="coffers">
+          <div class="panel-note">
+            Key: {pretty((coffers[0].key || 'unknown_key').replace(/_/g, ' '))}
+            {Math.max(...coffers.map(c => c.level)) > 0 && ` · Level ${Math.max(...coffers.map(c => c.level))}`}
+          </div>
+          <table>
+            <thead><tr><th>Item</th></tr></thead>
+            <tbody>
+              {coffers.map(c => (
+                <tr><td><ItemLink id={c.id} name={itemName(c.id)} /></td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* --- NPCs & Vendors --- */}
+      {vendors.size > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'vendors' }]} data-panel="vendors">
+          {[...vendors.keys()].sort().map(npc => {
+            const npcItems = vendors.get(npc)!.sort((a, b) => a.price - b.price);
+            return (
+              <>
+                <h3>{npc} <span class="badge">{npcItems.length} items</span></h3>
+                {npcItems.map(item => (
+                  <div class="vendor-row">
+                    <ItemLink id={item.id} name={itemName(item.id)} />
+                    <span class="vendor-price">{item.price.toLocaleString()}g</span>
+                  </div>
+                ))}
+              </>
+            );
+          })}
+        </div>
+      )}
+
+      {/* --- Notorious Monsters --- */}
+      {nms.size > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'nms' }]} data-panel="nms">
+          {[...nms.keys()].sort().map(name => {
+            const data = nms.get(name)!;
+            const [lo, hi] = data.level;
+            const lvStr = lo < hi && lo < 999 ? `Lv ${lo}–${hi}` : (lo < 999 ? `Lv ${lo}` : '');
+            const flags = [...data.flags].filter(f => f !== 'notorious').sort().map(f => FLAG_LABELS[f] || f);
+            const wotg = data.content.has('wotg');
+            const sortedDrops = [...data.drops].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
+            return (
+              <details class="mob-details">
+                <summary class="mob-summary">
+                  <span class="mob-name">{name}</span>
+                  <span class="badge badge-nm">NM</span>
+                  {wotg && <span class="badge badge-wotg">WotG</span>}
+                  {lvStr && <span class="mob-lv">{lvStr}</span>}
+                  {flags.length > 0 && <span class="mob-flags">{flags.join(' · ')}</span>}
+                </summary>
+                <div class="mob-body">
+                  {data.spawns && <p class="mob-flags" style="margin:0 0 6px">{data.spawns.replace(/_/g, ' ')}</p>}
+                  {sortedDrops.map(d => (
+                    <div class="drop">
+                      <span class="drop-rate">{fmtPct(d.pct)}</span>
+                      <ItemLink id={d.id} name={itemName(d.id)} />
+                    </div>
+                  ))}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      )}
+
+      {/* --- Monsters --- */}
+      {regulars.size > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'mobs' }]} data-panel="mobs">
+          <div class="panel-note">Aggregated mob drop pool — {regulars.size + nms.size} monsters ({nms.size} NM)</div>
+          {[...regulars.keys()].sort().map(name => {
+            const data = regulars.get(name)!;
+            const [lo, hi] = data.level;
+            const lvStr = lo < hi && lo < 999 ? `Lv ${lo}–${hi}` : (lo < 999 ? `Lv ${lo}` : '');
+            const flags = [...data.flags].sort().map(f => FLAG_LABELS[f] || f);
+            const wotg = data.content.has('wotg');
+            const sortedDrops = [...data.drops].sort((a, b) => (b.pct ?? 0) - (a.pct ?? 0));
+            return (
+              <details class="mob-details">
+                <summary class="mob-summary">
+                  <span class="mob-name">{name}</span>
+                  {wotg && <span class="badge badge-wotg">WotG</span>}
+                  {lvStr && <span class="mob-lv">{lvStr}</span>}
+                  {flags.length > 0 && <span class="mob-flags">{flags.join(' · ')}</span>}
+                </summary>
+                <div class="mob-body">
+                  {sortedDrops.map(d => (
+                    <div class="drop">
+                      <span class="drop-rate">{fmtPct(d.pct)}</span>
+                      <ItemLink id={d.id} name={itemName(d.id)} />
+                    </div>
+                  ))}
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      )}
+
+      {/* --- Steals --- */}
+      {steals.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'steals' }]} data-panel="steals">
+          <div class="panel-note">Steal items for this zone. The server data does not attribute steals to specific mobs.</div>
+          <table>
+            <thead><tr><th>Item</th><th style="width:80px;text-align:right">Rate</th></tr></thead>
+            <tbody>
+              {sortedSteals.map(s => (
+                <tr>
+                  <td><ItemLink id={s.id} name={itemName(s.id)} /></td>
+                  <td class="pct" style="text-align:right">{fmtPct(s.pct)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* --- Crystal Drops --- */}
+      {crystals.length > 0 && (
+        <div class:list={['panel-sub', { active: defaultTab === 'crystals' }]} data-panel="crystals">
+          <table>
+            <thead><tr><th>Crystal</th><th>Buff required</th><th style="width:80px;text-align:right">Rate</th></tr></thead>
+            <tbody>
+              {[...crystals].sort((a, b) => a.id - b.id).map(c => (
+                <tr>
+                  <td><ItemLink id={c.id} name={itemName(c.id)} /></td>
+                  <td>{pretty(c.buff)}</td>
+                  <td class="pct" style="text-align:right">{fmtPct(c.pct)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+    </div>
+
+    <div class="rail">
+      <div class="rail-card">
+        <h3>What this page doesn't have</h3>
+        <p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour or respawn timers — those are in mob pool Lua files we haven't parsed yet.</p>
+      </div>
+    </div>
+  </div>
+
+</Layout>

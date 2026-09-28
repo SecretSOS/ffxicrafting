@@ -1,0 +1,481 @@
+---
+import Layout from '@components/Layout.astro';
+import ItemLink from '@components/ItemLink.astro';
+import {
+  CRAFTS_ORDERED, GUILDS, VANA_DAYS,
+  getCraftStats, getGuildShopItems, getGuildVendorItems,
+  getGuildTurnins, getGuildRewards,
+  type CraftCode,
+} from '@lib/db';
+import { pretty } from '@lib/utils';
+
+export function getStaticPaths() {
+  return CRAFTS_ORDERED.map(c => ({
+    params: { slug: c.name.toLowerCase() },
+    props: { code: c.code as CraftCode, craftName: c.name, cssVar: c.cssVar },
+  }));
+}
+
+const { code, craftName, cssVar } = Astro.props;
+const guild = GUILDS[code];
+const holidayName = VANA_DAYS[guild.holiday];
+const stats = getCraftStats(code);
+const shopItems = getGuildShopItems(code);
+const vendorItems = getGuildVendorItems(guild.vendor);
+const turninPatterns = getGuildTurnins(guild.guildKey);
+const rewards = getGuildRewards(guild.guildKey);
+const sortedPatterns = [...turninPatterns.keys()].sort((a, b) => a - b);
+
+function fmtGil(g: number): string {
+  return g >= 1000 ? g.toLocaleString('en-US') : String(g);
+}
+---
+
+<Layout
+  title={`${craftName} · Phoenix era 75`}
+  description={`${craftName} guild details: shop inventory, GP turnins, rewards, hours, and live open/closed status.`}
+  activeNav="crafts"
+  breadcrumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Crafts', href: '/crafts/' },
+    { label: craftName },
+  ]}
+>
+  <!-- Guild header -->
+  <header class="guild-header" style={`--c:var(${cssVar})`}>
+    <div>
+      <h1>{craftName}</h1>
+      <div class="guild-meta">{guild.display} &middot; {guild.location}</div>
+    </div>
+    <div class="guild-status-wrap">
+      <span class="guild-badge" id="guildStatus">…</span>
+      <div class="guild-next" id="guildNext"></div>
+    </div>
+  </header>
+
+  <!-- Section TOC -->
+  <nav class="section-toc">
+    <a href="#hours">Hours</a>
+    <a href="#shop">Shop</a>
+    <a href="#gp-turnins">GP Turn-ins</a>
+    <a href="#gp-rewards">GP Rewards</a>
+    <a href="#vendor">Vendor</a>
+    <a href="#recipes">Recipes</a>
+  </nav>
+
+  <!-- Guild hours -->
+  <section class="panel" style="padding:28px">
+    <h2 id="hours">Guild hours</h2>
+    <table class="hours-table">
+      <tr><td class="hours-label">Open</td><td><strong>{guild.open}:00</strong> – <strong>{guild.close}:00</strong> Vana'diel time</td></tr>
+      <tr><td class="hours-label">Holiday</td><td>{holidayName} <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
+      <tr><td class="hours-label">Location</td><td>{guild.location}</td></tr>
+    </table>
+    <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from LandSandBoat. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
+  </section>
+
+  <!-- Guild shop -->
+  {shopItems.length > 0 && (
+    <section class="panel" style="padding:28px">
+      <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">({shopItems.length} items)</span></h2>
+      <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the {craftName.toLowerCase()} guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level.</p>
+      <input class="filter-input" type="text" placeholder="Filter items…" id="shopFilter" />
+      <div class="shop-grid" id="shopGrid">
+        {shopItems.map(it => (
+          <div class="shop-row">
+            <span class="shop-name"><ItemLink id={it.item_id} name={pretty(it.name)} /></span>
+            <span class="shop-price">{fmtGil(it.price)}g</span>
+            <span class="shop-stock">{it.qty_lo}–{it.qty_hi}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- GP Turn-ins -->
+  {sortedPatterns.length > 0 && (
+    <section class="panel" style="padding:28px">
+      <h2 id="gp-turnins">Guild point turn-ins</h2>
+      <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
+      <div class="turnin-tabs" id="turninTabs">
+        {sortedPatterns.map(p => (
+          <button class="turnin-tab" type="button" data-p={p}>
+            {p < 8 ? VANA_DAYS[p] : `Pattern ${p}`}
+          </button>
+        ))}
+      </div>
+      {sortedPatterns.map(p => (
+        <div class="turnin-pattern" id={`pat-${p}`} hidden={p !== 0}>
+          <table class="turnin-table">
+            <thead><tr><th>Item</th><th>Tier</th><th>Points</th><th>Daily max</th></tr></thead>
+            <tbody>
+              {turninPatterns.get(p)!.map(t => (
+                <tr>
+                  <td><ItemLink id={t.item_id} name={pretty(t.name)} /></td>
+                  <td>{t.tier}</td>
+                  <td>{t.points}</td>
+                  <td>{fmtGil(t.max_points)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </section>
+  )}
+
+  <!-- GP Rewards -->
+  {(rewards.items.length > 0 || rewards.keyItems.length > 0) && (
+    <section class="panel" style="padding:28px">
+      <h2 id="gp-rewards">Guild point rewards</h2>
+      {rewards.items.length > 0 && (
+        <>
+          <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
+          <div class="reward-grid">
+            {rewards.items.map(r => (
+              <div class="reward-row">
+                <span class="reward-name">
+                  {r.item_id
+                    ? <ItemLink id={r.item_id} name={pretty(r.name)} />
+                    : pretty(r.name)
+                  }
+                </span>
+                <span class="reward-rank">{r.min_rank}</span>
+                <span class="reward-gp" style={`color:var(${cssVar})`}>{fmtGil(r.cost)} GP</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+      {rewards.keyItems.length > 0 && (
+        <>
+          <h3 style="font-size:.95rem;color:var(--ink-soft);margin:16px 0 8px">Key items</h3>
+          <div class="reward-grid">
+            {rewards.keyItems.map(r => (
+              <div class="reward-row">
+                <span class="reward-name">{pretty(r.name)}</span>
+                <span class="reward-rank">{r.min_rank}</span>
+                <span class="reward-gp" style={`color:var(${cssVar})`}>{fmtGil(r.cost)} GP</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  )}
+
+  <!-- Guild vendor -->
+  {vendorItems.length > 0 && (
+    <section class="panel" style="padding:28px">
+      <h2 id="vendor">Guild vendor</h2>
+      <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:10px">Rank-gated items sold by the {craftName.toLowerCase()} guild vendor. Requires the listed rank or higher to purchase.</p>
+      <div class="reward-grid">
+        {vendorItems.map(v => (
+          <div class="reward-row">
+            <span class="reward-name"><ItemLink id={v.item_id} name={pretty(v.name)} /></span>
+            <span class="reward-rank">{v.gate || 'amateur'}</span>
+            <span class="shop-price">{fmtGil(v.price)}g</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Recipe stats -->
+  <section class="panel" style="padding:28px">
+    <h2 id="recipes">Recipes</h2>
+    <div class="stat-row">
+      <div class="stat"><strong>{stats.era60}</strong> <span>recipes (1–60)</span></div>
+      <div class="stat"><strong>{stats.total}</strong> <span>total</span></div>
+      <div class="stat"><strong>{stats.desynth}</strong> <span>desynth</span></div>
+    </div>
+    <div class="tool-links">
+      <a href={`/calculator?craft=${code}`}>Calculator</a>
+      <a href={`/profit?craft=${code}`}>Profit Finder</a>
+      <a href={`/shopping?craft=${code}`}>Shopping List</a>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline define:vars={{ guildOpen: guild.open, guildClose: guild.close, guildHoliday: guild.holiday }}>
+(function(){
+  var EPOCH=1009810800,
+  DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"];
+  function tick(){
+    var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+    vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+    hr=vh%24,wd=vd%8,
+    isOpen=wd!==guildHoliday&&hr>=guildOpen&&hr<guildClose,
+    el=document.getElementById("guildStatus"),
+    nxt=document.getElementById("guildNext");
+    if(!el)return;
+    if(isOpen){
+      el.className="guild-badge open";el.textContent="Open";
+      var left=guildClose-hr;
+      if(nxt)nxt.textContent="Closes in ~"+left+" Vana’diel hour"+(left!==1?"s":"");
+    }else{
+      el.className="guild-badge closed";el.textContent="Closed";
+      var msg="";
+      if(wd===guildHoliday){msg=DAYS[guildHoliday]+" is the guild holiday";}
+      else if(hr<guildOpen){msg="Opens at "+guildOpen+":00 (in ~"+(guildOpen-hr)+" hr)";}
+      else{msg="Opens tomorrow at "+guildOpen+":00";}
+      if(nxt)nxt.textContent=msg;
+    }
+  }
+  tick();setInterval(tick,2400);
+})();
+</script>
+
+<script is:inline>
+(function(){
+  var EPOCH=1009810800;
+  function getPattern(){
+    var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+    vd=Math.floor(vs/60/60/24);
+    return vd%8;
+  }
+  var tabs=document.querySelectorAll(".turnin-tab"),
+    pats=document.querySelectorAll(".turnin-pattern"),
+    cur=getPattern();
+  function show(p){
+    tabs.forEach(function(t){t.classList.toggle("active",+t.dataset.p===p)});
+    pats.forEach(function(d){d.hidden=+d.id.split("-")[1]!==p});
+  }
+  if(tabs.length) show(cur);
+  tabs.forEach(function(t){
+    t.addEventListener("click",function(){show(+t.dataset.p)});
+  });
+})();
+</script>
+
+<script is:inline>
+(function(){
+  var input=document.getElementById("shopFilter");
+  var grid=document.getElementById("shopGrid");
+  if(!input||!grid) return;
+  input.addEventListener("input",function(){
+    var q=input.value.toLowerCase();
+    var rows=grid.querySelectorAll(".shop-row");
+    rows.forEach(function(r){
+      r.style.display=r.textContent.toLowerCase().indexOf(q)>=0?"":"none";
+    });
+  });
+})();
+</script>
+
+<style>
+.guild-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.guild-header h1 { color: var(--c); }
+.guild-meta {
+  color: var(--ink-soft);
+  font-size: .88rem;
+  margin-top: 4px;
+}
+.guild-status-wrap {
+  margin-left: auto;
+  text-align: right;
+}
+.guild-badge {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 4px 12px;
+  letter-spacing: .02em;
+}
+.guild-badge.open {
+  background: color-mix(in srgb, var(--gain) 18%, transparent);
+  color: var(--gain);
+  border: 1px solid var(--gain);
+}
+.guild-badge.closed {
+  background: color-mix(in srgb, var(--loss) 14%, transparent);
+  color: var(--loss);
+  border: 1px solid var(--loss);
+}
+.guild-next {
+  color: var(--ink-faint);
+  font-size: .82rem;
+  margin-top: 2px;
+}
+
+.section-toc {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.section-toc a {
+  font-size: .82rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.section-toc a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hours-table { border-collapse: collapse; font-size: .92rem; width: auto; }
+.hours-table td { padding: 4px 16px 4px 0; border: none; }
+.hours-label { color: var(--ink-faint); }
+
+.filter-input {
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  background: transparent;
+  width: 280px;
+  max-width: 100%;
+  margin-bottom: 14px;
+}
+.filter-input:focus { border-color: var(--accent); outline: none; }
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px 18px;
+}
+.shop-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+.shop-name { min-width: 0; overflow-wrap: anywhere; }
+.shop-price {
+  color: var(--accent);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  font-size: .88rem;
+}
+.shop-stock {
+  color: var(--ink-faint);
+  font-size: .82rem;
+  white-space: nowrap;
+}
+
+.turnin-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.turnin-tab {
+  font: inherit;
+  color: var(--ink-soft);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: .82rem;
+}
+.turnin-tab:hover { border-color: var(--accent); }
+.turnin-tab.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+}
+.turnin-table { width: 100%; border-collapse: collapse; }
+.turnin-table th {
+  text-align: left;
+  font-weight: 400;
+  font-size: .76rem;
+  color: var(--ink-faint);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: var(--font-body);
+}
+.turnin-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.reward-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2px 18px;
+}
+.reward-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+.reward-name { min-width: 0; overflow-wrap: anywhere; }
+.reward-rank {
+  color: var(--ink-faint);
+  font-size: .82rem;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+.reward-gp {
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  font-size: .88rem;
+}
+
+.stat-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.stat strong {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-right: 6px;
+}
+.stat span { color: var(--ink-soft); font-size: .88rem; }
+
+.tool-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.tool-links a {
+  font-size: .85rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.tool-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .guild-header { flex-direction: column; align-items: flex-start; }
+  .guild-status-wrap { margin-left: 0; text-align: left; }
+  .shop-grid { grid-template-columns: 1fr; }
+  .reward-grid { grid-template-columns: 1fr; }
+}
+</style>

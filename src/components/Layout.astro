@@ -1,0 +1,76 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  activeNav?: string;
+  breadcrumbs?: Array<{ label: string; href?: string }>;
+}
+
+const { title, description = '', activeNav = '', breadcrumbs = [] } = Astro.props;
+
+const navLinks = [
+  { href: '/crafts', label: 'Crafts' },
+  { href: '/gathering/', label: 'Gathering' },
+  { href: '/zone/', label: 'Zones', key: 'zones' },
+  { href: '/bcnm', label: 'BCNMs', key: 'bcnm' },
+  { href: '/guides/', label: 'Guides', key: 'guides' },
+];
+
+import '@styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  {description && <meta name="description" content={description} />}
+  <meta name="theme-color" content="#0c1728" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="chrome">
+      <a href="/" class="brand">FFXI Crafting</a>
+      <nav class="top-nav">
+        {navLinks.map(link => (
+          <a href={link.href} class:list={{ active: (link.key ?? link.label.toLowerCase()) === activeNav }}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
+      <input type="search" class="search-box" placeholder="Search items…" aria-label="Search items" />
+    </div>
+
+    {breadcrumbs.length > 0 && (
+      <div class="crumb">
+        {breadcrumbs.map((crumb, i) => (
+          <>
+            {i > 0 && <span class="crumb-sep">/</span>}
+            {crumb.href
+              ? <a href={crumb.href}>{crumb.label}</a>
+              : <span style="color:var(--ink)">{crumb.label}</span>
+            }
+          </>
+        ))}
+      </div>
+    )}
+
+    <slot />
+
+    <footer class="site-footer">
+      Made by Secretsos · Data parsed from <a href="https://github.com/LandSandBoat/server">LandSandBoat</a> server source
+    </footer>
+  </div>
+
+  <script is:inline>
+    (function(){
+      var r=document.documentElement;
+      try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}
+    })();
+  </script>
+</body>
+</html>

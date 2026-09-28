@@ -1,0 +1,61 @@
+---
+import Layout from '@components/Layout.astro';
+import { getAllZones, getDb } from '@lib/db';
+import { pretty, slugify } from '@lib/utils';
+
+const zones = getAllZones();
+const db = getDb();
+
+const zoneCounts = new Map<string, number>();
+const rows = db.prepare(
+  "SELECT zone, COUNT(*) as cnt FROM sources WHERE zone IS NOT NULL AND zone != '' GROUP BY zone"
+).all() as Array<{ zone: string; cnt: number }>;
+for (const r of rows) zoneCounts.set(r.zone, r.cnt);
+
+const zoneList = zones
+  .map(z => ({ name: pretty(z), slug: slugify(z), count: zoneCounts.get(z) ?? 0 }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<Layout title="Zones · Phoenix era 75"
+  description="Every zone with mob drops, vendors, gathering, and chests."
+  activeNav="zones"
+  breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Zones' }]}>
+
+  <div>
+    <h1>Zones</h1>
+    <p class="dek">{zoneList.length} zones with data from the server source. Each page shows every mob drop, vendor, gathering point, and treasure chest in the zone.</p>
+  </div>
+
+  <div style="margin-bottom:16px">
+    <input
+      type="search"
+      id="zoneFilter"
+      placeholder="Filter zones…"
+      class="search-box"
+      style="width:100%;max-width:400px"
+      aria-label="Filter zones"
+    />
+  </div>
+
+  <div class="zone-grid" id="zoneGrid">
+    {zoneList.map(z => (
+      <div class="zone-entry" data-name={z.name.toLowerCase()}>
+        <a href={`/zone/${z.slug}`}>{z.name}</a>
+        <span class="zone-count">{z.count}</span>
+      </div>
+    ))}
+  </div>
+
+  <script>
+    const input = document.getElementById('zoneFilter') as HTMLInputElement;
+    const entries = document.querySelectorAll<HTMLElement>('.zone-entry');
+    input?.addEventListener('input', () => {
+      const q = input.value.toLowerCase();
+      entries.forEach(el => {
+        el.style.display = el.dataset.name?.includes(q) ? '' : 'none';
+      });
+    });
+  </script>
+
+</Layout>

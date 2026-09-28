@@ -1,0 +1,23 @@
+---
+import { iconPath, itemUrl } from '@lib/utils';
+
+interface Props {
+  id: number;
+  name: string;
+  size?: number;
+  hasIcon?: boolean;
+}
+
+const { id, name, size = 20, hasIcon = true } = Astro.props;
+const href = itemUrl(id, name);
+const icon = hasIcon ? iconPath(id) : null;
+---
+
+{icon ? (
+  <a href={href} class="icon-link">
+    <img src={icon} width={size} height={size} alt="" class="item-icon" loading="lazy" />
+    {name}
+  </a>
+) : (
+  <a href={href}>{name}</a>
+)}

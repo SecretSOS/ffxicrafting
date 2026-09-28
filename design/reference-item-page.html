@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Item page reference — Chunk of Copper Ore</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0f16; --surface:#141a26; --surface-2:#1b2333; --border:#2b3448;
+    --text:#f2eee3; --text-muted:#9aa2b6; --accent:#e3a75e; --accent-soft:#3a2f22; --link:#8ec1e8;
+    --serif:'Fraunces',Georgia,serif; --sans:'Public Sans',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--ink);color:var(--text);font-family:var(--sans);}
+  a{color:var(--link);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:1280px;margin:0 auto;padding:48px 56px;display:flex;flex-direction:column;gap:28px;}
+  .chrome{display:flex;align-items:center;gap:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+  .brand{font-family:var(--serif);font-weight:700;font-size:19px;}
+  .nav{display:flex;gap:22px;font-size:14px;color:var(--text-muted);flex-grow:1;}
+  .search{font-family:var(--mono);font-size:12px;color:var(--text-muted);border:1px solid var(--border);border-radius:6px;padding:7px 14px;}
+  .crumb{font-size:13px;color:var(--text-muted);}
+  .hero{display:flex;gap:28px;align-items:center;}
+  .icon{width:84px;height:84px;flex-shrink:0;border-radius:14px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+  .pill{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:4px 11px;}
+  .pill.on{background:var(--accent-soft);color:var(--accent);}
+  .pill.off{color:var(--text-muted);border:1px solid var(--border);}
+  h1{font-family:var(--serif);font-weight:700;font-size:46px;margin:0;line-height:1.1;}
+  h2{font-family:var(--serif);font-weight:600;font-size:22px;margin:0 0 14px;}
+  .body-row{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
+  .main{flex:1 1 700px;display:flex;flex-direction:column;gap:28px;}
+  .subhead{font-size:13px;color:var(--text-muted);margin-bottom:10px;}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .card .name{font-size:14px;margin-bottom:6px;}
+  .card .pct{font-family:var(--mono);font-size:20px;color:var(--accent);}
+  .card .sub{font-size:12px;color:var(--text-muted);}
+  .vendor-card{display:flex;align-items:center;gap:16px;padding:14px 18px;}
+  .quote{background:var(--accent-soft);border-radius:10px;padding:18px 20px;}
+  .quote p{margin:0;font-size:14.5px;line-height:1.6;color:var(--accent);}
+  .rail{width:320px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;height:fit-content;}
+  .rail-head{background:var(--accent-soft);color:var(--accent);font-family:var(--serif);font-weight:600;font-size:15px;padding:12px 18px;}
+  .rail-body{padding:6px 18px 14px;}
+  .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+  .row:last-child{border-bottom:none;}
+  .row span:last-child{font-family:var(--mono);}
+  .row .muted{color:var(--text-muted);}
+  .footer{font-size:12px;color:var(--text-muted);padding-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="chrome">
+    <div class="brand">FFXI Crafting</div>
+    <div class="nav"><span>Crafts</span><span>Gathering</span><span>Zones</span><span>BCNMs</span><span>Guides</span></div>
+    <div class="search">Search items…</div>
+  </div>
+
+  <div class="crumb">Home <span style="opacity:.5">/</span> Items <span style="opacity:.5">/</span> <span style="color:var(--text)">Chunk of Copper Ore</span></div>
+
+  <div class="hero">
+    <div class="icon">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e3a75e" stroke-width="1.6" stroke-linejoin="round">
+        <path d="M6 15 3 10l3-6h4l3 4-2 3 3 3-2 5H8z"/>
+        <path d="M13 8l3-4h4l1 5-3 4"/>
+      </svg>
+    </div>
+    <div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+        <span class="pill on">Ore</span>
+        <span class="pill off">Mining material</span>
+      </div>
+      <h1>Chunk of Copper Ore</h1>
+    </div>
+  </div>
+
+  <div class="body-row">
+    <div class="main">
+
+      <div>
+        <h2>Where to get it</h2>
+        <div class="subhead">Mined — real per-swing rate by zone</div>
+        <div class="grid3" style="margin-bottom:20px;">
+          <div class="card"><div class="name"><a href="#">Zeruhn Mines</a></div><div class="pct">16.9%</div></div>
+          <div class="card"><div class="name"><a href="#">Gusgen Mines</a></div><div class="pct">16.2%</div></div>
+          <div class="card"><div class="name"><a href="#">Newton Movalpolos</a></div><div class="pct">15.2%</div></div>
+          <div class="card"><div class="name"><a href="#">Palborough Mines</a></div><div class="pct">15.1%</div></div>
+          <div class="card"><div class="name"><a href="#">Yughott Grotto</a></div><div class="pct">14.7%</div></div>
+          <div class="card"><div class="name"><a href="#">Oldton Movalpolos</a></div><div class="pct">11.3%</div></div>
+        </div>
+        <div class="subhead">Guild vendor</div>
+        <div class="card vendor-card" style="display:inline-flex;">
+          <span style="font-size:14px"><a href="#">Goldsmithing Guild</a></span>
+          <span style="font-family:var(--mono);font-size:16px;color:var(--accent)">60g</span>
+          <span style="font-size:12px;color:var(--text-muted)">stock 120–180</span>
+        </div>
+      </div>
+
+      <div>
+        <h2>Used in</h2>
+        <div class="grid3">
+          <div class="card"><div class="name"><a href="#">Copper Ingot</a></div><div class="sub">Goldsmithing · skill 1</div></div>
+          <div class="card"><div class="name"><a href="#">Copper Ring</a></div><div class="sub">Goldsmithing · skill 1</div></div>
+          <div class="card"><div class="name"><a href="#">Copper Hairpin</a></div><div class="sub">Goldsmithing · skill 3</div></div>
+        </div>
+      </div>
+
+      <div class="quote">
+        <p>Copper is the cheapest ore in the game and the first real skill-up material every Goldsmith burns through — expect dozens of stacks before Copper Ingot stops giving points at skill 1.</p>
+      </div>
+
+    </div>
+
+    <div class="rail">
+      <div class="rail-head">At a glance</div>
+      <div class="rail-body">
+        <div class="row"><span class="muted">Category</span><span>Ore</span></div>
+        <div class="row"><span class="muted">Vendor price</span><span>60g</span></div>
+        <div class="row"><span class="muted">Best zone rate</span><span>16.9%</span></div>
+        <div class="row"><span class="muted">Used in recipes</span><span>3+</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Redesign concept · sourced from ffxicrafting.com's Goldsmithing guild page and gathering rate tables</div>
+
+</div>
+</body>
+</html>
