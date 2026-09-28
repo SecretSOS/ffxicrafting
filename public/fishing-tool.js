@@ -172,8 +172,6 @@ if(tog&&body){
     var open=body.style.display!=='none';
     body.style.display=open?'none':'';
     tog.textContent=open?'expand':'collapse';
-    try{localStorage.setItem('ft-open',open?'0':'1')}catch(e){}
   });
-  try{if(localStorage.getItem('ft-open')==='0'){body.style.display='none';tog.textContent='expand'}}catch(e){}
 }
 })();
