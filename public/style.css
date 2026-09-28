@@ -296,4 +296,8 @@ th[data-sort]:hover{color:var(--ink)}
  .sidebar-overlay{display:none!important}
  .sb-explore{display:none}
 }
+/* --- Page art (float-right illustrations) --- */
+.page-art{float:right;max-width:200px;width:28%;margin:0 0 16px 20px;border-radius:10px;height:auto;shape-margin:12px}
+@media(max-width:600px){.page-art{float:none;display:block;margin:12px auto;max-width:280px;width:100%;max-height:220px}}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}

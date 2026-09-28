@@ -23,8 +23,11 @@ const craftingNMs = nms.filter(nm => nm.drops.some(d => d.is_ingredient) || nm.s
   activeNav="nm"
   breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'NMs' }]}
 >
-  <h1>Notorious Monsters</h1>
-  <p class="dek">{nms.length} NMs across {zones.size} zones. {craftingNMs.length} drop at least one recipe ingredient. Crafting drops are highlighted.</p>
+  <div class="page-header">
+    <h1>Notorious Monsters</h1>
+    <img src="/img/nms.png" alt="Hunting Notorious Monsters" class="page-art">
+    <p class="dek">{nms.length} NMs across {zones.size} zones. {craftingNMs.length} drop at least one recipe ingredient. Crafting drops are highlighted.</p>
+  </div>
 
   <div class="nm-controls">
     <input class="filter-input" type="text" placeholder="Filter by NM name, zone, or item…" id="nmFilter" />
