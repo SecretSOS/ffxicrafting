@@ -221,3 +221,67 @@ export function getGuildRewards(guildKey: string): { items: RewardItem[]; keyIte
   `).all(guildKey) as RewardKeyItem[];
   return { items, keyItems };
 }
+
+// ── Notorious Monsters ──────────────────────────────────────────
+
+export interface NMDrop {
+  item_id: number;
+  item_name: string;
+  pct: number | null;
+  is_ingredient: boolean;
+}
+
+export interface NMEntry {
+  mob: string;
+  zone: string;
+  level_lo: number | null;
+  level_hi: number | null;
+  gate: string;
+  drops: NMDrop[];
+  steals: NMDrop[];
+}
+
+export function getAllNMs(): NMEntry[] {
+  const db = getDb();
+
+  const ingredientIds = new Set(
+    (db.prepare('SELECT DISTINCT item_id FROM recipe_ingredients').all() as { item_id: number }[])
+      .map(r => r.item_id)
+  );
+
+  const dropRows = db.prepare(`
+    SELECT s.where_ as mob, s.zone, s.item_id, i.name as item_name, s.pct,
+           s.level_lo, s.level_hi, s.gate, s.type
+    FROM sources s JOIN items i ON i.id = s.item_id
+    WHERE s.type IN ('mob_drop', 'mob_steal')
+      AND s.gate LIKE '%notorious%'
+      AND (s.content IS NULL OR LOWER(s.content) IN ('rotz','cop','toau','wotg'))
+    ORDER BY s.zone, s.where_, s.type, s.pct DESC
+  `).all() as {
+    mob: string; zone: string; item_id: number; item_name: string;
+    pct: number | null; level_lo: number | null; level_hi: number | null;
+    gate: string; type: string;
+  }[];
+
+  const nmMap = new Map<string, NMEntry>();
+  for (const r of dropRows) {
+    if (isExcludedZone(r.zone)) continue;
+    const key = `${r.mob}|${r.zone}`;
+    if (!nmMap.has(key)) {
+      nmMap.set(key, {
+        mob: r.mob, zone: r.zone,
+        level_lo: r.level_lo, level_hi: r.level_hi,
+        gate: r.gate, drops: [], steals: [],
+      });
+    }
+    const entry = nmMap.get(key)!;
+    const drop: NMDrop = {
+      item_id: r.item_id, item_name: r.item_name,
+      pct: r.pct, is_ingredient: ingredientIds.has(r.item_id),
+    };
+    if (r.type === 'mob_steal') entry.steals.push(drop);
+    else entry.drops.push(drop);
+  }
+
+  return [...nmMap.values()].sort((a, b) => a.zone.localeCompare(b.zone) || a.mob.localeCompare(b.mob));
+}
