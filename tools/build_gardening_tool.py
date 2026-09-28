@@ -22,6 +22,11 @@ SEEDS = {
 
 ELEMENTS = ["None", "Fire", "Ice", "Wind", "Earth", "Lightning", "Water", "Light", "Dark"]
 
+
+def fmt_name(name):
+    return name.replace('_', ' ').title().replace("'S ", "'s ").replace(' Of ', ' of ').replace(' The ', ' the ')
+
+
 conn = sqlite3.connect(DB)
 cur = conn.cursor()
 
@@ -53,7 +58,7 @@ for sid in range(1, 9):
         if key not in results:
             results[key] = []
         results[key].append([item_id, qty_lo, qty_hi, weight])
-        items_used[item_id] = item_name
+        items_used[item_id] = fmt_name(item_name)
 
 conn.close()
 
