@@ -189,6 +189,7 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 <nav class="section-toc" data-toc>
  <a href="#lookup">Lookup</a>
  <a href="#guild-hours">Guild</a>
+ <a href="#ranks">Ranks</a>
  <a href="#guild-shop">Shop</a>
  <a href="#gp-turnins">GP Turn-ins</a>
  <a href="#gp-rewards">GP Rewards</a>
@@ -230,6 +231,26 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
   <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Location</td><td>Port Windurst</td></tr>
  </table>
  <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from <a href="https://github.com/LandSandBoat/server/blob/base/scripts/data/guild_shops.lua">LandSandBoat</a>. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
+</details>
+
+<details class="panel pad collapsible" open>
+ <summary class="collapse-summary"><h2 id="ranks" style="margin:0;display:inline">Rank progression</h2><span class="collapse-arrow">▾</span></summary>
+ <p style="color:var(--ink-soft);font-size:.88rem;margin:12px 0">To advance in rank, catch and turn in the required fish to the guild master (Thubu Parohren, Port Windurst). Your skill must be within 2 levels of the rank cap. Each rank raises your skill cap by 10.</p>
+ <table class="turnin-table">
+  <thead><tr><th>Rank</th><th>Cap</th><th>Test fish</th><th>Fish skill</th><th>Advances to</th></tr></thead>
+  <tbody>
+   <tr><td>Amateur</td><td>10</td><td><a href="/item/4401-moat-carp" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4401.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moat Carp</a></td><td class="num">11</td><td>Recruit</td></tr>
+   <tr><td>Recruit</td><td>20</td><td><a href="/item/4379-cheval-salmon" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4379.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cheval Salmon</a></td><td class="num">21</td><td>Initiate</td></tr>
+   <tr><td>Initiate</td><td>30</td><td><a href="/item/4469-giant-catfish" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4469.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Giant Catfish</a></td><td class="num">31</td><td>Novice</td></tr>
+   <tr><td>Novice</td><td>40</td><td><a href="/item/4480-gugru-tuna" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4480.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gugru Tuna</a></td><td class="num">41</td><td>Apprentice</td></tr>
+   <tr><td>Apprentice</td><td>50</td><td><a href="/item/4462-monke-onke" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4462.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Monke-Onke</a></td><td class="num">51</td><td>Journeyman</td></tr>
+   <tr><td>Journeyman</td><td>60</td><td><a href="/item/4479-bhefhel-marlin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4479.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bhefhel Marlin</a></td><td class="num">61</td><td>Craftsman</td></tr>
+   <tr><td>Craftsman</td><td>70</td><td><a href="/item/4471-bladefish" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4471.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bladefish</a></td><td class="num">71</td><td>Artisan</td></tr>
+   <tr><td>Artisan</td><td>80</td><td><a href="/item/4478-three-eyed-fish" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4478.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Three-Eyed Fish</a></td><td class="num">81</td><td>Adept</td></tr>
+   <tr><td>Adept</td><td>90</td><td><a href="/item/4474-gigant-squid" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4474.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gigant Squid</a></td><td class="num">91</td><td>Veteran</td></tr>
+  </tbody>
+ </table>
+ <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Test items from <a href="https://github.com/LandSandBoat/server/blob/base/scripts/globals/hobbies/crafting/guild_master.lua">LandSandBoat</a>. Rank-up accepted at skill ≥ (cap − 2).</p>
 </details>
 
 <details class="panel pad collapsible" open>
