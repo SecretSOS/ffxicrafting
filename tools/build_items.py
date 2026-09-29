@@ -381,10 +381,6 @@ def build_page(iid):
         meta_parts.append(f'NPC: {it["base_price"]:,}g')
     meta_text = ' · '.join(meta_parts)
 
-    wiki = ''
-    if it['wiki_url']:
-        wiki += f' · <a href="{escape(it["wiki_url"])}" target="_blank" rel="noopener">Wiki ↗</a>'
-
     sep = ' ' if flags and meta_text else ''
 
     # Infobox
@@ -407,7 +403,7 @@ def build_page(iid):
     page += f'  {infobox}\n'
     page += f'  <div class="item-head">{icon_img}<div>\n'
     page += f'  <h1>{ne}</h1>\n'
-    page += f'  <p class="meta">{flags}{sep}{meta_text}{wiki}</p>\n'
+    page += f'  <p class="meta">{flags}{sep}{meta_text}</p>\n'
     page += '  </div></div>\n'
     page += ' </header>\n'
 
