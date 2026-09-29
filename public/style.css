@@ -9,7 +9,7 @@
  --ink:#f2eee3;--ink-soft:#9aa2b6;--ink-faint:#6e7a94;--link:#8ec1e8;
  --accent:#e3a75e;--accent-soft:#3a2f22;--gain:#74d3a0;--loss:#ff8f7d;--best:#74d3a0;
  --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
- --wood:#8a6a3f;--smith:#8d94a3;--gold:#e0b64c;--cloth:#c98fb5;--leather:#b5763f;--bone:#ded3bb;--alchemy:#7fc4a8;--cook:#e08f6a;
+ --wood:#8a6a3f;--smith:#8d94a3;--gold:#e0b64c;--cloth:#c98fb5;--leather:#b5763f;--bone:#ded3bb;--alchemy:#7fc4a8;--cook:#e08f6a;--fish:#5ba8c8;
  /* backward compat aliases for generated pages */
  --panel-top:#1b2333;--panel-bot:#141a26;--rule:#2b3448;--gil:#e3a75e;--sidebar-bg:#141a26;
  --font-display:'Marcellus',Georgia,serif;--font-body:'Atkinson Hyperlegible',system-ui,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
@@ -22,14 +22,14 @@
  --accent:#b07328;--accent-soft:#f5edd8;--gain:#12734a;--loss:#b23a2a;--best:#12734a;
  --panel-top:#fff;--panel-bot:#f7f8fa;--rule:#d4d8e0;--gil:#b07328;--sidebar-bg:#eaecf0;
  --fire:#c2432a;--ice:#1f7fae;--wind:#2d8a54;--earth:#8a6a2a;--lightning:#6b45b0;--water:#1c69b8;--light:#9a8536;--dark:#6a4a96;
- --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34}}
+ --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34;--fish:#1c7fa8}}
 :root[data-theme="light"]{
  --bg:#f0f1f4;--surface:#f7f8fa;--surface-2:#fff;--border:#d4d8e0;--frame:#3d4f6a;
  --ink:#1a1c22;--ink-soft:#4a4f5e;--ink-faint:#6e7380;--link:#2c6da8;
  --accent:#b07328;--accent-soft:#f5edd8;--gain:#12734a;--loss:#b23a2a;--best:#12734a;
  --panel-top:#fff;--panel-bot:#f7f8fa;--rule:#d4d8e0;--gil:#b07328;--sidebar-bg:#eaecf0;
  --fire:#c2432a;--ice:#1f7fae;--wind:#2d8a54;--earth:#8a6a2a;--lightning:#6b45b0;--water:#1c69b8;--light:#9a8536;--dark:#6a4a96;
- --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34}
+ --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34;--fish:#1c7fa8}
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:inherit}
