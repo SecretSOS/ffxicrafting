@@ -71,16 +71,29 @@ def load_all():
     db.row_factory = sqlite3.Row
 
     ah_prices, ah_fetched, ah_count = {}, 0, 0
+    ah_stack_prices, ah_bazaar_prices = {}, {}
     if os.path.exists(AH):
         with open(AH) as f:
             raw = json.load(f)
             ah_prices = {int(k): v for k, v in raw['prices'].items()}
+            ah_stack_prices = {int(k): v for k, v in raw.get('stackPrices', {}).items()}
+            ah_bazaar_prices = {int(k): v for k, v in raw.get('bazaarPrices', {}).items()}
             ah_fetched = raw.get('fetched', 0)
             ah_count = raw.get('count', len(ah_prices))
 
     items = {}
     for r in db.execute('SELECT * FROM items'):
         items[r['id']] = dict(r)
+
+    for iid, sp in ah_stack_prices.items():
+        if iid not in ah_prices:
+            it = items.get(iid)
+            stk = (it.get('stack') or 1) if it else 1
+            ah_prices[iid] = sp // stk if stk > 1 else sp
+    for iid, bp in ah_bazaar_prices.items():
+        if iid not in ah_prices:
+            ah_prices[iid] = bp
+    ah_count = len(ah_prices)
 
     # ── Vendor data with corrected guild prices ──
     vendor_best = {}
@@ -150,7 +163,7 @@ def load_all():
             'type': v['type'], 'zone': (v['zone'] or '').replace('_', ' ').title(),
             'vendor': (v['where_'] or '').replace('_', ' ').title(),
             'npc': cost,
-            'base': d['price'] if d['type'] != 'guild_shop' else None,
+            'base': v['price'] if v['type'] in ('npc_shop','guild_vendor','regional_vendor') else None,
             'buyMax': v['buy_max'], 'targetStock': v['target_stock'],
             'ah': ah, 'profit': profit,
             'margin': round(margin, 1) if margin else None,
@@ -621,6 +634,10 @@ border-radius:6px;padding:6px 12px;font-size:.8rem}
 .fame-ctrl input[type=range]{width:100px;accent-color:var(--gold)}
 .fame-ctrl .fame-val{color:var(--gold);font-family:var(--mono);font-weight:700;min-width:20px;text-align:center}
 .fame-ctrl .fame-pct{color:var(--ink-faint);font-size:.72rem}
+.scan-btn{background:var(--bg2);border:1px solid var(--rule);border-radius:6px;padding:4px 10px;
+color:var(--ink-soft);font-size:.78rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.scan-btn:hover{border-color:var(--accent);color:var(--accent)}
+.scan-btn.scanning{opacity:.5;pointer-events:none}
 
 .tabs{display:flex;gap:0;border-bottom:2px solid var(--rule);margin-bottom:16px;overflow-x:auto}
 .tab{font:inherit;font-size:.9rem;padding:10px 20px;background:none;border:none;
@@ -811,6 +828,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
     <span class="fame-val" id="fameVal">8</span>
     <span class="fame-pct" id="famePct">(-3%)</span>
    </div>
+   <button class="scan-btn" id="scanBtn" title="Re-fetch AH prices from disk">&#8635; Scan</button>
    <div class="hdr-stats" id="hdrStats"></div>
   </div>
  </div>
@@ -1078,6 +1096,21 @@ var D,T,sorts={flips:{k:'profit',d:-1},crafts:{k:'profit',d:-1},desynth:{k:'prof
 function famePrice(base,rank){return Math.floor(base*(111-rank)/100);}
 
 fetch('/api/data').then(function(r){return r.json()}).then(function(d){D=d;T=d.tree;init();});
+
+document.getElementById('scanBtn').addEventListener('click',function(){
+  var btn=this;btn.classList.add('scanning');btn.textContent='↻ Scanning...';
+  fetch('/api/refresh',{method:'POST'}).then(function(r){return r.json()}).then(function(d){
+    D=d;T=d.tree;
+    var ago=Math.floor((Date.now()/1000-D.ahFetched)/60);
+    var t=ago<60?ago+'m':Math.floor(ago/60)+'h';
+    document.getElementById('hdrStats').innerHTML=
+      '<span class="hs">AH: <b>'+D.ahCount+'</b> items ('+t+' ago)</span>'+
+      '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
+      '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
+    setBadges();window._lazyRendered={};switchTab(document.querySelector('.tab.active').dataset.tab);
+    btn.classList.remove('scanning');btn.textContent='↻ Scan';
+  }).catch(function(){btn.classList.remove('scanning');btn.textContent='↻ Scan';});
+});
 
 function init(){
   var ago=Math.floor((Date.now()/1000-D.ahFetched)/60);
@@ -2114,7 +2147,7 @@ function goToItem(name,id){
 </html>'''
 
 
-def make_handler(data_json, html_bytes):
+def make_handler(state, html_bytes):
     class H(SimpleHTTPRequestHandler):
         def do_GET(self):
             if self.path == '/':
@@ -2127,7 +2160,18 @@ def make_handler(data_json, html_bytes):
                 self.send_header('Content-Type', 'application/json')
                 self.send_header('Cache-Control', 'no-cache')
                 self.end_headers()
-                self.wfile.write(data_json)
+                self.wfile.write(state['json'])
+            else:
+                self.send_error(404)
+        def do_POST(self):
+            if self.path == '/api/refresh':
+                data = load_all()
+                state['json'] = json.dumps(data, separators=(',', ':')).encode()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Cache-Control', 'no-cache')
+                self.end_headers()
+                self.wfile.write(state['json'])
             else:
                 self.send_error(404)
         def log_message(self, *a):
@@ -2164,7 +2208,8 @@ def main():
     hb = HTML.encode()
     print(f"  Data payload: {len(dj)/1024:.0f} KB")
 
-    server = HTTPServer(('127.0.0.1', port), make_handler(dj, hb))
+    state = {'json': dj}
+    server = HTTPServer(('127.0.0.1', port), make_handler(state, hb))
     print(f'\n  PowerTool running at http://localhost:{port}')
     print('  Press Ctrl+C to stop.\n')
     threading.Timer(0.5, lambda: webbrowser.open(f'http://localhost:{port}')).start()
