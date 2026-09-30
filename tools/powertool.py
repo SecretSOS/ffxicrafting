@@ -836,6 +836,13 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
 .gpr-item .gpr-rank{font-size:.72rem;color:var(--ink-faint);text-transform:capitalize}
 .gpr-item .gpr-cost{font-family:var(--mono);color:var(--gold);font-size:.8rem}
 .gpr-ki{color:var(--ink-faint);font-style:italic}
+.gp-section{border:1px solid var(--rule);border-radius:8px;margin:0 0 12px;overflow:hidden}
+.gp-section-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;background:var(--bg2);user-select:none;font-size:.92rem;font-weight:700;color:var(--ink)}
+.gp-section-hdr:hover{background:var(--bg3)}
+.gp-section-hdr .gp-arr{transition:transform .2s;font-size:.7rem;color:var(--ink-faint)}
+.gp-section-hdr.open .gp-arr{transform:rotate(90deg)}
+.gp-section-body{display:none;padding:12px 16px}
+.gp-section-body.open{display:block}
 .zone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
 .zone-card{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;cursor:pointer;transition:.15s}
 .zone-card:hover{border-color:var(--accent);background:var(--bg3)}
@@ -1024,26 +1031,51 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  </div>
 
  <div class="pane" id="p-gp">
-  <div style="padding:0 0 8px"><p style="color:var(--ink-soft);font-size:.88rem">Guild Point turn-in analysis. Shows the cheapest items to turn in per GP earned, for each crafting guild. Daily pattern rotates which items are accepted.</p></div>
-  <div class="ctrl">
-   <select id="gpGuild"><option value="">All guilds</option></select>
-   <label>Max tier <input type="number" id="gpMaxTier" value="9" min="0" max="9"></label>
-   <label><input type="checkbox" id="gpPriceable" checked> Has price</label>
-   <span class="sp"></span><span class="cnt" id="gpCnt"></span>
+  <div style="padding:0 0 12px"><p style="color:var(--ink-soft);font-size:.88rem">Guild reference: hours, rank tests, turn-ins, rewards, and vendor items.</p></div>
+
+  <div class="gp-section">
+   <div class="gp-section-hdr" onclick="gpToggle(this)"><span>Guild Hours</span><span class="gp-arr">&#9654;</span></div>
+   <div class="gp-section-body" id="guildHours"></div>
   </div>
-  <div class="tw"><table><thead><tr>
-   <th data-k="name" data-t="gp">Item</th><th data-k="guild" data-t="gp">Guild</th>
-   <th data-k="tier" data-t="gp" class="n">Tier</th>
-   <th data-k="pts" data-t="gp" class="n">GP</th>
-   <th data-k="maxPts" data-t="gp" class="n">Daily Max</th>
-   <th data-k="price" data-t="gp" class="n">Cost</th>
-   <th data-k="cpg" data-t="gp" class="n">Gil/GP</th>
-   <th data-k="src" data-t="gp">Source</th>
-   <th data-k="pattern" data-t="gp" class="n">Pattern</th>
-  </tr></thead><tbody id="gpBody"></tbody></table></div>
-  <button class="show-more" id="gpMore" style="display:none"></button>
-  <div id="gpRewards" style="margin-top:20px"></div>
-  <div id="rankTests" style="margin-top:20px"></div>
+
+  <div class="gp-section">
+   <div class="gp-section-hdr" onclick="gpToggle(this)"><span>Rank-Up Tests</span><span class="gp-arr">&#9654;</span></div>
+   <div class="gp-section-body" id="rankTests"></div>
+  </div>
+
+  <div class="gp-section">
+   <div class="gp-section-hdr" onclick="gpToggle(this)"><span>GP Turn-ins</span><span class="gp-arr">&#9654;</span></div>
+   <div class="gp-section-body" id="gpTurninsBody">
+    <div class="ctrl">
+     <select id="gpGuild"><option value="">All guilds</option></select>
+     <label>Max tier <input type="number" id="gpMaxTier" value="9" min="0" max="9"></label>
+     <label><input type="checkbox" id="gpPriceable" checked> Has price</label>
+     <span class="sp"></span><span class="cnt" id="gpCnt"></span>
+    </div>
+    <div class="tw"><table><thead><tr>
+     <th data-k="name" data-t="gp">Item</th><th data-k="guild" data-t="gp">Guild</th>
+     <th data-k="tier" data-t="gp" class="n">Tier</th>
+     <th data-k="pts" data-t="gp" class="n">GP</th>
+     <th data-k="maxPts" data-t="gp" class="n">Daily Max</th>
+     <th data-k="price" data-t="gp" class="n">Cost</th>
+     <th data-k="cpg" data-t="gp" class="n">Gil/GP</th>
+     <th data-k="src" data-t="gp">Source</th>
+     <th data-k="pattern" data-t="gp" class="n">Pattern</th>
+    </tr></thead><tbody id="gpBody"></tbody></table></div>
+    <button class="show-more" id="gpMore" style="display:none"></button>
+   </div>
+  </div>
+
+  <div class="gp-section">
+   <div class="gp-section-hdr" onclick="gpToggle(this)"><span>GP Rewards</span><span class="gp-arr">&#9654;</span></div>
+   <div class="gp-section-body" id="gpRewards"></div>
+  </div>
+
+  <div class="gp-section">
+   <div class="gp-section-hdr" onclick="gpToggle(this)"><span>Guild Vendors</span><span class="gp-arr">&#9654;</span></div>
+   <div class="gp-section-body" id="guildVendors"></div>
+  </div>
+
  </div>
 
  <div class="pane" id="p-farming">
@@ -1689,6 +1721,52 @@ function filteredGp(){
     return true;
   });
 }
+function gpToggle(el){
+  el.classList.toggle('open');
+  var body=el.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function renderGuildHours(){
+  var guilds=[
+    {name:'Woodworking',open:6,close:21,holiday:'Firesday'},
+    {name:'Smithing',open:8,close:23,holiday:'Earthsday'},
+    {name:'Goldsmithing',open:8,close:23,holiday:'Iceday'},
+    {name:'Clothcraft',open:6,close:21,holiday:'Firesday'},
+    {name:'Leathercraft',open:3,close:18,holiday:'Iceday'},
+    {name:'Bonecraft',open:8,close:23,holiday:'Windsday'},
+    {name:'Alchemy',open:8,close:23,holiday:'Iceday'},
+    {name:'Cooking',open:5,close:20,holiday:'Darksday'},
+  ];
+  var h='<table style="width:100%;font-size:.85rem;border-collapse:collapse"><thead><tr style="color:var(--ink-faint);text-align:left"><th style="padding:4px 8px">Guild</th><th style="padding:4px 8px">Open</th><th style="padding:4px 8px">Close</th><th style="padding:4px 8px">Holiday (Closed)</th></tr></thead><tbody>';
+  guilds.forEach(function(g){
+    h+='<tr style="border-top:1px solid var(--rule)"><td style="padding:5px 8px;color:var(--accent);font-weight:700">'+g.name+'</td>';
+    h+='<td style="padding:5px 8px;font-family:var(--mono)">'+g.open+':00</td>';
+    h+='<td style="padding:5px 8px;font-family:var(--mono)">'+g.close+':00</td>';
+    h+='<td style="padding:5px 8px">'+g.holiday+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  document.getElementById('guildHours').innerHTML=h;
+}
+
+function renderGuildVendors(){
+  var vendors=D.flips?D.flips.filter(function(f){return f.type==='guild_vendor';}):[];
+  if(!vendors.length){document.getElementById('guildVendors').innerHTML='<p style="color:var(--ink-faint);font-size:.85rem">No guild vendor items found.</p>';return;}
+  var byGuild={};
+  vendors.forEach(function(v){var g=v.guild||'Unknown';byGuild[g]=byGuild[g]||[];byGuild[g].push(v);});
+  var h='<div class="gpr-grid">';
+  Object.keys(byGuild).sort().forEach(function(guild){
+    h+='<div class="gpr-card"><h4>'+guild+'</h4>';
+    byGuild[guild].sort(function(a,b){return(a.price||0)-(b.price||0);}).forEach(function(v){
+      h+='<div class="gpr-item"><span class="item-link" onclick="goToItem(\''+esc(v.name).replace(/'/g,"\\'")+'\')">' +esc(v.name)+'</span>';
+      h+='<span class="gpr-cost">'+(v.price?fmt(v.price)+' gil':'—')+'</span></div>';
+    });
+    h+='</div>';
+  });
+  h+='</div>';
+  document.getElementById('guildVendors').innerHTML=h;
+}
+
 function renderGp(){
   var all=sorted(filteredGp(),'gp');updSort('gp');var h='';var shown=all.slice(0,300);
   shown.forEach(function(g){
@@ -1721,7 +1799,7 @@ function renderGpRewards(){
   if(!D.gpRewards||!D.gpRewards.length)return;
   var byGuild={};
   D.gpRewards.forEach(function(r){byGuild[r.guild]=byGuild[r.guild]||[];byGuild[r.guild].push(r);});
-  var h='<h3 style="font-size:.95rem;color:var(--ink-soft);margin:0 0 12px">GP Rewards — What You Can Buy</h3><div class="gpr-grid">';
+  var h='<div class="gpr-grid">';
   Object.keys(byGuild).sort().forEach(function(guild){
     h+='<div class="gpr-card"><h4>'+guild+'</h4>';
     byGuild[guild].forEach(function(r){
@@ -1742,7 +1820,7 @@ function renderRankTests(){
   var byGuild={};
   D.rankTests.forEach(function(r){byGuild[r.guild]=byGuild[r.guild]||[];byGuild[r.guild].push(r);});
   var ranks=['Amateur','Recruit','Initiate','Novice','Apprentice','Journeyman','Craftsman','Artisan','Adept','Veteran','Expert'];
-  var h='<h3 style="font-size:.95rem;color:var(--ink-soft);margin:0 0 12px">Guild Rank-Up Tests — Items to Advance</h3><div class="gpr-grid">';
+  var h='<div class="gpr-grid">';
   Object.keys(byGuild).sort().forEach(function(guild){
     h+='<div class="gpr-card"><h4>'+guild+'</h4>';
     h+='<table style="width:100%;font-size:.8rem;border-collapse:collapse"><thead><tr style="color:var(--ink-faint);text-align:left"><th style="padding:2px 4px">From</th><th style="padding:2px 4px">To</th><th style="padding:2px 4px">Skill</th><th style="padding:2px 4px">Test Item</th></tr></thead><tbody>';
@@ -2177,7 +2255,7 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGp();renderGpRewards();renderRankTests();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
