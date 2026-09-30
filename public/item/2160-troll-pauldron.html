@@ -31,7 +31,12 @@ table{font-size:.88rem;margin-bottom:.4em}
 .src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
 .src-toggle:hover{color:var(--ink-soft)}
 .src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
-@media(max-width:700px){table{font-size:.8rem}}
+.ffxi-tooltip{background:#1e2244;border:2px solid #5a5e8a;border-radius:0;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;margin-top:14px;max-width:480px;box-shadow:inset 0 0 0 1px #0d1028,0 2px 8px rgba(0,0,0,.4)}
+.ffxi-tooltip .tt-icon{image-rendering:pixelated;flex-shrink:0;width:32px;height:32px;margin-top:2px}
+.ffxi-tooltip .tt-body{flex:1;min-width:0}
+.ffxi-tooltip .tt-name{color:#e8e4d0;font-size:14px;font-weight:600;margin:0 0 4px;font-family:var(--font-body);line-height:1.3}
+.ffxi-tooltip .tt-desc{color:#b0acc0;font-size:12.5px;line-height:1.5;margin:0;font-family:var(--font-body)}
+@media(max-width:700px){table{font-size:.8rem}.ffxi-tooltip{max-width:100%}}
 </style>
 </head>
 <body>
@@ -44,7 +49,7 @@ table{font-size:.88rem;margin-bottom:.4em}
  <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
  <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
  <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
-<symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
+ <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
  <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
 </svg>
 <nav class="top-bar">
@@ -74,15 +79,14 @@ table{font-size:.88rem;margin-bottom:.4em}
    <a href="/gathering/harvesting">Harvesting</a>
    <a href="/gathering/excavation">Excavation</a>
    <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
+   <a href="/fishing/">Fishing</a>
    <a href="/gathering/digging">Chocobo Digging</a>
    <a href="/gathering/clamming">Clamming</a>
   </div>
  </div>
   <a href="/zone/" class="nav-link">Zones</a>
-  <a href="/guides/" class="nav-link">Guides</a>
-  <a href="/nm/" class="nav-link">NMs</a>
   <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -133,6 +137,7 @@ table{font-size:.88rem;margin-bottom:.4em}
   <h1>Troll Pauldron</h1>
   <p class="meta">Stack: 1</p>
   </div></div>
+  <div class="ffxi-tooltip"><img class="tt-icon" src="/icons/2160.png" alt=""><div class="tt-body"><p class="tt-name">Troll Pauldron</p><p class="tt-desc">A bronze shoulderpiece from the armor of a Troll cannoneer. It is too heavy for a person to equip.</p></div></div>
  </header>
  <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Mob Drops</h3><table><thead><tr><th>Monster</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Level</th><th class="hide-sm">Info</th></tr></thead><tbody><tr data-src="data/zones/halvung/mobs.yaml"><td>Dorgerwor_the_Astute <span class="pill">notorious</span></td><td>Halvung</td><td class="num">5%</td><td class="hide-sm">81</td><td class="soft hide-sm">1 spawns</td></tr><tr data-src="data/zones/halvung/mobs.yaml"><td>Farlarder_the_Shrewd <span class="pill">notorious</span></td><td>Halvung</td><td class="num">5%</td><td class="hide-sm">80</td><td class="soft hide-sm">1 spawns</td></tr><tr data-src="data/zones/halvung/mobs.yaml"><td>Troll_Grenadier_H</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm">78–82</td><td class="soft hide-sm">8 spawns</td></tr><tr data-src="data/zones/halvung/mobs.yaml"><td>Troll_Machinist</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm">78–82</td><td class="soft hide-sm">10 spawns</td></tr><tr data-src="data/zones/mount_zhayolm/mobs.yaml"><td>Hilltroll_Puppetmaster</td><td>Mount Zhayolm</td><td class="num">1%</td><td class="hide-sm">79–83</td><td class="soft hide-sm">3 spawns</td></tr><tr data-src="phoenix/data/drops/zones/bhaflau_thickets/mobs.yaml"><td>Troll_Sabreur</td><td>Bhaflau Thickets</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/bhaflau_thickets/mobs.yaml"><td>Troll_Surveillant</td><td>Bhaflau Thickets</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/halvung/mobs.yaml"><td>Troll_Artilleryman_H</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/halvung/mobs.yaml"><td>Troll_Cameist</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/halvung/mobs.yaml"><td>Troll_Combatant</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/halvung/mobs.yaml"><td>Troll_Engraver</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/halvung/mobs.yaml"><td>Troll_Smelter</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/halvung/mobs.yaml"><td>Troll_Stoneworker</td><td>Halvung</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/mount_zhayolm/mobs.yaml"><td>Hilltroll_Monk</td><td>Mount Zhayolm</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/mount_zhayolm/mobs.yaml"><td>Hilltroll_Ranger</td><td>Mount Zhayolm</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/mount_zhayolm/mobs.yaml"><td>Hilltroll_Red_Mage</td><td>Mount Zhayolm</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/wajaom_woodlands/mobs.yaml"><td>Woodtroll_Monk</td><td>Wajaom Woodlands</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr><tr data-src="phoenix/data/drops/zones/wajaom_woodlands/mobs.yaml"><td>Woodtroll_Ranger</td><td>Wajaom Woodlands</td><td class="num">1%</td><td class="hide-sm"></td><td class="soft hide-sm">phoenix: drop overrides</td></tr></tbody></table><h3>Mining</h3><table><thead><tr><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/globals/hobbies/helm/data.lua"><td>Halvung</td><td class="num">2.9%</td><td class="soft hide-sm">pct per attempt incl. obtain rate</td></tr><tr data-src="scripts/globals/hobbies/helm/data.lua"><td>Mount Zhayolm</td><td class="num">1.9%</td><td class="soft hide-sm">pct per attempt incl. obtain rate</td></tr></tbody></table></section><section class="panel pad"><h2>Can be desynthed</h2><p class="soft">Break this item to obtain:</p><table><thead><tr><th>Craft</th><th>Results</th></tr></thead><tbody><tr><td>Smithing 79 <span class="pill">TOAU</span></td><td><a href="/item/649-bronze-ingot" class="icon-link"><img src="/icons/649.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Bronze Ingot</a> / <a href="/item/2302-troll-bronze-ingot" class="icon-link"><img src="/icons/2302.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Troll Bronze Ingot</a> <span class="soft">(HQ1)</span> / <a href="/item/2302-troll-bronze-ingot" class="icon-link"><img src="/icons/2302.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Troll Bronze Ingot</a> <span class="soft">(HQ2)</span> / <a href="/item/2302-troll-bronze-ingot" class="icon-link"><img src="/icons/2302.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Troll Bronze Ingot</a> <span class="soft">(HQ3)</span></td></tr></tbody></table></section>
 <footer class="site-footer panel pad">
