@@ -540,7 +540,10 @@ def build_fishing():
     body += 'species at different rarities. Some fish are quest targets, some are Cooking ingredients, and legendary fish are rare trophies. '
     body += 'Rods can break on big fish, and bait is consumed on each catch (or miss, for losable baits), so matching your gear to your target matters.</p></header>\n'
 
-    # Tabbed fishing data
+    body += FISHING_TOOL_HTML
+
+    # Tabbed fishing data — collapsible so the lookup tool stays visible
+    body += '<details class="collapsible"><summary class="collapse-summary"><span class="collapse-title">Fishing Database</span><span class="collapse-arrow">▾</span></summary>\n'
     body += '<section class="panel pad">\n'
     body += f'<div class="tab-bar" data-tabs>'
     body += f'<button class="active" data-tab="tab-fish">Fish ({len(fish)})</button>'
@@ -609,13 +612,13 @@ def build_fishing():
         body += '</tbody></table></div></details>\n'
 
     body += '</div></section>\n'
+    body += '</details>\n'
 
     guild_html = load_template('fishing_guild_section.html')
-    tool_body = FISHING_TOOL_HTML + guild_html
     tool_scripts = '<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'
 
     out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body,
-               extra_css_append=TOOL_CSS, extra_body=tool_body, extra_scripts=tool_scripts)
+               extra_css_append=TOOL_CSS, extra_body=guild_html, extra_scripts=tool_scripts)
     fp = os.path.join(OUT, 'fishing.html')
     with open(fp, 'w', encoding='utf-8') as f:
         f.write(out)
