@@ -95,7 +95,7 @@ var CVAR={Woodworking:'--wood',Smithing:'--smith',Goldsmithing:'--gold',Clothcra
 var NAME={wood:'Woodworking',smith:'Smithing',gold:'Goldsmithing',cloth:'Clothcraft',leather:'Leathercraft',bone:'Bonecraft',alchemy:'Alchemy',cook:'Cooking'};
 var SHORT={wood:'Wood',smith:'Smith',gold:'Gold',cloth:'Cloth',leather:'Lthr',bone:'Bone',alchemy:'Alch',cook:'Cook'};
 var I={},R=[],cur='all',prices={},skills={},canMakeOnly=false,hideUnpricedOn=false,onlyMissing=false;
-var sortCol='profit',sortDir=-1,computed=[];
+var sortCol='profit',sortDir=-1,computed=[],minProfit=0,showLimit=100;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 try{skills=JSON.parse(localStorage.getItem('phoenix-skills')||'{}');}catch(e){}
 CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=60;});
@@ -130,6 +130,7 @@ function computeAll(){
   if(cur!=='all')computed=computed.filter(function(x){return x.craft===cur;});
   if(canMakeOnly)computed=computed.filter(function(x){return x.skill>=x.r.lv&&x.unpriced.length===0&&!x.r.ki;});
   if(hideUnpricedOn)computed=computed.filter(function(x){return x.unpriced.length===0;});
+  if(minProfit>0)computed=computed.filter(function(x){return x.profit>=minProfit;});
   computed.sort(function(a,b){
     if(a.unpriced.length!==b.unpriced.length)return a.unpriced.length?1:-1;
     var va,vb;
@@ -193,7 +194,8 @@ function renderHead(){
 function renderResults(){
   computeAll();renderHead();
   var html='';
-  computed.forEach(function(x){
+  var shown=showLimit>0&&computed.length>showLimit?computed.slice(0,showLimit):computed;
+  shown.forEach(function(x){
     var r=x.r,it=I[r.res];if(!it)return;
     var cls=x.unpriced.length?'unpriced':'';
     var hq=hqChance(x.skill-r.lv);
@@ -210,8 +212,13 @@ function renderResults(){
       '<td class="num hide-sm">'+gil(Math.round(x.rev))+'</td>'+
       '<td class="num"><span class="'+profitCls+'">'+(x.profit>=0?'+':'−')+gil(Math.abs(Math.round(x.profit)))+srcLabel+'</span></td>'+
       '<td class="num hide-sm"><span class="'+(x.margin>=0?'gain':'loss')+'">'+(x.margin>=0?'+':'−')+Math.abs(Math.round(x.margin))+'%</span></td></tr>';});
+  if(showLimit>0&&computed.length>showLimit)html+='<tr><td colspan="6" style="padding:12px;text-align:center"><button type="button" id="showAllBtn" class="act">Show all '+computed.length+' recipes</button></td></tr>';
   document.getElementById('results').innerHTML=html||'<tr><td colspan="6" style="padding:20px;color:var(--ink-faint)">No recipes match your filters.</td></tr>';
-  document.getElementById('count').textContent=computed.length+' recipe'+(computed.length!==1?'s':'')+(cur!=='all'?' in '+cur:'')+(canMakeOnly?' you can attempt':'')+(hideUnpricedOn?', unpriced hidden':'');}
+  var countText=computed.length+' recipe'+(computed.length!==1?'s':'')+(cur!=='all'?' in '+cur:'')+(canMakeOnly?' you can attempt':'')+(hideUnpricedOn?', unpriced hidden':'');
+  if(showLimit>0&&computed.length>showLimit)countText+=' (showing top '+showLimit+')';
+  document.getElementById('count').textContent=countText;
+  var showAllBtn=document.getElementById('showAllBtn');
+  if(showAllBtn)showAllBtn.addEventListener('click',function(){showLimit=0;renderResults();});}
 function render(){renderCrafts();renderPrices();renderResults();}
 function fetchJSON(url,cb){var x=new XMLHttpRequest();x.open('GET',url);x.onload=function(){if(x.status===200)cb(JSON.parse(x.responseText));};x.send();}
 document.getElementById('results').innerHTML='<tr><td colspan="6" class="loading">Loading data…</td></tr>';
@@ -226,6 +233,7 @@ function setupListeners(){
   document.getElementById('skills').addEventListener('input',function(e){var t=e.target;if(t.tagName!=='INPUT')return;skills[t.getAttribute('data-craft')]=Number(t.value)||0;saveSkills();renderResults();});
   document.getElementById('canMakeBtn').addEventListener('click',function(){canMakeOnly=!canMakeOnly;this.classList.toggle('on',canMakeOnly);renderResults();});
   document.getElementById('hideUnpriced').addEventListener('click',function(){hideUnpricedOn=!hideUnpricedOn;this.classList.toggle('on',hideUnpricedOn);renderResults();});
+  document.getElementById('minProfitInput').addEventListener('input',function(){minProfit=Number(this.value)||0;showLimit=100;renderResults();});
   document.getElementById('priceGrid').addEventListener('input',function(e){
     var t=e.target;if(t.tagName!=='INPUT')return;
     var isSell=t.hasAttribute('data-sid'),id=isSell?t.getAttribute('data-sid'):t.getAttribute('data-id');
@@ -257,6 +265,7 @@ BODY = """\
   <div class="filter-row">
    <button class="act" id="canMakeBtn" type="button">Only craftable at my skill</button>
    <button class="act" id="hideUnpriced" type="button">Hide unpriced</button>
+   <label style="display:inline-flex;align-items:center;gap:5px;font-size:.85rem;color:var(--ink-faint)">Min profit <input type="number" id="minProfitInput" min="0" value="0" style="width:80px;font:inherit;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--rule);border-radius:4px;padding:4px 8px" aria-label="Minimum profit filter">g</label>
   </div>
  </header>
  <details class="panel pad" id="pricePanel">

@@ -4,7 +4,7 @@ var CRAFTS=['Woodworking','Smithing','Goldsmithing','Clothcraft','Leathercraft',
 var CODE={Woodworking:'wood',Smithing:'smith',Goldsmithing:'gold',Clothcraft:'cloth',Leathercraft:'leather',Bonecraft:'bone',Alchemy:'alchemy',Cooking:'cook'};
 var CVAR={Woodworking:'--wood',Smithing:'--smith',Goldsmithing:'--gold',Clothcraft:'--cloth',Leathercraft:'--leather',Bonecraft:'--bone',Alchemy:'--alchemy',Cooking:'--cook'};
 var ELEM=['fire','ice','wind','earth','lightning','water','light','dark'];
-var I={}, C={}, cur=CRAFTS[0], prices={}, onlyMissing=false;
+var I={}, C={}, cur=CRAFTS[0], prices={}, onlyMissing=false, searchTerm='';
 try{ prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}'); }catch(e){}
 var firstRun=!Object.keys(prices).length;
 function save(){ try{ localStorage.setItem('phoenix-prices-v2',JSON.stringify(prices)); }catch(e){} }
@@ -41,16 +41,25 @@ function perLevel(r,skill){
 }
 function bracketsFor(){
   var out=[];
-  for(var lo=1;lo<=91;lo+=(lo===1?9:10)){
+  for(var lo=1;lo<=51;lo+=(lo===1?9:10)){
     var hi=(lo===1?10:lo+9);
-    out.push({lo:lo,hi:Math.min(hi,100)});
+    out.push({lo:lo,hi:Math.min(hi,60)});
   }
   return out;
 }
 function rowsFor(craft,b){
   if(!C[craft]) return [];
   var mid=Math.floor((b.lo+b.hi)/2);
-  return C[craft].filter(function(r){ return r.lv>b.lo&&r.lv<=b.hi+5; }).map(function(r){
+  var st=searchTerm.toLowerCase();
+  return C[craft].filter(function(r){
+    if(r.lv<=b.lo||r.lv>b.hi+5) return false;
+    if(st){
+      var rn=I[r.res]?I[r.res].n.toLowerCase():'';
+      var hasIng=r.ing.some(function(p){return I[p[0]]&&I[p[0]].n.toLowerCase().indexOf(st)>=0;});
+      if(rn.indexOf(st)<0&&!hasIng) return false;
+    }
+    return true;
+  }).map(function(r){
     var pl=perLevel(r,Math.min(mid,r.lv-1));
     var up=unpricedOf(r);
     return {r:r, pl:pl, up:up, cost:costEach(r)};
@@ -145,7 +154,7 @@ function renderBrackets(){
   document.getElementById('brackets').innerHTML=html;
   var netNpc=totalNpc-totalCost, netAh=totalAh-totalCost;
   var sumHtml=
-    '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 100, cheapest path</span></div>'+
+    '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 60, cheapest path</span></div>'+
     '<div class="stat"><b>'+fmt(totalSynths)+'</b><span>synths</span></div>'+
     '<div class="stat"><b>'+gil(totalNpc)+'</b><span>vendor sell recovery</span></div>'+
     '<div class="stat"><b class="'+(netNpc>=0?'gain':'loss')+'">'+(netNpc>=0?'+':'−')+fmt(Math.abs(netNpc))+'</b><span>net (vendor)</span></div>';
@@ -153,7 +162,7 @@ function renderBrackets(){
     sumHtml+='<div class="stat"><b>'+gil(totalAh)+'</b><span>AH sell recovery</span></div>'+
       '<div class="stat"><b class="'+(netAh>=0?'gain':'loss')+'">'+(netAh>=0?'+':'−')+fmt(Math.abs(netAh))+'</b><span>net (AH)</span></div>';
   }
-  sumHtml+='<div class="stat"><b>'+gil(totalCost/99)+'</b><span>per skill level, average</span></div>';
+  sumHtml+='<div class="stat"><b>'+gil(totalCost/59)+'</b><span>per skill level, average</span></div>';
   if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials and are greyed out. Price them in the panel above to bring them into the comparison.</div>';
   document.getElementById('summary').innerHTML=sumHtml;
 }
@@ -209,6 +218,15 @@ function onBothLoaded(){
   document.getElementById('onlyMissing').addEventListener('click',function(){
     onlyMissing=!onlyMissing; this.classList.toggle('on',onlyMissing); this.textContent=onlyMissing?'Show all items':'Show only unpriced';
     renderPrices();
+  });
+  document.getElementById('recipeSearch').addEventListener('input',function(){
+    searchTerm=this.value;
+    var info=document.getElementById('searchInfo');
+    if(searchTerm){
+      var total=0;bracketsFor().forEach(function(b){total+=rowsFor(cur,b).length;});
+      info.textContent=total+' match'+(total!==1?'es':'');
+    }else{info.textContent='';}
+    renderBrackets();
   });
 }
 // server profile menu
