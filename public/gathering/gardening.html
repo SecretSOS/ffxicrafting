@@ -39,7 +39,53 @@ details.zone .zone-body{padding:8px 0 16px}
 .note{color:var(--ink-faint);font-size:.85rem;font-style:italic;margin:.6em 0}
 .tier{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.75rem;border:1px solid var(--rule);color:var(--ink-faint);margin-right:4px}
 @media(max-width:600px){details.zone summary{font-size:.9rem}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}.ft-panel{position:relative}
+.ft-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ft-head h2{margin:0;border-left:none;padding-left:0}
+.ft-selects{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.ft-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:180px}
+.ft-field label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.ft-field select{font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--border); border-radius:6px;padding:9px 12px;cursor:pointer;appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e7a94' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.ft-field select:focus{border-color:var(--accent);outline:none}
+.ft-field select option{background:var(--surface-2);color:var(--ink)}
+.ft-table{font-size:14px}
+.panel-note{color:var(--ink-soft);font-size:.92rem;margin:0 0 14px}
+.item-icon{vertical-align:middle;image-rendering:pixelated;border-radius:2px}
+#ft-rod-wrap h3{margin-top:0}
+@media(max-width:600px){.ft-selects{flex-direction:column}.ft-field{min-width:0}}
+.guild-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.guild-badge{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:4px 12px;letter-spacing:.02em}
+.guild-badge.open{background:color-mix(in srgb,var(--best) 18%,transparent);color:var(--best);border:1px solid var(--best)}
+.guild-badge.closed{background:color-mix(in srgb,var(--loss) 14%,transparent);color:var(--loss);border:1px solid var(--loss)}
+.guild-meta{color:var(--ink-soft);font-size:.88rem;margin-top:4px}
+.guild-next{color:var(--ink-faint);font-size:.82rem;margin-top:2px}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px 18px}
+.shop-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.shop-row .nm{min-width:0;overflow-wrap:anywhere}
+.shop-row .pr{color:var(--gil);white-space:nowrap;font-variant-numeric:tabular-nums}
+.shop-row .st{color:var(--ink-faint);font-size:.82rem;white-space:nowrap}
+.turnin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.turnin-tab{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.82rem}
+.turnin-tab:hover{border-color:var(--fish)}
+.turnin-tab.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
+.turnin-table{width:100%;border-collapse:collapse}
+.turnin-table th{text-align:left;font-weight:400;font-size:.76rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}
+.turnin-table td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+.reward-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px 18px}
+.reward-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.reward-row .rk{color:var(--ink-faint);font-size:.82rem;white-space:nowrap;text-transform:capitalize}
+.reward-row .gp{color:var(--fish);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.section-toc{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:5}
+.section-toc a{flex:0 0 auto;padding:5px 11px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);font-size:.82rem;white-space:nowrap;text-decoration:none}
+.section-toc a:hover{border-color:var(--fish);color:var(--fish)}
+.collapsible{position:relative}
+.collapse-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;padding:0}
+.collapse-summary::-webkit-details-marker{display:none}
+.collapse-summary::marker{display:none;content:""}
+.collapse-arrow{color:var(--ink-faint);font-size:1.1rem;transition:transform .15s;margin-left:auto;padding-left:12px}
+details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
+.collapse-title{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
+
 </style>
 </head>
 <body>
@@ -140,6 +186,19 @@ details.zone .zone-body{padding:8px 0 16px}
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/gathering/">Gathering</a><span class="sep">&rsaquo;</span>Gardening</nav>
 <div class="sub-nav"><a href="/gathering/mining">Mining</a><a href="/gathering/logging">Logging</a><a href="/gathering/harvesting">Harvesting</a><a href="/gathering/excavation">Excavation</a><a href="/gathering/gardening" class="cur">Gardening</a><a href="/gathering/digging">Digging</a><a href="/gathering/fishing">Fishing</a><a href="/gathering/clamming">Clamming</a></div><header class="panel pad"><h1>Gardening</h1><p class="lede">Plant a seed in a flowerpot, feed it crystals, and harvest the result. Two-crystal seeds (herb, tree cuttings, tree saplings, wildgrass) accept two crystals fed over time; single-crystal seeds only use one.</p><p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">Gardening is done inside your Mog House using flowerpots. Buy a flowerpot from the Mog House furnishing NPC, place it in your house, and plant a seed. Over real-world time your plant will grow through several stages. Feeding it elemental crystals during growth determines what it produces at harvest. Different seed and crystal combinations yield different items — the tables below show every possible outcome with exact weights. Gardening is a popular way to obtain crafting materials, rare seeds, and elemental ores without leaving town. You can tend up to 10 flowerpots across your Mog House and storage, making it a reliable passive income source.</p></header>
+<section class="panel pad gd-panel">
+ <div class="ft-head"><h2>Gardening Lookup</h2></div>
+ <div id="gd-body">
+  <p class="panel-note">Pick a seed and crystal(s) to see what you can harvest.</p>
+  <div class="ft-selects">
+   <div class="ft-field"><label for="gd-seed">Seed</label><select id="gd-seed"><option value="">— choose seed —</option></select></div>
+   <div class="ft-field"><label for="gd-c1">Crystal 1</label><select id="gd-c1"></select></div>
+   <div class="ft-field" id="gd-c2-wrap" style="display:none"><label for="gd-c2">Crystal 2</label><select id="gd-c2"></select></div>
+   <span class="filter-count" id="gd-count"></span>
+  </div>
+  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Weight</th><th class="num">Chance</th></tr></thead><tbody id="gd-results"><tr><td colspan="4" style="color:var(--ink-faint);text-align:center;padding:24px">Select a seed to begin</td></tr></tbody></table></div>
+ </div>
+</section>
 <section class="panel pad"><details class="zone"><summary><a href="/item/572-bag-of-herb-seeds" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/572.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Herb Seeds</a> <span class="badge">81 combos, 640 results</span></summary>
 <div class="zone-body">
 <table><thead><tr><th>Crystal 1</th><th>Crystal 2</th><th>Result</th><th style="text-align:right">Qty</th><th style="text-align:right">Weight</th></tr></thead><tbody>
@@ -2604,6 +2663,9 @@ details.zone .zone-body{padding:8px 0 16px}
 </footer>
 </main>
 </div>
+
+<script src="/gardening-data.js"></script>
+<script src="/gardening-tool.js"></script>
 <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
 <script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
 <script>(function(){

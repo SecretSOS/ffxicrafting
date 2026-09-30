@@ -1,0 +1,13 @@
+﻿<section class="panel pad gd-panel">
+ <div class="ft-head"><h2>Gardening Lookup</h2><button class="src-toggle" id="gd-toggle">collapse</button></div>
+ <div id="gd-body">
+  <p class="panel-note">Pick a seed and crystal(s) to see what you can harvest.</p>
+  <div class="ft-selects">
+   <div class="ft-field"><label for="gd-seed">Seed</label><select id="gd-seed"><option value="">— choose seed —</option></select></div>
+   <div class="ft-field"><label for="gd-c1">Crystal 1</label><select id="gd-c1"></select></div>
+   <div class="ft-field" id="gd-c2-wrap" style="display:none"><label for="gd-c2">Crystal 2</label><select id="gd-c2"></select></div>
+   <span class="filter-count" id="gd-count"></span>
+  </div>
+  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Weight</th><th class="num">Chance</th></tr></thead><tbody id="gd-results"><tr><td colspan="4" style="color:var(--ink-faint);text-align:center;padding:24px">Select a seed to begin</td></tr></tbody></table></div>
+ </div>
+</section>

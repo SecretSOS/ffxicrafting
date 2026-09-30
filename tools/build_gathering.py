@@ -94,6 +94,102 @@ details.zone .zone-body{padding:8px 0 16px}
 @media(max-width:600px){details.zone summary{font-size:.9rem}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}"""
 
+TOOL_CSS = """\
+.ft-panel{position:relative}
+.ft-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ft-head h2{margin:0;border-left:none;padding-left:0}
+.ft-selects{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
+.ft-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:180px}
+.ft-field label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.ft-field select{font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--border);\
+ border-radius:6px;padding:9px 12px;cursor:pointer;appearance:none;\
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e7a94' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");\
+ background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.ft-field select:focus{border-color:var(--accent);outline:none}
+.ft-field select option{background:var(--surface-2);color:var(--ink)}
+.ft-table{font-size:14px}
+.panel-note{color:var(--ink-soft);font-size:.92rem;margin:0 0 14px}
+.item-icon{vertical-align:middle;image-rendering:pixelated;border-radius:2px}
+#ft-rod-wrap h3{margin-top:0}
+@media(max-width:600px){.ft-selects{flex-direction:column}.ft-field{min-width:0}}
+.guild-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.guild-badge{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:4px 12px;letter-spacing:.02em}
+.guild-badge.open{background:color-mix(in srgb,var(--best) 18%,transparent);color:var(--best);border:1px solid var(--best)}
+.guild-badge.closed{background:color-mix(in srgb,var(--loss) 14%,transparent);color:var(--loss);border:1px solid var(--loss)}
+.guild-meta{color:var(--ink-soft);font-size:.88rem;margin-top:4px}
+.guild-next{color:var(--ink-faint);font-size:.82rem;margin-top:2px}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px 18px}
+.shop-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.shop-row .nm{min-width:0;overflow-wrap:anywhere}
+.shop-row .pr{color:var(--gil);white-space:nowrap;font-variant-numeric:tabular-nums}
+.shop-row .st{color:var(--ink-faint);font-size:.82rem;white-space:nowrap}
+.turnin-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.turnin-tab{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:.82rem}
+.turnin-tab:hover{border-color:var(--fish)}
+.turnin-tab.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
+.turnin-table{width:100%;border-collapse:collapse}
+.turnin-table th{text-align:left;font-weight:400;font-size:.76rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}
+.turnin-table td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+.reward-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px 18px}
+.reward-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.reward-row .rk{color:var(--ink-faint);font-size:.82rem;white-space:nowrap;text-transform:capitalize}
+.reward-row .gp{color:var(--fish);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.section-toc{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:5}
+.section-toc a{flex:0 0 auto;padding:5px 11px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-soft);font-size:.82rem;white-space:nowrap;text-decoration:none}
+.section-toc a:hover{border-color:var(--fish);color:var(--fish)}
+.collapsible{position:relative}
+.collapse-summary{display:flex;align-items:center;justify-content:space-between;cursor:pointer;list-style:none;padding:0}
+.collapse-summary::-webkit-details-marker{display:none}
+.collapse-summary::marker{display:none;content:""}
+.collapse-arrow{color:var(--ink-faint);font-size:1.1rem;transition:transform .15s;margin-left:auto;padding-left:12px}
+details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
+.collapse-title{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
+"""
+
+FISHING_TOOL_HTML = """\
+<section class="panel pad ft-panel" id="lookup">
+ <div class="ft-head"><h2>Fishing Lookup</h2></div>
+ <div id="ft-body">
+  <p class="panel-note">Pick a zone and bait to see what you can catch and which rods to use.</p>
+  <div class="ft-selects">
+   <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">— choose zone —</option></select></div>
+   <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">— choose bait —</option></select></div>
+   <span class="filter-count" id="ft-count"></span>
+  </div>
+  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th class="num">Rarity</th></tr></thead><tbody id="ft-results"><tr><td colspan="5" style="color:var(--ink-faint);text-align:center;padding:24px">Select a zone to begin</td></tr></tbody></table></div>
+  <div id="ft-rod-wrap" style="margin-top:16px">
+   <h3>Recommended rods</h3>
+   <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th class="num">Atk</th><th class="num">Rec</th><th>Breakable</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
+  </div>
+ </div>
+</section>
+"""
+
+GARDENING_TOOL_HTML = """\
+<section class="panel pad gd-panel">
+ <div class="ft-head"><h2>Gardening Lookup</h2></div>
+ <div id="gd-body">
+  <p class="panel-note">Pick a seed and crystal(s) to see what you can harvest.</p>
+  <div class="ft-selects">
+   <div class="ft-field"><label for="gd-seed">Seed</label><select id="gd-seed"><option value="">— choose seed —</option></select></div>
+   <div class="ft-field"><label for="gd-c1">Crystal 1</label><select id="gd-c1"></select></div>
+   <div class="ft-field" id="gd-c2-wrap" style="display:none"><label for="gd-c2">Crystal 2</label><select id="gd-c2"></select></div>
+   <span class="filter-count" id="gd-count"></span>
+  </div>
+  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Weight</th><th class="num">Chance</th></tr></thead><tbody id="gd-results"><tr><td colspan="4" style="color:var(--ink-faint);text-align:center;padding:24px">Select a seed to begin</td></tr></tbody></table></div>
+ </div>
+</section>
+"""
+
+TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+
+def load_template(name):
+    path = os.path.join(TEMPLATE_DIR, name)
+    if os.path.exists(path):
+        with open(path, 'r', encoding='utf-8') as f:
+            return f.read()
+    return ''
+
 SUBNAV_ITEMS = [
     ('mining', 'Mining'), ('logging', 'Logging'), ('harvesting', 'Harvesting'),
     ('excavation', 'Excavation'), ('gardening', 'Gardening'),
@@ -108,22 +204,25 @@ def subnav(current):
     return '<div class="sub-nav">' + ''.join(links) + '</div>'
 
 
-def page(title, desc, nav_id, body):
+def page(title, desc, nav_id, body, extra_css_append='', extra_body='', extra_scripts=''):
     og_path = f'gathering/{nav_id}' if nav_id else 'gathering/'
     if nav_id:
         crumbs = [('Home', '/'), ('Gathering', '/gathering/'), (title, None)]
     else:
         crumbs = [('Home', '/'), ('Gathering', None)]
 
+    css = EXTRA_CSS + extra_css_append
     html = html_head(
         f'{esc(title)} — FFXI Crafting',
         desc,
         f'https://ffxicrafting.com/{og_path}',
-        extra_css=EXTRA_CSS)
+        extra_css=css)
     html += layout_open(active='gathering', crumbs=crumbs)
     html += subnav(nav_id)
     html += body
+    html += extra_body
     html += layout_close(LSB_COMMIT)
+    html += extra_scripts
     html += page_end()
     return html
 
@@ -364,6 +463,8 @@ def build_gardening():
     body += 'Gardening is a popular way to obtain crafting materials, rare seeds, and elemental ores without leaving town. '
     body += 'You can tend up to 10 flowerpots across your Mog House and storage, making it a reliable passive income source.</p></header>\n'
 
+    body += GARDENING_TOOL_HTML
+
     for seed_num in sorted(data.keys()):
         sname, sid = SEED_NAMES.get(seed_num, (f'Seed Type {seed_num}', None))
         combos = data[seed_num]
@@ -400,7 +501,9 @@ def build_gardening():
         body += '</tbody></table>\n'
         body += '</div></details></section>\n'
 
-    out = page('Gardening', 'Gardening seed and crystal combinations with exact drop weights.', 'gardening', body)
+    gd_scripts = '\n<script src="/gardening-data.js"></script>\n<script src="/gardening-tool.js"></script>\n'
+    out = page('Gardening', 'Gardening seed and crystal combinations with exact drop weights.', 'gardening', body,
+               extra_css_append=TOOL_CSS, extra_scripts=gd_scripts)
     fp = os.path.join(OUT, 'gardening.html')
     with open(fp, 'w', encoding='utf-8') as f:
         f.write(out)
@@ -507,7 +610,12 @@ def build_fishing():
 
     body += '</div></section>\n'
 
-    out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body)
+    guild_html = load_template('fishing_guild_section.html')
+    tool_body = FISHING_TOOL_HTML + guild_html
+    tool_scripts = '<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'
+
+    out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body,
+               extra_css_append=TOOL_CSS, extra_body=tool_body, extra_scripts=tool_scripts)
     fp = os.path.join(OUT, 'fishing.html')
     with open(fp, 'w', encoding='utf-8') as f:
         f.write(out)
