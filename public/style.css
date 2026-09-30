@@ -46,7 +46,7 @@ table{border-collapse:collapse;width:100%}
    ============================================================ */
 
 /* --- Page wrapper --- */
-.wrap{max-width:1280px;margin:0 auto;padding:40px 48px;display:flex;flex-direction:column;gap:28px}
+.wrap{max-width:1440px;margin:0 auto;padding:40px 48px;display:flex;flex-direction:column;gap:28px}
 
 /* --- Chrome / top bar --- */
 .chrome{display:flex;align-items:center;gap:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
@@ -335,7 +335,7 @@ li{margin-bottom:.4em}
 
 /* --- Old top bar (for generated pages) --- */
 .top-bar{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);
- max-width:1400px;width:92%;margin:0 auto}
+ max-width:1600px;width:92%;margin:0 auto}
 .top-bar .logo{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--ink);white-space:nowrap}
 .top-bar .logo:hover{color:var(--accent)}
 .hamburger{display:none;background:none;border:1px solid var(--border);color:var(--ink-soft);border-radius:6px;
@@ -365,7 +365,7 @@ li{margin-bottom:.4em}
 .nav-dd-all{font-weight:700;border-bottom:1px solid var(--border)!important;margin-bottom:2px}
 
 /* --- Sidebar layout grid --- */
-.site-layout{display:grid;grid-template-columns:210px 1fr;gap:28px;max-width:1400px;width:92%;margin:0 auto;padding:0 16px;align-items:start}
+.site-layout{display:grid;grid-template-columns:210px 1fr;gap:28px;max-width:1600px;width:92%;margin:0 auto;padding:0 16px;align-items:start}
 
 /* --- Sidebar --- */
 .sidebar{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 80px);overflow-y:auto;padding:16px 0;scrollbar-width:thin}
