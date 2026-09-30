@@ -529,6 +529,21 @@ def load_all():
         })
     quest_list.sort(key=lambda q: -q['totalVal'])
 
+    # ── Sources Index (compact, for Source Finder) ──
+    source_idx = {}
+    for r in db.execute('''
+        SELECT item_id, type, zone, where_, price, pct, gate
+        FROM sources ORDER BY item_id
+    '''):
+        iid = r[0]
+        entry = {'t': r[1]}
+        if r[2]: entry['z'] = r[2].replace('_', ' ').title()
+        if r[3]: entry['w'] = r[3].replace('_', ' ').title()
+        if r[4]: entry['p'] = r[4]
+        if r[5]: entry['r'] = round(r[5], 2)
+        if r[6]: entry['g'] = r[6]
+        source_idx.setdefault(str(iid), []).append(entry)
+
     db.close()
 
     return {
@@ -543,6 +558,7 @@ def load_all():
         'fishing': fish_list,
         'rods': rods,
         'quests': quest_list,
+        'sourceIdx': source_idx,
         'ahFetched': ah_fetched,
         'ahCount': ah_count,
         'stats': {
@@ -737,6 +753,20 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
 
 .kbd-hint{position:fixed;bottom:16px;right:16px;font-size:.72rem;color:var(--ink-faint);display:flex;gap:8px;z-index:50}
 .kbd-hint kbd{font-family:var(--mono);font-size:.66rem;background:var(--bg2);padding:2px 5px;border-radius:3px;border:1px solid var(--rule)}
+
+.src-group{margin:16px 0}
+.src-group h4{font-size:.82rem;color:var(--accent);margin:0 0 6px;text-transform:uppercase;letter-spacing:.04em}
+.src-row{display:flex;align-items:center;gap:10px;padding:6px 10px;font-size:.84rem;border-bottom:1px solid var(--rule)}
+.src-row:last-child{border-bottom:none}
+.src-type{min-width:100px;font-size:.72rem;color:var(--ink-faint);text-transform:uppercase}
+.src-detail{flex:1;color:var(--ink)}
+.src-price{font-family:var(--mono);color:var(--gold);font-size:.82rem}
+.src-rate{font-family:var(--mono);color:var(--ink-faint);font-size:.78rem}
+.src-gate{font-size:.72rem;color:var(--ink-faint)}
+.src-summary{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+.src-chip{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:8px 14px;text-align:center}
+.src-chip .v{font-size:1.1rem;font-weight:700;font-family:var(--mono);color:var(--accent)}
+.src-chip .l{font-size:.68rem;color:var(--ink-faint);text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -760,6 +790,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
   <button class="tab" data-tab="desynth">Desynth</button>
   <button class="tab" data-tab="bcnm">BCNM</button>
   <button class="tab" data-tab="shop">Shopping List</button>
+  <button class="tab" data-tab="sources">Sources</button>
   <button class="tab" data-tab="skillup">Skill-Up</button>
   <button class="tab" data-tab="gp">GP Turn-ins</button>
   <button class="tab" data-tab="farming">Farming</button>
@@ -862,6 +893,15 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <div class="sl-list" id="slList"></div>
   </div>
   <div id="slTree"></div>
+ </div>
+
+ <div class="pane" id="p-sources">
+  <div style="padding:0 0 8px"><p style="color:var(--ink-soft);font-size:.88rem">Find every way to obtain an item: vendors, crafting, drops, quests, fishing, gathering, BCNMs, and more. Data from LandSandBoat source tables.</p></div>
+  <div class="shop-search">
+   <input type="search" id="srcSearch" placeholder="Search any item..." autocomplete="off">
+   <div class="sl-list" id="srcList"></div>
+  </div>
+  <div id="srcResult"></div>
  </div>
 
  <div class="pane" id="p-skillup">
@@ -1007,7 +1047,7 @@ function init(){
     '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
     '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
   buildFilters();renderDash();renderBcnm();
-  setupShoppingList();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();
+  setupShoppingList();setupSourceFinder();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();
 }
 function buildFilters(){
   var gs={},zs={},crs={};
@@ -1321,6 +1361,94 @@ function renderShoppingTree(itemId){
     var hidden=ch.style.display==='none';ch.style.display=hidden?'':'none';
     tog.innerHTML=hidden?'&#9660;':'&#9654;';
   });
+}
+
+// ── Source Finder ──
+var srcSelIdx=-1;
+function setupSourceFinder(){
+  var inp=document.getElementById('srcSearch'),list=document.getElementById('srcList');
+  var allItems=Object.keys(T.I).map(function(k){return{id:Number(k),name:T.I[k].n};});
+  inp.addEventListener('input',function(){
+    var v=inp.value.toLowerCase().trim();
+    if(v.length<2){list.classList.remove('open');return;}
+    var m=allItems.filter(function(it){return it.name.toLowerCase().indexOf(v)>=0;}).slice(0,20);
+    if(!m.length){list.classList.remove('open');return;}
+    list.innerHTML=m.map(function(it,i){return'<div class="sl-item'+(i===0?' sel':'')+'" data-id="'+it.id+'">'+esc(it.name)+'</div>';}).join('');
+    list.classList.add('open');srcSelIdx=0;
+  });
+  inp.addEventListener('keydown',function(e){
+    var items=list.querySelectorAll('.sl-item');if(!items.length)return;
+    if(e.key==='ArrowDown'){e.preventDefault();srcSelIdx=Math.min(srcSelIdx+1,items.length-1);items.forEach(function(x,i){x.classList.toggle('sel',i===srcSelIdx)});}
+    else if(e.key==='ArrowUp'){e.preventDefault();srcSelIdx=Math.max(srcSelIdx-1,0);items.forEach(function(x,i){x.classList.toggle('sel',i===srcSelIdx)});}
+    else if(e.key==='Enter'){e.preventDefault();if(items[srcSelIdx])srcPick(Number(items[srcSelIdx].getAttribute('data-id')));}
+  });
+  list.addEventListener('click',function(e){var it=e.target.closest('.sl-item');if(it)srcPick(Number(it.getAttribute('data-id')));});
+  inp.addEventListener('blur',function(){setTimeout(function(){list.classList.remove('open');},200);});
+}
+function srcPick(id){
+  var it=T.I[id];if(it)document.getElementById('srcSearch').value=it.n;
+  document.getElementById('srcList').classList.remove('open');
+  renderSources(id);
+}
+var SRC_LABELS={mob_drop:'Mob Drop',mob_steal:'Mob Steal',mob_crystal:'Crystal Drop',
+  treasure_chest:'Treasure Chest',treasure_coffer:'Treasure Coffer',field_casket:'Field Casket',
+  battlefield:'Battlefield',npc_shop:'NPC Shop',guild_shop:'Guild Shop',guild_vendor:'Guild NPC',
+  regional_vendor:'Regional Vendor',conquest_vendor:'Conquest',besieged_vendor:'Besieged',
+  curio_vendor:'Curio Vendor',guild_points:'Guild Points',mining:'Mining',logging:'Logging',
+  harvesting:'Harvesting',excavation:'Excavation',chocobo_dig:'Chocobo Dig',gardening:'Gardening',
+  fishing:'Fishing',clamming:'Clamming',synthesis:'Synthesis',desynthesis:'Desynthesis',quest:'Quest'};
+var SRC_GROUPS={
+  'Buy':['npc_shop','guild_shop','guild_vendor','regional_vendor','conquest_vendor','besieged_vendor','curio_vendor'],
+  'Craft':['synthesis','desynthesis'],
+  'Drop':['mob_drop','mob_steal','mob_crystal','treasure_chest','treasure_coffer','field_casket','battlefield'],
+  'Gather':['mining','logging','harvesting','excavation','chocobo_dig','gardening','clamming','fishing'],
+  'Reward':['quest','guild_points']
+};
+function renderSources(itemId){
+  var sources=D.sourceIdx[String(itemId)];
+  var it=T.I[itemId]||{n:'?'};
+  var ah=D.flips.find(function(f){return f.id===itemId;});
+  var ahP=ah?ah.ah:null;
+  if(!sources||!sources.length){
+    document.getElementById('srcResult').innerHTML='<div class="empty">No sources found for '+esc(it.n)+'</div>';return;
+  }
+  var byGroup={};
+  sources.forEach(function(s){
+    var grp='Other';
+    for(var g in SRC_GROUPS){if(SRC_GROUPS[g].indexOf(s.t)>=0){grp=g;break;}}
+    if(!byGroup[grp])byGroup[grp]=[];byGroup[grp].push(s);
+  });
+  var h='<h3 style="margin:12px 0 6px;font-size:1.05rem"><span class="item-link" onclick="goToItem(\''+esc(it.n).replace(/'/g,"\\'")+'\''+','+itemId+')">'+esc(it.n)+'</span></h3>';
+  h+='<div class="src-summary">';
+  h+='<div class="src-chip"><div class="v">'+sources.length+'</div><div class="l">Total Sources</div></div>';
+  h+='<div class="src-chip"><div class="v">'+Object.keys(byGroup).length+'</div><div class="l">Source Types</div></div>';
+  if(ahP)h+='<div class="src-chip"><div class="v" style="color:var(--gold)">'+fmt(ahP)+'</div><div class="l">AH Price</div></div>';
+  var vendorSrcs=(byGroup['Buy']||[]).filter(function(s){return s.p;});
+  if(vendorSrcs.length){var cheapest=vendorSrcs.reduce(function(a,b){return(a.p||999999)<(b.p||999999)?a:b;});
+    h+='<div class="src-chip"><div class="v" style="color:var(--gold)">'+fmt(cheapest.p)+'</div><div class="l">Cheapest Vendor</div></div>';}
+  h+='</div>';
+  var groupOrder=['Buy','Craft','Drop','Gather','Reward','Other'];
+  groupOrder.forEach(function(grp){
+    var items=byGroup[grp];if(!items||!items.length)return;
+    h+='<div class="src-group"><h4>'+grp+' ('+items.length+')</h4>';
+    h+='<div style="background:var(--bg2);border:1px solid var(--rule);border-radius:8px;overflow:hidden">';
+    items.forEach(function(s){
+      h+='<div class="src-row">';
+      h+='<span class="src-type">'+(SRC_LABELS[s.t]||s.t)+'</span>';
+      h+='<span class="src-detail">';
+      if(s.w)h+=esc(s.w);
+      if(s.w&&s.z)h+=' — ';
+      if(s.z)h+=esc(s.z);
+      if(!s.w&&!s.z)h+='—';
+      h+='</span>';
+      if(s.p)h+='<span class="src-price">'+fmt(s.p)+'g</span>';
+      if(s.r)h+='<span class="src-rate">'+s.r+'%</span>';
+      if(s.g)h+='<span class="src-gate"> '+esc(s.g)+'</span>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+  });
+  document.getElementById('srcResult').innerHTML=h;
 }
 
 // Skill-Up Estimator
@@ -1672,7 +1800,7 @@ function updSort(tab){
 }
 function toggleDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
 
-var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','skillup','gp','farming','fishing','quests','gilhr'];
+var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr'];
 function switchTab(id,push){
   if(TAB_KEYS.indexOf(id)<0)id='dash';
   document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
@@ -1773,7 +1901,7 @@ function cmdRender(q){
 function cmdSelect(it){
   cmdClose();
   if(it.tab==='shop'&&it.itemId){switchTab('shop');document.getElementById('slSearch').value=it.name;renderShoppingTree(it.itemId);return;}
-  var searchMap={flips:'fSearch',crafts:'cSearch',desynth:'dSearch',bcnm:'bSearch',fishing:'fishSearch',quests:'qSearch',gp:null};
+  var searchMap={flips:'fSearch',crafts:'cSearch',desynth:'dSearch',bcnm:'bSearch',fishing:'fishSearch',quests:'qSearch',gp:null,sources:'srcSearch'};
   var sid=searchMap[it.tab];
   if(sid){var el=document.getElementById(sid);if(el)el.value=it.name;}
   switchTab(it.tab);
