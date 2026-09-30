@@ -562,6 +562,29 @@ def load_all():
             'cost': r[5], 'isItem': r[1] == 'item',
         })
 
+    # ── Guild Rank Tests ──
+    rank_tests = []
+    for r in db.execute('''
+        SELECT g.guild, g.rank_index, g.rank_name, g.item_id, g.skill_cap, i.name
+        FROM guild_rank_tests g
+        LEFT JOIN items i ON g.item_id=i.id
+        ORDER BY g.guild, g.rank_index
+    '''):
+        iid = r[3]
+        rec = recipes_by_result.get(str(iid))
+        recipe = None
+        if rec:
+            first = rec[0] if isinstance(rec, list) else rec
+            recipe = {
+                'craft': first.get('cr'),
+                'lvl': first.get('lv'),
+            }
+        rank_tests.append({
+            'guild': r[0], 'rank': r[1], 'rankName': r[2],
+            'id': iid, 'name': name(iid), 'cap': r[4],
+            'recipe': recipe,
+        })
+
     # ── Sources Index (compact, for Source Finder) ──
     source_idx = {}
     for r in db.execute('''
@@ -586,6 +609,7 @@ def load_all():
         'bcnms': bcnms,
         'gp': gp_turnins,
         'gpRewards': gp_rewards,
+        'rankTests': rank_tests,
         'drops': drops,
         'gathering': gathering,
         'tree': {'R': recipes_by_result, 'I': items_slim, 'S': search_items},
@@ -1019,6 +1043,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   </tr></thead><tbody id="gpBody"></tbody></table></div>
   <button class="show-more" id="gpMore" style="display:none"></button>
   <div id="gpRewards" style="margin-top:20px"></div>
+  <div id="rankTests" style="margin-top:20px"></div>
  </div>
 
  <div class="pane" id="p-farming">
@@ -1712,6 +1737,31 @@ function renderGpRewards(){
   document.getElementById('gpRewards').innerHTML=h;
 }
 
+function renderRankTests(){
+  if(!D.rankTests||!D.rankTests.length)return;
+  var byGuild={};
+  D.rankTests.forEach(function(r){byGuild[r.guild]=byGuild[r.guild]||[];byGuild[r.guild].push(r);});
+  var ranks=['Amateur','Recruit','Initiate','Novice','Apprentice','Journeyman','Craftsman','Artisan','Adept','Veteran','Expert'];
+  var h='<h3 style="font-size:.95rem;color:var(--ink-soft);margin:0 0 12px">Guild Rank-Up Tests — Items to Advance</h3><div class="gpr-grid">';
+  Object.keys(byGuild).sort().forEach(function(guild){
+    h+='<div class="gpr-card"><h4>'+guild+'</h4>';
+    h+='<table style="width:100%;font-size:.8rem;border-collapse:collapse"><thead><tr style="color:var(--ink-faint);text-align:left"><th style="padding:2px 4px">From</th><th style="padding:2px 4px">To</th><th style="padding:2px 4px">Skill</th><th style="padding:2px 4px">Test Item</th></tr></thead><tbody>';
+    byGuild[guild].forEach(function(r){
+      var fromRank=ranks[r.rank-1]||'?';
+      h+='<tr style="border-top:1px solid var(--rule)">';
+      h+='<td style="padding:3px 4px;color:var(--ink-soft)">'+fromRank+'</td>';
+      h+='<td style="padding:3px 4px;color:var(--accent)">'+r.rankName+'</td>';
+      h+='<td style="padding:3px 4px;font-family:var(--mono)">'+r.cap+'</td>';
+      h+='<td style="padding:3px 4px"><span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';
+      if(r.recipe){h+=' <span style="color:var(--ink-faint);font-size:.72rem">(Lv'+r.recipe.lvl+')</span>';}
+      h+='</td></tr>';
+    });
+    h+='</tbody></table></div>';
+  });
+  h+='</div>';
+  document.getElementById('rankTests').innerHTML=h;
+}
+
 // Farming / Drops / Gathering
 function buildFarmFilters(){
   var zs={};D.drops.forEach(function(d){if(d.zone)zs[d.zone]=1;});
@@ -2127,7 +2177,7 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGp();renderGpRewards();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGp();renderGpRewards();renderRankTests();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
