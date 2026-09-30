@@ -150,8 +150,8 @@ def sidebar(active=''):
  <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
-{link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}  <a href="/gathering/fishing">Fishing Lookup <span class="sb-new">NEW</span></a>
-  <a href="/gathering/gardening">Gardening Lookup <span class="sb-new">NEW</span></a>
+{link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}  <a href="/gathering/fishing">Fishing Lookup</a>
+  <a href="/gathering/gardening">Gardening Lookup</a>
  </div>
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>

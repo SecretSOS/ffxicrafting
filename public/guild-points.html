@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guild Points Optimizer · Phoenix era 75</title>
+<meta name="description" content="Find the cheapest guild point turn-in for each craft and Vana&#x27;diel day. Compare cost per GP to maximize your daily points.">
+<meta property="og:title" content="Guild Points Optimizer · Phoenix era 75">
+<meta property="og:description" content="Find the cheapest guild point turn-in for each craft and Vana&#x27;diel day. Compare cost per GP to maximize your daily points.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/guild-points">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.crafts{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.craft{font:inherit;font-size:.82rem;padding:5px 14px;border-radius:20px;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:4px;transition:background .15s}
+.craft svg{width:16px;height:16px;color:var(--c)}
+.craft[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 20%,transparent);border-color:var(--c)}
+.craft:hover{border-color:var(--c,var(--accent))}
+.day-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;align-items:center}
+.day-btn{font:inherit;font-size:.82rem;padding:4px 12px;border-radius:4px;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.day-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.day-btn.today{border-color:var(--gain)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:.82rem;color:var(--ink-faint);border-bottom:2px solid var(--rule);padding:8px 10px;cursor:pointer;white-space:nowrap;user-select:none}
+th:hover{color:var(--ink)}
+td{padding:8px 10px;border-bottom:1px solid var(--rule);font-size:.88rem}
+.num{text-align:right}
+.gain{color:var(--gain)}
+.loss{color:var(--loss)}
+.rname a{color:var(--ink);text-decoration:none;font-weight:600}
+.rname a:hover{color:var(--accent)}
+.craft-cost{font-size:.78rem;color:var(--ink-faint);margin-top:2px}
+.tier-tag{font-size:.72rem;padding:2px 8px;border-radius:10px;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);margin-left:6px}
+.count{font-size:.85rem;color:var(--ink-faint);padding:8px 16px}
+.gil{display:inline-flex;align-items:center;gap:2px}
+.gil svg{width:12px;height:12px;color:goldenrod}
+.holiday{padding:30px;text-align:center;color:var(--ink-faint);font-size:1rem}
+.gp-note{font-size:.82rem;color:var(--ink-faint);margin:6px 0}
+
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+ <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
+ <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
+ <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
+ <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
+ <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
+ <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
+ <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
+ <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
+ <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+</svg>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="nav-links">
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/crafts" class="nav-dd-all">All Crafts</a>
+   <a href="/crafts/woodworking">Woodworking</a>
+   <a href="/crafts/smithing">Smithing</a>
+   <a href="/crafts/goldsmithing">Goldsmithing</a>
+   <a href="/crafts/clothcraft">Clothcraft</a>
+   <a href="/crafts/leathercraft">Leathercraft</a>
+   <a href="/crafts/bonecraft">Bonecraft</a>
+   <a href="/crafts/alchemy">Alchemy</a>
+   <a href="/crafts/cooking">Cooking</a>
+  </div>
+ </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
+  </div>
+ </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+  <a href="/guides/" class="nav-link">Guides</a>
+ </div>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="vana-week" id="vanaWeek"></div>
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Crafting Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+  <a href="/bcnm-tool">BCNM Profit Ranker</a>
+  <a href="/desynth">Desynth Calculator</a>
+  <a href="/guild-points">Guild Points</a>
+  <a href="/recipe-tree">Ingredient Tree</a>
+  <a href="/gathering/fishing">Fishing Lookup</a>
+  <a href="/gathering/gardening">Gardening Lookup</a>
+ </div>
+ <div class="sb-section sb-explore">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/fishing">Fishing</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Guilds</div>
+  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span id="guild-wood" class="sb-guild"></span></span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span id="guild-smith" class="sb-guild"></span></span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span id="guild-gold" class="sb-guild"></span></span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span id="guild-cloth" class="sb-guild"></span></span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span id="guild-leather" class="sb-guild"></span></span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span id="guild-bone" class="sb-guild"></span></span></a>
+  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span id="guild-alchemy" class="sb-guild"></span></span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span id="guild-cook" class="sb-guild"></span></span></a>
+  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span id="guild-fish" class="sb-guild"></span></span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Guild Points</nav>
+ <header class="panel pad">
+  <h1>Guild Points Optimizer</h1>
+  <p class="lede">Find the cheapest item to turn in for guild points today. Costs are based on ingredient vendor prices — set your own in the <a href="/calculator">calculator</a>.</p>
+  <div class="crafts" id="crafts"></div>
+  <div class="day-row" id="dayRow"></div>
+  <p class="gp-note">The current Vana'diel day is marked with ●. Each guild is closed one day per week (holiday).</p>
+ </header>
+ <section class="panel">
+  <div class="count" id="count"></div>
+  <div id="results" style="overflow-x:auto"></div>
+ </section>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
+</div>
+<script>
+(function(){
+var CRAFTS=['wood','smith','gold','cloth','leather','bone','alchemy','cook','fish'];
+var CVAR={wood:'--wood',smith:'--smith',gold:'--gold',cloth:'--cloth',leather:'--leather',bone:'--bone',alchemy:'--alchemy',cook:'--cook',fish:'--fish'};
+var NAME={wood:'Woodworking',smith:'Smithing',gold:'Goldsmithing',cloth:'Clothcraft',leather:'Leathercraft',bone:'Bonecraft',alchemy:'Alchemy',cook:'Cooking',fish:'Fishing'};
+var DAYS=['Firesday','Earthsday','Watersday','Windsday','Iceday','Lightningsday','Lightsday','Darksday'];
+var HOLIDAYS={wood:0,smith:2,gold:4,cloth:0,leather:4,bone:3,alchemy:4,cook:7,fish:5};
+var G={},I={},RC={},prices={},curGuild='wood',curDay=-1;
+var EPOCH=1009810800;
+try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
+function vanaDay(){var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25;return Math.floor(vs/60/60/24)%8;}
+function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var it=I[id];return it?(it.v||it.b||0):0;}
+function craftCost(itemId){
+  var rc=RC[String(itemId)];if(!rc)return null;
+  var total=price(rc.cry);
+  rc.ing.forEach(function(p){total+=price(p[0])*p[1];});
+  return total;
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
+function itemUrl(id){var it=I[id];if(!it)return'#';var slug=it.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return'/item/'+id+'-'+slug;}
+function renderGuilds(){
+  var h='';
+  CRAFTS.forEach(function(c){
+    h+='<button class="craft" type="button" aria-pressed="'+(c===curGuild)+'" data-c="'+c+'" style="--c:var('+CVAR[c]+')"><svg><use href="#i-'+(c==='fish'?'fish':c)+'"/></svg>'+NAME[c]+'</button>';
+  });
+  document.getElementById('crafts').innerHTML=h;
+}
+function renderDays(){
+  var today=vanaDay();
+  if(curDay<0)curDay=today;
+  var h='<span style="font-size:.82rem;color:var(--ink-faint)">Day:</span>';
+  DAYS.forEach(function(d,i){
+    var cls='day-btn';
+    if(i===curDay)cls+=' active';
+    if(i===today)cls+=' today';
+    h+='<button class="'+cls+'" type="button" data-d="'+i+'">'+d.replace('day','')+(i===today?' ●':'')+'</button>';
+  });
+  document.getElementById('dayRow').innerHTML=h;
+}
+function render(){
+  renderGuilds();renderDays();
+  var pattern=G[curGuild];if(!pattern){document.getElementById('results').innerHTML='';return;}
+  if(curDay===HOLIDAYS[curGuild]){
+    document.getElementById('results').innerHTML='<div class="holiday">Guild holiday — no turn-ins today.</div>';
+    document.getElementById('count').textContent='';
+    return;
+  }
+  var items=pattern[String(curDay)];
+  if(!items||!items.length){
+    document.getElementById('results').innerHTML='<tr><td colspan="5" style="padding:20px;color:var(--ink-faint)">No turn-in data for this pattern.</td></tr>';
+    return;
+  }
+  var rows=items.map(function(it){
+    var cost=craftCost(it.id);
+    var costPerGP=cost!==null&&it.pts>0?cost/it.pts:null;
+    var needed=Math.ceil(it.max/it.pts);
+    return{it:it,cost:cost,cpgp:costPerGP,needed:needed};
+  });
+  rows.sort(function(a,b){
+    if(a.cpgp===null&&b.cpgp===null)return 0;
+    if(a.cpgp===null)return 1;if(b.cpgp===null)return-1;
+    return a.cpgp-b.cpgp;
+  });
+  var html='<table><thead><tr><th>Item</th><th class="num">GP</th><th class="num">Craft Cost</th><th class="num">Gil/GP</th><th class="num">To Cap</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    var it=r.it,info=I[it.id]||{n:'?'};
+    var costStr=r.cost!==null?gil(Math.round(r.cost)):'<span style="color:var(--ink-faint)">—</span>';
+    var cpgpStr=r.cpgp!==null?fmt(Math.round(r.cpgp)):'—';
+    var cpgpCls=r.cpgp!==null&&r.cpgp<100?'gain':r.cpgp!==null&&r.cpgp>500?'loss':'';
+    html+='<tr><td><div class="rname"><a href="'+itemUrl(it.id)+'">'+esc(info.n)+'</a>';
+    html+='<span class="tier-tag">Tier '+it.t+'</span></div>';
+    if(r.cost!==null){
+      var rc=RC[String(it.id)];
+      if(rc){
+        var ingNames=rc.ing.map(function(p){var pi=I[p[0]];return pi?esc(pi.n)+(p[1]>1?' ×'+p[1]:''):'?';}).join(', ');
+        html+='<div class="craft-cost">'+ingNames+'</div>';
+      }
+    }
+    html+='</td>';
+    html+='<td class="num">'+it.pts+'<small style="color:var(--ink-faint)"> /'+fmt(it.max)+'</small></td>';
+    html+='<td class="num">'+costStr+'</td>';
+    html+='<td class="num"><span class="'+cpgpCls+'">'+cpgpStr+'</span></td>';
+    html+='<td class="num">'+r.needed+'</td>';
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('results').innerHTML=html;
+  document.getElementById('count').textContent=rows.length+' turn-in item'+(rows.length!==1?'s':'')+' for '+NAME[curGuild]+' on '+DAYS[curDay];
+}
+document.getElementById('results').innerHTML='<p style="padding:20px;color:var(--ink-faint)">Loading data…</p>';
+var x=new XMLHttpRequest();x.open('GET','/data/gp-tool.json');
+x.onload=function(){
+  if(x.status===200){
+    var d=JSON.parse(x.responseText);G=d.G;I=d.I;RC=d.RC;render();
+    document.getElementById('crafts').addEventListener('click',function(e){var b=e.target.closest('.craft');if(!b)return;curGuild=b.getAttribute('data-c');render();});
+    document.getElementById('dayRow').addEventListener('click',function(e){var b=e.target.closest('.day-btn');if(!b)return;curDay=Number(b.getAttribute('data-d'));render();});
+  }
+};x.send();
+})();
+</script>
+<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
+<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
+<script>(function(){
+var EPOCH=1009810800,
+DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
+ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
+DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
+GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]};
+function pad(n){return n<10?"0"+n:""+n}
+function tick(){
+ var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
+ vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
+ hr=vh%24,mn=vm%60,wd=vd%8;
+ var wk=document.getElementById("vanaWeek");
+ if(wk){
+  var ml=1440-(hr*60+mn),rs=ml*2.4;
+  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
+  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
+   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
+   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  wk.innerHTML=h;
+ }
+ var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
+ for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
+  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
+  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+}
+tick();setInterval(tick,2400);
+})();</script>
+<script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

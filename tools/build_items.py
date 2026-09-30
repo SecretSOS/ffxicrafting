@@ -15,6 +15,8 @@ ERA_SQL  = "('ROTZ','COP','TOAU','WOTG')"
 CRAFTS   = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing','cloth':'Clothcraft',
             'leather':'Leathercraft','bone':'Bonecraft','alchemy':'Alchemy','cook':'Cooking'}
 
+DESC_PATH = os.path.join(ROOT, 'data', 'item_descriptions.json')
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, SIDEBAR_JS
 
@@ -54,6 +56,13 @@ def fmt_level(lo, hi):
 # ─── Load data ──────────────────────────────────────────────────────────────
 
 print('Loading data...', flush=True)
+
+descriptions = {}
+if os.path.exists(DESC_PATH):
+    import json
+    with open(DESC_PATH, encoding='utf-8') as f:
+        descriptions = json.load(f)
+    print(f'  {len(descriptions)} item descriptions loaded')
 
 items = {}
 for r in db.execute('SELECT * FROM items'):
@@ -328,7 +337,12 @@ table{font-size:.88rem;margin-bottom:.4em}
 .src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
 .src-toggle:hover{color:var(--ink-soft)}
 .src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
-@media(max-width:700px){table{font-size:.8rem}}"""
+.ffxi-tooltip{background:#1e2244;border:2px solid #5a5e8a;border-radius:0;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;margin-top:14px;max-width:480px;box-shadow:inset 0 0 0 1px #0d1028,0 2px 8px rgba(0,0,0,.4)}
+.ffxi-tooltip .tt-icon{image-rendering:pixelated;flex-shrink:0;width:32px;height:32px;margin-top:2px}
+.ffxi-tooltip .tt-body{flex:1;min-width:0}
+.ffxi-tooltip .tt-name{color:#e8e4d0;font-size:14px;font-weight:600;margin:0 0 4px;font-family:var(--font-body);line-height:1.3}
+.ffxi-tooltip .tt-desc{color:#b0acc0;font-size:12.5px;line-height:1.5;margin:0;font-family:var(--font-body)}
+@media(max-width:700px){table{font-size:.8rem}.ffxi-tooltip{max-width:100%}}"""
 
 SRC_TOGGLE_JS = """\
 var st=document.getElementById('srcToggle');
@@ -399,12 +413,21 @@ def build_page(iid):
     infobox += '</div>'
 
     # Header
+    # FFXI tooltip
+    desc_text = descriptions.get(str(iid), '')
+    tooltip_html = ''
+    if desc_text:
+        tt_icon = f'<img class="tt-icon" src="/icons/{iid}.png" alt="">' if os.path.exists(icon_path) else ''
+        tooltip_html = f'<div class="ffxi-tooltip">{tt_icon}<div class="tt-body"><p class="tt-name">{ne}</p><p class="tt-desc">{escape(desc_text)}</p></div></div>'
+
     page += f' <header class="panel pad">\n'
     page += f'  {infobox}\n'
     page += f'  <div class="item-head">{icon_img}<div>\n'
     page += f'  <h1>{ne}</h1>\n'
     page += f'  <p class="meta">{flags}{sep}{meta_text}</p>\n'
     page += '  </div></div>\n'
+    if tooltip_html:
+        page += f'  {tooltip_html}\n'
     page += ' </header>\n'
 
     # Sections
