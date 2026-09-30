@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LOW COST Fishing + Cooking Guide &middot; Phoenix era 75</title>
+<meta name="description" content="Level cooking from 0 to 60 for almost nothing. Fish for free ingredients, cook them for skill-ups, and produce your own fishing bait. The ultimate self-sustaining loop.">
+<meta property="og:title" content="LOW COST Fishing + Cooking Guide &middot; Phoenix era 75">
+<meta property="og:description" content="Level cooking from 0 to 60 for almost nothing using the fishing + cooking feedback loop.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/fishing-cooking">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.fc-hero{margin:0 0 2em}
+.fc-hero h1{font-size:clamp(1.8rem,4.5vw,2.8rem);margin:0 0 .4em}
+.fc-hero .lede{color:var(--ink-soft);max-width:62ch;margin:0;font-size:1.05rem;line-height:1.55}
+
+.fc-loop{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px;margin:0 0 2.5em}
+.fc-loop h2{margin:0 0 .5em;font-size:1.3rem}
+.fc-loop-intro{color:var(--ink-soft);font-size:.92rem;line-height:1.55;margin:0 0 1.2em;max-width:70ch}
+.fc-loop-diagram{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:0 0 1.5em}
+.fc-loop-step{text-align:center;padding:16px 20px;border-radius:10px;border:1px solid var(--border);background:var(--bg);min-width:120px}
+.fc-loop-icon{font-size:1.6rem;margin-bottom:6px}
+.fc-loop-icon svg{width:28px;height:28px;color:var(--accent)}
+.fc-loop-label{font-weight:700;font-size:.95rem}
+.fc-loop-sub{font-size:.78rem;color:var(--ink-faint);margin-top:2px}
+.fc-loop-arrow{font-size:1.5rem;color:var(--accent);font-weight:700}
+.fc-loop-back{color:var(--gain)}
+.fc-loop-table{overflow-x:auto}
+.fc-loop-table table{width:100%;border-collapse:collapse;font-size:.88rem}
+.fc-loop-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);color:var(--ink-faint);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.fc-loop-table td{padding:6px 12px;border-bottom:1px solid var(--border)}
+
+.fc-tier{margin:0 0 2.5em}
+.fc-tier h2{font-size:1.3rem;border-left:4px solid var(--accent);padding-left:12px;margin:0 0 .5em}
+.fc-range{font-size:.85rem;color:var(--ink-faint);font-weight:400;margin-left:8px}
+.fc-intro{color:var(--ink-soft);font-size:.92rem;line-height:1.55;margin:0 0 1em;max-width:70ch}
+.fc-recipes{display:flex;flex-direction:column;gap:14px}
+
+.fc-recipe{border:1px solid var(--border);border-radius:10px;padding:18px 20px;background:var(--surface);transition:border-color .15s}
+.fc-recipe:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--border))}
+.fc-recipe.fc-bait{border-left:3px solid var(--gain)}
+.fc-recipe-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.fc-level{font-size:.78rem;font-weight:700;background:var(--accent);color:#fff;border-radius:4px;padding:2px 8px;white-space:nowrap}
+.fc-rname{font-weight:700;font-size:1.05rem}
+.fc-crystal{font-size:.82rem;color:var(--ink-faint)}
+.fc-bait-tag{font-size:.72rem;font-weight:700;background:var(--gain);color:#fff;border-radius:4px;padding:2px 8px;text-transform:uppercase;letter-spacing:.03em}
+
+.fc-ingredients{margin:0 0 8px}
+.fc-ing-label,.fc-where-label,.fc-bait-label{font-size:.78rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;margin:0 0 4px}
+.fc-ing-list{display:flex;flex-wrap:wrap;gap:6px}
+.fc-ing{font-size:.88rem;padding:3px 10px;border-radius:6px;background:color-mix(in srgb,var(--bg) 70%,var(--ink));text-decoration:none;color:var(--ink);white-space:nowrap}
+.fc-ing:hover{color:var(--accent)}
+.fc-ing-fish{border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+.fc-fish-skill{font-size:.78rem;color:var(--ink-faint)}
+
+.fc-where{margin:0 0 8px}
+.fc-zone-list{display:flex;flex-wrap:wrap;gap:6px}
+.fc-zone{font-size:.82rem;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--bg) 80%,var(--ink));color:var(--ink-soft)}
+
+.fc-bait-info{margin:0 0 8px}
+.fc-bait-list{display:flex;flex-direction:column;gap:4px}
+.fc-bait-item{font-size:.85rem}
+.fc-bait-item a{color:var(--ink);text-decoration:none}
+.fc-bait-item a:hover{color:var(--accent)}
+.fc-power{font-size:.75rem;color:var(--accent);font-weight:600}
+.fc-btype{font-size:.72rem;color:var(--ink-faint);margin-left:4px}
+.fc-craftable{font-size:.78rem;color:var(--gain);font-weight:600}
+.fc-note{font-size:.85rem;color:var(--ink-soft);line-height:1.5;padding:8px 12px;border-radius:6px;background:color-mix(in srgb,var(--bg) 92%,var(--accent));border-left:2px solid var(--accent)}
+
+.fc-tips{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:2em 0}
+.fc-tips h2{margin:0 0 .6em;font-size:1.2rem}
+.fc-tips ul{margin:0;padding:0 0 0 1.2em;line-height:1.65;font-size:.92rem;color:var(--ink-soft)}
+.fc-tips li{margin:0 0 .4em}
+.fc-tips strong{color:var(--ink)}
+
+.gil{display:inline-flex;align-items:center;gap:2px}
+.gil svg{width:12px;height:12px;color:goldenrod}
+
+@media(max-width:640px){
+ .fc-loop-diagram{flex-direction:column;gap:8px}
+ .fc-loop-arrow{transform:rotate(90deg)}
+ .fc-loop-back{transform:rotate(180deg)}
+ .fc-recipe-head{gap:6px}
+}
+</style>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true">
+ <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
+ <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
+ <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
+ <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
+ <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
+ <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
+ <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
+ <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
+ <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+</svg>
+<nav class="top-bar">
+ <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
+ <a href="/" class="logo">FFXI Crafting</a>
+ <div class="nav-links">
+  <div class="nav-dd">
+   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
+   <div class="nav-dd-menu">
+    <a href="/crafts" class="nav-dd-all">All Crafts</a>
+    <a href="/crafts/woodworking">Woodworking</a>
+    <a href="/crafts/smithing">Smithing</a>
+    <a href="/crafts/goldsmithing">Goldsmithing</a>
+    <a href="/crafts/clothcraft">Clothcraft</a>
+    <a href="/crafts/leathercraft">Leathercraft</a>
+    <a href="/crafts/bonecraft">Bonecraft</a>
+    <a href="/crafts/alchemy">Alchemy</a>
+    <a href="/crafts/cooking">Cooking</a>
+   </div>
+  </div>
+  <div class="nav-dd">
+   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+   <div class="nav-dd-menu">
+    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+    <a href="/gathering/mining">Mining</a>
+    <a href="/gathering/logging">Logging</a>
+    <a href="/gathering/harvesting">Harvesting</a>
+    <a href="/gathering/excavation">Excavation</a>
+    <a href="/gathering/gardening">Gardening</a>
+    <a href="/gathering/fishing">Fishing</a>
+    <a href="/gathering/digging">Chocobo Digging</a>
+    <a href="/gathering/clamming">Clamming</a>
+   </div>
+  </div>
+  <a href="/zone/" class="nav-link">Zones</a>
+  <a href="/guides/" class="nav-link active">Guides</a>
+  <a href="/nm/" class="nav-link">NMs</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
+ </div>
+ <div class="search-wrap"><input type="search" id="search" placeholder="Search items&hellip;" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar">
+ <div class="vana-week" id="vanaWeek"></div>
+ <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
+ <div class="sb-section">
+  <div class="sb-heading">Tools</div>
+  <a href="/calculator">Crafting Calculator</a>
+  <a href="/profit">Profit Finder</a>
+  <a href="/shopping">Shopping List</a>
+  <a href="/bcnm-tool">BCNM Profit Ranker</a>
+  <a href="/desynth">Desynth Calculator</a>
+  <a href="/guild-points">Guild Points</a>
+  <a href="/recipe-tree">Ingredient Tree</a>
+  <a href="/gathering/fishing">Fishing Lookup</a>
+  <a href="/gathering/gardening">Gardening Lookup</a>
+ </div>
+ <div class="sb-section sb-explore">
+  <div class="sb-heading">Explore</div>
+  <a href="/zone/">Zones</a>
+  <a href="/gathering/">Gathering</a>
+  <a href="/bcnm">BCNMs</a>
+  <a href="/crafts">Crafts</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Guides</div>
+  <a href="/fishing-cooking" class="active">Fishing + Cooking</a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Guilds</div>
+  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span id="guild-wood" class="sb-guild"></span></span></a>
+  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span id="guild-smith" class="sb-guild"></span></span></a>
+  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span id="guild-gold" class="sb-guild"></span></span></a>
+  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span id="guild-cloth" class="sb-guild"></span></span></a>
+  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span id="guild-leather" class="sb-guild"></span></span></a>
+  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span id="guild-bone" class="sb-guild"></span></span></a>
+  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span id="guild-alchemy" class="sb-guild"></span></span></a>
+  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span id="guild-cook" class="sb-guild"></span></span></a>
+  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span id="guild-fish" class="sb-guild"></span></span></a>
+ </div>
+ <div class="sb-section">
+  <div class="sb-heading">Info</div>
+  <a href="/about-the-data">About the Data</a>
+ </div>
+ <div id="ahStatus" class="ah-status" style="display:none"></div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/guides/">Guides</a><span class="sep">&rsaquo;</span>Fishing + Cooking</nav>
+<header class="fc-hero panel pad">
+ <h1>LOW COST Fishing + Cooking</h1>
+ <p class="lede">Level cooking from 0 to 60 spending almost nothing. Fish provide free ingredients, cooking produces fishing bait, and the cycle feeds itself. The only costs are crystals and a few vendor staples like salt, flour, and water.</p>
+</header>
+
+<div class="fc-loop">
+<h2>The Feedback Loop</h2>
+<p class="fc-loop-intro">The core of this guide: cooking recipes that produce fishing bait. Fish for free, cook for skill-ups, use the product as bait to catch more fish. The only ongoing cost is crystals and cheap vendor materials like flour and salt.</p>
+<div class="fc-loop-diagram">
+<div class="fc-loop-step fc-loop-fish"><div class="fc-loop-icon"><svg><use href="#i-fish"/></svg></div><div class="fc-loop-label">Catch Fish</div><div class="fc-loop-sub">Free — just need bait</div></div>
+<div class="fc-loop-arrow">→</div>
+<div class="fc-loop-step fc-loop-cook"><div class="fc-loop-icon"><svg><use href="#i-cook"/></svg></div><div class="fc-loop-label">Cook Fish</div><div class="fc-loop-sub">Skill-ups + product</div></div>
+<div class="fc-loop-arrow">→</div>
+<div class="fc-loop-step fc-loop-bait"><div class="fc-loop-icon">🎣</div><div class="fc-loop-label">Produce Bait</div><div class="fc-loop-sub">Use it to catch more</div></div>
+<div class="fc-loop-arrow fc-loop-back">↩</div>
+</div>
+<div class="fc-loop-table">
+<table><thead><tr><th>Recipe</th><th>Cook Lv</th><th>Loop</th></tr></thead><tbody>
+<tr><td><strong>Peeled Crayfish</strong></td><td>3</td><td>Crayfish → Wind Crystal → bait</td></tr>
+<tr><td><strong>Slice of Sardine</strong></td><td>11</td><td>Sardine → Wind Crystal → bait (x2)</td></tr>
+<tr><td><strong>Slice of Cod</strong></td><td>13</td><td>Tiger Cod → Wind Crystal → bait (x6)</td></tr>
+<tr><td><strong>Slice of Bluetail</strong></td><td>15</td><td>Bluetail → Wind Crystal → bait (x4)</td></tr>
+<tr><td><strong>Slice of Moat Carp</strong></td><td>17</td><td>Moat Carp → Wind Crystal → bait (x2)</td></tr>
+<tr><td><strong>Insect Paste</strong></td><td>29</td><td>Millioncorn + Worm + Water → bait (x12)</td></tr>
+<tr><td><strong>Sardine Paste</strong></td><td>31</td><td>Sardine + Horo Flour + Water → bait (x12)</td></tr>
+<tr><td><strong>Trout Paste</strong></td><td>33</td><td>Trout + Rye Flour + Water → bait (x12)</td></tr>
+<tr><td><strong>Meatball</strong></td><td>35</td><td>Hare Meat + Flour + Water → bait (x12)</td></tr>
+<tr><td><strong>Crayfish Paste</strong></td><td>52</td><td>Crayfish + Flour + Water → bait (x12)</td></tr>
+</tbody></table>
+</div>
+</div>
+
+<div class="fc-tips">
+<h2>Before You Start</h2>
+<ul>
+<li><strong>Get a rod:</strong> Start with a Willow Fishing Rod from the Fishermen's Guild in Windurst or Selbina. Upgrade to a Composite Rod when your skill allows.</li>
+<li><strong>Buy starter bait:</strong> Little Worms (4 gil each) and Lugworms (9 gil) are dirt cheap from the guild. Use these until you start producing your own bait.</li>
+<li><strong>Stock crystals:</strong> Wind, Fire, Earth, and Dark crystals are the main ones you'll need. Signet + farming mobs keeps these free.</li>
+<li><strong>Vendor staples:</strong> Rock Salt, Distilled Water, and flour (Horo, Rye, San d'Orian) cost a few hundred gil per stack from vendors. This is your only real expense.</li>
+<li><strong>Skill-up rules:</strong> You only gain cooking skill when the recipe level is <strong>above</strong> your current skill. Below skill 50, the base rate is 60%. At 50+, it drops to 25%.</li>
+<li><strong>Guild rank:</strong> Remember to rank up at the Cooking Guild when your skill reaches each tier. Your cap is (rank + 1) &times; 10.</li>
+</ul>
+</div>
+
+<section class="fc-tier" id="tier-1">
+<h2>Tier 1: Getting Started <span class="fc-range">Cook 0 → 9</span></h2>
+<p class="fc-intro">Start with the cheapest fish in the game. Crayfish are everywhere in freshwater zones. Wind crystals slice them into Peeled Crayfish — your first fishing bait you can make yourself.</p>
+<div class="fc-recipes">
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 3</span>
+<span class="fc-rname">Peeled Crayfish</span>
+<span class="fc-crystal">Wind Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4472-crayfish" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Phanauet Channel — Whole Zone</span>
+<span class="fc-zone">Carpenters Landing — South Landing</span>
+<span class="fc-zone">Carpenters Landing — Other Waterside South</span>
+<span class="fc-zone">Carpenters Landing — Other Waterside Center</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16994-sliceofmoatcarp">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/16993-peeledcrayfish">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Produces fishing bait! Use Peeled Crayfish to catch bigger fish later.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 9</span>
+<span class="fc-rname">Boiled Crayfish</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4472-crayfish" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Phanauet Channel — Whole Zone</span>
+<span class="fc-zone">Carpenters Landing — South Landing</span>
+<span class="fc-zone">Carpenters Landing — Other Waterside South</span>
+<span class="fc-zone">Carpenters Landing — Other Waterside Center</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16994-sliceofmoatcarp">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/16993-peeledcrayfish">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">A step up. The salt and water cost a few gil from vendors but the crayfish are free.</div>
+</div>
+</div>
+</section>
+<section class="fc-tier" id="tier-2">
+<h2>Tier 2: Sardines &amp; Slicing <span class="fc-range">Cook 9 → 19</span></h2>
+<p class="fc-intro">Move to sardines — abundant in any seaside zone. Slicing them produces Slice of Sardine (x2 per fish!), another fishing bait. This is where the feedback loop begins.</p>
+<div class="fc-recipes">
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 11</span>
+<span class="fc-rname">Slice Of Sardine</span>
+<span class="fc-crystal">Wind Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4360-bastoresardine" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+ or <a href="/item/5449-hamsi" class="fc-ing fc-ing-fish">Hamsi <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Manaclipper — Dhalmel Rock</span>
+<span class="fc-zone">Bibiki Bay — PI - North Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - West Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - East Beach</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17399-sabikirig">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 2x Slice of Sardine per fish — fishing bait worth 1,425 gil each from vendors. Keep these for later tiers.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 13</span>
+<span class="fc-rname">Slice Of Cod</span>
+<span class="fc-crystal">Wind Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4483-tigercod" class="fc-ing fc-ing-fish">Tiger Cod <span class="fc-fish-skill">(Fish Lv 29)</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Batallia Downs — North Seaside</span>
+<span class="fc-zone">Batallia Downs — South Seaside</span>
+<span class="fc-zone">Beaucedine Glacier — Seaside</span>
+<span class="fc-zone">Sauromugue Champaign — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17402-shrimplure">Shrimp Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,730</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 6x Slice of Cod per fish — even more bait per synth.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 15</span>
+<span class="fc-rname">Slice Of Bluetail</span>
+<span class="fc-crystal">Wind Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4399-bluetail" class="fc-ing fc-ing-fish">Bluetail <span class="fc-fish-skill">(Fish Lv 55)</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Manaclipper — Dhalmel Rock</span>
+<span class="fc-zone">Bibiki Bay — PI - North Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - West Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - East Beach</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17394-peeledlobster">Peeled Lobster</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>1,475</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17392-sliceofsardine">Slice of Sardine</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>1,425</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 4x Slice of Bluetail per fish.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 17</span>
+<span class="fc-rname">Slice Of Moat Carp</span>
+<span class="fc-crystal">Wind Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4401-moatcarp" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
+ or <a href="/item/4289-forestcarp" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Misareaux Coast — Cascade Edellaine</span>
+<span class="fc-zone">Al Zahbi — Whole Zone</span>
+<span class="fc-zone">West Ronfaure — Knightwell</span>
+<span class="fc-zone">La Theine Plateau — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16998-ballofinsectpaste">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 2x Slice of Moat Carp — yet another bait type for your growing supply.</div>
+</div>
+</div>
+</section>
+<section class="fc-tier" id="tier-3">
+<h2>Tier 3: Roasting &amp; First Meals <span class="fc-range">Cook 19 → 31</span></h2>
+<p class="fc-intro">Now you&#x27;re cooking actual meals. Roasted fish recipes use a Fire Crystal and Rock Salt with the fish you catch. These produce food items players actually use.</p>
+<div class="fc-recipes">
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 19</span>
+<span class="fc-rname">Roast Carp</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4401-moatcarp" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
+ or <a href="/item/4289-forestcarp" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Misareaux Coast — Cascade Edellaine</span>
+<span class="fc-zone">Al Zahbi — Whole Zone</span>
+<span class="fc-zone">West Ronfaure — Knightwell</span>
+<span class="fc-zone">La Theine Plateau — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16998-ballofinsectpaste">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">HQ: Broiled Carp. Both fish caught easily in freshwater.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 21</span>
+<span class="fc-rname">Roast Pipira</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4464-pipira" class="fc-ing fc-ing-fish">Pipira <span class="fc-fish-skill">(Fish Lv 29)</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">East Sarutabaruta — Lake Tepokalipuka</span>
+<span class="fc-zone">Yuhtunga Jungle — Southwest Pond</span>
+<span class="fc-zone">Yuhtunga Jungle — Southwest Waterfall - South</span>
+<span class="fc-zone">Yuhtunga Jungle — Southwest Waterfall - North</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17403-froglure">Frog Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,500</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17401-lizardlure">Lizard Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4,590</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Pipira are found in Sarutabaruta and Yuhtunga.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 29</span>
+<span class="fc-rname">Smoked Salmon</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4379-chevalsalmon" class="fc-ing fc-ing-fish">Cheval Salmon <span class="fc-fish-skill">(Fish Lv 21)</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="/item/693-walnutlog" class="fc-ing">Walnut Log — <span class="gil"><svg><use href="#i-gil"/></svg>1,300</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">East Ronfaure — Whole Zone</span>
+<span class="fc-zone">Jugner Forest — River</span>
+<span class="fc-zone">Ghelsba Outpost — River</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/16996-ballofsardinepaste">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/16999-balloftroutpaste">Ball of Trout Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>348</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Walnut Logs are a small cost. Salmon are in Ronfaure and Jugner.</div>
+</div>
+</div>
+</section>
+<section class="fc-tier" id="tier-4">
+<h2>Tier 4: Paste Mastery <span class="fc-range">Cook 31 → 40</span></h2>
+<p class="fc-intro">The paste recipes are the heart of the feedback loop. Each one produces 12x fishing bait from a single fish + flour + water. You&#x27;ll never need to buy bait again.</p>
+<div class="fc-recipes">
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 29</span>
+<span class="fc-rname">Insect Paste</span>
+<span class="fc-crystal">Earth Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/629-earofmillioncorn" class="fc-ing">Millioncorn — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
+<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="/item/17396-littleworm" class="fc-ing">Little Worm — <span class="gil"><svg><use href="#i-gil"/></svg>4</span></a>
+</div></div>
+<div class="fc-note">Not a fish recipe, but makes 12x Insect Paste — cheap bait. Little Worms are 4 gil each from vendors.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 31</span>
+<span class="fc-rname">Sardine Paste</span>
+<span class="fc-crystal">Earth Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4360-bastoresardine" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+ or <a href="/item/5449-hamsi" class="fc-ing fc-ing-fish">Hamsi <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+<a href="/item/631-bagofhoroflour" class="fc-ing">Horo Flour — <span class="gil"><svg><use href="#i-gil"/></svg>40</span></a>
+<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Manaclipper — Dhalmel Rock</span>
+<span class="fc-zone">Bibiki Bay — PI - North Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - West Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - East Beach</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17399-sabikirig">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 12x Sardine Paste per synth — premium fishing bait.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 32</span>
+<span class="fc-rname">Roast Trout</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4354-shiningtrout" class="fc-ing fc-ing-fish">Shining Trout <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+ or <a href="/item/5461-alabaligi" class="fc-ing fc-ing-fish">Alabaligi <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Phanauet Channel — Whole Zone</span>
+<span class="fc-zone">Carpenters Landing — South Landing</span>
+<span class="fc-zone">Carpenters Landing — North Landing</span>
+<span class="fc-zone">East Ronfaure — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17400-sinkingminnow">Sinking Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,160</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">HQ: Broiled Trout. Good bridging recipe if you have extra trout.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 33</span>
+<span class="fc-rname">Trout Paste</span>
+<span class="fc-crystal">Earth Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4354-shiningtrout" class="fc-ing fc-ing-fish">Shining Trout <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+ or <a href="/item/5461-alabaligi" class="fc-ing fc-ing-fish">Alabaligi <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+<a href="/item/611-bagofryeflour" class="fc-ing">Rye Flour — <span class="gil"><svg><use href="#i-gil"/></svg>40</span></a>
+<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Phanauet Channel — Whole Zone</span>
+<span class="fc-zone">Carpenters Landing — South Landing</span>
+<span class="fc-zone">Carpenters Landing — North Landing</span>
+<span class="fc-zone">East Ronfaure — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17400-sinkingminnow">Sinking Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,160</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 12x Trout Paste — bait for mid-level fish.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 35</span>
+<span class="fc-rname">Meatball</span>
+<span class="fc-crystal">Earth Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/610-bagofsandorianflour" class="fc-ing">San d&#x27;Orian Flour — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
+<a href="/item/4358-sliceofharemeat" class="fc-ing">Hare Meat — <span class="gil"><svg><use href="#i-gil"/></svg>160</span></a>
+<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+</div></div>
+<div class="fc-note">Makes 12x Meatball — fishing bait for mid/high fish. Hare Meat drops from rabbits.</div>
+</div>
+</div>
+</section>
+<section class="fc-tier" id="tier-5">
+<h2>Tier 5: Mid-Level Cooking <span class="fc-range">Cook 40 → 55</span></h2>
+<p class="fc-intro">You now have a stockpile of free bait. Time to cook more complex fish dishes. Fish Mithkabob is a server staple — everyone needs them.</p>
+<div class="fc-recipes">
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 46</span>
+<span class="fc-rname">Pickled Herring</span>
+<span class="fc-crystal">Ice Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4482-nosteauherring" class="fc-ing fc-ing-fish">Nosteau Herring <span class="fc-fish-skill">(Fish Lv 39)</span></a>
+<a href="/item/622-pinchofdriedmarjoram" class="fc-ing">Dried Marjoram — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Batallia Downs — North Seaside</span>
+<span class="fc-zone">Batallia Downs — South Seaside</span>
+<span class="fc-zone">Beaucedine Glacier — Seaside</span>
+<span class="fc-zone">Qufim Island — Northwest Seaside</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16996-ballofsardinepaste">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17402-shrimplure">Shrimp Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,730</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Herring are plentiful in Batallia and seaside zones.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 49</span>
+<span class="fc-rname">Fish Mithkabob</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4360-bastoresardine" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Manaclipper — Dhalmel Rock</span>
+<span class="fc-zone">Bibiki Bay — PI - North Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - West Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - East Beach</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17399-sabikirig">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">Uses multiple fish types: sardine/hamsi + nebimonite/uskumru + bluetail/cone calamary + shall shell/istiridye. All catchable.</div>
+</div>
+<div class="fc-recipe fc-bait">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 52</span>
+<span class="fc-rname">Crayfish Paste</span>
+<span class="fc-crystal">Earth Crystal</span>
+<span class="fc-bait-tag">Produces Bait</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4472-crayfish" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
+ or <a href="/item/5453-istakoz" class="fc-ing fc-ing-fish">Istakoz <span class="fc-fish-skill">(Fish Lv 46)</span></a>
+ or <a href="/item/4383-goldlobster" class="fc-ing fc-ing-fish">Gold Lobster <span class="fc-fish-skill">(Fish Lv 46)</span></a>
+<a href="/item/610-bagofsandorianflour" class="fc-ing">San d&#x27;Orian Flour — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
+<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Phanauet Channel — Whole Zone</span>
+<span class="fc-zone">Carpenters Landing — South Landing</span>
+<span class="fc-zone">Carpenters Landing — Other Waterside South</span>
+<span class="fc-zone">Carpenters Landing — Other Waterside Center</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16994-sliceofmoatcarp">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/16993-peeledcrayfish">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Makes 12x Crayfish Paste — the highest-tier craftable paste bait. Full circle back to crayfish!</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 53</span>
+<span class="fc-rname">Eel Kabob</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4429-blackeel" class="fc-ing fc-ing-fish">Black Eel <span class="fc-fish-skill">(Fish Lv 47)</span></a>
+ or <a href="/item/5458-yilanbaligi" class="fc-ing fc-ing-fish">Yilanbaligi <span class="fc-fish-skill">(Fish Lv 47)</span></a>
+<a href="/item/633-flaskofoliveoil" class="fc-ing">Olive Oil</a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Oldton Movalpolos — Whole Zone</span>
+<span class="fc-zone">North Gustaberg — Basin of Waterfall</span>
+<span class="fc-zone">North Gustaberg — River</span>
+<span class="fc-zone">Palborough Mines — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16997-ballofcrayfishpaste">Ball of Crayfish Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17397-shellbug">Shell Bug</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/16996-ballofsardinepaste">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">HQ: Broiled Eel. Eels found in Movalpolos and Gustaberg.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 54</span>
+<span class="fc-rname">Carp Sushi</span>
+<span class="fc-crystal">Dark Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4401-moatcarp" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
+ or <a href="/item/4289-forestcarp" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
+<a href="/item/620-boxoftarutarurice" class="fc-ing">Tarutaru Rice — <span class="gil"><svg><use href="#i-gil"/></svg>300</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Misareaux Coast — Cascade Edellaine</span>
+<span class="fc-zone">Al Zahbi — Whole Zone</span>
+<span class="fc-zone">West Ronfaure — Knightwell</span>
+<span class="fc-zone">La Theine Plateau — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/16998-ballofinsectpaste">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">HQ: Yahata-style Carp Sushi. Your moat carp supply keeps giving.</div>
+</div>
+</div>
+</section>
+<section class="fc-tier" id="tier-6">
+<h2>Tier 6: Approaching Cap <span class="fc-range">Cook 55 → 60</span></h2>
+<p class="fc-intro">The home stretch to skill 60. These recipes use the fish and bait you&#x27;ve been building up throughout the guide.</p>
+<div class="fc-recipes">
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 64</span>
+<span class="fc-rname">Blackened Frog</span>
+<span class="fc-crystal">Fire Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4515-copperfrog" class="fc-ing fc-ing-fish">Copper Frog <span class="fc-fish-skill">(Fish Lv 16)</span></a>
+<a href="/item/622-pinchofdriedmarjoram" class="fc-ing">Dried Marjoram — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
+<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Oldton Movalpolos — Whole Zone</span>
+<span class="fc-zone">North Gustaberg — Basin of Waterfall</span>
+<span class="fc-zone">North Gustaberg — River</span>
+<span class="fc-zone">Pashhow Marshlands — Whole Zone</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17001-giantshellbug">Giant Shell Bug</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17005-lufaisefly">Lufaise Fly</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
+</div></div>
+<div class="fc-note">Cook 64 but gives skill-ups from 55+. Copper frogs are in Gustaberg and Movalpolos. HQ: Frog Flambe.</div>
+</div>
+<div class="fc-recipe">
+<div class="fc-recipe-head">
+<span class="fc-level">Lv 23</span>
+<span class="fc-rname">Goblin Chocolate</span>
+<span class="fc-crystal">Dark Crystal</span>
+</div>
+<div class="fc-ingredients">
+<div class="fc-ing-label">Ingredients:</div>
+<div class="fc-ing-list">
+<a href="/item/4443-cobaltjellyfish" class="fc-ing fc-ing-fish">Cobalt Jellyfish <span class="fc-fish-skill">(Fish Lv 5)</span></a>
+<a href="/item/632-kukurubean" class="fc-ing">Kukuru Bean x3 — <span class="gil"><svg><use href="#i-gil"/></svg>120</span></a>
+<a href="/item/951-wijnruit" class="fc-ing">Wijnruit — <span class="gil"><svg><use href="#i-gil"/></svg>120</span></a>
+<a href="/item/4370-potofhoney" class="fc-ing">Honey — <span class="gil"><svg><use href="#i-gil"/></svg>200</span></a>
+<a href="/item/4378-jugofselbinamilk" class="fc-ing">Selbina Milk — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
+<a href="/item/4505-handfulofsunflowerseeds" class="fc-ing">Sunflower Seeds</a>
+</div></div>
+<div class="fc-where">
+<div class="fc-where-label">Where to fish:</div>
+<div class="fc-zone-list">
+<span class="fc-zone">Manaclipper — Dhalmel Rock</span>
+<span class="fc-zone">Bibiki Bay — PI - South Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - North Beach</span>
+<span class="fc-zone">Bibiki Bay — PI - West Beach</span>
+</div></div>
+<div class="fc-bait-info">
+<div class="fc-bait-label">Best baits:</div>
+<div class="fc-bait-list">
+<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="/item/17000-meatball">Meatball</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+</div></div>
+<div class="fc-note">Alternative path if you stocked up jellyfish. Many vendor ingredients but jellyfish are free.</div>
+</div>
+</div>
+</section>
+
+<div class="fc-tips">
+<h2>Summary: Total Cost Breakdown</h2>
+<ul>
+<li><strong>Fish:</strong> Free. All caught by you.</li>
+<li><strong>Crystals:</strong> Free if farmed with Signet, or cheap on AH.</li>
+<li><strong>Vendor materials:</strong> Rock Salt (~12 gil), Distilled Water (~12 gil), Horo/Rye/San d'Orian Flour (~80-130 gil each). Maybe 5,000-10,000 gil total over the entire 0-60 journey.</li>
+<li><strong>Starting bait:</strong> A few hundred gil worth of Little Worms to get started, then you produce your own.</li>
+<li><strong>Total estimate:</strong> Under 15,000 gil to cap cooking at 60, compared to 100,000+ gil buying all ingredients from AH.</li>
+</ul>
+</div>
+
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
+</main>
+</div>
+</body>
+</html>
