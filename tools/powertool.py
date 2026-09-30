@@ -799,6 +799,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="stackProfit" data-t="flips" class="n">Stack Profit</th>
    <th data-k="stack" data-t="flips" class="n">Stk</th><th data-k="info" data-t="flips">Info</th>
   </tr></thead><tbody id="fBody"></tbody></table></div>
+  <button class="show-more" id="fMore" style="display:none"></button>
  </div>
 
  <div class="pane" id="p-crafts">
@@ -822,6 +823,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="sellSrc" data-t="crafts">Sell Via</th>
    <th data-k="resultQty" data-t="crafts" class="n">Yield</th>
   </tr></thead><tbody id="cBody"></tbody></table></div>
+  <button class="show-more" id="cMore" style="display:none"></button>
  </div>
 
  <div class="pane" id="p-desynth">
@@ -840,6 +842,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="profit" data-t="desynth" class="n">Profit</th>
    <th data-k="results" data-t="desynth">Results</th>
   </tr></thead><tbody id="dBody"></tbody></table></div>
+  <button class="show-more" id="dMore" style="display:none"></button>
  </div>
 
  <div class="pane" id="p-bcnm">
@@ -910,6 +913,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="ev" data-t="farm" class="n">EV/Kill</th>
    <th data-k="lvLo" data-t="farm" class="n">Level</th>
   </tr></thead><tbody id="farmBody"></tbody></table></div>
+  <button class="show-more" id="farmMore" style="display:none"></button>
  </div>
 
  <div class="pane" id="p-fishing">
@@ -934,6 +938,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th>Zones</th>
    <th data-k="zoneCount" data-t="fish" class="n">Areas</th>
   </tr></thead><tbody id="fishBody"></tbody></table></div>
+  <button class="show-more" id="fishMore" style="display:none"></button>
  </div>
 
  <div class="pane" id="p-quests">
@@ -953,6 +958,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th>Item Rewards</th>
    <th data-k="totalVal" data-t="quest" class="n">Total Value</th>
   </tr></thead><tbody id="qBody"></tbody></table></div>
+  <button class="show-more" id="qMore" style="display:none"></button>
  </div>
 
  <!-- GIL/HOUR -->
@@ -974,6 +980,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="unitsHr" data-t="gilhr" class="n">Units/Hr</th>
    <th data-k="gilhr" data-t="gilhr" class="n s">Gil/Hour</th>
   </tr></thead><tbody id="gBody"></tbody></table></div>
+  <button class="show-more" id="gMore" style="display:none"></button>
  </div>
 </div>
 
@@ -1035,13 +1042,13 @@ function renderDash(){
     st(pd.length?fmt(pd[0].profit)+'g':'—','Best Desynth','g')+
     st(D.stats.totalRecipes,'Total Recipes','a');
   document.getElementById('dashFlips').innerHTML=miniTable(pf.slice(0,10),
-    function(f){return'<td class="nm">'+esc(f.name)+'</td><td class="n gil">'+fmt(f.npc)+'</td>'+
+    function(f){return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span></td><td class="n gil">'+fmt(f.npc)+'</td>'+
     '<td class="n"><span class="pos">+'+fmt(f.profit)+'</span></td><td class="sub">'+esc(f.vendor)+'</td>'});
   document.getElementById('dashCrafts').innerHTML=miniTable(pc.slice(0,10),
-    function(c){return'<td class="nm">'+esc(c.name)+'</td><td>'+c.craft+'</td><td class="n">'+c.level+'</td>'+
+    function(c){return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">' +esc(c.name)+'</span></td><td>'+c.craft+'</td><td class="n">'+c.level+'</td>'+
     '<td class="n"><span class="pos">+'+fmt(c.profit)+'</span></td>'+(c.allNpc?'<td><span class="tag t-npc">NPC</span></td>':'<td></td>')});
   document.getElementById('dashDesynth').innerHTML=miniTable(pd.slice(0,10),
-    function(d){return'<td class="nm">'+esc(d.input.name)+'</td><td>'+d.craft+'</td>'+
+    function(d){return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.input.name).replace(/'/g,"\\'")+'\')">' +esc(d.input.name)+'</span></td><td>'+d.craft+'</td>'+
     '<td class="n"><span class="pos">+'+fmt(d.profit)+'</span></td>'});
   document.getElementById('dashBcnm').innerHTML=miniTable(pb.slice(0,10),
     function(b){return'<td class="nm">'+esc(b.name)+'</td><td>'+b.sealType+'</td>'+
@@ -1077,7 +1084,7 @@ function renderFlips(){
   var all=sorted(filteredFlips(),'flips');updSort('flips');var h='';var rows=all.slice(0,200);
   rows.forEach(function(v){
     var isGuild=v.type==='guild_shop'&&v.buyMax;
-    h+='<tr><td class="nm">'+esc(v.name);
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(v.name).replace(/'/g,"\\'")+'\')">' +esc(v.name)+'</span>';
     if(v.ex)h+=' <span class="ex">Ex</span>';if(v.rare)h+=' <span class="ra">Rare</span>';
     h+='</td><td class="sub">'+esc(v.vendor)+'</td><td class="sub">'+esc(v.zone)+'</td>';
     h+='<td>'+typeL(v.type)+(v.guild?'<span class="tag t-guild">'+v.guild+'</span>':'')+'</td>';
@@ -1093,6 +1100,25 @@ function renderFlips(){
   });
   document.getElementById('fBody').innerHTML=h||'<tr><td colspan="11" class="empty">No matches</td></tr>';
   document.getElementById('fCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' items';
+  showMoreBtn('fMore',all.length>200?all.length-200:0,function(){renderFlipsFull(all);});
+}
+function renderFlipsFull(all){var h='';all.forEach(function(v){
+    var isGuild=v.type==='guild_shop'&&v.buyMax;
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(v.name).replace(/'/g,"\\'")+'\')">' +esc(v.name)+'</span>';
+    if(v.ex)h+=' <span class="ex">Ex</span>';if(v.rare)h+=' <span class="ra">Rare</span>';
+    h+='</td><td class="sub">'+esc(v.vendor)+'</td><td class="sub">'+esc(v.zone)+'</td>';
+    h+='<td>'+typeL(v.type)+(v.guild?'<span class="tag t-guild">'+v.guild+'</span>':'')+'</td>';
+    h+='<td class="n gil">'+fmt(v.npc);
+    if(isGuild)h+=' <span class="sub" title="buyMax at empty shelf">(max '+fmt(v.buyMax)+')</span>';
+    h+='</td>';
+    h+='<td class="n">'+(v.ah?'<span class="gil">'+fmt(v.ah)+'</span>':'<span class="sub">—</span>')+'</td>';
+    h+='<td class="n">'+pc(v.profit)+'</td><td class="n">'+mc(v.margin)+'</td>';
+    h+='<td class="n">'+(v.stackProfit?pc(v.stackProfit):'—')+'</td>';
+    h+='<td class="n">'+v.stack+'</td><td class="sub">';
+    if(v.gate)h+=esc(v.gate)+' ';if(v.hours)h+=v.hours+' ';
+    h+='</td></tr>';
+  });document.getElementById('fBody').innerHTML=h;
+  document.getElementById('fCnt').textContent=all.length+' items';showMoreBtn('fMore',0);
 }
 
 // Craft Profits
@@ -1108,7 +1134,7 @@ function filteredCrafts(){
   });
 }
 function renderCrafts(){
-  var all=sorted(filteredCrafts(),'crafts');updSort('crafts');var h='';var rows=all.slice(0,200);
+  var all=sorted(filteredCrafts(),'crafts');updSort('crafts');var h='';var rows=_showAll.crafts?all:all.slice(0,200);
   rows.forEach(function(c,i){
     var margin=c.matCost&&c.profit?(c.profit/c.matCost*100):null;
     h+='<tr style="cursor:pointer" onclick="toggleDetail(\'cd'+i+'\')">';
@@ -1141,6 +1167,7 @@ function renderCrafts(){
   });
   document.getElementById('cBody').innerHTML=h||'<tr><td colspan="9" class="empty">No matches</td></tr>';
   document.getElementById('cCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' recipes';
+  showMoreBtn('cMore',all.length>200?all.length-200:0,function(){_showAll.crafts=true;renderCrafts();});
 }
 
 // Desynth
@@ -1155,16 +1182,28 @@ function filteredDesynth(){
 function renderDesynth(){
   var all=sorted(filteredDesynth(),'desynth');updSort('desynth');var h='';var rows=all.slice(0,200);
   rows.forEach(function(d){
-    h+='<tr><td class="nm">'+esc(d.input.name)+(d.input.src?' <span class="tag t-'+d.input.src+'">'+d.input.src+'</span>':'')+'</td>';
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.input.name).replace(/'/g,"\\'")+'\')">' +esc(d.input.name)+'</span>'+(d.input.src?' <span class="tag t-'+d.input.src+'">'+d.input.src+'</span>':'')+'</td>';
     h+='<td>'+d.craft+'</td><td class="n">'+d.level+'</td>';
     h+='<td class="n">'+(d.input.price?'<span class="gil">'+fmt(d.input.price)+'</span>':'<span class="sub">—</span>')+'</td>';
     h+='<td class="n"><span class="gil">'+fmt(d.ev)+'</span></td>';
     h+='<td class="n">'+pc(d.profit)+'</td><td class="sub">';
-    d.results.forEach(function(r,i){if(i)h+=' / ';h+=esc(r.name);if(r.price)h+=' <span class="gil">'+fmt(r.rev)+'</span>';});
+    d.results.forEach(function(r,i){if(i)h+=' / ';h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';if(r.price)h+=' <span class="gil">'+fmt(r.rev)+'</span>';});
     h+='</td></tr>';
   });
   document.getElementById('dBody').innerHTML=h||'<tr><td colspan="7" class="empty">No matches</td></tr>';
   document.getElementById('dCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' recipes';
+  showMoreBtn('dMore',all.length>200?all.length-200:0,function(){renderDesynthFull(all);});
+}
+function renderDesynthFull(all){var h='';all.forEach(function(d){
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.input.name).replace(/'/g,"\\'")+'\')">' +esc(d.input.name)+'</span>'+(d.input.src?' <span class="tag t-'+d.input.src+'">'+d.input.src+'</span>':'')+'</td>';
+    h+='<td>'+d.craft+'</td><td class="n">'+d.level+'</td>';
+    h+='<td class="n">'+(d.input.price?'<span class="gil">'+fmt(d.input.price)+'</span>':'<span class="sub">—</span>')+'</td>';
+    h+='<td class="n"><span class="gil">'+fmt(d.ev)+'</span></td>';
+    h+='<td class="n">'+pc(d.profit)+'</td><td class="sub">';
+    d.results.forEach(function(r,i){if(i)h+=' / ';h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';if(r.price)h+=' <span class="gil">'+fmt(r.rev)+'</span>';});
+    h+='</td></tr>';
+  });document.getElementById('dBody').innerHTML=h;
+  document.getElementById('dCnt').textContent=all.length+' recipes';showMoreBtn('dMore',0);
 }
 
 // BCNM
@@ -1191,7 +1230,7 @@ function renderBcnm(){
       h+='<div class="lg"><h4>Roll '+g.roll+' ('+g.rolls+' roll'+(g.rolls>1?'s':'')+')</h4>';
       g.items.forEach(function(it){
         h+='<div class="lr"><span class="lr-p">'+it.pct.toFixed(1)+'%</span>';
-        h+='<span class="lr-n">'+esc(it.name)+(it.ahPrice?' <span class="tag t-ah">AH '+fmt(it.ahPrice)+'</span>':'')+'</span>';
+        h+='<span class="lr-n"><span class="item-link" onclick="goToItem(\''+esc(it.name).replace(/'/g,"\\'")+'\')">' +esc(it.name)+'</span>'+(it.ahPrice?' <span class="tag t-ah">AH '+fmt(it.ahPrice)+'</span>':'')+'</span>';
         h+='<span class="lr-v">'+(it.val?'<span class="gil">'+fmt(it.val)+'</span>':'')+'</span>';
         h+='<span class="lr-ev">EV: '+fmt(it.ev)+'</span></div>';
       });h+='</div>';
@@ -1392,7 +1431,7 @@ function filteredFarm(){
 function renderFarm(){
   var rows=sorted(filteredFarm(),'farm');updSort('farm');var mode=val('farmType');var h='';var shown=rows.slice(0,300);
   shown.forEach(function(d){
-    h+='<tr><td class="nm">'+esc(d.name)+'</td>';
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.name).replace(/'/g,"\\'")+'\')">' +esc(d.name)+'</span></td>';
     h+='<td class="sub">'+esc(mode==='gathering'?d.type:d.mob)+'</td>';
     h+='<td class="sub">'+esc(d.zone)+'</td>';
     h+='<td class="n">'+d.pct.toFixed(1)+'%</td>';
@@ -1404,9 +1443,31 @@ function renderFarm(){
   });
   document.getElementById('farmBody').innerHTML=h||'<tr><td colspan="7" class="empty">No matches</td></tr>';
   document.getElementById('farmCnt').textContent=shown.length+(rows.length>shown.length?' of '+rows.length:'')+' entries';
+  showMoreBtn('farmMore',rows.length>300?rows.length-300:0,function(){renderFarmFull(rows,mode);});
+}
+function renderFarmFull(rows,mode){var h='';rows.forEach(function(d){
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.name).replace(/'/g,"\\'")+'\')">' +esc(d.name)+'</span></td>';
+    h+='<td class="sub">'+esc(mode==='gathering'?d.type:d.mob)+'</td>';
+    h+='<td class="sub">'+esc(d.zone)+'</td>';
+    h+='<td class="n">'+d.pct.toFixed(1)+'%</td>';
+    h+='<td class="n"><span class="gil">'+fmt(d.ah||d.sell)+'</span></td>';
+    h+='<td class="n"><span class="'+(d.ev>=500?'pos':d.ev>=100?'mo':'sub')+'">'+fmt(d.ev)+'</span></td>';
+    if(mode==='gathering')h+='<td></td>';
+    else h+='<td class="n">'+(d.lvLo?d.lvLo+(d.lvHi&&d.lvHi!==d.lvLo?'-'+d.lvHi:''):'—')+'</td>';
+    h+='</tr>';
+  });document.getElementById('farmBody').innerHTML=h;
+  document.getElementById('farmCnt').textContent=rows.length+' entries';showMoreBtn('farmMore',0);
 }
 
 // ── Fishing ──
+function renderFishRods(){
+  if(!D.rods||!D.rods.length)return;
+  var h='<div style="font-size:.78rem;color:var(--ink-faint);margin-bottom:4px">Fishing Rods (by power)</div><div class="rod-bar">';
+  D.rods.forEach(function(r){
+    h+='<span class="rod-chip"><b>'+esc(r.name)+'</b> Atk:'+r.attack+' Size:'+esc(r.sizeType||'?')+' Rank:'+r.minRank+'-'+r.maxRank+'</span>';
+  });
+  h+='</div>';document.getElementById('fishRods').innerHTML=h;
+}
 function renderFishing(){
   var q=val('fishSearch').toLowerCase(),water=val('fishWater'),maxSk=num('fishMaxSkill')||200,
       sellable=chk('fishSellable'),legendary=chk('fishLegendary');
@@ -1421,7 +1482,7 @@ function renderFishing(){
   rows=sorted(rows,'fish');updSort('fish');
   var h='';
   rows.slice(0,200).forEach(function(f){
-    h+='<tr><td class="nm">'+esc(f.name);
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>';
     if(f.ex)h+=' <span class="ex">Ex</span>';if(f.rare)h+=' <span class="ra">Rare</span>';
     if(f.legendary)h+=' <span class="tag t-guild">Legend</span>';
     h+='</td>';
@@ -1441,7 +1502,25 @@ function renderFishing(){
     h+='</tr>';
   });
   document.getElementById('fishBody').innerHTML=h||'<tr><td colspan="9" class="empty">No matches</td></tr>';
-  document.getElementById('fishCnt').textContent=rows.length+' fish';
+  document.getElementById('fishCnt').textContent=(rows.length>200?'200 of ':'')+rows.length+' fish';
+  showMoreBtn('fishMore',rows.length>200?rows.length-200:0,function(){renderFishFull(rows);});
+}
+function renderFishFull(rows){var h='';rows.forEach(function(f){
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>';
+    if(f.ex)h+=' <span class="ex">Ex</span>';if(f.rare)h+=' <span class="ra">Rare</span>';
+    if(f.legendary)h+=' <span class="tag t-guild">Legend</span>';
+    h+='</td>';
+    h+='<td class="n">'+f.skill+'</td>';
+    h+='<td class="n">'+(f.difficulty||'—')+'</td>';
+    h+='<td>'+esc(f.water)+'</td>';
+    h+='<td class="n">'+(f.sell?'<span class="gil">'+fmt(f.sell)+'</span>':'—')+'</td>';
+    h+='<td>'+(f.sellSrc?'<span class="tag t-'+f.sellSrc+'">'+f.sellSrc+'</span>':'')+'</td>';
+    h+='<td class="sub">';f.baits.slice(0,2).forEach(function(b,i){if(i)h+=', ';h+=esc(b.name);});h+='</td>';
+    h+='<td class="sub">';f.zones.slice(0,3).forEach(function(z,i){if(i)h+=', ';h+=esc(z.zone);});
+    if(f.zoneCount>3)h+=' +'+(f.zoneCount-3);h+='</td>';
+    h+='<td class="n">'+f.zoneCount+'</td></tr>';
+  });document.getElementById('fishBody').innerHTML=h;
+  document.getElementById('fishCnt').textContent=rows.length+' fish';showMoreBtn('fishMore',0);
 }
 
 // ── Quests ──
@@ -1464,7 +1543,7 @@ function renderQuests(){
     h+='<td class="n">'+(qr.gil?'<span class="gil">'+fmt(qr.gil)+'</span>':'—')+'</td>';
     h+='<td class="sub">';
     qr.rewards.slice(0,3).forEach(function(r,i){
-      if(i)h+=', ';h+=esc(r.name)+(r.qty>1?' x'+r.qty:'');
+      if(i)h+=', ';h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>'+(r.qty>1?' x'+r.qty:'');
       if(r.price)h+=' <span class="gil">'+fmt(r.total)+'</span>';
     });
     h+='</td>';
@@ -1472,7 +1551,23 @@ function renderQuests(){
     h+='</tr>';
   });
   document.getElementById('qBody').innerHTML=h||'<tr><td colspan="6" class="empty">No matches</td></tr>';
-  document.getElementById('qCnt').textContent=rows.length+' quests';
+  document.getElementById('qCnt').textContent=(rows.length>200?'200 of ':'')+rows.length+' quests';
+  showMoreBtn('qMore',rows.length>200?rows.length-200:0,function(){renderQuestsFull(rows);});
+}
+function renderQuestsFull(rows){var h='';rows.forEach(function(qr){
+    h+='<tr><td class="nm">'+esc(qr.name)+'</td>';
+    h+='<td class="sub">'+esc(qr.area)+'</td>';
+    h+='<td class="n">'+(qr.fameGate||'—')+'</td>';
+    h+='<td class="n">'+(qr.gil?'<span class="gil">'+fmt(qr.gil)+'</span>':'—')+'</td>';
+    h+='<td class="sub">';
+    qr.rewards.slice(0,3).forEach(function(r,i){
+      if(i)h+=', ';h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>'+(r.qty>1?' x'+r.qty:'');
+      if(r.price)h+=' <span class="gil">'+fmt(r.total)+'</span>';
+    });
+    h+='</td>';
+    h+='<td class="n"><span class="'+(qr.totalVal>=1000?'pos':'mo')+'">'+fmt(qr.totalVal)+'</span></td></tr>';
+  });document.getElementById('qBody').innerHTML=h;
+  document.getElementById('qCnt').textContent=rows.length+' quests';showMoreBtn('qMore',0);
 }
 function buildQuestFilters(){
   var areas={};D.quests.forEach(function(q){if(q.area)areas[q.area]=1;});
@@ -1518,8 +1613,8 @@ function filteredGilHr(){
   });
 }
 function renderGilHr(){
-  var rows=sorted(filteredGilHr(),'gilhr');updSort('gilhr');var h='';
-  rows.slice(0,200).forEach(function(r){
+  var all=sorted(filteredGilHr(),'gilhr');updSort('gilhr');var h='';var rows=_showAll.gilhr?all:all.slice(0,200);
+  rows.forEach(function(r){
     var tc={'craft':'t-npc','flip':'t-ah','desynth':'t-guild','bcnm':'t-npc'}[r.atype]||'';
     h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">'+esc(r.name)+'</span>'+(r.allNpc?' <span class="tag t-npc-all">NPC</span>':'')+'</td>';
     h+='<td><span class="tag '+tc+'">'+r.atype+'</span></td>';
@@ -1529,7 +1624,16 @@ function renderGilHr(){
     h+='<td class="n"><span class="mg">'+fmt(r.gilhr)+'</span></td></tr>';
   });
   document.getElementById('gBody').innerHTML=h||'<tr><td colspan="6" class="empty">No matches</td></tr>';
-  document.getElementById('gCnt').textContent=rows.length+' activities';
+  document.getElementById('gCnt').textContent=(all.length>200?'200 of ':'')+all.length+' activities';
+  showMoreBtn('gMore',all.length>200?all.length-200:0,function(){_showAll.gilhr=true;renderGilHr();});
+}
+
+// Show more / Show all
+var _showAll={crafts:false,gilhr:false};
+function showMoreBtn(id,remaining,cb){
+  var el=document.getElementById(id);if(!el)return;
+  if(remaining>0){el.style.display='block';el.textContent='Show all ('+remaining+' more)';el.onclick=function(){if(cb)cb();};}
+  else{el.style.display='none';}
 }
 
 // Shared helpers
@@ -1577,7 +1681,7 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farming:renderFarm,fishing:renderFishing,quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
