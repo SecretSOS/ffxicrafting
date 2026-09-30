@@ -57,6 +57,7 @@
 .gil svg{width:12px;height:12px;color:goldenrod}
 
 </style>
+<script src="/powertools.js"></script>
 </head>
 <body>
 <svg style="display:none" aria-hidden="true">
@@ -182,16 +183,15 @@
 (function(){
 var B=[],I={},prices={},curSeal='all',sortCol='ev-seal',sortDir=-1;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
-var priceMode='custom';
-try{priceMode=localStorage.getItem('phoenix-price-mode')||'custom';}catch(e){}
 function savePrices(){try{localStorage.setItem('phoenix-prices-v2',JSON.stringify(prices));}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
 function itemUrl(id){var it=I[id];if(!it)return'#';var slug=it.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return'/item/'+id+'-'+slug;}
 function itemVal(id){
-  if(priceMode==='custom'){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);p=prices[id];if(p!==undefined&&p!=='')return Number(p);}
-  var a=window.AH;if(a&&a[id])return a[id];
+  var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);
+  p=prices[id];if(p!==undefined&&p!=='')return Number(p);
+  var a=window.AH;if(window.PT&&a&&a[id])return a[id];
   var it=I[id];if(!it)return 0;
   return it.b||0;
 }

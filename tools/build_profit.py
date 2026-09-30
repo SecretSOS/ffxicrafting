@@ -104,9 +104,9 @@ function savePrices(){try{localStorage.setItem('phoenix-prices-v2',JSON.stringif
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
-function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(a&&a[id])return a[id];var it=I[id];return it?(it.v||0):0;}
+function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.v||0):0;}
 function npcSell(id){var it=I[id];return it?(it.b||0):0;}
-function ahPrice(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(a&&a[id])return a[id];return 0;}
+function ahPrice(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];return 0;}
 function bestSell(id){return ahPrice(id)||npcSell(id);}
 function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
 function itemUrl(id){var it=I[id];return it?'/item/'+id+'-'+slugify(it.n):'#';}

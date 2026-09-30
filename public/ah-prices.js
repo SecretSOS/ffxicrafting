@@ -22,6 +22,7 @@ function load(){
  x.send();
 }
 function show(d){
+ if(!window.PT)return;
  var el=document.getElementById('ahStatus');
  if(!el)return;
  var ago=Math.floor((Date.now()/1000-d.fetched)/60);
