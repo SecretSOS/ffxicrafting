@@ -529,6 +529,21 @@ def load_all():
         })
     quest_list.sort(key=lambda q: -q['totalVal'])
 
+    # ── GP Rewards ──
+    gp_rewards = []
+    for r in db.execute('''
+        SELECT gp.guild, gp.kind, gp.name, gp.item_id, gp.min_rank, gp.cost, i.name as iname
+        FROM gp_rewards gp
+        LEFT JOIN items i ON gp.item_id=i.id
+        ORDER BY gp.guild, gp.cost
+    '''):
+        gp_rewards.append({
+            'guild': r[0], 'kind': r[1],
+            'name': (r[6] or r[2] or '').replace('_', ' ').title(),
+            'id': r[3], 'rank': (r[4] or '').replace('_', ' ').title(),
+            'cost': r[5], 'isItem': r[1] == 'item',
+        })
+
     # ── Sources Index (compact, for Source Finder) ──
     source_idx = {}
     for r in db.execute('''
@@ -552,6 +567,7 @@ def load_all():
         'desynths': desynths,
         'bcnms': bcnms,
         'gp': gp_turnins,
+        'gpRewards': gp_rewards,
         'drops': drops,
         'gathering': gathering,
         'tree': {'R': recipes_by_result, 'I': items_slim, 'S': search_items},
@@ -767,6 +783,13 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
 .src-chip{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:8px 14px;text-align:center}
 .src-chip .v{font-size:1.1rem;font-weight:700;font-family:var(--mono);color:var(--accent)}
 .src-chip .l{font-size:.68rem;color:var(--ink-faint);text-transform:uppercase}
+.gpr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.gpr-card{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:12px 16px}
+.gpr-card h4{font-size:.82rem;color:var(--accent);margin:0 0 8px;text-transform:capitalize}
+.gpr-item{display:flex;justify-content:space-between;padding:3px 0;font-size:.82rem}
+.gpr-item .gpr-rank{font-size:.72rem;color:var(--ink-faint);text-transform:capitalize}
+.gpr-item .gpr-cost{font-family:var(--mono);color:var(--gold);font-size:.8rem}
+.gpr-ki{color:var(--ink-faint);font-style:italic}
 </style>
 </head>
 <body>
@@ -934,6 +957,8 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="src" data-t="gp">Source</th>
    <th data-k="pattern" data-t="gp" class="n">Pattern</th>
   </tr></thead><tbody id="gpBody"></tbody></table></div>
+  <button class="show-more" id="gpMore" style="display:none"></button>
+  <div id="gpRewards" style="margin-top:20px"></div>
  </div>
 
  <div class="pane" id="p-farming">
@@ -1091,7 +1116,7 @@ function renderDash(){
     function(d){return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.input.name).replace(/'/g,"\\'")+'\')">' +esc(d.input.name)+'</span></td><td>'+d.craft+'</td>'+
     '<td class="n"><span class="pos">+'+fmt(d.profit)+'</span></td>'});
   document.getElementById('dashBcnm').innerHTML=miniTable(pb.slice(0,10),
-    function(b){return'<td class="nm">'+esc(b.name)+'</td><td>'+b.sealType+'</td>'+
+    function(b){return'<td class="nm"><span class="item-link" onclick="goToBcnm(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span></td><td>'+b.sealType+'</td>'+
     '<td class="n">'+b.seals+'</td><td class="n"><span class="pos">'+fmt(b.ev)+'g</span></td>'});
 }
 function miniTable(rows,fn){
@@ -1187,12 +1212,12 @@ function renderCrafts(){
     h+='<td><span class="tag t-'+c.result.src+'">'+c.result.src+'</span></td>';
     h+='<td class="n">'+c.result.qty+'</td></tr>';
     h+='<tr class="detail" id="cd'+i+'"><td colspan="9">';
-    h+='<div class="mats"><strong>Crystal:</strong> <span class="mat">'+esc(c.crystal.name)+
+    h+='<div class="mats"><strong>Crystal:</strong> <span class="mat"><span class="item-link" onclick="goToItem(\''+esc(c.crystal.name).replace(/'/g,"\\\\'")+'\')">' +esc(c.crystal.name)+'</span>'+
       (c.crystal.price?' <span class="mat-p gil">'+fmt(c.crystal.price)+'</span>':'')+
       (c.crystal.src?' <span class="tag t-'+c.crystal.src+'">'+c.crystal.src+'</span>':'')+'</span></div>';
     h+='<div class="mats" style="margin-top:4px"><strong>Materials:</strong> ';
     c.mats.forEach(function(m){
-      h+='<span class="mat"><span class="mat-q">'+m.qty+'x</span> '+esc(m.name);
+      h+='<span class="mat"><span class="mat-q">'+m.qty+'x</span> <span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
       if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total)+'</span>';
       if(m.src)h+=' <span class="tag t-'+m.src+'">'+m.src+'</span>';
       h+='</span> ';
@@ -1200,7 +1225,7 @@ function renderCrafts(){
     h+='</div>';
     if(c.hq.length){h+='<div style="margin-top:6px">';
       c.hq.forEach(function(hq,hi){
-        h+='<div class="hq-tier">HQ'+(hi+1)+': '+esc(hq.name)+' x'+hq.qty+
+        h+='<div class="hq-tier">HQ'+(hi+1)+': <span class="item-link" onclick="goToItem(\''+esc(hq.name).replace(/'/g,"\\\\'")+'\')">' +esc(hq.name)+'</span> x'+hq.qty+
           (hq.price?' — <span class="gil">'+fmt(hq.rev)+'</span>':'')+'</div>';
       });h+='</div>';}
     h+='</td></tr>';
@@ -1348,7 +1373,7 @@ function renderShoppingTree(itemId){
   var total=entries.reduce(function(s,e){return s+e.cost;},0);
   html+='<div class="base-mats"><h3>Base Materials — Total: <span class="gil">'+fmt(total)+'g</span></h3>';
   entries.forEach(function(e){
-    html+='<div class="bm-row"><span>'+esc(e.name)+' &times;'+e.qty+
+    html+='<div class="bm-row"><span><span class="item-link" onclick="goToItem(\''+esc(e.name).replace(/'/g,"\\'")+'\')">' +esc(e.name)+'</span> &times;'+e.qty+
       ' <span class="bm-src tag t-'+e.src+'">'+e.src+'</span>'+
       (e.unit?' <span class="sub">@'+fmt(e.unit)+'ea</span>':'')+
       '</span><span class="gil">'+fmt(Math.round(e.cost))+'g</span></div>';
@@ -1428,9 +1453,13 @@ function renderSources(itemId){
     h+='<div class="src-chip"><div class="v" style="color:var(--gold)">'+fmt(cheapest.p)+'</div><div class="l">Cheapest Vendor</div></div>';}
   h+='</div>';
   var groupOrder=['Buy','Craft','Drop','Gather','Reward','Other'];
+  var grpTab={'Buy':'flips','Craft':'crafts','Drop':'farming','Gather':'farming','Reward':'quests'};
   groupOrder.forEach(function(grp){
     var items=byGroup[grp];if(!items||!items.length)return;
-    h+='<div class="src-group"><h4>'+grp+' ('+items.length+')</h4>';
+    var tab=grpTab[grp];
+    h+='<div class="src-group"><h4 style="display:flex;align-items:center;gap:10px">'+grp+' ('+items.length+')';
+    if(tab)h+='<span class="item-link" style="font-size:.7rem;font-weight:400;text-transform:none" onclick="srcNavTab(\''+tab+'\',\''+esc(it.n).replace(/'/g,"\\'")+'\')">&rarr; view in '+tab+'</span>';
+    h+='</h4>';
     h+='<div style="background:var(--bg2);border:1px solid var(--rule);border-radius:8px;overflow:hidden">';
     items.forEach(function(s){
       h+='<div class="src-row">';
@@ -1497,7 +1526,7 @@ function renderSkillup(){
     '<th class="n">Net Cost</th><th class="n">Success</th><th class="n">Synths/Lv</th>'+
     '<th class="n">Level Cost</th><th class="n">Cumulative</th></tr></thead><tbody>';
   rows.forEach(function(r){
-    h+='<tr><td>'+r.lv+'</td><td class="nm">'+esc(r.name)+'</td><td class="n">'+r.rlv+'</td>'+
+    h+='<tr><td>'+r.lv+'</td><td class="nm">'+(r.name!=='—'?'<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>':r.name)+'</td><td class="n">'+r.rlv+'</td>'+
     '<td class="n"><span class="gil">'+fmt(r.gross)+'</span></td>'+
     '<td class="n"><span class="gil">'+fmt(r.net)+'</span></td>'+
     '<td class="n">'+(r.sr!==undefined?Math.round(r.sr*100)+'%':'—')+'</td>'+
@@ -1525,9 +1554,9 @@ function filteredGp(){
   });
 }
 function renderGp(){
-  var rows=sorted(filteredGp(),'gp');updSort('gp');var h='';var shown=rows.slice(0,300);
+  var all=sorted(filteredGp(),'gp');updSort('gp');var h='';var shown=all.slice(0,300);
   shown.forEach(function(g){
-    h+='<tr><td class="nm">'+esc(g.name)+'</td>';
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(g.name).replace(/'/g,"\\'")+'\')">' +esc(g.name)+'</span></td>';
     h+='<td>'+esc(g.guild)+'</td><td class="n">'+g.tier+'</td>';
     h+='<td class="n gil">'+fmt(g.pts)+'</td><td class="n">'+fmt(g.maxPts)+'</td>';
     h+='<td class="n">'+(g.price?'<span class="gil">'+fmt(g.price)+'</span>':'<span class="sub">—</span>')+'</td>';
@@ -1536,7 +1565,40 @@ function renderGp(){
     h+='<td class="n">'+g.pattern+'</td></tr>';
   });
   document.getElementById('gpBody').innerHTML=h||'<tr><td colspan="9" class="empty">No matches</td></tr>';
-  document.getElementById('gpCnt').textContent=shown.length+(rows.length>shown.length?' of '+rows.length:'')+' items';
+  document.getElementById('gpCnt').textContent=shown.length+(all.length>300?' of '+all.length:'')+' items';
+  showMoreBtn('gpMore',all.length>300?all.length-300:0,function(){renderGpFull(all);});
+}
+function renderGpFull(all){var h='';all.forEach(function(g){
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(g.name).replace(/'/g,"\\'")+'\')">' +esc(g.name)+'</span></td>';
+    h+='<td>'+esc(g.guild)+'</td><td class="n">'+g.tier+'</td>';
+    h+='<td class="n gil">'+fmt(g.pts)+'</td><td class="n">'+fmt(g.maxPts)+'</td>';
+    h+='<td class="n">'+(g.price?'<span class="gil">'+fmt(g.price)+'</span>':'<span class="sub">—</span>')+'</td>';
+    h+='<td class="n">'+(g.cpg!==null?'<span class="'+(g.cpg<=3?'pos':g.cpg<=8?'mo':'neg')+'">'+g.cpg.toFixed(1)+'</span>':'<span class="sub">—</span>')+'</td>';
+    h+='<td>'+(g.src?'<span class="tag t-'+g.src+'">'+g.src+'</span>':'')+'</td>';
+    h+='<td class="n">'+g.pattern+'</td></tr>';
+  });document.getElementById('gpBody').innerHTML=h;
+  document.getElementById('gpCnt').textContent=all.length+' items';showMoreBtn('gpMore',0);
+}
+
+// GP Rewards reference
+function renderGpRewards(){
+  if(!D.gpRewards||!D.gpRewards.length)return;
+  var byGuild={};
+  D.gpRewards.forEach(function(r){byGuild[r.guild]=byGuild[r.guild]||[];byGuild[r.guild].push(r);});
+  var h='<h3 style="font-size:.95rem;color:var(--ink-soft);margin:0 0 12px">GP Rewards — What You Can Buy</h3><div class="gpr-grid">';
+  Object.keys(byGuild).sort().forEach(function(guild){
+    h+='<div class="gpr-card"><h4>'+guild+'</h4>';
+    byGuild[guild].forEach(function(r){
+      h+='<div class="gpr-item"><span>';
+      if(r.isItem&&r.id){h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';}
+      else{h+='<span class="gpr-ki">'+esc(r.name)+'</span>';}
+      h+=' <span class="gpr-rank">'+esc(r.rank)+'</span></span>';
+      h+='<span class="gpr-cost">'+fmt(r.cost)+' GP</span></div>';
+    });
+    h+='</div>';
+  });
+  h+='</div>';
+  document.getElementById('gpRewards').innerHTML=h;
 }
 
 // Farming / Drops / Gathering
@@ -1620,7 +1682,7 @@ function renderFishing(){
     h+='<td class="n">'+(f.sell?'<span class="gil">'+fmt(f.sell)+'</span>':'—')+'</td>';
     h+='<td>'+(f.sellSrc?'<span class="tag t-'+f.sellSrc+'">'+f.sellSrc+'</span>':'')+'</td>';
     h+='<td class="sub">';
-    f.baits.slice(0,2).forEach(function(b,i){if(i)h+=', ';h+=esc(b.name);});
+    f.baits.slice(0,2).forEach(function(b,i){if(i)h+=', ';h+='<span class="item-link" onclick="goToItem(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span>';});
     h+='</td>';
     h+='<td class="sub">';
     f.zones.slice(0,3).forEach(function(z,i){if(i)h+=', ';h+=esc(z.zone);});
@@ -1643,7 +1705,7 @@ function renderFishFull(rows){var h='';rows.forEach(function(f){
     h+='<td>'+esc(f.water)+'</td>';
     h+='<td class="n">'+(f.sell?'<span class="gil">'+fmt(f.sell)+'</span>':'—')+'</td>';
     h+='<td>'+(f.sellSrc?'<span class="tag t-'+f.sellSrc+'">'+f.sellSrc+'</span>':'')+'</td>';
-    h+='<td class="sub">';f.baits.slice(0,2).forEach(function(b,i){if(i)h+=', ';h+=esc(b.name);});h+='</td>';
+    h+='<td class="sub">';f.baits.slice(0,2).forEach(function(b,i){if(i)h+=', ';h+='<span class="item-link" onclick="goToItem(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span>';});h+='</td>';
     h+='<td class="sub">';f.zones.slice(0,3).forEach(function(z,i){if(i)h+=', ';h+=esc(z.zone);});
     if(f.zoneCount>3)h+=' +'+(f.zoneCount-3);h+='</td>';
     h+='<td class="n">'+f.zoneCount+'</td></tr>';
@@ -1809,7 +1871,7 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGp();renderGpRewards();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
@@ -1930,14 +1992,35 @@ document.getElementById('cmdResults').addEventListener('click',function(e){
   var m=window._cmdMatches||[];var i=Number(r.dataset.i);if(m[i])cmdSelect(m[i]);
 });
 
-// ── Item linking: click item names to open Shopping List ──
+// ── Navigation helpers ──
+function srcNavTab(tab,name){
+  var searchMap={flips:'fSearch',crafts:'cSearch',farming:'farmSearch',quests:'qSearch'};
+  var sid=searchMap[tab];
+  if(sid){var el=document.getElementById(sid);if(el)el.value=name;}
+  if(tab==='farming'){document.getElementById('farmType').value='drops';}
+  switchTab(tab);
+  if(sid){var el2=document.getElementById(sid);if(el2)el2.dispatchEvent(new Event('input'));}
+}
+function goToBcnm(name){
+  document.getElementById('bSearch').value=name;
+  switchTab('bcnm');
+  document.getElementById('bSearch').dispatchEvent(new Event('input'));
+}
 function goToItem(name,id){
-  switchTab('shop');
-  document.getElementById('slSearch').value=name;
-  if(id&&T&&T.R&&T.R[String(id)]){renderShoppingTree(id);}
+  var found=false;
+  if(id&&T&&T.R&&T.R[String(id)]){switchTab('shop');document.getElementById('slSearch').value=name;renderShoppingTree(id);found=true;}
   else if(T&&T.S){
     var match=T.S.find(function(s){return s[1]===name||s[1].toLowerCase()===name.toLowerCase();});
-    if(match)renderShoppingTree(match[0]);
+    if(match){switchTab('shop');document.getElementById('slSearch').value=name;renderShoppingTree(match[0]);found=true;}
+  }
+  if(!found){
+    var allItems=Object.keys(T.I).map(function(k){return{id:Number(k),name:T.I[k].n};});
+    var srcMatch=allItems.find(function(it){return it.name===name||it.name.toLowerCase()===name.toLowerCase();});
+    if(srcMatch&&D.sourceIdx[String(srcMatch.id)]){
+      switchTab('sources');document.getElementById('srcSearch').value=name;renderSources(srcMatch.id);
+    } else {
+      switchTab('shop');document.getElementById('slSearch').value=name;
+    }
   }
 }
 </script>
