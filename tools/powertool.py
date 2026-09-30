@@ -790,6 +790,14 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
 .gpr-item .gpr-rank{font-size:.72rem;color:var(--ink-faint);text-transform:capitalize}
 .gpr-item .gpr-cost{font-family:var(--mono);color:var(--gold);font-size:.8rem}
 .gpr-ki{color:var(--ink-faint);font-style:italic}
+.zone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.zone-card{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;cursor:pointer;transition:.15s}
+.zone-card:hover{border-color:var(--accent);background:var(--bg3)}
+.zone-card h4{font-size:.92rem;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center}
+.zone-card h4 .zone-ev{font-family:var(--mono);color:var(--gold);font-size:.88rem}
+.zone-top{display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem}
+.zone-top span{background:var(--bg3);padding:2px 8px;border-radius:4px}
+.zone-meta{display:flex;gap:12px;font-size:.72rem;color:var(--ink-faint);margin-top:8px}
 </style>
 </head>
 <body>
@@ -965,11 +973,12 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
   <div style="padding:0 0 8px"><p style="color:var(--ink-soft);font-size:.88rem">Mob drops and gathering points ranked by expected value. EV = AH price &times; drop rate.</p></div>
   <div class="ctrl">
    <input type="search" id="farmSearch" placeholder="Search item, mob, or zone...">
-   <select id="farmType"><option value="drops">Mob Drops</option><option value="gathering">Gathering</option></select>
+   <select id="farmType"><option value="drops">Mob Drops</option><option value="gathering">Gathering</option><option value="zones">Zone Summary</option></select>
    <select id="farmZone"><option value="">All zones</option></select>
    <label>Min EV <input type="number" id="farmMinEV" value="0" min="0"></label>
    <span class="sp"></span><span class="cnt" id="farmCnt"></span>
   </div>
+  <div id="farmTableWrap">
   <div class="tw"><table><thead><tr>
    <th data-k="name" data-t="farm">Item</th><th data-k="mob" data-t="farm">Source</th>
    <th data-k="zone" data-t="farm">Zone</th>
@@ -979,6 +988,8 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <th data-k="lvLo" data-t="farm" class="n">Level</th>
   </tr></thead><tbody id="farmBody"></tbody></table></div>
   <button class="show-more" id="farmMore" style="display:none"></button>
+  </div>
+  <div id="farmZoneView" style="display:none"></div>
  </div>
 
  <div class="pane" id="p-fishing">
@@ -1073,6 +1084,20 @@ function init(){
     '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
   buildFilters();renderDash();renderBcnm();
   setupShoppingList();setupSourceFinder();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();
+  setBadges();
+}
+function setBadges(){
+  var pf=D.flips.filter(function(f){return f.profit&&f.profit>0}).length;
+  var pc=D.crafts.filter(function(c){return c.profit&&c.profit>0}).length;
+  var pd=D.desynths.filter(function(d){return d.profit&&d.profit>0}).length;
+  var badges={flips:pf,crafts:pc,desynth:pd,bcnm:D.bcnms.length};
+  document.querySelectorAll('.tab').forEach(function(btn){
+    var tab=btn.dataset.tab;if(badges[tab]){
+      var b=btn.querySelector('.badge');
+      if(!b){b=document.createElement('span');b.className='badge';btn.appendChild(b);}
+      b.textContent=badges[tab];
+    }
+  });
 }
 function buildFilters(){
   var gs={},zs={},crs={};
@@ -1619,7 +1644,15 @@ function filteredFarm(){
   });
 }
 function renderFarm(){
-  var rows=sorted(filteredFarm(),'farm');updSort('farm');var mode=val('farmType');var h='';var shown=rows.slice(0,300);
+  var mode=val('farmType');
+  if(mode==='zones'){
+    document.getElementById('farmTableWrap').style.display='none';
+    document.getElementById('farmZoneView').style.display='block';
+    renderZoneSummary();return;
+  }
+  document.getElementById('farmTableWrap').style.display='';
+  document.getElementById('farmZoneView').style.display='none';
+  var rows=sorted(filteredFarm(),'farm');updSort('farm');var h='';var shown=rows.slice(0,300);
   shown.forEach(function(d){
     h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.name).replace(/'/g,"\\'")+'\')">' +esc(d.name)+'</span></td>';
     h+='<td class="sub">'+esc(mode==='gathering'?d.type:d.mob)+'</td>';
@@ -1647,6 +1680,47 @@ function renderFarmFull(rows,mode){var h='';rows.forEach(function(d){
     h+='</tr>';
   });document.getElementById('farmBody').innerHTML=h;
   document.getElementById('farmCnt').textContent=rows.length+' entries';showMoreBtn('farmMore',0);
+}
+
+// Zone Summary
+function renderZoneSummary(){
+  var q=val('farmSearch').toLowerCase(),minEV=num('farmMinEV');
+  var zones={};
+  D.drops.forEach(function(d){
+    if(!d.zone)return;
+    if(q&&d.zone.toLowerCase().indexOf(q)<0&&d.name.toLowerCase().indexOf(q)<0)return;
+    if(!zones[d.zone])zones[d.zone]={totalEV:0,drops:[],gather:[],dropCount:0,gatherCount:0};
+    zones[d.zone].totalEV+=d.ev;zones[d.zone].drops.push(d);zones[d.zone].dropCount++;
+  });
+  D.gathering.forEach(function(g){
+    if(!g.zone)return;
+    if(q&&g.zone.toLowerCase().indexOf(q)<0&&g.name.toLowerCase().indexOf(q)<0)return;
+    if(!zones[g.zone])zones[g.zone]={totalEV:0,drops:[],gather:[],dropCount:0,gatherCount:0};
+    zones[g.zone].totalEV+=g.ev;zones[g.zone].gather.push(g);zones[g.zone].gatherCount++;
+  });
+  var arr=Object.keys(zones).map(function(z){return{zone:z,data:zones[z]};});
+  arr.sort(function(a,b){return b.data.totalEV-a.data.totalEV;});
+  if(minEV)arr=arr.filter(function(z){return z.data.totalEV>=minEV;});
+  var h='<div class="zone-grid">';
+  arr.slice(0,60).forEach(function(z){
+    var d=z.data;
+    var topDrops=d.drops.sort(function(a,b){return b.ev-a.ev;}).slice(0,5);
+    var topGather=d.gather.sort(function(a,b){return b.ev-a.ev;}).slice(0,3);
+    h+='<div class="zone-card" onclick="document.getElementById(\'farmType\').value=\'drops\';document.getElementById(\'farmZone\').value=\''+esc(z.zone).replace(/'/g,"\\'")+'\';renderFarm();">';
+    h+='<h4>'+esc(z.zone)+' <span class="zone-ev">'+fmt(d.totalEV)+' total EV</span></h4>';
+    if(topDrops.length){h+='<div class="zone-top">';
+      topDrops.forEach(function(dr){h+='<span><span class="item-link" onclick="event.stopPropagation();goToItem(\''+esc(dr.name).replace(/'/g,"\\'")+'\')">' +esc(dr.name)+'</span> <span class="pos">'+fmt(dr.ev)+'</span></span>';});
+      h+='</div>';}
+    if(topGather.length){h+='<div class="zone-top" style="margin-top:4px">';
+      topGather.forEach(function(g){h+='<span style="border-left:2px solid var(--accent);padding-left:6px">'+esc(g.type)+': '+esc(g.name)+' <span class="pos">'+fmt(g.ev)+'</span></span>';});
+      h+='</div>';}
+    h+='<div class="zone-meta"><span>'+d.dropCount+' drops</span><span>'+d.gatherCount+' gather</span></div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  document.getElementById('farmZoneView').innerHTML=h;
+  document.getElementById('farmCnt').textContent=arr.length+' zones';
+  showMoreBtn('farmMore',0);
 }
 
 // ── Fishing ──
