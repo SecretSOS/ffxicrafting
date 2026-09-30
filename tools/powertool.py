@@ -468,23 +468,28 @@ def load_all():
 
         zones = []
         for z in db.execute('''
-            SELECT zone, area, rarity FROM fishing_areas
+            SELECT zone, area, rarity, pool_size, restock_rate FROM fishing_areas
             WHERE fish_item_id=? ORDER BY rarity DESC
         ''', (fid,)):
             zones.append({
                 'zone': (z[0] or '').replace('_', ' ').title(),
                 'area': z[1],
                 'rarity': z[2],
+                'pool': z[3],
+                'restock': z[4],
             })
 
         baits = []
         for b in db.execute('''
-            SELECT bf.bait_item_id, fb.name, bf.power
+            SELECT bf.bait_item_id, fb.name, bf.power, fb.type, fb.losable
             FROM fishing_bait_for bf
             JOIN fishing_baits fb ON fb.item_id=bf.bait_item_id
             WHERE bf.fish_item_id=? ORDER BY bf.power DESC
         ''', (fid,)):
-            baits.append({'id': b[0], 'name': name(b[0]), 'power': b[2]})
+            bp, bsrc = cheapest(b[0])
+            baits.append({'id': b[0], 'name': name(b[0]), 'power': b[2],
+                          'type': b[3], 'losable': bool(b[4]),
+                          'cost': bp, 'costSrc': bsrc})
 
         fish_list.append({
             'id': fid, 'name': name(fid),
@@ -492,8 +497,8 @@ def load_all():
             'legendary': bool(f[5]), 'sizeType': f[6],
             'sell': sell, 'sellSrc': sell_src, 'ah': ap, 'npc': bp,
             'ex': ex_flag, 'rare': rare_flag, 'noAH': no_ah,
-            'zones': zones[:8],
-            'baits': baits[:5],
+            'zones': zones,
+            'baits': baits,
             'zoneCount': len(zones),
         })
 
@@ -815,6 +820,31 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
 .zone-top{display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem}
 .zone-top span{background:var(--bg3);padding:2px 8px;border-radius:4px}
 .zone-meta{display:flex;gap:12px;font-size:.72rem;color:var(--ink-faint);margin-top:8px}
+.fish-pick-wrap{display:inline-block}
+.fish-pick-list{position:absolute;top:100%;left:0;right:0;background:var(--bg2);border:1px solid var(--rule);
+border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:none}
+.fish-pick-list.open{display:block}
+.fish-pick-item{padding:6px 12px;cursor:pointer;font-size:.84rem;display:flex;justify-content:space-between}
+.fish-pick-item:hover{background:var(--bg3)}
+.fish-pick-item .fpi-sub{color:var(--ink-faint);font-size:.72rem}
+.fd{margin-top:10px;background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:16px}
+.fd-head{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.fd-name{font-size:1.1rem;font-weight:700;color:var(--ink)}
+.fd-stat{font-size:.8rem;color:var(--ink-soft)}
+.fd-stat b{color:var(--gold);font-family:var(--mono)}
+.fd-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:900px){.fd-cols{grid-template-columns:1fr}}
+.fd-col h4{font-size:.88rem;margin:0 0 8px;color:var(--accent);border-bottom:1px solid var(--rule);padding-bottom:4px}
+.fd-row{display:flex;justify-content:space-between;padding:3px 0;font-size:.82rem;border-bottom:1px solid color-mix(in srgb,var(--rule) 40%,transparent)}
+.fd-row:last-child{border-bottom:none}
+.fd-row .fd-main{color:var(--ink)}
+.fd-row .fd-sub{color:var(--ink-faint);font-size:.74rem}
+.fd-row .fd-val{color:var(--gold);font-family:var(--mono);font-size:.8rem}
+.fd-row.fd-best{background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:3px;padding:3px 4px}
+.fd-zone-group{margin-bottom:6px}
+.fd-zone-name{font-size:.82rem;font-weight:600;color:var(--ink);padding:4px 0 2px}
+.fd-area{display:flex;justify-content:space-between;padding:2px 0 2px 12px;font-size:.78rem;color:var(--ink-soft)}
+.fd-area .fd-val{font-size:.74rem}
 </style>
 </head>
 <body>
@@ -1024,6 +1054,17 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <label><input type="checkbox" id="fishLegendary"> Legendary only</label>
    <span class="sp"></span><span class="cnt" id="fishCnt"></span>
   </div>
+  <div class="fish-lookup" style="margin-bottom:14px">
+   <div class="ctrl" style="margin-bottom:0">
+    <label style="font-weight:600;color:var(--ink)">Fish Lookup</label>
+    <div class="fish-pick-wrap" style="position:relative;flex:1;max-width:340px">
+     <input type="search" id="fishPick" placeholder="Type a fish name to look up...">
+     <div class="fish-pick-list" id="fishPickList"></div>
+    </div>
+    <button class="scan-btn" id="fishPickClear" style="display:none">Clear</button>
+   </div>
+   <div id="fishDetail"></div>
+  </div>
   <div id="fishRods" style="margin-bottom:12px"></div>
   <div class="tw"><table><thead><tr>
    <th data-k="name" data-t="fish">Fish</th>
@@ -1120,7 +1161,7 @@ function init(){
     '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
     '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
   buildFilters();renderDash();renderBcnm();
-  setupShoppingList();setupSourceFinder();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();
+  setupShoppingList();setupSourceFinder();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();setupFishLookup();
   setBadges();
 }
 function setBadges(){
@@ -1791,7 +1832,7 @@ function renderFishing(){
   rows=sorted(rows,'fish');updSort('fish');
   var h='';
   rows.slice(0,200).forEach(function(f){
-    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>';
+    h+='<tr><td class="nm"><span class="item-link" onclick="fishLookup(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>';
     if(f.ex)h+=' <span class="ex">Ex</span>';if(f.rare)h+=' <span class="ra">Rare</span>';
     if(f.legendary)h+=' <span class="tag t-guild">Legend</span>';
     h+='</td>';
@@ -1815,7 +1856,7 @@ function renderFishing(){
   showMoreBtn('fishMore',rows.length>200?rows.length-200:0,function(){renderFishFull(rows);});
 }
 function renderFishFull(rows){var h='';rows.forEach(function(f){
-    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>';
+    h+='<tr><td class="nm"><span class="item-link" onclick="fishLookup(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>';
     if(f.ex)h+=' <span class="ex">Ex</span>';if(f.rare)h+=' <span class="ra">Rare</span>';
     if(f.legendary)h+=' <span class="tag t-guild">Legend</span>';
     h+='</td>';
@@ -1830,6 +1871,102 @@ function renderFishFull(rows){var h='';rows.forEach(function(f){
     h+='<td class="n">'+f.zoneCount+'</td></tr>';
   });document.getElementById('fishBody').innerHTML=h;
   document.getElementById('fishCnt').textContent=rows.length+' fish';showMoreBtn('fishMore',0);
+}
+
+// ── Fish Lookup ──
+function setupFishLookup(){
+  var inp=document.getElementById('fishPick'),list=document.getElementById('fishPickList'),
+      clr=document.getElementById('fishPickClear');
+  inp.addEventListener('input',function(){
+    var q=this.value.toLowerCase().trim();
+    if(q.length<2){list.innerHTML='';list.classList.remove('open');return;}
+    var matches=D.fishing.filter(function(f){return f.name.toLowerCase().indexOf(q)>=0}).slice(0,12);
+    if(!matches.length){list.innerHTML='<div class="fish-pick-item" style="color:var(--ink-faint)">No matches</div>';list.classList.add('open');return;}
+    list.innerHTML=matches.map(function(f){
+      return '<div class="fish-pick-item" data-fid="'+f.id+'"><span>'+esc(f.name)+'</span><span class="fpi-sub">Skill '+f.skill+' &middot; '+f.water+'</span></div>';
+    }).join('');
+    list.classList.add('open');
+  });
+  list.addEventListener('click',function(e){
+    var el=e.target.closest('.fish-pick-item');if(!el||!el.dataset.fid)return;
+    var fid=Number(el.dataset.fid);
+    var fish=D.fishing.find(function(f){return f.id===fid});
+    if(fish){inp.value=fish.name;list.classList.remove('open');clr.style.display='';showFishDetail(fish);}
+  });
+  clr.addEventListener('click',function(){inp.value='';list.classList.remove('open');clr.style.display='none';document.getElementById('fishDetail').innerHTML='';});
+  inp.addEventListener('blur',function(){setTimeout(function(){list.classList.remove('open')},200)});
+  inp.addEventListener('focus',function(){if(this.value.length>=2){this.dispatchEvent(new Event('input'))}});
+}
+function fishLookup(name){
+  var fish=D.fishing.find(function(f){return f.name===name});
+  if(!fish)return;
+  switchTab('fishing');
+  document.getElementById('fishPick').value=fish.name;
+  document.getElementById('fishPickClear').style.display='';
+  showFishDetail(fish);
+  document.getElementById('fishDetail').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function showFishDetail(f){
+  var h='<div class="fd"><div class="fd-head">';
+  h+='<span class="fd-name">'+esc(f.name)+'</span>';
+  if(f.legendary)h+=' <span class="tag t-guild">Legendary</span>';
+  if(f.ex)h+=' <span class="ex">Ex</span>';
+  if(f.rare)h+=' <span class="ra">Rare</span>';
+  h+='<span class="fd-stat">Skill <b>'+f.skill+'</b></span>';
+  h+='<span class="fd-stat">Difficulty <b>'+(f.difficulty||'?')+'</b></span>';
+  h+='<span class="fd-stat">Size <b>'+f.sizeType+'</b></span>';
+  h+='<span class="fd-stat">Water <b>'+esc(f.water)+'</b></span>';
+  if(f.sell)h+='<span class="fd-stat">Sell <b class="gil">'+fmt(f.sell)+'g</b> <span class="tag t-'+(f.sellSrc||'npc')+'">'+f.sellSrc+'</span></span>';
+  h+='</div>';
+  h+='<div class="fd-cols">';
+
+  // Column 1: Rods
+  h+='<div class="fd-col"><h4>Compatible Rods</h4>';
+  var rods=D.rods.filter(function(r){return r.sizeType===f.sizeType});
+  rods.sort(function(a,b){return b.attack-a.attack});
+  if(rods.length){
+    rods.forEach(function(r,i){
+      var cls=i===0?' fd-best':'';
+      h+='<div class="fd-row'+cls+'"><div><span class="fd-main item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';
+      h+='<div class="fd-sub">Rank '+r.minRank+'-'+r.maxRank+' &middot; Atk '+r.attack+'</div></div>';
+      h+='</div>';
+    });
+  } else h+='<div class="fd-row"><span class="fd-sub">No compatible rods found</span></div>';
+  h+='</div>';
+
+  // Column 2: Baits
+  h+='<div class="fd-col"><h4>Baits (by power)</h4>';
+  if(f.baits.length){
+    f.baits.forEach(function(b,i){
+      var cls=i===0?' fd-best':'';
+      h+='<div class="fd-row'+cls+'"><div><span class="fd-main item-link" onclick="goToItem(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span>';
+      h+='<div class="fd-sub">Power '+b.power+' &middot; '+b.type+(b.losable?' &middot; consumable':'')+'</div></div>';
+      h+='<span class="fd-val">'+(b.cost?fmt(b.cost)+'g':'—')+'</span></div>';
+    });
+  } else h+='<div class="fd-row"><span class="fd-sub">No bait data</span></div>';
+  h+='</div>';
+
+  // Column 3: Zones
+  h+='<div class="fd-col"><h4>Zones ('+f.zones.length+' spots)</h4>';
+  if(f.zones.length){
+    var grouped={},order=[];
+    f.zones.forEach(function(z){
+      if(!grouped[z.zone]){grouped[z.zone]=[];order.push(z.zone);}
+      grouped[z.zone].push(z);
+    });
+    order.forEach(function(zn){
+      h+='<div class="fd-zone-group"><div class="fd-zone-name">'+esc(zn)+'</div>';
+      grouped[zn].forEach(function(z){
+        var pct=z.rarity?Math.round(z.rarity/10)/100+'%':'?';
+        h+='<div class="fd-area"><span>'+esc(z.area)+'</span><span class="fd-val">'+pct+'</span></div>';
+      });
+      h+='</div>';
+    });
+  } else h+='<div class="fd-row"><span class="fd-sub">No zone data</span></div>';
+  h+='</div>';
+
+  h+='</div></div>';
+  document.getElementById('fishDetail').innerHTML=h;
 }
 
 // ── Quests ──
