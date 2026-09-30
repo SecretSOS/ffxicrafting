@@ -1630,16 +1630,17 @@ document.addEventListener('keydown',function(e){
 // ── Command Palette (Ctrl+K / /) ──
 var cmdIdx=0,cmdItems=[],cmdTypeFilter='';
 function cmdBuildIndex(){
-  cmdItems=[];
-  if(!D)return;
-  D.crafts.forEach(function(c){cmdItems.push({name:c.name,type:'craft',sub:c.craft+' '+c.level,tab:'crafts',id:c.resultId});});
-  D.flips.forEach(function(f){cmdItems.push({name:f.name,type:'flip',sub:f.vendor+' ('+f.zone+')',tab:'flips',id:f.id});});
-  D.desynths.forEach(function(d){cmdItems.push({name:d.input.name,type:'desynth',sub:d.craft+' '+d.level,tab:'desynth'});});
-  D.bcnms.forEach(function(b){cmdItems.push({name:b.name,type:'bcnm',sub:b.sealType+' x'+b.seals+' — '+fmt(b.ev)+'g EV',tab:'bcnm'});});
-  D.fishing.forEach(function(f){cmdItems.push({name:f.name,type:'fish',sub:'Skill '+f.skill+' '+f.water,tab:'fishing'});});
-  D.quests.forEach(function(q){cmdItems.push({name:q.name,type:'quest',sub:q.area,tab:'quests'});});
-  D.gp.forEach(function(g){cmdItems.push({name:g.name,type:'gp',sub:g.guild+' — '+g.pts+'GP',tab:'gp'});});
-  if(T&&T.S)T.S.forEach(function(s){cmdItems.push({name:s[1],type:'item',sub:'craftable',tab:'shop',itemId:s[0]});});
+  cmdItems=[];if(!D)return;
+  var seen={};
+  function add(o){var k=o.type+'|'+o.name;if(seen[k])return;seen[k]=1;cmdItems.push(o);}
+  D.crafts.forEach(function(c){add({name:c.name,type:'craft',sub:c.craft+' '+c.level,tab:'crafts',id:c.resultId});});
+  D.flips.forEach(function(f){add({name:f.name,type:'flip',sub:f.vendor+' ('+f.zone+')',tab:'flips',id:f.id});});
+  D.desynths.forEach(function(d){add({name:d.input.name,type:'desynth',sub:d.craft+' '+d.level,tab:'desynth'});});
+  D.bcnms.forEach(function(b){add({name:b.name,type:'bcnm',sub:b.sealType+' x'+b.seals+' — '+fmt(b.ev)+'g EV',tab:'bcnm'});});
+  D.fishing.forEach(function(f){add({name:f.name,type:'fish',sub:'Skill '+f.skill+' '+f.water,tab:'fishing'});});
+  D.quests.forEach(function(q){add({name:q.name,type:'quest',sub:q.area,tab:'quests'});});
+  D.gp.forEach(function(g){add({name:g.name,type:'gp',sub:g.guild+' — '+g.pts+'GP',tab:'gp'});});
+  if(T&&T.S)T.S.forEach(function(s){add({name:s[1],type:'item',sub:'craftable',tab:'shop',itemId:s[0]});});
 }
 function cmdOpen(){
   var ov=document.getElementById('cmdOverlay'),inp=document.getElementById('cmdInput');
@@ -1668,10 +1669,11 @@ function cmdRender(q){
 function cmdSelect(it){
   cmdClose();
   if(it.tab==='shop'&&it.itemId){switchTab('shop');document.getElementById('slSearch').value=it.name;renderShoppingTree(it.itemId);return;}
-  switchTab(it.tab);
   var searchMap={flips:'fSearch',crafts:'cSearch',desynth:'dSearch',bcnm:'bSearch',fishing:'fishSearch',quests:'qSearch',gp:null};
   var sid=searchMap[it.tab];
-  if(sid){var el=document.getElementById(sid);if(el){el.value=it.name;el.dispatchEvent(new Event('input'));}}
+  if(sid){var el=document.getElementById(sid);if(el)el.value=it.name;}
+  switchTab(it.tab);
+  if(sid){var el2=document.getElementById(sid);if(el2)el2.dispatchEvent(new Event('input'));}
 }
 document.getElementById('cmdOverlay').addEventListener('click',function(e){if(e.target===this)cmdClose();});
 document.getElementById('cmdInput').addEventListener('input',function(){cmdRender(this.value);});
