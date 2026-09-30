@@ -849,6 +849,7 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
    <select id="fGuild"><option value="">All guilds</option></select>
    <select id="fZone"><option value="">All zones</option></select>
    <label>Min profit <input type="number" id="fMinP" value="0" min="0"></label>
+   <label><input type="checkbox" id="fGilOnly" checked> Gil only</label>
    <label><input type="checkbox" id="fAH" checked> Has AH</label>
    <label><input type="checkbox" id="fProfit" checked> Profitable</label>
    <span class="sp"></span><span class="cnt" id="fCnt"></span>
@@ -931,6 +932,9 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
   <div class="shop-search">
    <input type="search" id="srcSearch" placeholder="Search any item..." autocomplete="off">
    <div class="sl-list" id="srcList"></div>
+  </div>
+  <div class="ctrl" style="margin-top:8px">
+   <label><input type="checkbox" id="srcGilOnly"> Hide alt-currency (Conquest/Besieged/Curio/GP)</label>
   </div>
   <div id="srcResult"></div>
  </div>
@@ -1151,15 +1155,17 @@ function miniTable(rows,fn){
 }
 
 // Vendor Flips
+var ALT_CURRENCY_TYPES=['conquest_vendor','besieged_vendor','curio_vendor'];
 function filteredFlips(){
   var q=val('fSearch').toLowerCase(),type=val('fType'),guild=val('fGuild'),zone=val('fZone'),
-      minP=num('fMinP'),onlyAH=chk('fAH'),onlyP=chk('fProfit');
+      minP=num('fMinP'),onlyAH=chk('fAH'),onlyP=chk('fProfit'),gilOnly=chk('fGilOnly');
   return D.flips.map(function(v){
     if(!v.base)return v;
     var ep=famePrice(v.base,fameRank),pr=v.ah?v.ah-ep:null;
     return Object.assign({},v,{npc:ep,profit:pr,margin:pr&&ep>0?Math.round(pr/ep*1000)/10:null,
       stackProfit:pr?Math.round(pr*v.stack):null});
   }).filter(function(v){
+    if(gilOnly&&ALT_CURRENCY_TYPES.indexOf(v.type)>=0)return false;
     if(q&&v.name.toLowerCase().indexOf(q)<0&&v.vendor.toLowerCase().indexOf(q)<0)return false;
     if(type&&v.type!==type)return false;
     if(guild&&v.guild!==guild)return false;
@@ -1434,8 +1440,11 @@ function setupSourceFinder(){
   });
   list.addEventListener('click',function(e){var it=e.target.closest('.sl-item');if(it)srcPick(Number(it.getAttribute('data-id')));});
   inp.addEventListener('blur',function(){setTimeout(function(){list.classList.remove('open');},200);});
+  document.getElementById('srcGilOnly').addEventListener('change',function(){if(_srcCurrentId)renderSources(_srcCurrentId);});
 }
+var _srcCurrentId=null;
 function srcPick(id){
+  _srcCurrentId=id;
   var it=T.I[id];if(it)document.getElementById('srcSearch').value=it.n;
   document.getElementById('srcList').classList.remove('open');
   renderSources(id);
@@ -1454,8 +1463,11 @@ var SRC_GROUPS={
   'Gather':['mining','logging','harvesting','excavation','chocobo_dig','gardening','clamming','fishing'],
   'Reward':['quest','guild_points']
 };
+var SRC_ALT_CURRENCY=['conquest_vendor','besieged_vendor','curio_vendor','guild_points'];
 function renderSources(itemId){
-  var sources=D.sourceIdx[String(itemId)];
+  var raw=D.sourceIdx[String(itemId)];
+  var hideAlt=chk('srcGilOnly');
+  var sources=raw?raw.filter(function(s){return!hideAlt||SRC_ALT_CURRENCY.indexOf(s.t)<0;}):null;
   var it=T.I[itemId]||{n:'?'};
   var ah=D.flips.find(function(f){return f.id===itemId;});
   var ahP=ah?ah.ah:null;
@@ -1963,7 +1975,7 @@ document.querySelectorAll('th[data-k]').forEach(function(th){
     if(rend[tab])rend[tab]();
   });
 });
-['fSearch','fType','fGuild','fZone','fMinP','fAH','fProfit'].forEach(function(id){
+['fSearch','fType','fGuild','fZone','fMinP','fGilOnly','fAH','fProfit'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='fSearch'?'input':'change',renderFlips)});
 ['cSearch','cCraft','cMaxLv','cMinP','cPriceable','cProfitable','cNpcOnly'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='cSearch'?'input':'change',renderCrafts)});
