@@ -114,7 +114,7 @@ var G={},I={},RC={},prices={},curGuild='wood',curDay=-1;
 var EPOCH=1009810800;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 function vanaDay(){var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25;return Math.floor(vs/60/60/24)%8;}
-function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var it=I[id];return it?(it.v||it.b||0):0;}
+function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(a&&a[id])return a[id];var it=I[id];return it?(it.v||it.b||0):0;}
 function craftCost(itemId){
   var rc=RC[String(itemId)];if(!rc)return null;
   var total=price(rc.cry);

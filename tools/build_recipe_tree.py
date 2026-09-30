@@ -108,7 +108,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
 function itemUrl(id){var it=I[id];if(!it)return'#';var slug=it.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return'/item/'+id+'-'+slug;}
-function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var it=I[id];return it?(it.v||it.b||0):0;}
+function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(a&&a[id])return a[id];var it=I[id];return it?(it.v||it.b||0):0;}
 
 function buildTree(itemId,qty,visited){
   if(!visited)visited={};

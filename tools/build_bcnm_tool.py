@@ -130,8 +130,8 @@ function itemUrl(id){var it=I[id];if(!it)return'#';var slug=it.n.toLowerCase().r
 function itemVal(id){
   var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);
   p=prices[id];if(p!==undefined&&p!=='')return Number(p);
+  var a=window.AH;if(a&&a[id])return a[id];
   var it=I[id];if(!it)return 0;
-  if(it.x)return it.b||0;
   return it.b||0;
 }
 function computeEV(bf){

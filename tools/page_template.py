@@ -162,6 +162,7 @@ def sidebar(active=''):
  <div class="sb-section">
   <div class="sb-heading">Info</div>
 {link("/about-the-data", "About the Data", "about")} </div>
+ <div id="ahStatus" class="ah-status" style="display:none"></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 '''
@@ -195,6 +196,7 @@ def page_scripts():
 <script>{THEME_JS}</script>
 <script>{SIDEBAR_JS}</script>
 <script>{VANA_CLOCK_JS}</script>
+<script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>

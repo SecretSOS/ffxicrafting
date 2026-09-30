@@ -150,6 +150,7 @@
   <div class="sb-heading">Info</div>
   <a href="/about-the-data">About the Data</a>
  </div>
+ <div id="ahStatus" class="ah-status" style="display:none"></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
@@ -189,8 +190,8 @@ function itemUrl(id){var it=I[id];if(!it)return'#';var slug=it.n.toLowerCase().r
 function itemVal(id){
   var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);
   p=prices[id];if(p!==undefined&&p!=='')return Number(p);
+  var a=window.AH;if(a&&a[id])return a[id];
   var it=I[id];if(!it)return 0;
-  if(it.x)return it.b||0;
   return it.b||0;
 }
 function computeEV(bf){
@@ -364,6 +365,7 @@ function tick(){
 }
 tick();setInterval(tick,2400);
 })();</script>
+<script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>

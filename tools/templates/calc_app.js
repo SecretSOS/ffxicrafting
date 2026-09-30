@@ -18,9 +18,9 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
 function gil(n,cls){ return '<span class="gil '+(cls||'')+'"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>'; }
-function price(id){ var p=prices[id]; if(p!==undefined&&p!=='') return Number(p); var it=I[id]; return it?(it.v||0):0; }
+function price(id){ var p=prices[id]; if(p!==undefined&&p!=='') return Number(p); var a=window.AH; if(a&&a[id]) return a[id]; var it=I[id]; return it?(it.v||0):0; }
 function npcSell(id){ var it=I[id]; return it?(it.b||0):0; }
-function ahPrice(id){ var p=prices['s'+id]; return (p!==undefined&&p!=='')?Number(p):0; }
+function ahPrice(id){ var p=prices['s'+id]; if(p!==undefined&&p!=='') return Number(p); var a=window.AH; if(a&&a[id]) return a[id]; return 0; }
 function bestSell(id){ return ahPrice(id)||npcSell(id); }
 function crystalOf(id){ var n=(I[id]&&I[id].n||'').toLowerCase().replace(' crystal',''); return ELEM.indexOf(n)>=0?n:'light'; }
 function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
