@@ -39,6 +39,30 @@ td{padding:8px 10px;border-bottom:1px solid var(--rule);font-size:.88rem}
 .gil svg{width:12px;height:12px;color:goldenrod}
 .holiday{padding:30px;text-align:center;color:var(--ink-faint);font-size:1rem}
 .gp-note{font-size:.82rem;color:var(--ink-faint);margin:6px 0}
+.gp-sec{border:1px solid var(--rule);border-radius:8px;margin:0 0 12px;overflow:hidden}
+.gp-sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;background:color-mix(in srgb,var(--c,var(--accent)) 8%,var(--bg));user-select:none;font-size:.92rem;font-weight:700;color:var(--ink)}
+.gp-sec-hdr:hover{background:color-mix(in srgb,var(--c,var(--accent)) 15%,var(--bg))}
+.gp-sec-hdr .gp-arr{transition:transform .2s;font-size:.7rem;color:var(--ink-faint)}
+.gp-sec-hdr.open .gp-arr{transform:rotate(90deg)}
+.gp-sec-body{display:none;padding:12px 16px}
+.gp-sec-body.open{display:block}
+.gp-sub{border:1px solid var(--rule);border-radius:6px;margin:0 0 8px;overflow:hidden}
+.gp-sub-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;cursor:pointer;background:var(--bg);user-select:none;font-size:.84rem;font-weight:600;color:var(--ink-soft)}
+.gp-sub-hdr:hover{background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+.gp-sub-hdr .gp-arr{font-size:.6rem}
+.gp-sub-hdr.open .gp-arr{transform:rotate(90deg)}
+.gp-sub-body{display:none;padding:8px 12px}
+.gp-sub-body.open{display:block}
+.gp-ref-tbl{width:100%;border-collapse:collapse;font-size:.82rem}
+.gp-ref-tbl th{text-align:left;padding:4px 8px;color:var(--ink-faint);border-bottom:1px solid var(--rule);font-size:.78rem}
+.gp-ref-tbl td{padding:5px 8px;border-bottom:1px solid color-mix(in srgb,var(--rule) 50%,transparent)}
+.gp-ref-tbl .n{text-align:right}
+.gp-rw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.gp-rw-item{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:.82rem;border-bottom:1px solid color-mix(in srgb,var(--rule) 40%,transparent)}
+.gp-rw-cost{color:var(--accent);font-family:var(--mono,monospace);font-size:.78rem}
+.gp-rw-rank{font-size:.7rem;color:var(--ink-faint);margin-left:4px}
+.gp-hours-tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:0 0 8px}
+.gp-hours-tbl td{padding:4px 8px}
 
 </style>
 <script src="/powertools.js"></script>
@@ -156,6 +180,13 @@ td{padding:8px 10px;border-bottom:1px solid var(--rule);font-size:.88rem}
   <div class="count" id="count"></div>
   <div id="results" style="overflow-x:auto"></div>
  </section>
+
+ <section class="panel pad" id="guildRef">
+  <h2 style="margin:0 0 6px;font-size:1.2rem">Guild Reference</h2>
+  <p class="gp-note" style="margin:0 0 16px">Turn-in items by skill level, rank-up tests, and GP rewards for every guild.</p>
+  <div id="guildSections"></div>
+ </section>
+
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
  <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
@@ -293,6 +324,79 @@ function tick(){
 }
 tick();setInterval(tick,2400);
 })();</script>
+<script>
+(function(){
+var GNAMES={alchemy:'Alchemy',bonecraft:'Bonecraft',clothcraft:'Clothcraft',cooking:'Cooking',fishing:'Fishing',goldsmithing:'Goldsmithing',leathercraft:'Leathercraft',smithing:'Smithing',woodworking:'Woodworking'};
+var GICONS={alchemy:'i-alchemy',bonecraft:'i-bone',clothcraft:'i-cloth',cooking:'i-cook',fishing:'i-fish',goldsmithing:'i-gold',leathercraft:'i-leather',smithing:'i-smith',woodworking:'i-wood'};
+var GCOL={alchemy:'var(--alchemy)',bonecraft:'var(--bone)',clothcraft:'var(--cloth)',cooking:'var(--cook)',fishing:'var(--fish)',goldsmithing:'var(--gold)',leathercraft:'var(--leather)',smithing:'var(--smith)',woodworking:'var(--wood)'};
+var GHOURS={alchemy:{o:8,c:23,h:'Iceday'},bonecraft:{o:8,c:23,h:'Windsday'},clothcraft:{o:6,c:21,h:'Firesday'},cooking:{o:5,c:20,h:'Darksday'},fishing:{o:3,c:18,h:'Lightningsday'},goldsmithing:{o:8,c:23,h:'Iceday'},leathercraft:{o:3,c:18,h:'Iceday'},smithing:{o:8,c:23,h:'Earthsday'},woodworking:{o:6,c:21,h:'Firesday'}};
+var RANKS=['Amateur','Recruit','Initiate','Novice','Apprentice','Journeyman','Craftsman','Artisan','Adept','Veteran','Expert'];
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+window.tog=function(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');};
+var x=new XMLHttpRequest();x.open('GET','/data/gp-ref.json');
+x.onload=function(){
+  if(x.status!==200)return;
+  var d=JSON.parse(x.responseText);
+  var wrap=document.getElementById('guildSections');
+  var guildOrder=['woodworking','smithing','goldsmithing','clothcraft','leathercraft','bonecraft','alchemy','cooking','fishing'];
+  var html='';
+  guildOrder.forEach(function(gk){
+    var gn=GNAMES[gk];
+    var hrs=GHOURS[gk];
+    html+='<div class="gp-sec">';
+    html+='<div class="gp-sec-hdr" style="--c:'+GCOL[gk]+'" onclick="tog(this)"><span><svg style="width:16px;height:16px;vertical-align:-2px;margin-right:6px;color:'+GCOL[gk]+'"><use href="#'+GICONS[gk]+'"/></svg>'+gn+'</span><span class="gp-arr">&#9654;</span></div>';
+    html+='<div class="gp-sec-body">';
+
+    // Guild hours
+    html+='<table class="gp-hours-tbl"><tr><td style="color:var(--ink-faint);width:80px">Hours</td><td>'+hrs.o+':00 – '+hrs.c+':00</td><td style="color:var(--ink-faint);width:80px">Holiday</td><td>'+hrs.h+'</td></tr></table>';
+
+    // Rank-up tests
+    var tests=d.rankTests[gk];
+    if(tests&&tests.length){
+      html+='<div class="gp-sub"><div class="gp-sub-hdr" onclick="tog(this)"><span>Rank-Up Tests</span><span class="gp-arr">&#9654;</span></div><div class="gp-sub-body">';
+      html+='<table class="gp-ref-tbl"><thead><tr><th>From</th><th>To</th><th class="n">Skill</th><th>Test Item</th></tr></thead><tbody>';
+      tests.forEach(function(t){
+        var from=RANKS[t.ri-1]||'?';
+        html+='<tr><td style="color:var(--ink-soft)">'+from+'</td><td style="color:'+GCOL[gk]+';font-weight:600">'+t.rn+'</td><td class="n" style="font-family:var(--mono,monospace)">'+t.cap+'</td><td><a href="/item/'+t.id+'-'+slug(t.n)+'" style="color:var(--ink);text-decoration:none;font-weight:600">'+esc(t.n)+'</a></td></tr>';
+      });
+      html+='</tbody></table></div></div>';
+    }
+
+    // Turn-ins by tier
+    var tiers=d.turnins[gk];
+    if(tiers){
+      for(var ti=0;ti<=9;ti++){
+        var items=tiers[String(ti)];
+        if(!items||!items.length)continue;
+        var lo=ti*10+1,hi=(ti+1)*10;
+        html+='<div class="gp-sub"><div class="gp-sub-hdr" onclick="tog(this)"><span>Turn-ins: Skill '+lo+'–'+hi+'</span><span class="gp-arr">&#9654;</span></div><div class="gp-sub-body">';
+        html+='<table class="gp-ref-tbl"><thead><tr><th>Item</th><th class="n">GP</th><th class="n">Daily Max</th></tr></thead><tbody>';
+        items.forEach(function(it){
+          html+='<tr><td><a href="/item/'+it.id+'-'+slug(it.n)+'" style="color:var(--ink);text-decoration:none;font-weight:500">'+esc(it.n)+'</a></td><td class="n" style="color:var(--accent)">'+fmt(it.pts)+'</td><td class="n">'+fmt(it.max)+'</td></tr>';
+        });
+        html+='</tbody></table></div></div>';
+      }
+    }
+
+    // GP Rewards
+    var rw=d.rewards[gk];
+    if(rw&&rw.length){
+      html+='<div class="gp-sub"><div class="gp-sub-hdr" onclick="tog(this)"><span>GP Rewards</span><span class="gp-arr">&#9654;</span></div><div class="gp-sub-body">';
+      rw.forEach(function(r){
+        var isKi=r.kind==='key_item';
+        html+='<div class="gp-rw-item"><span>'+(isKi?'<span style="color:var(--ink-faint);font-style:italic">'+esc(r.n)+'</span>':'<a href="/item/'+r.id+'-'+slug(r.n)+'" style="color:var(--ink);text-decoration:none;font-weight:500">'+esc(r.n)+'</a>')+' <span class="gp-rw-rank">'+r.rank+'</span></span><span class="gp-rw-cost">'+fmt(r.cost)+' GP</span></div>';
+      });
+      html+='</div></div>';
+    }
+
+    html+='</div></div>';
+  });
+  wrap.innerHTML=html;
+};x.send();
+})();
+</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>
