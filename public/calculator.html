@@ -70,6 +70,13 @@ input[type=number].set{border-color:var(--gil);color:var(--gil)}
 .gain{color:var(--best)}
 .loss{color:var(--loss)}
 .profit-src{color:var(--ink-faint);font-weight:400;margin-left:2px}
+.price-source{display:flex;align-items:center;gap:12px;padding:12px 18px;margin-bottom:8px;flex-wrap:wrap}
+.ps-label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.ps-toggle{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.ps-btn{font:inherit;font-size:.85rem;padding:6px 14px;background:none;border:none;color:var(--ink-soft);cursor:pointer;transition:background .1s,color .1s}
+.ps-btn:hover{color:var(--ink)}
+.ps-btn.active{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);font-weight:700}
+.ps-hint{font-size:.82rem;color:var(--ink-faint)}
 .filter{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 14px;align-items:center}
 th{position:sticky;top:0;background:var(--panel-bot);text-align:left;font-weight:400;font-size:.76rem;
  padding:7px 10px;border-bottom:1px solid var(--rule);z-index:1;text-transform:none;letter-spacing:0}
@@ -219,6 +226,15 @@ tr.unpriced td{opacity:.62}
 
  <section class="panel pad summary" id="summary" aria-live="polite"></section>
 
+ <div class="price-source" id="priceSource">
+  <span class="ps-label">Price source</span>
+  <div class="ps-toggle">
+   <button class="ps-btn active" data-mode="custom" type="button">Your Prices</button>
+   <button class="ps-btn" data-mode="ah" type="button">AH Prices</button>
+  </div>
+  <span class="ps-hint" id="psHint"></span>
+ </div>
+
  <details class="panel" id="pricePanel">
   <summary><span class="chev"></span>Your prices<span class="meta" id="priceMeta"></span></summary>
   <div class="filter">
@@ -260,6 +276,8 @@ var I={}, C={}, cur=CRAFTS[0], prices={}, onlyMissing=false, searchTerm='';
 try{ prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}'); }catch(e){}
 var firstRun=!Object.keys(prices).length;
 function save(){ try{ localStorage.setItem('phoenix-prices-v2',JSON.stringify(prices)); }catch(e){} }
+var priceMode='custom';
+try{ priceMode=localStorage.getItem('phoenix-price-mode')||'custom'; }catch(e){}
 var root=document.documentElement;
 try{ var th=localStorage.getItem('phoenix-theme'); if(th) root.setAttribute('data-theme',th); }catch(e){}
 document.getElementById('themeBtn').addEventListener('click',function(){
@@ -270,9 +288,9 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
 function gil(n,cls){ return '<span class="gil '+(cls||'')+'"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>'; }
-function price(id){ var p=prices[id]; if(p!==undefined&&p!=='') return Number(p); var a=window.AH; if(a&&a[id]) return a[id]; var it=I[id]; return it?(it.v||0):0; }
+function price(id){ if(priceMode==='custom'){ var p=prices[id]; if(p!==undefined&&p!=='') return Number(p); } var a=window.AH; if(a&&a[id]) return a[id]; var it=I[id]; return it?(it.v||0):0; }
 function npcSell(id){ var it=I[id]; return it?(it.b||0):0; }
-function ahPrice(id){ var p=prices['s'+id]; if(p!==undefined&&p!=='') return Number(p); var a=window.AH; if(a&&a[id]) return a[id]; return 0; }
+function ahPrice(id){ if(priceMode==='custom'){ var p=prices['s'+id]; if(p!==undefined&&p!=='') return Number(p); } var a=window.AH; if(a&&a[id]) return a[id]; return 0; }
 function bestSell(id){ return ahPrice(id)||npcSell(id); }
 function crystalOf(id){ var n=(I[id]&&I[id].n||'').toLowerCase().replace(' crystal',''); return ELEM.indexOf(n)>=0?n:'light'; }
 function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
@@ -462,6 +480,21 @@ function onBothLoaded(){
     var n=Object.keys(prices).filter(function(k){return prices[k]!=='';}).length;
     document.getElementById('priceMeta').textContent=n?(n+' saved'):'using vendor prices';
   });
+  (function(){
+    var btns=document.querySelectorAll('#priceSource .ps-btn');
+    var hint=document.getElementById('psHint');
+    function setMode(m){
+      priceMode=m;
+      try{ localStorage.setItem('phoenix-price-mode',m); }catch(e){}
+      btns.forEach(function(b){ b.classList.toggle('active',b.getAttribute('data-mode')===m); });
+      var a=window.AH; var ct=a?Object.keys(a).length:0;
+      if(m==='ah') hint.textContent=ct?ct+' AH items loaded':'AH data not available';
+      else hint.textContent='';
+      renderBrackets();
+    }
+    btns.forEach(function(b){ b.addEventListener('click',function(){ setMode(this.getAttribute('data-mode')); }); });
+    setMode(priceMode);
+  })();
   document.getElementById('vendorBtn').addEventListener('click',function(){
     Object.keys(I).forEach(function(id){ if((prices[id]===undefined||prices[id]==='')&&I[id].v) prices[id]=String(I[id].v); });
     save(); renderPrices(); renderBrackets();

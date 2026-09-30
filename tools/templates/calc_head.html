@@ -54,6 +54,13 @@ input[type=number].set{border-color:var(--gil);color:var(--gil)}
 .gain{color:var(--best)}
 .loss{color:var(--loss)}
 .profit-src{color:var(--ink-faint);font-weight:400;margin-left:2px}
+.price-source{display:flex;align-items:center;gap:12px;padding:12px 18px;margin-bottom:8px;flex-wrap:wrap}
+.ps-label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.ps-toggle{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.ps-btn{font:inherit;font-size:.85rem;padding:6px 14px;background:none;border:none;color:var(--ink-soft);cursor:pointer;transition:background .1s,color .1s}
+.ps-btn:hover{color:var(--ink)}
+.ps-btn.active{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);font-weight:700}
+.ps-hint{font-size:.82rem;color:var(--ink-faint)}
 .filter{display:flex;gap:8px;flex-wrap:wrap;padding:0 22px 14px;align-items:center}
 th{position:sticky;top:0;background:var(--panel-bot);text-align:left;font-weight:400;font-size:.76rem;
  padding:7px 10px;border-bottom:1px solid var(--rule);z-index:1;text-transform:none;letter-spacing:0}

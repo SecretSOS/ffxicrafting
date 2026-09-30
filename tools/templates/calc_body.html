@@ -33,6 +33,15 @@
 
  <section class="panel pad summary" id="summary" aria-live="polite"></section>
 
+ <div class="price-source" id="priceSource">
+  <span class="ps-label">Price source</span>
+  <div class="ps-toggle">
+   <button class="ps-btn active" data-mode="custom" type="button">Your Prices</button>
+   <button class="ps-btn" data-mode="ah" type="button">AH Prices</button>
+  </div>
+  <span class="ps-hint" id="psHint"></span>
+ </div>
+
  <details class="panel" id="pricePanel">
   <summary><span class="chev"></span>Your prices<span class="meta" id="priceMeta"></span></summary>
   <div class="filter">
