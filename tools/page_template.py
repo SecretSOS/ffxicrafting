@@ -218,6 +218,9 @@ def sidebar(active=''):
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
  <div class="sb-section">
+  <div class="sb-heading">Guilds</div>
+{craft_links} </div>
+ <div class="sb-section">
   <div class="sb-heading">Tools</div>
 {link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
 {link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}
@@ -225,9 +228,6 @@ def sidebar(active=''):
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
 {link("/zone/", "Zones", "zones")}{link("/gathering/fishing", "Fishing", "fishing")}{link("/gathering/", "Gathering", "gathering")}{link("/bcnm", "BCNMs", "bcnm")}{link("/crafts", "Crafts", "crafts")} </div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-{craft_links} </div>
  <div id="ahStatus" class="ah-status" style="display:none"></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
