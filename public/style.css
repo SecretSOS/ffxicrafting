@@ -6,7 +6,7 @@
 /* --- Tokens (dark default) --- */
 :root{
  --bg:#0c0f16;--surface:#141a26;--surface-2:#1b2333;--border:#2b3448;--frame:#3d4f6a;
- --ink:#f2eee3;--ink-soft:#b8c2d4;--ink-faint:#8d9ab2;--link:#8ec1e8;
+ --ink:#f2eee3;--ink-soft:#c5c9d2;--ink-faint:#9da3af;--link:#8ec1e8;
  --accent:#e3a75e;--accent-soft:#3a2f22;--gain:#74d3a0;--loss:#ff8f7d;--best:#74d3a0;
  --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
  --wood:#8a6a3f;--smith:#8d94a3;--gold:#e0b64c;--cloth:#c98fb5;--leather:#b5763f;--bone:#ded3bb;--alchemy:#7fc4a8;--cook:#e08f6a;--fish:#5ba8c8;
