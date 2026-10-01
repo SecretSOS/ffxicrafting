@@ -285,7 +285,13 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
 .rank-tbl th{{text-align:left;font-weight:400;font-size:.78rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}}
 .rank-tbl td{{padding:7px 10px;border-bottom:1px solid var(--rule)}}
 .rank-tbl .rn{{color:var({css_var});font-weight:600}}
-.rank-tbl .cap{{font-family:var(--mono,monospace)}}'''
+.rank-tbl .cap{{font-family:var(--mono,monospace)}}
+details.guild-section{{margin-bottom:4px}}
+details.guild-section>summary{{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}}
+details.guild-section>summary::-webkit-details-marker{{display:none}}
+details.guild-section>summary::before{{content:'\\25B6';font-size:.65em;color:var(--ink-faint);transition:transform .15s;flex-shrink:0}}
+details.guild-section[open]>summary::before{{transform:rotate(90deg)}}
+details.guild-section>summary h2{{margin:0;font-size:1.1rem}}'''
 
     html = html_head(
         f'{craft_name} · FFXI Crafting',
@@ -326,22 +332,22 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
   <a href="#recipes">Recipes</a>
  </nav>
 
- <section class="panel pad">
-  <h2 id="hours">Guild hours</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="hours">Guild hours</h2></summary>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>{guild['open']}:00</b> – <b>{guild['close']}:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>{holiday_name} <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Location</td><td>{escape(guild['location'])}</td></tr>
   </table>
   <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from LandSandBoat. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
- </section>
+ </details>
 
 '''
 
     # Rank-up tests
     if rank_tests:
-        html += ' <section class="panel pad">\n'
-        html += f'  <h2 id="rank-up">Rank-up tests</h2>\n'
+        html += ' <details open class="guild-section panel pad">\n'
+        html += f'  <summary><h2 id="rank-up">Rank-up tests</h2></summary>\n'
         html += f'  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">To advance your guild rank, reach the required skill level and turn in the test item to the guild master. Skill must be within 2 of the rank cap.</p>\n'
         html += '  <table class="rank-tbl"><thead><tr><th>From</th><th>To</th><th>Skill</th><th>Test item</th></tr></thead><tbody>\n'
         for rt in rank_tests:
@@ -349,13 +355,13 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
             to_rank = rt['rank_name']
             name = pretty(rt['name']) if rt['name'] else f'Item {rt["item_id"]}'
             html += f'    <tr><td>{from_rank}</td><td class="rn">{to_rank}</td><td class="cap">{rt["skill_cap"]}</td><td>{item_link(rt["item_id"], name)}</td></tr>\n'
-        html += '  </tbody></table>\n </section>\n\n'
+        html += '  </tbody></table>\n </details>\n\n'
 
     # Guild shop inventory
     if shop_items:
         html += f'''\
- <section class="panel pad">
-  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">({len(shop_items)} items)</span></h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">({len(shop_items)} items)</span></h2></summary>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the {craft_name.lower()} guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
   <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
   <div class="shop-grid" id="shopGrid">
@@ -365,13 +371,13 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
             html += f'   <div class="shop-row"><span class="nm">{item_link(it["item_id"], name)}</span>'
             html += f'<span class="pr">{format_gil(it["price"])}g</span>'
             html += f'<span class="st">{it["qty_lo"]}–{it["qty_hi"]}</span></div>\n'
-        html += '  </div>\n </section>\n\n'
+        html += '  </div>\n </details>\n\n'
 
     # GP turnins (8 patterns, one per day of the Vana'diel week)
     if patterns:
         html += f'''\
- <section class="panel pad">
-  <h2 id="gp-turnins">Guild point turn-ins</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="gp-turnins">Guild point turn-ins</h2></summary>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
 '''
@@ -389,11 +395,11 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
                 name = pretty(t['name'])
                 html += f'    <tr><td>{item_link(t["item_id"], name)}</td><td>{t["tier"]}</td><td>{t["points"]}</td><td>{format_gil(t["max_points"])}</td></tr>\n'
             html += '   </tbody></table>\n  </div>\n'
-        html += ' </section>\n\n'
+        html += ' </details>\n\n'
 
     # GP rewards
     if reward_items or reward_ki:
-        html += ' <section class="panel pad">\n  <h2 id="gp-rewards">Guild point rewards</h2>\n'
+        html += ' <details open class="guild-section panel pad">\n  <summary><h2 id="gp-rewards">Guild point rewards</h2></summary>\n'
         if reward_items:
             html += '  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>\n'
             html += '  <div class="reward-grid">\n'
@@ -409,13 +415,13 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
                 name = pretty(r['name'])
                 html += f'   <div class="reward-row"><span class="nm">{escape(name)}</span><span class="rk">{r["min_rank"]}</span><span class="gp">{format_gil(r["cost"])} GP</span></div>\n'
             html += '  </div>\n'
-        html += ' </section>\n\n'
+        html += ' </details>\n\n'
 
     # Guild vendor items
     if vendor_items:
         html += f'''\
- <section class="panel pad">
-  <h2 id="vendor">Guild vendor</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="vendor">Guild vendor</h2></summary>
   <p class="vendor-note">Rank-gated items sold by the {craft_name.lower()} guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
 '''
@@ -423,12 +429,12 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
             name = pretty(v['name'])
             rank = v['gate'] or 'amateur'
             html += f'   <div class="reward-row"><span class="nm">{item_link(v["item_id"], name)}</span><span class="rk">{rank}</span><span class="pr">{format_gil(v["price"])}g</span></div>\n'
-        html += '  </div>\n </section>\n\n'
+        html += '  </div>\n </details>\n\n'
 
     # Recipe overview
     html += f'''\
- <section class="panel pad">
-  <h2 id="recipes">Recipes</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="recipes">Recipes</h2></summary>
   <div class="stat-row">
    <div class="stat"><b>{era_60}</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>{total}</b><span>total</span></div>
@@ -439,7 +445,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
    <a href="/profit?craft={code}">Profit Finder</a>
    <a href="/shopping?craft={code}">Shopping List</a>
   </div>
- </section>
+ </details>
 
 '''
 
@@ -470,7 +476,17 @@ tabs.forEach(function(t){{
 }});
 }})();'''
 
+    toc_js = '''(function(){
+document.querySelectorAll(".section-toc a").forEach(function(a){
+ a.addEventListener("click",function(e){
+  var id=a.getAttribute("href").slice(1),el=document.getElementById(id);
+  if(!el)return;var d=el.closest("details");if(d&&!d.open)d.open=true;
+ });
+});
+})();'''
+
     html += f'\n<script>{guild_js}</script>\n'
+    html += f'<script>{toc_js}</script>\n'
     if turnin_js:
         html += f'<script>{turnin_js}</script>\n'
     html += page_end()

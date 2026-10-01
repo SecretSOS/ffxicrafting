@@ -48,6 +48,12 @@
 .rank-tbl td{padding:7px 10px;border-bottom:1px solid var(--rule)}
 .rank-tbl .rn{color:var(--leather);font-weight:600}
 .rank-tbl .cap{font-family:var(--mono,monospace)}
+details.guild-section{margin-bottom:4px}
+details.guild-section>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}
+details.guild-section>summary::-webkit-details-marker{display:none}
+details.guild-section>summary::before{content:'\25B6';font-size:.65em;color:var(--ink-faint);transition:transform .15s;flex-shrink:0}
+details.guild-section[open]>summary::before{transform:rotate(90deg)}
+details.guild-section>summary h2{margin:0;font-size:1.1rem}
 </style>
 <script src="/powertools.js"></script>
 </head>
@@ -178,18 +184,18 @@
   <a href="#recipes">Recipes</a>
  </nav>
 
- <section class="panel pad">
-  <h2 id="hours">Guild hours</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="hours">Guild hours</h2></summary>
   <table style="border-collapse:collapse;font-size:.92rem">
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Open</td><td><b>3:00</b> – <b>18:00</b> Vana'diel time</td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Holiday</td><td>Iceday <span style="color:var(--ink-faint)">(closed all day)</span></td></tr>
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Location</td><td>Southern San d&#x27;Oria</td></tr>
   </table>
   <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from LandSandBoat. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
- </section>
+ </details>
 
- <section class="panel pad">
-  <h2 id="rank-up">Rank-up tests</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="rank-up">Rank-up tests</h2></summary>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">To advance your guild rank, reach the required skill level and turn in the test item to the guild master. Skill must be within 2 of the rank cap.</p>
   <table class="rank-tbl"><thead><tr><th>From</th><th>To</th><th>Skill</th><th>Test item</th></tr></thead><tbody>
     <tr><td>Amateur</td><td class="rn">Recruit</td><td class="cap">20</td><td><a href="/item/13594-rabbit-mantle" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13594.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rabbit Mantle</a></td></tr>
@@ -203,10 +209,10 @@
     <tr><td>Adept</td><td class="rn">Veteran</td><td class="cap">100</td><td><a href="/item/12447-coeurl-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12447.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coeurl Mask</a></td></tr>
     <tr><td>Veteran</td><td class="rn">Expert</td><td class="cap">110</td><td><a href="/item/10577-urja-trousers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/10577.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Urja Trousers</a></td></tr>
   </tbody></table>
- </section>
+ </details>
 
- <section class="panel pad">
-  <h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(71 items)</span></h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="shop">Guild shop <span style="color:var(--ink-faint);font-weight:400;font-size:.85rem">(71 items)</span></h2></summary>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Items sold by the leathercraft guild merchants. Prices shown are the empty-shelf price; actual price varies with stock level. Stock restocks by ~3 per real day.</p>
   <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter items…" data-filter-target="shopGrid" data-filter-count="shopCount"><span class="filter-count" id="shopCount"></span></div>
   <div class="shop-grid" id="shopGrid">
@@ -282,10 +288,10 @@
    <div class="shop-row"><span class="nm"><a href="/item/13703-brigandine-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13703.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brigandine Armor</a></span><span class="pr">294,000g</span><span class="st">0–45</span></div>
    <div class="shop-row"><span class="nm"><a href="/item/12572-raptor-jerkin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12572.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Raptor Jerkin</a></span><span class="pr">296,400g</span><span class="st">0–45</span></div>
   </div>
- </section>
+ </details>
 
- <section class="panel pad">
-  <h2 id="gp-turnins">Guild point turn-ins</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="gp-turnins">Guild point turn-ins</h2></summary>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The guild accepts different items each Vana'diel day, cycling through 8 daily patterns. Turn in crafted items for guild points to spend on special rewards.</p>
   <div class="turnin-tabs" id="turninTabs">
    <button class="turnin-tab" type="button" data-p="0">Firesday</button>
@@ -488,10 +494,10 @@
     <tr><td><a href="/item/14183-mahatma-pigaches" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/14183.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mahatma Pigaches</a></td><td>9</td><td>3750</td><td>6,080</td></tr>
    </tbody></table>
   </div>
- </section>
+ </details>
 
- <section class="panel pad">
-  <h2 id="gp-rewards">Guild point rewards</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="gp-rewards">Guild point rewards</h2></summary>
   <h3 style="font-size:.95rem;color:var(--ink-soft);margin:12px 0 8px">Items</h3>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/15448-tanners-belt" style="display:inline-flex;align-items:center;gap:4px">Tanners Belt</a></span><span class="rk">novice</span><span class="gp">10,000 GP</span></div>
@@ -507,10 +513,10 @@
    <div class="reward-row"><span class="nm">Leather Purification</span><span class="rk">novice</span><span class="gp">40,000 GP</span></div>
    <div class="reward-row"><span class="nm">Leather Ensorcellment</span><span class="rk">novice</span><span class="gp">40,000 GP</span></div>
   </div>
- </section>
+ </details>
 
- <section class="panel pad">
-  <h2 id="vendor">Guild vendor</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="vendor">Guild vendor</h2></summary>
   <p class="vendor-note">Rank-gated items sold by the leathercraft guild vendor. Requires the listed rank or higher to purchase.</p>
   <div class="reward-grid">
    <div class="reward-row"><span class="nm"><a href="/item/2129-tanning-vat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2129.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tanning Vat</a></span><span class="rk">rank amateur</span><span class="pr">75g</span></div>
@@ -539,10 +545,10 @@
    <div class="reward-row"><span class="nm"><a href="/item/1628-buffalo-hide" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1628.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Buffalo Hide</a></span><span class="rk">rank apprentice</span><span class="pr">16,000g</span></div>
    <div class="reward-row"><span class="nm"><a href="/item/9253-square-of-synthetic-faulpie-leather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9253.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square of Synthetic Faulpie Leather</a></span><span class="rk">rank amateur</span><span class="pr">1,126,125g</span></div>
   </div>
- </section>
+ </details>
 
- <section class="panel pad">
-  <h2 id="recipes">Recipes</h2>
+ <details open class="guild-section panel pad">
+  <summary><h2 id="recipes">Recipes</h2></summary>
   <div class="stat-row">
    <div class="stat"><b>173</b><span>recipes (1–60)</span></div>
    <div class="stat"><b>355</b><span>total</span></div>
@@ -553,7 +559,7 @@
    <a href="/profit?craft=leather">Profit Finder</a>
    <a href="/shopping?craft=leather">Shopping List</a>
   </div>
- </section>
+ </details>
 
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
@@ -588,6 +594,14 @@ function tick(){
  }
 }
 tick();setInterval(tick,2400);
+})();</script>
+<script>(function(){
+document.querySelectorAll(".section-toc a").forEach(function(a){
+ a.addEventListener("click",function(e){
+  var id=a.getAttribute("href").slice(1),el=document.getElementById(id);
+  if(!el)return;var d=el.closest("details");if(d&&!d.open)d.open=true;
+ });
+});
 })();</script>
 <script>
 (function(){
