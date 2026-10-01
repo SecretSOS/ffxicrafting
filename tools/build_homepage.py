@@ -120,10 +120,6 @@ BODY = '''\
     <h3>BCNMs</h3>
     <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
    </a>
-   <a class="data-card" href="/nm/">
-    <h3>NMs</h3>
-    <p>NM drop rates and spawn conditions.</p>
-   </a>
    <a class="data-card" href="/fishing-cooking">
     <h3>Guides</h3>
     <p>Skill-up routes, gil-making strats, server-specific notes.</p>
