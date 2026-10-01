@@ -4,7 +4,7 @@ Run:  python tools/powertool.py
 Open: http://localhost:8090
 """
 
-import json, math, os, sqlite3, threading, webbrowser
+import json, math, os, sqlite3, threading, time, webbrowser
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -2437,6 +2437,7 @@ def make_handler(state, html_bytes):
         def do_POST(self):
             if self.path == '/api/refresh':
                 data = load_all()
+                data['ahFetched'] = int(time.time())
                 state['json'] = json.dumps(data, separators=(',', ':')).encode()
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
