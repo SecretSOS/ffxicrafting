@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate public/fishing-cooking.html — LOW COST Fishing + Cooking skill-up guide."""
 import json, os, sqlite3, html
+from page_template import full_page
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
@@ -335,23 +336,9 @@ def build_loop_diagram():
     h.append('</div>')
     return '\n'.join(h)
 
-PAGE = '''\
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LOW COST Fishing + Cooking Guide &middot; Phoenix era 75</title>
-<meta name="description" content="Level cooking from 0 to 60 for almost nothing. Fish for free ingredients, cook them for skill-ups, use the results as bait. Rinse and repeat.">
-<meta property="og:title" content="LOW COST Fishing + Cooking Guide &middot; Phoenix era 75">
-<meta property="og:description" content="Level cooking from 0 to 60 for almost nothing. Fish, cook, use the results as bait, repeat.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ffxicrafting.com/fishing-cooking">
-<meta name="theme-color" content="#0c1728">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
-<style>
+LSB_COMMIT = 'c2826b6a0b9a2c9bd374a7344181a7e53f680b1c'
+
+CUSTOM_CSS = '''\
 .fc-hero{margin:0 0 2em}
 .fc-hero h1{font-size:clamp(1.8rem,4.5vw,2.8rem);margin:0 0 .4em}
 .fc-hero .lede{color:var(--ink-soft);max-width:62ch;margin:0;font-size:1.05rem;line-height:1.55}
@@ -423,105 +410,14 @@ PAGE = '''\
  .fc-loop-arrow{transform:rotate(90deg)}
  .fc-loop-back{transform:rotate(180deg)}
  .fc-recipe-head{gap:6px}
-}
-</style>
-<script src="/powertools.js"></script>
-</head>
-<body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
-<nav class="top-bar">
- <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
- <a href="/" class="logo">FFXI Crafting</a>
- <div class="nav-links">
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/crafts" class="nav-dd-all">All Crafts</a>
-    <a href="/crafts/woodworking">Woodworking</a>
-    <a href="/crafts/smithing">Smithing</a>
-    <a href="/crafts/goldsmithing">Goldsmithing</a>
-    <a href="/crafts/clothcraft">Clothcraft</a>
-    <a href="/crafts/leathercraft">Leathercraft</a>
-    <a href="/crafts/bonecraft">Bonecraft</a>
-    <a href="/crafts/alchemy">Alchemy</a>
-    <a href="/crafts/cooking">Cooking</a>
-   </div>
-  </div>
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-    <a href="/gathering/mining">Mining</a>
-    <a href="/gathering/logging">Logging</a>
-    <a href="/gathering/harvesting">Harvesting</a>
-    <a href="/gathering/excavation">Excavation</a>
-    <a href="/gathering/gardening">Gardening</a>
-    <a href="/gathering/fishing">Fishing</a>
-    <a href="/gathering/digging">Chocobo Digging</a>
-    <a href="/gathering/clamming">Clamming</a>
-   </div>
-  </div>
-  <a href="/zone/" class="nav-link">Zones</a>
-  <a href="/guides/" class="nav-link active">Guides</a>
-  <a href="/nm/" class="nav-link">NMs</a>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
- </div>
- <div class="search-wrap"><input type="search" id="search" placeholder="Search items&hellip;" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
- <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
- <button class="act" id="themeBtn" type="button">Theme</button>
-</nav>
-<div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
- </div>
- <div class="sb-section sb-explore">
-  <div class="sb-heading">Explore</div>
-  <a href="/zone/">Zones</a>
-  <a href="/gathering/">Gathering</a>
-  <a href="/bcnm">BCNMs</a>
-  <a href="/crafts">Crafts</a>
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-<main class="main">
-<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/guides/">Guides</a><span class="sep">&rsaquo;</span>Fishing + Cooking</nav>
+}'''
+
+# ── Generate ───────────────────────────────────────────────────────
+
+loop_html = build_loop_diagram()
+tiers_html = '\n'.join(build_tier(t) for t in TIERS)
+
+BODY = '''\
 <header class="fc-hero panel pad">
  <h1>LOW COST Fishing + Cooking</h1>
  <p class="lede">Level cooking from 0 to 60 spending almost nothing. Fish provide free ingredients, cooking produces fishing bait, and the cycle feeds itself. The only costs are crystals and a few vendor staples like salt, flour, and water.</p>
@@ -553,22 +449,20 @@ TIERS_PLACEHOLDER
 <li><strong>Total estimate:</strong> Under 15,000 gil to cap cooking at 60, compared to 100,000+ gil buying all ingredients from AH.</li>
 </ul>
 </div>
-
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
-</main>
-</div>
-</body>
-</html>
 '''
 
-# ── Generate ───────────────────────────────────────────────────────────
+body = BODY.replace('LOOP_PLACEHOLDER', loop_html).replace('TIERS_PLACEHOLDER', tiers_html)
 
-loop_html = build_loop_diagram()
-tiers_html = '\n'.join(build_tier(t) for t in TIERS)
-page = PAGE.replace('LOOP_PLACEHOLDER', loop_html).replace('TIERS_PLACEHOLDER', tiers_html)
+page = full_page(
+    title='LOW COST Fishing + Cooking Guide \u00b7 Phoenix era 75',
+    description='Level cooking from 0 to 60 for almost nothing. Fish for free ingredients, cook them for skill-ups, use the results as bait. Rinse and repeat.',
+    og_url='https://ffxicrafting.com/fishing-cooking',
+    body_html=body,
+    active='fishing-cooking',
+    crumbs=[('Home', '/'), ('Guides', '/guides/'), ('Fishing + Cooking', '')],
+    lsb_commit=LSB_COMMIT,
+    extra_css=CUSTOM_CSS,
+)
 
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:

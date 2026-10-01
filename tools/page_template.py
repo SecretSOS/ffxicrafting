@@ -153,8 +153,12 @@ def top_bar(active=''):
     gathering_items = [(href, name, 'gathering') for href, name in GATHERING_PAGES]
     craft_items = [(f'/crafts/{name.lower()}', name, f'craft-{code}') for code, name, _ in CRAFTS_ORDERED]
     zones_cls = ' active' if active == 'zones' else ''
+    nm_cls = ' active' if active == 'nm' else ''
     bcnm_cls = ' active' if active == 'bcnm' else ''
-    guides_cls = ' active' if active == 'guides' else ''
+    guides_active = active in ('guides', 'fishing-cooking', 'fishing-101')
+    guides_cls = ' active' if guides_active else ''
+    fc_cls = ' class="active"' if active == 'fishing-cooking' else ''
+    f101_cls = ' class="active"' if active == 'fishing-101' else ''
     gathering_dd = _nav_dropdown('Gathering', '/gathering/', gathering_items, active)
     crafts_dd = _nav_dropdown('Crafts', '/crafts', craft_items, active)
     return f'''\
@@ -165,8 +169,15 @@ def top_bar(active=''):
 {crafts_dd}
 {gathering_dd}
   <a href="/zone/" class="nav-link{zones_cls}">Zones</a>
+  <div class="nav-dd">
+   <span class="nav-dd-btn{guides_cls}">Guides <span class="nav-dd-arr">&#9662;</span></span>
+   <div class="nav-dd-menu">
+    <a href="/fishing-cooking"{fc_cls}>Fishing + Cooking</a>
+    <a href="/fishing-101"{f101_cls}>Fishing 101</a>
+   </div>
+  </div>
+  <a href="/nm/" class="nav-link{nm_cls}">NMs</a>
   <a href="/bcnm" class="nav-link{bcnm_cls}">BCNMs</a>
-  <a href="/guides/" class="nav-link{guides_cls}">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
@@ -183,6 +194,7 @@ TOOL_ICONS = {
     'desynth':    'desynth',
     'guild-points': 'gp',
     'recipe-tree': 'tree',
+    'fishing-cooking': 'guide',
     'fishing-101': 'guide',
 }
 
@@ -224,8 +236,8 @@ def sidebar(active=''):
 {craft_links} </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
-{link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
-{link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}{link("/fishing-101", "Fishing 101", "fishing-101")}
+{link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{link("/fishing-101", "Fishing 101", "fishing-101")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
+{link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}{link("/fishing-cooking", "Fishing + Cooking", "fishing-cooking")}
  </div>
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>

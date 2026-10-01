@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FFXI Crafting Tools — calculator, profit finder, shopping list for era-75</title>
 <meta name="description" content="FFXI era-75 crafting calculator, profit finder, and shopping list. Data pulled from the LandSandBoat server source.">
-<meta name="theme-color" content="#0c1728">
-<meta property="og:title" content="FFXI Crafting Tools">
-<meta property="og:description" content="FFXI era-75 crafting calculator, profit finder, and shopping list. Data from the LandSandBoat server source.">
+<meta property="og:title" content="FFXI Crafting Tools — calculator, profit finder, shopping list for era-75">
+<meta property="og:description" content="FFXI era-75 crafting calculator, profit finder, and shopping list. Data pulled from the LandSandBoat server source.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/">
+<meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
@@ -37,6 +37,7 @@ h2{border-left:none;padding-left:0}
 @keyframes badge-pulse{0%,100%{opacity:1}50%{opacity:.6}}
 @media(max-width:640px){.hero-tools{grid-template-columns:1fr}}
 </style>
+<script src="/powertools.js"></script>
 </head>
 <body>
 <svg style="display:none" aria-hidden="true">
@@ -48,7 +49,7 @@ h2{border-left:none;padding-left:0}
  <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
  <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
  <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
-<symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
+ <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
  <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
  <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
  <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
@@ -64,39 +65,40 @@ h2{border-left:none;padding-left:0}
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/crafts" class="nav-dd-all">All Crafts</a>
-    <a href="/crafts/woodworking">Woodworking</a>
-    <a href="/crafts/smithing">Smithing</a>
-    <a href="/crafts/goldsmithing">Goldsmithing</a>
-    <a href="/crafts/clothcraft">Clothcraft</a>
-    <a href="/crafts/leathercraft">Leathercraft</a>
-    <a href="/crafts/bonecraft">Bonecraft</a>
-    <a href="/crafts/alchemy">Alchemy</a>
-    <a href="/crafts/cooking">Cooking</a>
-   </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/crafts" class="nav-dd-all">All Crafts</a>
+   <a href="/crafts/woodworking">Woodworking</a>
+   <a href="/crafts/smithing">Smithing</a>
+   <a href="/crafts/goldsmithing">Goldsmithing</a>
+   <a href="/crafts/clothcraft">Clothcraft</a>
+   <a href="/crafts/leathercraft">Leathercraft</a>
+   <a href="/crafts/bonecraft">Bonecraft</a>
+   <a href="/crafts/alchemy">Alchemy</a>
+   <a href="/crafts/cooking">Cooking</a>
   </div>
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
-    <a href="/gathering/mining">Mining</a>
-    <a href="/gathering/logging">Logging</a>
-    <a href="/gathering/harvesting">Harvesting</a>
-    <a href="/gathering/excavation">Excavation</a>
-    <a href="/gathering/gardening">Gardening</a>
-    <a href="/gathering/fishing">Fishing</a>
-    <a href="/gathering/digging">Chocobo Digging</a>
-    <a href="/gathering/clamming">Clamming</a>
-   </div>
+ </div>
+ <div class="nav-dd">
+  <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
+  <div class="nav-dd-menu">
+   <a href="/gathering/" class="nav-dd-all">All Gathering</a>
+   <a href="/gathering/mining">Mining</a>
+   <a href="/gathering/logging">Logging</a>
+   <a href="/gathering/harvesting">Harvesting</a>
+   <a href="/gathering/excavation">Excavation</a>
+   <a href="/gathering/gardening">Gardening</a>
+   <a href="/fishing/">Fishing</a>
+   <a href="/gathering/digging">Chocobo Digging</a>
+   <a href="/gathering/clamming">Clamming</a>
   </div>
+ </div>
   <a href="/zone/" class="nav-link">Zones</a>
   <div class="nav-dd">
    <span class="nav-dd-btn">Guides <span class="nav-dd-arr">&#9662;</span></span>
    <div class="nav-dd-menu">
     <a href="/fishing-cooking">Fishing + Cooking</a>
+    <a href="/fishing-101">Fishing 101</a>
    </div>
   </div>
   <a href="/nm/" class="nav-link">NMs</a>
@@ -126,17 +128,21 @@ h2{border-left:none;padding-left:0}
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
   <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
   <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
+  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
   <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
   <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
+
   <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
   <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
   <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
   <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
+  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
+
  </div>
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
   <a href="/zone/">Zones</a>
+  <a href="/gathering/fishing">Fishing</a>
   <a href="/gathering/">Gathering</a>
   <a href="/bcnm">BCNMs</a>
   <a href="/crafts">Crafts</a>
@@ -150,7 +156,7 @@ h2{border-left:none;padding-left:0}
    <img src="/img/wip.png" alt="Work in Progress">
    <p style="margin:.8em 0 0;font-size:.92rem;color:var(--ink-soft);max-width:52ch;line-height:1.5">The idea of this site is to give people an ad-free modern site for this amazing MMO. To help new and old players understand what they are doing and make the most gil they can. This site only costs me hosting, and I will not be putting ads on it, ever.</p>
    <p style="margin:.6em 0 0;font-size:.92rem;color:var(--ink-soft)">Send Errors &amp; Ideas to <strong>SECRETSOS</strong> on Discord</p>
-   <p style="margin:.3em 0 0;font-size:.88rem;color:var(--ink-faint)">Gil donations always welcome! In-game name: <strong>Secrets</strong> — Phoenix XI Private Server</p>
+   <p style="margin:.3em 0 0;font-size:.88rem;color:var(--ink-faint)">Gil donations always welcome! In-game name: <strong>Secrets</strong> &mdash; Phoenix XI Private Server</p>
   </div>
   <h1>FFXI Crafting Tools</h1>
 
@@ -158,19 +164,19 @@ h2{border-left:none;padding-left:0}
    <a class="tool-card" href="/calculator">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></svg>
     <h3>Crafting Calculator</h3>
-    <p>All recipes from 1–60, broken into 10-level brackets. Plug in your prices and see cost per synth, success rates, and HQ chances.</p>
+    <p>All recipes from 1&ndash;60, broken into 10-level brackets. Plug in your prices and see cost per synth, success rates, and HQ chances.</p>
     <span class="tc-cta">Open calculator &rarr;</span>
    </a>
    <a class="tool-card" href="/profit">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/><path d="M12 11v-1m0 8v1m-3-4H8m8 0h-1"/></svg>
     <h3>Profit Finder</h3>
-    <p>Recipes ranked by profit. Put in your skill levels and AH prices — it tells you what's worth crafting.</p>
+    <p>Recipes ranked by profit. Put in your skill levels and AH prices &mdash; it tells you what&#8217;s worth crafting.</p>
     <span class="tc-cta">Find profits &rarr;</span>
    </a>
    <a class="tool-card" href="/shopping">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     <h3>Shopping List</h3>
-    <p>Pick a craft and skill range, get every material you need. Grouped by where to get it — vendors, drops, gathering, other synths.</p>
+    <p>Pick a craft and skill range, get every material you need. Grouped by where to get it &mdash; vendors, drops, gathering, other synths.</p>
     <span class="tc-cta">Build a list &rarr;</span>
    </a>
    <a class="tool-card" href="/bcnm-tool">
@@ -182,25 +188,25 @@ h2{border-left:none;padding-left:0}
    <a class="tool-card" href="/desynth">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></svg>
     <h3>Desynth Calculator</h3>
-    <p>538 desynth recipes. Shows success rate at your skill, what you get back, and whether it's worth breaking.</p>
+    <p>538 desynth recipes. Shows success rate at your skill, what you get back, and whether it&#8217;s worth breaking.</p>
     <span class="tc-cta">Calculate desynth &rarr;</span>
    </a>
    <a class="tool-card" href="/guild-points">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
     <h3>Guild Points</h3>
-    <p>Cheapest turn-in for today's GP pattern. Shows cost per point for every item the guild accepts.</p>
+    <p>Cheapest turn-in for today&#8217;s GP pattern. Shows cost per point for every item the guild accepts.</p>
     <span class="tc-cta">Optimize GP &rarr;</span>
    </a>
    <a class="tool-card" href="/recipe-tree">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></svg>
     <h3>Ingredient Tree</h3>
-    <p>Breaks down any recipe into its full crafting chain — sub-combines, raw materials, total base cost.</p>
+    <p>Breaks down any recipe into its full crafting chain &mdash; sub-combines, raw materials, total base cost.</p>
     <span class="tc-cta">Explore trees &rarr;</span>
    </a>
    <a class="tool-card" href="/gathering/fishing">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
     <h3><svg style="width:18px;height:18px;vertical-align:-3px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>Fishing Lookup <span class="badge-new">New</span></h3>
-    <p>Zone and bait lookup — what you can catch, skill needed, rarity, best rod. Also has fish-first search and rod stat breakdowns.</p>
+    <p>Zone and bait lookup &mdash; what you can catch, skill needed, rarity, best rod. Also has fish-first search and rod stat breakdowns.</p>
     <span class="tc-cta">Find fish &rarr;</span>
    </a>
    <a class="tool-card" href="/gathering/gardening">
@@ -214,42 +220,41 @@ h2{border-left:none;padding-left:0}
 
  <section class="panel pad">
   <h2>Data &amp; Lookups</h2>
-  <p class="tag">7,164 items, 4,443 recipes, 41,000+ sources — all from the LandSandBoat server code.</p>
+  <p class="tag">7,164 items, 4,443 recipes, 41,000+ sources &mdash; all from the LandSandBoat server source.</p>
   <div class="data-grid">
    <a class="data-card" href="/crafts">
     <h3>Crafts</h3>
-    <p>8 crafts — recipes, guild hours, rank tests, GP items.</p>
+    <p>8 crafts &mdash; recipes, guild hours, rank tests, GP items.</p>
    </a>
    <a class="data-card" href="/gathering/">
     <h3>Gathering</h3>
-    <p>Mining, logging, fishing, gardening, clamming — drop tables by zone.</p>
+    <p>Mining, logging, fishing, gardening, clamming &mdash; drop tables by zone.</p>
    </a>
    <a class="data-card" href="/zone/">
     <h3>Zones</h3>
-    <p>162 zones — mob drops, vendors, gathering points, chests/coffers.</p>
+    <p>162 zones &mdash; mob drops, vendors, gathering points, chests/coffers.</p>
    </a>
    <a class="data-card" href="/bcnm">
     <h3>BCNMs</h3>
-    <p>61 orb fights — loot tables, crate rolls, seal costs.</p>
+    <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
    </a>
    <a class="data-card" href="/nm/">
     <h3>NMs</h3>
     <p>NM drop rates and spawn conditions.</p>
    </a>
-   <a class="data-card" href="/guides/">
+   <a class="data-card" href="/fishing-cooking">
     <h3>Guides</h3>
     <p>Skill-up routes, gil-making strats, server-specific notes.</p>
    </a>
   </div>
   <div class="source-note">
-   <p>Drop rates, crafting math, vendor inventories — all read from the <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> source code, not wikis.</p>
+   <p>Drop rates, crafting math, vendor inventories &mdash; all read from the <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> source code, not wikis.</p>
   </div>
  </section>
-
- <footer class="site-footer panel pad">
-  <p class="made">Made by <strong>Secretsos</strong></p>
-  <p>A fan resource. Final Fantasy XI is © Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
- </footer>
+<footer class="site-footer panel pad">
+ <p class="made">Made by <strong>Secretsos</strong></p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+</footer>
 </main>
 </div>
 <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
@@ -303,7 +308,7 @@ function tick(){
   h+='<div class="vw-moon">';
   h+=moonSvg(mi.pct,mi.wax);
   h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25b2':' \u25bc'):'')+'</span></div></div>';
+  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
   h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
   h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
   wk.innerHTML=h;
@@ -317,6 +322,7 @@ tick();setInterval(tick,2400);
 })();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
