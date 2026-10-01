@@ -87,7 +87,7 @@ BODY = '''\
    </a>
    <a class="tool-card" href="/gathering/fishing">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
-    <h3><svg style="width:18px;height:18px;vertical-align:-3px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>Fishing Lookup <span class="badge-new">New</span></h3>
+    <h3>Fishing Lookup</h3>
     <p>Zone and bait lookup &mdash; what you can catch, skill needed, rarity, best rod. Also has fish-first search and rod stat breakdowns.</p>
     <span class="tc-cta">Find fish &rarr;</span>
    </a>
