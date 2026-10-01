@@ -486,15 +486,15 @@ PAGE = '''\
  <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
-  <a href="/calculator">Crafting Calculator</a>
-  <a href="/profit">Profit Finder</a>
-  <a href="/shopping">Shopping List</a>
-  <a href="/gathering/fishing">Fishing Lookup</a>
-  <a href="/gathering/gardening">Gardening Lookup</a>
-  <a href="/bcnm-tool">BCNM Profit Ranker</a>
-  <a href="/desynth">Desynth Calculator</a>
-  <a href="/guild-points">Guild Points</a>
-  <a href="/recipe-tree">Ingredient Tree</a>
+  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
+  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
+  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
+  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
+  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
+  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
+  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
+  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
+  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
  </div>
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
