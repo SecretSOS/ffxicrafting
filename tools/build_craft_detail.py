@@ -241,6 +241,14 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
         ORDER BY r.cost
     """, (guild_key,)).fetchall()
 
+    # --- Rank-up tests ---
+    rank_tests = db.execute("""
+        SELECT g.rank_index, g.rank_name, g.item_id, g.skill_cap, i.name
+        FROM guild_rank_tests g LEFT JOIN items i ON g.item_id=i.id
+        WHERE g.guild=?
+        ORDER BY g.rank_index
+    """, (guild_key,)).fetchall()
+
     # --- Build HTML ---
     slug = craft_name.lower()
     extra_css = f'''\
@@ -272,7 +280,12 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
 .stat-row .stat b{{font-family:var(--font-display);font-weight:400;font-size:1.3rem}}
 .tool-links{{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}}
 .tool-links a{{font-size:.85rem;padding:6px 14px;border-radius:999px;border:1px solid var(--rule);color:var(--ink-soft);text-decoration:none;transition:border-color .15s,color .15s}}
-.tool-links a:hover{{border-color:var({css_var});color:var({css_var})}}'''
+.tool-links a:hover{{border-color:var({css_var});color:var({css_var})}}
+.rank-tbl{{width:100%;border-collapse:collapse;font-size:.88rem}}
+.rank-tbl th{{text-align:left;font-weight:400;font-size:.78rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}}
+.rank-tbl td{{padding:7px 10px;border-bottom:1px solid var(--rule)}}
+.rank-tbl .rn{{color:var({css_var});font-weight:600}}
+.rank-tbl .cap{{font-family:var(--mono,monospace)}}'''
 
     html = html_head(
         f'{craft_name} · FFXI Crafting',
@@ -305,6 +318,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
     html += f'''\
  <nav class="section-toc" data-toc>
   <a href="#hours">Hours</a>
+  <a href="#rank-up">Rank-Up</a>
   <a href="#shop">Shop</a>
   <a href="#gp-turnins">GP Turn-ins</a>
   <a href="#gp-rewards">GP Rewards</a>
@@ -323,6 +337,19 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
  </section>
 
 '''
+
+    # Rank-up tests
+    if rank_tests:
+        html += ' <section class="panel pad">\n'
+        html += f'  <h2 id="rank-up">Rank-up tests</h2>\n'
+        html += f'  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">To advance your guild rank, reach the required skill level and turn in the test item to the guild master. Skill must be within 2 of the rank cap.</p>\n'
+        html += '  <table class="rank-tbl"><thead><tr><th>From</th><th>To</th><th>Skill</th><th>Test item</th></tr></thead><tbody>\n'
+        for rt in rank_tests:
+            from_rank = RANK_ORDER[rt['rank_index'] - 1].title() if rt['rank_index'] > 0 else '—'
+            to_rank = rt['rank_name']
+            name = pretty(rt['name']) if rt['name'] else f'Item {rt["item_id"]}'
+            html += f'    <tr><td>{from_rank}</td><td class="rn">{to_rank}</td><td class="cap">{rt["skill_cap"]}</td><td>{item_link(rt["item_id"], name)}</td></tr>\n'
+        html += '  </tbody></table>\n </section>\n\n'
 
     # Guild shop inventory
     if shop_items:

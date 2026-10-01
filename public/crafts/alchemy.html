@@ -43,6 +43,11 @@
 .tool-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
 .tool-links a{font-size:.85rem;padding:6px 14px;border-radius:999px;border:1px solid var(--rule);color:var(--ink-soft);text-decoration:none;transition:border-color .15s,color .15s}
 .tool-links a:hover{border-color:var(--alchemy);color:var(--alchemy)}
+.rank-tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.rank-tbl th{text-align:left;font-weight:400;font-size:.78rem;color:var(--ink-faint);padding:6px 10px;border-bottom:1px solid var(--rule)}
+.rank-tbl td{padding:7px 10px;border-bottom:1px solid var(--rule)}
+.rank-tbl .rn{color:var(--alchemy);font-weight:600}
+.rank-tbl .cap{font-family:var(--mono,monospace)}
 </style>
 <script src="/powertools.js"></script>
 </head>
@@ -93,12 +98,7 @@
  </div>
   <a href="/zone/" class="nav-link">Zones</a>
   <a href="/bcnm" class="nav-link">BCNMs</a>
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Guides <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/fishing-cooking">Fishing + Cooking</a>
-   </div>
-  </div>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -164,6 +164,7 @@
 
  <nav class="section-toc" data-toc>
   <a href="#hours">Hours</a>
+  <a href="#rank-up">Rank-Up</a>
   <a href="#shop">Shop</a>
   <a href="#gp-turnins">GP Turn-ins</a>
   <a href="#gp-rewards">GP Rewards</a>
@@ -179,6 +180,23 @@
    <tr><td style="padding:4px 16px 4px 0;color:var(--ink-faint)">Location</td><td>Bastok Mines</td></tr>
   </table>
   <p style="color:var(--ink-faint);font-size:.82rem;margin-top:10px">Hours and holiday from LandSandBoat. The <code>GUILD_SHOP_HOLIDAYS</code> setting may disable holidays on some servers.</p>
+ </section>
+
+ <section class="panel pad">
+  <h2 id="rank-up">Rank-up tests</h2>
+  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">To advance your guild rank, reach the required skill level and turn in the test item to the guild master. Skill must be within 2 of the rank cap.</p>
+  <table class="rank-tbl"><thead><tr><th>From</th><th>To</th><th>Skill</th><th>Test item</th></tr></thead><tbody>
+    <tr><td>Amateur</td><td class="rn">Recruit</td><td class="cap">20</td><td><a href="/item/937-block-of-animal-glue" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/937.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Block of Animal Glue</a></td></tr>
+    <tr><td>Recruit</td><td class="rn">Initiate</td><td class="cap">30</td><td><a href="/item/4157-flask-of-poison-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4157.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask of Poison Potion</a></td></tr>
+    <tr><td>Initiate</td><td class="rn">Novice</td><td class="cap">40</td><td><a href="/item/4163-flask-of-blinding-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4163.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask of Blinding Potion</a></td></tr>
+    <tr><td>Novice</td><td class="rn">Apprentice</td><td class="cap">50</td><td><a href="/item/947-jar-of-firesand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/947.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jar of Firesand</a></td></tr>
+    <tr><td>Apprentice</td><td class="rn">Journeyman</td><td class="cap">60</td><td><a href="/item/16543-fire-sword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16543.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fire Sword</a></td></tr>
+    <tr><td>Journeyman</td><td class="rn">Craftsman</td><td class="cap">70</td><td><a href="/item/4116-hi-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4116.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Potion</a></td></tr>
+    <tr><td>Craftsman</td><td class="rn">Artisan</td><td class="cap">80</td><td><a href="/item/16479-acid-kukri" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16479.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Acid Kukri</a></td></tr>
+    <tr><td>Artisan</td><td class="rn">Adept</td><td class="cap">90</td><td><a href="/item/4120-x-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4120.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> X-Potion</a></td></tr>
+    <tr><td>Adept</td><td class="rn">Veteran</td><td class="cap">100</td><td><a href="/item/16609-bloody-sword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16609.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bloody Sword</a></td></tr>
+    <tr><td>Veteran</td><td class="rn">Expert</td><td class="cap">110</td><td><a href="/item/10792-saida-ring" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/10792.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Saida Ring</a></td></tr>
+  </tbody></table>
  </section>
 
  <section class="panel pad">
