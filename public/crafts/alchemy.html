@@ -658,10 +658,37 @@ tabs.forEach(function(t){
 <script>(function(){
 var EPOCH=1009810800,
 DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
+ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
 DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]};
+GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
+MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
 function pad(n){return n<10?"0"+n:""+n}
+function moonInfo(vd){
+ var md=(vd+26)%84,pct,wax;
+ if(md<=41){pct=Math.round(100*md/42);wax=true;}
+ else{pct=Math.round(100*(84-md)/42);wax=false;}
+ var pi;
+ if(pct<=5)pi=wax?0:0;
+ else if(pct<=30)pi=wax?1:7;
+ else if(pct<=55)pi=wax?2:6;
+ else if(pct<=80)pi=wax?3:5;
+ else pi=4;
+ return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
+}
+function moonSvg(pct,wax){
+ var r=11,cx=12,cy=12;
+ var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
+ var f=pct/100;
+ var dx=Math.round(r*(1-2*f));
+ if(!wax)dx=-dx;
+ var sweep=f>0.5?1:0;
+ if(!wax)sweep=f>0.5?0:1;
+ return '<svg viewBox="0 0 24 24" class="moon-orb">'
+  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
+  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
+  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
+  +'</svg>';
+}
 function tick(){
  var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
  vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
@@ -673,6 +700,13 @@ function tick(){
   for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
    if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
    h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  var mi=moonInfo(vd);
+  h+='<div class="vw-moon">';
+  h+=moonSvg(mi.pct,mi.wax);
+  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
+  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
+  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
+  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
   wk.innerHTML=h;
  }
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];

@@ -404,6 +404,14 @@ li{margin-bottom:.4em}
 .vw-name{flex:1}
 .vw-cd{font-variant-numeric:tabular-nums;font-size:.72rem;color:var(--ink-faint)}
 .vw-day.now .vw-cd{color:var(--ink-soft)}
+.vw-moon{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.moon-orb{width:28px;height:28px;flex:0 0 28px}
+.vw-moon-info{display:flex;flex-direction:column;gap:1px}
+.vw-moon-phase{font-size:.78rem;color:var(--ink-soft);font-weight:600}
+.vw-moon-pct{font-size:.7rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.vw-moon-track{position:relative;height:4px;background:var(--border);border-radius:2px;margin-top:6px;overflow:visible}
+.vw-moon-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#2a2a2e 0%,#e8e0c8 50%,#2a2a2e 100%)}
+.vw-moon-pip{position:absolute;top:-2px;width:8px;height:8px;border-radius:50%;background:#e8e0c8;border:1.5px solid var(--border);transform:translateX(-50%);box-shadow:0 0 4px rgba(232,224,200,.5)}
 
 /* --- Main content (sidebar layout) --- */
 .main{min-width:0;padding:16px 0 70px;display:flex;flex-direction:column;gap:16px}
