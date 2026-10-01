@@ -153,6 +153,7 @@ def top_bar(active=''):
     gathering_items = [(href, name, 'gathering') for href, name in GATHERING_PAGES]
     craft_items = [(f'/crafts/{name.lower()}', name, f'craft-{code}') for code, name, _ in CRAFTS_ORDERED]
     zones_cls = ' active' if active == 'zones' else ''
+    nm_cls = ' active' if active == 'nm' else ''
     bcnm_cls = ' active' if active == 'bcnm' else ''
     guides_active = active in ('guides', 'fishing-cooking', 'fishing-101')
     guides_cls = ' active' if guides_active else ''
@@ -175,6 +176,7 @@ def top_bar(active=''):
     <a href="/fishing-101"{f101_cls}>Fishing 101</a>
    </div>
   </div>
+  <a href="/nm/" class="nav-link{nm_cls}">NMs</a>
   <a href="/bcnm" class="nav-link{bcnm_cls}">BCNMs</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>

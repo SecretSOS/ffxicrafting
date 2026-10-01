@@ -116,6 +116,10 @@ BODY = '''\
     <h3>Zones</h3>
     <p>162 zones &mdash; mob drops, vendors, gathering points, chests/coffers.</p>
    </a>
+   <a class="data-card" href="/nm/">
+    <h3>NMs</h3>
+    <p>530 notorious monsters &mdash; drop tables, rates, spawn types.</p>
+   </a>
    <a class="data-card" href="/bcnm">
     <h3>BCNMs</h3>
     <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
