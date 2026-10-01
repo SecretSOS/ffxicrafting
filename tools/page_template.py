@@ -168,6 +168,7 @@ def top_bar(active=''):
   <a href="/guides/" class="nav-link{guides_cls}">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
 '''
@@ -216,7 +217,6 @@ def sidebar(active=''):
     return f'''\
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
 {link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
