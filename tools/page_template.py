@@ -195,14 +195,23 @@ def sidebar(active=''):
         cls = ' class="active"' if key == active else ''
         return f'  <a href="{href}"{cls}><span class="sb-tool"><svg aria-hidden="true"><use href="#i-{icon_id}"/></svg>{label}</span></a>\n'
 
+    GUILD_HOURS = {
+        'wood': (6, 21), 'smith': (8, 23), 'gold': (8, 23), 'cloth': (6, 21),
+        'leather': (3, 18), 'bone': (8, 23), 'alchemy': (8, 23), 'cook': (5, 20), 'fish': (3, 18),
+    }
+
     craft_links = ''
     for code, name, var in CRAFTS_ORDERED:
         cls = ' class="active"' if f'craft-{code}' == active else ''
         slug = name.lower()
-        craft_links += f'  <a href="/crafts/{slug}"{cls}><span class="sb-craft" style="--c:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg>{name}<span id="guild-{code}" class="sb-guild"></span></span></a>\n'
+        o, c = GUILD_HOURS[code]
+        hrs = f'{o:02d}:00–{c:02d}:00'
+        craft_links += f'  <a href="/crafts/{slug}"{cls}><span class="sb-craft" style="--c:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg><span class="sb-craft-label">{name}<span class="sb-guild-hrs">{hrs}</span></span><span id="guild-{code}" class="sb-guild"></span></span></a>\n'
 
     fish_cls = ' class="active"' if 'craft-fish' == active else ''
-    craft_links += f'  <a href="/gathering/fishing"{fish_cls}><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span id="guild-fish" class="sb-guild"></span></span></a>\n'
+    o, c = GUILD_HOURS['fish']
+    hrs = f'{o:02d}:00–{c:02d}:00'
+    craft_links += f'  <a href="/gathering/fishing"{fish_cls}><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">{hrs}</span></span><span id="guild-fish" class="sb-guild"></span></span></a>\n'
 
     return f'''\
 <aside class="sidebar" id="sidebar">
@@ -219,9 +228,6 @@ def sidebar(active=''):
  <div class="sb-section">
   <div class="sb-heading">Guilds</div>
 {craft_links} </div>
- <div class="sb-section">
-  <div class="sb-heading">Info</div>
-{link("/about-the-data", "About the Data", "about")} </div>
  <div id="ahStatus" class="ah-status" style="display:none"></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
