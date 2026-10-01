@@ -85,6 +85,26 @@ details.zone .zone-body{padding:8px 0 16px}
 .collapse-arrow{color:var(--ink-faint);font-size:1.1rem;transition:transform .15s;margin-left:auto;padding-left:12px}
 details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 .collapse-title{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
+.ft-mode-bar{display:flex;gap:6px;margin-bottom:14px}
+.ft-mode{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.88rem}
+.ft-mode:hover{border-color:var(--fish);color:var(--fish)}
+.ft-mode.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
+.fl-card{border:1px solid var(--rule);border-radius:8px;padding:16px;margin-bottom:12px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.fl-card h3{margin:0 0 .5em;font-family:var(--font-display);font-size:1.05rem}
+.fl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.fl-stat{border:1px solid var(--rule);border-radius:6px;padding:10px 12px;text-align:center}
+.fl-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)}
+.fl-stat .val{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.fl-pw{letter-spacing:1px;white-space:nowrap}
+.fl-pw3{color:var(--gil)}
+.fl-pw2{color:var(--water)}
+.fl-pw1{color:var(--ink-faint)}
+.rod-legend{border:1px solid var(--rule);border-radius:8px;padding:14px 16px;margin-bottom:14px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.rod-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.86rem}
+.rod-dl dt{font-weight:700;color:var(--ink);white-space:nowrap}
+.rod-dl dd{margin:0;color:var(--ink-soft);line-height:1.5}
+.rod-hint{font-weight:400;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint)}
+@media(max-width:600px){.rod-dl{grid-template-columns:1fr}.rod-dl dt{margin-top:6px}}
 
 </style>
 <script src="/powertools.js"></script>
@@ -136,12 +156,7 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
  </div>
   <a href="/zone/" class="nav-link">Zones</a>
   <a href="/bcnm" class="nav-link">BCNMs</a>
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Guides <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/fishing-cooking">Fishing + Cooking</a>
-   </div>
-  </div>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
