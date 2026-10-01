@@ -1187,7 +1187,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   <div class="cmd-hint"><span><kbd>↑↓</kbd> navigate</span><span><kbd>Enter</kbd> go</span><span><kbd>Esc</kbd> close</span><span><kbd>Tab</kbd> filter type</span></div>
  </div>
 </div>
-<div class="kbd-hint"><kbd>Ctrl+K</kbd> search <kbd>1-9</kbd> tabs</div>
+<div class="kbd-hint"><kbd>Ctrl+K</kbd> search <kbd>1-9</kbd> tabs <button id="shutdownBtn" title="Shutdown PowerTool server" style="background:none;border:1px solid var(--rule);color:var(--ink-faint);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:.75rem;margin-left:8px;vertical-align:middle" onmouseover="this.style.borderColor='var(--loss)';this.style.color='var(--loss)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink-faint)'">&#9211; Off</button></div>
 
 <script>
 var D,T,sorts={flips:{k:'profit',d:-1},crafts:{k:'profit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1}};
@@ -1208,6 +1208,12 @@ document.getElementById('scanBtn').addEventListener('click',function(){
     setBadges();window._lazyRendered={};switchTab(document.querySelector('.tab.active').dataset.tab);
     btn.classList.remove('scanning');btn.textContent='↻ Scan';
   }).catch(function(){btn.classList.remove('scanning');btn.textContent='↻ Scan';});
+});
+document.getElementById('shutdownBtn').addEventListener('click',function(){
+  if(!confirm('Shut down PowerTool server?'))return;
+  fetch('/api/shutdown',{method:'POST'}).then(function(){
+    document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#556;font-size:1.2rem">PowerTool server stopped.</div>';
+  });
 });
 
 function init(){
@@ -2437,6 +2443,12 @@ def make_handler(state, html_bytes):
                 self.send_header('Cache-Control', 'no-cache')
                 self.end_headers()
                 self.wfile.write(state['json'])
+            elif self.path == '/api/shutdown':
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/plain')
+                self.end_headers()
+                self.wfile.write(b'Shutting down...')
+                threading.Timer(0.3, lambda: self.server.shutdown()).start()
             else:
                 self.send_error(404)
         def log_message(self, *a):
