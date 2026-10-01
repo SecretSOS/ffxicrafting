@@ -144,22 +144,55 @@ TOOL_CSS = """\
 .collapse-arrow{color:var(--ink-faint);font-size:1.1rem;transition:transform .15s;margin-left:auto;padding-left:12px}
 details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 .collapse-title{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
+.ft-mode-bar{display:flex;gap:6px;margin-bottom:14px}
+.ft-mode{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.88rem}
+.ft-mode:hover{border-color:var(--fish);color:var(--fish)}
+.ft-mode.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
+.fl-card{border:1px solid var(--rule);border-radius:8px;padding:16px;margin-bottom:12px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.fl-card h3{margin:0 0 .5em;font-family:var(--font-display);font-size:1.05rem}
+.fl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.fl-stat{border:1px solid var(--rule);border-radius:6px;padding:10px 12px;text-align:center}
+.fl-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)}
+.fl-stat .val{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.fl-pw{letter-spacing:1px;white-space:nowrap}
+.fl-pw3{color:var(--gil)}
+.fl-pw2{color:var(--water)}
+.fl-pw1{color:var(--ink-faint)}
+.rod-legend{border:1px solid var(--rule);border-radius:8px;padding:14px 16px;margin-bottom:14px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.rod-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.86rem}
+.rod-dl dt{font-weight:700;color:var(--ink);white-space:nowrap}
+.rod-dl dd{margin:0;color:var(--ink-soft);line-height:1.5}
+.rod-hint{font-weight:400;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint)}
+@media(max-width:600px){.rod-dl{grid-template-columns:1fr}.rod-dl dt{margin-top:6px}}
 """
 
 FISHING_TOOL_HTML = """\
 <section class="panel pad ft-panel" id="lookup">
  <div class="ft-head"><h2>Fishing Lookup</h2></div>
  <div id="ft-body">
-  <p class="panel-note">Pick a zone and bait to see what you can catch and which rods to use.</p>
-  <div class="ft-selects">
-   <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">— choose zone —</option></select></div>
-   <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">— choose bait —</option></select></div>
-   <span class="filter-count" id="ft-count"></span>
+  <div class="ft-mode-bar">
+   <button class="ft-mode active" data-mode="zone">By Zone</button>
+   <button class="ft-mode" data-mode="fish">By Fish</button>
   </div>
-  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th class="num">Rarity</th></tr></thead><tbody id="ft-results"><tr><td colspan="5" style="color:var(--ink-faint);text-align:center;padding:24px">Select a zone to begin</td></tr></tbody></table></div>
-  <div id="ft-rod-wrap" style="margin-top:16px">
-   <h3>Recommended rods</h3>
-   <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th class="num">Atk</th><th class="num">Rec</th><th>Breakable</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
+  <div id="ft-mode-zone">
+   <p class="panel-note">Pick a zone and bait to see what you can catch and which rods to use.</p>
+   <div class="ft-selects">
+    <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">— choose zone —</option></select></div>
+    <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">— choose bait —</option></select></div>
+    <span class="filter-count" id="ft-count"></span>
+   </div>
+   <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th class="num">Rarity</th></tr></thead><tbody id="ft-results"><tr><td colspan="5" style="color:var(--ink-faint);text-align:center;padding:24px">Select a zone to begin</td></tr></tbody></table></div>
+   <div id="ft-rod-wrap" style="margin-top:16px">
+    <h3>Recommended rods</h3>
+    <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th class="num">ATK</th><th class="num">REC</th><th>Breakable</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
+   </div>
+  </div>
+  <div id="ft-mode-fish" style="display:none">
+   <p class="panel-note">Pick a fish to see where to catch it, which baits attract it, and the best rod to use.</p>
+   <div class="ft-selects">
+    <div class="ft-field"><label for="ft-fish">Fish</label><select id="ft-fish"><option value="">— choose fish —</option></select></div>
+   </div>
+   <div id="fl-results" style="margin-top:14px"></div>
   </div>
  </div>
 </section>
@@ -578,12 +611,27 @@ def build_fishing():
 
     # Rods tab
     body += '<div id="tab-rods" hidden><h2>Fishing rods</h2>\n'
-    body += '<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th><th data-sort="num">Attack</th><th data-sort="num">Recovery</th><th data-sort="num">Time</th><th>Breakable</th></tr></thead><tbody>\n'
+    body += '<div class="rod-legend">'
+    body += '<p style="margin:0 0 .6em;color:var(--ink-soft);font-size:.88rem;line-height:1.6">'
+    body += '<strong>Rod stat guide</strong> <span style="color:var(--ink-faint)">(from LandSandBoat source: <code>fishingutils.cpp</code>)</span></p>'
+    body += '<dl class="rod-dl">'
+    body += '<dt>ATK <span class="rod-hint">fishAttack</span></dt><dd>Damage per successful arrow input. Higher = catch faster.</dd>'
+    body += '<dt>REC <span class="rod-hint">fishRecovery</span></dt><dd>How much the fish heals when you miss. Higher = fish recovers more HP = harder fight. Lower is better.</dd>'
+    body += '<dt>Timer <span class="rod-hint">fishTime</span></dt><dd>Base catch time limit (seconds). Reduced by 10s on size mismatch. Higher = more time to land the catch.</dd>'
+    body += '<dt>Rank <span class="rod-hint">minRank–maxRank</span></dt><dd>Fish skill range the rod handles. Fish outside this window = higher snap and lose chance.</dd>'
+    body += '<dt>Size</dt><dd>Small or large. Must match the fish\'s size type or you lose time and risk breaking the rod.</dd>'
+    body += '</dl></div>\n'
+    body += '<div style="overflow-x:auto"><table><thead><tr>'
+    body += '<th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th>'
+    body += '<th data-sort="num" title="Damage per successful input — higher is better">ATK</th>'
+    body += '<th data-sort="num" title="Fish heal on miss — lower is better">REC</th>'
+    body += '<th data-sort="num" title="Base catch time limit in seconds">Timer</th>'
+    body += '<th>Breakable</th></tr></thead><tbody>\n'
     for r in rods:
         rank_str = f'{r["min_rank"]}–{r["max_rank"]}' if r['min_rank'] != r['max_rank'] else str(r['min_rank'])
         brk = 'Yes' if r['breakable'] else 'No'
         body += f'<tr><td>{item_link(r["item_id"])}</td><td>{r["size_type"] or ""}</td><td>{rank_str}</td>'
-        body += f'<td>{r["fish_attack"]}</td><td>{r["fish_recovery"]}</td><td>{r["fish_time"]}</td><td>{brk}</td></tr>\n'
+        body += f'<td>{r["fish_attack"]}</td><td>{r["fish_recovery"]}</td><td>{r["fish_time"]}s</td><td>{brk}</td></tr>\n'
 
     body += '</tbody></table></div></div>\n'
 

@@ -85,6 +85,26 @@ details.zone .zone-body{padding:8px 0 16px}
 .collapse-arrow{color:var(--ink-faint);font-size:1.1rem;transition:transform .15s;margin-left:auto;padding-left:12px}
 details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 .collapse-title{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
+.ft-mode-bar{display:flex;gap:6px;margin-bottom:14px}
+.ft-mode{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.88rem}
+.ft-mode:hover{border-color:var(--fish);color:var(--fish)}
+.ft-mode.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
+.fl-card{border:1px solid var(--rule);border-radius:8px;padding:16px;margin-bottom:12px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.fl-card h3{margin:0 0 .5em;font-family:var(--font-display);font-size:1.05rem}
+.fl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.fl-stat{border:1px solid var(--rule);border-radius:6px;padding:10px 12px;text-align:center}
+.fl-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)}
+.fl-stat .val{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.fl-pw{letter-spacing:1px;white-space:nowrap}
+.fl-pw3{color:var(--gil)}
+.fl-pw2{color:var(--water)}
+.fl-pw1{color:var(--ink-faint)}
+.rod-legend{border:1px solid var(--rule);border-radius:8px;padding:14px 16px;margin-bottom:14px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.rod-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.86rem}
+.rod-dl dt{font-weight:700;color:var(--ink);white-space:nowrap}
+.rod-dl dd{margin:0;color:var(--ink-soft);line-height:1.5}
+.rod-hint{font-weight:400;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint)}
+@media(max-width:600px){.rod-dl{grid-template-columns:1fr}.rod-dl dt{margin-top:6px}}
 
 </style>
 <script src="/powertools.js"></script>
@@ -136,12 +156,7 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
  </div>
   <a href="/zone/" class="nav-link">Zones</a>
   <a href="/bcnm" class="nav-link">BCNMs</a>
-  <div class="nav-dd">
-   <span class="nav-dd-btn">Guides <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/fishing-cooking">Fishing + Cooking</a>
-   </div>
-  </div>
+  <a href="/guides/" class="nav-link">Guides</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
@@ -195,16 +210,29 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 <section class="panel pad ft-panel" id="lookup">
  <div class="ft-head"><h2>Fishing Lookup</h2></div>
  <div id="ft-body">
-  <p class="panel-note">Pick a zone and bait to see what you can catch and which rods to use.</p>
-  <div class="ft-selects">
-   <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">— choose zone —</option></select></div>
-   <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">— choose bait —</option></select></div>
-   <span class="filter-count" id="ft-count"></span>
+  <div class="ft-mode-bar">
+   <button class="ft-mode active" data-mode="zone">By Zone</button>
+   <button class="ft-mode" data-mode="fish">By Fish</button>
   </div>
-  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th class="num">Rarity</th></tr></thead><tbody id="ft-results"><tr><td colspan="5" style="color:var(--ink-faint);text-align:center;padding:24px">Select a zone to begin</td></tr></tbody></table></div>
-  <div id="ft-rod-wrap" style="margin-top:16px">
-   <h3>Recommended rods</h3>
-   <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th class="num">Atk</th><th class="num">Rec</th><th>Breakable</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
+  <div id="ft-mode-zone">
+   <p class="panel-note">Pick a zone and bait to see what you can catch and which rods to use.</p>
+   <div class="ft-selects">
+    <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">— choose zone —</option></select></div>
+    <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">— choose bait —</option></select></div>
+    <span class="filter-count" id="ft-count"></span>
+   </div>
+   <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th class="num">Rarity</th></tr></thead><tbody id="ft-results"><tr><td colspan="5" style="color:var(--ink-faint);text-align:center;padding:24px">Select a zone to begin</td></tr></tbody></table></div>
+   <div id="ft-rod-wrap" style="margin-top:16px">
+    <h3>Recommended rods</h3>
+    <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th class="num">ATK</th><th class="num">REC</th><th>Breakable</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
+   </div>
+  </div>
+  <div id="ft-mode-fish" style="display:none">
+   <p class="panel-note">Pick a fish to see where to catch it, which baits attract it, and the best rod to use.</p>
+   <div class="ft-selects">
+    <div class="ft-field"><label for="ft-fish">Fish</label><select id="ft-fish"><option value="">— choose fish —</option></select></div>
+   </div>
+   <div id="fl-results" style="margin-top:14px"></div>
   </div>
  </div>
 </section>
@@ -354,25 +382,26 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 <tr><td><a href="/item/4305-ryugu-titan" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4305.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ryugu Titan</a> <span class="tier">legendary</span></td><td>150</td><td>large</td><td>freshwater</td><td style="font-size:.82rem;color:var(--ink-soft)">Den of Rancor, Manaclipper, Ship Bound for Mhaura, Ship Bound for Mhaura Pirates, Ship Bound for Selbina +1 more</td><td style="font-size:.82rem;color:var(--ink-soft)">Frog Lure, Lizard Lure, Meatball, Minnow +6</td></tr>
 </tbody></table></div></div>
 <div id="tab-rods" hidden><h2>Fishing rods</h2>
-<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th><th data-sort="num">Attack</th><th data-sort="num">Recovery</th><th data-sort="num">Time</th><th>Breakable</th></tr></thead><tbody>
-<tr><td><a href="/item/17011-ebisu-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17011.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebisu Fishing Rod</a></td><td>small</td><td>1–30</td><td>100</td><td>50</td><td>30</td><td>No</td></tr>
-<tr><td><a href="/item/17012-judges-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17012.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Judges Rod</a></td><td>small</td><td>1–40</td><td>200</td><td>100</td><td>60</td><td>No</td></tr>
-<tr><td><a href="/item/17013-goldfish-basket" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17013.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goldfish Basket</a></td><td>small</td><td>1–5</td><td>100</td><td>50</td><td>20</td><td>No</td></tr>
-<tr><td><a href="/item/17014-hume-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17014.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hume Fishing Rod</a></td><td>small</td><td>1–15</td><td>125</td><td>65</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17015-halcyon-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17015.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Halcyon Rod</a></td><td>small</td><td>1–18</td><td>100</td><td>70</td><td>41</td><td>Yes</td></tr>
-<tr><td><a href="/item/17384-carbon-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17384.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Carbon Fishing Rod</a></td><td>small</td><td>1–13</td><td>100</td><td>75</td><td>43</td><td>Yes</td></tr>
-<tr><td><a href="/item/17385-glass-fiber-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17385.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Glass Fiber Fishing Rod</a></td><td>small</td><td>1–12</td><td>100</td><td>80</td><td>45</td><td>Yes</td></tr>
-<tr><td><a href="/item/17387-tarutaru-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17387.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tarutaru Fishing Rod</a></td><td>small</td><td>1–9</td><td>130</td><td>70</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17388-fastwater-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17388.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fastwater Fishing Rod</a></td><td>small</td><td>1–8</td><td>135</td><td>65</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17389-bamboo-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17389.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bamboo Fishing Rod</a></td><td>small</td><td>1–7</td><td>140</td><td>60</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17390-yew-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17390.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Fishing Rod</a></td><td>small</td><td>1–6</td><td>145</td><td>55</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17391-willow-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17391.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Fishing Rod</a></td><td>small</td><td>1–5</td><td>150</td><td>50</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/19319-maze-monger-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/19319.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maze Monger Fishing Rod</a></td><td>small</td><td>1–25</td><td>100</td><td>100</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/19321-ebisu-fishing-rod-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/19321.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebisu Fishing Rod +1</a></td><td>small</td><td>1–30</td><td>100</td><td>50</td><td>40</td><td>No</td></tr>
-<tr><td><a href="/item/17380-mithran-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17380.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mithran Fishing Rod</a></td><td>large</td><td>8–18</td><td>130</td><td>65</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17381-composite-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17381.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Composite Fishing Rod</a></td><td>large</td><td>11–24</td><td>100</td><td>70</td><td>43</td><td>Yes</td></tr>
-<tr><td><a href="/item/17383-clothespole" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17383.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clothespole</a></td><td>large</td><td>12</td><td>170</td><td>50</td><td>30</td><td>Yes</td></tr>
-<tr><td><a href="/item/17382-single-hook-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17382.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Single Hook Fishing Rod</a></td><td>large</td><td>14–13</td><td>100</td><td>80</td><td>45</td><td>Yes</td></tr>
+<div class="rod-legend"><p style="margin:0 0 .6em;color:var(--ink-soft);font-size:.88rem;line-height:1.6"><strong>Rod stat guide</strong> <span style="color:var(--ink-faint)">(from LandSandBoat source: <code>fishingutils.cpp</code>)</span></p><dl class="rod-dl"><dt>ATK <span class="rod-hint">fishAttack</span></dt><dd>Damage per successful arrow input. Higher = catch faster.</dd><dt>REC <span class="rod-hint">fishRecovery</span></dt><dd>How much the fish heals when you miss. Higher = fish recovers more HP = harder fight. Lower is better.</dd><dt>Timer <span class="rod-hint">fishTime</span></dt><dd>Base catch time limit (seconds). Reduced by 10s on size mismatch. Higher = more time to land the catch.</dd><dt>Rank <span class="rod-hint">minRank–maxRank</span></dt><dd>Fish skill range the rod handles. Fish outside this window = higher snap and lose chance.</dd><dt>Size</dt><dd>Small or large. Must match the fish's size type or you lose time and risk breaking the rod.</dd></dl></div>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th><th data-sort="num" title="Damage per successful input — higher is better">ATK</th><th data-sort="num" title="Fish heal on miss — lower is better">REC</th><th data-sort="num" title="Base catch time limit in seconds">Timer</th><th>Breakable</th></tr></thead><tbody>
+<tr><td><a href="/item/17011-ebisu-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17011.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebisu Fishing Rod</a></td><td>small</td><td>1–30</td><td>100</td><td>50</td><td>30s</td><td>No</td></tr>
+<tr><td><a href="/item/17012-judges-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17012.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Judges Rod</a></td><td>small</td><td>1–40</td><td>200</td><td>100</td><td>60s</td><td>No</td></tr>
+<tr><td><a href="/item/17013-goldfish-basket" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17013.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goldfish Basket</a></td><td>small</td><td>1–5</td><td>100</td><td>50</td><td>20s</td><td>No</td></tr>
+<tr><td><a href="/item/17014-hume-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17014.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hume Fishing Rod</a></td><td>small</td><td>1–15</td><td>125</td><td>65</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17015-halcyon-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17015.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Halcyon Rod</a></td><td>small</td><td>1–18</td><td>100</td><td>70</td><td>41s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17384-carbon-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17384.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Carbon Fishing Rod</a></td><td>small</td><td>1–13</td><td>100</td><td>75</td><td>43s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17385-glass-fiber-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17385.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Glass Fiber Fishing Rod</a></td><td>small</td><td>1–12</td><td>100</td><td>80</td><td>45s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17387-tarutaru-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17387.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tarutaru Fishing Rod</a></td><td>small</td><td>1–9</td><td>130</td><td>70</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17388-fastwater-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17388.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fastwater Fishing Rod</a></td><td>small</td><td>1–8</td><td>135</td><td>65</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17389-bamboo-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17389.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bamboo Fishing Rod</a></td><td>small</td><td>1–7</td><td>140</td><td>60</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17390-yew-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17390.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Fishing Rod</a></td><td>small</td><td>1–6</td><td>145</td><td>55</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17391-willow-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17391.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Fishing Rod</a></td><td>small</td><td>1–5</td><td>150</td><td>50</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/19319-maze-monger-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/19319.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maze Monger Fishing Rod</a></td><td>small</td><td>1–25</td><td>100</td><td>100</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/19321-ebisu-fishing-rod-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/19321.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebisu Fishing Rod +1</a></td><td>small</td><td>1–30</td><td>100</td><td>50</td><td>40s</td><td>No</td></tr>
+<tr><td><a href="/item/17380-mithran-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17380.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mithran Fishing Rod</a></td><td>large</td><td>8–18</td><td>130</td><td>65</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17381-composite-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17381.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Composite Fishing Rod</a></td><td>large</td><td>11–24</td><td>100</td><td>70</td><td>43s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17383-clothespole" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17383.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clothespole</a></td><td>large</td><td>12</td><td>170</td><td>50</td><td>30s</td><td>Yes</td></tr>
+<tr><td><a href="/item/17382-single-hook-fishing-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17382.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Single Hook Fishing Rod</a></td><td>large</td><td>14–13</td><td>100</td><td>80</td><td>45s</td><td>Yes</td></tr>
 </tbody></table></div></div>
 <div id="tab-baits" hidden><h2>Baits &amp; lures</h2>
 <div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Bait</th><th data-sort="text">Type</th><th data-sort="num">Max Hook</th><th>Losable</th><th data-sort="num">Rank Mod</th></tr></thead><tbody>

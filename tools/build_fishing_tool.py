@@ -32,7 +32,15 @@ for r in c.execute('SELECT bait_item_id, fish_item_id, power FROM fishing_bait_f
     bf.setdefault(str(r[0]), []).append([r[1], r[2]])
     # [fish_item_id, power]
 
-data = {'fish': fish, 'baits': baits, 'rods': rods, 'zf': zf, 'bf': bf}
+fz = {}
+for r in c.execute('SELECT fish_item_id, zone, rarity FROM fishing_areas ORDER BY rarity DESC'):
+    fz.setdefault(str(r[0]), []).append([r[1], r[2]])
+
+fb = {}
+for r in c.execute('SELECT fish_item_id, bait_item_id, power FROM fishing_bait_for ORDER BY power DESC'):
+    fb.setdefault(str(r[0]), []).append([r[1], r[2]])
+
+data = {'fish': fish, 'baits': baits, 'rods': rods, 'zf': zf, 'bf': bf, 'fz': fz, 'fb': fb}
 js = 'var FD=' + json.dumps(data, separators=(',', ':')) + ';\n'
 
 with open(OUT, 'w', encoding='utf-8') as f:
