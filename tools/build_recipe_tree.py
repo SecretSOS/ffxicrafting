@@ -259,7 +259,7 @@ BODY = """\
 
 html = html_head(
     'Ingredient Tree · Phoenix era 75',
-    'See the full crafting chain for any FFXI recipe — every sub-combine and raw material, with total cost.',
+    'Full crafting chain for any recipe — sub-combines down to raw materials, with base cost.',
     'https://ffxicrafting.com/recipe-tree',
     EXTRA_CSS)
 html += layout_open(active='', crumbs=[('Home', '/'), ('Ingredient Tree', None)])

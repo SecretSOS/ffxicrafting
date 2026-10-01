@@ -206,7 +206,7 @@ BODY = """\
 
 html = html_head(
     'Desynth Profit Calculator · Phoenix era 75',
-    'Calculate desynth success rates and expected profit. Find which items are worth breaking down at your skill level.',
+    'Desynth success rates and profit at your skill level. 538 recipes.',
     'https://ffxicrafting.com/desynth',
     EXTRA_CSS)
 html += layout_open(active='', crumbs=[('Home', '/'), ('Desynth Calculator', None)])

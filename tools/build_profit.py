@@ -288,7 +288,7 @@ BODY = """\
 
 html = html_head(
     'Profit finder · Phoenix era 75',
-    'Every era recipe ranked by profit margin. Uses your custom prices and skill levels to find the most profitable crafts in FFXI.',
+    'Era recipes sorted by profit. Set your prices and skill levels to see what pays.',
     'https://ffxicrafting.com/profit',
     EXTRA_CSS)
 html += layout_open(active='profit', crumbs=[('Home', '/'), ('Profit Finder', None)])

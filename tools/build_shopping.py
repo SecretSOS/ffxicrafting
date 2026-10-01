@@ -334,7 +334,7 @@ BODY = """\
 
 html = html_head(
     'Shopping list · Phoenix era 75',
-    'Aggregate every crafting material for a skill-up path. Pick a craft and skill range (1–100), get the totals grouped by vendor, gathered, and dropped.',
+    'Pick a craft and skill range — get every material you need, grouped by source.',
     'https://ffxicrafting.com/shopping',
     EXTRA_CSS)
 html += layout_open(active='shopping', crumbs=[('Home', '/'), ('Shopping List', None)])

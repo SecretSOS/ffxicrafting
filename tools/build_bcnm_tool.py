@@ -298,7 +298,7 @@ BODY = """\
 
 html = html_head(
     'BCNM Profit Ranker · Phoenix era 75',
-    'Rank every BCNM by expected profit. Set your prices and find the best return on your Beastmen and Kindred seals.',
+    'All 61 orb BCNMs ranked by gil per seal. Plug in your sell prices.',
     'https://ffxicrafting.com/bcnm-tool',
     EXTRA_CSS)
 html += layout_open(active='bcnm', crumbs=[('Home', '/'), ('BCNMs', '/bcnm'), ('Profit Ranker', None)])

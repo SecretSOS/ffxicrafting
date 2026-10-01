@@ -221,7 +221,7 @@ BODY = """\
 
 html = html_head(
     'Guild Points Optimizer · Phoenix era 75',
-    'Find the cheapest guild point turn-in for each craft and Vana\'diel day. Compare cost per GP to maximize your daily points.',
+    'Cheapest GP turn-in for each craft, based on today\'s Vana\'diel pattern.',
     'https://ffxicrafting.com/guild-points',
     EXTRA_CSS)
 html += layout_open(active='', crumbs=[('Home', '/'), ('Guild Points', None)])
