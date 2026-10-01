@@ -46,7 +46,7 @@ BODY = '''\
    <a class="tool-card" href="/calculator">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></svg>
     <h3>Crafting Calculator</h3>
-    <p>All recipes from 1&ndash;60, broken into 10-level brackets. Plug in your prices and see cost per synth, success rates, and HQ chances.</p>
+    <p>All recipes from 1&ndash;100, broken into 10-level brackets. Plug in your prices and see cost per synth, success rates, and HQ chances.</p>
     <span class="tc-cta">Open calculator &rarr;</span>
    </a>
    <a class="tool-card" href="/profit">

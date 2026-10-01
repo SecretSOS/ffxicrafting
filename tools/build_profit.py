@@ -98,7 +98,7 @@ var I={},R=[],cur='all',prices={},skills={},canMakeOnly=false,hideUnpricedOn=fal
 var sortCol='profit',sortDir=-1,computed=[],minProfit=0,showLimit=100;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 try{skills=JSON.parse(localStorage.getItem('phoenix-skills')||'{}');}catch(e){}
-CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=60;});
+CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=100;});
 function saveSkills(){try{localStorage.setItem('phoenix-skills',JSON.stringify(skills));}catch(e){}}
 function savePrices(){try{localStorage.setItem('phoenix-prices-v2',JSON.stringify(prices));}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -148,7 +148,7 @@ function renderCrafts(){
   document.getElementById('crafts').innerHTML=h;}
 function renderSkills(){
   document.getElementById('skills').innerHTML='<span style="color:var(--ink-faint);font-size:.82rem;margin-right:4px">Your skills:</span>'+
-    CRAFTS.map(function(c){return'<span class="skill" style="--c:var('+CVAR[c]+')"><svg><use href="#i-'+CODE[c]+'"/></svg><input type="number" min="0" max="110" value="'+(skills[c]||60)+'" data-craft="'+c+'" aria-label="'+c+' skill"></span>';}).join('');}
+    CRAFTS.map(function(c){return'<span class="skill" style="--c:var('+CVAR[c]+')"><svg><use href="#i-'+CODE[c]+'"/></svg><input type="number" min="0" max="110" value="'+(skills[c]||100)+'" data-craft="'+c+'" aria-label="'+c+' skill"></span>';}).join('');}
 function renderPrices(){
   var recipes=cur==='all'?R:R.filter(function(r){return NAME[r.cr]===cur;});
   var seenBuy={},seenSell={},buyIds=[],sellIds=[];

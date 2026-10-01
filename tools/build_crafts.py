@@ -21,7 +21,7 @@ for code, name, var in CRAFTS_ORDERED:
         f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=0 AND (content_tag IS NULL OR content_tag IN {ERA})",
         (code,)).fetchone()[0]
     era_60 = db.execute(
-        f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 62 AND (content_tag IS NULL OR content_tag IN {ERA})",
+        f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 102 AND (content_tag IS NULL OR content_tag IN {ERA})",
         (code,)).fetchone()[0]
     desynth = db.execute(
         f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=1 AND (content_tag IS NULL OR content_tag IN {ERA})",
@@ -55,7 +55,7 @@ html += layout_open(
 html += '''\
  <header class="panel pad">
   <h1>Crafts</h1>
-  <p class="lede">Eight crafts, skill 1 to 60. Each card shows era recipe counts and links to the calculator, profit finder, and shopping list filtered for that craft.</p>
+  <p class="lede">Eight crafts, skill 1 to 100. Each card shows era recipe counts and links to the calculator, profit finder, and shopping list filtered for that craft.</p>
  </header>
 
  <section class="panel pad">
@@ -70,7 +70,7 @@ for c in craft_data:
     <div>
      <h3><a href="/crafts/{c['name'].lower()}" style="color:inherit;text-decoration:none">{c['name']}</a></h3>
      <div class="meta">
-      <b>{c['era_60']}</b> recipes (1–60)<br>
+      <b>{c['era_60']}</b> recipes (1–100)<br>
       <b>{c['total']}</b> total &middot; <b>{c['desynth']}</b> desynth
      </div>
      <div class="craft-links">
@@ -109,4 +109,4 @@ with open(OUT, 'w', encoding='utf-8') as f:
 
 print(f'crafts.html: {os.path.getsize(OUT) / 1024:.0f} KB')
 for c in craft_data:
-    print(f"  {c['name']}: {c['era_60']} recipes (1-60), {c['total']} total, {c['desynth']} desynth")
+    print(f"  {c['name']}: {c['era_60']} recipes (1-100), {c['total']} total, {c['desynth']} desynth")

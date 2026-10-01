@@ -177,7 +177,7 @@ var SHORT={wood:'Wood',smith:'Smith',gold:'Gold',cloth:'Cloth',leather:'Lthr',bo
 var R=[],I={},cur='all',prices={},skills={},sortCol='profit',sortDir=-1,computed=[],showLimit=100;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 try{skills=JSON.parse(localStorage.getItem('phoenix-skills')||'{}');}catch(e){}
-CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=60;});
+CRAFTS.forEach(function(c){if(skills[c]===undefined)skills[c]=100;});
 function savePrices(){try{localStorage.setItem('phoenix-prices-v2',JSON.stringify(prices));}catch(e){}}
 function saveSkills(){try{localStorage.setItem('phoenix-skills',JSON.stringify(skills));}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
@@ -221,7 +221,7 @@ function renderCrafts(){
   document.getElementById('crafts').innerHTML=h;}
 function renderSkills(){
   document.getElementById('skills').innerHTML='<span style="color:var(--ink-faint);font-size:.82rem;margin-right:4px">Your skills:</span>'+
-    CRAFTS.map(function(c){return'<span class="skill" style="--c:var('+CVAR[c]+')"><svg><use href="#i-'+c+'"/></svg><input type="number" min="0" max="110" value="'+(skills[c]||60)+'" data-craft="'+c+'" aria-label="'+NAME[c]+' skill"></span>';}).join('');}
+    CRAFTS.map(function(c){return'<span class="skill" style="--c:var('+CVAR[c]+')"><svg><use href="#i-'+c+'"/></svg><input type="number" min="0" max="110" value="'+(skills[c]||100)+'" data-craft="'+c+'" aria-label="'+NAME[c]+' skill"></span>';}).join('');}
 function renderHead(){
   document.getElementById('thead').innerHTML='<tr><th data-col="name">Item</th><th data-col="lv" class="num">Lv</th><th data-col="rate" class="num">Success</th><th data-col="cost" class="num">Cost</th><th data-col="ev" class="num">EV Output</th><th data-col="profit" class="num">Profit</th></tr>';}
 function renderResults(){

@@ -272,7 +272,7 @@ function generateCSV(){
 function update(){
   if(!C[cur])return;
   var from=Math.max(1,Math.min(99,Number(document.getElementById('fromSkill').value)||1));
-  var to=Math.max(from+1,Math.min(60,Number(document.getElementById('toSkill').value)||60));
+  var to=Math.max(from+1,Math.min(100,Number(document.getElementById('toSkill').value)||100));
   var path=computePath(cur,from,to);
   renderPath(path);}
 function fetchJSON(url,cb){var x=new XMLHttpRequest();x.open('GET',url);x.onload=function(){if(x.status===200)cb(JSON.parse(x.responseText));};x.send();}
@@ -314,7 +314,7 @@ BODY = """\
   <div class="crafts" id="crafts"></div>
   <div class="range-row">
    <label>From skill</label><input type="number" id="fromSkill" min="1" max="99" value="1">
-   <label>to</label><input type="number" id="toSkill" min="2" max="60" value="60">
+   <label>to</label><input type="number" id="toSkill" min="2" max="100" value="100">
   </div>
  </header>
  <section class="panel pad" id="pathPanel" hidden>

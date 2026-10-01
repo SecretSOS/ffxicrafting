@@ -184,7 +184,7 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
         f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=0 AND (content_tag IS NULL OR content_tag IN {ERA})",
         (code,)).fetchone()[0]
     era_60 = db.execute(
-        f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 62 AND (content_tag IS NULL OR content_tag IN {ERA})",
+        f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 102 AND (content_tag IS NULL OR content_tag IN {ERA})",
         (code,)).fetchone()[0]
     desynth = db.execute(
         f"SELECT COUNT(*) FROM recipes WHERE main_craft=? AND desynth=1 AND (content_tag IS NULL OR content_tag IN {ERA})",
@@ -436,7 +436,7 @@ details.guild-section>summary h2{{margin:0;font-size:1.1rem}}'''
  <details open class="guild-section panel pad">
   <summary><h2 id="recipes">Recipes</h2></summary>
   <div class="stat-row">
-   <div class="stat"><b>{era_60}</b><span>recipes (1–60)</span></div>
+   <div class="stat"><b>{era_60}</b><span>recipes (1–100)</span></div>
    <div class="stat"><b>{total}</b><span>total</span></div>
    <div class="stat"><b>{desynth}</b><span>desynth</span></div>
   </div>
