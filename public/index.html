@@ -33,6 +33,8 @@ h2{border-left:none;padding-left:0}
 .source-note p{color:var(--ink-soft);font-size:.88rem;margin:0;line-height:1.5}
 .wip-banner{text-align:center;margin:0 0 1.4em}
 .wip-banner img{max-width:340px;width:100%;height:auto;border-radius:12px}
+.badge-new{display:inline-block;background:#e63946;color:#fff;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle;animation:badge-pulse 2s ease-in-out infinite}
+@keyframes badge-pulse{0%,100%{opacity:1}50%{opacity:.6}}
 @media(max-width:640px){.hero-tools{grid-template-columns:1fr}}
 </style>
 </head>
@@ -191,7 +193,7 @@ h2{border-left:none;padding-left:0}
    </a>
    <a class="tool-card" href="/gathering/fishing">
     <svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
-    <h3>Fishing Lookup</h3>
+    <h3><svg style="width:18px;height:18px;vertical-align:-3px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>Fishing Lookup <span class="badge-new">New</span></h3>
     <p>Pick a zone and bait to see what you can catch, skill requirements, rarity, and which rod to use. Full fishing data from the server source.</p>
     <span class="tc-cta">Find fish &rarr;</span>
    </a>
