@@ -33,6 +33,7 @@ SVG_DEFS = '''\
  <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
  <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
  <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
+ <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
 </svg>'''
 
 THEME_JS = '(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();'
@@ -182,6 +183,7 @@ TOOL_ICONS = {
     'desynth':    'desynth',
     'guild-points': 'gp',
     'recipe-tree': 'tree',
+    'fishing-101': 'guide',
 }
 
 def sidebar(active=''):
@@ -223,7 +225,7 @@ def sidebar(active=''):
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
 {link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
-{link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}
+{link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}{link("/fishing-101", "Fishing 101", "fishing-101")}
  </div>
  <div class="sb-section sb-explore">
   <div class="sb-heading">Explore</div>
