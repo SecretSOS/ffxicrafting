@@ -237,9 +237,6 @@ def sidebar(active=''):
 {link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{link("/fishing-101", "Fishing 101", "fishing-101")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
 {link("/bcnm-tool", "BCNM Profit Ranker", "bcnm-tool")}{link("/desynth", "Desynth Calculator", "desynth")}{link("/guild-points", "Guild Points", "guild-points")}{link("/recipe-tree", "Ingredient Tree", "recipe-tree")}{link("/fishing-cooking", "Fishing + Cooking", "fishing-cooking")}
  </div>
- <div class="sb-section sb-explore">
-  <div class="sb-heading">Explore</div>
-{link("/zone/", "Zones", "zones")}{link("/gathering/fishing", "Fishing", "fishing")}{link("/gathering/", "Gathering", "gathering")}{link("/bcnm", "BCNMs", "bcnm")}{link("/crafts", "Crafts", "crafts")} </div>
  <div id="ahStatus" class="ah-status" style="display:none"></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
