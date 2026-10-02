@@ -197,10 +197,17 @@ var W=[[85,15,0,0,0],[85,15,0,0,0],[85,15,0,0,0],[80,20,0,0,0],[80,20,0,0,0],[70
 function avgGain(diff,skill){if(skill>=60)return 0.1;var w=W[Math.max(0,Math.min(14,diff))],s=0;for(var i=0;i<5;i++)s+=w[i]*(i+1)/10;return s/100;}
 function costEach(r){var c=price(r.cry);r.ing.forEach(function(p){c+=price(p[0])*p[1];});return c;}
 function unpricedOf(r){return r.ing.filter(function(p){return price(p[0])===0;}).map(function(p){return I[p[0]]?I[p[0]].n:'?';});}
+function successRate(diff){
+  if(diff<=0)return 0.95;
+  if(diff<=3)return 0.95-diff*0.05;
+  return Math.max(0,0.80-(diff-3)*0.10);}
 function perLevel(r,skill){
   var diff=r.lv-skill;if(diff<=0)return null;
+  var sr=successRate(diff);
+  if(sr<=0)return null;
   var chance=(skill<50?0.6:0.25),gain=avgGain(diff,skill);
-  var synths=1/(chance*gain)*1.05;
+  var effective=(diff<=5)?chance:(sr*chance);
+  var synths=1/(effective*gain)*1.05;
   return{synths:synths,cost:costEach(r)*synths};}
 function findBestForSkill(craft,skill){
   if(!C[craft])return null;
