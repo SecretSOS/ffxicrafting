@@ -46,6 +46,57 @@ GUILD_NPC_MAP = {
     'Wahraga':'leather','Yabby_Tanmikey':'cook','Yahliq':'alchemy',
 }
 
+GUILD_NPC_LOCATIONS = {
+    'Achika':('cloth','Norg','1.3, 19.3'),
+    'Akamafula':('bone','Lower Jeuno','28.5, -46.7'),
+    'Amalasanda':('leather','Lower Jeuno','28.1, -44.8'),
+    'Amulya':('alchemy','Metalworks','-106.1, -24.6'),
+    'Babubu':('cook','Port Windurst','-175.2, 70.4'),
+    'Beugungel':('smith','Carpenters Landing',None),
+    'Bornahn':('smith','Al Zahbi','46.0, -42.7'),
+    'Cauzeriste':('leather',"Northern San d'Oria",'-175.9, 280.3'),
+    'Cehn_Teyohngo':('bone','Al Zahbi','5.0, -12.0'),
+    'Celestina':('cloth','Mhaura','-37.6, 75.7'),
+    'Chaupire':('wood',"Northern San d'Oria",'-174.5, 281.9'),
+    'Chomo_Jinjahl':('fish','Windurst Waters','-105.1, 73.8'),
+    'Cletae':('gold',"Southern San d'Oria",'-189.1, 14.4'),
+    'Dehbi_Moshal':('alchemy','Al Zahbi','-71.6, -57.5'),
+    'Doggomehr':('smith',"Northern San d'Oria",'-193.9, 162.0'),
+    'Gibol':('wood','Selbina','13.6, 8.6'),
+    'Graegham':('leather','Selbina','-12.4, 8.7'),
+    'Jabbar':('gold','Port Bastok','-99.7, 26.0'),
+    'Jidwahn':('smith','Silver Sea route to Nashmau','5.0, -12.0'),
+    'Jirokichi':('fish','Norg','-1.5, 18.8'),
+    'Kamilah':('cloth','Mhaura','-64.3, 35.3'),
+    'Kopopo':('cook','Windurst Waters','-103.9, 74.3'),
+    'Kueh_Igunahmori':('bone',"Southern San d'Oria",'-194.8, 13.1'),
+    'Kuzah_Hpirohpon':('cook','Windurst Woods','-80.1, -127.7'),
+    'Lokhong':('cloth','Ship bound for Mhaura Pirates','1.8, -9.0'),
+    'Lucretia':('leather',"Northern San d'Oria",'-193.7, 159.4'),
+    'Maymunah':('gold','Bastok Mines','108.7, -3.1'),
+    'Mendoline':('wood','Selbina','-13.6, 10.9'),
+    'Meriri':('alchemy','Windurst Woods','-76.5, -128.3'),
+    'Mololo':('alchemy','Mhaura','-64.3, 34.1'),
+    'Ndego':('bone','Al Zahbi','-37.2, -33.9'),
+    'Odoba':('wood','Bastok Mines','108.5, 1.1'),
+    'Pashi_Maccaleh':('cook','Open sea route to Mhaura','5.0, -12.0'),
+    'Rajmonda':('smith','Ship bound for Selbina Pirates',None),
+    'Retto-Marutto':('gold','Windurst Woods','-6.1, -132.6'),
+    'Shih_Tayuun':('alchemy','Windurst Woods','-3.1, -131.4'),
+    'Silver_Owl':('gold','Port Bastok','-99.2, 23.3'),
+    'Taten-Bilten':('bone','Al Zahbi','71.6, -56.9'),
+    'Teerth':('leather','Bastok Markets','-205.2, -56.5'),
+    'Tilala':('wood','Selbina','14.3, 10.3'),
+    'Tsutsuroon':('fish','Nashmau','-15.2, 31.4'),
+    'Vicious_Eye':('cloth','Metalworks','-106.1, -28.8'),
+    'Visala':('cook','Bastok Markets','-202.0, -56.8'),
+    'Vuliaie':('cloth','Norg','-24.3, -19.6'),
+    'Wahnid':('gold','Aht Urhgan Whitegate','-31.7, -94.9'),
+    'Wahraga':('leather','Aht Urhgan Whitegate','-76.8, 140.3'),
+    'Yabby_Tanmikey':('cook','Mhaura','-36.5, 76.8'),
+    'Yahliq':('alchemy','Al Zahbi','5.0, -12.0'),
+}
+
 ERA_TAGS = (None, 'ROTZ', 'COP', 'TOAU', 'WOTG')
 
 
@@ -128,6 +179,35 @@ def load_all():
         if tp and (iid not in vendor_best or tp < vendor_best[iid][0]):
             vendor_best[iid] = (tp, vsrc, vendor_label, zone_label)
         vendor_all.append(d)
+
+    guild_labels = {**CRAFT_NAMES, 'fish': 'Fishing'}
+    item_vendors = {}
+    _seen_vendors = {}
+    for d in vendor_all:
+        iid = d['item_id']
+        tp = d['typical_price']
+        if not tp:
+            continue
+        npc_name = d.get('where_') or ''
+        loc = GUILD_NPC_LOCATIONS.get(npc_name)
+        if d['type'] == 'guild_shop' and loc:
+            guild_type, zone, pos = loc
+            dedup_key = (iid, npc_name, guild_type)
+            if dedup_key in _seen_vendors:
+                continue
+            _seen_vendors[dedup_key] = True
+            entry = {'n': npc_name.replace('_', ' '), 'z': zone, 'g': guild_labels.get(guild_type, guild_type), 'pr': tp}
+            if pos:
+                entry['pos'] = pos
+        else:
+            zone_raw = d['zone'] or ''
+            dedup_key = (iid, npc_name, zone_raw)
+            if dedup_key in _seen_vendors:
+                continue
+            _seen_vendors[dedup_key] = True
+            zone = zone_raw.replace('_', ' ').title()
+            entry = {'n': npc_name.replace('_', ' ').title(), 'z': zone, 'pr': tp}
+        item_vendors.setdefault(iid, []).append(entry)
 
     def cheapest(iid):
         vb = vendor_best.get(iid)
@@ -653,6 +733,7 @@ def load_all():
         'rods': rods,
         'quests': quest_list,
         'sourceIdx': source_idx,
+        'itemVendors': {str(k): v for k, v in item_vendors.items()},
         'ahFetched': ah_fetched,
         'ahCount': ah_count,
         'stats': {
@@ -754,6 +835,12 @@ tr:hover td{background:color-mix(in srgb,var(--bg3) 40%,transparent)}
 .t-skillup{background:#e65100;color:#ffe0b2;font-weight:700}
 .vc-breakdown{display:flex;flex-direction:column;gap:5px}
 .vc-group{font-size:.82rem;line-height:1.6}
+.vc-mat-row{padding:2px 0}
+.vc-vendors{margin:1px 0 4px 18px;font-size:.74rem;line-height:1.4}
+.vc-vline{padding:1px 0;color:#b0bec5}
+.vc-guild-label{color:#80cbc4;font-weight:600;font-size:.7rem}
+.vc-npc-name{color:#e0e0e0}
+.vc-pos{color:#ffab40;font-family:monospace;font-size:.7rem}
 .sub{font-size:.72rem;color:var(--ink-faint)}
 .ex{font-size:.68rem;color:var(--loss)}.ra{font-size:.68rem;color:var(--accent)}
 .empty{padding:40px;text-align:center;color:var(--ink-faint)}
@@ -2413,27 +2500,41 @@ function renderVendorCrafts(){
     h+='<td class="n">'+(stackP?pc(stackP):'—')+'</td>';
     h+='<td class="n">'+(gilHr?'<span class="mg">'+fmt(gilHr)+'</span>':'—')+'</td></tr>';
     h+='<tr class="detail" id="vd'+i+'"><td colspan="10"><div class="vc-breakdown">';
-    var groups={};var allItems=[{name:c.crystal.name,qty:1,price:c.crystal.price,total:c.crystal.price,src:c.crystal.src,vendor:c.crystal.vendor,zone:c.crystal.zone}];
+    var allItems=[{id:c.crystal.id,name:c.crystal.name,qty:1,price:c.crystal.price,total:c.crystal.price,src:c.crystal.src}];
     c.mats.forEach(function(m){allItems.push(m)});
+    var groups={};
     allItems.forEach(function(m){
       var key=m.src||'unknown';
-      var label='Unknown';
-      if(key==='ah')label='Buy from AH';
-      else if(key==='guild')label='Buy from '+(m.vendor||'Guild Shop');
-      else if(key==='npc')label='Buy from '+(m.vendor||'NPC');
-      if(!groups[label])groups[label]={src:key,items:[]};
-      groups[label].items.push(m);
+      if(!groups[key])groups[key]=[];
+      groups[key].push(m);
     });
     var order=['guild','npc','ah','unknown'];
-    var sorted_g=Object.keys(groups).sort(function(a,b){return order.indexOf(groups[a].src)-order.indexOf(groups[b].src)});
-    sorted_g.forEach(function(label){
-      var g=groups[label];
-      h+='<div class="vc-group"><span class="tag t-'+g.src+'" style="font-size:.72rem">'+label+'</span> ';
-      g.items.forEach(function(m,j){
-        if(j>0)h+=' ';
-        h+='<span class="mat">'+(m.qty>1?'<span class="mat-q">'+m.qty+'x</span> ':'')+'<span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
+    var srcLabels={guild:'Guild Shop',npc:'NPC Shop',ah:'Buy from AH',unknown:'Unknown'};
+    order.forEach(function(srcKey){
+      var g=groups[srcKey];if(!g)return;
+      h+='<div class="vc-group"><span class="tag t-'+srcKey+'" style="font-size:.72rem">'+srcLabels[srcKey]+'</span>';
+      g.forEach(function(m){
+        h+='<div class="vc-mat-row">'+(m.qty>1?'<span class="mat-q">'+m.qty+'x</span> ':'');
+        h+='<span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
         if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total||m.price)+'</span>';
-        h+='</span>';
+        var vlist=D.itemVendors&&D.itemVendors[String(m.id)];
+        if(vlist&&vlist.length>0&&srcKey!=='ah'){
+          var byG={};vlist.forEach(function(v){var gk=v.g||'';if(!byG[gk])byG[gk]=[];byG[gk].push(v);});
+          h+='<div class="vc-vendors">';
+          var gkeys=Object.keys(byG).sort();
+          gkeys.forEach(function(gk){
+            byG[gk].forEach(function(v){
+              h+='<div class="vc-vline">';
+              if(gk)h+='<span class="vc-guild-label">'+esc(gk)+'</span> ';
+              h+='<span class="vc-npc-name">'+esc(v.n)+'</span>';
+              if(v.z)h+=' <span class="sub">'+esc(v.z)+'</span>';
+              if(v.pos)h+=' <span class="vc-pos">!pos '+v.pos+'</span>';
+              h+='</div>';
+            });
+          });
+          h+='</div>';
+        }
+        h+='</div>';
       });
       h+='</div>';
     });
