@@ -123,17 +123,22 @@ def load_all():
 
         tp = d['typical_price']
         vsrc = 'guild' if d['type'] == 'guild_shop' else 'npc'
+        vendor_label = 'Guild Shop' if vsrc == 'guild' else (d['where_'] or '').replace('_', ' ').title()
+        zone_label = (d['zone'] or '').replace('_', ' ').title()
         if tp and (iid not in vendor_best or tp < vendor_best[iid][0]):
-            vendor_best[iid] = (tp, vsrc)
+            vendor_best[iid] = (tp, vsrc, vendor_label, zone_label)
         vendor_all.append(d)
 
     def cheapest(iid):
         vb = vendor_best.get(iid)
         ap = ah_prices.get(iid)
-        if vb and ap: return (vb[0], vb[1]) if vb[0] <= ap else (ap, 'ah')
-        if vb: return vb[0], vb[1]
-        if ap: return ap, 'ah'
-        return None, None
+        if vb and ap:
+            if vb[0] <= ap:
+                return vb[0], vb[1], vb[2], vb[3]
+            return ap, 'ah', None, None
+        if vb: return vb[0], vb[1], vb[2], vb[3]
+        if ap: return ap, 'ah', None, None
+        return None, None, None, None
 
     def sell_price(iid):
         ap = ah_prices.get(iid)
@@ -196,17 +201,19 @@ def load_all():
         mat_list = []
         missing = False
         for ing in ings:
-            p, src = cheapest(ing['item_id'])
+            p, src, vwhere, vzone = cheapest(ing['item_id'])
             if p is None:
                 missing = True
                 mat_list.append({'id': ing['item_id'], 'name': name(ing['item_id']),
-                                 'qty': ing['qty'], 'price': None, 'src': None, 'total': None})
+                                 'qty': ing['qty'], 'price': None, 'src': None, 'total': None,
+                                 'vendor': None, 'zone': None})
             else:
                 mat_list.append({'id': ing['item_id'], 'name': name(ing['item_id']),
-                                 'qty': ing['qty'], 'price': p, 'src': src, 'total': p * ing['qty']})
+                                 'qty': ing['qty'], 'price': p, 'src': src, 'total': p * ing['qty'],
+                                 'vendor': vwhere, 'zone': vzone})
                 mat_cost += p * ing['qty']
 
-        cry_p, cry_src = cheapest(r['crystal'])
+        cry_p, cry_src, cry_vendor, cry_zone = cheapest(r['crystal'])
         if cry_p:
             mat_cost += cry_p
 
@@ -252,7 +259,7 @@ def load_all():
             'id': r['id'], 'name': name(r['result']), 'recipeName': r['rname'],
             'craft': r['main_craft'], 'level': r['main_level'],
             'subs': sub_crafts if len(sub_crafts) > 1 else {},
-            'crystal': {'id': r['crystal'], 'name': name(r['crystal']), 'price': cry_p, 'src': cry_src},
+            'crystal': {'id': r['crystal'], 'name': name(r['crystal']), 'price': cry_p, 'src': cry_src, 'vendor': cry_vendor, 'zone': cry_zone},
             'mats': mat_list, 'matCost': mat_cost if not missing else None,
             'matSrc': mat_src,
             'result': {'id': r['result'], 'name': name(r['result']), 'qty': r['result_qty'],
@@ -515,7 +522,7 @@ def load_all():
             JOIN fishing_baits fb ON fb.item_id=bf.bait_item_id
             WHERE bf.fish_item_id=? ORDER BY bf.power DESC
         ''', (fid,)):
-            bp, bsrc = cheapest(b[0])
+            bp, bsrc, _, _ = cheapest(b[0])
             baits.append({'id': b[0], 'name': name(b[0]), 'power': b[2],
                           'type': b[3], 'losable': bool(b[4]),
                           'cost': bp, 'costSrc': bsrc})
@@ -744,6 +751,8 @@ tr:hover td{background:color-mix(in srgb,var(--bg3) 40%,transparent)}
 .t-npc-all{background:#1b5e20;color:#81c784;font-weight:700}
 .t-vendor{background:#283593;color:#9fa8da}
 .t-mixed{background:#4e342e;color:#bcaaa4}
+.vc-breakdown{display:flex;flex-direction:column;gap:5px}
+.vc-group{font-size:.82rem;line-height:1.6}
 .sub{font-size:.72rem;color:var(--ink-faint)}
 .ex{font-size:.68rem;color:var(--loss)}.ra{font-size:.68rem;color:var(--accent)}
 .empty{padding:40px;text-align:center;color:var(--ink-faint)}
@@ -2398,19 +2407,36 @@ function renderVendorCrafts(){
     h+='<td class="n">'+(mg!==null&&mg<25?'<span class="neg">'+mg.toFixed(1)+'%</span>':mc(mg))+'</td>';
     h+='<td class="n">'+(stackP?pc(stackP):'—')+'</td>';
     h+='<td class="n">'+(gilHr?'<span class="mg">'+fmt(gilHr)+'</span>':'—')+'</td></tr>';
-    h+='<tr class="detail" id="vd'+i+'"><td colspan="10">';
-    h+='<div class="mats"><strong>Crystal:</strong> <span class="mat"><span class="item-link" onclick="goToItem(\''+esc(c.crystal.name).replace(/'/g,"\\\\'")+'\')">' +esc(c.crystal.name)+'</span>'+
-      (c.crystal.price?' <span class="mat-p gil">'+fmt(c.crystal.price)+'</span>':'')+
-      (c.crystal.src?' <span class="tag t-'+c.crystal.src+'">'+c.crystal.src+'</span>':'')+'</span></div>';
-    h+='<div class="mats" style="margin-top:4px"><strong>Materials:</strong> ';
-    c.mats.forEach(function(m){
-      h+='<span class="mat"><span class="mat-q">'+m.qty+'x</span> <span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
-      if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total)+'</span>';
-      if(m.src)h+=' <span class="tag t-'+m.src+'">'+m.src+'</span>';
-      h+='</span> ';
+    h+='<tr class="detail" id="vd'+i+'"><td colspan="10"><div class="vc-breakdown">';
+    var groups={};var allItems=[{name:c.crystal.name,qty:1,price:c.crystal.price,total:c.crystal.price,src:c.crystal.src,vendor:c.crystal.vendor,zone:c.crystal.zone}];
+    c.mats.forEach(function(m){allItems.push(m)});
+    allItems.forEach(function(m){
+      var key=m.src||'unknown';
+      var label='Unknown';
+      if(key==='ah')label='Buy from AH';
+      else if(key==='guild')label='Buy from '+(m.vendor||'Guild Shop');
+      else if(key==='npc')label='Buy from '+(m.vendor||'NPC');
+      if(!groups[label])groups[label]={src:key,items:[]};
+      groups[label].items.push(m);
     });
+    var order=['guild','npc','ah','unknown'];
+    var sorted_g=Object.keys(groups).sort(function(a,b){return order.indexOf(groups[a].src)-order.indexOf(groups[b].src)});
+    sorted_g.forEach(function(label){
+      var g=groups[label];
+      h+='<div class="vc-group"><span class="tag t-'+g.src+'" style="font-size:.72rem">'+label+'</span> ';
+      g.items.forEach(function(m,j){
+        if(j>0)h+=' ';
+        h+='<span class="mat">'+(m.qty>1?'<span class="mat-q">'+m.qty+'x</span> ':'')+'<span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
+        if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total||m.price)+'</span>';
+        h+='</span>';
+      });
+      h+='</div>';
+    });
+    h+='<div class="vc-group"><span class="tag t-npc-all" style="font-size:.72rem">Sell to any NPC</span> ';
+    h+=(c.result.qty>1?c.result.qty+'× ':'')+esc(c.name)+' <span class="mat-p gil">'+fmt(c.npcSell)+'</span>';
+    if(c.result.qty>1)h+=' <span class="sub">= '+fmt(c.npcRev)+' total</span>';
     h+='</div>';
-    if(c.result.qty>1)h+='<div style="margin-top:4px;font-size:.78rem;color:var(--ink-soft)">Yield: ×'+c.result.qty+' per synth</div>';
+    h+='</div>';
     h+='</td></tr>';
   });
   document.getElementById('vcBody').innerHTML=h||'<tr><td colspan="10" class="empty">No vendor-profitable recipes match your filters</td></tr>';
