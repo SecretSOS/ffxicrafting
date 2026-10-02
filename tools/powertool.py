@@ -4,8 +4,12 @@ Run:  python tools/powertool.py
 Open: http://localhost:8090
 """
 
-import json, math, os, sqlite3, threading, time, webbrowser
+import json, math, os, sqlite3, threading, time, urllib.request, webbrowser
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from socketserver import ThreadingMixIn
+
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    daemon_threads = True
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
@@ -223,6 +227,10 @@ def load_all():
         all_npc = not missing and all(m['src'] == 'npc' for m in mat_list)
         margin = round(profit / mat_cost * 100, 1) if profit and mat_cost > 0 else None
 
+        npc_sell = items.get(r['result'], {}).get('base_price') or 0
+        npc_rev = npc_sell * r['result_qty']
+        npc_profit = (npc_rev - mat_cost) if (not missing and npc_sell > 0) else None
+
         crafts.append({
             'id': r['id'], 'name': name(r['result']), 'recipeName': r['rname'],
             'craft': r['main_craft'], 'level': r['main_level'],
@@ -235,6 +243,7 @@ def load_all():
             'resultId': r['result'],
             'profit': profit, 'margin': margin, 'missing': missing,
             'allNpc': all_npc, 'tag': r['content_tag'],
+            'npcSell': npc_sell, 'npcRev': npc_rev, 'npcProfit': npc_profit,
         })
 
     # ── Desynth Profits ──
@@ -889,8 +898,18 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
     <span class="fame-val" id="fameVal">8</span>
     <span class="fame-pct" id="famePct">(-3%)</span>
    </div>
-   <button class="scan-btn" id="scanBtn" title="Re-fetch AH prices from disk">&#8635; Scan</button>
+   <button class="scan-btn" id="scanBtn" title="Re-read data from disk">&#8635; Reload</button>
+   <button class="scan-btn" id="ahScanBtn" title="Fetch fresh AH prices from PSXI.gg" style="border-color:var(--gold);color:var(--gold)">&#9889; Scan AH</button>
    <div class="hdr-stats" id="hdrStats"></div>
+   <div id="ahProgress" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999">
+    <div style="background:var(--bg2);border-bottom:1px solid var(--rule);padding:8px 20px;display:flex;align-items:center;gap:12px">
+     <span id="ahProgLabel" style="font-size:.82rem;color:var(--ink-soft);white-space:nowrap">Fetching AH prices...</span>
+     <div style="flex:1;background:var(--bg);border-radius:4px;height:18px;overflow:hidden;border:1px solid var(--rule)">
+      <div id="ahProgBar" style="height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));width:0%;transition:width .3s;border-radius:3px"></div>
+     </div>
+     <span id="ahProgPct" style="font-size:.82rem;font-family:var(--mono);color:var(--accent);min-width:40px;text-align:right">0%</span>
+    </div>
+   </div>
   </div>
  </div>
  <div class="tabs" id="tabs">
@@ -907,6 +926,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   <button class="tab" data-tab="fishing">Fishing</button>
   <button class="tab" data-tab="quests">Quests</button>
   <button class="tab" data-tab="gilhr">Gil/Hour</button>
+  <button class="tab" data-tab="vendcraft">Vendor Crafts</button>
  </div>
 
  <div class="pane active" id="p-dash">
@@ -1178,6 +1198,46 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   </tr></thead><tbody id="gBody"></tbody></table></div>
   <button class="show-more" id="gMore" style="display:none"></button>
  </div>
+
+ <!-- VENDOR CRAFTS -->
+ <div class="pane" id="p-vendcraft">
+  <div class="ctrl" style="gap:6px">
+   <span style="font-size:.78rem;color:var(--ink-soft);font-weight:600">My Levels:</span>
+   <label style="font-size:.76rem">Wood <input type="number" id="vcWood" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Smith <input type="number" id="vcSmith" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Gold <input type="number" id="vcGold" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Cloth <input type="number" id="vcCloth" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Leather <input type="number" id="vcLeather" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Bone <input type="number" id="vcBone" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Alchemy <input type="number" id="vcAlchemy" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Cook <input type="number" id="vcCook" value="0" min="0" max="110" style="width:55px"></label>
+  </div>
+  <div class="ctrl">
+   <input type="search" id="vcSearch" placeholder="Search recipes...">
+   <select id="vcCraft"><option value="">All crafts</option></select>
+   <label>Min profit <input type="number" id="vcMinP" value="100" min="0"></label>
+   <label>Min margin% <input type="number" id="vcMinMg" value="0" min="0" max="10000" style="width:70px"></label>
+   <label><input type="checkbox" id="vcNpcOnly"> NPC mats only</label>
+   <label><input type="checkbox" id="vcPriceable" checked> Fully priceable</label>
+   <label><input type="checkbox" id="vcLvFilter"> Filter by my levels</label>
+   <span class="sp"></span><span class="cnt" id="vcCnt"></span>
+  </div>
+  <p style="font-size:.75rem;color:var(--ink-faint);margin:-6px 0 10px">Craft → sell to NPC vendor. Guaranteed income, no AH tax, no competition. Revenue = item base sell price × yield. ~300 crafts/hr (12s each).</p>
+  <div class="tw"><table><thead><tr>
+   <th data-k="name" data-t="vendcraft">Item</th>
+   <th data-k="craft" data-t="vendcraft">Craft</th>
+   <th data-k="level" data-t="vendcraft" class="n">Lv</th>
+   <th data-k="matCost" data-t="vendcraft" class="n">Mat Cost</th>
+   <th data-k="npcSell" data-t="vendcraft" class="n">NPC Sell</th>
+   <th data-k="npcRev" data-t="vendcraft" class="n">Revenue</th>
+   <th data-k="npcProfit" data-t="vendcraft" class="n s">Profit</th>
+   <th data-k="vcMargin" data-t="vendcraft" class="n">Margin</th>
+   <th data-k="vcStackP" data-t="vendcraft" class="n">×12 Profit</th>
+   <th data-k="vcGilHr" data-t="vendcraft" class="n">Gil/Hr</th>
+  </tr></thead><tbody id="vcBody"></tbody></table></div>
+  <button class="show-more" id="vcMore" style="display:none"></button>
+ </div>
+
 </div>
 
 <div class="cmd-overlay" id="cmdOverlay">
@@ -1190,7 +1250,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
 <div class="kbd-hint"><kbd>Ctrl+K</kbd> search <kbd>1-9</kbd> tabs <button id="shutdownBtn" title="Shutdown PowerTool server" style="background:none;border:1px solid var(--rule);color:var(--ink-faint);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:.75rem;margin-left:8px;vertical-align:middle" onmouseover="this.style.borderColor='var(--loss)';this.style.color='var(--loss)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink-faint)'">&#9211; Off</button></div>
 
 <script>
-var D,T,sorts={flips:{k:'profit',d:-1},crafts:{k:'profit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1}};
+var D,T,sorts={flips:{k:'profit',d:-1},crafts:{k:'profit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1},vendcraft:{k:'npcProfit',d:-1}};
 function famePrice(base,rank){return Math.floor(base*(111-rank)/100);}
 
 fetch('/api/data').then(function(r){return r.json()}).then(function(d){D=d;T=d.tree;init();});
@@ -1206,9 +1266,61 @@ document.getElementById('scanBtn').addEventListener('click',function(){
       '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
       '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
     setBadges();window._lazyRendered={};switchTab(document.querySelector('.tab.active').dataset.tab);
-    btn.classList.remove('scanning');btn.textContent='↻ Scan';
-  }).catch(function(){btn.classList.remove('scanning');btn.textContent='↻ Scan';});
+    btn.classList.remove('scanning');btn.textContent='↻ Reload';
+  }).catch(function(){btn.classList.remove('scanning');btn.textContent='↻ Reload';});
 });
+
+// AH Scan — fetch fresh prices from PSXI.gg
+document.getElementById('ahScanBtn').addEventListener('click',function(){
+  var btn=this;btn.classList.add('scanning');btn.textContent='⚡ Scanning...';
+  var prog=document.getElementById('ahProgress');prog.style.display='block';
+  var bar=document.getElementById('ahProgBar');
+  var pct=document.getElementById('ahProgPct');
+  var lbl=document.getElementById('ahProgLabel');
+  var w=0;
+  var steps=[
+    {t:300,w:5,l:'Connecting to PSXI.gg...'},
+    {t:800,w:15,l:'Fetching market data...'},
+    {t:1500,w:30,l:'Downloading prices...'},
+    {t:2500,w:45,l:'Still downloading...'},
+    {t:4000,w:55,l:'Processing item data...'},
+    {t:6000,w:65,l:'Almost there...'},
+    {t:8000,w:72,l:'Waiting for server...'},
+    {t:12000,w:78,l:'Large dataset, hang tight...'},
+  ];
+  var timers=steps.map(function(s){return setTimeout(function(){
+    w=s.w;bar.style.width=w+'%';pct.textContent=w+'%';lbl.textContent=s.l;
+  },s.t);});
+
+  fetch('/api/scan-ah',{method:'POST'}).then(function(r){return r.json()}).then(function(d){
+    timers.forEach(clearTimeout);
+    if(d.error){
+      lbl.textContent='Error: '+d.error;bar.style.background='var(--loss)';bar.style.width='100%';pct.textContent='✗';
+      setTimeout(function(){prog.style.display='none';bar.style.background='';},4000);
+      btn.classList.remove('scanning');btn.textContent='⚡ Scan AH';return;
+    }
+    bar.style.width='85%';pct.textContent='85%';lbl.textContent='Reloading PowerTool data...';
+    setTimeout(function(){
+      D=d;T=d.tree;
+      bar.style.width='100%';pct.textContent='100%';lbl.textContent='Done! '+D.ahCount+' items loaded.';
+      var ago=Math.floor((Date.now()/1000-D.ahFetched)/60);
+      var t=ago<60?ago+'m':Math.floor(ago/60)+'h';
+      document.getElementById('hdrStats').innerHTML=
+        '<span class="hs">AH: <b>'+D.ahCount+'</b> items ('+t+' ago)</span>'+
+        '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
+        '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
+      setBadges();window._lazyRendered={};switchTab(document.querySelector('.tab.active').dataset.tab);
+      setTimeout(function(){prog.style.display='none';},2000);
+      btn.classList.remove('scanning');btn.textContent='⚡ Scan AH';
+    },200);
+  }).catch(function(e){
+    timers.forEach(clearTimeout);
+    lbl.textContent='Failed: '+e.message;bar.style.background='var(--loss)';bar.style.width='100%';pct.textContent='✗';
+    setTimeout(function(){prog.style.display='none';bar.style.background='';},4000);
+    btn.classList.remove('scanning');btn.textContent='⚡ Scan AH';
+  });
+});
+
 document.getElementById('shutdownBtn').addEventListener('click',function(){
   if(!confirm('Shut down PowerTool server?'))return;
   fetch('/api/shutdown',{method:'POST'}).then(function(){
@@ -1226,12 +1338,14 @@ function init(){
   buildFilters();renderDash();renderBcnm();
   setupShoppingList();setupSourceFinder();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();setupFishLookup();
   setBadges();
+  if(location.hash&&location.hash.length>1)switchTab(location.hash.slice(1),false);
 }
 function setBadges(){
   var pf=D.flips.filter(function(f){return f.profit&&f.profit>0}).length;
   var pc=D.crafts.filter(function(c){return c.profit&&c.profit>0}).length;
   var pd=D.desynths.filter(function(d){return d.profit&&d.profit>0}).length;
-  var badges={flips:pf,crafts:pc,desynth:pd,bcnm:D.bcnms.length};
+  var pvc=D.crafts.filter(function(c){return c.npcProfit&&c.npcProfit>0}).length;
+  var badges={flips:pf,crafts:pc,desynth:pd,bcnm:D.bcnms.length,vendcraft:pvc};
   document.querySelectorAll('.tab').forEach(function(btn){
     var tab=btn.dataset.tab;if(badges[tab]){
       var b=btn.querySelector('.badge');
@@ -1256,7 +1370,7 @@ document.getElementById('fameSlider').addEventListener('input',function(){
   document.getElementById('fameVal').textContent=fameRank;
   var pct=Math.round((111-fameRank)/100*100-100);
   document.getElementById('famePct').textContent='('+(pct>=0?'+':'')+pct+'%)';
-  renderFlips();renderCrafts();
+  renderFlips();renderCrafts();if(window._lazyRendered&&window._lazyRendered.vendcraft)renderVendorCrafts();
 });
 
 // Dashboard
@@ -2208,8 +2322,81 @@ function renderGilHr(){
   showMoreBtn('gMore',all.length>200?all.length-200:0,function(){_showAll.gilhr=true;renderGilHr();});
 }
 
+// Vendor Crafts
+var vcCraftMap={wood:'vcWood',smith:'vcSmith',gold:'vcGold',cloth:'vcCloth',leather:'vcLeather',bone:'vcBone',alchemy:'vcAlchemy',cook:'vcCook'};
+function buildVcFilters(){
+  var crs={};D.crafts.forEach(function(c){if(c.npcSell>0)crs[c.craft]=1});
+  var s=document.getElementById('vcCraft');
+  Object.keys(crs).sort().forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k.charAt(0).toUpperCase()+k.slice(1);s.appendChild(o)});
+  ['vcSearch','vcCraft','vcMinP','vcMinMg','vcNpcOnly','vcPriceable','vcLvFilter',
+   'vcWood','vcSmith','vcGold','vcCloth','vcLeather','vcBone','vcAlchemy','vcCook'].forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    var evt=(el.type==='search'||el.type==='number'||el.type==='text')?'input':'change';
+    el.addEventListener(evt,renderVendorCrafts);
+  });
+}
+function filteredVendorCrafts(){
+  var q=val('vcSearch').toLowerCase(),craft=val('vcCraft'),minP=num('vcMinP'),minMg=num('vcMinMg'),
+      npcOnly=chk('vcNpcOnly'),priceable=chk('vcPriceable'),lvFilter=chk('vcLvFilter');
+  var myLv={};for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);
+  return D.crafts.filter(function(c){
+    if(c.npcSell<=0)return false;
+    if(q&&c.name.toLowerCase().indexOf(q)<0&&c.craft.toLowerCase().indexOf(q)<0)return false;
+    if(craft&&c.craft!==craft)return false;
+    if(priceable&&c.missing)return false;
+    if(npcOnly&&!c.allNpc)return false;
+    if(c.npcProfit===null)return false;
+    if(c.npcProfit<minP)return false;
+    var mg=c.matCost>0?c.npcProfit/c.matCost*100:0;
+    if(mg<minMg)return false;
+    if(lvFilter){
+      var ml=myLv[c.craft]||0;if(c.level>ml)return false;
+      var subs=c.subs;for(var sk in subs){if(sk!==c.craft&&subs[sk]>(myLv[sk]||0))return false;}
+    }
+    return true;
+  });
+}
+function renderVendorCrafts(){
+  var all=sorted(filteredVendorCrafts(),'vendcraft');updSort('vendcraft');
+  var h='';var rows=_showAll.vendcraft?all:all.slice(0,200);
+  rows.forEach(function(c,i){
+    var mg=c.matCost&&c.npcProfit?c.npcProfit/c.matCost*100:null;
+    var stackP=c.npcProfit?c.npcProfit*12:null;
+    var gilHr=c.npcProfit?c.npcProfit*300:null;
+    h+='<tr style="cursor:pointer" onclick="toggleDetail(\'vd'+i+'\')">';
+    h+='<td class="nm"><span class="item-link" onclick="event.stopPropagation();goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span>';
+    if(c.allNpc)h+=' <span class="tag t-npc-all">NPC Only</span>';
+    h+='</td>';
+    h+='<td>'+c.craft+'</td><td class="n">'+c.level+'</td>';
+    h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>':'<span class="sub">?</span>')+'</td>';
+    h+='<td class="n"><span class="gil">'+fmt(c.npcSell)+'</span></td>';
+    h+='<td class="n"><span class="gil">'+fmt(c.npcRev)+'</span></td>';
+    h+='<td class="n">'+pc(c.npcProfit)+'</td>';
+    h+='<td class="n">'+(mg!==null&&mg<25?'<span class="neg">'+mg.toFixed(1)+'%</span>':mc(mg))+'</td>';
+    h+='<td class="n">'+(stackP?pc(stackP):'—')+'</td>';
+    h+='<td class="n">'+(gilHr?'<span class="mg">'+fmt(gilHr)+'</span>':'—')+'</td></tr>';
+    h+='<tr class="detail" id="vd'+i+'"><td colspan="10">';
+    h+='<div class="mats"><strong>Crystal:</strong> <span class="mat"><span class="item-link" onclick="goToItem(\''+esc(c.crystal.name).replace(/'/g,"\\\\'")+'\')">' +esc(c.crystal.name)+'</span>'+
+      (c.crystal.price?' <span class="mat-p gil">'+fmt(c.crystal.price)+'</span>':'')+
+      (c.crystal.src?' <span class="tag t-'+c.crystal.src+'">'+c.crystal.src+'</span>':'')+'</span></div>';
+    h+='<div class="mats" style="margin-top:4px"><strong>Materials:</strong> ';
+    c.mats.forEach(function(m){
+      h+='<span class="mat"><span class="mat-q">'+m.qty+'x</span> <span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
+      if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total)+'</span>';
+      if(m.src)h+=' <span class="tag t-'+m.src+'">'+m.src+'</span>';
+      h+='</span> ';
+    });
+    h+='</div>';
+    if(c.result.qty>1)h+='<div style="margin-top:4px;font-size:.78rem;color:var(--ink-soft)">Yield: ×'+c.result.qty+' per synth</div>';
+    h+='</td></tr>';
+  });
+  document.getElementById('vcBody').innerHTML=h||'<tr><td colspan="10" class="empty">No vendor-profitable recipes match your filters</td></tr>';
+  document.getElementById('vcCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' recipes';
+  showMoreBtn('vcMore',all.length>200?all.length-200:0,function(){_showAll.vendcraft=true;renderVendorCrafts();});
+}
+
 // Show more / Show all
-var _showAll={crafts:false,gilhr:false};
+var _showAll={crafts:false,gilhr:false,vendcraft:false};
 function showMoreBtn(id,remaining,cb){
   var el=document.getElementById(id);if(!el)return;
   if(remaining>0){el.style.display='block';el.textContent='Show all ('+remaining+' more)';el.onclick=function(){if(cb)cb();};}
@@ -2236,6 +2423,9 @@ function sorted(arr,tab){
     if(s.k==='resultQty')av=a.result?a.result.qty:0,bv=b.result?b.result.qty:0;
     if(s.k==='inputName')av=a.input?a.input.name:'',bv=b.input?b.input.name:'';
     if(s.k==='inputPrice')av=a.input?a.input.price:0,bv=b.input?b.input.price:0;
+    if(s.k==='vcMargin'){av=a.matCost&&a.npcProfit?a.npcProfit/a.matCost*100:null;bv=b.matCost&&b.npcProfit?b.npcProfit/b.matCost*100:null}
+    if(s.k==='vcStackP'){av=a.npcProfit?a.npcProfit*12:null;bv=b.npcProfit?b.npcProfit*12:null}
+    if(s.k==='vcGilHr'){av=a.npcProfit?a.npcProfit*300:null;bv=b.npcProfit?b.npcProfit*300:null}
     if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return-1;
     if(typeof av==='string')return s.d*av.localeCompare(bv);
     return s.d*(av-bv);
@@ -2252,7 +2442,7 @@ function updSort(tab){
 }
 function toggleDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
 
-var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr'];
+var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr','vendcraft'];
 function switchTab(id,push){
   if(TAB_KEYS.indexOf(id)<0)id='dash';
   document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
@@ -2261,21 +2451,21 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr,vendcraft:function(){buildVcFilters();renderVendorCrafts();}};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
   t.addEventListener('click',function(){switchTab(this.dataset.tab);});
 });
 window.addEventListener('hashchange',function(){switchTab(location.hash.slice(1),false);});
-if(location.hash&&location.hash.length>1)setTimeout(function(){switchTab(location.hash.slice(1),false);},0);
+if(location.hash&&location.hash.length>1)setTimeout(function(){if(D)switchTab(location.hash.slice(1),false);},0);
 document.querySelectorAll('th[data-k]').forEach(function(th){
   th.addEventListener('click',function(){
     var tab=this.dataset.t,k=this.dataset.k;
     if(!sorts[tab])sorts[tab]={k:k,d:-1};
     else if(sorts[tab].k===k)sorts[tab].d*=-1;
     else sorts[tab]={k:k,d:-1};
-    var rend={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farm:renderFarm,fish:renderFishing,quest:renderQuests,gilhr:renderGilHr};
+    var rend={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farm:renderFarm,fish:renderFishing,quest:renderQuests,gilhr:renderGilHr,vendcraft:renderVendorCrafts};
     if(rend[tab])rend[tab]();
   });
 });
@@ -2444,6 +2634,22 @@ def make_handler(state, html_bytes):
                 self.send_header('Cache-Control', 'no-cache')
                 self.end_headers()
                 self.wfile.write(state['json'])
+            elif self.path == '/api/scan-ah':
+                try:
+                    ah_stats = fetch_ah_prices()
+                    data = load_all()
+                    state['json'] = json.dumps(data, separators=(',', ':')).encode()
+                    resp = json.dumps({**data, 'ahScanStats': ah_stats})
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Cache-Control', 'no-cache')
+                    self.end_headers()
+                    self.wfile.write(resp.encode())
+                except Exception as e:
+                    self.send_response(500)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'error': str(e)}).encode())
             elif self.path == '/api/shutdown':
                 self.send_response(200)
                 self.send_header('Content-Type', 'text/plain')
@@ -2455,6 +2661,50 @@ def make_handler(state, html_bytes):
         def log_message(self, *a):
             pass
     return H
+
+
+def fetch_ah_prices():
+    """Fetch AH prices from PSXI.gg and save to ah-prices.json. Returns stats dict."""
+    api = 'https://www.psxi.gg/api/v1/market/phoenixxi'
+    headers = {'Accept': 'application/json', 'User-Agent': 'ffxicrafting.com price fetcher'}
+    token = os.environ.get('PSXI_TOKEN', '')
+    if token:
+        headers['Authorization'] = f'Bearer {token}'
+
+    req = urllib.request.Request(api, headers=headers)
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        raw = json.loads(resp.read())
+
+    items = raw.get('data', [])
+    prices, stack_prices, bazaar_prices = {}, {}, {}
+    for item in items:
+        iid = item.get('itemId')
+        if not iid:
+            continue
+        ah = item.get('ah') or {}
+        bz = item.get('bazaar') or {}
+        single = ah.get('single') or {}
+        sp = single.get('median') or single.get('avg') or single.get('lastSale')
+        if sp and sp > 0:
+            prices[str(iid)] = int(sp)
+        stack = ah.get('stack') or {}
+        stp = stack.get('median') or stack.get('avg') or stack.get('lastSale')
+        if stp and stp > 0:
+            stack_prices[str(iid)] = int(stp)
+        bp = bz.get('median') or bz.get('avg')
+        if bp and bp > 0:
+            bazaar_prices[str(iid)] = int(bp)
+
+    total = len(set(list(prices.keys()) + list(stack_prices.keys()) + list(bazaar_prices.keys())))
+    meta = raw.get('meta', {})
+    result = {
+        'prices': prices, 'stackPrices': stack_prices, 'bazaarPrices': bazaar_prices,
+        'server': meta.get('server', 'phoenixxi'), 'fetched': int(time.time()), 'count': total,
+    }
+    os.makedirs(os.path.dirname(AH), exist_ok=True)
+    with open(AH, 'w', encoding='utf-8') as f:
+        json.dump(result, separators=(',', ':'), fp=f)
+    return {'single': len(prices), 'stack': len(stack_prices), 'bazaar': len(bazaar_prices), 'total': total}
 
 
 def main():
@@ -2487,13 +2737,13 @@ def main():
     print(f"  Data payload: {len(dj)/1024:.0f} KB")
 
     state = {'json': dj}
-    server = HTTPServer(('127.0.0.1', port), make_handler(state, hb))
+    server = ThreadedHTTPServer(('127.0.0.1', port), make_handler(state, hb))
     print(f'\n  PowerTool running at http://localhost:{port}')
     print('  Press Ctrl+C to stop.\n')
     threading.Timer(0.5, lambda: webbrowser.open(f'http://localhost:{port}')).start()
 
     try:
-        server.serve_forever()
+        server.serve_forever(poll_interval=2)
     except KeyboardInterrupt:
         print('\nStopped.')
         server.server_close()
