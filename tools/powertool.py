@@ -2443,16 +2443,27 @@ function renderGilHr(){
 
 // Vendor Crafts
 var vcCraftMap={wood:'vcWood',smith:'vcSmith',gold:'vcGold',cloth:'vcCloth',leather:'vcLeather',bone:'vcBone',alchemy:'vcAlchemy',cook:'vcCook'};
+function saveCraftLevels(){
+  var lv={};for(var k in vcCraftMap)lv[k]=num(vcCraftMap[k]);
+  try{localStorage.setItem('pt_craftLevels',JSON.stringify(lv));}catch(e){}
+}
+function restoreCraftLevels(){
+  try{var s=localStorage.getItem('pt_craftLevels');if(!s)return;var lv=JSON.parse(s);
+  for(var k in vcCraftMap){if(lv[k]!=null)document.getElementById(vcCraftMap[k]).value=lv[k];}
+  }catch(e){}
+}
 function buildVcFilters(){
+  restoreCraftLevels();
   var crs={};D.crafts.forEach(function(c){if(c.npcSell>0)crs[c.craft]=1});
   var s=document.getElementById('vcCraft');
   Object.keys(crs).sort().forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k.charAt(0).toUpperCase()+k.slice(1);s.appendChild(o)});
-  ['vcSearch','vcCraft','vcMinP','vcMinMg','vcNpcOnly','vcPriceable','vcLvFilter',
-   'vcWood','vcSmith','vcGold','vcCloth','vcLeather','vcBone','vcAlchemy','vcCook'].forEach(function(id){
+  var craftIds=['vcWood','vcSmith','vcGold','vcCloth','vcLeather','vcBone','vcAlchemy','vcCook'];
+  ['vcSearch','vcCraft','vcMinP','vcMinMg','vcNpcOnly','vcPriceable','vcLvFilter'].concat(craftIds).forEach(function(id){
     var el=document.getElementById(id);if(!el)return;
     var evt=(el.type==='search'||el.type==='number'||el.type==='text')?'input':'change';
     el.addEventListener(evt,renderVendorCrafts);
   });
+  craftIds.forEach(function(id){document.getElementById(id).addEventListener('input',saveCraftLevels);});
 }
 function filteredVendorCrafts(){
   var q=val('vcSearch').toLowerCase(),craft=val('vcCraft'),minP=num('vcMinP'),minMg=num('vcMinMg'),
