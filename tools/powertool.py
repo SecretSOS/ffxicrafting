@@ -751,6 +751,7 @@ tr:hover td{background:color-mix(in srgb,var(--bg3) 40%,transparent)}
 .t-npc-all{background:#1b5e20;color:#81c784;font-weight:700}
 .t-vendor{background:#283593;color:#9fa8da}
 .t-mixed{background:#4e342e;color:#bcaaa4}
+.t-skillup{background:#e65100;color:#ffe0b2;font-weight:700}
 .vc-breakdown{display:flex;flex-direction:column;gap:5px}
 .vc-group{font-size:.82rem;line-height:1.6}
 .sub{font-size:.72rem;color:var(--ink-faint)}
@@ -1250,7 +1251,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <label>Min margin% <input type="number" id="vcMinMg" value="0" min="0" max="10000" style="width:70px"></label>
    <label><input type="checkbox" id="vcNpcOnly"> NPC mats only</label>
    <label><input type="checkbox" id="vcPriceable" checked> Fully priceable</label>
-   <label><input type="checkbox" id="vcLvFilter"> Filter by my levels</label>
+   <label><input type="checkbox" id="vcLvFilter"> Filter by my levels (+4)</label>
    <span class="sp"></span><span class="cnt" id="vcCnt"></span>
   </div>
   <p style="font-size:.75rem;color:var(--ink-faint);margin:-6px 0 10px">Craft → sell to NPC vendor. Guaranteed income, no AH tax, no competition. Revenue = item base sell price × yield. ~300 crafts/hr (12s each).</p>
@@ -2381,24 +2382,28 @@ function filteredVendorCrafts(){
     var mg=c.matCost>0?c.npcProfit/c.matCost*100:0;
     if(mg<minMg)return false;
     if(lvFilter){
-      var ml=myLv[c.craft]||0;if(c.level>ml)return false;
-      var subs=c.subs;for(var sk in subs){if(sk!==c.craft&&subs[sk]>(myLv[sk]||0))return false;}
+      var ml=myLv[c.craft]||0;if(c.level>ml+4)return false;
+      var subs=c.subs;for(var sk in subs){if(sk!==c.craft&&subs[sk]>(myLv[sk]||0)+4)return false;}
     }
     return true;
   });
 }
 function renderVendorCrafts(){
   var all=sorted(filteredVendorCrafts(),'vendcraft');updSort('vendcraft');
+  var lvFilter=chk('vcLvFilter');
+  var myLv={};if(lvFilter){for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);}
   var h='';var rows=_showAll.vendcraft?all:all.slice(0,200);
   rows.forEach(function(c,i){
     var mg=c.matCost&&c.npcProfit?c.npcProfit/c.matCost*100:null;
     var stackP=c.npcProfit?c.npcProfit*12:null;
     var gilHr=c.npcProfit?c.npcProfit*300:null;
-    h+='<tr style="cursor:pointer" onclick="toggleDetail(\'vd'+i+'\')">';
+    var ml=lvFilter?(myLv[c.craft]||0):0;
+    var aboveLv=lvFilter&&c.level>ml;
+    h+='<tr style="cursor:pointer'+(aboveLv?';opacity:.7':'')+'" onclick="toggleDetail(\'vd'+i+'\')">';
     h+='<td class="nm"><span class="item-link" onclick="event.stopPropagation();goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span>';
     if(c.allNpc)h+=' <span class="tag t-npc-all">NPC Only</span>';
     h+='</td>';
-    h+='<td>'+c.craft+'</td><td class="n">'+c.level+'</td>';
+    h+='<td>'+c.craft+'</td><td class="n">'+c.level+(aboveLv?' <span class="tag t-skillup">+'+(c.level-ml)+'</span>':'')+'</td>';
     var srcTag=c.matSrc?{AH:'t-ah',NPC:'t-npc',Guild:'t-guild',Vendor:'t-vendor',Mixed:'t-mixed'}[c.matSrc]||'':'';
     h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>'+(srcTag?' <span class="tag '+srcTag+'">'+c.matSrc+'</span>':''):'<span class="sub">?</span>')+'</td>';
     h+='<td class="n"><span class="gil">'+fmt(c.npcSell)+'</span></td>';
