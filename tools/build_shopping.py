@@ -100,12 +100,11 @@ function perLevel(r,skill){
   var chance=(skill<50?0.6:0.25),gain=avgGain(diff,skill);
   var synths=1/(chance*gain)*1.05;
   return{synths:synths,cost:costEach(r)*synths};}
-function findBest(craft,b){
+function findBestForSkill(craft,skill){
   if(!C[craft])return null;
-  var mid=Math.floor((b.lo+b.hi)/2);
-  var recipes=C[craft].filter(function(r){return r.lv>b.lo&&r.lv<=b.hi+5;});
+  var recipes=C[craft].filter(function(r){return r.lv>skill;});
   var evaluated=recipes.map(function(r){
-    var pl=perLevel(r,Math.min(mid,r.lv-1));
+    var pl=perLevel(r,skill);
     return{r:r,pl:pl,up:unpricedOf(r)};
   }).filter(function(x){return x.pl;});
   var usable=evaluated.filter(function(x){return x.up.length===0&&!x.r.ki;});
@@ -113,15 +112,21 @@ function findBest(craft,b){
   usable.sort(function(a,z){return a.pl.cost-z.pl.cost;});
   return usable[0];}
 function computePath(craft,from,to){
-  var path=[];
-  BRACKETS.forEach(function(b){
-    var lo=Math.max(b.lo,from),hi=Math.min(b.hi,to);
-    if(lo>hi)return;
-    var levels=hi-lo+1,best=findBest(craft,b);
-    if(best)path.push({lo:lo,hi:hi,r:best.r,synthsPerLv:best.pl.synths,costPerLv:best.pl.cost,levels:levels,
-      totalSynths:Math.ceil(best.pl.synths*levels)});
-    else path.push({lo:lo,hi:hi,r:null,levels:levels,totalSynths:0});
-  });
+  var path=[],skill=from;
+  while(skill<to){
+    var best=findBestForSkill(craft,skill);
+    if(!best){
+      if(path.length&&!path[path.length-1].r){path[path.length-1].hi=skill;path[path.length-1].levels++;}
+      else path.push({lo:skill,hi:skill,r:null,levels:1,totalSynths:0});
+      skill++;continue;}
+    var startSkill=skill,totalS=0,totalC=0,rid=best.r.id;
+    while(skill<to){
+      var cur=findBestForSkill(craft,skill);
+      if(!cur||cur.r.id!==rid)break;
+      totalS+=cur.pl.synths;totalC+=cur.pl.cost;skill++;}
+    var levels=skill-startSkill;
+    path.push({lo:startSkill,hi:skill-1,r:best.r,synthsPerLv:totalS/levels,costPerLv:totalC/levels,levels:levels,
+      totalSynths:Math.ceil(totalS)});}
   return path;}
 function aggregateMats(path){
   var mats={};
@@ -158,7 +163,7 @@ function renderPath(path){
   if(!C[cur]){pp.hidden=true;mp.hidden=true;return;}
   pp.hidden=false;mp.hidden=false;
   var from=Number(document.getElementById('fromSkill').value)||1;
-  var to=Number(document.getElementById('toSkill').value)||60;
+  var to=Number(document.getElementById('toSkill').value)||100;
   document.getElementById('pathTitle').textContent=cur+' '+from+'–'+to+': cheapest path';
   var totalSynths=0,totalCost=0,gaps=[];
   var html='';
