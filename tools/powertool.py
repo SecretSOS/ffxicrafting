@@ -122,15 +122,16 @@ def load_all():
             d['target_stock'] = None
 
         tp = d['typical_price']
-        if tp and (iid not in vendor_best or tp < vendor_best[iid]):
-            vendor_best[iid] = tp
+        vsrc = 'guild' if d['type'] == 'guild_shop' else 'npc'
+        if tp and (iid not in vendor_best or tp < vendor_best[iid][0]):
+            vendor_best[iid] = (tp, vsrc)
         vendor_all.append(d)
 
     def cheapest(iid):
-        vp = vendor_best.get(iid)
+        vb = vendor_best.get(iid)
         ap = ah_prices.get(iid)
-        if vp and ap: return (vp, 'npc') if vp <= ap else (ap, 'ah')
-        if vp: return vp, 'npc'
+        if vb and ap: return (vb[0], vb[1]) if vb[0] <= ap else (ap, 'ah')
+        if vb: return vb[0], vb[1]
         if ap: return ap, 'ah'
         return None, None
 
@@ -224,8 +225,24 @@ def load_all():
 
         profit = nq_rev - mat_cost if not missing else None
         sub_crafts = {c: r[c] for c in CRAFTS if r[c] > 0}
-        all_npc = not missing and all(m['src'] == 'npc' for m in mat_list)
+        all_npc = not missing and all(m['src'] in ('npc', 'guild') for m in mat_list)
         margin = round(profit / mat_cost * 100, 1) if profit and mat_cost > 0 else None
+
+        all_srcs = set()
+        for m in mat_list:
+            if m['src']: all_srcs.add(m['src'])
+        if not all_srcs or missing:
+            mat_src = None
+        elif all_srcs == {'ah'}:
+            mat_src = 'AH'
+        elif all_srcs == {'npc'}:
+            mat_src = 'NPC'
+        elif all_srcs == {'guild'}:
+            mat_src = 'Guild'
+        elif all_srcs <= {'npc', 'guild'}:
+            mat_src = 'Vendor'
+        else:
+            mat_src = 'Mixed'
 
         npc_sell = items.get(r['result'], {}).get('base_price') or 0
         npc_rev = npc_sell * r['result_qty']
@@ -237,6 +254,7 @@ def load_all():
             'subs': sub_crafts if len(sub_crafts) > 1 else {},
             'crystal': {'id': r['crystal'], 'name': name(r['crystal']), 'price': cry_p, 'src': cry_src},
             'mats': mat_list, 'matCost': mat_cost if not missing else None,
+            'matSrc': mat_src,
             'result': {'id': r['result'], 'name': name(r['result']), 'qty': r['result_qty'],
                        'price': nq_sell, 'src': nq_src, 'rev': nq_rev},
             'hq': hq_tiers,
@@ -261,9 +279,10 @@ def load_all():
         if not ings: continue
         input_id = ings[0]['item_id']
         input_price_ah = ah_prices.get(input_id)
-        input_price_npc = vendor_best.get(input_id)
+        vb_input = vendor_best.get(input_id)
+        input_price_npc = vb_input[0] if vb_input else None
         input_price = input_price_ah or input_price_npc or 0
-        input_src = 'ah' if input_price_ah else ('npc' if input_price_npc else None)
+        input_src = 'ah' if input_price_ah else ((vb_input[1] if vb_input else 'npc') if input_price_npc else None)
 
         results = []
         for key, qkey in [('result','result_qty'),('hq1','hq1_qty'),('hq2','hq2_qty'),('hq3','hq3_qty')]:
@@ -362,8 +381,8 @@ def load_all():
         if it:
             d = {'n': it['name'].replace('_', ' ').title()}
             if it['base_price']: d['b'] = it['base_price']
-            vp = vendor_best.get(iid)
-            if vp: d['v'] = vp
+            vb = vendor_best.get(iid)
+            if vb: d['v'] = vb[0]
             ap = ah_prices.get(iid)
             if ap: d['a'] = ap
         else:
@@ -389,14 +408,14 @@ def load_all():
         ''', (guild,)):
             iid = r[1]
             pts = r[2]
-            vp = vendor_best.get(iid)
+            vb = vendor_best.get(iid)
             ap = ah_prices.get(iid)
             price = None
             src = None
-            if vp and ap:
-                price, src = (vp, 'npc') if vp <= ap else (ap, 'ah')
-            elif vp:
-                price, src = vp, 'npc'
+            if vb and ap:
+                price, src = (vb[0], vb[1]) if vb[0] <= ap else (ap, 'ah')
+            elif vb:
+                price, src = vb[0], vb[1]
             elif ap:
                 price, src = ap, 'ah'
             cpg = round(price / pts, 2) if price and pts > 0 else None
@@ -443,7 +462,8 @@ def load_all():
     '''):
         iid = r[0]
         ap = ah_prices.get(iid)
-        vp = vendor_best.get(iid)
+        vb = vendor_best.get(iid)
+        vp = vb[0] if vb else None
         bp = items.get(iid, {}).get('base_price', 0) or 0
         sell = ap or vp or bp
         if sell <= 0:
@@ -722,6 +742,8 @@ tr:hover td{background:color-mix(in srgb,var(--bg3) 40%,transparent)}
 .t-guild{background:#4a148c;color:#ce93d8}
 .t-base{background:#37474f;color:#b0bec5}
 .t-npc-all{background:#1b5e20;color:#81c784;font-weight:700}
+.t-vendor{background:#283593;color:#9fa8da}
+.t-mixed{background:#4e342e;color:#bcaaa4}
 .sub{font-size:.72rem;color:var(--ink-faint)}
 .ex{font-size:.68rem;color:var(--loss)}.ra{font-size:.68rem;color:var(--accent)}
 .empty{padding:40px;text-align:center;color:var(--ink-faint)}
@@ -2368,7 +2390,8 @@ function renderVendorCrafts(){
     if(c.allNpc)h+=' <span class="tag t-npc-all">NPC Only</span>';
     h+='</td>';
     h+='<td>'+c.craft+'</td><td class="n">'+c.level+'</td>';
-    h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>':'<span class="sub">?</span>')+'</td>';
+    var srcTag=c.matSrc?{AH:'t-ah',NPC:'t-npc',Guild:'t-guild',Vendor:'t-vendor',Mixed:'t-mixed'}[c.matSrc]||'':'';
+    h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>'+(srcTag?' <span class="tag '+srcTag+'">'+c.matSrc+'</span>':''):'<span class="sub">?</span>')+'</td>';
     h+='<td class="n"><span class="gil">'+fmt(c.npcSell)+'</span></td>';
     h+='<td class="n"><span class="gil">'+fmt(c.npcRev)+'</span></td>';
     h+='<td class="n">'+pc(c.npcProfit)+'</td>';
