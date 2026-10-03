@@ -871,9 +871,9 @@ tr:hover td{background:color-mix(in srgb,var(--bg3) 40%,transparent)}
 .vc-breakdown{display:flex;flex-direction:column;gap:5px}
 .vc-group{font-size:.82rem;line-height:1.6}
 .sell-mode{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-right:4px}
-.sell-mode .sm{padding:4px 14px;font-size:.78rem;cursor:pointer;background:none;border:none;color:var(--ink-soft);transition:all .15s}
-.sell-mode .sm.active{background:var(--gold);color:#1a1a2e;font-weight:600}
-.sell-mode .sm:hover:not(.active){background:rgba(255,215,0,.1)}
+.sell-mode .sm,.sell-mode .pm{padding:4px 14px;font-size:.78rem;cursor:pointer;background:none;border:none;color:var(--ink-soft);transition:all .15s}
+.sell-mode .sm.active,.sell-mode .pm.active{background:var(--gold);color:#1a1a2e;font-weight:600}
+.sell-mode .sm:hover:not(.active),.sell-mode .pm:hover:not(.active){background:rgba(255,215,0,.1)}
 .vc-mat-row{padding:2px 0}
 .vc-vendors{margin:1px 0 4px 18px;font-size:.74rem;line-height:1.4}
 .vc-vline{padding:1px 0;color:#b0bec5}
@@ -1140,8 +1140,11 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    </div>
    <input type="search" id="cSearch" placeholder="Search recipes...">
    <select id="cCraft"><option value="">All crafts</option></select>
-   <label>Min profit <input type="number" id="cMinP" value="100"></label>
-   <label>Max loss <input type="number" id="cMaxLoss" value="0" min="0" style="width:70px"></label>
+   <div class="sell-mode" id="profitMode">
+    <button class="pm active" data-pm="profit">Min profit</button>
+    <button class="pm" data-pm="loss">Max loss</button>
+   </div>
+   <input type="number" id="cThresh" value="100" style="width:70px">
    <label>Min margin% <input type="number" id="cMinMg" value="0" style="width:70px"></label>
    <label><input type="checkbox" id="cNpcOnly"> NPC mats only</label>
    <label><input type="checkbox" id="cPriceable" checked> Fully priceable</label>
@@ -1391,6 +1394,8 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
 <script>
 var D,T,_sellMode='npc',sorts={flips:{k:'profit',d:-1},crafts:{k:'npcProfit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1}};
 try{var _sm=localStorage.getItem('pt_sellMode');if(_sm==='ah'||_sm==='npc')_sellMode=_sm;}catch(e){}
+var _profitMode='profit';
+try{var _pm=localStorage.getItem('pt_profitMode');if(_pm==='loss')_profitMode=_pm;}catch(e){}
 function famePrice(base,rank){return Math.floor(base*(111-rank)/100);}
 
 fetch('/api/data').then(function(r){return r.json()}).then(function(d){D=d;T=d.tree;init();});
@@ -1635,38 +1640,44 @@ function initCraftTab(){
   });
   if(_sellMode==='ah')sorts.crafts.k='profit';
   var craftIds=['vcWood','vcSmith','vcGold','vcCloth','vcLeather','vcBone','vcAlchemy','vcCook'];
-  ['cSearch','cCraft','cMinP','cMaxLoss','cMinMg','cNpcOnly','cPriceable','cLvFilter','cLvRange'].concat(craftIds).forEach(function(id){
+  ['cSearch','cCraft','cThresh','cMinMg','cNpcOnly','cPriceable','cLvFilter','cLvRange'].concat(craftIds).forEach(function(id){
     var el=document.getElementById(id);if(!el)return;
     var evt=(el.type==='search'||el.type==='number'||el.type==='text')?'input':'change';
     el.addEventListener(evt,function(){_showAll.crafts=false;renderCrafts();});
   });
-  document.getElementById('cMaxLoss').addEventListener('input',function(){
-    if(num('cMaxLoss')>0){document.getElementById('cMinP').value='';document.getElementById('cMinMg').value='0';}
+  document.querySelectorAll('#profitMode .pm').forEach(function(b){
+    b.classList.toggle('active',b.dataset.pm===_profitMode);
+    b.addEventListener('click',function(){
+      _profitMode=this.dataset.pm;
+      document.querySelectorAll('#profitMode .pm').forEach(function(x){x.classList.toggle('active',x.dataset.pm===_profitMode);});
+      var inp=document.getElementById('cThresh');
+      if(_profitMode==='loss'){inp.value='100';inp.min='0';}else{inp.value='100';inp.removeAttribute('min');}
+      try{localStorage.setItem('pt_profitMode',_profitMode);}catch(e){}
+      _showAll.crafts=false;renderCrafts();
+    });
   });
-  document.getElementById('cMinP').addEventListener('input',function(){
-    if(val('cMinP')!=='')document.getElementById('cMaxLoss').value='0';
-  });
+  if(_profitMode==='loss')document.getElementById('cThresh').min='0';
   craftIds.forEach(function(id){document.getElementById(id).addEventListener('input',saveCraftLevels);});
 }
 function filteredCrafts(){
   var q=val('cSearch').toLowerCase(),craft=val('cCraft'),
-      minP=num('cMinP'),maxLoss=num('cMaxLoss'),minMg=num('cMinMg'),
+      thresh=num('cThresh'),minMg=num('cMinMg'),
       npcOnly=chk('cNpcOnly'),priceable=chk('cPriceable'),lvFilter=chk('cLvFilter'),lvRange=num('cLvRange');
   var myLv={};for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);
   var isNpc=_sellMode==='npc';
-  var lossMode=maxLoss>0;
+  var lossMode=_profitMode==='loss';
   return D.crafts.filter(function(c){
     if(q&&c.name.toLowerCase().indexOf(q)<0&&c.craft.toLowerCase().indexOf(q)<0)return false;
     if(craft&&c.craft!==craft)return false;
+    if(c.missing)return false;
     if(lossMode){
-      if(c.matCost!==null&&c.matCost>maxLoss)return false;
+      if(c.matCost===null||c.matCost>thresh)return false;
     }else{
       if(isNpc&&c.npcSell<=0)return false;
-      if(priceable&&c.missing)return false;
       if(npcOnly&&!c.allNpc)return false;
       var prof=isNpc?(c.npcProfit!==null?c.npcProfit:(c.matCost?-c.matCost:null)):c.profit;
       if(prof===null)return false;
-      if(prof<minP)return false;
+      if(prof<thresh)return false;
       var mg=c.matCost>0&&prof?prof/c.matCost*100:0;
       if(mg<minMg)return false;
     }
