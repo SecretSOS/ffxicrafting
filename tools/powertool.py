@@ -654,11 +654,37 @@ def load_all():
         })
 
     rods = []
-    for r in db.execute('SELECT item_id, name, size_type, min_rank, max_rank, fish_attack, breakable FROM fishing_rods ORDER BY fish_attack DESC'):
+    for r in db.execute('SELECT item_id, name, size_type, min_rank, max_rank, fish_attack, breakable, fish_recovery, fish_time FROM fishing_rods ORDER BY max_rank'):
+        src = db.execute("SELECT type, price FROM sources WHERE item_id=? AND type IN ('npc_shop','guild_shop') ORDER BY price LIMIT 1", (r[0],)).fetchone()
         rods.append({
             'id': r[0], 'name': name(r[0]), 'sizeType': r[2],
             'minRank': r[3], 'maxRank': r[4], 'attack': r[5],
-            'breakable': bool(r[6]),
+            'breakable': bool(r[6]), 'recovery': r[7], 'time': r[8],
+            'price': src[1] if src else None,
+            'priceSrc': ('npc' if src[0] == 'npc_shop' else 'guild') if src else None,
+        })
+    for r in rods:
+        compat = [f for f in fish_list if f['sizeType'] == r['sizeType'] and (f['ranking'] or 0) <= r['maxRank'] and not f['legendary']]
+        total = [f for f in fish_list if f['sizeType'] == r['sizeType'] and not f['legendary']]
+        r['fishCount'] = len(compat)
+        r['fishTotal'] = len(total)
+
+    bait_list = []
+    for b in db.execute('''
+        SELECT fb.item_id, fb.name, fb.type, fb.losable,
+               COUNT(DISTINCT bf.fish_item_id) as fish_count
+        FROM fishing_baits fb
+        JOIN fishing_bait_for bf ON bf.bait_item_id=fb.item_id
+        GROUP BY fb.item_id ORDER BY fish_count DESC
+    ''').fetchall():
+        bp, bsrc, _, _ = cheapest(b[0])
+        sz_small = db.execute("SELECT COUNT(*) FROM fishing_bait_for bf JOIN fish f ON f.item_id=bf.fish_item_id WHERE bf.bait_item_id=? AND f.size_type='small'", (b[0],)).fetchone()[0]
+        sz_large = b[4] - sz_small
+        bait_list.append({
+            'id': b[0], 'name': name(b[0]), 'type': b[2],
+            'losable': bool(b[3]), 'fishCount': b[4],
+            'small': sz_small, 'large': sz_large,
+            'cost': bp, 'costSrc': bsrc,
         })
 
     # ── Quest Rewards ──
@@ -771,6 +797,7 @@ def load_all():
         'tree': {'R': recipes_by_result, 'I': items_slim, 'S': search_items},
         'fishing': fish_list,
         'rods': rods,
+        'baits': bait_list,
         'quests': quest_list,
         'sourceIdx': source_idx,
         'itemVendors': {str(k): v for k, v in item_vendors.items()},
@@ -958,6 +985,21 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px;font-size:.88rem
 .rod-bar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
 .rod-chip{font-size:.76rem;padding:4px 10px;border-radius:6px;background:var(--bg2);border:1px solid var(--rule);color:var(--ink-soft)}
 .rod-chip b{color:var(--ink)}
+.guide-panel{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:16px;margin-top:8px}
+.guide-panel h3{margin:0 0 10px;font-size:.92rem;color:var(--gold)}
+.guide-panel table{width:100%;border-collapse:collapse;font-size:.8rem}
+.guide-panel th{text-align:left;padding:6px 8px;border-bottom:2px solid var(--rule);color:var(--ink-faint);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px}
+.guide-panel td{padding:6px 8px;border-bottom:1px solid var(--rule)}
+.guide-panel tr:hover{background:rgba(255,215,0,.04)}
+.tier-badge{display:inline-block;width:22px;height:22px;border-radius:4px;text-align:center;line-height:22px;font-weight:700;font-size:.72rem;color:#1a1a2e}
+.tier-s{background:#ffd700}.tier-a{background:#4caf50}.tier-b{background:#2196f3}.tier-c{background:#ff9800}.tier-d{background:#9e9e9e}
+.cov-bar{display:inline-block;height:8px;border-radius:4px;background:var(--gold);vertical-align:middle}
+.cov-bg{display:inline-block;width:80px;height:8px;border-radius:4px;background:rgba(255,255,255,.08);vertical-align:middle;position:relative}
+.lv-rod{color:var(--gold);font-weight:600}.lv-fish{color:var(--ink)}.lv-zone{color:var(--ink-soft);font-size:.75rem}
+.lv-arrow{color:var(--ink-faint);font-size:.7rem;padding:0 4px}
+.fish-guides .pm{padding:5px 16px;font-size:.8rem;cursor:pointer;background:none;border:1px solid var(--rule);color:var(--ink-soft);border-radius:6px;transition:all .15s}
+.fish-guides .pm.active{background:var(--gold);color:#1a1a2e;font-weight:600;border-color:var(--gold)}
+.fish-guides .pm:hover:not(.active){background:rgba(255,215,0,.1)}
 .q-items{font-size:.78rem;white-space:normal;max-width:320px;line-height:1.4}
 .q-item{display:inline-flex;gap:3px;align-items:center}
 
@@ -1328,6 +1370,16 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <div id="fishDetail"></div>
   </div>
   <div id="fishRods" style="margin-bottom:12px"></div>
+  <div class="fish-guides" style="margin-bottom:16px">
+   <div class="ctrl" style="gap:6px;margin-bottom:8px">
+    <button class="pm" id="gRod" onclick="toggleGuide('rod')">Rod Guide</button>
+    <button class="pm" id="gBait" onclick="toggleGuide('bait')">Bait Guide</button>
+    <button class="pm" id="gLevel" onclick="toggleGuide('level')">Leveling Guide</button>
+   </div>
+   <div id="rodGuide" class="guide-panel" style="display:none"></div>
+   <div id="baitGuide" class="guide-panel" style="display:none"></div>
+   <div id="levelGuide" class="guide-panel" style="display:none"></div>
+  </div>
   <div class="tw"><table><thead><tr>
    <th data-k="name" data-t="fish">Fish</th>
    <th data-k="skill" data-t="fish" class="n">Skill</th>
@@ -2369,6 +2421,129 @@ function renderFishRods(){
     h+='<span class="rod-chip"><b>'+esc(r.name)+'</b> Max rank:'+r.maxRank+' &middot; '+esc(r.sizeType||'?')+brk+'</span>';
   });
   h+='</div>';document.getElementById('fishRods').innerHTML=h;
+}
+var _guideOpen=null;
+function toggleGuide(which){
+  var panels=['rod','bait','level'];
+  panels.forEach(function(p){
+    var el=document.getElementById(p+'Guide');
+    var btn=document.getElementById('g'+p.charAt(0).toUpperCase()+p.slice(1));
+    if(p===which&&_guideOpen!==p){el.style.display='';btn.classList.add('active');_guideOpen=p;
+      if(p==='rod')renderRodGuide();else if(p==='bait')renderBaitGuide();else renderLevelGuide();
+    }else{el.style.display='none';btn.classList.remove('active');if(p===which)_guideOpen=null;}
+  });
+}
+function rodTier(r){
+  if(r.maxRank>=25)return{t:'S',c:'s'};
+  if(r.maxRank>=16)return{t:'A',c:'a'};
+  if(r.maxRank>=10)return{t:'B',c:'b'};
+  if(r.maxRank>=7)return{t:'C',c:'c'};
+  return{t:'D',c:'d'};
+}
+function renderRodGuide(){
+  var rods=D.rods.slice().sort(function(a,b){return b.maxRank-a.maxRank});
+  var h='<h3>Rod Guide — All Fishing Rods Ranked</h3>';
+  h+='<div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:10px">Higher <b>Max Rank</b> = handles tougher fish without breaking. Higher <b>Atk</b> = land fish faster. Higher <b>Rec</b> = more stamina regen mid-fight. Tier: <span class="tier-badge tier-s">S</span> Unbreakable <span class="tier-badge tier-a">A</span> Endgame <span class="tier-badge tier-b">B</span> Mid <span class="tier-badge tier-c">C</span> Starter <span class="tier-badge tier-d">D</span> Early</div>';
+  h+='<table><thead><tr><th>Tier</th><th>Rod</th><th>Size</th><th>Max Rank</th><th>Atk</th><th>Rec</th><th>Time</th><th>Price</th><th>Coverage</th><th></th></tr></thead><tbody>';
+  rods.forEach(function(r){
+    var tier=rodTier(r);
+    var pct=r.fishTotal?Math.round(r.fishCount/r.fishTotal*100):0;
+    var barW=Math.round(pct*0.8);
+    var priceStr=r.price?fmt(r.price)+'g':'—';
+    var srcTag=r.priceSrc?'<span class="tag t-'+(r.priceSrc==='npc'?'npc':'guild')+'">'+r.priceSrc+'</span>':'<span class="tag" style="background:rgba(255,255,255,.06);color:var(--ink-faint)">craft</span>';
+    var brk=r.breakable?'':'<span class="tag t-guild" style="font-size:.65rem">Unbreakable</span>';
+    h+='<tr>';
+    h+='<td><span class="tier-badge tier-'+tier.c+'">'+tier.t+'</span></td>';
+    h+='<td><span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span> '+brk+'</td>';
+    h+='<td>'+r.sizeType+'</td>';
+    h+='<td class="n"><b>'+r.maxRank+'</b></td>';
+    h+='<td class="n">'+r.attack+'</td>';
+    h+='<td class="n">'+r.recovery+'</td>';
+    h+='<td class="n">'+r.time+'s</td>';
+    h+='<td class="n">'+priceStr+' '+srcTag+'</td>';
+    h+='<td><span class="cov-bg"><span class="cov-bar" style="width:'+barW+'px"></span></span> <span style="font-size:.72rem;color:var(--ink-soft)">'+r.fishCount+'/'+r.fishTotal+' '+r.sizeType+' ('+pct+'%)</span></td>';
+    h+='<td></td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  document.getElementById('rodGuide').innerHTML=h;
+}
+function renderBaitGuide(){
+  var h='<h3>Bait Guide — All Baits &amp; Lures</h3>';
+  h+='<div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:10px"><b>Lures</b> are reusable (can still be lost on failed catches). <b>Baits</b> are consumed every catch. Higher <b>Fish Count</b> = more versatile.</div>';
+  h+='<table><thead><tr><th>Bait</th><th>Type</th><th>Price</th><th>Source</th><th class="n">Small Fish</th><th class="n">Large Fish</th><th class="n">Total Fish</th></tr></thead><tbody>';
+  D.baits.forEach(function(b){
+    if(b.fishCount<1)return;
+    var priceStr=b.cost?fmt(b.cost)+'g':'—';
+    var srcTag=b.costSrc?'<span class="tag t-'+(b.costSrc==='npc'?'npc':b.costSrc==='guild'?'guild':'ah')+'">'+b.costSrc+'</span>':'<span class="tag" style="background:rgba(255,255,255,.06);color:var(--ink-faint)">craft</span>';
+    var typeTag=b.type==='lure'?'<span style="color:#4caf50">lure</span>':'<span style="color:var(--ink-soft)">bait</span>';
+    h+='<tr>';
+    h+='<td><span class="item-link" onclick="goToItem(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span></td>';
+    h+='<td>'+typeTag+'</td>';
+    h+='<td class="n">'+priceStr+'</td>';
+    h+='<td>'+srcTag+'</td>';
+    h+='<td class="n">'+b.small+'</td>';
+    h+='<td class="n">'+b.large+'</td>';
+    h+='<td class="n"><b>'+b.fishCount+'</b></td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  document.getElementById('baitGuide').innerHTML=h;
+}
+function renderLevelGuide(){
+  var h='<h3>Leveling Guide — NPC/Guild Gear Only</h3>';
+  h+='<div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:10px">Computed from fish data. Target fish <b>5+ levels above</b> your skill for best skill-up rates. Only shows fish with a safe, buyable rod.</div>';
+  var smallRods=D.rods.filter(function(r){return r.priceSrc&&r.sizeType==='small'}).sort(function(a,b){return a.maxRank-b.maxRank});
+  var largeRods=D.rods.filter(function(r){return r.priceSrc&&r.sizeType==='large'}).sort(function(a,b){return a.maxRank-b.maxRank});
+  function buildPath(rods,sz){
+    var path=[],skill=0;
+    while(skill<100){
+      var cands=D.fishing.filter(function(f){
+        return f.skill>skill&&!f.legendary&&f.sizeType===sz&&f.ranking>0&&f.zones.length>0&&f.baits.length>0;
+      });
+      var best=null,bestScore=999;
+      cands.forEach(function(f){
+        var rod=null,rodCost=Infinity;
+        for(var i=0;i<rods.length;i++){if(rods[i].maxRank>=f.ranking){var c=rods[i].price||999999;if(c<rodCost){rod=rods[i];rodCost=c;}}}
+        if(!rod)return;
+        var gap=f.skill-skill;
+        var score=Math.abs(gap-6)*3+(rod.price?rod.price/5000:5)+(f.baits[0].cost?0:5)-(f.zones.length>2?1:0);
+        if(score<bestScore){bestScore=score;best={fish:f,rod:rod};}
+      });
+      if(!best)break;
+      var b=best.fish.baits[0];
+      path.push({from:skill,to:best.fish.skill,rod:best.rod.name,rodPrice:best.rod.price,rodRank:best.rod.maxRank,
+        fish:best.fish.name,fishSkill:best.fish.skill,fishRank:best.fish.ranking,
+        bait:b?b.name:'?',baitCost:b?b.cost:null,baitType:b?b.type:'?',
+        zone:best.fish.zones[0].zone});
+      skill=best.fish.skill;
+    }
+    return path;
+  }
+  var smallPath=buildPath(smallRods,'small');
+  var largePath=buildPath(largeRods,'large');
+  function renderPath(path,label){
+    var ph='<h4 style="margin:12px 0 6px;font-size:.84rem;color:var(--ink)">'+label+'</h4>';
+    ph+='<table><thead><tr><th>Skill</th><th>Rod</th><th>Fish</th><th>Rank</th><th>Bait</th><th>Zone</th></tr></thead><tbody>';
+    var lastRod='';
+    path.forEach(function(p){
+      var newRod=p.rod!==lastRod;lastRod=p.rod;
+      var rodCell=newRod?'<span class="lv-rod">'+esc(p.rod)+'</span> <span style="font-size:.7rem;color:var(--ink-faint)">'+(p.rodPrice?fmt(p.rodPrice)+'g':'craft')+' &middot; rank '+p.rodRank+'</span>':'<span style="color:var(--ink-faint)">↑ same</span>';
+      ph+='<tr'+(newRod?' style="border-top:2px solid var(--gold)"':'')+'>';
+      ph+='<td class="n">'+p.from+' → <b>'+p.to+'</b></td>';
+      ph+='<td>'+rodCell+'</td>';
+      ph+='<td><span class="lv-fish item-link" onclick="fishLookup(\''+esc(p.fish).replace(/'/g,"\\'")+'\')">' +esc(p.fish)+'</span> <span style="font-size:.72rem;color:var(--ink-faint)">sk'+p.fishSkill+'</span></td>';
+      ph+='<td class="n">'+p.fishRank+'</td>';
+      ph+='<td>'+esc(p.bait)+' <span style="font-size:.7rem;color:var(--ink-faint)">'+(p.baitCost?fmt(p.baitCost)+'g':'')+' '+(p.baitType==='lure'?'lure':'bait')+'</span></td>';
+      ph+='<td class="lv-zone">'+esc(p.zone)+'</td>';
+      ph+='</tr>';
+    });
+    ph+='</tbody></table>';
+    return ph;
+  }
+  h+=renderPath(smallPath,'Small Rod Path (primary)');
+  h+=renderPath(largePath,'Large Rod Path (alternative)');
+  document.getElementById('levelGuide').innerHTML=h;
 }
 function renderFishing(){
   var q=val('fishSearch').toLowerCase(),water=val('fishWater'),maxSk=num('fishMaxSkill')||200,
