@@ -140,11 +140,18 @@ def load_all():
     for r in db.execute('SELECT * FROM items'):
         items[r['id']] = dict(r)
 
+    ah_single_prices = dict(ah_prices)
+    ah_per_unit = {}
     for iid, sp in ah_stack_prices.items():
-        if iid not in ah_prices:
-            it = items.get(iid)
-            stk = (it.get('stack') or 1) if it else 1
-            ah_prices[iid] = sp // stk if stk > 1 else sp
+        it = items.get(iid)
+        stk = (it.get('stack') or 1) if it else 1
+        pu = sp // stk if stk > 1 else sp
+        ah_per_unit[iid] = pu
+        if iid in ah_prices:
+            if pu < ah_prices[iid]:
+                ah_prices[iid] = pu
+        else:
+            ah_prices[iid] = pu
     for iid, bp in ah_bazaar_prices.items():
         if iid not in ah_prices:
             ah_prices[iid] = bp
@@ -159,12 +166,14 @@ def load_all():
         WHERE type IN ('npc_shop','guild_shop','guild_vendor','regional_vendor',
                        'conquest_vendor','besieged_vendor','curio_vendor')
         AND price > 0
+        AND NOT (type = 'guild_shop' AND notes LIKE '%restock 0/%')
         ORDER BY type, where_, item_id
     '''):
         d = dict(r)
         iid = d['item_id']
         if d['type'] == 'guild_shop' and d['qty_hi'] and d['qty_hi'] > 0:
-            d['typical_price'] = guild_buy_price(d['price'], d['qty_hi'])
+            depleted_stock = int(d['qty_hi'] * 0.6)
+            d['typical_price'] = guild_buy_price(d['price'], d['qty_hi'], stock=depleted_stock)
             d['buy_max'] = d['price']
             d['target_stock'] = d['qty_hi']
         else:
@@ -176,8 +185,9 @@ def load_all():
         vsrc = 'guild' if d['type'] == 'guild_shop' else 'npc'
         vendor_label = 'Guild Shop' if vsrc == 'guild' else (d['where_'] or '').replace('_', ' ').title()
         zone_label = (d['zone'] or '').replace('_', ' ').title()
-        if tp and (iid not in vendor_best or tp < vendor_best[iid][0]):
-            vendor_best[iid] = (tp, vsrc, vendor_label, zone_label)
+        if d['type'] not in ('conquest_vendor', 'besieged_vendor', 'regional_vendor'):
+            if tp and (iid not in vendor_best or tp < vendor_best[iid][0]):
+                vendor_best[iid] = (tp, vsrc, vendor_label, zone_label)
         vendor_all.append(d)
 
     guild_labels = {**CRAFT_NAMES, 'fish': 'Fishing'}
@@ -196,9 +206,22 @@ def load_all():
             if dedup_key in _seen_vendors:
                 continue
             _seen_vendors[dedup_key] = True
-            entry = {'n': npc_name.replace('_', ' '), 'z': zone, 'g': guild_labels.get(guild_type, guild_type), 'pr': tp}
+            ts = d['target_stock'] or 0
+            ms = round(ts * 4 / 3) if ts else 0
+            best_p = guild_buy_price(d['buy_max'], ts) if ts > 0 else tp
+            entry = {'n': npc_name.replace('_', ' '), 'z': zone, 'g': guild_labels.get(guild_type, guild_type),
+                     'pr': tp, 'vt': 'guild', 'buyMax': d['buy_max'], 'bestPrice': best_p,
+                     'restock': int(d.get('notes', '').split('restock ')[1].split('/')[0]) if 'restock' in (d.get('notes') or '') else None}
             if pos:
                 entry['pos'] = pos
+        elif d['type'] == 'regional_vendor':
+            zone_raw = d['zone'] or ''
+            dedup_key = (iid, npc_name, zone_raw)
+            if dedup_key in _seen_vendors:
+                continue
+            _seen_vendors[dedup_key] = True
+            zone = zone_raw.replace('_', ' ').title()
+            entry = {'n': npc_name.replace('_', ' ').title(), 'z': zone, 'pr': tp, 'vt': 'regional'}
         else:
             zone_raw = d['zone'] or ''
             dedup_key = (iid, npc_name, zone_raw)
@@ -206,7 +229,7 @@ def load_all():
                 continue
             _seen_vendors[dedup_key] = True
             zone = zone_raw.replace('_', ' ').title()
-            entry = {'n': npc_name.replace('_', ' ').title(), 'z': zone, 'pr': tp}
+            entry = {'n': npc_name.replace('_', ' ').title(), 'z': zone, 'pr': tp, 'vt': 'npc'}
         item_vendors.setdefault(iid, []).append(entry)
 
     def cheapest(iid):
@@ -282,18 +305,28 @@ def load_all():
         missing = False
         for ing in ings:
             p, src, vwhere, vzone = cheapest(ing['item_id'])
+            iid_m = ing['item_id']
+            it_m = items.get(iid_m)
+            stk_m = (it_m.get('stack') or 1) if it_m else 1
+            single_p = ah_single_prices.get(iid_m)
+            stack_p = ah_stack_prices.get(iid_m)
+            stack_pu = ah_per_unit.get(iid_m)
             if p is None:
                 missing = True
-                mat_list.append({'id': ing['item_id'], 'name': name(ing['item_id']),
+                mat_list.append({'id': iid_m, 'name': name(iid_m),
                                  'qty': ing['qty'], 'price': None, 'src': None, 'total': None,
-                                 'vendor': None, 'zone': None})
+                                 'vendor': None, 'zone': None,
+                                 'ahSingle': single_p, 'ahStack': stack_p, 'stackSize': stk_m})
             else:
-                mat_list.append({'id': ing['item_id'], 'name': name(ing['item_id']),
+                mat_list.append({'id': iid_m, 'name': name(iid_m),
                                  'qty': ing['qty'], 'price': p, 'src': src, 'total': p * ing['qty'],
-                                 'vendor': vwhere, 'zone': vzone})
+                                 'vendor': vwhere, 'zone': vzone,
+                                 'ahSingle': single_p, 'ahStack': stack_p, 'stackSize': stk_m})
                 mat_cost += p * ing['qty']
 
         cry_p, cry_src, cry_vendor, cry_zone = cheapest(r['crystal'])
+        cry_it = items.get(r['crystal'])
+        cry_stk = (cry_it.get('stack') or 1) if cry_it else 1
         if cry_p:
             mat_cost += cry_p
 
@@ -339,7 +372,8 @@ def load_all():
             'id': r['id'], 'name': name(r['result']), 'recipeName': r['rname'],
             'craft': r['main_craft'], 'level': r['main_level'],
             'subs': sub_crafts if len(sub_crafts) > 1 else {},
-            'crystal': {'id': r['crystal'], 'name': name(r['crystal']), 'price': cry_p, 'src': cry_src, 'vendor': cry_vendor, 'zone': cry_zone},
+            'crystal': {'id': r['crystal'], 'name': name(r['crystal']), 'price': cry_p, 'src': cry_src, 'vendor': cry_vendor, 'zone': cry_zone,
+                        'ahSingle': ah_single_prices.get(r['crystal']), 'ahStack': ah_stack_prices.get(r['crystal']), 'stackSize': cry_stk},
             'mats': mat_list, 'matCost': mat_cost if not missing else None,
             'matSrc': mat_src,
             'result': {'id': r['result'], 'name': name(r['result']), 'qty': r['result_qty'],
@@ -739,6 +773,7 @@ def load_all():
         'stats': {
             'profitableFlips': len([f for f in flips if f.get('profit') and f['profit'] > 0]),
             'profitableCrafts': len([c for c in crafts if c.get('profit') and c['profit'] > 0]),
+            'profitableNpcCrafts': len([c for c in crafts if c.get('npcProfit') and c['npcProfit'] > 0]),
             'guaranteedCrafts': len([c for c in crafts if c.get('allNpc') and c.get('profit') and c['profit'] > 0]),
             'totalRecipes': len(crafts),
             'totalDesynth': len(desynths),
@@ -835,6 +870,10 @@ tr:hover td{background:color-mix(in srgb,var(--bg3) 40%,transparent)}
 .t-skillup{background:#e65100;color:#ffe0b2;font-weight:700}
 .vc-breakdown{display:flex;flex-direction:column;gap:5px}
 .vc-group{font-size:.82rem;line-height:1.6}
+.sell-mode{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-right:4px}
+.sell-mode .sm{padding:4px 14px;font-size:.78rem;cursor:pointer;background:none;border:none;color:var(--ink-soft);transition:all .15s}
+.sell-mode .sm.active{background:var(--gold);color:#1a1a2e;font-weight:600}
+.sell-mode .sm:hover:not(.active){background:rgba(255,215,0,.1)}
 .vc-mat-row{padding:2px 0}
 .vc-vendors{margin:1px 0 4px 18px;font-size:.74rem;line-height:1.4}
 .vc-vline{padding:1px 0;color:#b0bec5}
@@ -1034,7 +1073,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  <div class="tabs" id="tabs">
   <button class="tab active" data-tab="dash">Dashboard</button>
   <button class="tab" data-tab="flips">Vendor Flips</button>
-  <button class="tab" data-tab="crafts">Craft Profits</button>
+  <button class="tab" data-tab="crafts">Crafting</button>
   <button class="tab" data-tab="desynth">Desynth</button>
   <button class="tab" data-tab="bcnm">BCNM</button>
   <button class="tab" data-tab="shop">Shopping List</button>
@@ -1045,7 +1084,6 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   <button class="tab" data-tab="fishing">Fishing</button>
   <button class="tab" data-tab="quests">Quests</button>
   <button class="tab" data-tab="gilhr">Gil/Hour</button>
-  <button class="tab" data-tab="vendcraft">Vendor Crafts</button>
  </div>
 
  <div class="pane active" id="p-dash">
@@ -1084,25 +1122,44 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  </div>
 
  <div class="pane" id="p-crafts">
+  <div class="ctrl" style="gap:6px">
+   <span style="font-size:.78rem;color:var(--ink-soft);font-weight:600">My Levels:</span>
+   <label style="font-size:.76rem">Wood <input type="number" id="vcWood" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Smith <input type="number" id="vcSmith" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Gold <input type="number" id="vcGold" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Cloth <input type="number" id="vcCloth" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Leather <input type="number" id="vcLeather" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Bone <input type="number" id="vcBone" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Alchemy <input type="number" id="vcAlchemy" value="0" min="0" max="110" style="width:55px"></label>
+   <label style="font-size:.76rem">Cook <input type="number" id="vcCook" value="0" min="0" max="110" style="width:55px"></label>
+  </div>
   <div class="ctrl">
+   <div class="sell-mode" id="sellMode">
+    <button class="sm active" data-sm="npc">Sell to NPC</button>
+    <button class="sm" data-sm="ah">Sell on AH</button>
+   </div>
    <input type="search" id="cSearch" placeholder="Search recipes...">
    <select id="cCraft"><option value="">All crafts</option></select>
-   <label>Max level <input type="number" id="cMaxLv" value="110" min="1" max="110"></label>
-   <label>Min profit <input type="number" id="cMinP" value="0"></label>
-   <label><input type="checkbox" id="cPriceable" checked> Fully priceable</label>
-   <label><input type="checkbox" id="cProfitable"> Profitable only</label>
+   <label>Min profit <input type="number" id="cMinP" value="100"></label>
+   <label>Max loss <input type="number" id="cMaxLoss" value="0" min="0" style="width:70px"></label>
+   <label>Min margin% <input type="number" id="cMinMg" value="0" style="width:70px"></label>
    <label><input type="checkbox" id="cNpcOnly"> NPC mats only</label>
+   <label><input type="checkbox" id="cPriceable" checked> Fully priceable</label>
+   <label><input type="checkbox" id="cLvFilter"> Filter by my levels +<input type="number" id="cLvRange" value="4" min="0" max="50" style="width:48px;padding:2px 4px;font-size:.82rem"></label>
    <span class="sp"></span><span class="cnt" id="cCnt"></span>
   </div>
   <div class="tw"><table><thead><tr>
-   <th data-k="name" data-t="crafts">Item</th><th data-k="craft" data-t="crafts">Craft</th>
+   <th data-k="name" data-t="crafts">Item</th>
+   <th data-k="craft" data-t="crafts">Craft</th>
    <th data-k="level" data-t="crafts" class="n">Lv</th>
    <th data-k="matCost" data-t="crafts" class="n">Mat Cost</th>
-   <th data-k="rev" data-t="crafts" class="n">Revenue</th>
-   <th data-k="profit" data-t="crafts" class="n">Profit</th>
+   <th data-k="ahSell" data-t="crafts" class="n">AH Sell</th>
+   <th data-k="npcSell" data-t="crafts" class="n">NPC Sell</th>
+   <th data-k="revenue" data-t="crafts" class="n">Revenue</th>
+   <th data-k="profit" data-t="crafts" class="n s">Profit</th>
    <th data-k="margin" data-t="crafts" class="n">Margin</th>
-   <th data-k="sellSrc" data-t="crafts">Sell Via</th>
-   <th data-k="resultQty" data-t="crafts" class="n">Yield</th>
+   <th data-k="stackP" data-t="crafts" class="n">×12 Profit</th>
+   <th data-k="gilHr" data-t="crafts" class="n">Gil/Hr</th>
   </tr></thead><tbody id="cBody"></tbody></table></div>
   <button class="show-more" id="cMore" style="display:none"></button>
  </div>
@@ -1319,43 +1376,6 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  </div>
 
  <!-- VENDOR CRAFTS -->
- <div class="pane" id="p-vendcraft">
-  <div class="ctrl" style="gap:6px">
-   <span style="font-size:.78rem;color:var(--ink-soft);font-weight:600">My Levels:</span>
-   <label style="font-size:.76rem">Wood <input type="number" id="vcWood" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Smith <input type="number" id="vcSmith" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Gold <input type="number" id="vcGold" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Cloth <input type="number" id="vcCloth" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Leather <input type="number" id="vcLeather" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Bone <input type="number" id="vcBone" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Alchemy <input type="number" id="vcAlchemy" value="0" min="0" max="110" style="width:55px"></label>
-   <label style="font-size:.76rem">Cook <input type="number" id="vcCook" value="0" min="0" max="110" style="width:55px"></label>
-  </div>
-  <div class="ctrl">
-   <input type="search" id="vcSearch" placeholder="Search recipes...">
-   <select id="vcCraft"><option value="">All crafts</option></select>
-   <label>Min profit <input type="number" id="vcMinP" value="100" min="0"></label>
-   <label>Min margin% <input type="number" id="vcMinMg" value="0" min="0" max="10000" style="width:70px"></label>
-   <label><input type="checkbox" id="vcNpcOnly"> NPC mats only</label>
-   <label><input type="checkbox" id="vcPriceable" checked> Fully priceable</label>
-   <label><input type="checkbox" id="vcLvFilter"> Filter by my levels (+4)</label>
-   <span class="sp"></span><span class="cnt" id="vcCnt"></span>
-  </div>
-  <p style="font-size:.75rem;color:var(--ink-faint);margin:-6px 0 10px">Craft → sell to NPC vendor. Guaranteed income, no AH tax, no competition. Revenue = item base sell price × yield. ~300 crafts/hr (12s each).</p>
-  <div class="tw"><table><thead><tr>
-   <th data-k="name" data-t="vendcraft">Item</th>
-   <th data-k="craft" data-t="vendcraft">Craft</th>
-   <th data-k="level" data-t="vendcraft" class="n">Lv</th>
-   <th data-k="matCost" data-t="vendcraft" class="n">Mat Cost</th>
-   <th data-k="npcSell" data-t="vendcraft" class="n">NPC Sell</th>
-   <th data-k="npcRev" data-t="vendcraft" class="n">Revenue</th>
-   <th data-k="npcProfit" data-t="vendcraft" class="n s">Profit</th>
-   <th data-k="vcMargin" data-t="vendcraft" class="n">Margin</th>
-   <th data-k="vcStackP" data-t="vendcraft" class="n">×12 Profit</th>
-   <th data-k="vcGilHr" data-t="vendcraft" class="n">Gil/Hr</th>
-  </tr></thead><tbody id="vcBody"></tbody></table></div>
-  <button class="show-more" id="vcMore" style="display:none"></button>
- </div>
 
 </div>
 
@@ -1369,7 +1389,8 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
 <div class="kbd-hint"><kbd>Ctrl+K</kbd> search <kbd>1-9</kbd> tabs <button id="shutdownBtn" title="Shutdown PowerTool server" style="background:none;border:1px solid var(--rule);color:var(--ink-faint);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:.75rem;margin-left:8px;vertical-align:middle" onmouseover="this.style.borderColor='var(--loss)';this.style.color='var(--loss)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink-faint)'">&#9211; Off</button></div>
 
 <script>
-var D,T,sorts={flips:{k:'profit',d:-1},crafts:{k:'profit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1},vendcraft:{k:'npcProfit',d:-1}};
+var D,T,_sellMode='npc',sorts={flips:{k:'profit',d:-1},crafts:{k:'npcProfit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1}};
+try{var _sm=localStorage.getItem('pt_sellMode');if(_sm==='ah'||_sm==='npc')_sellMode=_sm;}catch(e){}
 function famePrice(base,rank){return Math.floor(base*(111-rank)/100);}
 
 fetch('/api/data').then(function(r){return r.json()}).then(function(d){D=d;T=d.tree;init();});
@@ -1461,10 +1482,9 @@ function init(){
 }
 function setBadges(){
   var pf=D.flips.filter(function(f){return f.profit&&f.profit>0}).length;
-  var pc=D.crafts.filter(function(c){return c.profit&&c.profit>0}).length;
+  var pc=_sellMode==='npc'?D.crafts.filter(function(c){return c.npcProfit&&c.npcProfit>0}).length:D.crafts.filter(function(c){return c.profit&&c.profit>0}).length;
   var pd=D.desynths.filter(function(d){return d.profit&&d.profit>0}).length;
-  var pvc=D.crafts.filter(function(c){return c.npcProfit&&c.npcProfit>0}).length;
-  var badges={flips:pf,crafts:pc,desynth:pd,bcnm:D.bcnms.length,vendcraft:pvc};
+  var badges={flips:pf,crafts:pc,desynth:pd,bcnm:D.bcnms.length};
   document.querySelectorAll('.tab').forEach(function(btn){
     var tab=btn.dataset.tab;if(badges[tab]){
       var b=btn.querySelector('.badge');
@@ -1478,6 +1498,7 @@ function buildFilters(){
   D.flips.forEach(function(v){if(v.guild)gs[v.guild]=1;if(v.zone)zs[v.zone]=1});
   D.crafts.forEach(function(c){crs[c.craft]=1});D.desynths.forEach(function(c){crs[c.craft]=1});
   fill('fGuild',gs);fill('fZone',zs);fill('cCraft',crs);fill('dCraft',crs);
+  initCraftTab();
 }
 function fill(id,obj){var s=document.getElementById(id);Object.keys(obj).sort().forEach(function(k){
   var o=document.createElement('option');o.value=k;o.textContent=k.charAt(0).toUpperCase()+k.slice(1);s.appendChild(o)})}
@@ -1489,7 +1510,7 @@ document.getElementById('fameSlider').addEventListener('input',function(){
   document.getElementById('fameVal').textContent=fameRank;
   var pct=Math.round((111-fameRank)/100*100-100);
   document.getElementById('famePct').textContent='('+(pct>=0?'+':'')+pct+'%)';
-  renderFlips();renderCrafts();if(window._lazyRendered&&window._lazyRendered.vendcraft)renderVendorCrafts();
+  renderFlips();renderCrafts();
 });
 
 // Dashboard
@@ -1588,50 +1609,195 @@ function renderFlipsFull(all){var h='';all.forEach(function(v){
 }
 
 // Craft Profits
+var vcCraftMap={wood:'vcWood',smith:'vcSmith',gold:'vcGold',cloth:'vcCloth',leather:'vcLeather',bone:'vcBone',alchemy:'vcAlchemy',cook:'vcCook'};
+function saveCraftLevels(){
+  var lv={};for(var k in vcCraftMap)lv[k]=num(vcCraftMap[k]);
+  try{localStorage.setItem('pt_craftLevels',JSON.stringify(lv));}catch(e){}
+}
+function restoreCraftLevels(){
+  try{var s=localStorage.getItem('pt_craftLevels');if(!s)return;var lv=JSON.parse(s);
+  for(var k in vcCraftMap){if(lv[k]!=null)document.getElementById(vcCraftMap[k]).value=lv[k];}
+  }catch(e){}
+}
+function setSellMode(m){
+  _sellMode=m;
+  document.querySelectorAll('.sell-mode .sm').forEach(function(b){b.classList.toggle('active',b.dataset.sm===m);});
+  sorts.crafts.k=m==='npc'?'npcProfit':'profit';
+  _showAll.crafts=false;
+  try{localStorage.setItem('pt_sellMode',m);}catch(e){}
+  setBadges();renderCrafts();
+}
+function initCraftTab(){
+  restoreCraftLevels();
+  document.querySelectorAll('.sell-mode .sm').forEach(function(b){
+    b.classList.toggle('active',b.dataset.sm===_sellMode);
+    b.addEventListener('click',function(){setSellMode(this.dataset.sm);});
+  });
+  if(_sellMode==='ah')sorts.crafts.k='profit';
+  var craftIds=['vcWood','vcSmith','vcGold','vcCloth','vcLeather','vcBone','vcAlchemy','vcCook'];
+  ['cSearch','cCraft','cMinP','cMaxLoss','cMinMg','cNpcOnly','cPriceable','cLvFilter','cLvRange'].concat(craftIds).forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    var evt=(el.type==='search'||el.type==='number'||el.type==='text')?'input':'change';
+    el.addEventListener(evt,function(){_showAll.crafts=false;renderCrafts();});
+  });
+  document.getElementById('cMaxLoss').addEventListener('input',function(){
+    if(num('cMaxLoss')>0){document.getElementById('cMinP').value='';document.getElementById('cMinMg').value='0';}
+  });
+  document.getElementById('cMinP').addEventListener('input',function(){
+    if(val('cMinP')!=='')document.getElementById('cMaxLoss').value='0';
+  });
+  craftIds.forEach(function(id){document.getElementById(id).addEventListener('input',saveCraftLevels);});
+}
 function filteredCrafts(){
-  var q=val('cSearch').toLowerCase(),craft=val('cCraft'),maxLv=num('cMaxLv')||110,
-      minP=num('cMinP'),priceable=chk('cPriceable'),profitable=chk('cProfitable'),npcOnly=chk('cNpcOnly');
+  var q=val('cSearch').toLowerCase(),craft=val('cCraft'),
+      minP=num('cMinP'),maxLoss=num('cMaxLoss'),minMg=num('cMinMg'),
+      npcOnly=chk('cNpcOnly'),priceable=chk('cPriceable'),lvFilter=chk('cLvFilter'),lvRange=num('cLvRange');
+  var myLv={};for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);
+  var isNpc=_sellMode==='npc';
+  var lossMode=maxLoss>0;
   return D.crafts.filter(function(c){
     if(q&&c.name.toLowerCase().indexOf(q)<0&&c.craft.toLowerCase().indexOf(q)<0)return false;
-    if(craft&&c.craft!==craft)return false;if(c.level>maxLv)return false;
-    if(priceable&&c.missing)return false;if(profitable&&(!c.profit||c.profit<=0))return false;
-    if(npcOnly&&!c.allNpc)return false;if(c.profit!==null&&c.profit<minP)return false;
+    if(craft&&c.craft!==craft)return false;
+    if(lossMode){
+      if(c.matCost!==null&&c.matCost>maxLoss)return false;
+    }else{
+      if(isNpc&&c.npcSell<=0)return false;
+      if(priceable&&c.missing)return false;
+      if(npcOnly&&!c.allNpc)return false;
+      var prof=isNpc?(c.npcProfit!==null?c.npcProfit:(c.matCost?-c.matCost:null)):c.profit;
+      if(prof===null)return false;
+      if(prof<minP)return false;
+      var mg=c.matCost>0&&prof?prof/c.matCost*100:0;
+      if(mg<minMg)return false;
+    }
+    if(lvFilter){
+      var ml=myLv[c.craft]||0;if(c.level>ml+lvRange)return false;
+      var subs=c.subs;for(var sk in subs){if(sk!==c.craft&&subs[sk]>(myLv[sk]||0)+lvRange)return false;}
+    }
     return true;
   });
 }
 function renderCrafts(){
-  var all=sorted(filteredCrafts(),'crafts');updSort('crafts');var h='';var rows=_showAll.crafts?all:all.slice(0,200);
+  var all=sorted(filteredCrafts(),'crafts');updSort('crafts');
+  var isNpc=_sellMode==='npc';
+  var lvFilter=chk('cLvFilter');
+  var myLv={};if(lvFilter){for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);}
+  var h='';var rows=_showAll.crafts?all:all.slice(0,200);
   rows.forEach(function(c,i){
-    var margin=c.matCost&&c.profit?(c.profit/c.matCost*100):null;
-    h+='<tr style="cursor:pointer" onclick="toggleDetail(\'cd'+i+'\')">';
-    h+='<td class="nm"><span class="item-link" onclick="event.stopPropagation();goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span>'+(c.allNpc?' <span class="tag t-npc-all">NPC Only</span>':'')+'</td>';
+    var prof=isNpc?(c.npcProfit!==null?c.npcProfit:(c.matCost?-c.matCost:null)):c.profit;
+    var rev=isNpc?c.npcRev:c.result.rev;
+    var sellP=isNpc?c.npcSell:c.result.price;
+    var mg=c.matCost&&prof?prof/c.matCost*100:null;
+    var stackP=prof?prof*12:null;
+    var gilHr=prof?prof*300:null;
+    var ml=lvFilter?(myLv[c.craft]||0):0;
+    var aboveLv=lvFilter&&c.level>ml;
+    h+='<tr style="cursor:pointer'+(aboveLv?';opacity:.7':'')+'" onclick="toggleDetail(\'cd'+i+'\')">';
+    h+='<td class="nm"><span class="item-link" onclick="event.stopPropagation();goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span>';
+    if(c.allNpc)h+=' <span class="tag t-npc-all">NPC Only</span>';
+    h+='</td>';
     h+='<td>'+c.craft+(Object.keys(c.subs).length>1?'<span class="sub"> +subs</span>':'')+'</td>';
-    h+='<td class="n">'+c.level+'</td>';
-    h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>':'<span class="sub">?</span>')+'</td>';
-    h+='<td class="n"><span class="gil">'+fmt(c.result.rev)+'</span></td>';
-    h+='<td class="n">'+pc(c.profit)+'</td><td class="n">'+mc(margin)+'</td>';
-    h+='<td><span class="tag t-'+c.result.src+'">'+c.result.src+'</span></td>';
-    h+='<td class="n">'+c.result.qty+'</td></tr>';
-    h+='<tr class="detail" id="cd'+i+'"><td colspan="9">';
-    h+='<div class="mats"><strong>Crystal:</strong> <span class="mat"><span class="item-link" onclick="goToItem(\''+esc(c.crystal.name).replace(/'/g,"\\\\'")+'\')">' +esc(c.crystal.name)+'</span>'+
-      (c.crystal.price?' <span class="mat-p gil">'+fmt(c.crystal.price)+'</span>':'')+
-      (c.crystal.src?' <span class="tag t-'+c.crystal.src+'">'+c.crystal.src+'</span>':'')+'</span></div>';
-    h+='<div class="mats" style="margin-top:4px"><strong>Materials:</strong> ';
-    c.mats.forEach(function(m){
-      h+='<span class="mat"><span class="mat-q">'+m.qty+'x</span> <span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
-      if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total)+'</span>';
-      if(m.src)h+=' <span class="tag t-'+m.src+'">'+m.src+'</span>';
-      h+='</span> ';
-    });
-    h+='</div>';
-    if(c.hq.length){h+='<div style="margin-top:6px">';
+    h+='<td class="n">'+c.level+(aboveLv?' <span class="tag t-skillup">+'+(c.level-ml)+'</span>':'')+'</td>';
+    var srcTag=c.matSrc?{AH:'t-ah',NPC:'t-npc',Guild:'t-guild',Vendor:'t-vendor',Mixed:'t-mixed'}[c.matSrc]||'':'';
+    h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>'+(srcTag?' <span class="tag '+srcTag+'">'+c.matSrc+'</span>':''):'<span class="sub">?</span>')+'</td>';
+    var ahP=c.result?c.result.price:0;
+    h+='<td class="n">'+(ahP?'<span class="gil">'+fmt(ahP)+'</span>':'<span class="sub">—</span>')+'</td>';
+    h+='<td class="n">'+(c.npcSell?'<span class="gil">'+fmt(c.npcSell)+'</span>':'<span class="sub">—</span>')+'</td>';
+    h+='<td class="n"><span class="gil">'+fmt(rev)+'</span>'+(c.result.qty>1?' <span class="sub">&times;'+c.result.qty+'</span>':'')+'</td>';
+    h+='<td class="n">'+pc(prof)+'</td>';
+    h+='<td class="n">'+(mg!==null&&mg<25?'<span class="neg">'+mg.toFixed(1)+'%</span>':mc(mg))+'</td>';
+    h+='<td class="n">'+(stackP?pc(stackP):'—')+'</td>';
+    h+='<td class="n">'+(gilHr?'<span class="mg">'+fmt(gilHr)+'</span>':'—')+'</td></tr>';
+    h+='<tr class="detail" id="cd'+i+'"><td colspan="11"><div class="vc-breakdown">';
+    var allItems=[{id:c.crystal.id,name:c.crystal.name,qty:1,price:c.crystal.price,total:c.crystal.price,src:c.crystal.src,ahSingle:c.crystal.ahSingle,ahStack:c.crystal.ahStack,stackSize:c.crystal.stackSize}];
+    c.mats.forEach(function(m){allItems.push(m)});
+    var groups={};
+    allItems.forEach(function(m){var key=m.src||'unknown';if(!groups[key])groups[key]=[];groups[key].push(m);});
+    var order=['guild','npc','ah','unknown'];
+    var srcLabels={guild:'Guild Shop',npc:'NPC Shop',ah:'Buy from AH',unknown:'Unknown'};
+    order.forEach(function(srcKey){
+      var g=groups[srcKey];if(!g)return;
+      h+='<div class="vc-group"><span class="tag t-'+srcKey+'" style="font-size:.72rem">'+srcLabels[srcKey]+'</span>';
+      g.forEach(function(m){
+        h+='<div class="vc-mat-row">'+(m.qty>1?'<span class="mat-q">'+m.qty+'x</span> ':'');
+        h+='<span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
+        if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total||m.price)+'</span>';
+        if(srcKey==='ah'&&m.ahSingle!=null&&m.ahStack!=null&&m.stackSize>1){
+          var spu=Math.floor(m.ahStack/m.stackSize);
+          h+=' <span class="sub" style="font-size:.72rem">(single: '+fmt(m.ahSingle)+' · stack/'+m.stackSize+': '+fmt(m.ahStack)+' = '+fmt(spu)+'/ea'+(spu<m.ahSingle?' ✓':'')+')</span>';
+        }else if(srcKey==='ah'&&m.ahStack!=null&&m.ahSingle==null&&m.stackSize>1){
+          var spu2=Math.floor(m.ahStack/m.stackSize);
+          h+=' <span class="sub" style="font-size:.72rem">(stack/'+m.stackSize+': '+fmt(m.ahStack)+' = '+fmt(spu2)+'/ea)</span>';
+        }else if(srcKey==='ah'&&m.ahSingle!=null&&m.ahStack==null){
+          h+=' <span class="sub" style="font-size:.72rem">(single only)</span>';
+        }
+        var vlist=D.itemVendors&&D.itemVendors[String(m.id)];
+        if(vlist&&vlist.length>0){
+          var guildVendors=vlist.filter(function(v){return v.vt==='guild';});
+          var npcVendors=vlist.filter(function(v){return v.vt==='npc';});
+          var regVendors=vlist.filter(function(v){return v.vt==='regional';});
+          h+='<div class="vc-vendors">';
+          if(guildVendors.length>0){
+            var gv=guildVendors[0];
+            h+='<div class="vc-vline"><span class="tag t-guild" style="font-size:.68rem;padding:1px 6px">Guild</span> ';
+            h+='<span class="gil">'+fmt(gv.pr)+'</span>';
+            if(gv.bestPrice!=null&&gv.buyMax!=null)h+=' <span class="sub" style="font-size:.72rem">(range: '+fmt(gv.bestPrice)+' full — '+fmt(gv.buyMax)+' empty';
+            if(gv.restock)h+=', +'+gv.restock+'/day';
+            h+=')</span>';
+            var byG={};guildVendors.forEach(function(v){var gk=v.g||'';if(!byG[gk])byG[gk]=[];byG[gk].push(v);});
+            Object.keys(byG).sort().forEach(function(gk){
+              byG[gk].forEach(function(v){
+                h+='<div class="vc-vline" style="padding-left:12px">';
+                if(gk)h+='<span class="vc-guild-label">'+esc(gk)+'</span> ';
+                h+='<span class="vc-npc-name">'+esc(v.n)+'</span>';
+                if(v.z)h+=' <span class="sub">'+esc(v.z)+'</span>';
+                if(v.pos)h+=' <span class="vc-pos">!pos '+v.pos+'</span>';
+                h+='</div>';});});
+          }
+          if(npcVendors.length>0){
+            npcVendors.forEach(function(v){
+              h+='<div class="vc-vline"><span class="tag t-npc" style="font-size:.68rem;padding:1px 6px">NPC</span> ';
+              h+='<span class="vc-npc-name">'+esc(v.n)+'</span>';
+              if(v.z)h+=' <span class="sub">'+esc(v.z)+'</span>';
+              h+=' <span class="gil">'+fmt(v.pr)+'</span>';
+              if(v.pos)h+=' <span class="vc-pos">!pos '+v.pos+'</span>';
+              h+='</div>';});
+          }
+          if(regVendors.length>0){
+            regVendors.forEach(function(v){
+              h+='<div class="vc-vline"><span class="tag" style="font-size:.68rem;padding:1px 6px;background:#555;color:#ccc">Regional</span> ';
+              h+='<span class="vc-npc-name">'+esc(v.n)+'</span>';
+              if(v.z)h+=' <span class="sub">'+esc(v.z)+'</span>';
+              h+=' <span class="gil">'+fmt(v.pr)+'</span>';
+              h+=' <span class="sub" style="font-size:.68rem">(requires conquest)</span>';
+              h+='</div>';});
+          }
+          h+='</div>';
+        }
+        h+='</div>';});
+      h+='</div>';});
+    if(isNpc){
+      h+='<div class="vc-group"><span class="tag t-npc-all" style="font-size:.72rem">Sell to any NPC</span> ';
+      h+=(c.result.qty>1?c.result.qty+'&times; ':'')+esc(c.name)+' <span class="mat-p gil">'+fmt(c.npcSell)+'</span>';
+      if(c.result.qty>1)h+=' <span class="sub">= '+fmt(c.npcRev)+' total</span>';
+      h+='</div>';
+    }else{
+      h+='<div class="vc-group"><span class="tag t-ah" style="font-size:.72rem">Sell on AH</span> ';
+      h+=(c.result.qty>1?c.result.qty+'&times; ':'')+esc(c.name);
+      if(c.result.price)h+=' <span class="mat-p gil">'+fmt(c.result.price)+'</span>';
+      if(c.result.qty>1&&c.result.rev)h+=' <span class="sub">= '+fmt(c.result.rev)+' total</span>';
+      h+='</div>';
+    }
+    if(c.hq.length){
+      h+='<div class="vc-group" style="margin-top:2px"><span style="font-size:.72rem;color:var(--ink-soft);font-weight:600">HQ Tiers</span>';
       c.hq.forEach(function(hq,hi){
-        h+='<div class="hq-tier">HQ'+(hi+1)+': <span class="item-link" onclick="goToItem(\''+esc(hq.name).replace(/'/g,"\\\\'")+'\')">' +esc(hq.name)+'</span> x'+hq.qty+
-          (hq.price?' — <span class="gil">'+fmt(hq.rev)+'</span>':'')+'</div>';
-      });h+='</div>';}
-    h+='</td></tr>';
+        h+='<div class="vc-mat-row">HQ'+(hi+1)+': <span class="item-link" onclick="goToItem(\''+esc(hq.name).replace(/'/g,"\\\\'")+'\')">' +esc(hq.name)+'</span> &times;'+hq.qty;
+        if(hq.price)h+=' — <span class="gil">'+fmt(hq.rev)+'</span>';
+        h+='</div>';});
+      h+='</div>';}
+    h+='</div></td></tr>';
   });
-  document.getElementById('cBody').innerHTML=h||'<tr><td colspan="9" class="empty">No matches</td></tr>';
+  document.getElementById('cBody').innerHTML=h||'<tr><td colspan="11" class="empty">No recipes match your filters</td></tr>';
   document.getElementById('cCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' recipes';
   showMoreBtn('cMore',all.length>200?all.length-200:0,function(){_showAll.crafts=true;renderCrafts();});
 }
@@ -2441,128 +2607,9 @@ function renderGilHr(){
   showMoreBtn('gMore',all.length>200?all.length-200:0,function(){_showAll.gilhr=true;renderGilHr();});
 }
 
-// Vendor Crafts
-var vcCraftMap={wood:'vcWood',smith:'vcSmith',gold:'vcGold',cloth:'vcCloth',leather:'vcLeather',bone:'vcBone',alchemy:'vcAlchemy',cook:'vcCook'};
-function saveCraftLevels(){
-  var lv={};for(var k in vcCraftMap)lv[k]=num(vcCraftMap[k]);
-  try{localStorage.setItem('pt_craftLevels',JSON.stringify(lv));}catch(e){}
-}
-function restoreCraftLevels(){
-  try{var s=localStorage.getItem('pt_craftLevels');if(!s)return;var lv=JSON.parse(s);
-  for(var k in vcCraftMap){if(lv[k]!=null)document.getElementById(vcCraftMap[k]).value=lv[k];}
-  }catch(e){}
-}
-function buildVcFilters(){
-  restoreCraftLevels();
-  var crs={};D.crafts.forEach(function(c){if(c.npcSell>0)crs[c.craft]=1});
-  var s=document.getElementById('vcCraft');
-  Object.keys(crs).sort().forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=k.charAt(0).toUpperCase()+k.slice(1);s.appendChild(o)});
-  var craftIds=['vcWood','vcSmith','vcGold','vcCloth','vcLeather','vcBone','vcAlchemy','vcCook'];
-  ['vcSearch','vcCraft','vcMinP','vcMinMg','vcNpcOnly','vcPriceable','vcLvFilter'].concat(craftIds).forEach(function(id){
-    var el=document.getElementById(id);if(!el)return;
-    var evt=(el.type==='search'||el.type==='number'||el.type==='text')?'input':'change';
-    el.addEventListener(evt,renderVendorCrafts);
-  });
-  craftIds.forEach(function(id){document.getElementById(id).addEventListener('input',saveCraftLevels);});
-}
-function filteredVendorCrafts(){
-  var q=val('vcSearch').toLowerCase(),craft=val('vcCraft'),minP=num('vcMinP'),minMg=num('vcMinMg'),
-      npcOnly=chk('vcNpcOnly'),priceable=chk('vcPriceable'),lvFilter=chk('vcLvFilter');
-  var myLv={};for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);
-  return D.crafts.filter(function(c){
-    if(c.npcSell<=0)return false;
-    if(q&&c.name.toLowerCase().indexOf(q)<0&&c.craft.toLowerCase().indexOf(q)<0)return false;
-    if(craft&&c.craft!==craft)return false;
-    if(priceable&&c.missing)return false;
-    if(npcOnly&&!c.allNpc)return false;
-    if(c.npcProfit===null)return false;
-    if(c.npcProfit<minP)return false;
-    var mg=c.matCost>0?c.npcProfit/c.matCost*100:0;
-    if(mg<minMg)return false;
-    if(lvFilter){
-      var ml=myLv[c.craft]||0;if(c.level>ml+4)return false;
-      var subs=c.subs;for(var sk in subs){if(sk!==c.craft&&subs[sk]>(myLv[sk]||0)+4)return false;}
-    }
-    return true;
-  });
-}
-function renderVendorCrafts(){
-  var all=sorted(filteredVendorCrafts(),'vendcraft');updSort('vendcraft');
-  var lvFilter=chk('vcLvFilter');
-  var myLv={};if(lvFilter){for(var k in vcCraftMap)myLv[k]=num(vcCraftMap[k]);}
-  var h='';var rows=_showAll.vendcraft?all:all.slice(0,200);
-  rows.forEach(function(c,i){
-    var mg=c.matCost&&c.npcProfit?c.npcProfit/c.matCost*100:null;
-    var stackP=c.npcProfit?c.npcProfit*12:null;
-    var gilHr=c.npcProfit?c.npcProfit*300:null;
-    var ml=lvFilter?(myLv[c.craft]||0):0;
-    var aboveLv=lvFilter&&c.level>ml;
-    h+='<tr style="cursor:pointer'+(aboveLv?';opacity:.7':'')+'" onclick="toggleDetail(\'vd'+i+'\')">';
-    h+='<td class="nm"><span class="item-link" onclick="event.stopPropagation();goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span>';
-    if(c.allNpc)h+=' <span class="tag t-npc-all">NPC Only</span>';
-    h+='</td>';
-    h+='<td>'+c.craft+'</td><td class="n">'+c.level+(aboveLv?' <span class="tag t-skillup">+'+(c.level-ml)+'</span>':'')+'</td>';
-    var srcTag=c.matSrc?{AH:'t-ah',NPC:'t-npc',Guild:'t-guild',Vendor:'t-vendor',Mixed:'t-mixed'}[c.matSrc]||'':'';
-    h+='<td class="n">'+(c.matCost!==null?'<span class="gil">'+fmt(c.matCost)+'</span>'+(srcTag?' <span class="tag '+srcTag+'">'+c.matSrc+'</span>':''):'<span class="sub">?</span>')+'</td>';
-    h+='<td class="n"><span class="gil">'+fmt(c.npcSell)+'</span></td>';
-    h+='<td class="n"><span class="gil">'+fmt(c.npcRev)+'</span></td>';
-    h+='<td class="n">'+pc(c.npcProfit)+'</td>';
-    h+='<td class="n">'+(mg!==null&&mg<25?'<span class="neg">'+mg.toFixed(1)+'%</span>':mc(mg))+'</td>';
-    h+='<td class="n">'+(stackP?pc(stackP):'—')+'</td>';
-    h+='<td class="n">'+(gilHr?'<span class="mg">'+fmt(gilHr)+'</span>':'—')+'</td></tr>';
-    h+='<tr class="detail" id="vd'+i+'"><td colspan="10"><div class="vc-breakdown">';
-    var allItems=[{id:c.crystal.id,name:c.crystal.name,qty:1,price:c.crystal.price,total:c.crystal.price,src:c.crystal.src}];
-    c.mats.forEach(function(m){allItems.push(m)});
-    var groups={};
-    allItems.forEach(function(m){
-      var key=m.src||'unknown';
-      if(!groups[key])groups[key]=[];
-      groups[key].push(m);
-    });
-    var order=['guild','npc','ah','unknown'];
-    var srcLabels={guild:'Guild Shop',npc:'NPC Shop',ah:'Buy from AH',unknown:'Unknown'};
-    order.forEach(function(srcKey){
-      var g=groups[srcKey];if(!g)return;
-      h+='<div class="vc-group"><span class="tag t-'+srcKey+'" style="font-size:.72rem">'+srcLabels[srcKey]+'</span>';
-      g.forEach(function(m){
-        h+='<div class="vc-mat-row">'+(m.qty>1?'<span class="mat-q">'+m.qty+'x</span> ':'');
-        h+='<span class="item-link" onclick="goToItem(\''+esc(m.name).replace(/'/g,"\\\\'")+'\')">' +esc(m.name)+'</span>';
-        if(m.price!==null)h+=' <span class="mat-p gil">'+fmt(m.total||m.price)+'</span>';
-        var vlist=D.itemVendors&&D.itemVendors[String(m.id)];
-        if(vlist&&vlist.length>0&&srcKey!=='ah'){
-          var byG={};vlist.forEach(function(v){var gk=v.g||'';if(!byG[gk])byG[gk]=[];byG[gk].push(v);});
-          h+='<div class="vc-vendors">';
-          var gkeys=Object.keys(byG).sort();
-          gkeys.forEach(function(gk){
-            byG[gk].forEach(function(v){
-              h+='<div class="vc-vline">';
-              if(gk)h+='<span class="vc-guild-label">'+esc(gk)+'</span> ';
-              h+='<span class="vc-npc-name">'+esc(v.n)+'</span>';
-              if(v.z)h+=' <span class="sub">'+esc(v.z)+'</span>';
-              if(v.pos)h+=' <span class="vc-pos">!pos '+v.pos+'</span>';
-              h+='</div>';
-            });
-          });
-          h+='</div>';
-        }
-        h+='</div>';
-      });
-      h+='</div>';
-    });
-    h+='<div class="vc-group"><span class="tag t-npc-all" style="font-size:.72rem">Sell to any NPC</span> ';
-    h+=(c.result.qty>1?c.result.qty+'× ':'')+esc(c.name)+' <span class="mat-p gil">'+fmt(c.npcSell)+'</span>';
-    if(c.result.qty>1)h+=' <span class="sub">= '+fmt(c.npcRev)+' total</span>';
-    h+='</div>';
-    h+='</div>';
-    h+='</td></tr>';
-  });
-  document.getElementById('vcBody').innerHTML=h||'<tr><td colspan="10" class="empty">No vendor-profitable recipes match your filters</td></tr>';
-  document.getElementById('vcCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' recipes';
-  showMoreBtn('vcMore',all.length>200?all.length-200:0,function(){_showAll.vendcraft=true;renderVendorCrafts();});
-}
 
 // Show more / Show all
-var _showAll={crafts:false,gilhr:false,vendcraft:false};
+var _showAll={crafts:false,gilhr:false};
 function showMoreBtn(id,remaining,cb){
   var el=document.getElementById(id);if(!el)return;
   if(remaining>0){el.style.display='block';el.textContent='Show all ('+remaining+' more)';el.onclick=function(){if(cb)cb();};}
@@ -2583,15 +2630,14 @@ function sorted(arr,tab){
   var s=sorts[tab];if(!s)return arr;
   return arr.slice().sort(function(a,b){
     var av=a[s.k],bv=b[s.k];
-    if(s.k==='rev')av=a.result?a.result.rev:0,bv=b.result?b.result.rev:0;
-    if(s.k==='margin'){av=a.matCost&&a.profit?a.profit/a.matCost*100:null;bv=b.matCost&&b.profit?b.profit/b.matCost*100:null}
-    if(s.k==='sellSrc')av=a.result?a.result.src:'',bv=b.result?b.result.src:'';
-    if(s.k==='resultQty')av=a.result?a.result.qty:0,bv=b.result?b.result.qty:0;
+    if(s.k==='ahSell'){av=a.result?a.result.price:0;bv=b.result?b.result.price:0}
+    if(s.k==='npcSell'){av=a.npcSell||0;bv=b.npcSell||0}
+    if(s.k==='revenue'){var n=_sellMode==='npc';av=n?a.npcRev:(a.result?a.result.rev:0);bv=n?b.npcRev:(b.result?b.result.rev:0)}
+    if(s.k==='margin'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=a.matCost&&pa?pa/a.matCost*100:null;bv=b.matCost&&pb?pb/b.matCost*100:null}
+    if(s.k==='stackP'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*12:null;bv=pb?pb*12:null}
+    if(s.k==='gilHr'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*300:null;bv=pb?pb*300:null}
     if(s.k==='inputName')av=a.input?a.input.name:'',bv=b.input?b.input.name:'';
     if(s.k==='inputPrice')av=a.input?a.input.price:0,bv=b.input?b.input.price:0;
-    if(s.k==='vcMargin'){av=a.matCost&&a.npcProfit?a.npcProfit/a.matCost*100:null;bv=b.matCost&&b.npcProfit?b.npcProfit/b.matCost*100:null}
-    if(s.k==='vcStackP'){av=a.npcProfit?a.npcProfit*12:null;bv=b.npcProfit?b.npcProfit*12:null}
-    if(s.k==='vcGilHr'){av=a.npcProfit?a.npcProfit*300:null;bv=b.npcProfit?b.npcProfit*300:null}
     if(av==null&&bv==null)return 0;if(av==null)return 1;if(bv==null)return-1;
     if(typeof av==='string')return s.d*av.localeCompare(bv);
     return s.d*(av-bv);
@@ -2608,7 +2654,7 @@ function updSort(tab){
 }
 function toggleDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
 
-var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr','vendcraft'];
+var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr'];
 function switchTab(id,push){
   if(TAB_KEYS.indexOf(id)<0)id='dash';
   document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
@@ -2617,7 +2663,7 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr,vendcraft:function(){buildVcFilters();renderVendorCrafts();}};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
@@ -2631,14 +2677,12 @@ document.querySelectorAll('th[data-k]').forEach(function(th){
     if(!sorts[tab])sorts[tab]={k:k,d:-1};
     else if(sorts[tab].k===k)sorts[tab].d*=-1;
     else sorts[tab]={k:k,d:-1};
-    var rend={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farm:renderFarm,fish:renderFishing,quest:renderQuests,gilhr:renderGilHr,vendcraft:renderVendorCrafts};
+    var rend={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:renderGp,farm:renderFarm,fish:renderFishing,quest:renderQuests,gilhr:renderGilHr};
     if(rend[tab])rend[tab]();
   });
 });
 ['fSearch','fType','fGuild','fZone','fMinP','fGilOnly','fAH','fProfit'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='fSearch'?'input':'change',renderFlips)});
-['cSearch','cCraft','cMaxLv','cMinP','cPriceable','cProfitable','cNpcOnly'].forEach(function(id){
-  var el=document.getElementById(id);if(el)el.addEventListener(id==='cSearch'?'input':'change',renderCrafts)});
 ['dSearch','dCraft','dProfitable'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='dSearch'?'input':'change',renderDesynth)});
 ['bSearch','bSeal'].forEach(function(id){
@@ -2831,15 +2875,32 @@ def make_handler(state, html_bytes):
 
 def fetch_ah_prices():
     """Fetch AH prices from PSXI.gg and save to ah-prices.json. Returns stats dict."""
+    if os.path.exists(AH):
+        age = time.time() - os.path.getmtime(AH)
+        if age < 300:
+            with open(AH) as f:
+                raw = json.load(f)
+            return {'single': len(raw.get('prices', {})), 'stack': len(raw.get('stackPrices', {})),
+                    'bazaar': len(raw.get('bazaarPrices', {})), 'total': raw.get('count', 0), 'cached': True}
+
     api = 'https://www.psxi.gg/api/v1/market/phoenixxi'
     headers = {'Accept': 'application/json', 'User-Agent': 'ffxicrafting.com price fetcher'}
     token = os.environ.get('PSXI_TOKEN', '')
     if token:
         headers['Authorization'] = f'Bearer {token}'
 
-    req = urllib.request.Request(api, headers=headers)
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        raw = json.loads(resp.read())
+    try:
+        req = urllib.request.Request(api, headers=headers)
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            raw = json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        if e.code == 403 and os.path.exists(AH):
+            with open(AH) as f:
+                cached = json.load(f)
+            return {'single': len(cached.get('prices', {})), 'stack': len(cached.get('stackPrices', {})),
+                    'bazaar': len(cached.get('bazaarPrices', {})), 'total': cached.get('count', 0),
+                    'cached': True, 'note': 'PSXI rate-limited, using cached data'}
+        raise
 
     items = raw.get('data', [])
     prices, stack_prices, bazaar_prices = {}, {}, {}
