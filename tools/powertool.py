@@ -1390,10 +1390,11 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <th data-k="skill" data-t="fish" class="n">Skill</th>
    <th data-k="difficulty" data-t="fish" class="n">Diff</th>
    <th data-k="water" data-t="fish">Water</th>
-   <th data-k="sell" data-t="fish" class="n">Sell Price</th>
+   <th data-k="sell" data-t="fish" class="n">Sell Price &#x25BC;</th>
    <th data-k="sellSrc" data-t="fish">Source</th>
    <th>Best Bait</th>
    <th>Zones</th>
+   <th data-k="ranking" data-t="fish" class="n">Rank</th>
    <th data-k="zoneCount" data-t="fish" class="n">Areas</th>
   </tr></thead><tbody id="fishBody"></tbody></table></div>
   <button class="show-more" id="fishMore" style="display:none"></button>
@@ -2669,10 +2670,12 @@ function renderFishing(){
     f.zones.slice(0,3).forEach(function(z,i){if(i)h+=', ';h+=esc(z.zone);});
     if(f.zoneCount>3)h+=' +'+(f.zoneCount-3);
     h+='</td>';
+    var rk=f.ranking||0;var rkColor=rk<=5?'#4caf50':rk<=8?'#8bc34a':rk<=12?'#ff9800':rk<=18?'#e53935':'#9c27b0';
+    h+='<td class="n"><b style="color:'+rkColor+'">'+rk+'</b></td>';
     h+='<td class="n">'+f.zoneCount+'</td>';
     h+='</tr>';
   });
-  document.getElementById('fishBody').innerHTML=h||'<tr><td colspan="9" class="empty">No matches</td></tr>';
+  document.getElementById('fishBody').innerHTML=h||'<tr><td colspan="10" class="empty">No matches</td></tr>';
   document.getElementById('fishCnt').textContent=(rows.length>200?'200 of ':'')+rows.length+' fish';
   showMoreBtn('fishMore',rows.length>200?rows.length-200:0,function(){renderFishFull(rows);});
 }
@@ -2689,6 +2692,8 @@ function renderFishFull(rows){var h='';rows.forEach(function(f){
     h+='<td class="sub">';f.baits.slice(0,2).forEach(function(b,i){if(i)h+=', ';h+='<span class="item-link" onclick="goToItem(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span>';});h+='</td>';
     h+='<td class="sub">';f.zones.slice(0,3).forEach(function(z,i){if(i)h+=', ';h+=esc(z.zone);});
     if(f.zoneCount>3)h+=' +'+(f.zoneCount-3);h+='</td>';
+    var rk2=f.ranking||0;var rkC2=rk2<=5?'#4caf50':rk2<=8?'#8bc34a':rk2<=12?'#ff9800':rk2<=18?'#e53935':'#9c27b0';
+    h+='<td class="n"><b style="color:'+rkC2+'">'+rk2+'</b></td>';
     h+='<td class="n">'+f.zoneCount+'</td></tr>';
   });document.getElementById('fishBody').innerHTML=h;
   document.getElementById('fishCnt').textContent=rows.length+' fish';showMoreBtn('fishMore',0);
