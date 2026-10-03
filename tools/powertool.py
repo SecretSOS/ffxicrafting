@@ -680,11 +680,14 @@ def load_all():
         bp, bsrc, _, _ = cheapest(b[0])
         sz_small = db.execute("SELECT COUNT(*) FROM fishing_bait_for bf JOIN fish f ON f.item_id=bf.fish_item_id WHERE bf.bait_item_id=? AND f.size_type='small'", (b[0],)).fetchone()[0]
         sz_large = b[4] - sz_small
+        ranks = [r2[0] for r2 in db.execute("SELECT f.ranking FROM fishing_bait_for bf JOIN fish f ON f.item_id=bf.fish_item_id WHERE bf.bait_item_id=? AND f.ranking>0 AND f.ranking<99 AND f.legendary=0", (b[0],)).fetchall()]
         bait_list.append({
             'id': b[0], 'name': name(b[0]), 'type': b[2],
             'losable': bool(b[3]), 'fishCount': b[4],
             'small': sz_small, 'large': sz_large,
             'cost': bp, 'costSrc': bsrc,
+            'maxRank': max(ranks) if ranks else 0,
+            'minRank': min(ranks) if ranks else 0,
         })
 
     # ── Quest Rewards ──
@@ -1375,10 +1378,12 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
     <button class="pm" id="gRod" onclick="toggleGuide('rod')">Rod Guide</button>
     <button class="pm" id="gBait" onclick="toggleGuide('bait')">Bait Guide</button>
     <button class="pm" id="gLevel" onclick="toggleGuide('level')">Leveling Guide</button>
+    <button class="pm" id="gGear" onclick="toggleGuide('gear')" style="background:rgba(229,57,53,.15);border-color:rgba(229,57,53,.4);color:#e53935;font-weight:600">Gear Check</button>
    </div>
    <div id="rodGuide" class="guide-panel" style="display:none"></div>
    <div id="baitGuide" class="guide-panel" style="display:none"></div>
    <div id="levelGuide" class="guide-panel" style="display:none"></div>
+   <div id="gearGuide" class="guide-panel" style="display:none"></div>
   </div>
   <div class="tw"><table><thead><tr>
    <th data-k="name" data-t="fish">Fish</th>
@@ -2424,12 +2429,12 @@ function renderFishRods(){
 }
 var _guideOpen=null;
 function toggleGuide(which){
-  var panels=['rod','bait','level'];
+  var panels=['rod','bait','level','gear'];
   panels.forEach(function(p){
     var el=document.getElementById(p+'Guide');
     var btn=document.getElementById('g'+p.charAt(0).toUpperCase()+p.slice(1));
     if(p===which&&_guideOpen!==p){el.style.display='';btn.classList.add('active');_guideOpen=p;
-      if(p==='rod')renderRodGuide();else if(p==='bait')renderBaitGuide();else renderLevelGuide();
+      if(p==='rod')renderRodGuide();else if(p==='bait')renderBaitGuide();else if(p==='level')renderLevelGuide();else renderGearCheck();
     }else{el.style.display='none';btn.classList.remove('active');if(p===which)_guideOpen=null;}
   });
 }
@@ -2470,18 +2475,24 @@ function renderRodGuide(){
 }
 function renderBaitGuide(){
   var h='<h3>Bait Guide — All Baits &amp; Lures</h3>';
-  h+='<div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:10px"><b>Lures</b> are reusable (can still be lost on failed catches). <b>Baits</b> are consumed every catch. Higher <b>Fish Count</b> = more versatile.</div>';
-  h+='<table><thead><tr><th>Bait</th><th>Type</th><th>Price</th><th>Source</th><th class="n">Small Fish</th><th class="n">Large Fish</th><th class="n">Total Fish</th></tr></thead><tbody>';
+  h+='<div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:10px"><b>Lures</b> are reusable (can still be lost on failed catches). <b>Baits</b> are consumed every catch. <b>Hardest Fish</b> = highest ranking fish this bait attracts — your rod\'s Max Rank must meet or beat this number or you\'ll break rods and lose fish.</div>';
+  h+='<table><thead><tr><th>Bait</th><th>Type</th><th>Price</th><th>Source</th><th class="n">Hardest Fish</th><th class="n">Min Rod Needed</th><th class="n">Small</th><th class="n">Large</th><th class="n">Total</th></tr></thead><tbody>';
   D.baits.forEach(function(b){
     if(b.fishCount<1)return;
     var priceStr=b.cost?fmt(b.cost)+'g':'—';
     var srcTag=b.costSrc?'<span class="tag t-'+(b.costSrc==='npc'?'npc':b.costSrc==='guild'?'guild':'ah')+'">'+b.costSrc+'</span>':'<span class="tag" style="background:rgba(255,255,255,.06);color:var(--ink-faint)">craft</span>';
     var typeTag=b.type==='lure'?'<span style="color:#4caf50">lure</span>':'<span style="color:var(--ink-soft)">bait</span>';
+    var mr=b.maxRank||0;
+    var rankColor=mr<=5?'#4caf50':mr<=8?'#8bc34a':mr<=12?'#ff9800':mr<=18?'#e53935':'#9c27b0';
+    var minRod=D.rods.filter(function(r){return r.maxRank>=mr}).sort(function(a,b){return a.maxRank-b.maxRank})[0];
+    var rodName=minRod?minRod.name:'—';
     h+='<tr>';
     h+='<td><span class="item-link" onclick="goToItem(\''+esc(b.name).replace(/'/g,"\\'")+'\')">' +esc(b.name)+'</span></td>';
     h+='<td>'+typeTag+'</td>';
     h+='<td class="n">'+priceStr+'</td>';
     h+='<td>'+srcTag+'</td>';
+    h+='<td class="n"><b style="color:'+rankColor+'">'+mr+'</b></td>';
+    h+='<td style="font-size:.75rem">'+esc(rodName)+'</td>';
     h+='<td class="n">'+b.small+'</td>';
     h+='<td class="n">'+b.large+'</td>';
     h+='<td class="n"><b>'+b.fishCount+'</b></td>';
@@ -2544,6 +2555,89 @@ function renderLevelGuide(){
   h+=renderPath(smallPath,'Small Rod Path (primary)');
   h+=renderPath(largePath,'Large Rod Path (alternative)');
   document.getElementById('levelGuide').innerHTML=h;
+}
+function renderGearCheck(){
+  var h='<h3>Gear Check — Rod + Bait Compatibility</h3>';
+  h+='<div style="font-size:.78rem;color:var(--ink-faint);margin-bottom:12px">Pick your rod and bait to see <b>exactly</b> what you\'ll hook. <span style="color:#e53935;font-weight:600">Red = your rod can\'t handle it</span> — you\'ll snap lines and break rods.</div>';
+  h+='<div class="ctrl" style="gap:8px;margin-bottom:12px;flex-wrap:wrap">';
+  h+='<select id="gcRod" onchange="updateGearCheck()" style="background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:6px 10px;font-size:.82rem;min-width:200px">';
+  h+='<option value="">— Pick a Rod —</option>';
+  var sortedRods=D.rods.slice().sort(function(a,b){return a.maxRank-b.maxRank});
+  sortedRods.forEach(function(r){
+    h+='<option value="'+r.id+'">'+esc(r.name)+' (rank '+r.maxRank+', '+r.sizeType+')'+(r.price?' — '+fmt(r.price)+'g':'')+'</option>';
+  });
+  h+='</select>';
+  h+='<select id="gcBait" onchange="updateGearCheck()" style="background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:6px 10px;font-size:.82rem;min-width:200px">';
+  h+='<option value="">— Pick a Bait —</option>';
+  D.baits.forEach(function(b){
+    if(b.fishCount<1)return;
+    h+='<option value="'+b.id+'">'+esc(b.name)+' ('+b.type+', max rank '+b.maxRank+')'+(b.cost?' — '+fmt(b.cost)+'g':'')+'</option>';
+  });
+  h+='</select>';
+  h+='<select id="gcZone" onchange="updateGearCheck()" style="background:var(--bg);color:var(--ink);border:1px solid var(--rule);border-radius:6px;padding:6px 10px;font-size:.82rem;min-width:180px">';
+  h+='<option value="">All Zones</option>';
+  h+='</select>';
+  h+='</div>';
+  h+='<div id="gcResult"></div>';
+  document.getElementById('gearGuide').innerHTML=h;
+}
+function updateGearCheck(){
+  var rodId=num('gcRod'),baitId=num('gcBait');
+  if(!rodId||!baitId){document.getElementById('gcResult').innerHTML='<div style="color:var(--ink-faint);font-size:.82rem;padding:20px;text-align:center">Select both a rod and a bait to see results.</div>';return;}
+  var rod=null;D.rods.forEach(function(r){if(r.id===rodId)rod=r;});
+  var bait=null;D.baits.forEach(function(b){if(b.id===baitId)bait=b;});
+  if(!rod||!bait){return;}
+  var matches=D.fishing.filter(function(f){
+    return f.sizeType===rod.sizeType&&f.baits.some(function(b){return b.id===bait.id;});
+  });
+  var zoneFilter=val('gcZone');
+  var allZones={};
+  matches.forEach(function(f){f.zones.forEach(function(z){allZones[z.zone]=1;});});
+  var zs=Object.keys(allZones).sort();
+  var zSel=document.getElementById('gcZone');
+  var curVal=zSel.value;
+  var opts='<option value="">All Zones ('+zs.length+')</option>';
+  zs.forEach(function(z){opts+='<option value="'+esc(z)+'"'+(z===curVal?' selected':'')+'>'+esc(z)+'</option>';});
+  zSel.innerHTML=opts;
+  if(zoneFilter){matches=matches.filter(function(f){return f.zones.some(function(z){return z.zone===zoneFilter;});});}
+  matches.sort(function(a,b){return (b.sell||0)-(a.sell||0);});
+  var safe=0,danger=0;
+  matches.forEach(function(f){if((f.ranking||0)<=rod.maxRank)safe++;else danger++;});
+  var h='<div style="margin-bottom:10px;font-size:.82rem">';
+  h+='<b>'+esc(rod.name)+'</b> (max rank '+rod.maxRank+', '+rod.sizeType+') + <b>'+esc(bait.name)+'</b>';
+  h+=' — <span style="color:#4caf50;font-weight:600">'+safe+' safe</span>';
+  if(danger)h+=', <span style="color:#e53935;font-weight:600">'+danger+' DANGEROUS</span>';
+  h+='</div>';
+  if(danger){
+    h+='<div style="background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:.8rem">';
+    h+='<b style="color:#e53935">WARNING:</b> '+danger+' fish this bait attracts have ranking above your rod\'s max rank of '+rod.maxRank+'. ';
+    h+='You will snap lines, lose fights, and risk breaking your rod on every one of these catches. ';
+    var minSafe=D.rods.filter(function(r){return r.sizeType===rod.sizeType&&r.maxRank>=bait.maxRank}).sort(function(a,b){return a.maxRank-b.maxRank})[0];
+    if(minSafe)h+='<b>Minimum safe rod for this bait: '+esc(minSafe.name)+' (rank '+minSafe.maxRank+')</b>';
+    h+='</div>';
+  }
+  h+='<table><thead><tr><th></th><th>Fish</th><th class="n">Skill</th><th class="n">Rank</th><th>Water</th><th class="n">Sell</th><th>Zones</th></tr></thead><tbody>';
+  matches.forEach(function(f){
+    var fRank=f.ranking||0;
+    var ok=fRank<=rod.maxRank;
+    var icon=ok?'<span style="color:#4caf50;font-weight:700">&#10003;</span>':'<span style="color:#e53935;font-weight:700">&#9888;</span>';
+    var rowStyle=ok?'':'background:rgba(229,57,53,.06);';
+    var sellStr=f.sell?fmt(f.sell)+'g':'—';
+    var zoneStr=f.zones.slice(0,3).map(function(z){return esc(z.zone)}).join(', ');
+    if(f.zones.length>3)zoneStr+=' +' +(f.zones.length-3);
+    var leg=f.legendary?' <span class="tag t-guild" style="font-size:.6rem">Legend</span>':'';
+    h+='<tr style="'+rowStyle+'">';
+    h+='<td>'+icon+'</td>';
+    h+='<td><span class="item-link" onclick="fishLookup(\''+esc(f.name).replace(/'/g,"\\'")+'\')">' +esc(f.name)+'</span>'+leg+'</td>';
+    h+='<td class="n">'+f.skill+'</td>';
+    h+='<td class="n"><b style="color:'+(ok?'#4caf50':'#e53935')+'">'+fRank+'</b></td>';
+    h+='<td>'+f.water+'</td>';
+    h+='<td class="n" style="color:var(--gold)">'+sellStr+'</td>';
+    h+='<td style="font-size:.75rem;color:var(--ink-soft)">'+zoneStr+'</td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  document.getElementById('gcResult').innerHTML=h;
 }
 function renderFishing(){
   var q=val('fishSearch').toLowerCase(),water=val('fishWater'),maxSk=num('fishMaxSkill')||200,
