@@ -256,10 +256,14 @@ def load_all():
 
     # ── Vendor Flips ──
     flips = []
+    _flip_seen = set()
     for v in vendor_all:
         iid = v['item_id']
         it = items.get(iid)
         if not it: continue
+        flip_key = (iid, v['type'], v['zone'], v['where_'])
+        if flip_key in _flip_seen: continue
+        _flip_seen.add(flip_key)
         ah = ah_prices.get(iid)
         cost = v['typical_price']
         profit = (ah - cost) if ah else None
@@ -1216,6 +1220,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  </div>
 
  <div class="pane" id="p-desynth">
+  <p style="color:var(--ink-soft);font-size:.82rem;margin:0 0 8px">40% success cap. HQ on success: 60% chance, tiers ~40/30/20/10. EV already factors these rates. Gil/Hr assumes ~300 desynths/hr.</p>
   <div class="ctrl">
    <input type="search" id="dSearch" placeholder="Search...">
    <select id="dCraft"><option value="">All crafts</option></select>
@@ -1228,7 +1233,8 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <th data-k="level" data-t="desynth" class="n">Lv</th>
    <th data-k="inputPrice" data-t="desynth" class="n">Input Cost</th>
    <th data-k="ev" data-t="desynth" class="n">Expected Value</th>
-   <th data-k="profit" data-t="desynth" class="n">Profit</th>
+   <th data-k="profit" data-t="desynth" class="n s">Profit</th>
+   <th data-k="gilHr" data-t="desynth" class="n">Gil/Hr</th>
    <th data-k="results" data-t="desynth">Results</th>
   </tr></thead><tbody id="dBody"></tbody></table></div>
   <button class="show-more" id="dMore" style="display:none"></button>
@@ -1239,6 +1245,9 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <input type="search" id="bSearch" placeholder="Search BCNMs...">
    <select id="bSeal"><option value="">All seals</option>
     <option value="Beastmen">Beastmen</option><option value="Kindred">Kindred</option></select>
+   <select id="bSort">
+    <option value="ev">Sort: EV</option><option value="evPerSeal">Gil/Seal</option>
+    <option value="evPerHour">Gil/Hour</option><option value="seals">Seal Cost</option></select>
    <span class="sp"></span><span class="cnt" id="bCnt"></span>
   </div>
   <div id="bList"></div>
@@ -1249,6 +1258,9 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   <div class="shop-search">
    <input type="search" id="slSearch" placeholder="Search craftable items..." autocomplete="off">
    <div class="sl-list" id="slList"></div>
+  </div>
+  <div class="ctrl" style="margin-top:6px">
+   <label>Quantity <input type="number" id="slQty" value="1" min="1" max="999" style="width:60px"></label>
   </div>
   <div id="slTree"></div>
  </div>
@@ -1421,6 +1433,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  <!-- GIL/HOUR -->
  <div class="pane" id="p-gilhr">
   <div class="ctrl">
+   <input type="search" id="gSearch" placeholder="Search activities...">
    <select id="gType"><option value="">All activities</option>
     <option value="craft">Crafting</option><option value="flip">Vendor Flips</option>
     <option value="desynth">Desynth</option><option value="bcnm">BCNM</option>
@@ -1429,7 +1442,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <label>Min gil/hr <input type="number" id="gMinGH" value="0" min="0"></label>
    <span class="sp"></span><span class="cnt" id="gCnt"></span>
   </div>
-  <p style="font-size:.75rem;color:var(--ink-faint);margin:-6px 0 10px">Estimates: Crafts/Desynth ~12s per synth (300/hr). Flips ~30s each (120/hr). BCNMs use actual clear time. Fishing ~12s per catch (300/hr).</p>
+  <p style="font-size:.75rem;color:var(--ink-faint);margin:-6px 0 10px">Estimates: Crafts/Desynth ~12s per synth (300/hr). Flips ~30s each (120/hr). BCNMs use actual clear time. Fishing ~30 successful catches/hr (conservative).</p>
   <div class="tw"><table><thead><tr>
    <th data-k="name" data-t="gilhr">Activity</th>
    <th data-k="atype" data-t="gilhr">Type</th>
@@ -1611,7 +1624,7 @@ function renderDash(){
     {title:'Top Gil/Hour',id:'dashGilHr',data:gilHr.slice(0,8),render:function(r){
       return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">'+esc(r.name)+'</span> <span class="tag '+({'craft':'t-npc','flip':'t-ah','desynth':'t-guild','bcnm':'t-npc','fishing':'t-base'}[r.atype]||'')+'">'+r.atype+'</span></td><td class="n"><span class="mg">'+fmt(r.gilhr)+'</span></td>';}},
     {title:'Guaranteed Crafts (NPC Only)',id:'dashNpc',data:gc.slice(0,8),render:function(c){
-      return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span></td><td>'+c.craft+' '+c.level+'</td><td class="n"><span class="pos">+'+fmt(c.profit)+'</span></td><td class="n"><span class="mg">'+fmt(c.profit*300)+'/hr</span></td>';}},
+      return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(c.name).replace(/'/g,"\\'")+'\','+c.resultId+')">'+esc(c.name)+'</span></td><td>'+c.craft+' '+c.level+'</td><td class="n"><span class="pos">+'+fmt(c.profit)+'</span></td><td class="n"><span class="mg">'+fmt(c.profit*SYNTHS_HR)+'/hr</span></td>';}},
     {title:'Top Vendor Flips',id:'dashFlips',data:pf.slice(0,8),render:function(f){
       return'<td class="nm"><span class="item-link" onclick="goToItem(\''+esc(f.name).replace(/'/g,"\\'")+'\')">'+esc(f.name)+'</span></td><td class="n gil">'+fmt(f.npc)+'</td><td class="n"><span class="pos">+'+fmt(f.profit)+'</span></td><td class="sub">'+esc(f.vendor)+'</td>';}},
     {title:'Top Craft Profits (AH)',id:'dashCrafts',data:pc.slice(0,8),render:function(c){
@@ -1795,7 +1808,7 @@ function renderCrafts(){
     var sellP=isNpc?c.npcSell:c.result.price;
     var mg=c.matCost&&prof?prof/c.matCost*100:null;
     var stackP=prof?prof*12:null;
-    var gilHr=prof?prof*300:null;
+    var gilHr=prof?prof*SYNTHS_HR:null;
     var ml=lvFilter?(myLv[c.craft]||0):0;
     var aboveLv=lvFilter&&c.level>ml;
     h+='<tr style="cursor:pointer'+(aboveLv?';opacity:.7':'')+'" onclick="toggleDetail(\'cd'+i+'\')">';
@@ -1920,24 +1933,28 @@ function filteredDesynth(){
 function renderDesynth(){
   var all=sorted(filteredDesynth(),'desynth');updSort('desynth');var h='';var rows=all.slice(0,200);
   rows.forEach(function(d){
+    var gilHr=d.profit?d.profit*SYNTHS_HR:0;
     h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.input.name).replace(/'/g,"\\'")+'\')">' +esc(d.input.name)+'</span>'+(d.input.src?' <span class="tag t-'+d.input.src+'">'+d.input.src+'</span>':'')+'</td>';
     h+='<td>'+d.craft+'</td><td class="n">'+d.level+'</td>';
     h+='<td class="n">'+(d.input.price?'<span class="gil">'+fmt(d.input.price)+'</span>':'<span class="sub">—</span>')+'</td>';
     h+='<td class="n"><span class="gil">'+fmt(d.ev)+'</span></td>';
-    h+='<td class="n">'+pc(d.profit)+'</td><td class="sub">';
+    h+='<td class="n">'+pc(d.profit)+'</td>';
+    h+='<td class="n">'+(gilHr>0?'<span class="mg">'+fmt(gilHr)+'</span>':'<span class="sub">—</span>')+'</td><td class="sub">';
     d.results.forEach(function(r,i){if(i)h+=' / ';h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';if(r.price)h+=' <span class="gil">'+fmt(r.rev)+'</span>';});
     h+='</td></tr>';
   });
-  document.getElementById('dBody').innerHTML=h||'<tr><td colspan="7" class="empty">No matches</td></tr>';
+  document.getElementById('dBody').innerHTML=h||'<tr><td colspan="8" class="empty">No matches</td></tr>';
   document.getElementById('dCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' recipes';
   showMoreBtn('dMore',all.length>200?all.length-200:0,function(){renderDesynthFull(all);});
 }
 function renderDesynthFull(all){var h='';all.forEach(function(d){
+    var gilHr=d.profit?d.profit*SYNTHS_HR:0;
     h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(d.input.name).replace(/'/g,"\\'")+'\')">' +esc(d.input.name)+'</span>'+(d.input.src?' <span class="tag t-'+d.input.src+'">'+d.input.src+'</span>':'')+'</td>';
     h+='<td>'+d.craft+'</td><td class="n">'+d.level+'</td>';
     h+='<td class="n">'+(d.input.price?'<span class="gil">'+fmt(d.input.price)+'</span>':'<span class="sub">—</span>')+'</td>';
     h+='<td class="n"><span class="gil">'+fmt(d.ev)+'</span></td>';
-    h+='<td class="n">'+pc(d.profit)+'</td><td class="sub">';
+    h+='<td class="n">'+pc(d.profit)+'</td>';
+    h+='<td class="n">'+(gilHr>0?'<span class="mg">'+fmt(gilHr)+'</span>':'<span class="sub">—</span>')+'</td><td class="sub">';
     d.results.forEach(function(r,i){if(i)h+=' / ';h+='<span class="item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';if(r.price)h+=' <span class="gil">'+fmt(r.rev)+'</span>';});
     h+='</td></tr>';
   });document.getElementById('dBody').innerHTML=h;
@@ -1950,7 +1967,7 @@ function filteredBcnm(){
   return D.bcnms.filter(function(b){
     if(q&&b.name.toLowerCase().indexOf(q)<0)return false;
     if(seal&&b.sealType!==seal)return false;return true;
-  }).sort(function(a,b){return b.ev-a.ev});
+  }).sort(function(a,b){var k=val('bSort')||'ev';return k==='seals'?(a[k]||0)-(b[k]||0):(b[k]||0)-(a[k]||0);});
 }
 function renderBcnm(){
   var rows=filteredBcnm();var h='';
@@ -1959,7 +1976,7 @@ function renderBcnm(){
     h+='<div class="bf-h"><span class="chev">&#9654;</span>';
     h+='<span class="bf-n">'+esc(b.name)+'</span>';
     h+='<div class="bf-m"><span>'+b.sealType+' x'+b.seals+'</span>';
-    h+='<span>Cap '+b.cap+'</span><span>'+b.players+'p / '+b.minutes+'min</span>';
+    h+='<span>'+(b.cap?'Cap '+b.cap:'No cap')+'</span><span>'+b.players+'p / '+b.minutes+'min</span>';
     h+='<span style="color:var(--gold)">'+fmt(b.evPerSeal)+'g/seal</span>';
     h+='<span style="color:var(--accent)">'+fmt(b.evPerHour)+' gil/hr</span></div>';
     h+='<span class="bf-ev"><span class="g">'+fmt(b.ev)+'g</span> EV</span></div>';
@@ -2000,6 +2017,7 @@ function setupShoppingList(){
   });
   list.addEventListener('click',function(e){var it=e.target.closest('.sl-item');if(it)slPick(Number(it.getAttribute('data-id')));});
   inp.addEventListener('blur',function(){setTimeout(function(){list.classList.remove('open');},200);});
+  document.getElementById('slQty').addEventListener('change',function(){renderShoppingTree();});
 }
 function slPick(id){
   var it=T.I[id];if(it)document.getElementById('slSearch').value=it.n;
@@ -2039,9 +2057,12 @@ function renderTreeNode(node,depth){
   if(isCraftable){h+='<div class="tree-ch">';node.children.forEach(function(c){h+=renderTreeNode(c,depth+1);});h+='</div>';}
   h+='</div>';return h;
 }
+var _slItemId=null;
 function renderShoppingTree(itemId){
-  var tree=buildTree(itemId,1),bases=collectBase(tree);var it=T.I[itemId]||{n:'?'};
-  var html='<h3 style="margin:12px 0 6px;font-size:1.05rem">'+esc(it.n)+'</h3>'+renderTreeNode(tree);
+  if(itemId)_slItemId=itemId;else itemId=_slItemId;if(!itemId)return;
+  var qty=num('slQty')||1;
+  var tree=buildTree(itemId,qty),bases=collectBase(tree);var it=T.I[itemId]||{n:'?'};
+  var html='<h3 style="margin:12px 0 6px;font-size:1.05rem">'+esc(it.n)+(qty>1?' &times;'+qty:'')+'</h3>'+renderTreeNode(tree);
   var entries=Object.keys(bases).map(function(k){var bi=T.I[k]||{n:'?'};var p=treePrice(Number(k));
     return{id:k,name:bi.n,qty:bases[k],cost:p*bases[k],unit:p,src:treeSrc(Number(k))};
   }).sort(function(a,b){return b.cost-a.cost;});
@@ -2270,9 +2291,9 @@ function renderGuildVendors(){
   var h='<div class="gpr-grid">';
   Object.keys(byGuild).sort().forEach(function(guild){
     h+='<div class="gpr-card"><h4>'+guild+'</h4>';
-    byGuild[guild].sort(function(a,b){return(a.price||0)-(b.price||0);}).forEach(function(v){
+    byGuild[guild].sort(function(a,b){return(a.npc||0)-(b.npc||0);}).forEach(function(v){
       h+='<div class="gpr-item"><span class="item-link" onclick="goToItem(\''+esc(v.name).replace(/'/g,"\\'")+'\')">' +esc(v.name)+'</span>';
-      h+='<span class="gpr-cost">'+(v.price?fmt(v.price)+' gil':'—')+'</span></div>';
+      h+='<span class="gpr-cost">'+(v.npc?fmt(v.npc)+' gil':'—')+'</span></div>';
     });
     h+='</div>';
   });
@@ -2946,8 +2967,9 @@ function buildGilHr(){
   return rows;
 }
 function filteredGilHr(){
-  var type=val('gType'),npcOnly=chk('gNpcOnly'),minGH=num('gMinGH');
+  var q=val('gSearch').toLowerCase(),type=val('gType'),npcOnly=chk('gNpcOnly'),minGH=num('gMinGH');
   return buildGilHr().filter(function(r){
+    if(q&&r.name.toLowerCase().indexOf(q)<0&&r.detail.toLowerCase().indexOf(q)<0&&r.atype.indexOf(q)<0)return false;
     if(type&&r.atype!==type)return false;
     if(npcOnly&&!r.allNpc)return false;
     if(r.gilhr<minGH)return false;
@@ -2998,7 +3020,7 @@ function sorted(arr,tab){
     if(s.k==='revenue'){var n=_sellMode==='npc';av=n?a.npcRev:(a.result?a.result.rev:0);bv=n?b.npcRev:(b.result?b.result.rev:0)}
     if(s.k==='margin'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=a.matCost&&pa?pa/a.matCost*100:null;bv=b.matCost&&pb?pb/b.matCost*100:null}
     if(s.k==='stackP'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*12:null;bv=pb?pb*12:null}
-    if(s.k==='gilHr'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*300:null;bv=pb?pb*300:null}
+    if(s.k==='gilHr'){var n=tab==='crafts'&&_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*SYNTHS_HR:null;bv=pb?pb*SYNTHS_HR:null}
     if(s.k==='gilhr'&&av===undefined){av=a.sell?a.sell*FISH_HR:0;bv=b.sell?b.sell*FISH_HR:0}
     if(s.k==='inputName')av=a.input?a.input.name:'',bv=b.input?b.input.name:'';
     if(s.k==='inputPrice')av=a.input?a.input.price:0,bv=b.input?b.input.price:0;
@@ -3049,7 +3071,7 @@ document.querySelectorAll('th[data-k]').forEach(function(th){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='fSearch'?'input':'change',renderFlips)});
 ['dSearch','dCraft','dProfitable'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='dSearch'?'input':'change',renderDesynth)});
-['bSearch','bSeal'].forEach(function(id){
+['bSearch','bSeal','bSort'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='bSearch'?'input':'change',renderBcnm)});
 ['gpGuild','gpMaxTier','gpPriceable'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener('change',renderGp)});
@@ -3061,6 +3083,7 @@ document.querySelectorAll('th[data-k]').forEach(function(th){
   var el=document.getElementById(id);if(el)el.addEventListener(id==='qSearch'?'input':'change',renderQuests)});
 ['gType','gNpcOnly','gMinGH'].forEach(function(id){
   var el=document.getElementById(id);if(el)el.addEventListener('change',renderGilHr)});
+document.getElementById('gSearch').addEventListener('input',function(){_showAll.gilhr=false;renderGilHr();});
 
 // ── Keyboard shortcuts: number keys for tabs ──
 document.addEventListener('keydown',function(e){
