@@ -602,7 +602,7 @@ def load_all():
     fish_list = []
     for f in db.execute('''
         SELECT f.item_id, f.name, f.skill, f.difficulty, f.water_type, f.legendary,
-               f.size_type, f.min_length, f.max_length
+               f.size_type, f.min_length, f.max_length, f.ranking
         FROM fish f
         ORDER BY f.skill
     '''):
@@ -645,6 +645,7 @@ def load_all():
             'id': fid, 'name': name(fid),
             'skill': f[2], 'difficulty': f[3], 'water': f[4],
             'legendary': bool(f[5]), 'sizeType': f[6],
+            'ranking': f[9],
             'sell': sell, 'sellSrc': sell_src, 'ah': ap, 'npc': bp,
             'ex': ex_flag, 'rare': rare_flag, 'noAH': no_ah,
             'zones': zones,
@@ -653,10 +654,11 @@ def load_all():
         })
 
     rods = []
-    for r in db.execute('SELECT item_id, name, size_type, min_rank, max_rank, fish_attack FROM fishing_rods ORDER BY fish_attack DESC'):
+    for r in db.execute('SELECT item_id, name, size_type, min_rank, max_rank, fish_attack, breakable FROM fishing_rods ORDER BY fish_attack DESC'):
         rods.append({
             'id': r[0], 'name': name(r[0]), 'sizeType': r[2],
             'minRank': r[3], 'maxRank': r[4], 'attack': r[5],
+            'breakable': bool(r[6]),
         })
 
     # ── Quest Rewards ──
@@ -714,12 +716,16 @@ def load_all():
 
     # ── Guild Rank Tests ──
     rank_tests = []
-    for r in db.execute('''
+    try:
+      _rt_rows = db.execute('''
         SELECT g.guild, g.rank_index, g.rank_name, g.item_id, g.skill_cap, i.name
         FROM guild_rank_tests g
         LEFT JOIN items i ON g.item_id=i.id
         ORDER BY g.guild, g.rank_index
-    '''):
+      ''').fetchall()
+    except Exception:
+      _rt_rows = []
+    for r in _rt_rows:
         iid = r[3]
         rec = recipes_by_result.get(str(iid))
         recipe = None
@@ -2356,9 +2362,11 @@ function renderZoneSummary(){
 // ── Fishing ──
 function renderFishRods(){
   if(!D.rods||!D.rods.length)return;
-  var h='<div style="font-size:.78rem;color:var(--ink-faint);margin-bottom:4px">Fishing Rods (by power)</div><div class="rod-bar">';
-  D.rods.forEach(function(r){
-    h+='<span class="rod-chip"><b>'+esc(r.name)+'</b> Atk:'+r.attack+' Size:'+esc(r.sizeType||'?')+' Rank:'+r.minRank+'-'+r.maxRank+'</span>';
+  var h='<div style="font-size:.78rem;color:var(--ink-faint);margin-bottom:4px">Fishing Rods — sorted by durability (handles fish up to ranking X)</div><div class="rod-bar">';
+  var sorted=D.rods.slice().sort(function(a,b){return a.maxRank-b.maxRank});
+  sorted.forEach(function(r){
+    var brk=r.breakable?'':'<span class="tag t-guild" style="font-size:.65rem;margin-left:4px">Unbreakable</span>';
+    h+='<span class="rod-chip"><b>'+esc(r.name)+'</b> Max rank:'+r.maxRank+' &middot; '+esc(r.sizeType||'?')+brk+'</span>';
   });
   h+='</div>';document.getElementById('fishRods').innerHTML=h;
 }
@@ -2458,6 +2466,7 @@ function showFishDetail(f){
   if(f.rare)h+=' <span class="ra">Rare</span>';
   h+='<span class="fd-stat">Skill <b>'+f.skill+'</b></span>';
   h+='<span class="fd-stat">Difficulty <b>'+(f.difficulty||'?')+'</b></span>';
+  h+='<span class="fd-stat">Ranking <b>'+(f.ranking||'?')+'</b></span>';
   h+='<span class="fd-stat">Size <b>'+f.sizeType+'</b></span>';
   h+='<span class="fd-stat">Water <b>'+esc(f.water)+'</b></span>';
   if(f.sell)h+='<span class="fd-stat">Sell <b class="gil">'+fmt(f.sell)+'g</b> <span class="tag t-'+(f.sellSrc||'npc')+'">'+f.sellSrc+'</span></span>';
@@ -2465,15 +2474,19 @@ function showFishDetail(f){
   h+='<div class="fd-cols">';
 
   // Column 1: Rods
-  h+='<div class="fd-col"><h4>Compatible Rods</h4>';
+  h+='<div class="fd-col"><h4>Rods (by durability)</h4>';
   var rods=D.rods.filter(function(r){return r.sizeType===f.sizeType});
-  rods.sort(function(a,b){return b.attack-a.attack});
+  rods.sort(function(a,b){return b.maxRank-a.maxRank});
+  var fRank=f.ranking||0;
   if(rods.length){
-    rods.forEach(function(r,i){
-      var cls=i===0?' fd-best':'';
+    rods.forEach(function(r){
+      var safe=r.maxRank>=fRank;
+      var cls=safe?' fd-best':'';
+      var icon=safe?'<span style="color:#4caf50;font-weight:700" title="Safe — max rank covers this fish">&#10003;</span>':'<span style="color:#e53935;font-weight:700" title="Risk — fish ranking exceeds rod max rank">&#9888;</span>';
+      var brk=r.breakable?'':' <span class="tag t-guild" style="font-size:.65rem">Unbreakable</span>';
       h+='<div class="fd-row'+cls+'"><div><span class="fd-main item-link" onclick="goToItem(\''+esc(r.name).replace(/'/g,"\\'")+'\')">' +esc(r.name)+'</span>';
-      h+='<div class="fd-sub">Rank '+r.minRank+'-'+r.maxRank+' &middot; Atk '+r.attack+'</div></div>';
-      h+='</div>';
+      h+='<div class="fd-sub">Max rank '+r.maxRank+(fRank?' (fish: '+fRank+')':'')+brk+'</div></div>';
+      h+='<span class="fd-val">'+icon+'</span></div>';
     });
   } else h+='<div class="fd-row"><span class="fd-sub">No compatible rods found</span></div>';
   h+='</div>';

@@ -447,7 +447,7 @@ for f in sorted(glob.glob(P('scripts/quests/*/*.lua'))):
           qlo=qty, qhi=qty, notes='quest reward', file=rel(f))
 # ---------- 21. fishing: fish stats, rods, baits, bait affinity, catch areas
 cur.executescript("""CREATE TABLE fish(item_id INT PRIMARY KEY, name TEXT, skill INT, difficulty INT, min_length INT, max_length INT,
-  size_type TEXT, water_type TEXT, legendary INT, hour_pattern INT, moon_pattern INT);
+  size_type TEXT, water_type TEXT, legendary INT, hour_pattern INT, moon_pattern INT, ranking INT);
 CREATE TABLE fishing_rods(item_id INT PRIMARY KEY, name TEXT, size_type TEXT, min_rank INT, max_rank INT, fish_attack INT,
   fish_recovery INT, fish_time INT, breakable INT, broken_item_id INT);
 CREATE TABLE fishing_baits(item_id INT PRIMARY KEY, name TEXT, type TEXT, max_hook INT, losable INT, rank_mod INT);
@@ -458,8 +458,8 @@ WATER = {0: 'sea/ocean', 1: 'freshwater'}
 zname = {int(m[0]): m[1].replace('_', ' ') for m in re.findall(r"INSERT INTO `zone_settings` VALUES \((\d+),'[^']*',\d+,'([^']*)'", rd(P('sql/zone_settings.sql')))}
 for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_fish.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
-    cur.execute("INSERT OR REPLACE INTO fish VALUES (?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], int(g[2]), int(g[3]), int(g[6]), int(g[7]),
-        SIZE.get(int(g[9]), str(g[9])), WATER.get(int(g[10]), str(g[10])), int(g[18]), int(g[15]), int(g[16])))
+    cur.execute("INSERT OR REPLACE INTO fish VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], int(g[2]), int(g[3]), int(g[6]), int(g[7]),
+        SIZE.get(int(g[9]), str(g[9])), WATER.get(int(g[10]), str(g[10])), int(g[18]), int(g[15]), int(g[16]), int(g[8])))
 for m in re.finditer(r"INSERT INTO `fishing_rod` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_rod.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
     cur.execute("INSERT OR REPLACE INTO fishing_rods VALUES (?,?,?,?,?,?,?,?,?,?)", (iid, g[1], SIZE.get(int(g[3]), str(g[3])),
