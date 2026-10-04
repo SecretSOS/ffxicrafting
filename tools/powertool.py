@@ -126,13 +126,14 @@ def load_all():
     db.row_factory = sqlite3.Row
 
     ah_prices, ah_fetched, ah_count = {}, 0, 0
-    ah_stack_prices, ah_bazaar_prices = {}, {}
+    ah_stack_prices, ah_bazaar_prices, ah_timestamps = {}, {}, {}
     if os.path.exists(AH):
         with open(AH) as f:
             raw = json.load(f)
             ah_prices = {int(k): v for k, v in raw['prices'].items()}
             ah_stack_prices = {int(k): v for k, v in raw.get('stackPrices', {}).items()}
             ah_bazaar_prices = {int(k): v for k, v in raw.get('bazaarPrices', {}).items()}
+            ah_timestamps = {int(k): v for k, v in raw.get('timestamps', {}).items()}
             ah_fetched = raw.get('fetched', 0)
             ah_count = raw.get('count', len(ah_prices))
 
@@ -288,6 +289,28 @@ def load_all():
             'gate': v['gate'], 'guild': CRAFT_NAMES.get(guild),
             'hours': hours, 'holiday': holiday,
             'stock': v['qty_hi'], 'notes': v['notes'],
+        })
+
+    # ── AH → Vendor Flips (buy on AH, sell to NPC) ──
+    ah_vendor_flips = []
+    for iid, ah_price in ah_prices.items():
+        it = items.get(iid)
+        if not it or not it.get('base_price'):
+            continue
+        vendor_sell = it['base_price']
+        if ah_price >= vendor_sell:
+            continue
+        profit = vendor_sell - ah_price
+        margin = (profit / ah_price * 100) if ah_price > 0 else 0
+        stk = it.get('stack') or 1
+        ts = ah_timestamps.get(iid)
+        ah_vendor_flips.append({
+            'id': iid, 'name': name(iid), 'stack': stk,
+            'ex': it['ex'], 'rare': it['rare'],
+            'ahPrice': ah_price, 'vendorSell': vendor_sell,
+            'profit': profit, 'margin': round(margin, 1),
+            'stackProfit': profit * stk,
+            'priceAge': ts,
         })
 
     # ── Craft Profits ──
@@ -793,6 +816,7 @@ def load_all():
 
     return {
         'flips': flips,
+        'ahVendorFlips': ah_vendor_flips,
         'crafts': crafts,
         'desynths': desynths,
         'bcnms': bcnms,
@@ -810,6 +834,7 @@ def load_all():
         'itemVendors': {str(k): v for k, v in item_vendors.items()},
         'ahFetched': ah_fetched,
         'ahCount': ah_count,
+        'ahTimestamps': {str(k): v for k, v in ah_timestamps.items()},
         'stats': {
             'profitableFlips': len([f for f in flips if f.get('profit') and f['profit'] > 0]),
             'profitableCrafts': len([c for c in crafts if c.get('profit') and c['profit'] > 0]),
@@ -819,6 +844,7 @@ def load_all():
             'totalDesynth': len(desynths),
             'totalBCNM': len(bcnms),
             'profitableDesynth': len([d for d in desynths if d.get('profit') and d['profit'] > 0]),
+            'ahVendorFlips': len(ah_vendor_flips),
         }
     }
 
@@ -876,6 +902,11 @@ border:1px solid var(--rule);border-radius:5px;padding:6px 10px}
 .ctrl label{font-size:.8rem;color:var(--ink-soft);display:flex;align-items:center;gap:5px;cursor:pointer}
 .ctrl .sp{flex:1}
 .ctrl .cnt{font-size:.8rem;color:var(--ink-faint)}
+
+.calc-field{display:flex;flex-direction:column;gap:3px}
+.calc-field label{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)}
+.calc-field input{font:inherit;font-size:.92rem;color:var(--ink);background:var(--bg2);border:1px solid var(--rule);border-radius:5px;padding:8px 10px;width:100%;box-sizing:border-box}
+.calc-field input:focus{border-color:var(--accent);outline:none}
 
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .st{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:120px}
@@ -1129,6 +1160,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
  <div class="tabs" id="tabs">
   <button class="tab active" data-tab="dash">Dashboard</button>
   <button class="tab" data-tab="flips">Vendor Flips</button>
+  <button class="tab" data-tab="ahflips">AH→Vendor</button>
   <button class="tab" data-tab="crafts">Crafting</button>
   <button class="tab" data-tab="desynth">Desynth</button>
   <button class="tab" data-tab="bcnm">BCNM</button>
@@ -1140,6 +1172,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
   <button class="tab" data-tab="fishing">Fishing</button>
   <button class="tab" data-tab="quests">Quests</button>
   <button class="tab" data-tab="gilhr">Gil/Hour</button>
+  <button class="tab" data-tab="calc">Calc</button>
  </div>
 
  <div class="pane active" id="p-dash">
@@ -1170,6 +1203,26 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
    <th data-k="stack" data-t="flips" class="n">Stk</th><th data-k="info" data-t="flips">Info</th>
   </tr></thead><tbody id="fBody"></tbody></table></div>
   <button class="show-more" id="fMore" style="display:none"></button>
+ </div>
+
+ <div class="pane" id="p-ahflips">
+  <div class="ctrl">
+   <input type="search" id="afSearch" placeholder="Search items...">
+   <label>Min profit <input type="number" id="afMinP" value="10" min="0"></label>
+   <span class="sp"></span><span class="cnt" id="afCnt"></span>
+  </div>
+  <div class="tw"><table><thead><tr>
+   <th data-k="name" data-t="ahflips">Item</th>
+   <th data-k="ahPrice" data-t="ahflips" class="n">AH Buy</th>
+   <th data-k="vendorSell" data-t="ahflips" class="n">Vendor Sell</th>
+   <th data-k="profit" data-t="ahflips" class="n">Profit</th>
+   <th data-k="margin" data-t="ahflips" class="n">Margin%</th>
+   <th data-k="stackProfit" data-t="ahflips" class="n">Stack Profit</th>
+   <th data-k="gilHr" data-t="ahflips" class="n">Gil/Hr</th>
+   <th data-k="stack" data-t="ahflips" class="n">Stk</th>
+   <th data-k="age" data-t="ahflips">Price Age</th>
+  </tr></thead><tbody id="afBody"></tbody></table></div>
+  <button class="show-more" id="afMore" style="display:none"></button>
  </div>
 
  <div class="pane" id="p-crafts">
@@ -1456,6 +1509,20 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
 
  <!-- VENDOR CRAFTS -->
 
+ <div class="pane" id="p-calc">
+  <h3 style="margin:0 0 12px;font-size:1rem">Quick Craft Calculator</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;max-width:600px">
+   <div class="calc-field"><label>Crystal</label><input type="number" id="calcCrystal" min="0" value="0" placeholder="0"></div>
+   <div class="calc-field"><label>Ingredient 1</label><input type="number" id="calcIng1" min="0" value="0" placeholder="0"></div>
+   <div class="calc-field"><label>Ingredient 2</label><input type="number" id="calcIng2" min="0" value="0" placeholder="0"></div>
+   <div class="calc-field"><label>Ingredient 3</label><input type="number" id="calcIng3" min="0" value="0" placeholder="0"></div>
+   <div class="calc-field"><label>Ingredient 4</label><input type="number" id="calcIng4" min="0" value="0" placeholder="0"></div>
+   <div class="calc-field"><label>Result Vendor</label><input type="number" id="calcResult" min="0" value="0" placeholder="0"></div>
+   <div class="calc-field"><label>Qty per synth</label><input type="number" id="calcQty" min="1" value="1" placeholder="1"></div>
+  </div>
+  <div id="calcOutput" style="margin-top:16px;padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);font-size:.92rem;line-height:1.8"></div>
+ </div>
+
 </div>
 
 <div class="cmd-overlay" id="cmdOverlay">
@@ -1468,7 +1535,7 @@ border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:50;display:no
 <div class="kbd-hint"><kbd>Ctrl+K</kbd> search <kbd>1-9</kbd> tabs <button id="shutdownBtn" title="Shutdown PowerTool server" style="background:none;border:1px solid var(--rule);color:var(--ink-faint);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:.75rem;margin-left:8px;vertical-align:middle" onmouseover="this.style.borderColor='var(--loss)';this.style.color='var(--loss)'" onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--ink-faint)'">&#9211; Off</button></div>
 
 <script>
-var D,T,_sellMode='npc',sorts={flips:{k:'profit',d:-1},crafts:{k:'npcProfit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1}};
+var D,T,_sellMode='npc',sorts={flips:{k:'profit',d:-1},ahflips:{k:'profit',d:-1},crafts:{k:'npcProfit',d:-1},desynth:{k:'profit',d:-1},gp:{k:'cpg',d:1},farm:{k:'ev',d:-1},fish:{k:'sell',d:-1},quest:{k:'totalVal',d:-1},gilhr:{k:'gilhr',d:-1}};
 try{var _sm=localStorage.getItem('pt_sellMode');if(_sm==='ah'||_sm==='npc')_sellMode=_sm;}catch(e){}
 var _profitMode='profit';
 try{var _pm=localStorage.getItem('pt_profitMode');if(_pm==='loss')_profitMode=_pm;}catch(e){}
@@ -1523,12 +1590,16 @@ document.getElementById('ahScanBtn').addEventListener('click',function(){
     bar.style.width='85%';pct.textContent='85%';lbl.textContent='Reloading PowerTool data...';
     setTimeout(function(){
       D=d;T=d.tree;
-      bar.style.width='100%';pct.textContent='100%';lbl.textContent='Done! '+D.ahCount+' items loaded.';
+      var ss=d.ahScanStats||{};var extra='';
+      if(ss.new)extra+=' (+'+ss.new+' new)';
+      if(ss.updated)extra+=' ('+ss.updated+' updated)';
+      bar.style.width='100%';pct.textContent='100%';lbl.textContent='Done! '+D.ahCount+' items loaded.'+extra;
       var ago=Math.floor((Date.now()/1000-D.ahFetched)/60);
       var t=ago<60?ago+'m':Math.floor(ago/60)+'h';
       document.getElementById('hdrStats').innerHTML=
         '<span class="hs">AH: <b>'+D.ahCount+'</b> items ('+t+' ago)</span>'+
         '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
+        '<span class="hs">AH→V: <b>'+(D.stats.ahVendorFlips||0)+'</b></span>'+
         '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
       setBadges();window._lazyRendered={};switchTab(document.querySelector('.tab.active').dataset.tab);
       setTimeout(function(){prog.style.display='none';},2000);
@@ -1555,6 +1626,7 @@ function init(){
   document.getElementById('hdrStats').innerHTML=
     '<span class="hs">AH: <b>'+D.ahCount+'</b> items ('+t+' ago)</span>'+
     '<span class="hs">Flips: <b>'+D.stats.profitableFlips+'</b></span>'+
+    '<span class="hs">AH→V: <b>'+(D.stats.ahVendorFlips||0)+'</b></span>'+
     '<span class="hs">Crafts: <b>'+D.stats.profitableCrafts+'</b></span>';
   buildFilters();renderDash();renderBcnm();
   setupShoppingList();setupSourceFinder();setupSkillup();buildGpFilters();buildFarmFilters();buildQuestFilters();setupFishLookup();
@@ -1565,7 +1637,8 @@ function setBadges(){
   var pf=D.flips.filter(function(f){return f.profit&&f.profit>0}).length;
   var pc=_sellMode==='npc'?D.crafts.filter(function(c){return c.npcProfit&&c.npcProfit>0}).length:D.crafts.filter(function(c){return c.profit&&c.profit>0}).length;
   var pd=D.desynths.filter(function(d){return d.profit&&d.profit>0}).length;
-  var badges={flips:pf,crafts:pc,desynth:pd,bcnm:D.bcnms.length};
+  var avf=(D.ahVendorFlips||[]).length;
+  var badges={flips:pf,ahflips:avf,crafts:pc,desynth:pd,bcnm:D.bcnms.length};
   document.querySelectorAll('.tab').forEach(function(btn){
     var tab=btn.dataset.tab;if(badges[tab]){
       var b=btn.querySelector('.badge');
@@ -1612,7 +1685,8 @@ function renderDash(){
     st(bestGH?fmt(bestGH.gilhr)+'g':'—','Best Gil/Hour','g')+
     st(bestGH?esc(bestGH.name):'—','Top Activity','gd')+
     st(gc.length,'Guaranteed Crafts','a')+
-    st(pf.length,'Profitable Flips','a')+
+    st(pf.length,'Vendor Flips','a')+
+    st((D.ahVendorFlips||[]).length,'AH→Vendor Flips','a')+
     st(pb.length?fmt(pb[0].ev)+'g':'—','Best BCNM EV','g')+
     st(topFish.length?fmt(topFish[0].sell)+'g':'—','Best Fish Sell','g');
 
@@ -1708,6 +1782,60 @@ function renderFlipsFull(all){var h='';all.forEach(function(v){
   });document.getElementById('fBody').innerHTML=h;
   document.getElementById('fCnt').textContent=all.length+' items';showMoreBtn('fMore',0);
 }
+
+// AH → Vendor Flips
+function filteredAhFlips(){
+  var q=(val('afSearch')||'').toLowerCase(),minP=num('afMinP')||0;
+  return (D.ahVendorFlips||[]).filter(function(f){
+    if(q&&f.name.toLowerCase().indexOf(q)<0)return false;
+    if(f.profit<minP)return false;
+    return true;
+  });
+}
+function ageStr(ts){
+  if(!ts)return '?';
+  var sec=Math.floor(Date.now()/1000-ts);
+  if(sec<60)return 'just now';
+  if(sec<3600)return Math.floor(sec/60)+'m';
+  if(sec<86400)return Math.floor(sec/3600)+'h';
+  return Math.floor(sec/86400)+'d';
+}
+function renderAhFlips(){
+  var all=sorted(filteredAhFlips(),'ahflips');updSort('ahflips');var h='';var rows=all.slice(0,200);
+  rows.forEach(function(v){
+    h+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(v.name).replace(/'/g,"\\'")+'\')">' +esc(v.name)+'</span>';
+    if(v.ex)h+=' <span class="ex">Ex</span>';if(v.rare)h+=' <span class="ra">Rare</span>';
+    h+='</td>';
+    h+='<td class="n gil">'+fmt(v.ahPrice)+'</td>';
+    h+='<td class="n gil">'+fmt(v.vendorSell)+'</td>';
+    h+='<td class="n">'+pc(v.profit)+'</td>';
+    h+='<td class="n">'+mc(v.margin)+'</td>';
+    var ghr=v.profit?v.profit*FLIPS_HR:0;
+    h+='<td class="n">'+(v.stackProfit?pc(v.stackProfit):'—')+'</td>';
+    h+='<td class="n">'+(ghr?pc(ghr):'—')+'</td>';
+    h+='<td class="n">'+v.stack+'</td>';
+    h+='<td class="sub">'+ageStr(v.priceAge)+'</td>';
+    h+='</tr>';
+  });
+  document.getElementById('afBody').innerHTML=h||'<tr><td colspan="9" class="empty">No AH→Vendor flips found</td></tr>';
+  document.getElementById('afCnt').textContent=rows.length+(all.length>200?' of '+all.length:'')+' items';
+  showMoreBtn('afMore',all.length>200?all.length-200:0,function(){
+    var h2='';all.forEach(function(v){
+      var ghr2=v.profit?v.profit*FLIPS_HR:0;
+      h2+='<tr><td class="nm"><span class="item-link" onclick="goToItem(\''+esc(v.name).replace(/'/g,"\\'")+'\')">' +esc(v.name)+'</span>';
+      if(v.ex)h2+=' <span class="ex">Ex</span>';if(v.rare)h2+=' <span class="ra">Rare</span>';
+      h2+='</td><td class="n gil">'+fmt(v.ahPrice)+'</td><td class="n gil">'+fmt(v.vendorSell)+'</td>';
+      h2+='<td class="n">'+pc(v.profit)+'</td><td class="n">'+mc(v.margin)+'</td>';
+      h2+='<td class="n">'+(v.stackProfit?pc(v.stackProfit):'—')+'</td>';
+      h2+='<td class="n">'+(ghr2?pc(ghr2):'—')+'</td>';
+      h2+='<td class="n">'+v.stack+'</td><td class="sub">'+ageStr(v.priceAge)+'</td></tr>';
+    });document.getElementById('afBody').innerHTML=h2;
+    document.getElementById('afCnt').textContent=all.length+' items';showMoreBtn('afMore',0);
+  });
+}
+['afSearch','afMinP'].forEach(function(id){
+  var el=document.getElementById(id);if(el)el.addEventListener(id==='afSearch'?'input':'change',function(){_showAll.ahflips=false;window._lazyRendered.ahflips=false;renderAhFlips();});
+});
 
 // Craft Profits
 var vcCraftMap={wood:'vcWood',smith:'vcSmith',gold:'vcGold',cloth:'vcCloth',leather:'vcLeather',bone:'vcBone',alchemy:'vcAlchemy',cook:'vcCook'};
@@ -2946,6 +3074,11 @@ function buildGilHr(){
     rows.push({name:f.name,atype:'flip',detail:f.vendor+' ('+f.zone+')',
       unitProfit:f.profit,unitsHr:FLIPS_HR,gilhr:f.profit*FLIPS_HR,allNpc:false});
   });
+  (D.ahVendorFlips||[]).forEach(function(f){
+    if(!f.profit||f.profit<=0)return;
+    rows.push({name:f.name,atype:'ahflip',detail:'AH '+fmt(f.ahPrice)+' → Vendor '+fmt(f.vendorSell),
+      unitProfit:f.profit,unitsHr:FLIPS_HR,gilhr:f.profit*FLIPS_HR,allNpc:false});
+  });
   D.desynths.forEach(function(d){
     if(!d.profit||d.profit<=0)return;
     rows.push({name:d.input.name,atype:'desynth',detail:d.craft+' '+d.level,
@@ -2994,7 +3127,7 @@ function renderGilHr(){
 
 
 // Show more / Show all
-var _showAll={crafts:false,gilhr:false};
+var _showAll={crafts:false,ahflips:false,gilhr:false};
 function showMoreBtn(id,remaining,cb){
   var el=document.getElementById(id);if(!el)return;
   if(remaining>0){el.style.display='block';el.textContent='Show all ('+remaining+' more)';el.onclick=function(){if(cb)cb();};}
@@ -3020,7 +3153,7 @@ function sorted(arr,tab){
     if(s.k==='revenue'){var n=_sellMode==='npc';av=n?a.npcRev:(a.result?a.result.rev:0);bv=n?b.npcRev:(b.result?b.result.rev:0)}
     if(s.k==='margin'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=a.matCost&&pa?pa/a.matCost*100:null;bv=b.matCost&&pb?pb/b.matCost*100:null}
     if(s.k==='stackP'){var n=_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*12:null;bv=pb?pb*12:null}
-    if(s.k==='gilHr'){var n=tab==='crafts'&&_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*SYNTHS_HR:null;bv=pb?pb*SYNTHS_HR:null}
+    if(s.k==='gilHr'){if(tab==='ahflips'){av=a.profit?a.profit*FLIPS_HR:null;bv=b.profit?b.profit*FLIPS_HR:null}else{var n=tab==='crafts'&&_sellMode==='npc';var pa=n?a.npcProfit:a.profit,pb=n?b.npcProfit:b.profit;av=pa?pa*SYNTHS_HR:null;bv=pb?pb*SYNTHS_HR:null}}
     if(s.k==='gilhr'&&av===undefined){av=a.sell?a.sell*FISH_HR:0;bv=b.sell?b.sell*FISH_HR:0}
     if(s.k==='inputName')av=a.input?a.input.name:'',bv=b.input?b.input.name:'';
     if(s.k==='inputPrice')av=a.input?a.input.price:0,bv=b.input?b.input.price:0;
@@ -3040,7 +3173,7 @@ function updSort(tab){
 }
 function toggleDetail(id){var el=document.getElementById(id);if(el)el.classList.toggle('open')}
 
-var TAB_KEYS=['dash','flips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr'];
+var TAB_KEYS=['dash','flips','ahflips','crafts','desynth','bcnm','shop','sources','skillup','gp','farming','fishing','quests','gilhr','calc'];
 function switchTab(id,push){
   if(TAB_KEYS.indexOf(id)<0)id='dash';
   document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
@@ -3049,7 +3182,7 @@ function switchTab(id,push){
   if(btn)btn.classList.add('active');
   var pane=document.getElementById('p-'+id);if(pane)pane.classList.add('active');
   var L=window._lazyRendered||(window._lazyRendered={});
-  if(!L[id]){L[id]=true;var r={flips:renderFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
+  if(!L[id]){L[id]=true;var r={flips:renderFlips,ahflips:renderAhFlips,crafts:renderCrafts,desynth:renderDesynth,gp:function(){renderGuildHours();renderRankTests();renderGp();renderGpRewards();renderGuildVendors();},farming:renderFarm,fishing:function(){renderFishRods();renderFishing();},quests:renderQuests,gilhr:renderGilHr};if(r[id])r[id]();}
   if(push!==false)history.replaceState(null,'','#'+id);
 }
 document.querySelectorAll('.tab').forEach(function(t){
@@ -3085,6 +3218,38 @@ document.querySelectorAll('th[data-k]').forEach(function(th){
   var el=document.getElementById(id);if(el)el.addEventListener('change',renderGilHr)});
 document.getElementById('gSearch').addEventListener('input',function(){_showAll.gilhr=false;renderGilHr();});
 
+// ── Quick Calc ──
+function calcUpdate(){
+  var crystal=+(document.getElementById('calcCrystal').value)||0;
+  var i1=+(document.getElementById('calcIng1').value)||0;
+  var i2=+(document.getElementById('calcIng2').value)||0;
+  var i3=+(document.getElementById('calcIng3').value)||0;
+  var i4=+(document.getElementById('calcIng4').value)||0;
+  var sell=+(document.getElementById('calcResult').value)||0;
+  var qty=+(document.getElementById('calcQty').value)||1;
+  if(qty<1)qty=1;
+  var cost=crystal+i1+i2+i3+i4;
+  var revenue=sell*qty;
+  var profit=revenue-cost;
+  var margin=revenue>0?Math.round(profit/revenue*100):0;
+  var perStack=profit*12;
+  var perHr=profit*300;
+  var cls=profit>0?'mg':profit<0?'loss':'';
+  var h='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">';
+  h+='<div><span style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)">Cost</span><br><span style="font-size:1.1rem;font-weight:700">'+fmt(cost)+'g</span></div>';
+  h+='<div><span style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)">Revenue'+(qty>1?' (×'+qty+')':'')+'</span><br><span style="font-size:1.1rem;font-weight:700">'+fmt(revenue)+'g</span></div>';
+  h+='<div><span style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)">Profit</span><br><span class="'+cls+'" style="font-size:1.1rem;font-weight:700">'+fmt(profit)+'g</span></div>';
+  h+='<div><span style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)">Margin</span><br><span class="'+cls+'" style="font-size:1.1rem;font-weight:700">'+margin+'%</span></div>';
+  h+='<div><span style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)">Per Stack (×12)</span><br><span class="'+cls+'" style="font-size:1.1rem;font-weight:700">'+fmt(perStack)+'g</span></div>';
+  h+='<div><span style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)">Gil/Hour (300/hr)</span><br><span class="'+cls+'" style="font-size:1.1rem;font-weight:700">'+fmt(perHr)+'g</span></div>';
+  h+='</div>';
+  document.getElementById('calcOutput').innerHTML=h;
+}
+['calcCrystal','calcIng1','calcIng2','calcIng3','calcIng4','calcResult','calcQty'].forEach(function(id){
+  document.getElementById(id).addEventListener('input',calcUpdate);
+});
+calcUpdate();
+
 // ── Keyboard shortcuts: number keys for tabs ──
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA')return;
@@ -3106,6 +3271,7 @@ function cmdBuildIndex(){
   function add(o){var k=o.type+'|'+o.name;if(seen[k])return;seen[k]=1;cmdItems.push(o);}
   D.crafts.forEach(function(c){add({name:c.name,type:'craft',sub:c.craft+' '+c.level,tab:'crafts',id:c.resultId});});
   D.flips.forEach(function(f){add({name:f.name,type:'flip',sub:f.vendor+' ('+f.zone+')',tab:'flips',id:f.id});});
+  (D.ahVendorFlips||[]).forEach(function(f){add({name:f.name,type:'ahflip',sub:'Buy AH '+fmt(f.ahPrice)+' → Vendor '+fmt(f.vendorSell),tab:'ahflips',id:f.id});});
   D.desynths.forEach(function(d){add({name:d.input.name,type:'desynth',sub:d.craft+' '+d.level,tab:'desynth'});});
   D.bcnms.forEach(function(b){add({name:b.name,type:'bcnm',sub:b.sealType+' x'+b.seals+' — '+fmt(b.ev)+'g EV',tab:'bcnm'});});
   D.fishing.forEach(function(f){add({name:f.name,type:'fish',sub:'Skill '+f.skill+' '+f.water,tab:'fishing'});});
@@ -3261,14 +3427,15 @@ def make_handler(state, html_bytes):
 
 
 def fetch_ah_prices():
-    """Fetch AH prices from PSXI.gg and save to ah-prices.json. Returns stats dict."""
+    """Fetch AH prices from PSXI.gg and MERGE into ah-prices.json. Old prices persist until overwritten."""
+    existing = {}
     if os.path.exists(AH):
+        with open(AH) as f:
+            existing = json.load(f)
         age = time.time() - os.path.getmtime(AH)
         if age < 300:
-            with open(AH) as f:
-                raw = json.load(f)
-            return {'single': len(raw.get('prices', {})), 'stack': len(raw.get('stackPrices', {})),
-                    'bazaar': len(raw.get('bazaarPrices', {})), 'total': raw.get('count', 0), 'cached': True}
+            return {'single': len(existing.get('prices', {})), 'stack': len(existing.get('stackPrices', {})),
+                    'bazaar': len(existing.get('bazaarPrices', {})), 'total': existing.get('count', 0), 'cached': True}
 
     api = 'https://www.psxi.gg/api/v1/market/phoenixxi'
     headers = {'Accept': 'application/json', 'User-Agent': 'ffxicrafting.com price fetcher'}
@@ -3281,44 +3448,57 @@ def fetch_ah_prices():
         with urllib.request.urlopen(req, timeout=30) as resp:
             raw = json.loads(resp.read())
     except urllib.error.HTTPError as e:
-        if e.code == 403 and os.path.exists(AH):
-            with open(AH) as f:
-                cached = json.load(f)
-            return {'single': len(cached.get('prices', {})), 'stack': len(cached.get('stackPrices', {})),
-                    'bazaar': len(cached.get('bazaarPrices', {})), 'total': cached.get('count', 0),
+        if e.code == 403 and existing:
+            return {'single': len(existing.get('prices', {})), 'stack': len(existing.get('stackPrices', {})),
+                    'bazaar': len(existing.get('bazaarPrices', {})), 'total': existing.get('count', 0),
                     'cached': True, 'note': 'PSXI rate-limited, using cached data'}
         raise
 
-    items = raw.get('data', [])
-    prices, stack_prices, bazaar_prices = {}, {}, {}
-    for item in items:
+    now = int(time.time())
+    prices = dict(existing.get('prices', {}))
+    stack_prices = dict(existing.get('stackPrices', {}))
+    bazaar_prices = dict(existing.get('bazaarPrices', {}))
+    timestamps = dict(existing.get('timestamps', {}))
+
+    new_count = 0
+    updated_count = 0
+    for item in raw.get('data', []):
         iid = item.get('itemId')
         if not iid:
             continue
+        key = str(iid)
         ah = item.get('ah') or {}
         bz = item.get('bazaar') or {}
         single = ah.get('single') or {}
         sp = single.get('median') or single.get('avg') or single.get('lastSale')
         if sp and sp > 0:
-            prices[str(iid)] = int(sp)
+            was_new = key not in prices
+            prices[key] = int(sp)
+            timestamps[key] = now
+            if was_new:
+                new_count += 1
+            else:
+                updated_count += 1
         stack = ah.get('stack') or {}
         stp = stack.get('median') or stack.get('avg') or stack.get('lastSale')
         if stp and stp > 0:
-            stack_prices[str(iid)] = int(stp)
+            stack_prices[key] = int(stp)
         bp = bz.get('median') or bz.get('avg')
         if bp and bp > 0:
-            bazaar_prices[str(iid)] = int(bp)
+            bazaar_prices[key] = int(bp)
 
     total = len(set(list(prices.keys()) + list(stack_prices.keys()) + list(bazaar_prices.keys())))
     meta = raw.get('meta', {})
     result = {
         'prices': prices, 'stackPrices': stack_prices, 'bazaarPrices': bazaar_prices,
-        'server': meta.get('server', 'phoenixxi'), 'fetched': int(time.time()), 'count': total,
+        'timestamps': timestamps,
+        'server': meta.get('server', 'phoenixxi'), 'fetched': now, 'count': total,
     }
     os.makedirs(os.path.dirname(AH), exist_ok=True)
     with open(AH, 'w', encoding='utf-8') as f:
         json.dump(result, separators=(',', ':'), fp=f)
-    return {'single': len(prices), 'stack': len(stack_prices), 'bazaar': len(bazaar_prices), 'total': total}
+    return {'single': len(prices), 'stack': len(stack_prices), 'bazaar': len(bazaar_prices),
+            'total': total, 'new': new_count, 'updated': updated_count}
 
 
 def main():
@@ -3331,7 +3511,7 @@ def main():
 
     print(f"  {s['totalRecipes']} craft recipes, {s['totalDesynth']} desynth, {s['totalBCNM']} BCNMs")
     print(f"  {data['ahCount']} AH prices loaded")
-    print(f"  {s['profitableFlips']} profitable vendor flips")
+    print(f"  {s['profitableFlips']} profitable vendor flips, {s['ahVendorFlips']} AH->vendor flips")
     print(f"  {s['profitableCrafts']} profitable crafts ({len(gc)} guaranteed NPC-mat)")
 
     if pf:

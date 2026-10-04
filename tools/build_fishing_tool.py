@@ -8,9 +8,9 @@ conn = sqlite3.connect(DB)
 c = conn.cursor()
 
 fish = {}
-for r in c.execute('SELECT item_id, name, skill, difficulty, size_type, water_type, legendary FROM fish ORDER BY skill'):
-    fish[str(r[0])] = [r[1], r[2], r[3], r[4], r[5], r[6]]
-    # [name, skill, difficulty, size_type, water_type, legendary]
+for r in c.execute('SELECT item_id, name, skill, difficulty, size_type, water_type, legendary, ranking FROM fish ORDER BY skill'):
+    fish[str(r[0])] = [r[1], r[2], r[3], r[4], r[5], r[6], r[7] or 0]
+    # [name, skill, difficulty, size_type, water_type, legendary, ranking]
 
 baits = {}
 for r in c.execute('SELECT item_id, name, type, losable FROM fishing_baits ORDER BY name'):

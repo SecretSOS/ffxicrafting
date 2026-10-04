@@ -52,6 +52,11 @@ def item_link(iid):
     n = item_name(iid)
     return f'<a href="/item/{iid}-{slugify(n)}" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
 
+def fish_link(iid):
+    n = item_name(iid)
+    icon = f'<img src="/icons/{iid}.png" width="24" height="24" alt="" class="item-icon" loading="lazy"> ' if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')) else ''
+    return f'<a href="/fishing/fish/{slugify(n)}" class="icon-link" style="display:inline-flex;align-items:center;gap:6px">{icon}{esc(n)}</a>'
+
 ELEMENTS = {0:'None', 1:'Fire', 2:'Ice', 3:'Wind', 4:'Earth', 5:'Lightning', 6:'Water', 7:'Light', 8:'Dark'}
 EL_CSS = {0:'', 1:'--fire', 2:'--ice', 3:'--wind', 4:'--earth', 5:'--lightning', 6:'--water', 7:'--light', 8:'--dark'}
 
@@ -110,6 +115,8 @@ TOOL_CSS = """\
 .ft-table{font-size:14px}
 .panel-note{color:var(--ink-soft);font-size:.92rem;margin:0 0 14px}
 .item-icon{vertical-align:middle;image-rendering:pixelated;border-radius:2px}
+.icon-link{display:inline-flex;align-items:center;gap:6px}
+.legendary-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:700;background:color-mix(in srgb,var(--gil) 20%,transparent);color:var(--gil)}
 #ft-rod-wrap h3{margin-top:0}
 @media(max-width:600px){.ft-selects{flex-direction:column}.ft-field{min-width:0}}
 .guild-header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -144,13 +151,9 @@ TOOL_CSS = """\
 .collapse-arrow{color:var(--ink-faint);font-size:1.1rem;transition:transform .15s;margin-left:auto;padding-left:12px}
 details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 .collapse-title{font-family:var(--font-display);font-size:1.15rem;color:var(--ink)}
-.ft-mode-bar{display:flex;gap:6px;margin-bottom:14px}
-.ft-mode{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.88rem}
-.ft-mode:hover{border-color:var(--fish);color:var(--fish)}
-.ft-mode.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
 .fl-card{border:1px solid var(--rule);border-radius:8px;padding:16px;margin-bottom:12px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
 .fl-card h3{margin:0 0 .5em;font-family:var(--font-display);font-size:1.05rem}
-.fl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.fl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:12px}
 .fl-stat{border:1px solid var(--rule);border-radius:6px;padding:10px 12px;text-align:center}
 .fl-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)}
 .fl-stat .val{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
@@ -164,36 +167,46 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 .rod-dl dd{margin:0;color:var(--ink-soft);line-height:1.5}
 .rod-hint{font-weight:400;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-faint)}
 @media(max-width:600px){.rod-dl{grid-template-columns:1fr}.rod-dl dt{margin-top:6px}}
+.ft-tier{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:4px;font-weight:700;font-size:.72rem;color:#fff}
+.tier-s{background:#9c27b0}.tier-a{background:#e53935}.tier-b{background:#ff9800}.tier-c{background:#4caf50}.tier-d{background:#78909c}
+.ft-cov-bg{display:inline-block;width:80px;height:8px;background:var(--rule);border-radius:4px;vertical-align:middle}
+.ft-cov-bar{display:block;height:100%;background:var(--fish);border-radius:4px}
+.ft-tier-legend{font-size:.78rem;color:var(--ink-faint);margin-bottom:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ft-warning{background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:.82rem}
+.ft-guide-bar{display:flex;gap:6px;margin:16px 0 0;flex-wrap:wrap}
+.ft-guide-btn{font:inherit;color:var(--ink-soft);background:none;border:1px solid var(--rule);border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.84rem;transition:all .15s}
+.ft-guide-btn:hover{border-color:var(--fish);color:var(--fish)}
+.ft-guide-btn.active{border-color:var(--fish);background:color-mix(in srgb,var(--fish) 16%,transparent);color:var(--ink);font-weight:700}
+.ft-guide-panel{margin-top:14px;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.ft-row{cursor:pointer;transition:background .1s}.ft-row:hover{background:color-mix(in srgb,var(--fish) 6%,transparent)}
+.panel-note{color:var(--ink-soft);font-size:.86rem;margin:0 0 10px;line-height:1.5}
 """
 
 FISHING_TOOL_HTML = """\
 <section class="panel pad ft-panel" id="lookup">
  <div class="ft-head"><h2>Fishing Lookup</h2></div>
  <div id="ft-body">
-  <div class="ft-mode-bar">
-   <button class="ft-mode active" data-mode="zone">By Zone</button>
-   <button class="ft-mode" data-mode="fish">By Fish</button>
+  <p class="panel-note">Filter by any combination of zone, bait, and fish. Click a row for full detail. Dropdowns narrow to show only valid combinations.</p>
+  <div class="ft-selects">
+   <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">-- any zone --</option></select></div>
+   <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">-- any bait --</option></select></div>
+   <div class="ft-field"><label for="ft-fish">Fish</label><select id="ft-fish"><option value="">-- any fish --</option></select></div>
+   <button type="button" id="ft-reset" class="ft-guide-btn" style="padding:6px 12px;font-size:.78rem">Reset</button>
+   <span class="filter-count" id="ft-count"></span>
   </div>
-  <div id="ft-mode-zone">
-   <p class="panel-note">Pick a zone and bait to see what you can catch and which rods to use.</p>
-   <div class="ft-selects">
-    <div class="ft-field"><label for="ft-zone">Zone</label><select id="ft-zone"><option value="">— choose zone —</option></select></div>
-    <div class="ft-field"><label for="ft-bait">Bait</label><select id="ft-bait"><option value="">— choose bait —</option></select></div>
-    <span class="filter-count" id="ft-count"></span>
-   </div>
-   <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th class="num">Rarity</th></tr></thead><tbody id="ft-results"><tr><td colspan="5" style="color:var(--ink-faint);text-align:center;padding:24px">Select a zone to begin</td></tr></tbody></table></div>
-   <div id="ft-rod-wrap" style="margin-top:16px">
-    <h3>Recommended rods</h3>
-    <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th class="num">ATK</th><th class="num">REC</th><th>Breakable</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
-   </div>
+  <div style="overflow-x:auto;margin-top:12px"><table class="ft-table"><thead><tr><th>Fish</th><th class="num">Skill</th><th class="num">Diff</th><th>Size</th><th>Water</th><th class="num">Rarity</th><th class="num">Power</th><th class="num">Rank</th><th>Zones</th></tr></thead><tbody id="ft-results"><tr><td colspan="9" style="color:var(--ink-faint);text-align:center;padding:24px">Select a filter to begin</td></tr></tbody></table></div>
+  <div id="ft-rod-wrap" style="margin-top:16px">
+   <h3>Recommended Rods</h3>
+   <div style="overflow-x:auto"><table class="ft-table"><thead><tr><th>Rod</th><th>Tier</th><th>Size</th><th>Rank</th><th class="num">ATK</th><th class="num">REC</th><th class="num">Timer</th><th>Breakable</th><th>Safe?</th></tr></thead><tbody id="ft-rods"></tbody></table></div>
   </div>
-  <div id="ft-mode-fish" style="display:none">
-   <p class="panel-note">Pick a fish to see where to catch it, which baits attract it, and the best rod to use.</p>
-   <div class="ft-selects">
-    <div class="ft-field"><label for="ft-fish">Fish</label><select id="ft-fish"><option value="">— choose fish —</option></select></div>
-   </div>
-   <div id="fl-results" style="margin-top:14px"></div>
+  <div id="fl-results" style="margin-top:14px"></div>
+  <div class="ft-guide-bar">
+   <button type="button" class="ft-guide-btn" id="ft-rod-guide-btn">Rod Guide</button>
+   <button type="button" class="ft-guide-btn" id="ft-gear-check-btn">Gear Check</button>
   </div>
+  <div id="ft-rod-guide" class="ft-guide-panel" style="display:none"></div>
+  <div id="ft-gear-check" class="ft-guide-panel" style="display:none"></div>
  </div>
 </section>
 """
@@ -565,18 +578,13 @@ def build_fishing():
 
     body = '<header class="panel pad"><h1>Fishing</h1>'
     body += '<p class="lede">Fish, rods, baits, and fishing areas from the server source. Skill is the minimum to hook; difficulty affects the fight.</p>'
-    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.92rem;line-height:1.6">'
-    body += 'Fishing is a standalone skill that works differently from crafting. Equip a rod and bait, then cast your line at any body of water with the <code>/fish</code> command. '
-    body += 'When a fish bites, a stamina minigame begins — you must fight the fish by pressing the right arrow key when the prompt appears and releasing when it doesn\'t. '
-    body += 'Your rod determines what size fish you can handle and how fast you tire it, while your bait determines what species you can attract. '
-    body += 'Fishing skill increases with successful catches, and higher skill lets you hook tougher fish. Each zone has its own set of fishable areas with different '
-    body += 'species at different rarities. Some fish are quest targets, some are Cooking ingredients, and legendary fish are rare trophies. '
-    body += 'Rods can break on big fish, and bait is consumed on each catch (or miss, for losable baits), so matching your gear to your target matters.</p></header>\n'
+    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.88rem;line-height:1.5">'
+    body += 'Equip a rod and bait, <code>/fish</code> at water. Rod size must match the fish — mismatched costs 10s off the timer. '
+    body += 'Higher rod ATK = faster catch; lower REC = fish heals less on miss. Rods break on fish above their max rank. '
+    body += 'Bait determines what species you attract; lures are reusable, baits are consumed each catch.</p></header>\n'
 
     body += FISHING_TOOL_HTML
 
-    # Tabbed fishing data — collapsible so the lookup tool stays visible
-    body += '<details class="collapsible"><summary class="collapse-summary"><span class="collapse-title">Fishing Database</span><span class="collapse-arrow">▾</span></summary>\n'
     body += '<section class="panel pad">\n'
     body += f'<div class="tab-bar" data-tabs>'
     body += f'<button class="active" data-tab="tab-fish">Fish ({len(fish)})</button>'
@@ -586,26 +594,17 @@ def build_fishing():
     body += '</div>\n'
     body += '<div id="tab-fish"><h2>Fish</h2>\n'
     body += '<div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter fish…" data-filter-target="fishTable" data-filter-count="fishCount"><span class="filter-count" id="fishCount"></span></div>\n'
-    body += '<div style="overflow-x:auto"><table id="fishTable"><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th><th>Zones</th><th>Baits</th></tr></thead><tbody>\n'
+    body += '<div style="overflow-x:auto"><table id="fishTable"><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th><th data-sort="num">Baits</th><th data-sort="num">Zones</th></tr></thead><tbody>\n'
     for f in fish:
         fid = f['item_id']
-        zones = sorted(fish_zones.get(fid, set()))
-        zone_str = ', '.join(pretty(z) for z in zones[:5])
-        if len(zones) > 5:
-            zone_str += f' +{len(zones)-5} more'
-
-        baits_for_fish = bait_map.get(fid, [])
-        bait_str = ', '.join(item_name(b) for b in baits_for_fish[:4])
-        if len(baits_for_fish) > 4:
-            bait_str += f' +{len(baits_for_fish)-4}'
-
-        legendary = ' <span class="tier">legendary</span>' if f['legendary'] else ''
+        zone_count = len(fish_zones.get(fid, set()))
+        bait_count = len(bait_map.get(fid, []))
+        legendary = ' <span class="legendary-badge">legendary</span>' if f['legendary'] else ''
         water = f['water_type'] or ''
 
-        body += f'<tr><td>{item_link(fid)}{legendary}</td><td>{f["skill"]}</td>'
+        body += f'<tr><td>{fish_link(fid)}{legendary}</td><td>{f["skill"]}</td>'
         body += f'<td>{f["size_type"] or ""}</td><td>{esc(water)}</td>'
-        body += f'<td style="font-size:.82rem;color:var(--ink-soft)">{esc(zone_str)}</td>'
-        body += f'<td style="font-size:.82rem;color:var(--ink-soft)">{esc(bait_str)}</td></tr>\n'
+        body += f'<td>{bait_count}</td><td>{zone_count}</td></tr>\n'
 
     body += '</tbody></table></div></div>\n'
 
@@ -660,7 +659,6 @@ def build_fishing():
         body += '</tbody></table></div></details>\n'
 
     body += '</div></section>\n'
-    body += '</details>\n'
 
     guild_html = load_template('fishing_guild_section.html')
     tool_scripts = '<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'
