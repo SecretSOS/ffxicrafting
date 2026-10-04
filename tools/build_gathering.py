@@ -581,7 +581,8 @@ def build_fishing():
     body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.88rem;line-height:1.5">'
     body += 'Equip a rod and bait, <code>/fish</code> at water. Rod size must match the fish — mismatched costs 10s off the timer. '
     body += 'Higher rod ATK = faster catch; lower REC = fish heals less on miss. Rods break on fish above their max rank. '
-    body += 'Bait determines what species you attract; lures are reusable, baits are consumed each catch.</p></header>\n'
+    body += 'Bait determines what species you attract; lures are reusable, baits are consumed each catch.</p>'
+    body += '<p style="margin-top:.6em"><a href="/fishing-101" style="color:var(--accent)">Fishing 101 Guide</a> &mdash; rod progression, leveling path, skill-up mechanics, Lu Shang\'s quest.</p></header>\n'
 
     body += FISHING_TOOL_HTML
 
