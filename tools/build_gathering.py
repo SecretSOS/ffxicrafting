@@ -585,8 +585,9 @@ def build_fishing():
 
     body += FISHING_TOOL_HTML
 
-    body += '<section class="panel pad">\n'
-    body += f'<div class="tab-bar" data-tabs>'
+    body += '<details class="collapsible panel pad">\n'
+    body += f'<summary class="collapse-summary"><span class="collapse-title">Fish Database ({len(fish)} fish, {len(rods)} rods, {len(baits)} baits)</span><span class="collapse-arrow">▼</span></summary>\n'
+    body += f'<div class="tab-bar" data-tabs style="margin-top:14px">'
     body += f'<button class="active" data-tab="tab-fish">Fish ({len(fish)})</button>'
     body += f'<button data-tab="tab-rods">Rods ({len(rods)})</button>'
     body += f'<button data-tab="tab-baits">Baits ({len(baits)})</button>'
@@ -658,7 +659,7 @@ def build_fishing():
             body += f'<tr><td>{item_link(a["fish_item_id"])}</td><td>{esc(a["area"] or "")}</td><td class="pct">{a["rarity"]}</td></tr>\n'
         body += '</tbody></table></div></details>\n'
 
-    body += '</div></section>\n'
+    body += '</div></details>\n'
 
     guild_html = load_template('fishing_guild_section.html')
     tool_scripts = '<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'

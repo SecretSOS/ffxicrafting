@@ -252,8 +252,9 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
   <div id="ft-gear-check" class="ft-guide-panel" style="display:none"></div>
  </div>
 </section>
-<section class="panel pad">
-<div class="tab-bar" data-tabs><button class="active" data-tab="tab-fish">Fish (138)</button><button data-tab="tab-rods">Rods (18)</button><button data-tab="tab-baits">Baits (39)</button><button data-tab="tab-areas">Areas (95 zones)</button></div>
+<details class="collapsible panel pad">
+<summary class="collapse-summary"><span class="collapse-title">Fish Database (138 fish, 18 rods, 39 baits)</span><span class="collapse-arrow">▼</span></summary>
+<div class="tab-bar" data-tabs style="margin-top:14px"><button class="active" data-tab="tab-fish">Fish (138)</button><button data-tab="tab-rods">Rods (18)</button><button data-tab="tab-baits">Baits (39)</button><button data-tab="tab-areas">Areas (95 zones)</button></div>
 <div id="tab-fish"><h2>Fish</h2>
 <div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter fish…" data-filter-target="fishTable" data-filter-count="fishCount"><span class="filter-count" id="fishCount"></span></div>
 <div style="overflow-x:auto"><table id="fishTable"><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th><th data-sort="num">Baits</th><th data-sort="num">Zones</th></tr></thead><tbody>
@@ -1982,7 +1983,7 @@ details.collapsible:not([open]) .collapse-arrow{transform:rotate(-90deg)}
 <tr><td><a href="/item/4472-crayfish" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4472.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crayfish</a></td><td>River</td><td class="pct">1000</td></tr>
 <tr><td><a href="/item/4515-copper-frog" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4515.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Copper Frog</a></td><td>River</td><td class="pct">1000</td></tr>
 </tbody></table></div></details>
-</div></section>
+</div></details>
 <details class="panel pad collapsible" open>
  <summary class="collapse-summary"><span class="collapse-title">Fishermen's Guild</span><span class="collapse-arrow">▾</span></summary>
  <div class="guild-header">
