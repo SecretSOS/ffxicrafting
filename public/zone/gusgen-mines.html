@@ -65,20 +65,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -107,21 +93,20 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -149,7 +134,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="infobox-row"><span class="infobox-label">Gathering</span><span class="infobox-val">Mining</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
 <div class="infobox-row"><span class="infobox-label">Chests</span><span class="infobox-val">7 items</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">179 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">185 rows</span></div>
 </div>
 <div style="clear:both"></div></header>
 <div class="jump"><a href="#gathering">Gathering</a><a href="#chests">Treasure chests</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
@@ -266,14 +251,17 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <details class="mob"><summary><span class="mob-name">Gallinipper GM</span> <span class="mob-lv">Lv 32–35</span> <span class="mob-spawns">16 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">10.0%</span><a href="/item/846-insect-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/846.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Insect Wing</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Ghast blm GM</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Ghast blm GM</span> <span class="mob-lv">Lv 33–36</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">24.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2776-pumice-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2776.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pumice Stone</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Ghoul blm GM</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Ghoul blm GM</span> <span class="mob-lv">Lv 23–27</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2776-pumice-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2776.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pumice Stone</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Ghoul war GM MoS</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Ghoul war GM MoS</span> <span class="mob-lv">Lv 20–24</span> <span class="mob-spawns">23 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2776-pumice-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2776.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pumice Stone</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Greater Pugil KT GM</span> <span class="mob-lv">Lv 29–31</span> <span class="mob-spawns">11 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/868.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pugil Scales</a></div>
@@ -323,20 +311,17 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4108.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lightning Cluster</a></div>
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4108-lightning-cluster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4108.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lightning Cluster</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Wendigo war</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Wendigo war</span> <span class="mob-lv">Lv 26–30</span> <span class="mob-spawns">11 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2776-pumice-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2776.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pumice Stone</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Wight blm</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Wight blm</span> <span class="mob-lv">Lv 29–33</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4876-scroll-of-absorb-vit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4876.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Absorb-Vit</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4877-scroll-of-absorb-agi" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4877.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Absorb-Agi</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4878-scroll-of-absorb-int" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4878.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Absorb-Int</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2776-pumice-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2776.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pumice Stone</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Wight war GM</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Wight war GM</span> <span class="mob-lv">Lv 31–34</span> <span class="mob-spawns">16 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4876-scroll-of-absorb-vit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4876.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Absorb-Vit</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4877-scroll-of-absorb-agi" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4877.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Absorb-Agi</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4878-scroll-of-absorb-int" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4878.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Absorb-Int</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/2776-pumice-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2776.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pumice Stone</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
@@ -352,6 +337,12 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/928-pinch-of-bomb-ash" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/928.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Bomb Ash</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/4374-sleepshroom" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4374.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sleepshroom</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -423,7 +414,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

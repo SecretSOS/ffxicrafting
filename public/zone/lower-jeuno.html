@@ -65,20 +65,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -107,21 +93,20 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -145,9 +130,9 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Lower Jeuno</nav>
 <header class="panel pad"><h1>Lower Jeuno</h1>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
-<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">17 NPCs, 151 items</span></div>
+<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">12 NPCs, 116 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">161 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">126 rows</span></div>
 </div>
 <div style="clear:both"></div></header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
@@ -279,46 +264,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="vendor-row"><a href="/item/4441-bottle-of-grape-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4441.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Grape Juice</a><span class="vendor-price gil">930g</span></div>
 <div class="vendor-row"><a href="/item/4424-bottle-of-melon-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4424.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Melon Juice</a><span class="vendor-price gil">1,100g</span></div>
 <div class="vendor-row"><a href="/item/4556-serving-of-icecap-rolanberry" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4556.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Serving Of Icecap Rolanberry</a><span class="vendor-price gil">5,544g</span></div>
-<h3>chetak <span class="badge">12 items</span></h3>
-<div class="vendor-row"><a href="/item/12737-white-mitts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12737.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> White Mitts</a><span class="vendor-price gil">4,830g</span></div>
-<div class="vendor-row"><a href="/item/12730-wool-cuffs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12730.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wool Cuffs</a><span class="vendor-price gil">10,234g</span></div>
-<div class="vendor-row"><a href="/item/12609-black-tunic" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12609.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Black Tunic</a><span class="vendor-price gil">10,356g</span></div>
-<div class="vendor-row"><a href="/item/12474-wool-hat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12474.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wool Hat</a><span class="vendor-price gil">12,138g</span></div>
-<div class="vendor-row"><a href="/item/12738-linen-mitts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12738.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Linen Mitts</a><span class="vendor-price gil">15,732g</span></div>
-<div class="vendor-row"><a href="/item/12722-bracers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12722.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bracers</a><span class="vendor-price gil">16,900g</span></div>
-<div class="vendor-row"><a href="/item/12602-wool-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12602.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wool Robe</a><span class="vendor-price gil">18,088g</span></div>
-<div class="vendor-row"><a href="/item/12466-red-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12466.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Red Cap</a><span class="vendor-price gil">20,000g</span></div>
-<div class="vendor-row"><a href="/item/12594-gambison" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12594.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gambison</a><span class="vendor-price gil">32,500g</span></div>
-<div class="vendor-row"><a href="/item/12610-cloak" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12610.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cloak</a><span class="vendor-price gil">33,212g</span></div>
-<div class="vendor-row"><a href="/item/12467-wool-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12467.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wool Cap</a><span class="vendor-price gil">45,760g</span></div>
-<div class="vendor-row"><a href="/item/12595-wool-gambison" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12595.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wool Gambison</a><span class="vendor-price gil">68,640g</span></div>
-<h3>ghebi damomohe <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/4467-garlic-cracker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4467.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Garlic Cracker</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/4405-rice-ball" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4405.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rice Ball</a><span class="vendor-price gil">160g</span></div>
-<div class="vendor-row"><a href="/item/4457-eel-kabob" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4457.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Eel Kabob</a><span class="vendor-price gil">3,000g</span></div>
-<h3>pawkrix <span class="badge">7 items</span></h3>
-<div class="vendor-row"><a href="/item/4495-chunk-of-goblin-chocolate" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4495.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Goblin Chocolate</a><span class="vendor-price gil">35g</span></div>
-<div class="vendor-row"><a href="/item/631-bag-of-horo-flour" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/631.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Horo Flour</a><span class="vendor-price gil">40g</span></div>
-<div class="vendor-row"><a href="/item/4458-loaf-of-goblin-bread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4458.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Loaf Of Goblin Bread</a><span class="vendor-price gil">300g</span></div>
-<div class="vendor-row"><a href="/item/1239-goblin-doll" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1239.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Doll</a><span class="vendor-price gil">500g</span></div>
-<div class="vendor-row"><a href="/item/952-bag-of-poison-flour" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/952.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Poison Flour</a><span class="vendor-price gil">515g</span></div>
-<div class="vendor-row"><a href="/item/4539-goblin-pie" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4539.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Pie</a><span class="vendor-price gil">650g</span></div>
-<div class="vendor-row"><a href="/item/4543-goblin-mushpot" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4543.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mushpot</a><span class="vendor-price gil">1,140g</span></div>
-<h3>stinknix <span class="badge">6 items</span></h3>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/943-pinch-of-poison-dust" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/943.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Poison Dust</a><span class="vendor-price gil">320g</span></div>
-<div class="vendor-row"><a href="/item/944-pinch-of-venom-dust" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/944.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Venom Dust</a><span class="vendor-price gil">1,035g</span></div>
-<div class="vendor-row"><a href="/item/17313-grenade" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17313.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Grenade</a><span class="vendor-price gil">1,204g</span></div>
-<div class="vendor-row"><a href="/item/945-pinch-of-paralysis-dust" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/945.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Paralysis Dust</a><span class="vendor-price gil">2,000g</span></div>
-<h3>yoskolo <span class="badge">7 items</span></h3>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/4422-bottle-of-orange-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4422.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Orange Juice</a><span class="vendor-price gil">200g</span></div>
-<div class="vendor-row"><a href="/item/4423-bottle-of-apple-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4423.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Apple Juice</a><span class="vendor-price gil">300g</span></div>
-<div class="vendor-row"><a href="/item/4442-bottle-of-pineapple-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4442.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Pineapple Juice</a><span class="vendor-price gil">400g</span></div>
-<div class="vendor-row"><a href="/item/4441-bottle-of-grape-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4441.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Grape Juice</a><span class="vendor-price gil">930g</span></div>
-<div class="vendor-row"><a href="/item/4424-bottle-of-melon-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4424.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Melon Juice</a><span class="vendor-price gil">1,100g</span></div>
-<div class="vendor-row"><a href="/item/4556-serving-of-icecap-rolanberry" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4556.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Serving Of Icecap Rolanberry</a><span class="vendor-price gil">5,544g</span></div>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
 <footer class="site-footer panel pad">
@@ -386,7 +331,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

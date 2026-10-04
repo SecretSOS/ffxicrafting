@@ -65,20 +65,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -107,21 +93,20 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -145,9 +130,9 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Bastok Markets</nav>
 <header class="panel pad"><h1>Bastok Markets</h1>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
-<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">17 NPCs, 158 items</span></div>
+<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">11 NPCs, 107 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">175 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">124 rows</span></div>
 </div>
 <div style="clear:both"></div></header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
@@ -269,63 +254,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="vendor-row"><a href="/item/16545-broadsword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16545.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Broadsword</a><span class="vendor-price gil">23,185g</span></div>
 <div class="vendor-row"><a href="/item/16537-mythril-sword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16537.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Sword</a><span class="vendor-price gil">34,073g</span></div>
 <div class="vendor-row"><a href="/item/16558-falchion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16558.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Falchion</a><span class="vendor-price gil">67,353g</span></div>
-<h3>charging chocobo <span class="badge">11 items</span></h3>
-<div class="vendor-row"><a href="/item/12960-bronze-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12960.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Leggings</a><span class="vendor-price gil">128g</span></div>
-<div class="vendor-row"><a href="/item/12832-bronze-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12832.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Subligar</a><span class="vendor-price gil">208g</span></div>
-<div class="vendor-row"><a href="/item/12944-scale-greaves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12944.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Greaves</a><span class="vendor-price gil">1,085g</span></div>
-<div class="vendor-row"><a href="/item/12816-scale-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12816.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Cuisses</a><span class="vendor-price gil">1,790g</span></div>
-<div class="vendor-row"><a href="/item/12945-brass-greaves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12945.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Greaves</a><span class="vendor-price gil">9,152g</span></div>
-<div class="vendor-row"><a href="/item/12817-brass-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12817.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Cuisses</a><span class="vendor-price gil">15,456g</span></div>
-<div class="vendor-row"><a href="/item/13080-gorget" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13080.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gorget</a><span class="vendor-price gil">18,360g</span></div>
-<div class="vendor-row"><a href="/item/12928-plate-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12928.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Plate Leggings</a><span class="vendor-price gil">23,760g</span></div>
-<div class="vendor-row"><a href="/item/12800-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12800.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuisses</a><span class="vendor-price gil">37,800g</span></div>
-<div class="vendor-row"><a href="/item/12929-mythril-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12929.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Leggings</a><span class="vendor-price gil">39,550g</span></div>
-<div class="vendor-row"><a href="/item/12801-mythril-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Cuisses</a><span class="vendor-price gil">63,238g</span></div>
-<h3>ciqala <span class="badge">13 items</span></h3>
-<div class="vendor-row"><a href="/item/17049-maple-wand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17049.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Wand</a><span class="vendor-price gil">51g</span></div>
-<div class="vendor-row"><a href="/item/17088-ash-staff" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17088.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ash Staff</a><span class="vendor-price gil">64g</span></div>
-<div class="vendor-row"><a href="/item/16390-bronze-knuckles" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16390.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Knuckles</a><span class="vendor-price gil">244g</span></div>
-<div class="vendor-row"><a href="/item/16640-bronze-axe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16640.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Axe</a><span class="vendor-price gil">328g</span></div>
-<div class="vendor-row"><a href="/item/17042-bronze-hammer" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17042.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Hammer</a><span class="vendor-price gil">340g</span></div>
-<div class="vendor-row"><a href="/item/16704-butterfly-axe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16704.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Butterfly Axe</a><span class="vendor-price gil">698g</span></div>
-<div class="vendor-row"><a href="/item/16391-brass-knuckles" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16391.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Knuckles</a><span class="vendor-price gil">900g</span></div>
-<div class="vendor-row"><a href="/item/16641-brass-axe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16641.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Axe</a><span class="vendor-price gil">1,622g</span></div>
-<div class="vendor-row"><a href="/item/17043-brass-hammer" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17043.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Hammer</a><span class="vendor-price gil">2,315g</span></div>
-<div class="vendor-row"><a href="/item/16705-greataxe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16705.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Greataxe</a><span class="vendor-price gil">4,732g</span></div>
-<div class="vendor-row"><a href="/item/16392-metal-knuckles" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16392.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Metal Knuckles</a><span class="vendor-price gil">5,188g</span></div>
-<div class="vendor-row"><a href="/item/17044-warhammer" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17044.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Warhammer</a><span class="vendor-price gil">6,496g</span></div>
-<div class="vendor-row"><a href="/item/16643-battleaxe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Battleaxe</a><span class="vendor-price gil">12,150g</span></div>
-<h3>harmodios <span class="badge">5 items</span></h3>
-<div class="vendor-row"><a href="/item/17345-flute" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17345.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flute</a><span class="vendor-price gil">49g</span></div>
-<div class="vendor-row"><a href="/item/17353-maple-harp" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17353.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Maple Harp</a><span class="vendor-price gil">49g</span></div>
-<div class="vendor-row"><a href="/item/17344-cornette" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17344.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cornette</a><span class="vendor-price gil">244g</span></div>
-<div class="vendor-row"><a href="/item/17347-piccolo" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17347.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piccolo</a><span class="vendor-price gil">1,090g</span></div>
-<div class="vendor-row"><a href="/item/17351-gemshorn" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17351.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gemshorn</a><span class="vendor-price gil">5,159g</span></div>
-<h3>mjoll <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/17318-wooden-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17318.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/17321-silver-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17321.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Arrow</a><span class="vendor-price gil">17g</span></div>
-<h3>peritrage <span class="badge">6 items</span></h3>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17337-mythril-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17337.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Bolt</a><span class="vendor-price gil">24g</span></div>
-<div class="vendor-row"><a href="/item/17216-light-crossbow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17216.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Light Crossbow</a><span class="vendor-price gil">179g</span></div>
-<div class="vendor-row"><a href="/item/17298-tathlum" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17298.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tathlum</a><span class="vendor-price gil">320g</span></div>
-<div class="vendor-row"><a href="/item/17217-crossbow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17217.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow</a><span class="vendor-price gil">2,449g</span></div>
-<div class="vendor-row"><a href="/item/17218-zamburak" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17218.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Zamburak</a><span class="vendor-price gil">15,243g</span></div>
-<h3>zhikkom <span class="badge">13 items</span></h3>
-<div class="vendor-row"><a href="/item/16405-cat-baghnakhs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16405.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cat Baghnakhs</a><span class="vendor-price gil">116g</span></div>
-<div class="vendor-row"><a href="/item/16465-bronze-knife" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16465.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Knife</a><span class="vendor-price gil">164g</span></div>
-<div class="vendor-row"><a href="/item/16535-bronze-sword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16535.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Sword</a><span class="vendor-price gil">268g</span></div>
-<div class="vendor-row"><a href="/item/16551-sapara" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16551.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sapara</a><span class="vendor-price gil">776g</span></div>
-<div class="vendor-row"><a href="/item/16466-knife" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16466.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Knife</a><span class="vendor-price gil">2,425g</span></div>
-<div class="vendor-row"><a href="/item/16552-scimitar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16552.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scimitar</a><span class="vendor-price gil">4,525g</span></div>
-<div class="vendor-row"><a href="/item/16473-kukri" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16473.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kukri</a><span class="vendor-price gil">6,151g</span></div>
-<div class="vendor-row"><a href="/item/16536-iron-sword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16536.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Sword</a><span class="vendor-price gil">7,920g</span></div>
-<div class="vendor-row"><a href="/item/16517-degen" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16517.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Degen</a><span class="vendor-price gil">10,224g</span></div>
-<div class="vendor-row"><a href="/item/16513-tuck" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16513.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tuck</a><span class="vendor-price gil">12,754g</span></div>
-<div class="vendor-row"><a href="/item/16545-broadsword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16545.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Broadsword</a><span class="vendor-price gil">23,185g</span></div>
-<div class="vendor-row"><a href="/item/16537-mythril-sword" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16537.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Sword</a><span class="vendor-price gil">34,073g</span></div>
-<div class="vendor-row"><a href="/item/16558-falchion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16558.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Falchion</a><span class="vendor-price gil">67,353g</span></div>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
 <footer class="site-footer panel pad">
@@ -393,7 +321,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

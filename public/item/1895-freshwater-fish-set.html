@@ -67,20 +67,6 @@ table{font-size:.88rem;margin-bottom:.4em}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -109,21 +95,20 @@ table{font-size:.88rem;margin-bottom:.4em}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -146,10 +131,10 @@ table{font-size:.88rem;margin-bottom:.4em}
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Freshwater Fish Set</nav>
  <header class="panel pad">
-  <div class="infobox"><div class="infobox-head">Freshwater Fish Set</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">1895</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">1</span></div><div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">1,462 gil</span></div></div>
+  <div class="infobox"><div class="infobox-head">Freshwater Fish Set</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">1895</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">12</span></div><div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">1,462 gil</span></div></div>
   <div class="item-head"><img class="item-icon" src="/icons/1895.png" alt="" width="32" height="32"><div>
   <h1>Freshwater Fish Set</h1>
-  <p class="meta">Stack: 1 · NPC: 1,462g</p>
+  <p class="meta">Stack: 12 · NPC: 1,462g</p>
   </div></div>
  </header>
  <section class="panel pad"><h2>Used in</h2><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Woodworking 80 <span class="soft">(Alchemy 36)</span> <span class="pill">COP</span></td><td><a href="/item/120-freshwater-aquarium" class="icon-link"><img src="/icons/120.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Freshwater Aquarium</a></td><td class="ings hide-sm"><a href="/item/4102-light-crystal" class="icon-link"><img src="/icons/4102.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Light Crystal</a> · <a href="/item/703-petrified-log" class="icon-link"><img src="/icons/703.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Petrified Log</a> · <a href="/item/716-piece-of-oak-lumber" class="icon-link"><img src="/icons/716.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Piece of Oak Lumber</a> · <a href="/item/1886-bottle-of-sieglinde-putty" class="icon-link"><img src="/icons/1886.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Bottle of Sieglinde Putty</a> · <a href="/item/1887-glass-sheet" class="icon-link"><img src="/icons/1887.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Glass Sheet</a> · <a href="/item/1895-freshwater-fish-set" class="icon-link"><img src="/icons/1895.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Freshwater Fish Set</a> · <a href="/item/4464-pipira" class="icon-link"><img src="/icons/4464.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Pipira</a> ×3</td></tr><tr><td>Woodworking 80 <span class="soft">(Alchemy 36)</span> <span class="pill">TOAU</span></td><td><a href="/item/223-river-aquarium" class="icon-link"><img src="/icons/223.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> River Aquarium</a></td><td class="ings hide-sm"><a href="/item/4102-light-crystal" class="icon-link"><img src="/icons/4102.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Light Crystal</a> · <a href="/item/703-petrified-log" class="icon-link"><img src="/icons/703.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Petrified Log</a> · <a href="/item/716-piece-of-oak-lumber" class="icon-link"><img src="/icons/716.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Piece of Oak Lumber</a> · <a href="/item/1886-bottle-of-sieglinde-putty" class="icon-link"><img src="/icons/1886.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Bottle of Sieglinde Putty</a> · <a href="/item/1887-glass-sheet" class="icon-link"><img src="/icons/1887.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Glass Sheet</a> · <a href="/item/1895-freshwater-fish-set" class="icon-link"><img src="/icons/1895.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Freshwater Fish Set</a> · <a href="/item/5460-kayabaligi" class="icon-link"><img src="/icons/5460.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Kayabaligi</a> ×3</td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Alchemy 77 <span class="pill">COP</span></td><td><a href="/item/1895-freshwater-fish-set" class="icon-link"><img src="/icons/1895.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Freshwater Fish Set</a></td><td class="ings hide-sm"><a href="/item/4101-water-crystal" class="icon-link"><img src="/icons/4101.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Water Crystal</a> · <a href="/item/1888-sack-of-silica" class="icon-link"><img src="/icons/1888.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Sack of Silica</a> · <a href="/item/1890-bundle-of-river-foliage" class="icon-link"><img src="/icons/1890.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Bundle of River Foliage</a> · <a href="/item/1892-onz-of-desalinator" class="icon-link"><img src="/icons/1892.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Onz of Desalinator</a> · <a href="/item/4154-flask-of-holy-water" class="icon-link"><img src="/icons/4154.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> Flask of Holy Water</a></td></tr></tbody></table></section>
@@ -231,7 +216,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

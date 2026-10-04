@@ -354,6 +354,23 @@ li{margin-bottom:.4em}
 .nav-link:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
 .nav-link.active{color:var(--accent)}
 
+/* --- Guild bar (second nav row) --- */
+.guild-bar{display:flex;align-items:center;gap:0;padding:0;border-bottom:1px solid var(--border);
+ max-width:1600px;width:92%;margin:0 auto;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.guild-bar::-webkit-scrollbar{display:none}
+.guild-bar a{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--ink-soft);font-size:.82rem;
+ white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s}
+.guild-bar a:hover{color:var(--ink);text-decoration:none;border-bottom-color:color-mix(in srgb,var(--ink) 20%,transparent)}
+.guild-bar a.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.guild-bar svg{width:15px;height:15px;flex-shrink:0}
+.guild-bar .gb-dot{width:6px;height:6px;border-radius:50%;flex:0 0 6px}
+.guild-bar .gb-dot.open{background:var(--gain);box-shadow:0 0 3px color-mix(in srgb,var(--gain) 60%,transparent)}
+.guild-bar .gb-dot.closed{background:var(--loss);opacity:.5}
+.guild-bar .gb-hrs{font-size:.65rem;color:var(--ink-faint);margin-left:-2px}
+@media(max-width:820px){
+ .guild-bar{width:100%;padding:0 16px}
+}
+
 /* --- Nav dropdown --- */
 .nav-dd{position:relative}
 .nav-dd-btn{display:block;color:var(--ink-soft);font-size:.86rem;cursor:default;white-space:nowrap;user-select:none;padding:6px 10px;border-radius:4px}

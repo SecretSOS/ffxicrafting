@@ -109,20 +109,6 @@
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -151,21 +137,20 @@
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -222,7 +207,7 @@
 <tr><td><a href="#rapid_raptors">Rapid Raptors</a></td><td>Balgas Dais</td><td>50</td><td>50 BS</td><td>3p</td><td>15m</td><td>4</td><td class="r">15,000</td><td class="r">9,106</td></tr>
 <tr><td><a href="#treasure_and_tribulations">Treasure and Tribulations</a></td><td>Balgas Dais</td><td>50</td><td>50 BS</td><td>6p</td><td>30m</td><td>3</td><td class="r">1,734</td><td class="r">2,337</td></tr>
 <tr><td><a href="#divine_punishers">Divine Punishers</a></td><td>Balgas Dais</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>8</td><td class="r">18,000</td><td class="r">17,113</td></tr>
-<tr><td><a href="#wild_wild_whiskers">Wild Wild Whiskers</a></td><td>Balgas Dais</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>9</td><td class="r">15,000</td><td class="r">12,800</td></tr>
+<tr><td><a href="#wild_wild_whiskers">Wild Wild Whiskers</a></td><td>Balgas Dais</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>9</td><td class="r">15,000</td><td class="r">11,591</td></tr>
 <tr><td><a href="#early_bird_catches_the_wyrm">Early Bird Catches the Wyrm</a></td><td>Balgas Dais</td><td>—</td><td>99 KC</td><td>18p</td><td>30m</td><td>11</td><td class="r">32,000</td><td class="r">35,435</td></tr>
 <tr><td><a href="#moa_constrictors">Moa Constrictors</a></td><td>Balgas Dais</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>8</td><td class="r">24,000</td><td class="r">16,088</td></tr>
 <tr><td><a href="#royale_ramble">Royale Ramble</a></td><td>Balgas Dais</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>8</td><td class="r">24,000</td><td class="r">27,749</td></tr>
@@ -232,17 +217,17 @@
 <tr><td><a href="#eye_of_the_storm">Eye of the Storm</a></td><td>Chamber of Oracles</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>9</td><td class="r">24,000</td><td class="r">25,448</td></tr>
 <tr><td><a href="#the_scarlet_king">The Scarlet King</a></td><td>Chamber of Oracles</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>9</td><td class="r">24,000</td><td class="r">24,035</td></tr>
 <tr><td><a href="#wings_of_fury">Wings of Fury</a></td><td>Ghelsba Outpost</td><td>20</td><td>20 BS</td><td>3p</td><td>15m</td><td>5</td><td class="r">1,500</td><td class="r">2,161</td></tr>
-<tr><td><a href="#petrifying_pair">Petrifying Pair</a></td><td>Ghelsba Outpost</td><td>30</td><td>30 BS</td><td>3p</td><td>15m</td><td>6</td><td class="r">3,000</td><td class="r">3,377</td></tr>
+<tr><td><a href="#petrifying_pair">Petrifying Pair</a></td><td>Ghelsba Outpost</td><td>30</td><td>30 BS</td><td>3p</td><td>15m</td><td>6</td><td class="r">3,000</td><td class="r">3,379</td></tr>
 <tr><td><a href="#toadal_recall">Toadal Recall</a></td><td>Ghelsba Outpost</td><td>30</td><td>30 BS</td><td>6p</td><td>30m</td><td>7</td><td class="r">4,000</td><td class="r">3,306</td></tr>
 <tr><td><a href="#shooting_fish">Shooting Fish</a></td><td>Horlais Peak</td><td>20</td><td>20 BS</td><td>3p</td><td>15m</td><td>7</td><td class="r">1,500</td><td class="r">1,933</td></tr>
 <tr><td><a href="#carapace_combatants">Carapace Combatants</a></td><td>Horlais Peak</td><td>30</td><td>30 BS</td><td>3p</td><td>15m</td><td>6</td><td class="r">3,000</td><td class="r">3,283</td></tr>
-<tr><td><a href="#dropping_like_flies">Dropping Like Flies</a></td><td>Horlais Peak</td><td>30</td><td>30 BS</td><td>6p</td><td>30m</td><td>10</td><td class="r">4,000</td><td class="r">3,714</td></tr>
+<tr><td><a href="#dropping_like_flies">Dropping Like Flies</a></td><td>Horlais Peak</td><td>30</td><td>30 BS</td><td>6p</td><td>30m</td><td>10</td><td class="r">4,000</td><td class="r">3,710</td></tr>
 <tr><td><a href="#tails_of_woe">Tails of Woe</a></td><td>Horlais Peak</td><td>40</td><td>40 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">6,000</td><td class="r">9,069</td></tr>
 <tr><td><a href="#under_observation">Under Observation</a></td><td>Horlais Peak</td><td>40</td><td>40 BS</td><td>3p</td><td>15m</td><td>8</td><td class="r">5,000</td><td class="r">5,838</td></tr>
 <tr><td><a href="#eye_of_the_tiger">Eye of the Tiger</a></td><td>Horlais Peak</td><td>50</td><td>50 BS</td><td>3p</td><td>15m</td><td>6</td><td class="r">8,000</td><td class="r">8,622</td></tr>
-<tr><td><a href="#hostile_herbivores">Hostile Herbivores</a></td><td>Horlais Peak</td><td>50</td><td>50 BS</td><td>6p</td><td>30m</td><td>4</td><td class="r">0</td><td class="r">2,845</td></tr>
+<tr><td><a href="#hostile_herbivores">Hostile Herbivores</a></td><td>Horlais Peak</td><td>50</td><td>50 BS</td><td>6p</td><td>30m</td><td>4</td><td class="r">0</td><td class="r">2,580</td></tr>
 <tr><td><a href="#dismemberment_brigade">Dismemberment Brigade</a></td><td>Horlais Peak</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>7</td><td class="r">18,000</td><td class="r">17,545</td></tr>
-<tr><td><a href="#shots_in_the_dark">Shots in the Dark</a></td><td>Horlais Peak</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>6</td><td class="r">15,000</td><td class="r">8,802</td></tr>
+<tr><td><a href="#shots_in_the_dark">Shots in the Dark</a></td><td>Horlais Peak</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>6</td><td class="r">15,000</td><td class="r">7,593</td></tr>
 <tr><td><a href="#contaminated_colosseum">Contaminated Colosseum</a></td><td>Horlais Peak</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>8</td><td class="r">24,000</td><td class="r">20,516</td></tr>
 <tr><td><a href="#double_dragonian">Double Dragonian</a></td><td>Horlais Peak</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>8</td><td class="r">24,000</td><td class="r">19,094</td></tr>
 <tr><td><a href="#horns_of_war">Horns of War</a></td><td>Horlais Peak</td><td>—</td><td>99 KC</td><td>18p</td><td>30m</td><td>11</td><td class="r">32,000</td><td class="r">26,764</td></tr>
@@ -254,7 +239,7 @@
 <tr><td><a href="#awful_autopsy">An Awful Autopsy</a></td><td>QuBia Arena</td><td>50</td><td>50 BS</td><td>3p</td><td>15m</td><td>4</td><td class="r">15,000</td><td class="r">10,069</td></tr>
 <tr><td><a href="#idol_thoughts">Idol Thoughts</a></td><td>QuBia Arena</td><td>50</td><td>50 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">12,000</td><td class="r">3,038</td></tr>
 <tr><td><a href="#brothers_d_aurphe">Brothers D&#x27;Aurphe</a></td><td>QuBia Arena</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">18,000</td><td class="r">11,632</td></tr>
-<tr><td><a href="#celery">Celery</a></td><td>QuBia Arena</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>8</td><td class="r">0</td><td class="r">12,756</td></tr>
+<tr><td><a href="#celery">Celery</a></td><td>QuBia Arena</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>8</td><td class="r">0</td><td class="r">12,151</td></tr>
 <tr><td><a href="#demolition_squad">Demolition Squad</a></td><td>QuBia Arena</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>5</td><td class="r">18,000</td><td class="r">10,272</td></tr>
 <tr><td><a href="#come_into_my_parlor">Come Into My Parlor</a></td><td>QuBia Arena</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>9</td><td class="r">24,000</td><td class="r">14,735</td></tr>
 <tr><td><a href="#e_vase_ive_action">E-vase-ive Action</a></td><td>QuBia Arena</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>9</td><td class="r">24,000</td><td class="r">15,559</td></tr>
@@ -262,15 +247,15 @@
 <tr><td><a href="#amphibian_assault">Amphibian Assault</a></td><td>Sacrificial Chamber</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">18,000</td><td class="r">12,122</td></tr>
 <tr><td><a href="#jungle_boogymen">Jungle Boogymen</a></td><td>Sacrificial Chamber</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">18,000</td><td class="r">12,102</td></tr>
 <tr><td><a href="#kindred_spirits">Area: Throne Room</a></td><td>Throne Room</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>5</td><td class="r">18,000</td><td class="r">26,319</td></tr>
-<tr><td><a href="#crustacean_conundrum">Crustacean Conundrum</a></td><td>Waughroon Shrine</td><td>20</td><td>20 BS</td><td>3p</td><td>15m</td><td>7</td><td class="r">1,500</td><td class="r">1,822</td></tr>
+<tr><td><a href="#crustacean_conundrum">Crustacean Conundrum</a></td><td>Waughroon Shrine</td><td>20</td><td>20 BS</td><td>3p</td><td>15m</td><td>7</td><td class="r">1,500</td><td class="r">1,781</td></tr>
 <tr><td><a href="#birds_of_a_feather">Birds of a Feather</a></td><td>Waughroon Shrine</td><td>30</td><td>30 BS</td><td>3p</td><td>15m</td><td>5</td><td class="r">3,000</td><td class="r">3,225</td></tr>
 <tr><td><a href="#grove_guardians">Grove Guardians</a></td><td>Waughroon Shrine</td><td>30</td><td>30 BS</td><td>6p</td><td>30m</td><td>9</td><td class="r">4,000</td><td class="r">3,441</td></tr>
 <tr><td><a href="#royal_jelly">Royal Jelly</a></td><td>Waughroon Shrine</td><td>40</td><td>40 BS</td><td>3p</td><td>15m</td><td>7</td><td class="r">5,000</td><td class="r">7,452</td></tr>
 <tr><td><a href="#worms_turn">The Worm&#x27;s Turn</a></td><td>Waughroon Shrine</td><td>40</td><td>40 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">6,000</td><td class="r">9,200</td></tr>
 <tr><td><a href="#3_2_1">3, 2, 1...</a></td><td>Waughroon Shrine</td><td>50</td><td>50 BS</td><td>6p</td><td>30m</td><td>6</td><td class="r">12,000</td><td class="r">7,559</td></tr>
-<tr><td><a href="#final_bout">The Final Bout</a></td><td>Waughroon Shrine</td><td>50</td><td>50 BS</td><td>3p</td><td>3m</td><td>6</td><td class="r">8,000</td><td class="r">8,632</td></tr>
+<tr><td><a href="#final_bout">The Final Bout</a></td><td>Waughroon Shrine</td><td>50</td><td>50 BS</td><td>3p</td><td>3m</td><td>6</td><td class="r">8,000</td><td class="r">8,301</td></tr>
 <tr><td><a href="#grimshell_shocktroopers">Grimshell Shocktroopers</a></td><td>Waughroon Shrine</td><td>60</td><td>60 BS</td><td>6p</td><td>30m</td><td>7</td><td class="r">18,000</td><td class="r">16,807</td></tr>
-<tr><td><a href="#up_in_arms">Up in Arms</a></td><td>Waughroon Shrine</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>8</td><td class="r">15,000</td><td class="r">49,153</td></tr>
+<tr><td><a href="#up_in_arms">Up in Arms</a></td><td>Waughroon Shrine</td><td>60</td><td>60 BS</td><td>3p</td><td>15m</td><td>8</td><td class="r">15,000</td><td class="r">46,734</td></tr>
 <tr><td><a href="#copycat">Copycat</a></td><td>Waughroon Shrine</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>8</td><td class="r">24,000</td><td class="r">19,154</td></tr>
 <tr><td><a href="#operation_desert_swarm">Operation Desert Storm</a></td><td>Waughroon Shrine</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>7</td><td class="r">24,000</td><td class="r">15,476</td></tr>
 <tr><td><a href="#prehistoric_pigeons">Prehistoric Pigeons</a></td><td>Waughroon Shrine</td><td>—</td><td>30 KC</td><td>6p</td><td>30m</td><td>7</td><td class="r">24,000</td><td class="r">17,246</td></tr>
@@ -5052,8 +5037,8 @@
 </tbody></table></div>
 <div class="roll-group"><div class="roll-label">Roll 8</div>
 <table class="loot-table"><tbody>
-<tr><td class="loot-name"><span class="nothing">— nothing —</span></td><td class="loot-pct pct-high"><div class="pct-bar" style="width:99.9%"></div><span>100%</span></td></tr>
-<tr><td class="loot-name"><a href="/item/17440-kraken-club" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17440.png" width="20" height="20" alt="" style="image-rendering:pixelated;vertical-align:middle;border-radius:2px" loading="lazy"> Kraken Club</a></td><td class="loot-pct pct-low"><div class="pct-bar" style="width:0.1%"></div><span>0.10%</span></td></tr>
+<tr><td class="loot-name"><span class="nothing">— nothing —</span></td><td class="loot-pct pct-high"><div class="pct-bar" style="width:100.0%"></div><span>100%</span></td></tr>
+<tr><td class="loot-name"><a href="/item/17440-kraken-club" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17440.png" width="20" height="20" alt="" style="image-rendering:pixelated;vertical-align:middle;border-radius:2px" loading="lazy"> Kraken Club</a></td><td class="loot-pct pct-low"><div class="pct-bar" style="width:0.0%"></div><span>0.01%</span></td></tr>
 </tbody></table></div>
 <div class="crate-gil">Crate gil: <strong>15,000</strong></div>
 <div class="bf-source">Source: <code>scripts/battlefields/Waughroon_Shrine/up_in_arms.lua</code></div>
@@ -5476,7 +5461,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

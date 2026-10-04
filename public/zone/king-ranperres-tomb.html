@@ -65,20 +65,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -107,21 +93,20 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -145,9 +130,9 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>King Ranperres Tomb</nav>
 <header class="panel pad"><h1>King Ranperres Tomb</h1>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
-<div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">30 (2 NM)</span></div>
+<div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">29 (2 NM)</span></div>
 <div class="infobox-row"><span class="infobox-label">Chests</span><span class="infobox-val">6 items</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">155 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">159 rows</span></div>
 </div>
 <div style="clear:both"></div></header>
 <div class="jump"><a href="#chests">Treasure chests</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
@@ -219,36 +204,33 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <details class="mob"><summary><span class="mob-name">Enchanted Bones war</span> <span class="mob-lv">Lv 4–8</span> <span class="mob-flags">night only</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Goblin Ambusher</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Goblin Ambusher</span> <span class="mob-lv">Lv 12–16</span> <span class="mob-spawns">13 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/937-block-of-animal-glue" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/937.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Block Of Animal Glue</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12440-leather-bandana" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12440.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Bandana</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12696-leather-gloves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12696.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Gloves</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12824-leather-trousers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12824.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Trousers</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12952-leather-highboots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12952.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Highboots</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Goblin Butcher</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Goblin Butcher</span> <span class="mob-lv">Lv 12–16</span> <span class="mob-spawns">13 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12432-faceguard" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12432.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Faceguard</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12688-scale-finger-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Finger Gauntlets</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12816-scale-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12816.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Cuisses</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12944-scale-greaves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12944.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Greaves</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Goblin Gambler</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Goblin Gambler</span> <span class="mob-lv">Lv 21–23</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">5.00%</span><a href="/item/952-bag-of-poison-flour" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/952.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Poison Flour</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12473-poets-circlet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12473.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Poets Circlet</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12729-linen-cuffs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12729.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Linen Cuffs</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12857-linen-slops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12857.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Linen Slops</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12985-holly-clogs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12985.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Clogs</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Goblin Leecher</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4745-scroll-of-sneak" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4745.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Sneak</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4744-scroll-of-invisible" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4744.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Invisible</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/4746-scroll-of-deodorize" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4746.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Deodorize</a></div>
+<details class="mob"><summary><span class="mob-name">Goblin Leecher</span> <span class="mob-lv">Lv 21–23</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12473-poets-circlet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12473.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Poets Circlet</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12729-linen-cuffs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12729.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Linen Cuffs</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12857-linen-slops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12857.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Linen Slops</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12985-holly-clogs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12985.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Clogs</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Goblin Mugger</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Goblin Mugger</span> <span class="mob-lv">Lv 21–23</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12449-brass-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12449.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Cap</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12705-brass-mittens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12705.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Mittens</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12833-brass-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12833.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Subligar</a></div>
@@ -261,7 +243,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12832-bronze-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12832.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Subligar</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12960-bronze-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12960.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Leggings</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Goblin Tinkerer</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Goblin Tinkerer</span> <span class="mob-lv">Lv 12–16</span> <span class="mob-spawns">13 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12432-faceguard" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12432.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Faceguard</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12688-scale-finger-gauntlets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Finger Gauntlets</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/12816-scale-cuisses" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12816.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scale Cuisses</a></div>
@@ -285,9 +267,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <details class="mob"><summary><span class="mob-name">Hati</span> <span class="mob-lv">Lv 77–78</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/858-wolf-hide" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/858.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wolf Hide</a></div>
 <div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
-</div></details>
-<details class="mob"><summary><span class="mob-name">Locus Dire Bat</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Mouse Bat KRT</span> <span class="mob-lv">Lv 3–6</span> <span class="mob-spawns">19 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
@@ -342,6 +321,11 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
 <tr><td><a href="/item/656-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/656.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/656.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/656-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/656.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/817-spool-of-grass-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/817.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Grass Thread</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/825-square-of-cotton-cloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/825.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/825-square-of-cotton-cloth" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/825.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Cotton Cloth</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -351,6 +335,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
@@ -419,7 +404,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

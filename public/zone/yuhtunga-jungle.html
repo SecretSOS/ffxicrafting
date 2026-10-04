@@ -65,20 +65,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -107,21 +93,20 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -147,10 +132,10 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">29 (4 NM)</span></div>
 <div class="infobox-row"><span class="infobox-label">Gathering</span><span class="infobox-val">Logging, Harvesting</span></div>
-<div class="infobox-row"><span class="infobox-label">Digging</span><span class="infobox-val">9 items</span></div>
+<div class="infobox-row"><span class="infobox-label">Digging</span><span class="infobox-val">26 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
 <div class="infobox-row"><span class="infobox-label">Caskets</span><span class="infobox-val">21 items</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">212 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">235 rows</span></div>
 </div>
 <div style="clear:both"></div></header>
 <div class="jump"><a href="#gathering">Gathering</a><a href="#digging">Chocobo digging</a><a href="#caskets">Field caskets</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
@@ -160,7 +145,10 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <tr><td><a href="/item/721-piece-of-rattan-lumber" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/721.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">15.2%</td></tr>
 <tr><td><a href="/item/688-arrowwood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/688.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arrowwood Log</a></td><td class="pct" style="text-align:right">14.5%</td></tr>
 <tr><td><a href="/item/689-lauan-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/689.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lauan Log</a></td><td class="pct" style="text-align:right">9.60%</td></tr>
+<tr><td><a href="/item/5908-butterpear" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5908.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Butterpear</a></td><td class="pct" style="text-align:right">8.03%</td></tr>
 <tr><td><a href="/item/912-beehive-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/912.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beehive Chip</a></td><td class="pct" style="text-align:right">7.20%</td></tr>
+<tr><td><a href="/item/732-kapor-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/732.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kapor Log</a></td><td class="pct" style="text-align:right">7.12%</td></tr>
+<tr><td><a href="/item/731-aquilaria-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/731.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Aquilaria Log</a></td><td class="pct" style="text-align:right">7.03%</td></tr>
 <tr><td><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></td><td class="pct" style="text-align:right">4.97%</td></tr>
 <tr><td><a href="/item/697-holly-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/697.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Log</a></td><td class="pct" style="text-align:right">4.88%</td></tr>
 <tr><td><a href="/item/701-rosewood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/701.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rosewood Log</a></td><td class="pct" style="text-align:right">1.99%</td></tr>
@@ -178,18 +166,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 </tbody></table>
 </section>
 <section class="panel pad" id="digging"><h2>Chocobo digging</h2>
-<h3>Regular — requires dig rank amateur</h3>
-<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
-<tr><td><a href="/item/628-stick-of-cinnamon" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/628.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Stick Of Cinnamon</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/701-rosewood-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/701.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rosewood Log</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/703-petrified-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/703.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Petrified Log</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/721-piece-of-rattan-lumber" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/721.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rattan Lumber</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/4375-danceshroom" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4375.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Danceshroom</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/4386-king-truffle" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4386.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> King Truffle</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/4448-puffball" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4448.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Puffball</a></td><td class="pct" style="text-align:right">0</td></tr>
-</tbody></table>
 </section>
 <section class="panel pad" id="caskets"><h2>Field caskets</h2>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
@@ -328,11 +304,12 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <details class="mob"><summary><span class="mob-name">Makara</span> <span class="mob-lv">Lv 35–38</span> <span class="mob-spawns">21 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/868.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pugil Scales</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Overgrown Rose</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Overgrown Rose</span> <span class="mob-lv">Lv 45–48</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">24.0%</span><a href="/item/920-malboro-vine" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/920.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Malboro Vine</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1983-mushroom-locust" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1983.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mushroom Locust</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1446-lacquer-tree-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1446.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lacquer Tree Log</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">River Sahagin</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">River Sahagin</span> <span class="mob-lv">Lv 34–38</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">10.0%</span><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></div>
 <div class="drop"><span class="drop-rate">5.00%</span><a href="/item/4484-shall-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
 </div></details>
@@ -376,7 +353,9 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/750-silver-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/750.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="/item/920-malboro-vine" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/920.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Malboro Vine</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/927-coeurl-whisker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/927.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Coeurl Whisker</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -453,7 +432,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Notorious Monsters · FFXI Crafting</title>
-<meta name="description" content="530 Notorious Monsters with drop tables, rates, and zones for FFXI era-75 servers.">
+<meta name="description" content="547 Notorious Monsters with drop tables, rates, and zones for FFXI era-75 servers.">
 <meta property="og:title" content="Notorious Monsters · FFXI Crafting">
-<meta property="og:description" content="530 Notorious Monsters with drop tables, rates, and zones for FFXI era-75 servers.">
+<meta property="og:description" content="547 Notorious Monsters with drop tables, rates, and zones for FFXI era-75 servers.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/nm/">
 <meta name="theme-color" content="#0c1728">
@@ -80,20 +80,6 @@
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -122,21 +108,20 @@
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -160,11 +145,11 @@
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Notorious Monsters</nav>
  <header class="nm-hero panel pad">
   <h1>Notorious Monsters</h1>
-  <p class="lede">Every NM in the era-75 database with their drop tables, rates, and zones. 530 NMs across 132 zones.</p>
+  <p class="lede">Every NM in the era-75 database with their drop tables, rates, and zones. 547 NMs across 135 zones.</p>
   <div class="nm-stats">
-   <span class="nm-stat"><b>530</b> NMs</span>
-   <span class="nm-stat"><b>132</b> zones</span>
-   <span class="nm-stat"><b>6,723</b> drop entries</span>
+   <span class="nm-stat"><b>547</b> NMs</span>
+   <span class="nm-stat"><b>135</b> zones</span>
+   <span class="nm-stat"><b>6,793</b> drop entries</span>
   </div>
  </header>
 
@@ -571,12 +556,31 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Attohwa Chasm <span class="nm-zone-ct">1 NM</span><a href="/zone/attohwa-chasm" class="nm-zone-link">zone page →</a></summary>
+   <summary>Attohwa Chasm <span class="nm-zone-ct">2 NMs</span><a href="/zone/attohwa-chasm" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Ambusher Antlion" data-flags="lottery" data-lv="75">
      <summary><span class="nm-mob-name">Ambusher Antlion</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 75–77</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/1616-antlion-jaw"><img src="/icons/1616.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antlion Jaw</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Tiamat" data-flags="scripted" data-lv="95">
+     <summary><span class="nm-mob-name">Tiamat</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 95</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">18%</span><a href="/item/1816-wyrm-horn"><img src="/icons/1816.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wyrm Horn</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">11%</span><a href="/item/903-dragon-talon"><img src="/icons/903.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dragon Talon</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">11%</span><a href="/item/1133-vial-of-dragon-blood"><img src="/icons/1133.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Dragon Blood</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">6.0%</span><a href="/item/4486-dragon-heart"><img src="/icons/4486.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dragon Heart</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/655-adaman-ingot"><img src="/icons/655.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Adaman Ingot</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/658-damascus-ingot"><img src="/icons/658.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Damascus Ingot</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/722-divine-log"><img src="/icons/722.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Divine Log</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/836-square-of-damascene-cloth"><img src="/icons/836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Damascene Cloth</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/837-spool-of-malboro-fiber"><img src="/icons/837.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Malboro Fiber</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/860-behemoth-hide"><img src="/icons/860.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Hide</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/1110-vial-of-black-beetle-blood"><img src="/icons/1110.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Black Beetle Blood</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/1311-piece-of-oxblood"><img src="/icons/1311.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Oxblood</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.7%</span><a href="/item/1313-lock-of-sirens-hair"><img src="/icons/1313.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lock Of Sirens Hair</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">2.4%</span><a href="/item/4272-slice-of-dragon-meat"><img src="/icons/4272.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Dragon Meat</a></div>
      </div>
     </details>
    </div>
@@ -1608,6 +1612,29 @@
    </div>
   </details>
   <details class="nm-zone">
+   <summary>Behemoths Dominion <span class="nm-zone-ct">2 NMs</span><a href="/zone/behemoths-dominion" class="nm-zone-link">zone page →</a></summary>
+   <div class="nm-zone-body">
+    <details class="nm-mob" data-nm="Behemoth" data-flags="scripted" data-lv="70">
+     <summary><span class="nm-mob-name">Behemoth</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 70</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/860-behemoth-hide"><img src="/icons/860.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Hide</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/860-behemoth-hide"><img src="/icons/860.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Hide</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="King Behemoth" data-flags="scripted" data-lv="85">
+     <summary><span class="nm-mob-name">King Behemoth</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 85</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/860-behemoth-hide"><img src="/icons/860.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Hide</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/883-behemoth-horn"><img src="/icons/883.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Horn</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/831-square-of-shining-cloth"><img src="/icons/831.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Shining Cloth</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/860-behemoth-hide"><img src="/icons/860.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Hide</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/883-behemoth-horn"><img src="/icons/883.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Behemoth Horn</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/6416-hunk-of-behemoth-meat"><img src="/icons/6416.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hunk Of Behemoth Meat</a></div>
+     </div>
+    </details>
+   </div>
+  </details>
+  <details class="nm-zone">
    <summary>Bhaflau Thickets <span class="nm-zone-ct">1 NM</span><a href="/zone/bhaflau-thickets" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Berried Chigoe" data-flags="scripted" data-lv="60">
@@ -1929,7 +1956,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Crawlers Nest <span class="nm-zone-ct">6 NMs</span><a href="/zone/crawlers-nest" class="nm-zone-link">zone page →</a></summary>
+   <summary>Crawlers Nest <span class="nm-zone-ct">7 NMs</span><a href="/zone/crawlers-nest" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Guardian Crawler" data-flags="scripted" data-lv="45">
      <summary><span class="nm-mob-name">Guardian Crawler</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 45</span> <span class="nm-spawns">2 spawns</span></summary>
@@ -1964,6 +1991,14 @@
      <summary><span class="nm-mob-name">Queen Crawler</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 64</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/816-spool-of-silk-thread"><img src="/icons/816.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Silk Thread</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4357-crawler-egg"><img src="/icons/4357.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crawler Egg</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Awd Goggie" data-flags="scripted" data-lv="68">
+     <summary><span class="nm-mob-name">Awd Goggie</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 68</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/4508-serving-of-royal-jelly"><img src="/icons/4508.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Serving Of Royal Jelly</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/816-spool-of-silk-thread"><img src="/icons/816.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Silk Thread</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4357-crawler-egg"><img src="/icons/4357.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crawler Egg</a></div>
      </div>
     </details>
@@ -2126,8 +2161,17 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Dragons Aery <span class="nm-zone-ct">1 NM</span><a href="/zone/dragons-aery" class="nm-zone-link">zone page →</a></summary>
+   <summary>Dragons Aery <span class="nm-zone-ct">2 NMs</span><a href="/zone/dragons-aery" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
+    <details class="nm-mob" data-nm="Fafnir" data-flags="scripted" data-lv="90">
+     <summary><span class="nm-mob-name">Fafnir</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 90</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/903-dragon-talon"><img src="/icons/903.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dragon Talon</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/867-handful-of-dragon-scales"><img src="/icons/867.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Dragon Scales</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/867-handful-of-dragon-scales"><img src="/icons/867.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Dragon Scales</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/4486-dragon-heart"><img src="/icons/4486.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dragon Heart</a></div>
+     </div>
+    </details>
     <details class="nm-mob" data-nm="Nidhogg" data-flags="scripted" data-lv="90">
      <summary><span class="nm-mob-name">Nidhogg</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 90</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
@@ -3662,7 +3706,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Feiyin <span class="nm-zone-ct">6 NMs</span><a href="/zone/feiyin" class="nm-zone-link">zone page →</a></summary>
+   <summary>Feiyin <span class="nm-zone-ct">8 NMs</span><a href="/zone/feiyin" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Goliath" data-flags="lottery" data-lv="62">
      <summary><span class="nm-mob-name">Goliath</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 62</span> <span class="nm-spawns">4 spawns</span></summary>
@@ -3670,6 +3714,12 @@
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/1465-slab-of-granite"><img src="/icons/1465.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slab Of Granite</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/644-chunk-of-mythril-ore"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/955-golem-shard"><img src="/icons/955.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Golem Shard</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Eastern Shadow" data-flags="lottery" data-lv="63">
+     <summary><span class="nm-mob-name">Eastern Shadow</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 63</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/940-revival-tree-root"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Northern Shadow" data-flags="lottery" data-lv="63">
@@ -3680,6 +3730,12 @@
     </details>
     <details class="nm-mob" data-nm="Southern Shadow" data-flags="lottery" data-lv="63">
      <summary><span class="nm-mob-name">Southern Shadow</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 63</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/940-revival-tree-root"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Western Shadow" data-flags="lottery" data-lv="63">
+     <summary><span class="nm-mob-name">Western Shadow</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 63</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/940-revival-tree-root"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
      </div>
@@ -4085,7 +4141,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Jugner Forest <span class="nm-zone-ct">6 NMs</span><a href="/zone/jugner-forest" class="nm-zone-link">zone page →</a></summary>
+   <summary>Jugner Forest <span class="nm-zone-ct">7 NMs</span><a href="/zone/jugner-forest" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Panzer Percival" data-flags="lottery" data-lv="25">
      <summary><span class="nm-mob-name">Panzer Percival</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 25–26</span> <span class="nm-spawns">2 spawns</span></summary>
@@ -4114,6 +4170,14 @@
      <summary><span class="nm-mob-name">Supplespine Mujwuj</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-wotg">WotG</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 50</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/2847-blue-jasper"><img src="/icons/2847.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Blue Jasper</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="King Arthro" data-flags="scripted" data-lv="55">
+     <summary><span class="nm-mob-name">King Arthro</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 55</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/836-square-of-damascene-cloth"><img src="/icons/836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Damascene Cloth</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/836-square-of-damascene-cloth"><img src="/icons/836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Damascene Cloth</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/836-square-of-damascene-cloth"><img src="/icons/836.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Square Of Damascene Cloth</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Fradubio" data-flags="lottery" data-lv="59">
@@ -5281,7 +5345,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Labyrinth of Onzozo <span class="nm-zone-ct">6 NMs</span><a href="/zone/labyrinth-of-onzozo" class="nm-zone-link">zone page →</a></summary>
+   <summary>Labyrinth of Onzozo <span class="nm-zone-ct">7 NMs</span><a href="/zone/labyrinth-of-onzozo" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Mysticmaker Profblix" data-flags="scripted" data-lv="50">
      <summary><span class="nm-mob-name">Mysticmaker Profblix</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 50–52</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -5311,6 +5375,14 @@
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/510-goblin-armor"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/511-goblin-mask"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/748-gold-beastcoin"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Lord of Onzozo" data-flags="lottery" data-lv="74">
+     <summary><span class="nm-mob-name">Lord of Onzozo</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 74–77</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/4484-shall-shell"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/4484-shall-shell"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/4484-shall-shell"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Ose" data-flags="lottery" data-lv="74">
@@ -5484,7 +5556,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Maze of Shakhrami <span class="nm-zone-ct">5 NMs</span><a href="/zone/maze-of-shakhrami" class="nm-zone-link">zone page →</a></summary>
+   <summary>Maze of Shakhrami <span class="nm-zone-ct">6 NMs</span><a href="/zone/maze-of-shakhrami" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Ichorous Ire" data-flags="scripted" data-lv="35">
      <summary><span class="nm-mob-name">Ichorous Ire</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 35–36</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -5496,6 +5568,14 @@
      <summary><span class="nm-mob-name">Leech King</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 35–36</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/924-vial-of-fiend-blood"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Argus" data-flags="scripted" data-lv="36">
+     <summary><span class="nm-mob-name">Argus</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 36–37</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/914-vial-of-mercury"><img src="/icons/914.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Mercury</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/939-hecteyes-eye"><img src="/icons/939.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hecteyes Eye</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/939-hecteyes-eye"><img src="/icons/939.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hecteyes Eye</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Gloombound Lurker" data-flags="" data-lv="47">
@@ -7700,7 +7780,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Quicksand Caves <span class="nm-zone-ct">15 NMs</span><a href="/zone/quicksand-caves" class="nm-zone-link">zone page →</a></summary>
+   <summary>Quicksand Caves <span class="nm-zone-ct">16 NMs</span><a href="/zone/quicksand-caves" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Sagittarius X-XIII" data-flags="lottery" data-lv="55">
      <summary><span class="nm-mob-name">Sagittarius X-XIII</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 55–57</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -7752,6 +7832,13 @@
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/645-chunk-of-darksteel-ore"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Antican Magister" data-flags="lottery" data-lv="65">
+     <summary><span class="nm-mob-name">Antican Magister</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 65–66</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/644-chunk-of-mythril-ore"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/1118-antican-pauldron"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Antican Praefectus" data-flags="lottery" data-lv="65">
@@ -7889,6 +7976,18 @@
    </div>
   </details>
   <details class="nm-zone">
+   <summary>Ranguemont Pass <span class="nm-zone-ct">1 NM</span><a href="/zone/ranguemont-pass" class="nm-zone-link">zone page →</a></summary>
+   <div class="nm-zone-body">
+    <details class="nm-mob" data-nm="Taisaijin" data-flags="scripted" data-lv="60">
+     <summary><span class="nm-mob-name">Taisaijin</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 60</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/914-vial-of-mercury"><img src="/icons/914.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Mercury</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/939-hecteyes-eye"><img src="/icons/939.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hecteyes Eye</a></div>
+     </div>
+    </details>
+   </div>
+  </details>
+  <details class="nm-zone">
    <summary>Riverne Site A01 <span class="nm-zone-ct">4 NMs</span><a href="/zone/riverne-site-a01" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Ouryu" data-flags="battlefield,scripted" data-lv="0">
@@ -7962,7 +8061,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Rolanberry Fields <span class="nm-zone-ct">5 NMs</span><a href="/zone/rolanberry-fields" class="nm-zone-link">zone page →</a></summary>
+   <summary>Rolanberry Fields <span class="nm-zone-ct">6 NMs</span><a href="/zone/rolanberry-fields" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Black Triple Stars" data-flags="lottery" data-lv="26">
      <summary><span class="nm-mob-name">Black Triple Stars</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 26–27</span> <span class="nm-spawns">2 spawns</span></summary>
@@ -7986,6 +8085,12 @@
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/920-malboro-vine"><img src="/icons/920.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Malboro Vine</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/920-malboro-vine"><img src="/icons/920.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Malboro Vine</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/13838-dodge-headband"><img src="/icons/13838.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dodge Headband</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Simurgh" data-flags="scripted" data-lv="58">
+     <summary><span class="nm-mob-name">Simurgh</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 58</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/658-damascus-ingot"><img src="/icons/658.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Damascus Ingot</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Verthandi" data-flags="" data-lv="85">
@@ -8502,7 +8607,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Sauromugue Champaign <span class="nm-zone-ct">3 NMs</span><a href="/zone/sauromugue-champaign" class="nm-zone-link">zone page →</a></summary>
+   <summary>Sauromugue Champaign <span class="nm-zone-ct">4 NMs</span><a href="/zone/sauromugue-champaign" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Deadly Dodo" data-flags="lottery" data-lv="39">
      <summary><span class="nm-mob-name">Deadly Dodo</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 39–40</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -8510,6 +8615,12 @@
       <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/4435-slice-of-cockatrice-meat"><img src="/icons/4435.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Cockatrice Meat</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/854-cockatrice-skin"><img src="/icons/854.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cockatrice Skin</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/842-giant-bird-feather"><img src="/icons/842.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Giant Bird Feather</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Roc" data-flags="scripted" data-lv="55">
+     <summary><span class="nm-mob-name">Roc</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 55</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/658-damascus-ingot"><img src="/icons/658.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Damascus Ingot</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Verthandi" data-flags="" data-lv="85">
@@ -8947,7 +9058,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Sea Serpent Grotto <span class="nm-zone-ct">11 NMs</span><a href="/zone/sea-serpent-grotto" class="nm-zone-link">zone page →</a></summary>
+   <summary>Sea Serpent Grotto <span class="nm-zone-ct">16 NMs</span><a href="/zone/sea-serpent-grotto" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Masan" data-flags="lottery" data-lv="39">
      <summary><span class="nm-mob-name">Masan</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 39</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -8988,6 +9099,20 @@
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
      </div>
     </details>
+    <details class="nm-mob" data-nm="Pahh the Gullcaller" data-flags="lottery" data-lv="56">
+     <summary><span class="nm-mob-name">Pahh the Gullcaller</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 56–58</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/624-clump-of-pamtam-kelp"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Worr the Clawfisted" data-flags="lottery" data-lv="60">
+     <summary><span class="nm-mob-name">Worr the Clawfisted</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 60–61</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/624-clump-of-pamtam-kelp"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
+     </div>
+    </details>
     <details class="nm-mob" data-nm="Sea Hog" data-flags="lottery" data-lv="62">
      <summary><span class="nm-mob-name">Sea Hog</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 62–63</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
@@ -9013,12 +9138,34 @@
       <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
      </div>
     </details>
+    <details class="nm-mob" data-nm="Voll the Sharkfinned" data-flags="lottery" data-lv="64">
+     <summary><span class="nm-mob-name">Voll the Sharkfinned</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 64–66</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/624-clump-of-pamtam-kelp"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4484-shall-shell"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">1.0%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
+     </div>
+    </details>
     <details class="nm-mob" data-nm="Yarr the Pearleyed" data-flags="lottery" data-lv="64">
      <summary><span class="nm-mob-name">Yarr the Pearleyed</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 64–66</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/624-clump-of-pamtam-kelp"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/4484-shall-shell"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Novv the Whitehearted" data-flags="lottery" data-lv="66">
+     <summary><span class="nm-mob-name">Novv the Whitehearted</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 66–67</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/624-clump-of-pamtam-kelp"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Zuug the Shoreleaper" data-flags="lottery" data-lv="70">
+     <summary><span class="nm-mob-name">Zuug the Shoreleaper</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 70</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/624-clump-of-pamtam-kelp"><img src="/icons/624.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Clump Of Pamtam Kelp</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/4443-cobalt-jellyfish"><img src="/icons/4443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cobalt Jellyfish</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Ocean Sahagin" data-flags="" data-lv="75">
@@ -9086,12 +9233,19 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>South Gustaberg <span class="nm-zone-ct">2 NMs</span><a href="/zone/south-gustaberg" class="nm-zone-link">zone page →</a></summary>
+   <summary>South Gustaberg <span class="nm-zone-ct">3 NMs</span><a href="/zone/south-gustaberg" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Bubbly Bernie" data-flags="scripted" data-lv="9">
      <summary><span class="nm-mob-name">Bubbly Bernie</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 9–10</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4400-slice-of-land-crab-meat"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Leaping Lizzy" data-flags="lottery" data-lv="10">
+     <summary><span class="nm-mob-name">Leaping Lizzy</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 10–11</span> <span class="nm-spawns">2 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/926-lizard-tail"><img src="/icons/926.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Tail</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/852-lizard-skin"><img src="/icons/852.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Skin</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Carnero" data-flags="lottery" data-lv="11">
@@ -9444,7 +9598,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>The Boyahda Tree <span class="nm-zone-ct">5 NMs</span><a href="/zone/the-boyahda-tree" class="nm-zone-link">zone page →</a></summary>
+   <summary>The Boyahda Tree <span class="nm-zone-ct">6 NMs</span><a href="/zone/the-boyahda-tree" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Ellyllon" data-flags="lottery" data-lv="65">
      <summary><span class="nm-mob-name">Ellyllon</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 65–66</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -9452,6 +9606,13 @@
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/4374-sleepshroom"><img src="/icons/4374.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sleepshroom</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/4449-reishi-mushroom"><img src="/icons/4449.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Reishi Mushroom</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/4386-king-truffle"><img src="/icons/4386.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> King Truffle</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Aquarius" data-flags="lottery" data-lv="69">
+     <summary><span class="nm-mob-name">Aquarius</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 69–71</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/881-crab-shell"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/4400-slice-of-land-crab-meat"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Unut" data-flags="lottery" data-lv="69">
@@ -9486,7 +9647,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>The Eldieme Necropolis <span class="nm-zone-ct">7 NMs</span><a href="/zone/the-eldieme-necropolis" class="nm-zone-link">zone page →</a></summary>
+   <summary>The Eldieme Necropolis <span class="nm-zone-ct">8 NMs</span><a href="/zone/the-eldieme-necropolis" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Skull of Envy" data-flags="scripted" data-lv="60">
      <summary><span class="nm-mob-name">Skull of Envy</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 60</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -9516,6 +9677,12 @@
      <summary><span class="nm-mob-name">Skull of Pride</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 60</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/791-aquamarine"><img src="/icons/791.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Aquamarine</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="Skull of Sloth" data-flags="scripted" data-lv="60">
+     <summary><span class="nm-mob-name">Skull of Sloth</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 60</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/805-zircon"><img src="/icons/805.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Zircon</a></div>
      </div>
     </details>
     <details class="nm-mob" data-nm="Skull of Wrath" data-flags="scripted" data-lv="60">
@@ -9578,8 +9745,14 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>The Shrine of Ruavitau <span class="nm-zone-ct">1 NM</span><a href="/zone/the-shrine-of-ruavitau" class="nm-zone-link">zone page →</a></summary>
+   <summary>The Shrine of Ruavitau <span class="nm-zone-ct">2 NMs</span><a href="/zone/the-shrine-of-ruavitau" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
+    <details class="nm-mob" data-nm="Olla Grande" data-flags="scripted" data-lv="85">
+     <summary><span class="nm-mob-name">Olla Grande</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 85</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/1445-freyas-tear"><img src="/icons/1445.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Freyas Tear</a></div>
+     </div>
+    </details>
     <details class="nm-mob" data-nm="Kirin" data-flags="scripted" data-lv="92">
      <summary><span class="nm-mob-name">Kirin</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 92</span></summary>
      <div class="nm-drops">
@@ -9711,7 +9884,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Valkurm Dunes <span class="nm-zone-ct">3 NMs</span><a href="/zone/valkurm-dunes" class="nm-zone-link">zone page →</a></summary>
+   <summary>Valkurm Dunes <span class="nm-zone-ct">4 NMs</span><a href="/zone/valkurm-dunes" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Metal Shears" data-flags="scripted" data-lv="22">
      <summary><span class="nm-mob-name">Metal Shears</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-wotg">WotG</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 22–23</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -9726,6 +9899,12 @@
       <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/924-vial-of-fiend-blood"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
      </div>
     </details>
+    <details class="nm-mob" data-nm="Valkurm Emperor" data-flags="lottery" data-lv="29">
+     <summary><span class="nm-mob-name">Valkurm Emperor</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 29–30</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/846-insect-wing"><img src="/icons/846.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Insect Wing</a></div>
+     </div>
+    </details>
     <details class="nm-mob" data-nm="Marchelute" data-flags="scripted" data-lv="41">
      <summary><span class="nm-mob-name">Marchelute</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 41</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
@@ -9735,8 +9914,17 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Valley of Sorrows <span class="nm-zone-ct">1 NM</span><a href="/zone/valley-of-sorrows" class="nm-zone-link">zone page →</a></summary>
+   <summary>Valley of Sorrows <span class="nm-zone-ct">2 NMs</span><a href="/zone/valley-of-sorrows" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
+    <details class="nm-mob" data-nm="Adamantoise" data-flags="scripted" data-lv="70">
+     <summary><span class="nm-mob-name">Adamantoise</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 70</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">100%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">24%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+      <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+     </div>
+    </details>
     <details class="nm-mob" data-nm="Aspidochelone" data-flags="scripted" data-lv="85">
      <summary><span class="nm-mob-name">Aspidochelone</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 85</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
@@ -9745,6 +9933,17 @@
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/646-chunk-of-adaman-ore"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
       <div class="nm-drop"><span class="nm-drop-rate">15%</span><a href="/item/908-adamantoise-shell"><img src="/icons/908.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Adamantoise Shell</a></div>
+     </div>
+    </details>
+   </div>
+  </details>
+  <details class="nm-zone">
+   <summary>Velugannon Palace <span class="nm-zone-ct">1 NM</span><a href="/zone/velugannon-palace" class="nm-zone-link">zone page →</a></summary>
+   <div class="nm-zone-body">
+    <details class="nm-mob" data-nm="Steam Cleaner" data-flags="scripted" data-lv="81">
+     <summary><span class="nm-mob-name">Steam Cleaner</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 81–83</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">5.0%</span><a href="/item/1445-freyas-tear"><img src="/icons/1445.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Freyas Tear</a></div>
      </div>
     </details>
    </div>
@@ -10240,7 +10439,7 @@
    </div>
   </details>
   <details class="nm-zone">
-   <summary>Western Altepa Desert <span class="nm-zone-ct">3 NMs</span><a href="/zone/western-altepa-desert" class="nm-zone-link">zone page →</a></summary>
+   <summary>Western Altepa Desert <span class="nm-zone-ct">4 NMs</span><a href="/zone/western-altepa-desert" class="nm-zone-link">zone page →</a></summary>
    <div class="nm-zone-body">
     <details class="nm-mob" data-nm="Celphie" data-flags="lottery" data-lv="47">
      <summary><span class="nm-mob-name">Celphie</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">lottery</span> <span class="nm-mob-lv">Lv 47–50</span> <span class="nm-spawns">1 spawns</span></summary>
@@ -10259,6 +10458,12 @@
      <summary><span class="nm-mob-name">Dahu</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-wotg">WotG</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 57</span> <span class="nm-spawns">1 spawns</span></summary>
      <div class="nm-drops">
       <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/2835-lock-of-dahu-hair"><img src="/icons/2835.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lock Of Dahu Hair</a></div>
+     </div>
+    </details>
+    <details class="nm-mob" data-nm="King Vinegarroon" data-flags="scripted" data-lv="80">
+     <summary><span class="nm-mob-name">King Vinegarroon</span> <span class="nm-badge nm-badge-nm">NM</span> <span class="nm-badge nm-badge-flag">scripted</span> <span class="nm-mob-lv">Lv 80</span> <span class="nm-spawns">1 spawns</span></summary>
+     <div class="nm-drops">
+      <div class="nm-drop"><span class="nm-drop-rate">10%</span><a href="/item/901-venomous-claw"><img src="/icons/901.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Venomous Claw</a></div>
      </div>
     </details>
    </div>
@@ -10863,7 +11068,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

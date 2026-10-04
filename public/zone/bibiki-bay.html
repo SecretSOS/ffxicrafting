@@ -65,20 +65,6 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -107,21 +93,20 @@ details.mob .mob-body{padding:6px 0 14px 18px}
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -147,32 +132,13 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">28 (2 NM)</span></div>
 <div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">1 NPCs, 3 items</span></div>
-<div class="infobox-row"><span class="infobox-label">Digging</span><span class="infobox-val">16 items</span></div>
+<div class="infobox-row"><span class="infobox-label">Digging</span><span class="infobox-val">24 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">282 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">291 rows</span></div>
 </div>
 <div style="clear:both"></div></header>
 <div class="jump"><a href="#digging">Chocobo digging</a><a href="#vendors">NPCs &amp; vendors</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="digging"><h2>Chocobo digging</h2>
-<h3>Regular — requires dig rank amateur, dig rank journeyman</h3>
-<table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Weight</th></tr></thead><tbody>
-<tr><td><a href="/item/641-chunk-of-tin-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/641.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Tin Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/847-bird-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/847.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bird Feather</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/885-turtle-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/885.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Turtle Shell</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/888-seashell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/888.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Seashell</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/893-giant-femur" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/893.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Giant Femur</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1255-chunk-of-fire-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1255.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Fire Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1256-chunk-of-ice-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1256.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Ice Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1257-chunk-of-wind-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1257.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Wind Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1258-chunk-of-earth-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1258.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Earth Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1259-chunk-of-lightning-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1259.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Lightning Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1260-chunk-of-water-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1260.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Water Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1261-chunk-of-light-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1261.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Light Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/1262-chunk-of-dark-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1262.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Dark Ore</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/4484-shall-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4484.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shall Shell</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/17395-lugworm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17395.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lugworm</a></td><td class="pct" style="text-align:right">0</td></tr>
-<tr><td><a href="/item/17397-shell-bug" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17397.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shell Bug</a></td><td class="pct" style="text-align:right">0</td></tr>
-</tbody></table>
 </section>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Pohka Chichiyowahl <span class="badge">3 items</span></h3>
@@ -251,7 +217,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
-<details class="mob"><summary><span class="mob-name">Hobgoblin Venerer</span></summary><div class="mob-body">
+<details class="mob"><summary><span class="mob-name">Hobgoblin Venerer</span> <span class="mob-lv">Lv 72–74</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
 <div class="drop"><span class="drop-rate">5.00%</span><a href="/item/511-goblin-mask" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/511.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Mask</a></div>
 <div class="drop"><span class="drop-rate">1.00%</span><a href="/item/510-goblin-armor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/510.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Goblin Armor</a></div>
 </div></details>
@@ -309,6 +275,7 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
+<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
 <tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
@@ -399,7 +366,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>

@@ -97,7 +97,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();'''
@@ -151,7 +151,6 @@ def _nav_dropdown(label, landing_href, items, active):
 
 def top_bar(active=''):
     gathering_items = [(href, name, 'gathering') for href, name in GATHERING_PAGES]
-    craft_items = [(f'/crafts/{name.lower()}', name, f'craft-{code}') for code, name, _ in CRAFTS_ORDERED]
     zones_cls = ' active' if active == 'zones' else ''
     nm_cls = ' active' if active == 'nm' else ''
     bcnm_cls = ' active' if active == 'bcnm' else ''
@@ -160,13 +159,11 @@ def top_bar(active=''):
     fc_cls = ' class="active"' if active == 'fishing-cooking' else ''
     f101_cls = ' class="active"' if active == 'fishing-101' else ''
     gathering_dd = _nav_dropdown('Gathering', '/gathering/', gathering_items, active)
-    crafts_dd = _nav_dropdown('Crafts', '/crafts', craft_items, active)
     return f'''\
 <nav class="top-bar">
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-{crafts_dd}
 {gathering_dd}
   <a href="/zone/" class="nav-link{zones_cls}">Zones</a>
   <div class="nav-dd">
@@ -184,6 +181,29 @@ def top_bar(active=''):
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
 '''
+
+
+GUILD_HOURS = {
+    'wood': (6, 21), 'smith': (8, 23), 'gold': (8, 23), 'cloth': (6, 21),
+    'leather': (3, 18), 'bone': (8, 23), 'alchemy': (8, 23), 'cook': (5, 20), 'fish': (3, 18),
+}
+
+
+def guild_bar(active=''):
+    links = ''
+    for code, name, var in CRAFTS_ORDERED:
+        cls = ' class="active"' if f'craft-{code}' == active else ''
+        slug = name.lower()
+        o, c = GUILD_HOURS[code]
+        hrs = f'{o:02d}–{c:02d}'
+        links += f' <a href="/crafts/{slug}"{cls} style="color:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg>{name}<span class="gb-hrs">{hrs}</span><span id="guild-{code}" class="gb-dot"></span></a>\n'
+
+    fish_cls = ' class="active"' if 'craft-fish' == active else ''
+    o, c = GUILD_HOURS['fish']
+    hrs = f'{o:02d}–{c:02d}'
+    links += f' <a href="/gathering/fishing"{fish_cls} style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">{hrs}</span><span id="guild-fish" class="gb-dot"></span></a>\n'
+
+    return f'<nav class="guild-bar">\n{links}</nav>\n'
 
 
 TOOL_ICONS = {
@@ -210,30 +230,9 @@ def sidebar(active=''):
         cls = ' class="active"' if key == active else ''
         return f'  <a href="{href}"{cls}><span class="sb-tool"><svg aria-hidden="true"><use href="#i-{icon_id}"/></svg>{label}</span></a>\n'
 
-    GUILD_HOURS = {
-        'wood': (6, 21), 'smith': (8, 23), 'gold': (8, 23), 'cloth': (6, 21),
-        'leather': (3, 18), 'bone': (8, 23), 'alchemy': (8, 23), 'cook': (5, 20), 'fish': (3, 18),
-    }
-
-    craft_links = ''
-    for code, name, var in CRAFTS_ORDERED:
-        cls = ' class="active"' if f'craft-{code}' == active else ''
-        slug = name.lower()
-        o, c = GUILD_HOURS[code]
-        hrs = f'{o:02d}:00–{c:02d}:00'
-        craft_links += f'  <a href="/crafts/{slug}"{cls}><span class="sb-craft" style="--c:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg><span class="sb-craft-label">{name}<span class="sb-guild-hrs">{hrs}</span></span><span id="guild-{code}" class="sb-guild"></span></span></a>\n'
-
-    fish_cls = ' class="active"' if 'craft-fish' == active else ''
-    o, c = GUILD_HOURS['fish']
-    hrs = f'{o:02d}:00–{c:02d}:00'
-    craft_links += f'  <a href="/gathering/fishing"{fish_cls}><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">{hrs}</span></span><span id="guild-fish" class="sb-guild"></span></span></a>\n'
-
     return f'''\
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-{craft_links} </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
 {link("/calculator", "Crafting Calculator", "calculator")}{link("/profit", "Profit Finder", "profit")}{link("/shopping", "Shopping List", "shopping")}{link("/fishing-101", "Fishing 101", "fishing-101")}{tool_link("/gathering/fishing", "Fishing Lookup", "fish", "fishing")}{tool_link("/gathering/gardening", "Gardening Lookup", "garden", "gardening")}
@@ -287,6 +286,7 @@ def page_end():
 def layout_open(active='', crumbs=None):
     html = SVG_DEFS + '\n'
     html += top_bar(active)
+    html += guild_bar(active)
     html += '<div class="site-layout">\n'
     html += sidebar(active)
     html += '<main class="main">\n'

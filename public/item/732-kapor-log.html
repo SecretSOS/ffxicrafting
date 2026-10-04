@@ -15,7 +15,8 @@
 <link rel="stylesheet" href="/style.css">
 <style>
 .item-head{display:flex;align-items:center;gap:14px}
-.item-icon{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
+.item-icon{image-rendering:pixelated;flex-shrink:0;vertical-align:middle;border-radius:2px}
+.icon-link{display:inline-flex;align-items:center;gap:4px}
 h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
 h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
 h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
@@ -30,8 +31,14 @@ table{font-size:.88rem;margin-bottom:.4em}
 .src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
 .src-toggle:hover{color:var(--ink-soft)}
 .src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
-@media(max-width:700px){table{font-size:.8rem}}
+.ffxi-tooltip{background:#1e2244;border:2px solid #5a5e8a;border-radius:0;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;margin-top:14px;max-width:480px;box-shadow:inset 0 0 0 1px #0d1028,0 2px 8px rgba(0,0,0,.4)}
+.ffxi-tooltip .tt-icon{image-rendering:pixelated;flex-shrink:0;width:32px;height:32px;margin-top:2px}
+.ffxi-tooltip .tt-body{flex:1;min-width:0}
+.ffxi-tooltip .tt-name{color:#e8e4d0;font-size:14px;font-weight:600;margin:0 0 4px;font-family:var(--font-body);line-height:1.3}
+.ffxi-tooltip .tt-desc{color:#b0acc0;font-size:12.5px;line-height:1.5;margin:0;font-family:var(--font-body)}
+@media(max-width:700px){table{font-size:.8rem}.ffxi-tooltip{max-width:100%}}
 </style>
+<script src="/powertools.js"></script>
 </head>
 <body>
 <svg style="display:none" aria-hidden="true">
@@ -43,14 +50,22 @@ table{font-size:.88rem;margin-bottom:.4em}
  <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
  <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
  <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
-<symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
+ <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
  <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
+ <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
+ <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
+ <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
+ <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
+ <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
+ <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
+ <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
+ <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
+ <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
 </svg>
 <nav class="top-bar">
  <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
-  <a href="/zone/" class="nav-link">Zones</a>
  <div class="nav-dd">
   <span class="nav-dd-btn">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
@@ -60,87 +75,73 @@ table{font-size:.88rem;margin-bottom:.4em}
    <a href="/gathering/harvesting">Harvesting</a>
    <a href="/gathering/excavation">Excavation</a>
    <a href="/gathering/gardening">Gardening</a>
-   <a href="/gathering/fishing">Fishing</a>
+   <a href="/fishing/">Fishing</a>
    <a href="/gathering/digging">Chocobo Digging</a>
    <a href="/gathering/clamming">Clamming</a>
   </div>
  </div>
-  <a href="/bcnm" class="nav-link">BCNMs</a>
- <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
-   <a href="/nm/" class="nav-link">NMs</a>
+  <a href="/zone/" class="nav-link">Zones</a>
   <div class="nav-dd">
    <span class="nav-dd-btn">Guides <span class="nav-dd-arr">&#9662;</span></span>
    <div class="nav-dd-menu">
     <a href="/fishing-cooking">Fishing + Cooking</a>
+    <a href="/fishing-101">Fishing 101</a>
    </div>
   </div>
+  <a href="/nm/" class="nav-link">NMs</a>
+  <a href="/bcnm" class="nav-link">BCNMs</a>
  </div>
  <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
+ <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
+</nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
 </nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-server"><strong>Phoenix</strong><span>era 75 &middot; ToAU baseline</span></div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
-  <a href="/calculator">Crafting Calculator</a>
-  <a href="/profit">Profit Finder</a>
-  <a href="/shopping">Shopping List</a>
-  <a href="/gathering/fishing">Fishing Lookup <span class="sb-new">NEW</span></a>
-  <a href="/gathering/gardening">Gardening Lookup <span class="sb-new">NEW</span></a>
+  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
+  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
+  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
+  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
+  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
+  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
+
+  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
+  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
+  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
+  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
+  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
+
  </div>
- <div class="sb-section sb-explore">
-  <div class="sb-heading">Explore</div>
-  <a href="/zone/">Zones</a>
-  <a href="/gathering/">Gathering</a>
-  <a href="/bcnm">BCNMs</a>
-  <a href="/crafts">Crafts</a>
- </div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
- <div class="sb-section">
-  <div class="sb-heading">Info</div>
-  <a href="/about-the-data">About the Data</a>
- </div>
+ <div id="ahStatus" class="ah-status" style="display:none"></div>
 </aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Kapor Log</nav>
  <header class="panel pad">
   <div class="infobox"><div class="infobox-head">Kapor Log</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">732</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">12</span></div></div>
-  <div class="item-head"><img class="item-icon" src="/img/item/732.png" alt="" width="32" height="32"><div>
+  <div class="item-head"><img class="item-icon" src="/icons/732.png" alt="" width="32" height="32"><div>
   <h1>Kapor Log</h1>
   <p class="meta">Stack: 12</p>
   </div></div>
+  <div class="ffxi-tooltip"><img class="tt-icon" src="/icons/732.png" alt=""><div class="tt-body"><p class="tt-name">Kapor Log</p><p class="tt-desc">A rough-cut log of the fragrant wood known as kapor.</p></div></div>
  </header>
  <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Logging</h3><table><thead><tr><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/globals/hobbies/helm/data.lua"><td>Yuhtunga Jungle</td><td class="num">7.1%</td><td class="soft hide-sm">pct per attempt incl. obtain rate</td></tr><tr data-src="scripts/globals/hobbies/helm/data.lua"><td>Yhoator Jungle</td><td class="num">6.7%</td><td class="soft hide-sm">pct per attempt incl. obtain rate</td></tr></tbody></table></section>
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/73cb1ffc605b26f554682778a4c9bd406feffdef" rel="noopener"><code style="font-size:.85em">73cb1ffc60</code></a>. <a href="/about-the-data">About the data</a>.</p>
+ <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
 </footer>
 </main>
 </div>
@@ -162,10 +163,37 @@ else if(!on&&ex){ex.remove()}});
 <script>(function(){
 var EPOCH=1009810800,
 DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Ltng","Light","Dark"],
+ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
 DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]};
+GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
+MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
 function pad(n){return n<10?"0"+n:""+n}
+function moonInfo(vd){
+ var md=(vd+26)%84,pct,wax;
+ if(md<=41){pct=Math.round(100*md/42);wax=true;}
+ else{pct=Math.round(100*(84-md)/42);wax=false;}
+ var pi;
+ if(pct<=5)pi=wax?0:0;
+ else if(pct<=30)pi=wax?1:7;
+ else if(pct<=55)pi=wax?2:6;
+ else if(pct<=80)pi=wax?3:5;
+ else pi=4;
+ return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
+}
+function moonSvg(pct,wax){
+ var r=11,cx=12,cy=12;
+ var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
+ var f=pct/100;
+ var dx=Math.round(r*(1-2*f));
+ if(!wax)dx=-dx;
+ var sweep=f>0.5?1:0;
+ if(!wax)sweep=f>0.5?0:1;
+ return '<svg viewBox="0 0 24 24" class="moon-orb">'
+  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
+  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
+  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
+  +'</svg>';
+}
 function tick(){
  var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
  vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
@@ -177,16 +205,25 @@ function tick(){
   for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
    if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
    h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  var mi=moonInfo(vd);
+  h+='<div class="vw-moon">';
+  h+=moonSvg(mi.pct,mi.wax);
+  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
+  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
+  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
+  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
   wk.innerHTML=h;
  }
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>
+<script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -77,20 +77,6 @@
  <a href="/" class="logo">FFXI Crafting</a>
  <div class="nav-links">
  <div class="nav-dd">
-  <span class="nav-dd-btn">Crafts <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-   <a href="/crafts" class="nav-dd-all">All Crafts</a>
-   <a href="/crafts/woodworking">Woodworking</a>
-   <a href="/crafts/smithing">Smithing</a>
-   <a href="/crafts/goldsmithing">Goldsmithing</a>
-   <a href="/crafts/clothcraft">Clothcraft</a>
-   <a href="/crafts/leathercraft">Leathercraft</a>
-   <a href="/crafts/bonecraft">Bonecraft</a>
-   <a href="/crafts/alchemy">Alchemy</a>
-   <a href="/crafts/cooking">Cooking</a>
-  </div>
- </div>
- <div class="nav-dd">
   <span class="nav-dd-btn active">Gathering <span class="nav-dd-arr">&#9662;</span></span>
   <div class="nav-dd-menu">
    <a href="/gathering/" class="nav-dd-all">All Gathering</a>
@@ -119,21 +105,20 @@
  <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
  <button class="act" id="themeBtn" type="button">Theme</button>
 </nav>
+<nav class="guild-bar">
+ <a href="/crafts/woodworking" style="color:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg>Woodworking<span class="gb-hrs">06–21</span><span id="guild-wood" class="gb-dot"></span></a>
+ <a href="/crafts/smithing" style="color:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg>Smithing<span class="gb-hrs">08–23</span><span id="guild-smith" class="gb-dot"></span></a>
+ <a href="/crafts/goldsmithing" style="color:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg>Goldsmithing<span class="gb-hrs">08–23</span><span id="guild-gold" class="gb-dot"></span></a>
+ <a href="/crafts/clothcraft" style="color:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg>Clothcraft<span class="gb-hrs">06–21</span><span id="guild-cloth" class="gb-dot"></span></a>
+ <a href="/crafts/leathercraft" style="color:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg>Leathercraft<span class="gb-hrs">03–18</span><span id="guild-leather" class="gb-dot"></span></a>
+ <a href="/crafts/bonecraft" style="color:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg>Bonecraft<span class="gb-hrs">08–23</span><span id="guild-bone" class="gb-dot"></span></a>
+ <a href="/crafts/alchemy" style="color:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg>Alchemy<span class="gb-hrs">08–23</span><span id="guild-alchemy" class="gb-dot"></span></a>
+ <a href="/crafts/cooking" style="color:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg>Cooking<span class="gb-hrs">05–20</span><span id="guild-cook" class="gb-dot"></span></a>
+ <a href="/gathering/fishing" style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">03–18</span><span id="guild-fish" class="gb-dot"></span></a>
+</nav>
 <div class="site-layout">
 <aside class="sidebar" id="sidebar">
  <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Guilds</div>
-  <a href="/crafts/woodworking"><span class="sb-craft" style="--c:var(--wood)"><svg aria-hidden="true"><use href="#i-wood"/></svg><span class="sb-craft-label">Woodworking<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-wood" class="sb-guild"></span></span></a>
-  <a href="/crafts/smithing"><span class="sb-craft" style="--c:var(--smith)"><svg aria-hidden="true"><use href="#i-smith"/></svg><span class="sb-craft-label">Smithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-smith" class="sb-guild"></span></span></a>
-  <a href="/crafts/goldsmithing"><span class="sb-craft" style="--c:var(--gold)"><svg aria-hidden="true"><use href="#i-gold"/></svg><span class="sb-craft-label">Goldsmithing<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-gold" class="sb-guild"></span></span></a>
-  <a href="/crafts/clothcraft"><span class="sb-craft" style="--c:var(--cloth)"><svg aria-hidden="true"><use href="#i-cloth"/></svg><span class="sb-craft-label">Clothcraft<span class="sb-guild-hrs">06:00–21:00</span></span><span id="guild-cloth" class="sb-guild"></span></span></a>
-  <a href="/crafts/leathercraft"><span class="sb-craft" style="--c:var(--leather)"><svg aria-hidden="true"><use href="#i-leather"/></svg><span class="sb-craft-label">Leathercraft<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-leather" class="sb-guild"></span></span></a>
-  <a href="/crafts/bonecraft"><span class="sb-craft" style="--c:var(--bone)"><svg aria-hidden="true"><use href="#i-bone"/></svg><span class="sb-craft-label">Bonecraft<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-bone" class="sb-guild"></span></span></a>
-  <a href="/crafts/alchemy"><span class="sb-craft" style="--c:var(--alchemy)"><svg aria-hidden="true"><use href="#i-alchemy"/></svg><span class="sb-craft-label">Alchemy<span class="sb-guild-hrs">08:00–23:00</span></span><span id="guild-alchemy" class="sb-guild"></span></span></a>
-  <a href="/crafts/cooking"><span class="sb-craft" style="--c:var(--cook)"><svg aria-hidden="true"><use href="#i-cook"/></svg><span class="sb-craft-label">Cooking<span class="sb-guild-hrs">05:00–20:00</span></span><span id="guild-cook" class="sb-guild"></span></span></a>
-  <a href="/gathering/fishing"><span class="sb-craft" style="--c:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg><span class="sb-craft-label">Fishing<span class="sb-guild-hrs">03:00–18:00</span></span><span id="guild-fish" class="sb-guild"></span></span></a>
- </div>
  <div class="sb-section">
   <div class="sb-heading">Tools</div>
   <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
@@ -218,15 +203,15 @@
 <h2>Rod Compatibility</h2>
 <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:.8em">Rods have a size class (small/large) and rank window. Fish outside the window have increased break/fail chance. Legendary rods are exempt from size penalties.</p>
 <div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank Window</th><th>Breakable</th><th>Notes</th></tr></thead><tbody>
-<tr><td><a href="/fishing/rod/bamboo-fishing-rod" class="icon-link"><img src="/icons/17389.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bamboo Fishing Rod</a></td><td>small</td><td>1–7</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+<tr><td><a href="/fishing/rod/bamboo-fishing-rod" class="icon-link"><img src="/icons/17389.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Bamboo Fishing Rod</a></td><td>small</td><td>1–8</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/carbon-fishing-rod" class="icon-link"><img src="/icons/17384.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Carbon Fishing Rod</a></td><td>small</td><td>1–13</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/ebisu-fishing-rod" class="icon-link"><img src="/icons/17011.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Ebisu Fishing Rod</a></td><td>small</td><td>1–30</td><td>No</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/ebisu-fishing-rod-1" class="icon-link"><img src="/icons/19321.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Ebisu Fishing Rod +1</a></td><td>small</td><td>1–30</td><td>No</td><td><span class="ok">Compatible</span></td></tr>
-<tr><td><a href="/fishing/rod/fastwater-fishing-rod" class="icon-link"><img src="/icons/17388.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Fastwater Fishing Rod</a></td><td>small</td><td>1–8</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+<tr><td><a href="/fishing/rod/fastwater-fishing-rod" class="icon-link"><img src="/icons/17388.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Fastwater Fishing Rod</a></td><td>small</td><td>1–7</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/glass-fiber-fishing-rod" class="icon-link"><img src="/icons/17385.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Glass Fiber Fishing Rod</a></td><td>small</td><td>1–12</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/goldfish-basket" class="icon-link"><img src="/icons/17013.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Goldfish Basket</a></td><td>small</td><td>1–5</td><td>No</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/halcyon-rod" class="icon-link"><img src="/icons/17015.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Halcyon Rod</a></td><td>small</td><td>1–18</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
-<tr><td><a href="/fishing/rod/hume-fishing-rod" class="icon-link"><img src="/icons/17014.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Hume Fishing Rod</a></td><td>small</td><td>1–15</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
+<tr><td><a href="/fishing/rod/hume-fishing-rod" class="icon-link"><img src="/icons/17014.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Hume Fishing Rod</a></td><td>small</td><td>1–10</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/judges-rod" class="icon-link"><img src="/icons/17012.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Judges Rod</a></td><td>small</td><td>1–40</td><td>No</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/maze-monger-fishing-rod" class="icon-link"><img src="/icons/19319.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Maze Monger Fishing Rod</a></td><td>small</td><td>1–25</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/tarutaru-fishing-rod" class="icon-link"><img src="/icons/17387.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Tarutaru Fishing Rod</a></td><td>small</td><td>1–9</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
@@ -234,8 +219,8 @@
 <tr><td><a href="/fishing/rod/yew-fishing-rod" class="icon-link"><img src="/icons/17390.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Yew Fishing Rod</a></td><td>small</td><td>1–6</td><td>Yes</td><td><span class="ok">Compatible</span></td></tr>
 <tr><td><a href="/fishing/rod/mithran-fishing-rod" class="icon-link"><img src="/icons/17380.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Mithran Fishing Rod</a></td><td>large</td><td>8–18</td><td>Yes</td><td><span class="warn">Fish too small for rod</span></td></tr>
 <tr><td><a href="/fishing/rod/composite-fishing-rod" class="icon-link"><img src="/icons/17381.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Composite Fishing Rod</a></td><td>large</td><td>11–24</td><td>Yes</td><td><span class="warn">Fish too small for rod</span></td></tr>
-<tr><td><a href="/fishing/rod/clothespole" class="icon-link"><img src="/icons/17383.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Clothespole</a></td><td>large</td><td>12–12</td><td>Yes</td><td><span class="warn">Fish too small for rod</span></td></tr>
-<tr><td><a href="/fishing/rod/single-hook-fishing-rod" class="icon-link"><img src="/icons/17382.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Single Hook Fishing Rod</a></td><td>large</td><td>14–13</td><td>Yes</td><td><span class="warn">Fish too small for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/clothespole" class="icon-link"><img src="/icons/17383.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Clothespole</a></td><td>large</td><td>12–16</td><td>Yes</td><td><span class="warn">Fish too small for rod</span></td></tr>
+<tr><td><a href="/fishing/rod/single-hook-fishing-rod" class="icon-link"><img src="/icons/17382.png" width="24" height="24" alt="" class="fish-icon" loading="lazy"> Single Hook Fishing Rod</a></td><td>large</td><td>14–22</td><td>Yes</td><td><span class="warn">Fish too small for rod</span></td></tr>
 </tbody></table></div></section>
 <footer class="site-footer panel pad">
  <p class="made">Made by <strong>Secretsos</strong></p>
@@ -302,7 +287,7 @@ function tick(){
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
  for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
   if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className="sb-guild "+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
 }
 tick();setInterval(tick,2400);
 })();</script>
