@@ -174,12 +174,11 @@ details.g-section>summary h2{margin:0;font-size:1.1rem}
  <nav class="g-toc" data-toc>
   <a href="#starting">Starting Out</a>
   <a href="#mechanics">How Fishing Works</a>
+  <a href="#rods">Rod Guide</a>
   <a href="#skillup">Skill-ups</a>
   <a href="#daily">Daily Limit</a>
   <a href="#losing">Losing the Catch</a>
-  <a href="#route-a">Route A</a>
-  <a href="#route-b">Route B</a>
-  <a href="#fish-ref">Fish Locations</a>
+  <a href="#leveling">Leveling Path</a>
   <a href="#tips">Tips</a>
   <a href="#lushang">Lu Shang's Rod</a>
  </nav>
@@ -223,6 +222,54 @@ details.g-section>summary h2{margin:0;font-size:1.1rem}
    <li>Fish with rarity under 1000 have hook chance reduced proportionally &mdash; rare catches are deliberately harder to hook.</li>
   </ul>
   <p style="color:var(--ink-soft);font-size:.88rem;margin-top:12px">If a spot goes dead, try again after weather changes or at a different moon phase before assuming you have the wrong bait.</p>
+ </details>
+
+ <details open class="g-section panel pad">
+  <summary><h2 id="rods">Rod Guide</h2></summary>
+  <p style="color:var(--ink-soft);font-size:.9rem;margin-bottom:12px">Your rod determines what you can safely catch. Fish above a rod's max rank can snap your line or break the rod.</p>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px">Rod Stats Explained</h3>
+  <ul class="mechanic-list">
+   <li><b>Size</b> &mdash; Small or large. Must match the fish's size type. Mismatch costs 10 seconds off the timer and up to 90% loss chance.</li>
+   <li><b>Rank (min&ndash;max)</b> &mdash; The fish difficulty range the rod handles. Fish above max rank = line snaps and rod breaks. This is the most important stat.</li>
+   <li><b>ATK (fishAttack)</b> &mdash; Damage per successful arrow input. Higher = catch fish faster.</li>
+   <li><b>REC (fishRecovery)</b> &mdash; How much the fish heals when you miss an input. Lower is better.</li>
+   <li><b>Timer (fishTime)</b> &mdash; Base catch time in seconds. Reduced by 10s on size mismatch.</li>
+  </ul>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px">Progression Rods (Small)</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:10px">Most fish are small. These rods cover your leveling path.</p>
+  <div style="overflow-x:auto">
+  <table class="route-tbl"><thead><tr><th>Rod</th><th>Rank</th><th>ATK</th><th>REC</th><th>Timer</th><th>When to use</th></tr></thead><tbody>
+   <tr><td><b>Willow</b></td><td class="sk">1&ndash;5</td><td>150</td><td>50</td><td>30s</td><td>Free from RoE. Skill 1&ndash;10 starter.</td></tr>
+   <tr><td><b>Bamboo</b></td><td class="sk">1&ndash;8</td><td>140</td><td>60</td><td>30s</td><td>Cheap upgrade from Willow. Good to skill 15.</td></tr>
+   <tr><td><b>Hume</b></td><td class="sk">1&ndash;10</td><td>125</td><td>65</td><td>30s</td><td>Slightly higher range. Good to skill 20.</td></tr>
+   <tr><td><b>Carbon Fiber</b></td><td class="sk">1&ndash;13</td><td>100</td><td>75</td><td>43s</td><td>Longer timer, decent range for mid-teens.</td></tr>
+   <tr><td><b>Halcyon</b></td><td class="sk">1&ndash;18</td><td>100</td><td>70</td><td>41s</td><td style="color:var(--accent)"><b>The workhorse.</b> Covers skill 1&ndash;50 comfortably. Buy this and don't look back until Lu Shang's.</td></tr>
+  </tbody></table>
+  </div>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px">Large-Fish Rods</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:10px">Some targets (Giant Catfish, Bhefhel Marlin, Ahtapot, etc.) are large-size fish and need a large rod.</p>
+  <div style="overflow-x:auto">
+  <table class="route-tbl"><thead><tr><th>Rod</th><th>Rank</th><th>ATK</th><th>REC</th><th>Timer</th><th>When to use</th></tr></thead><tbody>
+   <tr><td><b>Mithran</b></td><td class="sk">8&ndash;18</td><td>130</td><td>65</td><td>30s</td><td>Earliest large rod. Good for Giant Catfish, ferries.</td></tr>
+   <tr><td><b>Composite</b></td><td class="sk">11&ndash;24</td><td>100</td><td>70</td><td>43s</td><td>Best large rod before legendary. Covers Bhefhel Marlin, Ahtapot.</td></tr>
+   <tr><td><b>Clothespole</b></td><td class="sk">12&ndash;16</td><td>170</td><td>50</td><td>30s</td><td>Niche &mdash; high ATK but narrow rank range. Fast kills on mid-rank large fish.</td></tr>
+  </tbody></table>
+  </div>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px">Legendary Rods</h3>
+  <div style="overflow-x:auto">
+  <table class="route-tbl"><thead><tr><th>Rod</th><th>Rank</th><th>ATK</th><th>REC</th><th>Timer</th><th>Notes</th></tr></thead><tbody>
+   <tr><td><b>Lu Shang's</b></td><td class="sk">any</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>Works on any size fish. Unbreakable. 5% fatigue discount. Skill-up penalty under 50. See <a href="#lushang">quest details</a>.</td></tr>
+   <tr><td><b>Ebisu</b></td><td class="sk">1&ndash;30</td><td>100</td><td>50</td><td>30s</td><td>Unbreakable, any size, 15% fatigue discount. Best rod in the game. Obtained from the Ebisu quest chain.</td></tr>
+  </tbody></table>
+  </div>
+
+  <div class="correction">
+   <b>Recommended path:</b> Willow &rarr; Halcyon (buy ASAP, use until Lu Shang's) &rarr; Lu Shang's (skill 50+). Keep a Mithran or Composite on hand for large-fish targets. Once you have Lu Shang's, it replaces everything.
+  </div>
  </details>
 
  <details open class="g-section panel pad">
@@ -321,83 +368,95 @@ details.g-section>summary h2{margin:0;font-size:1.1rem}
  </details>
 
  <details open class="g-section panel pad">
-  <summary><h2 id="route-a">Route A &mdash; Classic Era</h2></summary>
-  <p class="route-note">Based on the classic retail-era route. The more vanilla path.</p>
-  <div style="overflow-x:auto">
-  <table class="route-tbl"><thead><tr><th>Skill</th><th>Zone</th><th>Rod</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
-   <tr><td class="sk">1–11</td><td>Knightwell / W. Ronfaure</td><td>Hume Rod</td><td>Little Worm</td><td>Crayfish, Moat Carp</td><td style="color:var(--ink-faint)">Both bite frequently; fast early climb</td></tr>
-   <tr><td class="sk">11–19</td><td>E. Sarutabaruta</td><td>Halcyon Rod</td><td>Sabiki Rig</td><td>Quus</td><td style="color:var(--ink-faint)">Multi-catch rig = more skill-up rolls. Outdoor zone.</td></tr>
-   <tr><td class="sk">19–27</td><td>Sea Serpent Grotto (J-12)</td><td>Halcyon Rod</td><td>Shrimp Lure</td><td>Nebimonite</td><td style="color:var(--ink-faint)">Very frequent bites</td></tr>
-   <tr><td class="sk">27–35</td><td>Crystal Spring, Jugner (J-9)</td><td>Halcyon Rod</td><td>Minnow</td><td>Crystal Bass</td><td style="color:var(--ink-faint)">Slowest stretch until the 50s</td></tr>
-   <tr><td class="sk">35–53</td><td>Buburimu Peninsula (K-8)</td><td>Halcyon Rod</td><td>Robber Rig</td><td>Shall Shell, Bluetail</td><td style="color:var(--ink-faint)">Best fish for skilling up; ~13k/stack</td></tr>
-   <tr><td class="sk">53–55</td><td>W. Sarutabaruta (F-11)</td><td>Lu Shang&#x27;s</td><td>Minnow</td><td>Bluetail, Bastore Bream</td><td style="color:var(--ink-faint)">Needs some spot experimentation</td></tr>
-   <tr><td class="sk">55–86</td><td>Nashmau port</td><td>Lu Shang&#x27;s</td><td>Shrimp Lure</td><td>Mercanbaligi, Ahtapot</td><td style="color:var(--ink-faint)">~50% bite rate at high skill</td></tr>
-   <tr><td class="sk">86–108</td><td>Oldton Movalpolos (G/H-11)</td><td>Lu Shang&#x27;s</td><td>Minnow</td><td>Armored Pisces</td><td style="color:var(--ink-faint)">40–50% bite rate</td></tr>
-  </tbody></table>
-  </div>
-  <p class="route-label">Alternatives (86+)</p>
-  <div style="overflow-x:auto">
-  <table class="route-tbl"><thead><tr><th>Skill</th><th>Zone</th><th>Rod</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
-   <tr><td class="sk">86–96</td><td>Qufim Island</td><td>Lu Shang&#x27;s</td><td>Shrimp Lure</td><td>Black Sole</td><td style="color:var(--ink-faint)">~25% bite rate; cook into sushi for profit</td></tr>
-   <tr><td class="sk">86–99</td><td>Nashmau docks</td><td>Lu Shang&#x27;s</td><td>Sinking Minnow</td><td>Pterygotus</td><td style="color:var(--ink-faint)">~30% bite rate</td></tr>
-  </tbody></table>
-  </div>
- </details>
+  <summary><h2 id="leveling">Leveling Path</h2></summary>
+  <p style="color:var(--ink-soft);font-size:.9rem;margin-bottom:12px">One path, multiple options per bracket. Pick whichever zone you have access to. Aim for fish <b>10&ndash;11 levels above your skill</b> for the best skill-up rate. Avoid city zones (Port Windurst, Port Jeuno, Lower Jeuno) &mdash; they have a skill-up penalty.</p>
 
- <details open class="g-section panel pad">
-  <summary><h2 id="route-b">Route B &mdash; Private Server Tuned</h2></summary>
-  <p class="route-note">Based on the HorizonXI route (another 75-cap private server). Uses different zones in the mid-late game.</p>
+  <h3 style="font-size:.95rem;margin:14px 0 8px;color:var(--accent)">Skill 1&ndash;11 &mdash; Starter</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:8px">Rod: <b>Willow</b> (free from RoE) or <b>Bamboo</b>. Upgrade to Hume if you want extra range.</p>
   <div style="overflow-x:auto">
-  <table class="route-tbl"><thead><tr><th>Skill</th><th>Zone</th><th>Rod</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
-   <tr><td class="sk">0–11</td><td>W. Ronfaure / Knightswell</td><td>Hume / Halcyon</td><td>Insect Ball</td><td>Moat Carp</td><td style="color:var(--ink-faint)">Bank carp toward Lu Shang quest</td></tr>
-   <tr><td class="sk">11–27</td><td>Mhaura → E. Ronfaure → ferry</td><td>Halcyon</td><td>Sabiki Rig → Fly Lure</td><td>Yellow Globe, Cheval Salmon, Nebimonite</td><td style="color:var(--ink-faint)"></td></tr>
-   <tr><td class="sk">27–39</td><td>E. Ronfaure → Qufim</td><td>Halcyon</td><td>Fly Lure → Sardine Balls</td><td>Shining Trout, Nosteau Herring</td><td style="color:var(--ink-faint)">Herring → Pickled Herring for profit</td></tr>
-   <tr><td class="sk">39–61</td><td>Batallia → Qufim → ferry</td><td>Halcyon → Composite</td><td>Minnow → Bluetail Slice</td><td>Cone Calamary, Bluetail, Bhefhel Marlin</td><td style="color:var(--ink-faint)">Bluetail NPC ~300g each</td></tr>
-   <tr><td class="sk">55–76</td><td>E. Sarutabaruta / Yuhtunga</td><td>Lu Shang&#x27;s</td><td>Fly Lure → Meatball</td><td>Crescent Fish, Silver Shark</td><td style="color:var(--ink-faint)">Crescent Fish NPC 400g+</td></tr>
-   <tr><td class="sk">76–96</td><td>Qufim cliffs / Batallia</td><td>Lu Shang&#x27;s</td><td>Shrimp Lure → Sinking Minnow</td><td>Bastore Bream, Black Sole</td><td style="color:var(--ink-faint)">Bream ~7k/stack, Sole ~9–10k/stack</td></tr>
+  <table class="route-tbl"><thead><tr><th>Zone</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
+   <tr><td>W. Ronfaure / Knightwell</td><td>Little Worm</td><td>Crayfish, Moat Carp</td><td style="color:var(--ink-faint)">Both bite frequently. Bank Moat Carp toward Lu Shang quest.</td></tr>
+   <tr><td>S. Gustaberg</td><td>Little Worm</td><td>Crayfish</td><td style="color:var(--ink-faint)">Bastok starter. Near guild for bait restocks.</td></tr>
+   <tr><td>Windurst Waters</td><td>Little Worm</td><td>Crayfish, Moat Carp</td><td style="color:var(--ink-faint)">Windurst starter. City zone though &mdash; move outdoors soon.</td></tr>
   </tbody></table>
   </div>
-  <div class="correction">
-   <b>Where the routes disagree:</b> Route A goes through Sea Serpent Grotto, Crystal Spring, Buburimu, Nashmau, and Oldton Movalpolos.
-   Route B goes through Batallia Downs, Qufim, and Yuhtunga instead. Both are valid era-75 paths.
-   If one route goes dead on Phoenix (no bites after trying weather/moon), switch to the other for that skill band.
-  </div>
- </details>
 
- <details open class="g-section panel pad">
-  <summary><h2 id="fish-ref">Fish Locations &amp; Best Bait</h2></summary>
-  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:10px">"Best bait" = highest affinity power for that fish.</p>
+  <h3 style="font-size:.95rem;margin:14px 0 8px;color:var(--accent)">Skill 11&ndash;27 &mdash; Early Grind</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:8px">Rod: <b>Halcyon</b> (buy now, use for the next 40+ levels). Mithran for large fish on ferries.</p>
   <div style="overflow-x:auto">
-  <table class="fish-tbl"><thead><tr><th>Fish</th><th>Skill</th><th>Zone(s)</th><th>Best bait</th></tr></thead><tbody>
-   <tr><td><b>Crayfish</b></td><td class="sk">7</td><td>Phanauet Channel, Carpenters&#x27; Landing, Oldton Movalpolos +44 more</td><td>Slice of Moat Carp (Little Worm one tier down)</td></tr>
-   <tr><td><b>Moat Carp</b></td><td class="sk">11</td><td>Misareaux Coast, Al Zahbi, W. Ronfaure, La Theine +21 more</td><td>Ball of Insect Paste (Little Worm one tier down)</td></tr>
-   <tr><td><b>Forest Carp</b></td><td class="sk">20</td><td>Yuhtunga Jungle, Yhoator Jungle only</td><td>Ball of Insect Paste</td></tr>
-   <tr><td><b>Yellow Globe</b></td><td class="sk">17</td><td>Open sea, Batallia Downs, Beaucedine Glacier, Buburimu +7 more</td><td>Crayfish Paste / Sabiki Rig / Worm Lure (tied)</td></tr>
-   <tr><td><b>Cheval Salmon</b></td><td class="sk">21</td><td>East Ronfaure, Jugner Forest, Ghelsba Outpost only</td><td>Fly Lure</td></tr>
-   <tr><td><b>Quus</b></td><td class="sk">19</td><td>Manaclipper, Bibiki Bay, Lufaise Meadows +17 more</td><td>Lugworm (Sabiki Rig one tier down)</td></tr>
-   <tr><td><b>Nebimonite</b></td><td class="sk">27</td><td>Sea Serpent Grotto + all 4 ferry routes</td><td>Crayfish Paste (Shrimp Lure one tier down)</td></tr>
-   <tr><td><b>Crystal Bass</b></td><td class="sk">35</td><td>Jugner Forest, Sanctuary of Zi&#x27;Tah only</td><td>Minnow / Sinking Minnow (tied)</td></tr>
-   <tr><td><b>Shining Trout</b></td><td class="sk">37</td><td>Phanauet Channel, Carpenters&#x27; Landing, E. Ronfaure, Jugner +1</td><td>Fly Lure / Minnow / Sinking Minnow (tied)</td></tr>
-   <tr><td><b>Nosteau Herring</b></td><td class="sk">39</td><td>Batallia Downs, Beaucedine Glacier, Qufim, Lower Jeuno +1</td><td>Sardine Paste / Lugworm / Shrimp Lure (tied)</td></tr>
-   <tr><td><b>Cone Calamary</b></td><td class="sk">48</td><td>Manaclipper, Bibiki Bay, Batallia Downs, Beaucedine +6 more</td><td>Minnow</td></tr>
-   <tr><td><b>Shall Shell</b></td><td class="sk">53</td><td>Bibiki Bay, Valkurm Dunes, Cape Teriggan, Buburimu only</td><td>Robber Rig</td></tr>
-   <tr><td><b>Bluetail</b></td><td class="sk">55</td><td>Manaclipper, Bibiki Bay, Batallia Downs, Buburimu, Qufim +11</td><td>Minnow</td></tr>
-   <tr><td><b>Bhefhel Marlin</b></td><td class="sk">61</td><td>Selbina/Mhaura ferry routes only (ship-only catch)</td><td>Slice of Bluetail</td></tr>
-   <tr><td><b>Crescent Fish</b></td><td class="sk">69</td><td>E. Sarutabaruta, Yuhtunga Jungle, Dragon&#x27;s Aery only</td><td>Fly Lure</td></tr>
-   <tr><td><b>Silver Shark</b></td><td class="sk">76</td><td>Batallia Downs, Sauromugue, Sea Serpent Grotto, ferries +3</td><td>Meatball</td></tr>
-   <tr><td><b>Bastore Bream</b></td><td class="sk">86</td><td>S. Gustaberg, W/E. Sarutabaruta, SSG, Port Bastok/Windurst</td><td>Shrimp Lure</td></tr>
-   <tr><td><b>Mercanbaligi</b></td><td class="sk">86</td><td>Nashmau, Arrapago Reef, Talacca Cove only</td><td>Shrimp Lure</td></tr>
-   <tr><td><b>Ahtapot</b></td><td class="sk">90</td><td>Nashmau, Arrapago Reef, Talacca Cove only</td><td>Crayfish Paste / Peeled Lobster / Shrimp Lure (tied)</td></tr>
-   <tr><td><b>Black Sole</b></td><td class="sk">96</td><td>Batallia Downs, Beaucedine, Sauromugue, Qufim, Lower/Port Jeuno</td><td>Sinking Minnow</td></tr>
-   <tr><td><b>Pterygotus</b></td><td class="sk">99</td><td>Nashmau only</td><td>Lugworm (Sinking Minnow one tier down)</td></tr>
-   <tr><td><b>Armored Pisces</b></td><td class="sk">108</td><td>Oldton Movalpolos only</td><td>Frog Lure / Meatball / Minnow / Sinking Minnow (tied)</td></tr>
+  <table class="route-tbl"><thead><tr><th>Zone</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
+   <tr><td>E. Sarutabaruta</td><td>Sabiki Rig</td><td>Quus</td><td style="color:var(--ink-faint)">Multi-catch rig = more skill-up rolls per reel. Great 11&ndash;19.</td></tr>
+   <tr><td>Sea Serpent Grotto (J-12)</td><td>Shrimp Lure</td><td>Nebimonite</td><td style="color:var(--ink-faint)">Very frequent bites. Best spot for 19&ndash;27.</td></tr>
+   <tr><td>Mhaura &rarr; Ferry</td><td>Sabiki Rig / Fly Lure</td><td>Yellow Globe, Nebimonite</td><td style="color:var(--ink-faint)">Ride the ferry for multi-fish variety. Need Mithran for large catches.</td></tr>
+   <tr><td>E. Ronfaure</td><td>Fly Lure</td><td>Cheval Salmon</td><td style="color:var(--ink-faint)">Skill 21. Quiet outdoor spot near San d'Oria.</td></tr>
   </tbody></table>
   </div>
-  <div class="correction">
-   <b>Bait corrections vs. common guides:</b> Quus&#8217;s strongest bait is Lugworm, not Sabiki Rig.
-   Nebimonite prefers Crayfish Paste over Shrimp Lure. Pterygotus prefers Lugworm over Sinking Minnow.
-   Everything else checks out.
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px;color:var(--accent)">Skill 27&ndash;50 &mdash; Mid Game</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:8px">Rod: <b>Halcyon</b> (still). Composite rod if targeting large fish on ferries.</p>
+  <div style="overflow-x:auto">
+  <table class="route-tbl"><thead><tr><th>Zone</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
+   <tr><td>Jugner Forest (J-9 Crystal Spring)</td><td>Minnow</td><td>Crystal Bass</td><td style="color:var(--ink-faint)">Skill 27&ndash;35. Slowest bracket &mdash; patience required.</td></tr>
+   <tr><td>Buburimu Peninsula (K-8)</td><td>Robber Rig</td><td>Shall Shell, Bluetail</td><td style="color:var(--ink-faint)">Skill 35&ndash;53. Multi-catch rig, ~13k/stack. Best mid-game spot.</td></tr>
+   <tr><td>Batallia Downs</td><td>Minnow</td><td>Cone Calamary, Bluetail</td><td style="color:var(--ink-faint)">Skill 39+. Alternative to Buburimu. Bluetail NPC ~300g each.</td></tr>
+   <tr><td>Qufim Island</td><td>Sardine Balls</td><td>Nosteau Herring</td><td style="color:var(--ink-faint)">Skill 39+. Herring &rarr; Pickled Herring for cooking profit.</td></tr>
+   <tr><td>Ferry (Selbina/Mhaura)</td><td>Bluetail Slice</td><td>Bhefhel Marlin (large)</td><td style="color:var(--ink-faint)">Skill 50+. Needs Composite rod. Ship-only catch.</td></tr>
+  </tbody></table>
   </div>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px;color:var(--accent)">Skill 50&ndash;76 &mdash; Lu Shang Era</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:8px">Rod: <b>Lu Shang's</b> (if you have it &mdash; massive advantage). Halcyon still works but slower. Lu Shang's has a skill-up penalty under skill 50, so wait until then to switch.</p>
+  <div style="overflow-x:auto">
+  <table class="route-tbl"><thead><tr><th>Zone</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
+   <tr><td>Buburimu Peninsula</td><td>Robber Rig</td><td>Shall Shell, Bluetail</td><td style="color:var(--ink-faint)">Still good through skill 53 even with Lu Shang's.</td></tr>
+   <tr><td>W. Sarutabaruta (F-11)</td><td>Minnow</td><td>Bluetail, Bastore Bream</td><td style="color:var(--ink-faint)">Skill 53&ndash;55. Needs spot experimentation.</td></tr>
+   <tr><td>E. Sarutabaruta / Yuhtunga</td><td>Fly Lure</td><td>Crescent Fish</td><td style="color:var(--ink-faint)">Skill 55&ndash;69. Crescent Fish NPC 400g+. Solid profit.</td></tr>
+   <tr><td>Nashmau port</td><td>Shrimp Lure</td><td>Mercanbaligi, Ahtapot</td><td style="color:var(--ink-faint)">Skill 55&ndash;86. ~50% bite rate. Ahtapot is large (Lu Shang handles both sizes).</td></tr>
+   <tr><td>Yuhtunga Jungle</td><td>Meatball</td><td>Silver Shark</td><td style="color:var(--ink-faint)">Skill 65&ndash;76. Good skill-ups on this high-rank target.</td></tr>
+  </tbody></table>
+  </div>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px;color:var(--accent)">Skill 76&ndash;100+ &mdash; Endgame</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:8px">Rod: <b>Lu Shang's</b> required. Bite rates drop &mdash; this is the long haul. Consider Ebisu if you can get it.</p>
+  <div style="overflow-x:auto">
+  <table class="route-tbl"><thead><tr><th>Zone</th><th>Bait</th><th>Target</th><th>Notes</th></tr></thead><tbody>
+   <tr><td>Nashmau port</td><td>Shrimp Lure</td><td>Mercanbaligi, Ahtapot</td><td style="color:var(--ink-faint)">Still viable through skill 86+. Familiar spot.</td></tr>
+   <tr><td>Qufim Island</td><td>Shrimp Lure / Sinking Minnow</td><td>Bastore Bream, Black Sole</td><td style="color:var(--ink-faint)">Bream ~7k/stack, Sole ~9&ndash;10k/stack. Best profit zone. ~25% bite rate on Sole.</td></tr>
+   <tr><td>Batallia Downs</td><td>Sinking Minnow</td><td>Black Sole</td><td style="color:var(--ink-faint)">Alternative Sole spot. Skill 86&ndash;96.</td></tr>
+   <tr><td>Nashmau docks</td><td>Sinking Minnow</td><td>Pterygotus</td><td style="color:var(--ink-faint)">Skill 86&ndash;99. ~30% bite rate. Best bait is actually Lugworm.</td></tr>
+   <tr><td>Oldton Movalpolos (G/H-11)</td><td>Minnow</td><td>Armored Pisces</td><td style="color:var(--ink-faint)">Skill 86&ndash;108. 40&ndash;50% bite rate. Highest-rank fish in the game.</td></tr>
+  </tbody></table>
+  </div>
+
+  <div class="correction">
+   <b>If a spot goes dead</b> (no bites after 5+ minutes), try again after weather changes or at a different moon phase &mdash; both shift the catch pool. Switch to an alternative zone for that skill bracket.
+  </div>
+
+  <h3 style="font-size:.95rem;margin:14px 0 8px">Fish Reference &mdash; Best Bait</h3>
+  <p style="color:var(--ink-faint);font-size:.85rem;margin-bottom:10px">Quick lookup: strongest-affinity bait for each leveling target. Not all baits are equal &mdash; some common guides get these wrong.</p>
+  <div style="overflow-x:auto">
+  <table class="fish-tbl"><thead><tr><th>Fish</th><th>Skill</th><th>Best bait</th><th>Common alternatives</th></tr></thead><tbody>
+   <tr><td><b>Crayfish</b></td><td class="sk">7</td><td>Slice of Moat Carp</td><td>Little Worm</td></tr>
+   <tr><td><b>Moat Carp</b></td><td class="sk">11</td><td>Ball of Insect Paste</td><td>Little Worm</td></tr>
+   <tr><td><b>Quus</b></td><td class="sk">19</td><td>Lugworm *</td><td>Sabiki Rig</td></tr>
+   <tr><td><b>Cheval Salmon</b></td><td class="sk">21</td><td>Fly Lure</td><td>&mdash;</td></tr>
+   <tr><td><b>Nebimonite</b></td><td class="sk">27</td><td>Crayfish Paste *</td><td>Shrimp Lure</td></tr>
+   <tr><td><b>Crystal Bass</b></td><td class="sk">35</td><td>Minnow / Sinking Minnow</td><td>&mdash;</td></tr>
+   <tr><td><b>Nosteau Herring</b></td><td class="sk">39</td><td>Sardine Paste / Lugworm</td><td>Shrimp Lure</td></tr>
+   <tr><td><b>Cone Calamary</b></td><td class="sk">48</td><td>Minnow</td><td>&mdash;</td></tr>
+   <tr><td><b>Shall Shell</b></td><td class="sk">53</td><td>Robber Rig</td><td>&mdash;</td></tr>
+   <tr><td><b>Bluetail</b></td><td class="sk">55</td><td>Minnow</td><td>&mdash;</td></tr>
+   <tr><td><b>Crescent Fish</b></td><td class="sk">69</td><td>Fly Lure</td><td>&mdash;</td></tr>
+   <tr><td><b>Silver Shark</b></td><td class="sk">76</td><td>Meatball</td><td>&mdash;</td></tr>
+   <tr><td><b>Bastore Bream</b></td><td class="sk">86</td><td>Shrimp Lure</td><td>&mdash;</td></tr>
+   <tr><td><b>Mercanbaligi</b></td><td class="sk">86</td><td>Shrimp Lure</td><td>&mdash;</td></tr>
+   <tr><td><b>Ahtapot</b></td><td class="sk">90</td><td>Crayfish Paste / Shrimp Lure</td><td>Peeled Lobster</td></tr>
+   <tr><td><b>Black Sole</b></td><td class="sk">96</td><td>Sinking Minnow</td><td>&mdash;</td></tr>
+   <tr><td><b>Pterygotus</b></td><td class="sk">99</td><td>Lugworm *</td><td>Sinking Minnow</td></tr>
+   <tr><td><b>Armored Pisces</b></td><td class="sk">108</td><td>Frog Lure / Meatball / Minnow</td><td>Sinking Minnow</td></tr>
+  </tbody></table>
+  </div>
+  <p style="color:var(--ink-faint);font-size:.82rem;margin-top:6px">* = differs from what most guides recommend. Verified from server source data.</p>
  </details>
 
  <details open class="g-section panel pad">
