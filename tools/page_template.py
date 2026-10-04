@@ -120,90 +120,19 @@ def html_head(title, description='', og_url='', extra_css=''):
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">{style}
+<script src="/nav.js"></script>
 <script src="/powertools.js"></script>
 </head>
 <body>
 '''
 
 
-GATHERING_PAGES = [
-    ('/gathering/mining', 'Mining'), ('/gathering/logging', 'Logging'),
-    ('/gathering/harvesting', 'Harvesting'), ('/gathering/excavation', 'Excavation'),
-    ('/gathering/gardening', 'Gardening'), ('/fishing/', 'Fishing'),
-    ('/gathering/digging', 'Chocobo Digging'), ('/gathering/clamming', 'Clamming'),
-]
-
-
-def _nav_dropdown(label, landing_href, items, active):
-    is_active = any(active == k for _, _, k in items) or active == label.lower()
-    btn_cls = ' active' if is_active else ''
-    links = f'   <a href="{landing_href}" class="nav-dd-all">All {label}</a>\n'
-    for href, name, key in items:
-        acls = ' class="active"' if key == active else ''
-        links += f'   <a href="{href}"{acls}>{name}</a>\n'
-    return f'''\
- <div class="nav-dd">
-  <span class="nav-dd-btn{btn_cls}">{label} <span class="nav-dd-arr">&#9662;</span></span>
-  <div class="nav-dd-menu">
-{links}  </div>
- </div>'''
-
-
 def top_bar(active=''):
-    gathering_items = [(href, name, 'gathering') for href, name in GATHERING_PAGES]
-    zones_cls = ' active' if active == 'zones' else ''
-    nm_cls = ' active' if active == 'nm' else ''
-    bcnm_cls = ' active' if active == 'bcnm' else ''
-    guides_active = active in ('guides', 'fishing-cooking', 'fishing-101')
-    guides_cls = ' active' if guides_active else ''
-    fc_cls = ' class="active"' if active == 'fishing-cooking' else ''
-    f101_cls = ' class="active"' if active == 'fishing-101' else ''
-    gathering_dd = _nav_dropdown('Gathering', '/gathering/', gathering_items, active)
-    return f'''\
-<nav class="top-bar">
- <button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>
- <a href="/" class="logo">FFXI Crafting</a>
- <div class="nav-links">
-{gathering_dd}
-  <a href="/zone/" class="nav-link{zones_cls}">Zones</a>
-  <div class="nav-dd">
-   <span class="nav-dd-btn{guides_cls}">Guides <span class="nav-dd-arr">&#9662;</span></span>
-   <div class="nav-dd-menu">
-    <a href="/fishing-cooking"{fc_cls}>Fishing + Cooking</a>
-    <a href="/fishing-101"{f101_cls}>Fishing 101</a>
-   </div>
-  </div>
-  <a href="/nm/" class="nav-link{nm_cls}">NMs</a>
-  <a href="/bcnm" class="nav-link{bcnm_cls}">BCNMs</a>
- </div>
- <div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>
- <div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 &middot; ToAU</span></div>
- <button class="act" id="themeBtn" type="button">Theme</button>
-</nav>
-'''
-
-
-GUILD_HOURS = {
-    'wood': (6, 21), 'smith': (8, 23), 'gold': (8, 23), 'cloth': (6, 21),
-    'leather': (3, 18), 'bone': (8, 23), 'alchemy': (8, 23), 'cook': (5, 20), 'fish': (3, 18),
-}
+    return '<nav class="top-bar" id="topBar"></nav>\n'
 
 
 def guild_bar(active=''):
-    links = ''
-    for code, name, var in CRAFTS_ORDERED:
-        cls = ' class="active"' if f'craft-{code}' == active else ''
-        slug = name.lower()
-        o, c = GUILD_HOURS[code]
-        hrs = f'{o:02d}–{c:02d}'
-        links += f' <a href="/crafts/{slug}"{cls} style="color:var({var})"><svg aria-hidden="true"><use href="#i-{code}"/></svg>{name}<span class="gb-hrs">{hrs}</span><span id="guild-{code}" class="gb-dot"></span></a>\n'
-
-    fish_cls = ' class="active"' if 'craft-fish' == active else ''
-    o, c = GUILD_HOURS['fish']
-    hrs = f'{o:02d}–{c:02d}'
-    links += f' <a href="/gathering/fishing"{fish_cls} style="color:var(--fish)"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing<span class="gb-hrs">{hrs}</span><span id="guild-fish" class="gb-dot"></span></a>\n'
-
-    return f'<nav class="guild-bar">\n{links}</nav>\n'
+    return '<nav class="guild-bar" id="guildBar"></nav>\n<script>initNav()</script>\n'
 
 
 TOOL_ICONS = {
