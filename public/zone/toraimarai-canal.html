@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,300 +51,197 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Toraimarai Canal</nav>
 <header class="panel pad"><h1>Toraimarai Canal</h1>
+<div class="zone-hero">
+<div class="zone-map"><img src="/img/maps/toraimarai_canal.png" alt="Map of Toraimarai Canal" loading="lazy"><div class="map-dots"><span class="map-dot obj" style="left:82.0%;top:66.8%" data-name="EVENTER"></span><span class="map-dot obj" style="left:11.8%;top:21.1%" data-name="DIRECTOR"></span><span class="map-dot obj" style="left:82.3%;top:66.6%" data-name="Marble Door"></span><span class="map-dot obj" style="left:83.0%;top:68.0%" data-name="Marble Door"></span><span class="map-dot obj" style="left:84.1%;top:66.1%" data-name="Marble Door"></span><span class="map-dot obj" style="left:30.4%;top:45.7%" data-name="a gel"></span><span class="map-dot obj" style="left:50.7%;top:35.6%" data-name="a gel"></span><span class="map-dot obj" style="left:24.9%;top:61.6%" data-name="a gel"></span><span class="map-dot obj" style="left:37.3%;top:74.5%" data-name="a gel"></span><span class="map-dot obj" style="left:56.7%;top:65.2%" data-name="a gel"></span><span class="map-dot obj" style="left:7.6%;top:61.7%" data-name="a gel"></span><span class="map-dot obj" style="left:8.9%;top:61.7%" data-name="a gel"></span><span class="map-dot obj" style="left:7.7%;top:71.4%" data-name="a gel"></span><span class="map-dot obj" style="left:8.9%;top:71.4%" data-name="a gel"></span><span class="map-dot obj" style="left:38.3%;top:39.3%" data-name="a latticed door"></span><span class="map-dot obj" style="left:45.1%;top:68.0%" data-name="a latticed door"></span><span class="map-dot obj" style="left:25.7%;top:29.3%" data-name="a latticed door"></span><span class="map-dot obj" style="left:13.8%;top:53.7%" data-name="Large Stone Door"></span><span class="map-dot obj" style="left:37.8%;top:39.0%" data-name="???"></span><span class="map-dot obj" style="left:44.6%;top:68.4%" data-name="???"></span><span class="map-dot obj" style="left:63.1%;top:53.8%" data-name="???"></span><span class="map-dot obj" style="left:83.5%;top:66.0%" data-name="Tome of Magic"></span><span class="map-dot obj" style="left:82.5%;top:67.1%" data-name="Tome of Magic"></span><span class="map-dot obj" style="left:82.5%;top:65.8%" data-name="Tome of Magic"></span><span class="map-dot obj" style="left:83.9%;top:66.6%" data-name="Tome of Magic"></span><span class="map-dot obj" style="left:83.0%;top:65.5%" data-name="Tome of Magic"></span><span class="map-dot obj" style="left:89.5%;top:73.1%" data-name="Transporter"></span><span class="map-dot obj" style="left:4.5%;top:14.4%" data-name="Goblin Footprint"></span><span class="map-dot obj" style="left:18.1%;top:27.8%" data-name="GoalPoint"></span><span class="map-dot obj" style="left:43.6%;top:73.6%" data-name="GoalPoint"></span><span class="map-dot obj" style="left:72.8%;top:69.9%" data-name="GoalPoint"></span><span class="map-dot obj" style="left:88.9%;top:49.2%" data-name="GoalPoint"></span><span class="map-dot obj" style="left:10.2%;top:21.9%" data-name="Grounds Tome"></span><span class="map-dot obj" style="left:89.6%;top:50.4%" data-name="Grounds Tome"></span><span class="map-dot obj" style="left:93.0%;top:85.6%" data-name="Grounds Tome"></span><span class="map-dot obj" style="left:37.7%;top:70.6%" data-name="Grounds Tome"></span><span class="map-dot obj" style="left:50.2%;top:32.0%" data-name="Geomagnetic Fount"></span><span class="map-dot obj" style="left:10.2%;top:21.1%" data-name="Survival Guide"></span><span class="map-dot obj" style="left:18.4%;top:50.1%" data-name="Home Point #1"></span></div></div>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">26 (1 NM)</span></div>
 <div class="infobox-row"><span class="infobox-label">Caskets</span><span class="infobox-val">17 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Coffers</span><span class="infobox-val">7 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">114 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <div class="jump"><a href="#caskets">Field caskets</a><a href="#coffers">Treasure coffers</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="caskets"><h2>Field caskets</h2>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/4119-hi-potion-3" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4119.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Potion +3</a></td><td class="pct" style="text-align:right">17.1%</td></tr>
-<tr><td><a href="/item/4133-hi-ether-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4133.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Ether +1</a></td><td class="pct" style="text-align:right">16.8%</td></tr>
-<tr><td><a href="/item/4144-hi-elixir" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4144.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Elixir</a></td><td class="pct" style="text-align:right">5.81%</td></tr>
-<tr><td><a href="/item/739-chunk-of-orichalcum-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/739.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Orichalcum Ore</a></td><td class="pct" style="text-align:right">5.30%</td></tr>
-<tr><td><a href="/item/737-chunk-of-gold-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/737.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">4.34%</td></tr>
-<tr><td><a href="/item/2459-pinch-of-minium" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2459.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Minium</a></td><td class="pct" style="text-align:right">2.84%</td></tr>
-<tr><td><a href="/item/4155-remedy" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4155.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Remedy</a></td><td class="pct" style="text-align:right">2.56%</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">2.55%</td></tr>
-<tr><td><a href="/item/1213-handful-of-darksteel-bolt-heads" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1213.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Darksteel Bolt Heads</a></td><td class="pct" style="text-align:right">2.46%</td></tr>
-<tr><td><a href="/item/5662-dragon-fruit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5662.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dragon Fruit</a></td><td class="pct" style="text-align:right">2.15%</td></tr>
-<tr><td><a href="/item/769-red-rock" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/769.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Red Rock</a></td><td class="pct" style="text-align:right">2.14%</td></tr>
-<tr><td><a href="/item/844-phoenix-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/844.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Phoenix Feather</a></td><td class="pct" style="text-align:right">1.45%</td></tr>
-<tr><td><a href="/item/821-spool-of-rainbow-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/821.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Rainbow Thread</a></td><td class="pct" style="text-align:right">1.11%</td></tr>
-<tr><td><a href="/item/16520-verdun" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16520.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Verdun</a></td><td class="pct" style="text-align:right">0.380%</td></tr>
-<tr><td><a href="/item/13929-errant-hat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13929.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Errant Hat</a></td><td class="pct" style="text-align:right">0.270%</td></tr>
-<tr><td><a href="/item/14078-errant-cuffs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/14078.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Errant Cuffs</a></td><td class="pct" style="text-align:right">0.260%</td></tr>
-<tr><td><a href="/item/14380-errant-houppelande" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/14380.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Errant Houppelande</a></td><td class="pct" style="text-align:right">0.100%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Hi-Potion_+3" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:24;--isz:20px"></span> Hi-Potion +3</a></td><td class="pct" style="text-align:right">17.1%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Hi-Ether_+1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:25;--isz:20px"></span> Hi-Ether +1</a></td><td class="pct" style="text-align:right">16.8%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Hi-Elixir" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:25;--isz:20px"></span> Hi-Elixir</a></td><td class="pct" style="text-align:right">5.81%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Orichalcum_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:5;--isz:20px"></span> Chunk Of Orichalcum Ore</a></td><td class="pct" style="text-align:right">5.30%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:5;--isz:20px"></span> Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">4.34%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Minium" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:19;--isz:20px"></span> Pinch Of Minium</a></td><td class="pct" style="text-align:right">2.84%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Remedy" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:24;--ir:25;--isz:20px"></span> Remedy</a></td><td class="pct" style="text-align:right">2.56%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">2.55%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Darksteel_Bolt_Heads" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:25;--ir:9;--isz:20px"></span> Handful Of Darksteel Bolt Heads</a></td><td class="pct" style="text-align:right">2.46%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Dragon_Fruit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:4;--isz:20px;--is:1"></span> Dragon Fruit</a></td><td class="pct" style="text-align:right">2.15%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Red_Rock" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:5;--isz:20px"></span> Red Rock</a></td><td class="pct" style="text-align:right">2.14%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Phoenix_Feather" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:6;--isz:20px"></span> Phoenix Feather</a></td><td class="pct" style="text-align:right">1.45%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Rainbow_Thread" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:36;--ir:6;--isz:20px"></span> Spool Of Rainbow Thread</a></td><td class="pct" style="text-align:right">1.11%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Verdun" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:19;--isz:20px;--is:2"></span> Verdun</a></td><td class="pct" style="text-align:right">0.380%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Errant_Hat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:3;--isz:20px;--is:2"></span> Errant Hat</a></td><td class="pct" style="text-align:right">0.270%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Errant_Cuffs" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:14;--ir:5;--isz:20px;--is:2"></span> Errant Cuffs</a></td><td class="pct" style="text-align:right">0.260%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Errant_Houppelande" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:8;--isz:20px;--is:2"></span> Errant Houppelande</a></td><td class="pct" style="text-align:right">0.100%</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="coffers"><h2>Treasure coffers</h2>
 <p style="font-size:.88rem;color:var(--ink-soft)">Key: Toraimari Coffer Key · Level 60</p>
 <table><thead><tr><th>Item</th></tr></thead><tbody>
-<tr><td><a href="/item/784-jadeite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/784.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jadeite</a></td></tr>
-<tr><td><a href="/item/791-aquamarine" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/791.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Aquamarine</a></td></tr>
-<tr><td><a href="/item/797-painite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/797.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Painite</a></td></tr>
-<tr><td><a href="/item/801-chrysoberyl" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chrysoberyl</a></td></tr>
-<tr><td><a href="/item/802-moonstone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/802.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Moonstone</a></td></tr>
-<tr><td><a href="/item/803-sunstone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/803.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sunstone</a></td></tr>
-<tr><td><a href="/item/805-zircon" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/805.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Zircon</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Jadeite" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:63;--ir:5;--isz:20px"></span> Jadeite</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Aquamarine" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:6;--isz:20px"></span> Aquamarine</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Painite" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:12;--ir:6;--isz:20px"></span> Painite</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Chrysoberyl" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:6;--isz:20px"></span> Chrysoberyl</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Moonstone" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:6;--isz:20px"></span> Moonstone</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Sunstone" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:6;--isz:20px"></span> Sunstone</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Zircon" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:6;--isz:20px"></span> Zircon</a></td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="nms"><h2>Notorious monsters</h2>
 <details class="mob"><summary><span class="mob-name">Oni Carcass</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 68–70</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/849-undead-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/849.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Undead Skin</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/849-undead-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/849.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Undead Skin</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/849-undead-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/849.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Undead Skin</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Undead_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:7;--isz:20px"></span> Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Undead_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:7;--isz:20px"></span> Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Undead_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:7;--isz:20px"></span> Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Bigclaw aggro</span> <span class="mob-lv">Lv 49–52</span> <span class="mob-spawns">19 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:8;--isz:20px"></span> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Crab_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:32;--ir:7;--isz:20px"></span> Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Land_Crab_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:28;--isz:20px"></span> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Land_Crab_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:28;--isz:20px"></span> Slice Of Land Crab Meat</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bigclaw fished</span> <span class="mob-lv">Lv 49–52</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:8;--isz:20px"></span> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Crab_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:32;--ir:7;--isz:20px"></span> Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Land_Crab_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:28;--isz:20px"></span> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Land_Crab_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:28;--isz:20px"></span> Slice Of Land Crab Meat</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bloodsucker TC</span> <span class="mob-lv">Lv 54–57</span> <span class="mob-spawns">8 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Fiend_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:8;--isz:20px"></span> Vial Of Fiend Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bloodsucker fished</span> <span class="mob-lv">Lv 54–57</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Fiend_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:8;--isz:20px"></span> Vial Of Fiend Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Bouncing Ball</span> <span class="mob-lv">Lv 64–67</span> <span class="mob-spawns">7 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/930-vial-of-beastman-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/930.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Beastman Blood</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Fiend_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:8;--isz:20px"></span> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Beastman_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:11;--ir:8;--isz:20px"></span> Vial Of Beastman Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Canal Bats TC</span> <span class="mob-lv">Lv 45–47</span> <span class="mob-spawns">17 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Fang" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:7;--isz:20px"></span> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Fang" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:7;--isz:20px"></span> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:8;--isz:20px"></span> Bat Wing</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Dark Aspic</span> <span class="mob-lv">Lv 53–55</span> <span class="mob-spawns">7 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Dire Bat UDT TC SSG</span> <span class="mob-lv">Lv 62–64</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/930.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Beastman Blood</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:8;--isz:20px"></span> Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Fang" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:7;--isz:20px"></span> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Fiend_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:8;--isz:20px"></span> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Beastman_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:11;--ir:8;--isz:20px"></span> Vial Of Beastman Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Doom Mage TC</span> <span class="mob-lv">Lv 65–67</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Doom Soldier TC</span> <span class="mob-lv">Lv 65–67</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Fallen Knight</span> <span class="mob-lv">Lv 52–55</span> <span class="mob-spawns">14 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Fleshcraver</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Girtab</span> <span class="mob-lv">Lv 58–60</span> <span class="mob-spawns">2 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/896-scorpion-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/896.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scorpion Shell</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/897-scorpion-claw" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/897.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scorpion Claw</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/897-scorpion-claw" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/897.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scorpion Claw</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Scorpion_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:7;--isz:20px"></span> Scorpion Shell</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Scorpion_Claw" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:7;--isz:20px"></span> Scorpion Claw</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Scorpion_Claw" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:7;--isz:20px"></span> Scorpion Claw</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Hell Bat TC</span> <span class="mob-lv">Lv 47–49</span> <span class="mob-spawns">27 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:8;--isz:20px"></span> Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Fang" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:7;--isz:20px"></span> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Fiend_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:8;--isz:20px"></span> Vial Of Fiend Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Impish Bats</span> <span class="mob-lv">Lv 58–60</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/922-bat-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/922.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Wing</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/891-bat-fang" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/891.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bat Fang</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/924-vial-of-fiend-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/924.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Fiend Blood</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/930-vial-of-beastman-blood" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/930.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Beastman Blood</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:8;--isz:20px"></span> Bat Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Bat_Fang" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:7;--isz:20px"></span> Bat Fang</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Fiend_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:8;--isz:20px"></span> Vial Of Fiend Blood</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Beastman_Blood" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:11;--ir:8;--isz:20px"></span> Vial Of Beastman Blood</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Lich</span> <span class="mob-lv">Lv 54–57</span> <span class="mob-spawns">4 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Makara</span> <span class="mob-lv">Lv 49–52</span> <span class="mob-spawns">25 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/868.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pugil Scales</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Pugil_Scales" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:19;--ir:7;--isz:20px"></span> Handful Of Pugil Scales</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Mindcraver</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Mousse SSG</span> <span class="mob-lv">Lv 63–65</span> <span class="mob-spawns">3 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Mousse fished</span> <span class="mob-lv">Lv 63–65</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/637-vial-of-slime-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/637.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Slime_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:3;--isz:20px"></span> Vial Of Slime Oil</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Rock Crab fished</span> <span class="mob-lv">Lv 52–54</span> <span class="mob-flags">fished · scripted</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:8;--isz:20px"></span> Chunk Of Rock Salt</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Land_Crab_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:28;--isz:20px"></span> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Crab_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:32;--ir:7;--isz:20px"></span> Crab Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Rotten Sod</span> <span class="mob-lv">Lv 58–60</span> <span class="mob-spawns">1 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/940-revival-tree-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/940.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Revival Tree Root</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/849-undead-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/849.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Undead Skin</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Revival_Tree_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:8;--isz:20px"></span> Revival Tree Root</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Undead_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:7;--isz:20px"></span> Undead Skin</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Scavenger Crab</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-spawns">6 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4400-slice-of-land-crab-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4400.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Slice Of Land Crab Meat</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/881-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/881.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crab Shell</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1193-high-quality-crab-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1193.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> High-Quality Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Land_Crab_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:28;--isz:20px"></span> Slice Of Land Crab Meat</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Crab_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:32;--ir:7;--isz:20px"></span> Crab Shell</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/High-Quality_Crab_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:19;--ir:9;--isz:20px"></span> High-Quality Crab Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Starmite</span> <span class="mob-lv">Lv 65–67</span> <span class="mob-spawns">5 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/846-insect-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/846.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Insect Wing</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/894-beetle-jaw" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/894.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beetle Jaw</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Insect_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:6;--isz:20px"></span> Insect Wing</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Beetle_Jaw" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:43;--ir:7;--isz:20px"></span> Beetle Jaw</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Stygian Pugil</span> <span class="mob-lv">Lv 63–65</span> <span class="mob-spawns">10 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/868-handful-of-pugil-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/868.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Pugil Scales</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Pugil_Scales" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:19;--ir:7;--isz:20px"></span> Handful Of Pugil Scales</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/864-handful-of-fish-scales" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/864.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/880-bone-chip" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/880.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/936-chunk-of-rock-salt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/936.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Fish_Scales" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:15;--ir:7;--isz:20px"></span> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Fish_Scales" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:15;--ir:7;--isz:20px"></span> Handful Of Fish Scales</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bone_Chip" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:7;--isz:20px"></span> Bone Chip</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:8;--isz:20px"></span> Chunk Of Rock Salt</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

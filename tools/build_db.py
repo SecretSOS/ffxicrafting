@@ -4,7 +4,7 @@ Scope: every item used in or produced by a synth recipe, plus every known way to
 Usage: python build_db.py <lsb_root> <out.db> [<phoenix_modules>]   (needs: pip install pyyaml)"""
 import re, sys, os, glob, json, csv, sqlite3, collections, yaml
 ROOT, OUT = sys.argv[1], sys.argv[2]
-PXI = sys.argv[3] if len(sys.argv) > 3 else None
+PXI = sys.argv[3] if len(sys.argv) > 3 else r'C:\Users\MEE87\Documents\phoenix-server\modules'
 P = lambda *a: os.path.join(ROOT, *a)
 rd = lambda f: open(f, encoding='utf-8', errors='ignore').read()
 rel = lambda f: os.path.relpath(f, ROOT).replace('\\', '/')
@@ -447,26 +447,32 @@ for f in sorted(glob.glob(P('scripts/quests/*/*.lua'))):
           qlo=qty, qhi=qty, notes='quest reward', file=rel(f))
 # ---------- 21. fishing: fish stats, rods, baits, bait affinity, catch areas
 cur.executescript("""CREATE TABLE fish(item_id INT PRIMARY KEY, name TEXT, skill INT, difficulty INT, min_length INT, max_length INT,
-  size_type TEXT, water_type TEXT, legendary INT, hour_pattern INT, moon_pattern INT, ranking INT);
+  size_type TEXT, water_type TEXT, legendary INT, hour_pattern INT, moon_pattern INT, month_pattern INT, ranking INT,
+  rarity INT, base_delay INT, base_move INT, flags INT, max_hook INT, is_item INT);
 CREATE TABLE fishing_rods(item_id INT PRIMARY KEY, name TEXT, size_type TEXT, min_rank INT, max_rank INT, fish_attack INT,
-  fish_recovery INT, fish_time INT, breakable INT, broken_item_id INT);
-CREATE TABLE fishing_baits(item_id INT PRIMARY KEY, name TEXT, type TEXT, max_hook INT, losable INT, rank_mod INT);
+  fish_recovery INT, fish_time INT, breakable INT, broken_item_id INT, legendary INT, material INT,
+  lgd_bonus_attack INT, lgd_bonus_time INT, sm_delay_bonus INT, sm_move_bonus INT, lg_delay_bonus INT, lg_move_bonus INT,
+  multiplier INT, flags INT, rating INT);
+CREATE TABLE fishing_baits(item_id INT PRIMARY KEY, name TEXT, type TEXT, max_hook INT, losable INT, rank_mod INT, flags INT);
 CREATE TABLE fishing_bait_for(bait_item_id INT, fish_item_id INT, power INT);
 CREATE TABLE fishing_areas(zone TEXT, area TEXT, fish_item_id INT, rarity INT, pool_size INT, restock_rate INT);""")
 SIZE = {0: 'small', 1: 'large'}
 WATER = {0: 'sea/ocean', 1: 'freshwater'}
 zname = {int(m[0]): m[1].replace('_', ' ') for m in re.findall(r"INSERT INTO `zone_settings` VALUES \((\d+),'[^']*',\d+,'([^']*)'", rd(P('sql/zone_settings.sql')))}
-for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_fish.sql'))):
+for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_fish.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
-    cur.execute("INSERT OR REPLACE INTO fish VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], int(g[2]), int(g[3]), int(g[6]), int(g[7]),
-        SIZE.get(int(g[9]), str(g[9])), WATER.get(int(g[10]), str(g[10])), int(g[18]), int(g[15]), int(g[16]), int(g[8])))
-for m in re.finditer(r"INSERT INTO `fishing_rod` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_rod.sql'))):
+    cur.execute("INSERT OR REPLACE INTO fish VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], int(g[2]), int(g[3]), int(g[6]), int(g[7]),
+        SIZE.get(int(g[9]), str(g[9])), WATER.get(int(g[10]), str(g[10])), int(g[18]), int(g[15]), int(g[16]), int(g[17]), int(g[8]),
+        int(g[22]), int(g[4]), int(g[5]), int(g[14]), int(g[21]), int(g[20])))
+for m in re.finditer(r"INSERT INTO `fishing_rod` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_rod.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
-    cur.execute("INSERT OR REPLACE INTO fishing_rods VALUES (?,?,?,?,?,?,?,?,?,?)", (iid, g[1], SIZE.get(int(g[3]), str(g[3])),
-        int(g[5]), int(g[6]), int(g[7]), int(g[9]), int(g[10]), int(g[17]), int(g[18])))
+    cur.execute("INSERT OR REPLACE INTO fishing_rods VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], SIZE.get(int(g[3]), str(g[3])),
+        int(g[5]), int(g[6]), int(g[7]), int(g[9]), int(g[10]), int(g[17]), int(g[18]),
+        int(g[20]), int(g[2]), int(g[8]), int(g[11]), int(g[12]), int(g[13]), int(g[14]), int(g[15]),
+        int(g[16]), int(g[4]), int(g[21])))
 for m in re.finditer(r"INSERT INTO `fishing_bait` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_bait.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
-    cur.execute("INSERT OR REPLACE INTO fishing_baits VALUES (?,?,?,?,?,?)", (iid, g[1], {0: 'bait', 1: 'lure'}.get(int(g[2]), g[2]), int(g[3]), int(g[4]), int(g[7])))
+    cur.execute("INSERT OR REPLACE INTO fishing_baits VALUES (?,?,?,?,?,?,?)", (iid, g[1], {0: 'bait', 1: 'lure'}.get(int(g[2]), g[2]), int(g[3]), int(g[4]), int(g[7]), int(g[5])))
 for m in re.finditer(r"INSERT INTO `fishing_bait_affinity` VALUES \((\d+),(\d+),(\d+)\)", rd(P('sql/fishing_bait_affinity.sql'))):
     cur.execute("INSERT INTO fishing_bait_for VALUES (?,?,?)", (int(m[1]), int(m[2]), int(m[3])))
 groups = collections.defaultdict(list)

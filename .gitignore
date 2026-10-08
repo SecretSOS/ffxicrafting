@@ -27,3 +27,6 @@ Thumbs.db
 # Uncomment if the database gets too large for comfort and you would rather
 # rebuild it than commit it. It is ~8 MB, which git handles fine.
 # data/ffxi_crafting.db
+
+.vercel
+.env*.local

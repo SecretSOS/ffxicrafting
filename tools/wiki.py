@@ -27,6 +27,10 @@ def wiki_url(title):
     return 'https://horizonffxi.wiki/w/index.php?'+urllib.parse.urlencode({'search':title,'title':'Special:Search','go':'Go'})
 def db_url(name):
     return 'https://horizonxi.com/items/'+name
+def phoenix_url(name, sortname=None):
+    raw = name.replace(' ', '_').lower()
+    t = wiki_title(raw, sortname)
+    return 'https://wiki.phoenix-xi.com/' + t.replace(' ', '_')
 if __name__=='__main__':
     for n,s in [('chunk_of_copper_ore','copper_ore'),('royal_knights_belt','ryl.kgt._belt'),('scroll_of_warp_ii','warp_ii'),('dart_+1','dart_+1'),('scroll_of_absorb-vit','absorb-vit'),('wrestlers_aspis','wrestlers_aspis')]:
         t=wiki_title(n,s); print(n,'->',t,wiki_url(t))

@@ -8,22 +8,18 @@ DB = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT = os.path.join(ROOT, 'public', 'fishing-101.html')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end
+from page_template import html_head, layout_open, layout_close, page_end, icon_html
+from wiki import phoenix_url
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
 lsb_commit = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()['v']
 
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
-
 def _icon(iid, size=20):
-    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
-        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
-    return ''
+    return icon_html(iid, size)
 
 def item_link(item_id, name):
-    slug = name.lower().replace(' ', '-').replace("'", '')
-    return f'<a href="/item/{item_id}-{slug}" style="display:inline-flex;align-items:center;gap:4px">{_icon(item_id)}{escape(name)}</a>'
+    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{_icon(item_id)}{escape(name)}</a>'
 
 def lookup(name_str):
     r = db.execute("SELECT id, name FROM items WHERE LOWER(name)=LOWER(?)", (name_str,)).fetchone()
@@ -107,6 +103,7 @@ html += '''\
   <a href="#route-b">Route B</a>
   <a href="#fish-ref">Fish Locations</a>
   <a href="#tips">Tips</a>
+  <a href="#gp-keys">GP Key Items</a>
   <a href="#lushang">Lu Shang\'s Rod</a>
  </nav>
 
@@ -389,6 +386,25 @@ html += '''\
    <li>Fisherman\'s Apron (100,000 GP) reduces junk catches &mdash; not a day-one purchase, but worth it once you\'re serious.</li>
    <li><b>You can\'t multitask while fishing.</b> Trading items, swapping gear sets, crafting, logging out, and sitting are all blocked while your line is out.</li>
   </ul>
+ </details>
+
+'''
+
+# --- GP Key Items ---
+html += '''\
+ <details open class="g-section panel pad">
+  <summary><h2 id="gp-keys">GP Key Items</h2></summary>
+  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">The Fishermen&#8217;s Guild sells key items with guild points that unlock special fishing abilities. These are purchased from the Union Representative.</p>
+  <table class="route-tbl" style="margin-bottom:12px">
+   <thead><tr><th>Key Item</th><th>Cost</th><th>Min Rank</th><th>What it does</th></tr></thead>
+   <tbody>
+    <tr><td><span class="pill ki">Frog Fishing</span></td><td style="color:var(--accent);font-weight:700">30,000 GP</td><td>Novice</td><td>Allows catching fish with frog-type lures (Frog Lure, Frog Flyfishing). Required for some large freshwater catches.</td></tr>
+    <tr><td><span class="pill ki">Serpent Rumors</span></td><td style="color:var(--accent);font-weight:700">95,000 GP</td><td>Adept</td><td>Unlocks special sea serpent catches in certain zones.</td></tr>
+    <tr><td><span class="pill ki">Mooching</span></td><td style="color:var(--accent);font-weight:700">115,000 GP</td><td>Veteran</td><td>Allows using caught fish as bait directly from your inventory to catch larger fish.</td></tr>
+    <tr><td><span class="pill ki">Angler&#8217;s Almanac</span></td><td style="color:var(--accent);font-weight:700">20,000 GP</td><td>Veteran</td><td>Shows additional information about hooked fish before you reel in.</td></tr>
+   </tbody>
+  </table>
+  <p style="color:var(--ink-faint);font-size:.82rem">Frog Fishing is the most impactful early purchase &mdash; frog lures catch high-value freshwater fish that are otherwise inaccessible. Start saving GP early.</p>
  </details>
 
 '''

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brady Guide Components · FFXI Crafting</title>
+<meta name="description" content="Showcase of every Brady Games strategy guide component available in style.css.">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script src="/nav.js"></script>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Component Test</nav>
+
+<!-- ============================================================
+     BRADY GUIDE COMPONENTS — COPY-PASTE REFERENCE
+
+     Edit this file to try things out. Every component below
+     is a CSS class from style.css — no JS needed. Just use
+     the HTML structure shown and swap in your own text.
+     ============================================================ -->
+
+
+<!-- ────────────────────────────────────────────────────────────
+     1. CHAPTER HEADER
+     Use at the top of a guide page or major section break.
+     ──────────────────────────────────────────────────────────── -->
+<div class="chapter-header">
+  <div class="chapter-num">Chapter 1</div>
+  <h1 class="chapter-title">Fishing + Cooking Leveling Guide</h1>
+  <p class="chapter-sub">A dual-craft path from 1 to 100 on Phoenix</p>
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     2. GUIDE TIP  (amber/gold — general advice)
+     The "TIP" label appears automatically via CSS ::before.
+     ──────────────────────────────────────────────────────────── -->
+<div class="guide-tip">
+  <strong>Frog Lure</strong> in Giddeus covers Dark Bass all the way to Red Terrapin.
+  No gear swap needed — Carbon Rod the whole way.
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     3. GUIDE WARNING  (red — watch out / danger)
+     The "!!" label appears automatically.
+     ──────────────────────────────────────────────────────────── -->
+<div class="guide-warning">
+  Don't sell your guild key items — you <strong>cannot</strong> rebuy them.
+  If you drop Woodworking's Lumberjack key item, those recipes are
+  locked forever on that character.
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     4. GUIDE PROTIP  (green — advanced / money-saving)
+     The "PRO" label appears automatically.
+     ──────────────────────────────────────────────────────────── -->
+<div class="guide-protip">
+  Millioncorn from <strong>Benaige</strong> in Southern San d'Oria is 48g,
+  not 240g guild price. Cornstarch is vendor trash but cheap to make
+  — float alchemy levels with it.
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     5. GUIDE NOTE  (subtle — background info, no icon)
+     ──────────────────────────────────────────────────────────── -->
+<div class="guide-note">
+  Guild shops restock every Vana'diel day (57.6 real seconds).
+  If the NPC is sold out, wait or zone and come back.
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     6. LEVEL BAND  (skill range header)
+     Use to introduce a new tier/bracket in a leveling guide.
+     ──────────────────────────────────────────────────────────── -->
+<div class="level-band">
+  <span class="band-range">Cooking 1–10</span>
+  <span class="band-label">Getting started — everything from NPCs</span>
+</div>
+
+<p style="color:var(--ink-soft);margin:0 0 8px">Your recipes and notes for this tier go here. Regular paragraphs, tables, whatever you need.</p>
+
+<div class="guide-tip">
+  Buy Distilled Water and Rock Salt from the Culinarians' Guild.
+  Pebble Soup is pure profit at this range.
+</div>
+
+<div class="level-band">
+  <span class="band-range">Cooking 11–20</span>
+  <span class="band-label">Tortillas and cheap synths</span>
+</div>
+
+<p style="color:var(--ink-soft);margin:0 0 8px">Next tier content goes here.</p>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     7. IMAGE SLOT  (placeholder for screenshots)
+
+     Empty version (no image yet):
+     ──────────────────────────────────────────────────────────── -->
+<div class="img-slot empty">Screenshot goes here</div>
+
+<!-- With an actual image + caption: -->
+<div class="img-slot">
+  <img src="/img/wip.png" alt="Example image">
+  <p class="caption">This is a caption under the image.</p>
+</div>
+
+<!-- Floated image (wraps text around it): -->
+<div style="overflow:hidden;margin:14px 0">
+  <div class="img-slot img-float-right">
+    <img src="/img/wip.png" alt="Floated example">
+    <p class="caption">Floated right</p>
+  </div>
+  <p style="color:var(--ink-soft);line-height:1.6">
+    This text wraps around the floated image on the right.
+    Use <code>img-float-right</code> or <code>img-float-left</code>
+    to position screenshots alongside your guide text, just like
+    in a real Brady Games strategy guide. The image takes up about
+    40% of the width and the text flows around it naturally.
+    Add as much text as you need and it will keep wrapping.
+    This is great for showing an NPC location or a map while
+    describing what to do.
+  </p>
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     8. QUICK REFERENCE TABLE
+     Good for summarizing a tier's recipes, materials, etc.
+     ──────────────────────────────────────────────────────────── -->
+<div class="quick-ref">
+  <div class="qr-head">Quick Reference — Cooking 1–10</div>
+  <table>
+    <thead>
+      <tr><th>Recipe</th><th>Skill</th><th>Crystal</th><th>Ingredients</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Pebble Soup</td><td>1</td><td>Fire</td><td>Distilled Water, Rock Salt, Pebble</td></tr>
+      <tr><td>Roasted Corn</td><td>3</td><td>Fire</td><td>Millioncorn</td></tr>
+      <tr><td>Boiled Crayfish</td><td>5</td><td>Water</td><td>Crayfish, Distilled Water</td></tr>
+      <tr><td>Salmon Sub</td><td>9</td><td>Wind</td><td>Salmon, Horo Flour, San d'Orian Flour, Selbina Butter</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ────────────────────────────────────────────────────────────
+     9. MIXING THEM TOGETHER
+     Here's what a real guide section looks like.
+     ──────────────────────────────────────────────────────────── -->
+<div class="chapter-header">
+  <div class="chapter-num">Chapter 2</div>
+  <h1 class="chapter-title">Example: Putting It All Together</h1>
+  <p class="chapter-sub">How a real guide section looks when you combine components</p>
+</div>
+
+<div class="level-band">
+  <span class="band-range">Fishing 30–40</span>
+  <span class="band-label">Giddeus to Selbina — the Carbon Rod era</span>
+</div>
+
+<div class="guide-tip">
+  <strong>Frog Lure</strong> in Giddeus — Dark Bass to Red Terrapin, no gear swap needed. Carbon Rod the whole way.
+</div>
+
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Head to Giddeus with a Carbon Rod and Frog Lures. Dark Bass start biting
+  at skill 30 and you'll transition to Red Terrapin around 36. Both sell
+  to NPCs for decent gil, making this stretch self-funding.
+</p>
+
+<div class="guide-warning">
+  Watch your inventory — Dark Bass don't stack. Bring a <strong>Mog Satchel</strong>
+  or plan to make multiple trips.
+</div>
+
+<div class="quick-ref">
+  <div class="qr-head">Quick Reference — Fishing 30–40</div>
+  <table>
+    <thead>
+      <tr><th>Zone</th><th>Bait</th><th>Target</th><th>Skill Range</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Giddeus</td><td>Frog Lure</td><td>Dark Bass</td><td>30–36</td></tr>
+      <tr><td>Giddeus</td><td>Frog Lure</td><td>Red Terrapin</td><td>36–40</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="guide-protip">
+  Red Terrapin are also a guild point turn-in for Fishing at the
+  <strong>Craftsman</strong> tier. If you're leveling guild rank alongside
+  skill, keep a few in storage.
+</div>
+
+<div class="img-slot empty">Screenshot: Giddeus fishing spot location</div>
+
+<div class="guide-note">
+  Giddeus is a Yagudo beastman zone. Bring Invisible or be prepared to fight.
+  The fishing spot is in the first open area past the zone entrance.
+</div>
+
+
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script src="/ah-prices.js"></script>
+<script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
+</body>
+</html>

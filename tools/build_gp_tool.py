@@ -124,7 +124,7 @@ function craftCost(itemId){
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
-function itemUrl(id){var it=I[id];if(!it)return'#';var slug=it.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');return'/item/'+id+'-'+slug;}
+function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
 function renderGuilds(){
   var h='';
   CRAFTS.forEach(function(c){
@@ -174,7 +174,7 @@ function render(){
     var costStr=r.cost!==null?gil(Math.round(r.cost)):'<span style="color:var(--ink-faint)">—</span>';
     var cpgpStr=r.cpgp!==null?fmt(Math.round(r.cpgp)):'—';
     var cpgpCls=r.cpgp!==null&&r.cpgp<100?'gain':r.cpgp!==null&&r.cpgp>500?'loss':'';
-    html+='<tr><td><div class="rname"><a href="'+itemUrl(it.id)+'">'+esc(info.n)+'</a>';
+    html+='<tr><td><div class="rname"><a href="'+itemUrl(it.id)+'" target="_blank" rel="noopener">'+esc(info.n)+'</a>';
     html+='<span class="tier-tag">Tier '+it.t+'</span></div>';
     if(r.cost!==null){
       var rc=RC[String(it.id)];

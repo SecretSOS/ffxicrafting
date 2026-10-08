@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,173 +51,70 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Mhaura</nav>
 <header class="panel pad"><h1>Mhaura</h1>
+<div class="zone-hero">
+<div class="zone-map"><img src="/img/maps/mhaura.png" alt="Map of Mhaura" loading="lazy"><div class="map-dots"><span class="map-dot npc" style="left:30.9%;top:53.9%" data-name="Hyria"></span><span class="map-dot npc" style="left:36.9%;top:48.1%" data-name="Somo Aatsula"></span><span class="map-dot npc" style="left:39.0%;top:52.5%" data-name="Mauh Halaapah"></span><span class="map-dot npc" style="left:36.4%;top:50.6%" data-name="Maximin"></span><span class="map-dot npc" style="left:38.0%;top:51.0%" data-name="Zhon Kihshimo"></span><span class="map-dot npc" style="left:37.6%;top:49.4%" data-name="Runito-Monito"></span><span class="map-dot obj" style="left:38.1%;top:50.9%" data-name="Take"></span><span class="map-dot npc" style="left:37.8%;top:49.4%" data-name="Rycharde"></span><span class="map-dot npc" style="left:37.8%;top:51.0%" data-name="Graine"></span><span class="map-dot npc" style="left:33.5%;top:50.4%" data-name="Yabby Tanmikey"></span><span class="map-dot npc" style="left:33.4%;top:50.4%" data-name="Celestina"></span><span class="map-dot npc" style="left:31.2%;top:53.8%" data-name="Mololo"></span><span class="map-dot npc" style="left:31.2%;top:53.7%" data-name="Kamilah"></span><span class="map-dot npc" style="left:30.1%;top:54.3%" data-name="Ekokoko"></span><span class="map-dot npc" style="left:29.9%;top:53.8%" data-name="Numi Adaligo"></span><span class="map-dot npc" style="left:32.6%;top:53.7%" data-name="Pikini-Mikini"></span><span class="map-dot obj" style="left:33.4%;top:51.9%" data-name="Orlando"></span><span class="map-dot obj" style="left:39.0%;top:54.8%" data-name="Grimr"></span><span class="map-dot obj" style="left:39.0%;top:54.7%" data-name="Zexu"></span><span class="map-dot npc" style="left:34.1%;top:53.3%" data-name="Bihoro-Guhoro"></span><span class="map-dot npc" style="left:34.1%;top:53.1%" data-name="Kupupu"></span><span class="map-dot npc" style="left:39.4%;top:49.7%" data-name="Amalanbraux"></span><span class="map-dot obj" style="left:33.0%;top:54.8%" data-name="Galdo"></span><span class="map-dot obj" style="left:35.2%;top:51.9%" data-name="Lakom-Lukom"></span><span class="map-dot npc" style="left:38.1%;top:53.1%" data-name="Celestina"></span><span class="map-dot obj" style="left:39.2%;top:49.8%" data-name="Nereus"></span><span class="map-dot npc" style="left:33.7%;top:55.4%" data-name="Katsunaga"></span><span class="map-dot npc" style="left:39.7%;top:53.0%" data-name="Kotan-Purutan"></span><span class="map-dot npc" style="left:36.8%;top:53.4%" data-name="Pekuku"></span><span class="map-dot npc" style="left:37.2%;top:52.0%" data-name="Ludwig"></span><span class="map-dot obj" style="left:35.4%;top:49.5%" data-name="Home Point #1"></span><span class="map-dot obj" style="left:38.1%;top:50.3%" data-name="Door:&quot;Sailors' Stay&quot;"></span><span class="map-dot obj" style="left:38.1%;top:52.0%" data-name="Door:&quot;Sailors' Stay&quot;"></span><span class="map-dot obj" style="left:33.9%;top:51.2%" data-name="Door:Goldsmiths' Guild"></span><span class="map-dot obj" style="left:34.2%;top:52.5%" data-name="Door:Orlando's Antiques"></span><span class="map-dot obj" style="left:32.1%;top:54.0%" data-name="Door:Blacksmiths' Guild"></span><span class="map-dot obj" style="left:30.8%;top:54.0%" data-name="Door:Governor's House"></span><span class="map-dot npc" style="left:40.1%;top:53.4%" data-name="Felisa"></span><span class="map-dot npc" style="left:39.2%;top:53.6%" data-name="Albin"></span><span class="map-dot npc" style="left:39.2%;top:53.4%" data-name="Radhika"></span><span class="map-dot npc" style="left:40.1%;top:53.6%" data-name="Emyr"></span><span class="map-dot npc" style="left:38.9%;top:53.5%" data-name="Condor Eye"></span><span class="map-dot npc" style="left:40.4%;top:53.5%" data-name="Standing Bear"></span><span class="map-dot npc" style="left:37.1%;top:56.4%" data-name="Dieh Yamilsiah"></span><span class="map-dot obj" style="left:39.0%;top:53.5%" data-name="_6xu"></span><span class="map-dot obj" style="left:40.3%;top:53.5%" data-name="_6xv"></span><span class="map-dot obj" style="left:37.1%;top:56.5%" data-name="_6xw"></span><span class="map-dot npc" style="left:31.2%;top:54.2%" data-name="Koh Lenbalalako"></span><span class="map-dot npc" style="left:29.5%;top:47.5%" data-name="Shikaree M"></span><span class="map-dot obj" style="left:31.9%;top:54.0%" data-name="Semih Lafihna"></span><span class="map-dot npc" style="left:29.1%;top:47.4%" data-name="Koh Lenbalalako"></span><span class="map-dot npc" style="left:37.5%;top:58.4%" data-name="OYAMISURA01"></span><span class="map-dot npc" style="left:37.5%;top:57.9%" data-name="OYAMISURA02"></span><span class="map-dot npc" style="left:37.5%;top:57.8%" data-name="OYAMISURA03"></span><span class="map-dot npc" style="left:37.7%;top:57.8%" data-name="OYAMISURA04"></span><span class="map-dot npc" style="left:37.6%;top:57.7%" data-name="OYAMISURA05"></span><span class="map-dot npc" style="left:37.8%;top:57.9%" data-name="OYAMISURA06"></span><span class="map-dot npc" style="left:37.9%;top:58.2%" data-name="OYAMISURA07"></span><span class="map-dot npc" style="left:37.3%;top:58.2%" data-name="OYAMISURA08"></span><span class="map-dot npc" style="left:31.0%;top:53.5%" data-name="OYAMISURA09"></span><span class="map-dot obj" style="left:30.5%;top:53.6%" data-name="Chocobo"></span><span class="map-dot obj" style="left:30.3%;top:53.8%" data-name="Chocobo02"></span><span class="map-dot obj" style="left:19.8%;top:28.8%" data-name="Chocobo03"></span><span class="map-dot obj" style="left:30.9%;top:53.4%" data-name="Chocobo04"></span><span class="map-dot npc" style="left:11.0%;top:26.7%" data-name="HEISHI01"></span><span class="map-dot npc" style="left:95.5%;top:58.5%" data-name="HEISHI02"></span><span class="map-dot obj" style="left:29.4%;top:47.6%" data-name="Perih Vashai"></span><span class="map-dot npc" style="left:38.8%;top:52.1%" data-name="Ripapa"></span><span class="map-dot npc" style="left:39.0%;top:52.1%" data-name="Lacia"></span><span class="map-dot npc" style="left:37.5%;top:55.1%" data-name="???"></span><span class="map-dot npc" style="left:35.9%;top:50.9%" data-name="Phoochuchu"></span><span class="map-dot npc" style="left:33.2%;top:50.9%" data-name="Fyi Chalmwoh"></span><span class="map-dot npc" style="left:35.1%;top:52.2%" data-name="Keshab-Menjab"></span><span class="map-dot npc" style="left:33.9%;top:54.5%" data-name="Emila"></span><span class="map-dot npc" style="left:37.3%;top:51.2%" data-name="Mauriri"></span><span class="map-dot npc" style="left:36.9%;top:49.0%" data-name="Panoru-Kanoru"></span><span class="map-dot obj" style="left:37.6%;top:51.5%" data-name="Nomad Moogle"></span><span class="map-dot obj" style="left:37.8%;top:51.7%" data-name="Nomad Moogle"></span><span class="map-dot obj" style="left:36.9%;top:50.8%" data-name="Explorer Moogle"></span><span class="map-dot npc" style="left:36.7%;top:50.8%" data-name="mgtest"></span><span class="map-dot npc" style="left:32.3%;top:54.0%" data-name="Tya Padolih"></span><span class="map-dot obj" style="left:38.4%;top:51.7%" data-name="Porter Moogle"></span><span class="map-dot npc" style="left:39.7%;top:49.6%" data-name="Zurko-Bazurko"></span><span class="map-dot obj" style="left:39.9%;top:49.7%" data-name="Proto-Waypoint"></span><span class="map-dot npc" style="left:35.9%;top:48.3%" data-name="Marilionne"></span><span class="map-dot npc" style="left:34.9%;top:54.3%" data-name="Tonasav"></span><span class="map-dot obj" style="left:34.1%;top:52.4%" data-name="Ambuscade Tome"></span><span class="map-dot obj" style="left:33.1%;top:52.0%" data-name="Layer Reserve"></span><span class="map-dot npc" style="left:34.2%;top:52.3%" data-name="Gorpa-Masorpa"></span></div></div>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">3 NPCs, 37 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
 <div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">44 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Graine <span class="badge">15 items</span></h3>
-<div class="vendor-row"><a href="/item/12960-bronze-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12960.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Leggings</a><span class="vendor-price gil">128g</span></div>
-<div class="vendor-row"><a href="/item/12704-bronze-mittens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12704.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Mittens</a><span class="vendor-price gil">140g</span></div>
-<div class="vendor-row"><a href="/item/12448-bronze-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12448.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Cap</a><span class="vendor-price gil">168g</span></div>
-<div class="vendor-row"><a href="/item/12832-bronze-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12832.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Subligar</a><span class="vendor-price gil">208g</span></div>
-<div class="vendor-row"><a href="/item/12576-bronze-harness" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12576.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Harness</a><span class="vendor-price gil">256g</span></div>
-<div class="vendor-row"><a href="/item/12952-leather-highboots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12952.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Highboots</a><span class="vendor-price gil">336g</span></div>
-<div class="vendor-row"><a href="/item/12696-leather-gloves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12696.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Gloves</a><span class="vendor-price gil">360g</span></div>
-<div class="vendor-row"><a href="/item/12440-leather-bandana" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12440.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Bandana</a><span class="vendor-price gil">439g</span></div>
-<div class="vendor-row"><a href="/item/12824-leather-trousers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12824.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Trousers</a><span class="vendor-price gil">536g</span></div>
-<div class="vendor-row"><a href="/item/12568-leather-vest" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12568.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Vest</a><span class="vendor-price gil">671g</span></div>
-<div class="vendor-row"><a href="/item/12961-brass-leggings" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12961.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Leggings</a><span class="vendor-price gil">1,240g</span></div>
-<div class="vendor-row"><a href="/item/12705-brass-mittens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12705.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Mittens</a><span class="vendor-price gil">1,365g</span></div>
-<div class="vendor-row"><a href="/item/12449-brass-cap" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12449.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Cap</a><span class="vendor-price gil">1,635g</span></div>
-<div class="vendor-row"><a href="/item/12833-brass-subligar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12833.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Subligar</a><span class="vendor-price gil">2,000g</span></div>
-<div class="vendor-row"><a href="/item/12577-brass-harness" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12577.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Harness</a><span class="vendor-price gil">2,485g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bronze_Leggings" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:23;--isz:20px;--is:1"></span> Bronze Leggings</a><span class="vendor-price gil">128g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bronze_Mittens" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:20;--isz:20px;--is:1"></span> Bronze Mittens</a><span class="vendor-price gil">140g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bronze_Cap" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:39;--ir:17;--isz:20px;--is:1"></span> Bronze Cap</a><span class="vendor-price gil">168g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bronze_Subligar" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:14;--ir:22;--isz:20px;--is:1"></span> Bronze Subligar</a><span class="vendor-price gil">208g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bronze_Harness" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:15;--ir:19;--isz:20px;--is:1"></span> Bronze Harness</a><span class="vendor-price gil">256g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Highboots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:23;--isz:20px;--is:1"></span> Leather Highboots</a><span class="vendor-price gil">336g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Gloves" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:37;--ir:20;--isz:20px;--is:1"></span> Leather Gloves</a><span class="vendor-price gil">360g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Bandana" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:17;--isz:20px;--is:1"></span> Leather Bandana</a><span class="vendor-price gil">439g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Trousers" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:22;--isz:20px;--is:1"></span> Leather Trousers</a><span class="vendor-price gil">536g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Vest" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:19;--isz:20px;--is:1"></span> Leather Vest</a><span class="vendor-price gil">671g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Leggings" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:23;--isz:20px;--is:1"></span> Brass Leggings</a><span class="vendor-price gil">1,240g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Mittens" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:20;--isz:20px;--is:1"></span> Brass Mittens</a><span class="vendor-price gil">1,365g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Cap" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:17;--isz:20px;--is:1"></span> Brass Cap</a><span class="vendor-price gil">1,635g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Subligar" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:15;--ir:22;--isz:20px;--is:1"></span> Brass Subligar</a><span class="vendor-price gil">2,000g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Harness" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:19;--isz:20px;--is:1"></span> Brass Harness</a><span class="vendor-price gil">2,485g</span></div>
 <h3>Pikini-Mikini <span class="badge">10 items</span></h3>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17395-lugworm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17395.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lugworm</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/4376-strip-of-meat-jerky" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4376.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Strip Of Meat Jerky</a><span class="vendor-price gil">120g</span></div>
-<div class="vendor-row"><a href="/item/5299-dish-of-salsa" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5299.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dish Of Salsa</a><span class="vendor-price gil">148g</span></div>
-<div class="vendor-row"><a href="/item/4148-antidote" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4148.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antidote</a><span class="vendor-price gil">316g</span></div>
-<div class="vendor-row"><a href="/item/1021-hatchet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1021.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hatchet</a><span class="vendor-price gil">500g</span></div>
-<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4151.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
-<div class="vendor-row"><a href="/item/4112-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4112.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Potion</a><span class="vendor-price gil">910g</span></div>
-<div class="vendor-row"><a href="/item/917-sheet-of-parchment" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/917.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sheet Of Parchment</a><span class="vendor-price gil">1,980g</span></div>
-<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4150.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:29;--isz:20px"></span> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:30;--isz:20px;--is:2"></span> Lugworm</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Meat_Jerky" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:27;--isz:20px"></span> Strip Of Meat Jerky</a><span class="vendor-price gil">120g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Salsa" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:1;--isz:20px;--is:1"></span> Dish Of Salsa</a><span class="vendor-price gil">148g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Antidote" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:25;--isz:20px"></span> Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Hatchet" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:8;--isz:20px"></span> Hatchet</a><span class="vendor-price gil">500g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Echo_Drops" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:25;--isz:20px"></span> Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Potion" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:24;--isz:20px"></span> Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Parchment" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:7;--isz:20px"></span> Sheet Of Parchment</a><span class="vendor-price gil">1,980g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Eye_Drops" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:25;--isz:20px"></span> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
 <h3>Runito-Monito <span class="badge">12 items</span></h3>
-<div class="vendor-row"><a href="/item/17318-wooden-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17318.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/17319-bone-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17319.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bone Arrow</a><span class="vendor-price gil">5g</span></div>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17307-dart" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17307.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dart</a><span class="vendor-price gil">10g</span></div>
-<div class="vendor-row"><a href="/item/17059-bronze-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17059.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bronze Rod</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/16405-cat-baghnakhs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16405.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cat Baghnakhs</a><span class="vendor-price gil">116g</span></div>
-<div class="vendor-row"><a href="/item/16704-butterfly-axe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16704.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Butterfly Axe</a><span class="vendor-price gil">672g</span></div>
-<div class="vendor-row"><a href="/item/17081-brass-rod" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17081.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Rod</a><span class="vendor-price gil">690g</span></div>
-<div class="vendor-row"><a href="/item/16449-brass-dagger" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16449.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Dagger</a><span class="vendor-price gil">930g</span></div>
-<div class="vendor-row"><a href="/item/16407-brass-baghnakhs" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16407.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Baghnakhs</a><span class="vendor-price gil">1,690g</span></div>
-<div class="vendor-row"><a href="/item/16583-claymore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16583.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Claymore</a><span class="vendor-price gil">2,720g</span></div>
-<div class="vendor-row"><a href="/item/16531-brass-xiphos" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16531.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brass Xiphos</a><span class="vendor-price gil">3,915g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Wooden_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:29;--isz:20px;--is:2"></span> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bone_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:29;--isz:20px;--is:2"></span> Bone Arrow</a><span class="vendor-price gil">5g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Crossbow_Bolt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:29;--isz:20px;--is:2"></span> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Dart" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:60;--ir:28;--isz:20px;--is:2"></span> Dart</a><span class="vendor-price gil">10g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bronze_Rod" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:26;--isz:20px;--is:2"></span> Bronze Rod</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Cat_Baghnakhs" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:18;--isz:20px;--is:2"></span> Cat Baghnakhs</a><span class="vendor-price gil">116g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Butterfly_Axe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:22;--isz:20px;--is:2"></span> Butterfly Axe</a><span class="vendor-price gil">672g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Rod" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:26;--isz:20px;--is:2"></span> Brass Rod</a><span class="vendor-price gil">690g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Dagger" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:18;--isz:20px;--is:2"></span> Brass Dagger</a><span class="vendor-price gil">930g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Baghnakhs" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:29;--ir:18;--isz:20px;--is:2"></span> Brass Baghnakhs</a><span class="vendor-price gil">1,690g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Claymore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:39;--ir:20;--isz:20px;--is:2"></span> Claymore</a><span class="vendor-price gil">2,720g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brass_Xiphos" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:20;--isz:20px;--is:2"></span> Brass Xiphos</a><span class="vendor-price gil">3,915g</span></div>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

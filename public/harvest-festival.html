@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Harvest Festival Guide · FFXI Crafting</title>
+<meta name="description" content="Phoenix Harvest Festival (Halloween) guide: event dates, every trick-or-treat NPC with map grid, accepted sweets and where to get them, reward odds, upgrade paths and costumes — read from the Phoenix server source.">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script src="/nav.js"></script>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Guides<span class="sep">&rsaquo;</span>Harvest Festival</nav>
+
+<!-- ============================================================
+     CHAPTER 1 — OVERVIEW
+     ============================================================ -->
+<div class="chapter-header">
+  <div class="chapter-num">Seasonal Event</div>
+  <h1 class="chapter-title">The Harvest Festival</h1>
+  <p class="chapter-sub">Trick-or-treating in the three nations, Phoenix edition</p>
+</div>
+
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Every October the merchants of San d'Oria, Bastok and Windurst put on monster costumes and
+  wait for adventurers to bring them sweets. Trade a sweet to one of them and you'll either
+  get a piece of event gear, get turned into a monster yourself, or just get thanked.
+  The event gives out <strong>eight items</strong>: two hats and two staves, each with an
+  upgraded version.
+</p>
+
+<div class="guide-note">
+  This guide is based on Phoenix's own server code (<code>phoenixffxi/Phoenix</code>, beta
+  branch), not on retail wikis. Phoenix runs what the code calls the <strong>2005 edition</strong>
+  of the festival. Most guides you'll find online describe the 2007-or-later version
+  (event stalls, Wake of the Lilies, bomb decorations, Pitchforks), and
+  <a href="#not-here">most of that isn't on Phoenix</a>.
+</div>
+
+<div class="quick-ref">
+  <div class="qr-head">Quick Reference — Event at a Glance</div>
+  <table>
+    <tbody>
+      <tr><th>Runs</th><td>Oct 20 – Nov 1, Japan time (JST). Pacific time: <strong>Mon Oct 19, 8:00 AM PDT → Sun Nov 1, 6:59 AM PST</strong></td></tr>
+      <tr><th>Where</th><td>Northern &amp; Southern San d'Oria, Bastok Mines &amp; Markets, Windurst Waters &amp; Woods</td></tr>
+      <tr><th>Who</th><td>22 merchants, all in costume during the event (<a href="#npcs">full list</a>)</td></tr>
+      <tr><th>What to trade</th><td>One sweet per trade, any of the <a href="#sweets">43 accepted sweets</a></td></tr>
+      <tr><th>Rewards</th><td>Pumpkin Head, Pumpkin Head II, Trick Staff, Trick Staff II, plus the HQ version of each</td></tr>
+      <tr><th>Level / job</th><td>Any level, any job. Every reward is Lv. 1, all jobs</td></tr>
+      <tr><th>Cost</th><td>Roughly 25–30 sweets on average for all eight items. Acorn Cookies cost 24 gil each</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="guide-warning">
+  <strong>Check that it's actually running.</strong> The public Phoenix code ships with the
+  festival <em>turned off</em> (<code>HALLOWEEN_2005 = 0</code>). The live server's settings
+  aren't public, so we can't confirm from code that Phoenix will turn it on. The quickest test
+  is in game: after the start date, walk past <strong>Faustin</strong> in Bastok Mines (J-9).
+  If he's in a monster costume, the event is live. If the event is off, trading a sweet does
+  nothing and you keep the sweet.
+</div>
+
+<!-- ============================================================
+     CHAPTER 2 — WALKTHROUGH
+     ============================================================ -->
+<div class="chapter-header">
+  <div class="chapter-num">Chapter 1</div>
+  <h1 class="chapter-title">How Trick-or-Treating Works</h1>
+  <p class="chapter-sub">One sweet, one trade, one of three outcomes</p>
+</div>
+
+<div class="level-band">
+  <span class="band-range">Step 1</span>
+  <span class="band-label">Stock up on sweets</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Any sweet on the <a href="#sweets">accepted list</a> works, and they all give the same odds.
+  The cheapest by far are cookies from <strong>Ness Rugetomal</strong> in Windurst Waters (F-10),
+  who is also one of the trick-or-treat NPCs. Buy a stack and you can trade them right there.
+</p>
+
+<div class="level-band">
+  <span class="band-range">Step 2</span>
+  <span class="band-label">Free an inventory slot</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  The NPC only hands out an item if you have at least one empty slot. With a full bag, the
+  item roll is skipped and the sweet is still used up.
+</p>
+
+<div class="level-band">
+  <span class="band-range">Step 3</span>
+  <span class="band-label">Trade one sweet to a costumed NPC</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Trade a single sweet. All 22 NPCs work exactly the same way, so use whichever is closest.
+  Repeat until you have everything you want.
+</p>
+
+<div class="quick-ref">
+  <div class="qr-head">What the NPC's reply means</div>
+  <table>
+    <thead><tr><th>NPC says</th><th>What happened</th></tr></thead>
+    <tbody>
+      <tr><td><em>"Here, take this..."</em></td><td>You got an event item</td></tr>
+      <tr><td><em>"Thank you... And now for your treat..."</em></td><td>You've been put in a monster costume for one hour</td></tr>
+      <tr><td><em>"Thank you..."</em></td><td>Nothing. The sweet is used up</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="guide-tip">
+  Trade <strong>one sweet at a time</strong>. The NPC only checks the first item in the
+  trade, and the whole trade window is consumed.
+</div>
+
+<!-- ============================================================
+     CHAPTER 3 — NPC LOCATIONS
+     ============================================================ -->
+<div class="chapter-header" id="npcs">
+  <div class="chapter-num">Chapter 2</div>
+  <h1 class="chapter-title">Trick-or-Treat NPC Locations</h1>
+  <p class="chapter-sub">22 merchants across six city zones, mostly regional vendors</p>
+</div>
+
+<div class="guide-note">
+  The NPC list and their positions come from the server code. Map grids come from BG-Wiki
+  and HorizonXI Wiki, and we checked them against the server positions. All 22 NPCs stand
+  still; none of them wander. They are mostly <strong>regional (conquest) merchants</strong>.
+  Their shop may be closed depending on conquest results, but <strong>trading works
+  either way</strong>.
+</div>
+
+<div class="level-band">
+  <span class="band-range">San d'Oria</span>
+  <span class="band-label">8 NPCs</span>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Southern San d'Oria — 5 NPCs</div>
+  <table>
+    <thead><tr><th>NPC</th><th>Grid</th><th>Normally sells</th></tr></thead>
+    <tbody>
+      <tr><td>Machielle</td><td>G-9</td><td>Norvallen regional goods</td></tr>
+      <tr><td>Corua</td><td>G-9</td><td>Ronfaure regional goods</td></tr>
+      <tr><td>Pourette</td><td>J-9</td><td>Derfland regional goods</td></tr>
+      <tr><td>Apairemant</td><td>K-8</td><td>Gustaberg regional goods</td></tr>
+      <tr><td>Phamelise</td><td>K-9</td><td>Zulkheim regional goods</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Northern San d'Oria — 3 NPCs</div>
+  <table>
+    <thead><tr><th>NPC</th><th>Grid</th><th>Normally sells</th></tr></thead>
+    <tbody>
+      <tr><td>Vichuel</td><td>F-4</td><td>Fauregandi regional goods</td></tr>
+      <tr><td>Antonian</td><td>J-8</td><td>Aragoneu regional goods</td></tr>
+      <tr><td>Attarena</td><td>M-9</td><td>Li'Telor regional goods</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="guide-tip">
+  San d'Oria's best spot is <strong>Southern San d'Oria</strong>. Machielle and Corua stand
+  together at G-9, and the other three are one block east (J-9 / K-8 / K-9).
+</div>
+
+<div class="level-band">
+  <span class="band-range">Bastok</span>
+  <span class="band-label">6 NPCs</span>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Bastok Mines — 5 NPCs</div>
+  <table>
+    <thead><tr><th>NPC</th><th>Grid</th><th>Normally sells</th></tr></thead>
+    <tbody>
+      <tr><td>Mille</td><td>G-6</td><td>Norvallen regional goods</td></tr>
+      <tr><td>Emaliveulaux</td><td>G-6</td><td>Tavnazian regional goods</td></tr>
+      <tr><td>Aulavia</td><td>G-7</td><td>Vollbow regional goods</td></tr>
+      <tr><td>Faustin</td><td>J-9</td><td>Ronfaure regional goods</td></tr>
+      <tr><td>Proud Beard</td><td>K-8</td><td>Hume/Galka starter armor</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Bastok Markets — 1 NPC</div>
+  <table>
+    <thead><tr><th>NPC</th><th>Grid</th><th>Normally sells</th></tr></thead>
+    <tbody>
+      <tr><td>Olwyn</td><td>E-11</td><td>Medicines (Mjoll's General Goods)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="level-band">
+  <span class="band-range">Windurst</span>
+  <span class="band-label">8 NPCs</span>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Windurst Waters — 5 NPCs</div>
+  <table>
+    <thead><tr><th>NPC</th><th>Grid</th><th>Normally sells</th></tr></thead>
+    <tbody>
+      <tr><td>Ness Rugetomal</td><td>F-10 (north map)</td><td><strong>Cookies</strong>, food, drinks (Rarab Tail Hostelry)</td></tr>
+      <tr><td>Ensasa</td><td>H-9 (north map)</td><td>Catalysts, arrows, songs (Ensasa's Catalyst Shop)</td></tr>
+      <tr><td>Upih Khachla</td><td>H-9 (north map)</td><td>Herbs, medicines (inside Ensasa's shop)</td></tr>
+      <tr><td>Ahyeekih</td><td>H-10 (north map)</td><td>Kolshushu regional goods</td></tr>
+      <tr><td>Maqu Molpih</td><td>H-8 (south map)</td><td>Aragoneu regional goods</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Windurst Woods — 3 NPCs</div>
+  <table>
+    <thead><tr><th>NPC</th><th>Grid</th><th>Normally sells</th></tr></thead>
+    <tbody>
+      <tr><td>Nhobi Zalkia</td><td>G-8</td><td>Kuzotz regional goods</td></tr>
+      <tr><td>Taraihi-Perunhi</td><td>K-10</td><td>Derfland regional goods</td></tr>
+      <tr><td>Millerovieunet</td><td>J-12</td><td>Qufim regional goods</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="guide-protip">
+  The cheapest setup in the game: stand in the Rarab Tail Hostelry in <strong>Windurst Waters
+  (F-10)</strong>. Buy cookies from Ness Rugetomal and trade them straight back to him. No
+  running around at all.
+</div>
+<div class="guide-note">
+  Meriri and Kuzah Hpirohpon, the Clothcraft guild merchants in Windurst Woods, also wear
+  costumes during the event, but they <strong>don't accept sweets</strong>. They're just
+  decoration.
+</div>
+
+<div class="img-slot empty">Screenshot: costumed regional merchants, Southern San d'Oria G-9</div>
+
+<!-- ============================================================
+     CHAPTER 4 — REWARDS
+     ============================================================ -->
+<div class="chapter-header" id="rewards">
+  <div class="chapter-num">Chapter 3</div>
+  <h1 class="chapter-title">Rewards &amp; Upgrades</h1>
+  <p class="chapter-sub">Four base items, four upgrades</p>
+</div>
+
+<div class="quick-ref">
+  <div class="qr-head">Event Equipment (all Lv. 1, all jobs, Rare/Ex)</div>
+  <table>
+    <thead><tr><th>Item</th><th>Slot</th><th>Stats (Phoenix database)</th><th>How to get</th></tr></thead>
+    <tbody>
+      <tr><td>Pumpkin Head</td><td>Head</td><td>Enmity −1</td><td>Random drop</td></tr>
+      <tr><td>Horror Head</td><td>Head</td><td>No stats</td><td>Wear Pumpkin Head and trade</td></tr>
+      <tr><td>Pumpkin Head II</td><td>Head</td><td>Enmity +1</td><td>Random drop</td></tr>
+      <tr><td>Horror Head II</td><td>Head</td><td>No stats</td><td>Wear Pumpkin Head II and trade</td></tr>
+      <tr><td>Trick Staff</td><td>Staff</td><td>DMG 1, Delay 356, HP+1, MP+1</td><td>Random drop</td></tr>
+      <tr><td>Treat Staff</td><td>Staff</td><td>DMG 1, Delay 356, HP+5, MP+5. <strong>Latent:</strong> 10% chance per melee swing during the festival to warp you to your Home Point</td><td>Equip Trick Staff and trade</td></tr>
+      <tr><td>Trick Staff II</td><td>Staff</td><td>DMG 2, Delay 356, HP+1, MP+1. <strong>Use:</strong> Warp to Home Point (10 charges, 1-hour reuse)</td><td>Random drop</td></tr>
+      <tr><td>Treat Staff II</td><td>Staff</td><td>DMG 2, Delay 356, HP+5, MP+5. <strong>Use:</strong> Warp to Home Point (1 charge, 20-hour reuse)</td><td>Equip Trick Staff II and trade</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="guide-protip">
+  <strong>Trick Staff II is the prize.</strong> It's a free, reusable Warp for any job at
+  Lv. 1, with 10 charges and a one-hour cooldown. On a fresh server where Warp scrolls and
+  Black Mage warps are scarce, that saves real gil and time. Get it on every character.
+</div>
+
+<div class="level-band">
+  <span class="band-range">Phase 1</span>
+  <span class="band-label">Collect the four base items</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  With <strong>no event gear equipped</strong>, each trade has a <strong>1 in 3</strong> chance
+  to give you a base item you don't already own. The server never gives a duplicate: items in
+  your Mog Safe and other storage count as owned.
+</p>
+
+<div class="guide-warning">
+  <strong>Take off finished gear.</strong> If you're wearing an event head or staff whose
+  upgrade you <em>already have</em>, the server checks that item, finds nothing to give, and
+  stops. You get no item at all, and base-item drops are blocked until you take it off.
+</div>
+
+<div class="level-band">
+  <span class="band-range">Phase 2</span>
+  <span class="band-label">Upgrade by wearing the base item</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Equip a base item and trade sweets. Each trade then has a <strong>1 in 3</strong> chance to
+  give you its upgrade. You keep the base item. You can wear a hat <em>and</em> a staff at
+  the same time: the server upgrades the hat first, then the staff on later trades, so you
+  don't need to swap gear in between.
+</p>
+
+<div class="quick-ref">
+  <div class="qr-head">Upgrade Order (top to bottom, first match wins)</div>
+  <table>
+    <thead><tr><th>If you're wearing…</th><th>…and don't have</th><th>Trade can give</th></tr></thead>
+    <tbody>
+      <tr><td>Pumpkin Head</td><td>Horror Head</td><td>Horror Head</td></tr>
+      <tr><td>Pumpkin Head II</td><td>Horror Head II</td><td>Horror Head II</td></tr>
+      <tr><td>Trick Staff</td><td>Treat Staff</td><td>Treat Staff</td></tr>
+      <tr><td>Trick Staff II</td><td>Treat Staff II</td><td>Treat Staff II</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="level-band">
+  <span class="band-range">The Math</span>
+  <span class="band-label">How many sweets to bring</span>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Average sweets per item</div>
+  <table>
+    <thead><tr><th>Goal</th><th>Chance per trade</th><th>Average sweets</th></tr></thead>
+    <tbody>
+      <tr><td>1st base item</td><td>33%</td><td>3</td></tr>
+      <tr><td>2nd base item</td><td>33%</td><td>3</td></tr>
+      <tr><td>3rd base item</td><td>31%</td><td>3.2</td></tr>
+      <tr><td>4th base item</td><td>23%</td><td>4.4</td></tr>
+      <tr><td>Each upgrade (×4)</td><td>33%</td><td>3 each</td></tr>
+      <tr><td><strong>Full set of 8</strong></td><td>—</td><td><strong>≈ 26</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="guide-tip">
+  Bring <strong>at least 40 sweets</strong> to cover bad luck. At 24 gil per Acorn Cookie,
+  the full set costs about 1,000 gil.
+</div>
+<div class="guide-note">
+  Why the last base item is harder: when picking a base item, the server makes up to four
+  random draws from the list of four and stops at the first one you don't own. Owned items
+  aren't removed from the list (a bug in the code), so with three already owned, only about
+  68% of trades find the missing one. Combined with the 1-in-3 roll, that's about 23% per trade.
+</div>
+
+<!-- ============================================================
+     CHAPTER 5 — SWEETS
+     ============================================================ -->
+<div class="chapter-header" id="sweets">
+  <div class="chapter-num">Chapter 4</div>
+  <h1 class="chapter-title">Sweets: What's Accepted &amp; Where to Get It</h1>
+  <p class="chapter-sub">43 sweets accepted, all with the same odds</p>
+</div>
+
+<div class="guide-warning">
+  <strong>Only the normal-quality version counts.</strong> The server checks exact item IDs, so
+  HQ versions (for example the HQ Ginger Cookie) are rejected. So is anything not on the list
+  below. A rejected sweet stays in your inventory.
+</div>
+
+<div class="level-band">
+  <span class="band-range">Buy</span>
+  <span class="band-label">NPC vendors</span>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Sweets sold by NPCs (base prices; your fame changes the final price)</div>
+  <table>
+    <thead><tr><th>Sweet</th><th>Vendor</th><th>Zone</th><th>Price</th><th>Condition</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Acorn Cookie</strong></td><td>Ness Rugetomal</td><td>Windurst Waters F-10</td><td>24</td><td>Always for sale</td></tr>
+      <tr><td>Cinna-cookie</td><td>Ness Rugetomal</td><td>Windurst Waters F-10</td><td>15</td><td>Windurst 1st or 2nd in conquest</td></tr>
+      <tr><td>Ginger Cookie</td><td>Ness Rugetomal</td><td>Windurst Waters F-10</td><td>12</td><td>Windurst citizens only, Windurst 1st in conquest</td></tr>
+      <tr><td>Ginger Cookie</td><td>Valeriano Troupe</td><td>Travels between nations</td><td>12</td><td>When the troupe is in town</td></tr>
+      <tr><td>Goblin Chocolate</td><td>Pawkrix</td><td>Lower Jeuno</td><td>35</td><td>—</td></tr>
+      <tr><td>Dried Date</td><td>Khaf Jhifanm</td><td>Aht Urhgan Whitegate</td><td>200</td><td>—</td></tr>
+      <tr><td>Baked Apple</td><td>Glyke</td><td>Upper Jeuno</td><td>440</td><td>—</td></tr>
+      <tr><td>Orange Kuchen</td><td>Taajiji</td><td>Windurst Waters</td><td>975</td><td>—</td></tr>
+      <tr><td>Sutlac</td><td>Yafaaf</td><td>Aht Urhgan Whitegate</td><td>1,500</td><td>—</td></tr>
+      <tr><td>Irmik Helvasi</td><td>Fayeewah</td><td>Aht Urhgan Whitegate</td><td>2,075</td><td>—</td></tr>
+      <tr><td>Icecap Rolanberry</td><td>Yoskolo</td><td>Lower Jeuno</td><td>5,544</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="guide-tip">
+  Non-Windurst players: <strong>Acorn Cookies</strong> are always for sale and stack to 99.
+  Buy a full stack (about 2,400 gil) and you're set. In Jeuno, <strong>Goblin Chocolate</strong>
+  at 35 gil is the next best option.
+</div>
+
+<div class="level-band">
+  <span class="band-range">Craft</span>
+  <span class="band-label">Cooking recipes for crafters</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  These recipes are all era-legal, need no key item, and have a fire crystal unless noted.
+  Two of them make 33 sweets per synth, which is a whole festival's worth:
+</p>
+<div class="quick-ref">
+  <div class="qr-head">Best sweets to craft</div>
+  <table>
+    <thead><tr><th>Sweet</th><th>Cooking</th><th>Yield</th><th>Ingredients</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Goblin Chocolate</strong></td><td>23</td><td>33</td><td>Dark crystal: Kukuru Bean ×3, Wijnruit, Honey, Selbina Milk, Cobalt Jellyfish, Sunflower Seeds</td></tr>
+      <tr><td>Baked Apple</td><td>23</td><td>1</td><td>Selbina Butter, Maple Sugar, Cinnamon, Faerie Apple</td></tr>
+      <tr><td><strong>Acorn Cookie</strong></td><td>32</td><td>33</td><td>San d'Orian Flour, Selbina Butter, Crawler Egg, Honey, Acorn ×4</td></tr>
+      <tr><td>Bubble Chocolate</td><td>37</td><td>12</td><td>Maple Sugar, Kukuru Bean ×4, Selbina Milk</td></tr>
+      <tr><td>Cinna-cookie</td><td>47</td><td>33</td><td>San d'Orian Flour, Selbina Butter, Maple Sugar, Cinnamon, Lizard Egg, Distilled Water</td></tr>
+      <tr><td>Apple Pie</td><td>48</td><td>4</td><td>Pie Dough, Maple Sugar, Cinnamon, Lizard Egg, Faerie Apple</td></tr>
+      <tr><td>Ginger Cookie</td><td>58</td><td>33</td><td>San d'Orian Flour, Selbina Butter, Ginger Root, Maple Sugar, Lizard Egg, Distilled Water</td></tr>
+      <tr><td>Melon Pie</td><td>62</td><td>4</td><td>Pie Dough, Maple Sugar, Cinnamon, Lizard Egg, Thundermelon</td></tr>
+      <tr><td>Pumpkin Pie</td><td>85</td><td>4</td><td>Selbina Butter, Pie Dough, Maple Sugar, Cinnamon, Ogre Pumpkin, Selbina Milk, Distilled Water, Bird Egg</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="guide-protip">
+  Leveling Cooking? <strong>Goblin Chocolate at 23</strong> and <strong>Acorn Cookies at 32</strong>
+  are already common leveling synths, and both make 33 per craft. In October there's a
+  ready market: list stacks on the AH for players doing the event.
+</div>
+<div class="guide-note">
+  Several cakes on the accepted list (Maple, Orange, Pumpkin, Chocolate and Yogurt Cake,
+  Mont Blanc, Bavarois and others) need a key item the recipe table calls #2042. Phoenix's
+  Culinarians' Guild point shop doesn't sell it, so treat those recipes as not craftable
+  unless you can find them for sale.
+</div>
+
+<div class="level-band">
+  <span class="band-range">Reference</span>
+  <span class="band-label">All 43 accepted sweets</span>
+</div>
+<div class="quick-ref">
+  <div class="qr-head">Accepted Sweets</div>
+  <table>
+    <thead><tr><th>Sweet</th><th>Stack</th><th>Source on Phoenix</th></tr></thead>
+    <tbody>
+      <tr><td>Acorn Cookie</td><td>99</td><td>NPC (24g), Cooking 32</td></tr>
+      <tr><td>Cinna-cookie</td><td>99</td><td>NPC (15g), Cooking 47</td></tr>
+      <tr><td>Ginger Cookie</td><td>99</td><td>NPC (12g), Cooking 58</td></tr>
+      <tr><td>Goblin Chocolate</td><td>99</td><td>NPC (35g), Cooking 23</td></tr>
+      <tr><td>Bubble Chocolate</td><td>12</td><td>Cooking 37</td></tr>
+      <tr><td>Bloody Chocolate</td><td>12</td><td>Key-item recipe only</td></tr>
+      <tr><td>Apple Pie</td><td>12</td><td>Cooking 48</td></tr>
+      <tr><td>Melon Pie</td><td>12</td><td>Cooking 62</td></tr>
+      <tr><td>Pumpkin Pie</td><td>12</td><td>Cooking 85</td></tr>
+      <tr><td>Rolanberry Pie</td><td>12</td><td>Cooking 90</td></tr>
+      <tr><td>Pamama Tart</td><td>12</td><td>Cooking 56</td></tr>
+      <tr><td>Baked Apple</td><td>12</td><td>NPC (440g), Cooking 23</td></tr>
+      <tr><td>Cherry Muffin</td><td>12</td><td>Key-item recipe only</td></tr>
+      <tr><td>Coffee Muffin</td><td>12</td><td>Key-item recipe only</td></tr>
+      <tr><td>Cream Puff</td><td>12</td><td>Key-item recipe only</td></tr>
+      <tr><td>Dried Berry</td><td>12</td><td>WotG recipe (may not be enabled)</td></tr>
+      <tr><td>Dried Date</td><td>12</td><td>NPC (200g), Cooking 11</td></tr>
+      <tr><td>Snoll Gelato</td><td>12</td><td>Cooking 62 + Alchemy 11</td></tr>
+      <tr><td>Sweet Rice Cake</td><td>12</td><td>Cooking 99</td></tr>
+      <tr><td>Witch Nougat</td><td>12</td><td>Key-item recipe only</td></tr>
+      <tr><td>Icecap Rolanberry</td><td>1</td><td>NPC (5,544g), Cooking 54</td></tr>
+      <tr><td>Orange Kuchen</td><td>1</td><td>NPC (975g), Cooking 80</td></tr>
+      <tr><td>Marron Glace</td><td>1</td><td>Cooking 86</td></tr>
+      <tr><td>Crimson Jelly</td><td>1</td><td>Cooking 88</td></tr>
+      <tr><td>Irmik Helvasi</td><td>1</td><td>NPC (2,075g)</td></tr>
+      <tr><td>Sutlac</td><td>1</td><td>NPC (1,500g)</td></tr>
+      <tr><td>Bavarois</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Cherry Bavarois</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Konigskuchen</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Black Pudding</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Buche au Chocolat</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Lebkuchen House</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Chocolate Cake</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Gateau aux Fraises</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Maple Cake</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Mille Feuille</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Mont Blanc</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Orange Cake</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Pumpkin Cake</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Yogurt Cake</td><td>1</td><td>Key-item recipe only</td></tr>
+      <tr><td>Love Chocolate</td><td>1</td><td>Needs Heart Chocolate (seasonal)</td></tr>
+      <tr><td>Cupid Chocolate</td><td>1</td><td>No source found</td></tr>
+      <tr><td>Jack-o'-Lantern*</td><td>1</td><td>See note</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="guide-note">
+  *The server's sweet list has an entry commented as "Jack-o'-Pie", but its item ID (4488)
+  belongs to the <strong>Jack-o'-Lantern</strong>, the pumpkin furnishing. If you own one,
+  it should be accepted. We couldn't find a normal way to get one on Phoenix.
+</div>
+
+<!-- ============================================================
+     CHAPTER 6 — COSTUMES
+     ============================================================ -->
+<div class="chapter-header" id="costumes">
+  <div class="chapter-num">Chapter 5</div>
+  <h1 class="chapter-title">Costumes</h1>
+  <p class="chapter-sub">Turn into a beastman or monster for an hour</p>
+</div>
+
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  When a trade doesn't give an item, you may be turned into a monster instead. The costume is
+  picked at random from eight looks: <strong>Yagudo, Quadav, Orc, Shade, Ghost, Hound,
+  Skeleton</strong> or <strong>Dark Stalker</strong>. The beastman and Shade looks also have
+  random variants. It lasts <strong>one hour</strong>, and you can remove it early by
+  clicking off the Costume status icon.
+</p>
+
+<div class="guide-warning">
+  <strong>Each sweet type gives a costume only once per character.</strong> The server
+  remembers every sweet type you've traded, and there's a comment in the code saying this
+  should reset each game day, but it never does. Once you've traded an Acorn Cookie,
+  further Acorn Cookies can still give <em>items</em>, but they'll never give a costume
+  again. To get more costumes, trade a different sweet.
+</div>
+<div class="guide-tip">
+  Want costumes for screenshots? Save one each of several cheap sweets (Acorn Cookie,
+  Cinna-cookie, Ginger Cookie, Goblin Chocolate, Dried Date, Baked Apple). Each new type gets
+  one costume chance.
+</div>
+<div class="guide-note">
+  The code includes a hint line ("If you put this on and walk around, something...unexpected
+  might happen...") meant for certain costume-and-zone combinations, which hints at the
+  retail Pitchfork. On Phoenix it can never trigger: the check compares the zone's
+  <em>name</em> to a zone <em>number</em>, so it never matches.
+</div>
+
+<!-- ============================================================
+     CHAPTER 7 — ROUTE
+     ============================================================ -->
+<div class="chapter-header">
+  <div class="chapter-num">Chapter 6</div>
+  <h1 class="chapter-title">Recommended Route</h1>
+  <p class="chapter-sub">All 8 items in about 15 minutes</p>
+</div>
+
+<div class="level-band">
+  <span class="band-range">1</span>
+  <span class="band-label">Get to Windurst Waters (F-10)</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Clear several inventory slots and unequip your main hand and head. Buy 40+ Acorn Cookies
+  from Ness Rugetomal, or bring your own sweets from home.
+</p>
+<div class="level-band">
+  <span class="band-range">2</span>
+  <span class="band-label">Collect the four base items</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  With nothing in your head or main slots, trade one cookie at a time to Ness Rugetomal until
+  you have Pumpkin Head, Pumpkin Head II, Trick Staff and Trick Staff II. Expect about 14 cookies.
+</p>
+<div class="level-band">
+  <span class="band-range">3</span>
+  <span class="band-label">Pumpkin Head + Trick Staff</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Equip both and keep trading. Horror Head comes first, then Treat Staff. About 6 cookies.
+</p>
+<div class="level-band">
+  <span class="band-range">4</span>
+  <span class="band-label">Pumpkin Head II + Trick Staff II</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  Swap to the II versions and trade until you have Horror Head II and Treat Staff II. About 6 cookies.
+</p>
+<div class="level-band">
+  <span class="band-range">5</span>
+  <span class="band-label">Unequip everything and stash it</span>
+</div>
+<p style="color:var(--ink-soft);line-height:1.6;margin:0 0 14px">
+  You're done. Put the gear in storage (all eight are Rare/Ex, so you can't sell or trade
+  them), but keep <strong>Trick Staff II</strong> handy for its warp.
+</p>
+
+<div class="guide-warning">
+  Don't melee with the <strong>Treat Staff</strong> during the festival unless you want to go
+  home. It has a 10% chance per swing to warp you to your Home Point.
+</div>
+
+<!-- ============================================================
+     CHAPTER 8 — NOT ON PHOENIX
+     ============================================================ -->
+<div class="chapter-header" id="not-here">
+  <div class="chapter-num">Chapter 7</div>
+  <h1 class="chapter-title">What's <em>Not</em> in Phoenix's Festival</h1>
+  <p class="chapter-sub">Things retail guides mention that don't exist here</p>
+</div>
+
+<div class="quick-ref">
+  <div class="qr-head">Retail festival features vs. Phoenix code</div>
+  <table>
+    <thead><tr><th>Feature (retail)</th><th>On Phoenix?</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Pitchfork / Pitchfork +1</td><td>No</td><td>The items exist in the database, but no event code gives them out</td></tr>
+      <tr><td>Bomb decorations / costume-pair reward</td><td>No</td><td>No decoration NPCs or pairing logic</td></tr>
+      <tr><td>Event stalls (lanterns, seasonal goods)</td><td>No</td><td>No event vendor is set up</td></tr>
+      <tr><td>Wake of the Lilies / Dark Lilies exorcists</td><td>No</td><td>No exorcist NPCs or quest scripts</td></tr>
+      <tr><td>Roaming "Trick" NPCs (Trick Phantom etc.)</td><td>No</td><td>Phoenix uses the 22 stationary merchants instead</td></tr>
+      <tr><td>Pink Masquerade, pumpkin hunt, Botulus Suit, mount</td><td>No</td><td>Post-2010 retail content</td></tr>
+      <tr><td>Login-campaign hats</td><td>No</td><td>Retail-only system</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="guide-note">
+  Phoenix runs a private fork, so staff could add or change festival content without updating
+  the public code. If you see something in game that isn't in this guide, let us know.
+</div>
+
+<!-- ============================================================
+     SOURCES
+     ============================================================ -->
+<div class="level-band">
+  <span class="band-range">Sources</span>
+  <span class="band-label">Where every number on this page comes from</span>
+</div>
+<div class="guide-note">
+  Phoenix server code (<code>github.com/phoenixffxi/Phoenix</code>, beta branch, checked
+  Oct 2026):
+  <code>scripts/globals/harvest_festivals.lua</code> (dates, sweet list, reward logic, odds,
+  costumes);
+  <code>settings/default/main.lua</code> (<code>HALLOWEEN_2005</code>);
+  <code>scripts/zones/*/IDs.lua</code> and <code>npcs/*.lua</code> (which NPCs, costume skins, NPC text);
+  <code>data/zones/*/npcs.yaml</code> (NPC positions);
+  <code>scripts/globals/shop.lua</code> and individual vendor scripts (prices);
+  <code>scripts/items/treat_staff.lua</code> (warp latent);
+  <code>sql/item_*.sql</code> (item stats and flags);
+  <code>sql/synth_recipes.sql</code> (recipes).
+  Map grids are from BG-Wiki and HorizonXI Wiki, checked against server positions.
+</div>
+
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script src="/ah-prices.js"></script>
+<script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
+</body>
+</html>

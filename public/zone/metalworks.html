@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,152 +51,49 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Metalworks</nav>
 <header class="panel pad"><h1>Metalworks</h1>
+<div class="zone-hero">
+<div class="zone-map"><img src="/img/maps/metalworks.png" alt="Map of Metalworks" loading="lazy"><div class="map-dots"><span class="map-dot npc" style="left:44.8%;top:49.3%" data-name="Vicious Eye"></span><span class="map-dot npc" style="left:43.4%;top:37.4%" data-name="Ghemp"></span><span class="map-dot npc" style="left:44.5%;top:39.5%" data-name="Romero"></span><span class="map-dot npc" style="left:64.0%;top:36.9%" data-name="Veit"></span><span class="map-dot npc" style="left:63.8%;top:39.1%" data-name="Striking Snake"></span><span class="map-dot npc" style="left:72.1%;top:52.4%" data-name="Savae E Paleade"></span><span class="map-dot npc" style="left:72.8%;top:52.1%" data-name="Riault"></span><span class="map-dot npc" style="left:72.1%;top:50.2%" data-name="Lutia"></span><span class="map-dot npc" style="left:71.6%;top:49.8%" data-name="Chantain"></span><span class="map-dot npc" style="left:72.1%;top:34.3%" data-name="Patt-Pott"></span><span class="map-dot npc" style="left:73.0%;top:34.4%" data-name="Topuru-Kuperu"></span><span class="map-dot npc" style="left:71.2%;top:37.6%" data-name="Moyoyo"></span><span class="map-dot npc" style="left:72.1%;top:36.4%" data-name="Mih Ketto"></span><span class="map-dot npc" style="left:78.8%;top:34.3%" data-name="Zenobia"></span><span class="map-dot npc" style="left:79.4%;top:34.4%" data-name="Dietrich"></span><span class="map-dot npc" style="left:78.8%;top:36.3%" data-name="Hadelind"></span><span class="map-dot npc" style="left:80.1%;top:37.4%" data-name="Cerberus"></span><span class="map-dot npc" style="left:79.7%;top:52.2%" data-name="Lucius"></span><span class="map-dot npc" style="left:78.8%;top:50.1%" data-name="Hans"></span><span class="map-dot npc" style="left:87.1%;top:46.7%" data-name="Kachina"></span><span class="map-dot npc" style="left:87.0%;top:45.0%" data-name="Mythily"></span><span class="map-dot npc" style="left:54.6%;top:47.8%" data-name="Remus"></span><span class="map-dot obj" style="left:64.4%;top:48.8%" data-name="Tomasa"></span><span class="map-dot npc" style="left:63.3%;top:49.1%" data-name="Grohm"></span><span class="map-dot npc" style="left:88.3%;top:44.2%" data-name="Galina"></span><span class="map-dot npc" style="left:61.6%;top:44.0%" data-name="Raibaht"></span><span class="map-dot npc" style="left:81.1%;top:44.2%" data-name="Naji"></span><span class="map-dot npc" style="left:95.2%;top:36.3%" data-name="Ayame"></span><span class="map-dot npc" style="left:86.6%;top:42.9%" data-name="Iron Eater"></span><span class="map-dot npc" style="left:81.0%;top:42.3%" data-name="Malduc"></span><span class="map-dot npc" style="left:95.5%;top:51.1%" data-name="Romualdo"></span><span class="map-dot npc" style="left:59.4%;top:43.6%" data-name="Elayne"></span><span class="map-dot npc" style="left:50.7%;top:38.8%" data-name="Darha"></span><span class="map-dot npc" style="left:72.4%;top:42.3%" data-name="High Bear"></span><span class="map-dot npc" style="left:69.8%;top:45.5%" data-name="Patricius"></span><span class="map-dot npc" style="left:75.8%;top:41.7%" data-name="Fariel"></span><span class="map-dot npc" style="left:75.5%;top:39.9%" data-name="Kaela"></span><span class="map-dot obj" style="left:55.3%;top:40.7%" data-name="@6l0"></span><span class="map-dot obj" style="left:55.9%;top:45.8%" data-name="_6ls"></span><span class="map-dot obj" style="left:54.7%;top:45.8%" data-name="_6lt"></span><span class="map-dot obj" style="left:55.3%;top:45.8%" data-name="@6l1"></span><span class="map-dot obj" style="left:55.9%;top:40.7%" data-name="_6lu"></span><span class="map-dot obj" style="left:54.7%;top:40.7%" data-name="_6lv"></span><span class="map-dot obj" style="left:46.9%;top:47.1%" data-name="Door:Blacksmiths' Guild"></span><span class="map-dot obj" style="left:46.9%;top:37.0%" data-name="Door:Blacksmiths' Guild"></span><span class="map-dot obj" style="left:54.1%;top:47.9%" data-name="Door:Darksteel Forge"></span><span class="map-dot obj" style="left:54.1%;top:38.6%" data-name="Door:Cermet Refinery"></span><span class="map-dot obj" style="left:60.8%;top:47.1%" data-name="Door:Craftsmen's Eatery"></span><span class="map-dot obj" style="left:59.6%;top:43.6%" data-name="Door:Cid's Lab"></span><span class="map-dot obj" style="left:60.8%;top:39.4%" data-name="Door:Gunpowder Room"></span><span class="map-dot obj" style="left:72.1%;top:48.1%" data-name="Door:San d'Orian Consul"></span><span class="map-dot obj" style="left:72.1%;top:38.4%" data-name="Door:Windurstian Consul"></span><span class="map-dot obj" style="left:78.8%;top:48.1%" data-name="Door:Aide's Office"></span><span class="map-dot obj" style="left:78.8%;top:38.4%" data-name="Door:Jeunoan Consul"></span><span class="map-dot obj" style="left:85.7%;top:44.7%" data-name="Door:Dept. of Industry"></span><span class="map-dot obj" style="left:85.7%;top:41.8%" data-name="Door:Conference Room"></span><span class="map-dot obj" style="left:87.2%;top:43.3%" data-name="Door:President's Office"></span><span class="map-dot obj" style="left:90.6%;top:41.4%" data-name="Door:Presidential Suite"></span><span class="map-dot obj" style="left:90.6%;top:42.2%" data-name="Door:President's Office"></span><span class="map-dot obj" style="left:90.6%;top:45.2%" data-name="Door:Cornelia's Room"></span><span class="map-dot obj" style="left:94.2%;top:49.8%" data-name="Door:Cannonry"></span><span class="map-dot obj" style="left:94.2%;top:36.7%" data-name="Door:Cannonry"></span><span class="map-dot npc" style="left:60.8%;top:43.0%" data-name="Quasim"></span><span class="map-dot npc" style="left:57.4%;top:44.3%" data-name="Izabele"></span><span class="map-dot npc" style="left:70.7%;top:49.3%" data-name="Glarociquet, T.K."></span><span class="map-dot npc" style="left:73.6%;top:37.2%" data-name="Lexun-Marixun, W.W."></span><span class="map-dot npc" style="left:64.2%;top:37.9%" data-name="Deidogg"></span><span class="map-dot npc" style="left:4.5%;top:76.3%" data-name="Michea"></span><span class="map-dot npc" style="left:45.0%;top:36.7%" data-name="Lorena"></span><span class="map-dot npc" style="left:94.4%;top:50.0%" data-name="Viresefilant"></span><span class="map-dot npc" style="left:85.8%;top:42.6%" data-name="Matabe"></span><span class="map-dot npc" style="left:56.3%;top:42.8%" data-name="Invincible Shield"></span><span class="map-dot npc" style="left:69.4%;top:40.7%" data-name="Udine A.M.A.N."></span><span class="map-dot obj" style="left:62.7%;top:36.2%" data-name="relic"></span><span class="map-dot obj" style="left:67.1%;top:28.3%" data-name="Door:Audience Chamber"></span><span class="map-dot obj" style="left:68.9%;top:40.2%" data-name="DIRECTOR"></span><span class="map-dot npc" style="left:63.7%;top:47.2%" data-name="Vladinek"></span><span class="map-dot npc" style="left:63.3%;top:47.3%" data-name="Sanctia"></span><span class="map-dot npc" style="left:77.3%;top:39.2%" data-name="Takiyah"></span><span class="map-dot npc" style="left:60.6%;top:43.3%" data-name="Luto Mewrilah"></span><span class="map-dot npc" style="left:61.9%;top:43.2%" data-name="Miledo-Shiraddo"></span><span class="map-dot npc" style="left:60.9%;top:43.2%" data-name="Nabima-Hyonbima"></span><span class="map-dot obj" style="left:62.4%;top:43.2%" data-name="???"></span><span class="map-dot obj" style="left:55.0%;top:38.7%" data-name="Small Switch"></span><span class="map-dot obj" style="left:60.5%;top:43.3%" data-name="Medium Switch"></span><span class="map-dot obj" style="left:47.4%;top:43.2%" data-name="Large Switch"></span><span class="map-dot npc" style="left:73.7%;top:43.9%" data-name="Helga"></span><span class="map-dot npc" style="left:64.2%;top:48.9%" data-name="Leonhardt"></span><span class="map-dot npc" style="left:49.4%;top:47.0%" data-name="Hildolf"></span><span class="map-dot npc" style="left:85.8%;top:45.8%" data-name="Cloud Walker"></span><span class="map-dot obj" style="left:86.0%;top:46.0%" data-name="Matrimonial Coffer"></span><span class="map-dot obj" style="left:85.6%;top:45.6%" data-name="Celebratory Chest"></span><span class="map-dot obj" style="left:49.6%;top:47.6%" data-name="Synergy Furnace"></span><span class="map-dot obj" style="left:76.5%;top:47.3%" data-name="Home Point #1"></span><span class="map-dot obj" style="left:50.7%;top:42.6%" data-name="Home Point #2"></span><span class="map-dot npc" style="left:43.6%;top:38.5%" data-name="Esvin"></span><span class="map-dot obj" style="left:49.7%;top:48.9%" data-name="Smithy Moogle"></span><span class="map-dot obj" style="left:86.4%;top:46.4%" data-name="Curator Moogle"></span></div></div>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">3 NPCs, 17 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">17 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Nogga <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/2792-flasque-of-catalytic-oil" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2792.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flasque Of Catalytic Oil</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/17316-bomb-arm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17316.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bomb Arm</a><span class="vendor-price gil">750g</span></div>
-<div class="vendor-row"><a href="/item/17313-grenade" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17313.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Grenade</a><span class="vendor-price gil">1,204g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Flasque_of_Catalytic_Oil" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:21;--isz:20px"></span> Flasque Of Catalytic Oil</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bomb_Arm" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:4;--ir:29;--isz:20px;--is:2"></span> Bomb Arm</a><span class="vendor-price gil">750g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Grenade" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:1;--ir:29;--isz:20px;--is:2"></span> Grenade</a><span class="vendor-price gil">1,204g</span></div>
 <h3>Olaf <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/17340-bullet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17340.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bullet</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/928-pinch-of-bomb-ash" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/928.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Bomb Ash</a><span class="vendor-price gil">515g</span></div>
-<div class="vendor-row"><a href="/item/17248-arquebus" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17248.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Arquebus</a><span class="vendor-price gil">52,040g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bullet" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:29;--isz:20px;--is:2"></span> Bullet</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bomb_Ash" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:9;--ir:8;--isz:20px"></span> Pinch Of Bomb Ash</a><span class="vendor-price gil">515g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Arquebus" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:14;--ir:28;--isz:20px;--is:2"></span> Arquebus</a><span class="vendor-price gil">52,040g</span></div>
 <h3>Tomasa <span class="badge">11 items</span></h3>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/4391-bretzel" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4391.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bretzel</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4409-hard-boiled-egg" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4409.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hard-Boiled Egg</a><span class="vendor-price gil">80g</span></div>
-<div class="vendor-row"><a href="/item/4499-loaf-of-iron-bread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4499.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Loaf Of Iron Bread</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/4578-sausage" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4578.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sausage</a><span class="vendor-price gil">156g</span></div>
-<div class="vendor-row"><a href="/item/4455-bowl-of-pebble-soup" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4455.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bowl Of Pebble Soup</a><span class="vendor-price gil">200g</span></div>
-<div class="vendor-row"><a href="/item/4396-sausage-roll" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4396.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sausage Roll</a><span class="vendor-price gil">278g</span></div>
-<div class="vendor-row"><a href="/item/4436-baked-popoto" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4436.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Baked Popoto</a><span class="vendor-price gil">320g</span></div>
-<div class="vendor-row"><a href="/item/4442-bottle-of-pineapple-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4442.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Pineapple Juice</a><span class="vendor-price gil">397g</span></div>
-<div class="vendor-row"><a href="/item/4424-bottle-of-melon-juice" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4424.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bottle Of Melon Juice</a><span class="vendor-price gil">1,100g</span></div>
-<div class="vendor-row"><a href="/item/4417-bowl-of-egg-soup" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4417.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bowl Of Egg Soup</a><span class="vendor-price gil">3,269g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:29;--isz:20px"></span> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bretzel" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:10;--ir:28;--isz:20px"></span> Bretzel</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Hard-Boiled_Egg" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:28;--isz:20px"></span> Hard-Boiled Egg</a><span class="vendor-price gil">80g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Iron_Bread" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:29;--isz:20px"></span> Loaf Of Iron Bread</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Sausage" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:30;--isz:20px"></span> Sausage</a><span class="vendor-price gil">156g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Pebble_Soup" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:9;--ir:29;--isz:20px"></span> Bowl Of Pebble Soup</a><span class="vendor-price gil">200g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Sausage_Roll" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:14;--ir:28;--isz:20px"></span> Sausage Roll</a><span class="vendor-price gil">278g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Baked_Popoto" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:28;--isz:20px"></span> Baked Popoto</a><span class="vendor-price gil">320g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Pineapple_Juice" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:60;--ir:28;--isz:20px"></span> Bottle Of Pineapple Juice</a><span class="vendor-price gil">397g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Melon_Juice" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:42;--ir:28;--isz:20px"></span> Bottle Of Melon Juice</a><span class="vendor-price gil">1,100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Egg_Soup" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:35;--ir:28;--isz:20px"></span> Bowl Of Egg Soup</a><span class="vendor-price gil">3,269g</span></div>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

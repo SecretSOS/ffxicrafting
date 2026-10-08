@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,374 +51,269 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Quicksand Caves</nav>
 <header class="panel pad"><h1>Quicksand Caves</h1>
+<div class="zone-hero">
 <div class="infobox"><div class="infobox-head">Zone Information</div>
-<div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">31 (16 NM)</span></div>
+<div class="infobox-row"><span class="infobox-label">Monsters</span><span class="infobox-val">31 (15 NM)</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
 <div class="infobox-row"><span class="infobox-label">Caskets</span><span class="infobox-val">24 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Coffers</span><span class="infobox-val">6 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">152 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <div class="jump"><a href="#caskets">Field caskets</a><a href="#coffers">Treasure coffers</a><a href="#nms">Notorious monsters</a><a href="#mobs">Monsters</a><a href="#steals">Steals</a></div>
 <section class="panel pad" id="caskets"><h2>Field caskets</h2>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Chance</th></tr></thead><tbody>
-<tr><td><a href="/item/4116-hi-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4116.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Potion</a></td><td class="pct" style="text-align:right">14.9%</td></tr>
-<tr><td><a href="/item/4117-hi-potion-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4117.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Potion +1</a></td><td class="pct" style="text-align:right">13.4%</td></tr>
-<tr><td><a href="/item/4133-hi-ether-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4133.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hi-Ether +1</a></td><td class="pct" style="text-align:right">12.5%</td></tr>
-<tr><td><a href="/item/4120-x-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4120.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> X-Potion</a></td><td class="pct" style="text-align:right">7.45%</td></tr>
-<tr><td><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></td><td class="pct" style="text-align:right">6.92%</td></tr>
-<tr><td><a href="/item/4141-pro-ether-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4141.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pro-Ether +1</a></td><td class="pct" style="text-align:right">6.26%</td></tr>
-<tr><td><a href="/item/702-ebony-log" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ebony Log</a></td><td class="pct" style="text-align:right">4.03%</td></tr>
-<tr><td><a href="/item/737-chunk-of-gold-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/737.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">3.85%</td></tr>
-<tr><td><a href="/item/5164-jar-of-ground-wasabi" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/5164.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jar Of Ground Wasabi</a></td><td class="pct" style="text-align:right">3.67%</td></tr>
-<tr><td><a href="/item/12427-bascinet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12427.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bascinet</a></td><td class="pct" style="text-align:right">3.43%</td></tr>
-<tr><td><a href="/item/1443-pinch-of-dried-mugwort" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1443.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Dried Mugwort</a></td><td class="pct" style="text-align:right">2.33%</td></tr>
-<tr><td><a href="/item/12811-darksteel-breeches" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12811.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Darksteel Breeches</a></td><td class="pct" style="text-align:right">2.21%</td></tr>
-<tr><td><a href="/item/12939-darksteel-sollerets" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12939.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Darksteel Sollerets</a></td><td class="pct" style="text-align:right">2.12%</td></tr>
-<tr><td><a href="/item/12740-silk-mitts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12740.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silk Mitts</a></td><td class="pct" style="text-align:right">2.03%</td></tr>
-<tr><td><a href="/item/12829-beak-trousers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12829.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beak Trousers</a></td><td class="pct" style="text-align:right">1.86%</td></tr>
-<tr><td><a href="/item/13698-beak-helm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13698.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beak Helm</a></td><td class="pct" style="text-align:right">1.83%</td></tr>
-<tr><td><a href="/item/12683-darksteel-mufflers" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12683.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Darksteel Mufflers</a></td><td class="pct" style="text-align:right">1.71%</td></tr>
-<tr><td><a href="/item/13700-beak-gloves" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13700.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beak Gloves</a></td><td class="pct" style="text-align:right">1.61%</td></tr>
-<tr><td><a href="/item/823-spool-of-gold-thread" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/823.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spool Of Gold Thread</a></td><td class="pct" style="text-align:right">1.57%</td></tr>
-<tr><td><a href="/item/4121-x-potion-1" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> X-Potion +1</a></td><td class="pct" style="text-align:right">1.49%</td></tr>
-<tr><td><a href="/item/12868-silk-slacks" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12868.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silk Slacks</a></td><td class="pct" style="text-align:right">1.46%</td></tr>
-<tr><td><a href="/item/13702-beak-ledelsens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/13702.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beak Ledelsens</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
-<tr><td><a href="/item/12996-silk-pumps" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12996.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silk Pumps</a></td><td class="pct" style="text-align:right">1.37%</td></tr>
-<tr><td><a href="/item/844-phoenix-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/844.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Phoenix Feather</a></td><td class="pct" style="text-align:right">0.570%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Hi-Potion" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:24;--isz:20px"></span> Hi-Potion</a></td><td class="pct" style="text-align:right">14.9%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Hi-Potion_+1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:24;--isz:20px"></span> Hi-Potion +1</a></td><td class="pct" style="text-align:right">13.4%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Hi-Ether_+1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:25;--isz:20px"></span> Hi-Ether +1</a></td><td class="pct" style="text-align:right">12.5%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/X-Potion" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:24;--isz:20px"></span> X-Potion</a></td><td class="pct" style="text-align:right">7.45%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></td><td class="pct" style="text-align:right">6.92%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Pro-Ether_+1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px"></span> Pro-Ether +1</a></td><td class="pct" style="text-align:right">6.26%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Ebony_Log" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:4;--isz:20px"></span> Ebony Log</a></td><td class="pct" style="text-align:right">4.03%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:5;--isz:20px"></span> Chunk Of Gold Ore</a></td><td class="pct" style="text-align:right">3.85%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Ground_Wasabi" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:0;--isz:20px;--is:1"></span> Jar Of Ground Wasabi</a></td><td class="pct" style="text-align:right">3.67%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Bascinet" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:17;--isz:20px;--is:1"></span> Bascinet</a></td><td class="pct" style="text-align:right">3.43%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Dried_Mugwort" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:1;--ir:12;--isz:20px"></span> Pinch Of Dried Mugwort</a></td><td class="pct" style="text-align:right">2.33%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Darksteel_Breeches" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:60;--ir:21;--isz:20px;--is:1"></span> Darksteel Breeches</a></td><td class="pct" style="text-align:right">2.21%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Darksteel_Sollerets" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:34;--ir:23;--isz:20px;--is:1"></span> Darksteel Sollerets</a></td><td class="pct" style="text-align:right">2.12%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Silk_Mitts" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:21;--isz:20px;--is:1"></span> Silk Mitts</a></td><td class="pct" style="text-align:right">2.03%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Beak_Trousers" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:11;--ir:22;--isz:20px;--is:1"></span> Beak Trousers</a></td><td class="pct" style="text-align:right">1.86%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Beak_Helm" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:0;--isz:20px;--is:2"></span> Beak Helm</a></td><td class="pct" style="text-align:right">1.83%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Darksteel_Mufflers" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:26;--ir:20;--isz:20px;--is:1"></span> Darksteel Mufflers</a></td><td class="pct" style="text-align:right">1.71%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Beak_Gloves" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:0;--isz:20px;--is:2"></span> Beak Gloves</a></td><td class="pct" style="text-align:right">1.61%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Thread" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:38;--ir:6;--isz:20px"></span> Spool Of Gold Thread</a></td><td class="pct" style="text-align:right">1.57%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/X-Potion_+1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:24;--isz:20px"></span> X-Potion +1</a></td><td class="pct" style="text-align:right">1.49%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Silk_Slacks" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:22;--isz:20px;--is:1"></span> Silk Slacks</a></td><td class="pct" style="text-align:right">1.46%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Beak_Ledelsens" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:0;--isz:20px;--is:2"></span> Beak Ledelsens</a></td><td class="pct" style="text-align:right">1.40%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Silk_Pumps" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:25;--ir:24;--isz:20px;--is:1"></span> Silk Pumps</a></td><td class="pct" style="text-align:right">1.37%</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Phoenix_Feather" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:6;--isz:20px"></span> Phoenix Feather</a></td><td class="pct" style="text-align:right">0.570%</td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="coffers"><h2>Treasure coffers</h2>
 <p style="font-size:.88rem;color:var(--ink-soft)">Key: Quicksand Coffer Key · Level 55</p>
 <table><thead><tr><th>Item</th></tr></thead><tbody>
-<tr><td><a href="/item/784-jadeite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/784.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jadeite</a></td></tr>
-<tr><td><a href="/item/791-aquamarine" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/791.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Aquamarine</a></td></tr>
-<tr><td><a href="/item/797-painite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/797.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Painite</a></td></tr>
-<tr><td><a href="/item/801-chrysoberyl" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/801.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chrysoberyl</a></td></tr>
-<tr><td><a href="/item/803-sunstone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/803.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sunstone</a></td></tr>
-<tr><td><a href="/item/810-fluorite" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/810.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fluorite</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Jadeite" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:63;--ir:5;--isz:20px"></span> Jadeite</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Aquamarine" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:6;--isz:20px"></span> Aquamarine</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Painite" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:12;--ir:6;--isz:20px"></span> Painite</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Chrysoberyl" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:6;--isz:20px"></span> Chrysoberyl</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Sunstone" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:6;--isz:20px"></span> Sunstone</a></td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Fluorite" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:25;--ir:6;--isz:20px"></span> Fluorite</a></td></tr>
 </tbody></table>
 </section>
 <section class="panel pad" id="nms"><h2>Notorious monsters</h2>
 <details class="mob"><summary><span class="mob-name">Antican Consul</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 75</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Legatus</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 72–74</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-</div></details>
-<details class="mob"><summary><span class="mob-name">Antican Magister</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 65–66</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
-<p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Praefectus</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 65</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Praetor</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 72–74</span></summary><div class="mob-body">
 <p class="mob-spawns">2 spawns</p>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Proconsul</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 65</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Tribunus</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 65</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1121-antican-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Robe</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Robe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:8;--isz:20px"></span> Antican Robe</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Centurio X-I</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 56–58</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1121-antican-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Robe</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Robe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:8;--isz:20px"></span> Antican Robe</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Diamond Daig</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 70</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/846-insect-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/846.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Insect Wing</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/889-beetle-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/889.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beetle Shell</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/894-beetle-jaw" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/894.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beetle Jaw</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Insect_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:6;--isz:20px"></span> Insect Wing</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Beetle_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:7;--isz:20px"></span> Beetle Shell</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Beetle_Jaw" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:43;--ir:7;--isz:20px"></span> Beetle Jaw</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Nussknacker</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 60–61</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/926-lizard-tail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/926.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Tail</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/4362-lizard-egg" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4362.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Egg</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/852-lizard-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/852.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Skin</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Lizard_Tail" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:8;--isz:20px"></span> Lizard Tail</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Lizard_Egg" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:27;--isz:20px"></span> Lizard Egg</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Lizard_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:7;--isz:20px"></span> Lizard Skin</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Proconsul XII</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 70–72</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sabotender Bailarin</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 59–61</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/1592-cactuar-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1592.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cactuar Root</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Cactuar_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:12;--isz:20px"></span> Cactuar Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sabotender Bailarina</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 80–81</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/1592-cactuar-root" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1592.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cactuar Root</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Cactuar_Root" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:12;--isz:20px"></span> Cactuar Root</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sagittarius X-XIII</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 55–57</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1121-antican-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Robe</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Robe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:8;--isz:20px"></span> Antican Robe</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Triarius X-XV</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 72–74</span> <span class="mob-flags">lottery</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Tribunus VII-I</span> <span class="badge badge-nm">NM</span> <span class="mob-lv">Lv 60–62</span> <span class="mob-flags">scripted</span></summary><div class="mob-body">
 <p class="mob-spawns">1 spawns</p>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
-<div class="drop"><span class="drop-rate">100.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/646-chunk-of-adaman-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/646.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Adaman_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:3;--isz:20px"></span> Chunk Of Adaman Ore</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="mobs"><h2>Monsters</h2>
 <details class="mob"><summary><span class="mob-name">Antican Aedilis</span> <span class="mob-lv">Lv 62–72</span> <span class="mob-spawns">25 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1121-antican-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Robe</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Antican_Robe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:8;--isz:20px"></span> Antican Robe</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Antesignanus</span> <span class="mob-lv">Lv 62–72</span> <span class="mob-spawns">28 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Hastatus</span> <span class="mob-lv">Lv 52–59</span> <span class="mob-spawns">46 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+</div></details>
+<details class="mob"><summary><span class="mob-name">Antican Magister</span></summary><div class="mob-body">
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">100.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Angel_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:10;--isz:20px"></span> Piece Of Angel Skin</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Princeps</span> <span class="mob-lv">Lv 52–59</span> <span class="mob-spawns">51 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Quaestor</span> <span class="mob-lv">Lv 62–72</span> <span class="mob-spawns">29 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/1121-antican-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Robe</a></div>
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Robe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:8;--isz:20px"></span> Antican Robe</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Signifer</span> <span class="mob-lv">Lv 52–59</span> <span class="mob-spawns">47 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1980-jar-of-antican-acid" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1980.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jar Of Antican Acid</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1121-antican-robe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1121.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Robe</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/644-chunk-of-mythril-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/644.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Mythril Ore</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Antican_Acid" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:22;--ir:15;--isz:20px"></span> Jar Of Antican Acid</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Antican_Robe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:8;--isz:20px"></span> Antican Robe</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Mythril_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:3;--isz:20px"></span> Chunk Of Mythril Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Antican Triarius</span> <span class="mob-lv">Lv 62–72</span> <span class="mob-spawns">28 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/16995-piece-of-rotten-meat" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16995.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Piece Of Rotten Meat</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/1118-antican-pauldron" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1118.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antican Pauldron</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/645-chunk-of-darksteel-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/645.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Darksteel Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Rotten_Meat" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:13;--ir:25;--isz:20px;--is:2"></span> Piece Of Rotten Meat</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Antican_Pauldron" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:8;--isz:20px"></span> Antican Pauldron</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Darksteel_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:3;--isz:20px"></span> Chunk Of Darksteel Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Girtab</span> <span class="mob-lv">Lv 62–65</span> <span class="mob-spawns">19 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">24.0%</span><a href="/item/897-scorpion-claw" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/897.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scorpion Claw</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/896-scorpion-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/896.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scorpion Shell</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/1473-high-quality-scorpion-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1473.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> High-Quality Scorpion Shell</a></div>
+<div class="drop"><span class="drop-rate">24.0%</span><a href="https://wiki.phoenix-xi.com/Scorpion_Claw" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:7;--isz:20px"></span> Scorpion Claw</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Scorpion_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:7;--isz:20px"></span> Scorpion Shell</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/High-Quality_Scorpion_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:22;--ir:12;--isz:20px"></span> High-Quality Scorpion Shell</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Helm Beetle</span> <span class="mob-lv">Lv 51–58</span> <span class="mob-spawns">35 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/846-insect-wing" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/846.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Insect Wing</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/889-beetle-shell" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/889.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beetle Shell</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/894-beetle-jaw" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/894.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Beetle Jaw</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Insect_Wing" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:6;--isz:20px"></span> Insect Wing</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Beetle_Shell" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:7;--isz:20px"></span> Beetle Shell</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Beetle_Jaw" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:43;--ir:7;--isz:20px"></span> Beetle Jaw</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sabotender Bailaor</span> <span class="mob-lv">Lv 52–59</span> <span class="mob-spawns">25 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1817-cactus-arm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1817.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cactus Arm</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Cactus_Arm" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:14;--isz:20px"></span> Cactus Arm</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:29;--isz:20px"></span> Flask Of Distilled Water</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sand Eater</span> <span class="mob-lv">Lv 51–59</span> <span class="mob-spawns">32 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/768-flint-stone" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/768.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flint Stone</a></div>
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/640-chunk-of-copper-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/640.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Copper Ore</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/642-chunk-of-zinc-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/642.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Zinc Ore</a></div>
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/643-chunk-of-iron-ore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chunk Of Iron Ore</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Flint_Stone" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:5;--isz:20px"></span> Flint Stone</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Copper_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:3;--isz:20px"></span> Chunk Of Copper Ore</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Zinc_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:49;--ir:3;--isz:20px"></span> Chunk Of Zinc Ore</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Iron_Ore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:3;--isz:20px"></span> Chunk Of Iron Ore</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sand Lizard</span> <span class="mob-lv">Lv 56–59</span> <span class="mob-spawns">27 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/926-lizard-tail" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/926.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Tail</a></div>
-<div class="drop"><span class="drop-rate">15.0%</span><a href="/item/4362-lizard-egg" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4362.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Egg</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/852-lizard-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/852.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Skin</a></div>
-<div class="drop"><span class="drop-rate">5.00%</span><a href="/item/852-lizard-skin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/852.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Skin</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Lizard_Tail" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:8;--isz:20px"></span> Lizard Tail</a></div>
+<div class="drop"><span class="drop-rate">15.0%</span><a href="https://wiki.phoenix-xi.com/Lizard_Egg" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:27;--isz:20px"></span> Lizard Egg</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Lizard_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:7;--isz:20px"></span> Lizard Skin</a></div>
+<div class="drop"><span class="drop-rate">5.00%</span><a href="https://wiki.phoenix-xi.com/Lizard_Skin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:7;--isz:20px"></span> Lizard Skin</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sand Spider</span> <span class="mob-lv">Lv 51–55</span> <span class="mob-spawns">16 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">1.00%</span><a href="/item/838-spider-web" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/838.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spider Web</a></div>
+<div class="drop"><span class="drop-rate">1.00%</span><a href="https://wiki.phoenix-xi.com/Spider_Web" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:6;--isz:20px"></span> Spider Web</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Sand Tarantula</span> <span class="mob-lv">Lv 65–69</span> <span class="mob-spawns">12 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/838-spider-web" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/838.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spider Web</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Spider_Web" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:6;--isz:20px"></span> Spider Web</a></div>
 </div></details>
 <details class="mob"><summary><span class="mob-name">Spelunking Sabotender</span> <span class="mob-lv">Lv 62–68</span> <span class="mob-spawns">11 spawns</span></summary><div class="mob-body">
-<div class="drop"><span class="drop-rate">10.0%</span><a href="/item/1817-cactus-arm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/1817.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cactus Arm</a></div>
+<div class="drop"><span class="drop-rate">10.0%</span><a href="https://wiki.phoenix-xi.com/Cactus_Arm" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:14;--isz:20px"></span> Cactus Arm</a></div>
 </div></details>
 </section>
 <section class="panel pad" id="steals"><h2>Steals</h2>
 <p class="note">Steal items for this zone. The server data does not attribute steals to specific mobs.</p>
 <table><thead><tr><th data-sort="text">Item</th><th data-sort="num" style="width:80px;text-align:right">Rate</th></tr></thead><tbody>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/748-gold-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/748.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/749-mythril-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/749.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/751-platinum-beastcoin" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/751.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Platinum Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/838-spider-web" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/838.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spider Web</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/838-spider-web" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/838.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Spider Web</a></td><td class="pct" style="text-align:right">—</td></tr>
-<tr><td><a href="/item/4362-lizard-egg" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4362.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Egg</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Gold_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:5;--isz:20px"></span> Gold Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Mythril_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:28;--ir:5;--isz:20px"></span> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Mythril_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:28;--ir:5;--isz:20px"></span> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Mythril_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:28;--ir:5;--isz:20px"></span> Mythril Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Platinum_Beastcoin" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:30;--ir:5;--isz:20px"></span> Platinum Beastcoin</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Spider_Web" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:6;--isz:20px"></span> Spider Web</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Spider_Web" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:6;--isz:20px"></span> Spider Web</a></td><td class="pct" style="text-align:right">—</td></tr>
+<tr><td><a href="https://wiki.phoenix-xi.com/Lizard_Egg" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:27;--isz:20px"></span> Lizard Egg</a></td><td class="pct" style="text-align:right">—</td></tr>
 </tbody></table>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No map for this zone yet. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

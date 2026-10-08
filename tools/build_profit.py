@@ -108,8 +108,7 @@ function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);va
 function npcSell(id){var it=I[id];return it?(it.b||0):0;}
 function ahPrice(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];return 0;}
 function bestSell(id){return ahPrice(id)||npcSell(id);}
-function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
-function itemUrl(id){var it=I[id];return it?'/item/'+id+'-'+slugify(it.n):'#';}
+function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
 function icoHtml(id){return'<img src="/img/item/'+id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;vertical-align:-2px;margin-right:2px" onerror="this.style.display=\'none\'">';}
 function hqChance(gap){if(gap<0)return 0;if(gap<=10)return 0.0156;if(gap<=30)return 0.0625;if(gap<=50)return 0.25;return 0.50;}
 function computeRow(r){
@@ -163,7 +162,7 @@ function renderPrices(){
     var set=prices[id]!==undefined&&prices[id]!=='';
     if(onlyMissing&&(set||it.v))return'';
     var hint=it.v?('vendor '+fmt(it.v)):(it.g?('gathered: '+it.g):(it.m?('drops at '+it.m+'%'):(it.c!==null&&it.c!==undefined?('craftable at lv '+it.c):'no vendor')));
-    return'<div class="price-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a><small>'+hint+'</small></div>'+
+    return'<div class="price-row"><div class="nm"><a href="'+itemUrl(id)+'" target="_blank" rel="noopener">'+icoHtml(id)+esc(it.n)+'</a><small>'+hint+'</small></div>'+
       '<input type="number" min="0" inputmode="numeric" data-id="'+id+'" value="'+(set?prices[id]:'')+'" placeholder="'+(it.v||0)+'" class="'+(set?'set':'')+'" aria-label="'+esc(it.n)+' buy price"></div>';
   }
   function sellRow(id){
@@ -171,7 +170,7 @@ function renderPrices(){
     var ahSet=prices['s'+id]!==undefined&&prices['s'+id]!=='';
     var npc=it.b||0;
     var exTag=it.x?' <span style="color:var(--loss);font-size:.75rem">Ex</span>':'';
-    return'<div class="price-row sell-row"><div class="nm"><a href="'+itemUrl(id)+'">'+icoHtml(id)+esc(it.n)+'</a>'+
+    return'<div class="price-row sell-row"><div class="nm"><a href="'+itemUrl(id)+'" target="_blank" rel="noopener">'+icoHtml(id)+esc(it.n)+'</a>'+
       '<small>Vendor sell: '+fmt(npc)+'g'+exTag+'</small></div>'+
       '<div class="sell-prices">'+
       '<span class="sell-npc" title="NPC vendor sell price">'+fmt(npc)+'g</span>'+
@@ -203,7 +202,7 @@ function renderResults(){
     var ings=r.ing.map(function(p){var pi=I[p[0]];return pi?esc(pi.n)+(p[1]>1?' ×'+p[1]:''):'?';}).join(' · ');
     var profitCls=x.profit>=0?'gain':'loss';
     var srcLabel=x.usesAH?' <small class="profit-src">AH</small>':' <small class="profit-src">NPC</small>';
-    html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r.res)+'">'+icoHtml(r.res)+esc(it.n)+'</a>'+(r.rq>1?' ×'+r.rq:'')+
+    html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r.res)+'" target="_blank" rel="noopener">'+icoHtml(r.res)+esc(it.n)+'</a>'+(r.rq>1?' ×'+r.rq:'')+
       '<span class="craft-tag" style="--c:var(--'+r.cr+')">'+SHORT[r.cr]+' '+r.lv+'</span>'+pills+'</div>'+
       (hq>0?'<div class="rmeta">HQ '+Math.round(hq*100)+'%</div>':'')+
       '<div class="ings">'+ings+'</div></td>'+

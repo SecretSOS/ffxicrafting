@@ -1,0 +1,25 @@
+{
+  "name": "Secrets",
+  "nation": "San d'Oria",
+  "conq1": "",
+  "conq2": "",
+  "conq3": "",
+  "skills": {
+    "fish": 35,
+    "cook": 50,
+    "alchemy": 6,
+    "wood": 4,
+    "smith": 0,
+    "gold": 0,
+    "cloth": 0,
+    "leather": 0,
+    "bone": 0
+  },
+  "fame": {
+    "sandy": 9,
+    "bastok": 1,
+    "windy": 1,
+    "norg": 1,
+    "jeuno": 5
+  }
+}

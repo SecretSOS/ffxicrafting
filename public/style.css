@@ -172,7 +172,15 @@ a.card:hover{border-color:var(--accent);text-decoration:none}
 .card .val{font-family:var(--font-mono);font-size:20px;color:var(--accent)}
 .card .sub{font-size:12px;color:var(--ink-faint)}
 
-/* --- Item icon --- */
+/* --- Item icon (sprite sheets) --- */
+.icon{display:inline-block;background-image:url(/sprites/icons-0.png);background-repeat:no-repeat;
+ image-rendering:pixelated;border-radius:2px;vertical-align:middle;
+ width:var(--isz,20px);height:var(--isz,20px);
+ background-size:calc(64 * var(--isz,20px)) auto;
+ background-position:calc(var(--ic,0) * var(--isz,20px) * -1) calc(var(--ir,0) * var(--isz,20px) * -1)}
+.icon[style*="--is:1"]{background-image:url(/sprites/icons-1.png)}
+.icon[style*="--is:2"]{background-image:url(/sprites/icons-2.png)}
+.icon[style*="--is:3"]{background-image:url(/sprites/icons-3.png)}
 .item-icon{image-rendering:pixelated;border-radius:2px;vertical-align:middle}
 .icon-link{display:inline-flex;align-items:center;gap:4px}
 
@@ -199,7 +207,7 @@ details.mob-details[open] .mob-summary::before{transform:rotate(90deg)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
 .badge.live{border-color:var(--gain);color:var(--gain)}
 .pill{display:inline-block;font-size:.68rem;border:1px solid var(--border);border-radius:4px;padding:0 5px;margin-left:4px;color:var(--ink-faint)}
-.pill.ki{border-color:var(--lightning);color:var(--lightning)}
+.pill.ki{border-color:var(--loss);color:var(--loss)}
 .pill.wotg{border-color:var(--accent);color:var(--accent)}
 .pill.nm{border-color:var(--fire);color:var(--fire)}
 .pill.best{border-color:var(--gain);color:var(--gain)}
@@ -447,6 +455,61 @@ li{margin-bottom:.4em}
 
 /* --- Sticky table headers (sidebar layout) --- */
 .panel table thead th{position:sticky;top:0;z-index:5}
+
+/* ============================================================
+   BRADY GAMES — strategy guide components
+   ============================================================ */
+
+/* --- Guide callout boxes --- */
+.guide-tip,.guide-warning,.guide-protip,.guide-note{
+ position:relative;border-radius:8px;padding:14px 16px 14px 44px;margin:14px 0;font-size:.92rem;line-height:1.6}
+.guide-tip::before,.guide-warning::before,.guide-protip::before,.guide-note::before{
+ position:absolute;left:14px;top:14px;font-size:1.1rem;line-height:1}
+.guide-tip{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border-left:3px solid var(--accent);color:var(--ink)}
+.guide-tip::before{content:"TIP";font-family:var(--font-mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;
+ color:var(--accent);top:16px}
+.guide-warning{background:color-mix(in srgb,var(--loss) 10%,var(--surface));border-left:3px solid var(--loss);color:var(--ink)}
+.guide-warning::before{content:"!!";font-family:var(--font-mono);font-size:.7rem;font-weight:700;color:var(--loss);top:16px}
+.guide-protip{background:color-mix(in srgb,var(--gain) 10%,var(--surface));border-left:3px solid var(--gain);color:var(--ink)}
+.guide-protip::before{content:"PRO";font-family:var(--font-mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;
+ color:var(--gain);top:16px}
+.guide-note{background:var(--surface);border-left:3px solid var(--border);color:var(--ink-soft);padding-left:16px}
+.guide-note::before{display:none}
+
+.guide-tip strong,.guide-warning strong,.guide-protip strong{font-weight:700}
+
+/* --- Chapter header --- */
+.chapter-header{text-align:center;padding:28px 16px 20px;margin:0 0 20px;position:relative}
+.chapter-header::before,.chapter-header::after{content:'';display:block;height:2px;
+ background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto;max-width:420px}
+.chapter-header::before{margin-bottom:16px}
+.chapter-header::after{margin-top:16px}
+.chapter-num{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.chapter-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin:0;line-height:1.15;color:var(--ink)}
+.chapter-sub{font-size:.92rem;color:var(--ink-soft);margin-top:6px}
+
+/* --- Image slot (placeholder for screenshots) --- */
+.img-slot{border:2px dashed var(--border);border-radius:10px;padding:12px;text-align:center;margin:14px 0;
+ background:color-mix(in srgb,var(--surface) 50%,transparent)}
+.img-slot img{width:100%;border-radius:8px;display:block}
+.img-slot .caption{font-size:.82rem;color:var(--ink-faint);margin-top:6px;font-style:italic}
+.img-slot.empty{min-height:120px;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:.82rem}
+.img-float-right{float:right;max-width:280px;width:40%;margin:0 0 14px 18px}
+.img-float-left{float:left;max-width:280px;width:40%;margin:0 18px 14px 0}
+
+/* --- Level band (skill range header) --- */
+.level-band{display:flex;align-items:center;gap:12px;padding:10px 0;margin:20px 0 12px;
+ border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.level-band .band-range{font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--accent);white-space:nowrap}
+.level-band .band-label{font-size:.88rem;color:var(--ink-soft)}
+
+/* --- Quick reference table --- */
+.quick-ref{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:14px 0}
+.quick-ref .qr-head{background:var(--accent-soft);color:var(--accent);font-family:var(--font-display);font-weight:600;
+ font-size:.88rem;padding:8px 14px;letter-spacing:.02em}
+.quick-ref table{margin:0}
+.quick-ref th{background:var(--surface);font-size:.7rem}
+.quick-ref td{font-size:.88rem}
 
 /* ============================================================
    RESPONSIVE

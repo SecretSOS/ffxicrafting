@@ -80,6 +80,14 @@
 .gil{display:inline-flex;align-items:center;gap:2px}
 .gil svg{width:12px;height:12px;color:goldenrod}
 
+.fc-ki-note{margin:14px 0 0;padding:14px 16px;border:1px solid color-mix(in srgb,var(--loss) 30%,var(--border));border-radius:8px;background:color-mix(in srgb,var(--loss) 5%,var(--surface));font-size:.88rem}
+.fc-ki-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;font-size:.85rem;color:var(--ink-soft)}
+.fc-ki-list{display:flex;flex-direction:column;gap:4px}
+.fc-ki-row{font-size:.85rem;color:var(--ink-soft);line-height:1.5}
+.fc-ki-row strong{color:var(--loss)}
+.fc-ki-cost{font-size:.78rem;color:var(--ink-faint)}
+.pill.ki{border-color:var(--loss);color:var(--loss);font-size:.72rem;padding:1px 6px;border:1px solid;border-radius:4px;font-weight:600}
+
 @media(max-width:640px){
  .fc-loop-diagram{flex-direction:column;gap:8px}
  .fc-loop-arrow{transform:rotate(90deg)}
@@ -91,51 +99,11 @@
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking" class="active"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/guides/">Guides</a><span class="sep">&rsaquo;</span>Fishing + Cooking</nav>
@@ -197,7 +165,7 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4472-crayfish" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
+<a href="https://wiki.phoenix-xi.com/Crayfish" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -210,9 +178,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16994-sliceofmoatcarp">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/16993-peeledcrayfish">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Moat_Carp" target="_blank" rel="noopener">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Peeled_Crayfish" target="_blank" rel="noopener">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Produces fishing bait! Use Peeled Crayfish to catch bigger fish later.</div>
 </div>
@@ -225,9 +193,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4472-crayfish" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
-<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="https://wiki.phoenix-xi.com/Crayfish" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -240,9 +208,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16994-sliceofmoatcarp">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/16993-peeledcrayfish">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Moat_Carp" target="_blank" rel="noopener">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Peeled_Crayfish" target="_blank" rel="noopener">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">A step up. The salt and water cost a few gil from vendors but the crayfish are free.</div>
 </div>
@@ -262,8 +230,8 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4360-bastoresardine" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
- or <a href="/item/5449-hamsi" class="fc-ing fc-ing-fish">Hamsi <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+<a href="https://wiki.phoenix-xi.com/Bastore_Sardine" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Hamsi" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Hamsi <span class="fc-fish-skill">(Fish Lv 9)</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -276,9 +244,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17399-sabikirig">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Sabiki_Rig" target="_blank" rel="noopener">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 2x Slice of Sardine per fish — fishing bait worth 1,425 gil each from vendors. Keep these for later tiers.</div>
 </div>
@@ -292,7 +260,7 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4483-tigercod" class="fc-ing fc-ing-fish">Tiger Cod <span class="fc-fish-skill">(Fish Lv 29)</span></a>
+<a href="https://wiki.phoenix-xi.com/Tiger_Cod" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Tiger Cod <span class="fc-fish-skill">(Fish Lv 29)</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -305,9 +273,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17402-shrimplure">Shrimp Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,730</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Shrimp_Lure" target="_blank" rel="noopener">Shrimp Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,730</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 6x Slice of Cod per fish — even more bait per synth.</div>
 </div>
@@ -321,7 +289,7 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4399-bluetail" class="fc-ing fc-ing-fish">Bluetail <span class="fc-fish-skill">(Fish Lv 55)</span></a>
+<a href="https://wiki.phoenix-xi.com/Bluetail" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Bluetail <span class="fc-fish-skill">(Fish Lv 55)</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -334,9 +302,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17394-peeledlobster">Peeled Lobster</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>1,475</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17392-sliceofsardine">Slice of Sardine</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>1,425</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Minnow" target="_blank" rel="noopener">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Peeled_Lobster" target="_blank" rel="noopener">Peeled Lobster</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>1,475</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Sardine" target="_blank" rel="noopener">Slice of Sardine</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>1,425</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 4x Slice of Bluetail per fish.</div>
 </div>
@@ -350,8 +318,8 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4401-moatcarp" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
- or <a href="/item/4289-forestcarp" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
+<a href="https://wiki.phoenix-xi.com/Moat_Carp" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Forest_Carp" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -364,9 +332,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16998-ballofinsectpaste">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Insect_Paste" target="_blank" rel="noopener">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 2x Slice of Moat Carp — yet another bait type for your growing supply.</div>
 </div>
@@ -385,9 +353,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4401-moatcarp" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
- or <a href="/item/4289-forestcarp" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Moat_Carp" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Forest_Carp" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -400,9 +368,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16998-ballofinsectpaste">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Insect_Paste" target="_blank" rel="noopener">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">HQ: Broiled Carp. Both fish caught easily in freshwater.</div>
 </div>
@@ -415,8 +383,8 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4464-pipira" class="fc-ing fc-ing-fish">Pipira <span class="fc-fish-skill">(Fish Lv 29)</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Pipira" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Pipira <span class="fc-fish-skill">(Fish Lv 29)</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -429,9 +397,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17403-froglure">Frog Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,500</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17401-lizardlure">Lizard Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4,590</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Minnow" target="_blank" rel="noopener">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Frog_Lure" target="_blank" rel="noopener">Frog Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,500</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lizard_Lure" target="_blank" rel="noopener">Lizard Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4,590</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Pipira are found in Sarutabaruta and Yuhtunga.</div>
 </div>
@@ -444,9 +412,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4379-chevalsalmon" class="fc-ing fc-ing-fish">Cheval Salmon <span class="fc-fish-skill">(Fish Lv 21)</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
-<a href="/item/693-walnutlog" class="fc-ing">Walnut Log — <span class="gil"><svg><use href="#i-gil"/></svg>1,300</span></a>
+<a href="https://wiki.phoenix-xi.com/Cheval_Salmon" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Cheval Salmon <span class="fc-fish-skill">(Fish Lv 21)</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Walnut_Log" target="_blank" rel="noopener" class="fc-ing">Walnut Log — <span class="gil"><svg><use href="#i-gil"/></svg>1,300</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -458,17 +426,23 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/16996-ballofsardinepaste">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/16999-balloftroutpaste">Ball of Trout Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>348</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Fly_Lure" target="_blank" rel="noopener">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Sardine_Paste" target="_blank" rel="noopener">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Trout_Paste" target="_blank" rel="noopener">Ball of Trout Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>348</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Walnut Logs are a small cost. Salmon are in Ronfaure and Jugner.</div>
 </div>
 </div>
+<div class="fc-ki-note">
+<div class="fc-ki-head"><span class="pill ki">GP Key Item</span> Recipes in this range requiring GP key items:</div>
+<div class="fc-ki-list">
+<div class="fc-ki-row"><strong>Noodle Kneading</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Peperoncino (Lv 23)</div>
+</div></div>
 </section>
 <section class="fc-tier" id="tier-4">
 <h2>Tier 4: Paste Mastery <span class="fc-range">Cook 31 → 40</span></h2>
 <p class="fc-intro">The paste recipes are the heart of the feedback loop. Each one produces 12x fishing bait from a single fish + flour + water. You&#x27;ll never need to buy bait again.</p>
+<div class="guide-tip"><strong>Fishing Lv 32:</strong> Frog Lure in Giddeus — Dark Bass to Red Terrapin, no gear swap needed. Carbon Rod the whole way.</div>
 <div class="fc-recipes">
 <div class="fc-recipe fc-bait">
 <div class="fc-recipe-head">
@@ -480,9 +454,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/629-earofmillioncorn" class="fc-ing">Millioncorn — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
-<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
-<a href="/item/17396-littleworm" class="fc-ing">Little Worm — <span class="gil"><svg><use href="#i-gil"/></svg>4</span></a>
+<a href="https://wiki.phoenix-xi.com/Ear_of_Millioncorn" target="_blank" rel="noopener" class="fc-ing">Millioncorn — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
+<a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener" class="fc-ing">Little Worm — <span class="gil"><svg><use href="#i-gil"/></svg>4</span></a>
 </div></div>
 <div class="fc-note">Not a fish recipe, but makes 12x Insect Paste — cheap bait. Little Worms are 4 gil each from vendors.</div>
 </div>
@@ -496,10 +470,10 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4360-bastoresardine" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
- or <a href="/item/5449-hamsi" class="fc-ing fc-ing-fish">Hamsi <span class="fc-fish-skill">(Fish Lv 9)</span></a>
-<a href="/item/631-bagofhoroflour" class="fc-ing">Horo Flour — <span class="gil"><svg><use href="#i-gil"/></svg>40</span></a>
-<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="https://wiki.phoenix-xi.com/Bastore_Sardine" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Hamsi" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Hamsi <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+<a href="https://wiki.phoenix-xi.com/Horo_Flour" target="_blank" rel="noopener" class="fc-ing">Horo Flour — <span class="gil"><svg><use href="#i-gil"/></svg>40</span></a>
+<a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -512,9 +486,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17399-sabikirig">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Sabiki_Rig" target="_blank" rel="noopener">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 12x Sardine Paste per synth — premium fishing bait.</div>
 </div>
@@ -527,9 +501,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4354-shiningtrout" class="fc-ing fc-ing-fish">Shining Trout <span class="fc-fish-skill">(Fish Lv 37)</span></a>
- or <a href="/item/5461-alabaligi" class="fc-ing fc-ing-fish">Alabaligi <span class="fc-fish-skill">(Fish Lv 37)</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Shining_Trout" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Shining Trout <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Alabaligi" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Alabaligi <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -542,9 +516,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17400-sinkingminnow">Sinking Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,160</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Fly_Lure" target="_blank" rel="noopener">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Minnow" target="_blank" rel="noopener">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Sinking_Minnow" target="_blank" rel="noopener">Sinking Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,160</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">HQ: Broiled Trout. Good bridging recipe if you have extra trout.</div>
 </div>
@@ -558,10 +532,10 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4354-shiningtrout" class="fc-ing fc-ing-fish">Shining Trout <span class="fc-fish-skill">(Fish Lv 37)</span></a>
- or <a href="/item/5461-alabaligi" class="fc-ing fc-ing-fish">Alabaligi <span class="fc-fish-skill">(Fish Lv 37)</span></a>
-<a href="/item/611-bagofryeflour" class="fc-ing">Rye Flour — <span class="gil"><svg><use href="#i-gil"/></svg>40</span></a>
-<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="https://wiki.phoenix-xi.com/Shining_Trout" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Shining Trout <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Alabaligi" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Alabaligi <span class="fc-fish-skill">(Fish Lv 37)</span></a>
+<a href="https://wiki.phoenix-xi.com/Rye_Flour" target="_blank" rel="noopener" class="fc-ing">Rye Flour — <span class="gil"><svg><use href="#i-gil"/></svg>40</span></a>
+<a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -574,9 +548,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17407-minnow">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17400-sinkingminnow">Sinking Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,160</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Fly_Lure" target="_blank" rel="noopener">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Minnow" target="_blank" rel="noopener">Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>2,025</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Sinking_Minnow" target="_blank" rel="noopener">Sinking Minnow</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,160</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 12x Trout Paste — bait for mid-level fish.</div>
 </div>
@@ -590,17 +564,24 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/610-bagofsandorianflour" class="fc-ing">San d&#x27;Orian Flour — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
-<a href="/item/4358-sliceofharemeat" class="fc-ing">Hare Meat — <span class="gil"><svg><use href="#i-gil"/></svg>160</span></a>
-<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="https://wiki.phoenix-xi.com/San_Dorian_Flour" target="_blank" rel="noopener" class="fc-ing">San d&#x27;Orian Flour — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
+<a href="https://wiki.phoenix-xi.com/Hare_Meat" target="_blank" rel="noopener" class="fc-ing">Hare Meat — <span class="gil"><svg><use href="#i-gil"/></svg>160</span></a>
+<a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
 </div></div>
 <div class="fc-note">Makes 12x Meatball — fishing bait for mid/high fish. Hare Meat drops from rabbits.</div>
 </div>
 </div>
+<div class="fc-ki-note">
+<div class="fc-ki-head"><span class="pill ki">GP Key Item</span> Recipes in this range requiring GP key items:</div>
+<div class="fc-ki-list">
+<div class="fc-ki-row"><strong>Noodle Kneading</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Ortolana (Lv 33), Melanzane (Lv 40)</div>
+<div class="fc-ki-row"><strong>Patissier</strong> <span class="fc-ki-cost">(8,000 GP)</span> — Cherry Macaron (Lv 35), Maple Cake (Lv 35), Bloody Chocolate (Lv 37), Sutlac (Lv 40)</div>
+</div></div>
 </section>
 <section class="fc-tier" id="tier-5">
 <h2>Tier 5: Mid-Level Cooking <span class="fc-range">Cook 40 → 55</span></h2>
 <p class="fc-intro">You now have a stockpile of free bait. Time to cook more complex fish dishes. Fish Mithkabob is a server staple — everyone needs them.</p>
+<div class="guide-tip"><strong>Cooking Lv 41:</strong> Millioncorn from Benaige in Southern San d&#x27;Oria is 48g, not 240g guild price. Cornstarch is vendor trash but cheap to make — float alchemy levels with it.</div>
 <div class="fc-recipes">
 <div class="fc-recipe">
 <div class="fc-recipe-head">
@@ -611,9 +592,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4482-nosteauherring" class="fc-ing fc-ing-fish">Nosteau Herring <span class="fc-fish-skill">(Fish Lv 39)</span></a>
-<a href="/item/622-pinchofdriedmarjoram" class="fc-ing">Dried Marjoram — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Nosteau_Herring" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Nosteau Herring <span class="fc-fish-skill">(Fish Lv 39)</span></a>
+<a href="https://wiki.phoenix-xi.com/Dried_Marjoram" target="_blank" rel="noopener" class="fc-ing">Dried Marjoram — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -626,9 +607,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16996-ballofsardinepaste">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17402-shrimplure">Shrimp Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,730</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Sardine_Paste" target="_blank" rel="noopener">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Shrimp_Lure" target="_blank" rel="noopener">Shrimp Lure</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>5,730</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Herring are plentiful in Batallia and seaside zones.</div>
 </div>
@@ -641,7 +622,7 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4360-bastoresardine" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
+<a href="https://wiki.phoenix-xi.com/Bastore_Sardine" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Bastore Sardine <span class="fc-fish-skill">(Fish Lv 9)</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -654,9 +635,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17399-sabikirig">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17395-lugworm">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Sabiki_Rig" target="_blank" rel="noopener">Sabiki Rig</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>15,960</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener">Lugworm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>9</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">Uses multiple fish types: sardine/hamsi + nebimonite/uskumru + bluetail/cone calamary + shall shell/istiridye. All catchable.</div>
 </div>
@@ -670,11 +651,11 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4472-crayfish" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
- or <a href="/item/5453-istakoz" class="fc-ing fc-ing-fish">Istakoz <span class="fc-fish-skill">(Fish Lv 46)</span></a>
- or <a href="/item/4383-goldlobster" class="fc-ing fc-ing-fish">Gold Lobster <span class="fc-fish-skill">(Fish Lv 46)</span></a>
-<a href="/item/610-bagofsandorianflour" class="fc-ing">San d&#x27;Orian Flour — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
-<a href="/item/4509-flaskofdistilledwater" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
+<a href="https://wiki.phoenix-xi.com/Crayfish" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Crayfish <span class="fc-fish-skill">(Fish Lv 7)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Istakoz" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Istakoz <span class="fc-fish-skill">(Fish Lv 46)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Gold_Lobster" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Gold Lobster <span class="fc-fish-skill">(Fish Lv 46)</span></a>
+<a href="https://wiki.phoenix-xi.com/San_Dorian_Flour" target="_blank" rel="noopener" class="fc-ing">San d&#x27;Orian Flour — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
+<a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" class="fc-ing">Distilled Water — <span class="gil"><svg><use href="#i-gil"/></svg>12</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -687,9 +668,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16994-sliceofmoatcarp">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/16993-peeledcrayfish">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Moat_Carp" target="_blank" rel="noopener">Slice of Moat Carp</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Peeled_Crayfish" target="_blank" rel="noopener">Peeled Crayfish</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>71</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Makes 12x Crayfish Paste — the highest-tier craftable paste bait. Full circle back to crayfish!</div>
 </div>
@@ -702,9 +683,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4429-blackeel" class="fc-ing fc-ing-fish">Black Eel <span class="fc-fish-skill">(Fish Lv 47)</span></a>
- or <a href="/item/5458-yilanbaligi" class="fc-ing fc-ing-fish">Yilanbaligi <span class="fc-fish-skill">(Fish Lv 47)</span></a>
-<a href="/item/633-flaskofoliveoil" class="fc-ing">Olive Oil</a>
+<a href="https://wiki.phoenix-xi.com/Black_Eel" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Black Eel <span class="fc-fish-skill">(Fish Lv 47)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Yilanbaligi" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Yilanbaligi <span class="fc-fish-skill">(Fish Lv 47)</span></a>
+<a href="https://wiki.phoenix-xi.com/Olive_Oil" target="_blank" rel="noopener" class="fc-ing">Olive Oil</a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -717,9 +698,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16997-ballofcrayfishpaste">Ball of Crayfish Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17397-shellbug">Shell Bug</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/16996-ballofsardinepaste">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Crayfish_Paste" target="_blank" rel="noopener">Ball of Crayfish Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Shell_Bug" target="_blank" rel="noopener">Shell Bug</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Sardine_Paste" target="_blank" rel="noopener">Ball of Sardine Paste</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">HQ: Broiled Eel. Eels found in Movalpolos and Gustaberg.</div>
 </div>
@@ -732,10 +713,10 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4401-moatcarp" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
- or <a href="/item/4289-forestcarp" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
-<a href="/item/620-boxoftarutarurice" class="fc-ing">Tarutaru Rice — <span class="gil"><svg><use href="#i-gil"/></svg>300</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Moat_Carp" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Moat Carp <span class="fc-fish-skill">(Fish Lv 11)</span></a>
+ or <a href="https://wiki.phoenix-xi.com/Forest_Carp" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Forest Carp <span class="fc-fish-skill">(Fish Lv 20)</span></a>
+<a href="https://wiki.phoenix-xi.com/Tarutaru_Rice" target="_blank" rel="noopener" class="fc-ing">Tarutaru Rice — <span class="gil"><svg><use href="#i-gil"/></svg>300</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -748,13 +729,21 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/16998-ballofinsectpaste">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17002-robberrig">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Ball_of_Insect_Paste" target="_blank" rel="noopener">Ball of Insect Paste</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>40</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Robber_Rig" target="_blank" rel="noopener">Robber Rig</a> <span class="fc-power">pwr 1</span> <span class="fc-btype">lure</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">HQ: Yahata-style Carp Sushi. Your moat carp supply keeps giving.</div>
 </div>
 </div>
+<div class="fc-ki-note">
+<div class="fc-ki-head"><span class="pill ki">GP Key Item</span> Recipes in this range requiring GP key items:</div>
+<div class="fc-ki-list">
+<div class="fc-ki-row"><strong>Noodle Kneading</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Melanzane (Lv 40), Soba Noodles (Lv 44), Spaghetti (Lv 44), Vongole Rosso (Lv 46)</div>
+<div class="fc-ki-row"><strong>Patissier</strong> <span class="fc-ki-cost">(8,000 GP)</span> — Sutlac (Lv 40), Cherry Muffin (Lv 43), Bavarois (Lv 44), Orange Cake (Lv 45), Sugar Rusk (Lv 45), Mont Blanc (Lv 47), Mille-Feuille (Lv 52), Coffee Muffin (Lv 53), Cherry Bavarois (Lv 54), Icecap Rolanberry (Lv 54), Coffee Macaron (Lv 55), Pumpkin Cake (Lv 55)</div>
+<div class="fc-ki-row"><strong>Raw Fish Handling</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Crab Sushi (Lv 49), Shrimp Sushi (Lv 54)</div>
+<div class="fc-ki-row"><strong>Stewpot Mastery</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Loach Slop (Lv 51)</div>
+</div></div>
 </section>
 <section class="fc-tier" id="tier-6">
 <h2>Tier 6: Approaching Cap <span class="fc-range">Cook 55 → 60</span></h2>
@@ -769,9 +758,9 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4515-copperfrog" class="fc-ing fc-ing-fish">Copper Frog <span class="fc-fish-skill">(Fish Lv 16)</span></a>
-<a href="/item/622-pinchofdriedmarjoram" class="fc-ing">Dried Marjoram — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
-<a href="/item/936-chunkofrocksalt" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
+<a href="https://wiki.phoenix-xi.com/Copper_Frog" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Copper Frog <span class="fc-fish-skill">(Fish Lv 16)</span></a>
+<a href="https://wiki.phoenix-xi.com/Dried_Marjoram" target="_blank" rel="noopener" class="fc-ing">Dried Marjoram — <span class="gil"><svg><use href="#i-gil"/></svg>48</span></a>
+<a href="https://wiki.phoenix-xi.com/Rock_Salt" target="_blank" rel="noopener" class="fc-ing">Rock Salt — <span class="gil"><svg><use href="#i-gil"/></svg>15</span></a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -784,9 +773,9 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17001-giantshellbug">Giant Shell Bug</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17005-lufaisefly">Lufaise Fly</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Fly_Lure" target="_blank" rel="noopener">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Giant_Shell_Bug" target="_blank" rel="noopener">Giant Shell Bug</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Lufaise_Fly" target="_blank" rel="noopener">Lufaise Fly</a> <span class="fc-power">pwr 2</span> <span class="fc-btype">bait</span> <span class="fc-craftable">(craft it!)</span></span>
 </div></div>
 <div class="fc-note">Cook 64 but gives skill-ups from 55+. Copper frogs are in Gustaberg and Movalpolos. HQ: Frog Flambe.</div>
 </div>
@@ -799,12 +788,12 @@
 <div class="fc-ingredients">
 <div class="fc-ing-label">Ingredients:</div>
 <div class="fc-ing-list">
-<a href="/item/4443-cobaltjellyfish" class="fc-ing fc-ing-fish">Cobalt Jellyfish <span class="fc-fish-skill">(Fish Lv 5)</span></a>
-<a href="/item/632-kukurubean" class="fc-ing">Kukuru Bean x3 — <span class="gil"><svg><use href="#i-gil"/></svg>120</span></a>
-<a href="/item/951-wijnruit" class="fc-ing">Wijnruit — <span class="gil"><svg><use href="#i-gil"/></svg>120</span></a>
-<a href="/item/4370-potofhoney" class="fc-ing">Honey — <span class="gil"><svg><use href="#i-gil"/></svg>200</span></a>
-<a href="/item/4378-jugofselbinamilk" class="fc-ing">Selbina Milk — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
-<a href="/item/4505-handfulofsunflowerseeds" class="fc-ing">Sunflower Seeds</a>
+<a href="https://wiki.phoenix-xi.com/Cobalt_Jellyfish" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">Cobalt Jellyfish <span class="fc-fish-skill">(Fish Lv 5)</span></a>
+<a href="https://wiki.phoenix-xi.com/Kukuru_Bean" target="_blank" rel="noopener" class="fc-ing">Kukuru Bean x3 — <span class="gil"><svg><use href="#i-gil"/></svg>120</span></a>
+<a href="https://wiki.phoenix-xi.com/Wijnruit" target="_blank" rel="noopener" class="fc-ing">Wijnruit — <span class="gil"><svg><use href="#i-gil"/></svg>120</span></a>
+<a href="https://wiki.phoenix-xi.com/Honey" target="_blank" rel="noopener" class="fc-ing">Honey — <span class="gil"><svg><use href="#i-gil"/></svg>200</span></a>
+<a href="https://wiki.phoenix-xi.com/Selbina_Milk" target="_blank" rel="noopener" class="fc-ing">Selbina Milk — <span class="gil"><svg><use href="#i-gil"/></svg>60</span></a>
+<a href="https://wiki.phoenix-xi.com/Sunflower_Seeds" target="_blank" rel="noopener" class="fc-ing">Sunflower Seeds</a>
 </div></div>
 <div class="fc-where">
 <div class="fc-where-label">Where to fish:</div>
@@ -817,13 +806,20 @@
 <div class="fc-bait-info">
 <div class="fc-bait-label">Best baits:</div>
 <div class="fc-bait-list">
-<span class="fc-bait-item"><a href="/item/17405-flylure">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17396-littleworm">Little Worm</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
-<span class="fc-bait-item"><a href="/item/17000-meatball">Meatball</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Fly_Lure" target="_blank" rel="noopener">Fly Lure</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">lure</span> — <span class="gil"><svg><use href="#i-gil"/></svg>3,600</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Little_Worm" target="_blank" rel="noopener">Little Worm</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>4</span> <span class="fc-craftable">(or craft it!)</span></span>
+<span class="fc-bait-item"><a href="https://wiki.phoenix-xi.com/Meatball" target="_blank" rel="noopener">Meatball</a> <span class="fc-power">pwr 3</span> <span class="fc-btype">bait</span> — <span class="gil"><svg><use href="#i-gil"/></svg>350</span> <span class="fc-craftable">(or craft it!)</span></span>
 </div></div>
 <div class="fc-note">Alternative path if you stocked up jellyfish. Many vendor ingredients but jellyfish are free.</div>
 </div>
 </div>
+<div class="fc-ki-note">
+<div class="fc-ki-head"><span class="pill ki">GP Key Item</span> Recipes in this range requiring GP key items:</div>
+<div class="fc-ki-list">
+<div class="fc-ki-row"><strong>Patissier</strong> <span class="fc-ki-cost">(8,000 GP)</span> — Coffee Macaron (Lv 55), Pumpkin Cake (Lv 55)</div>
+<div class="fc-ki-row"><strong>Noodle Kneading</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Carbonara (Lv 56), Zaru Soba (Lv 56)</div>
+<div class="fc-ki-row"><strong>Raw Fish Handling</strong> <span class="fc-ki-cost">(30,000 GP)</span> — Tentacle Sushi (Lv 58)</div>
+</div></div>
 </section>
 
 <div class="fc-tips">
@@ -836,75 +832,9 @@
 <li><strong>Total estimate:</strong> Under 15,000 gil to cap cooking at 60, compared to 100,000+ gil buying all ingredients from AH.</li>
 </ul>
 </div>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

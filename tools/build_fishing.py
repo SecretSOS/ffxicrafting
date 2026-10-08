@@ -12,7 +12,7 @@ for d in ('fish', 'bait', 'rod'):
     os.makedirs(os.path.join(OUT, d), exist_ok=True)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import full_page
+from page_template import full_page, icon_html
 
 db = sqlite3.connect(DB)
 LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()[0]
@@ -57,14 +57,6 @@ rod_by_id = {r['item_id']: r for r in rods_all}
 
 # ─── Helpers ─────────────────────────────────────────────────────────
 
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
-
-def icon_img(item_id, size=24):
-    path = os.path.join(ICON_DIR, f'{item_id}.png')
-    if not os.path.exists(path):
-        return ''
-    return f'<img src="/icons/{item_id}.png" width="{size}" height="{size}" alt="" class="fish-icon" loading="lazy">'
-
 def slugify(s):
     return re.sub(r'^-+|-+$', '', re.sub(r'[^a-z0-9]+', '-', s.lower()))
 
@@ -83,17 +75,17 @@ def zone_link(z):
 
 def fish_link(fid, show_icon=True):
     name = item_name(fid)
-    ico = icon_img(fid) + ' ' if show_icon else ''
+    ico = icon_html(fid) if show_icon else ''
     return f'<a href="/fishing/fish/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
 
 def bait_link(bid, show_icon=True):
     name = item_name(bid)
-    ico = icon_img(bid) + ' ' if show_icon else ''
+    ico = icon_html(bid) if show_icon else ''
     return f'<a href="/fishing/bait/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
 
 def rod_link(rid, show_icon=True):
     name = item_name(rid)
-    ico = icon_img(rid) + ' ' if show_icon else ''
+    ico = icon_html(rid) if show_icon else ''
     return f'<a href="/fishing/rod/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
 
 def power_badge(p):
@@ -173,9 +165,9 @@ def build_fish_page(f):
 
     body = '<header class="panel pad">\n'
     body += '<div class="fish-header">\n'
-    ico = icon_img(fid, 48)
+    ico = icon_html(fid, 48)
     if ico:
-        body += ico.replace('class="fish-icon"', 'class="header-icon"') + '\n'
+        body += ico + '\n'
     body += '<div class="fish-title">\n'
     body += f'<h1>{esc(name)}</h1>\n'
 
@@ -290,9 +282,9 @@ def build_bait_page(b):
 
     body = '<header class="panel pad">\n'
     body += '<div class="fish-header">\n'
-    ico = icon_img(bid, 48)
+    ico = icon_html(bid, 48)
     if ico:
-        body += ico.replace('class="fish-icon"', 'class="header-icon"') + '\n'
+        body += ico + '\n'
     body += '<div class="fish-title">\n'
     body += f'<h1>{esc(name)}</h1>\n'
     body += '<div class="fish-badges">\n'
@@ -360,9 +352,9 @@ def build_rod_page(r):
 
     body = '<header class="panel pad">\n'
     body += '<div class="fish-header">\n'
-    ico = icon_img(rid, 48)
+    ico = icon_html(rid, 48)
     if ico:
-        body += ico.replace('class="fish-icon"', 'class="header-icon"') + '\n'
+        body += ico + '\n'
     body += '<div class="fish-title">\n'
     body += f'<h1>{esc(name)}</h1>\n'
     body += '<div class="fish-badges">\n'

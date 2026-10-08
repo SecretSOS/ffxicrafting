@@ -18,7 +18,7 @@ CRAFTS   = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing','cloth
 DESC_PATH = os.path.join(ROOT, 'data', 'item_descriptions.json')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end, SIDEBAR_JS
+from page_template import html_head, layout_open, layout_close, page_end, icon_html
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
@@ -26,6 +26,13 @@ db.row_factory = sqlite3.Row
 LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()['v']
 LSB_SHORT  = LSB_COMMIT[:10]
 LSB_URL    = f'https://github.com/LandSandBoat/server/tree/{LSB_COMMIT}'
+
+ki_names = {}
+try:
+    for r in db.execute('SELECT key_item_id, name, gp_cost FROM guild_key_items'):
+        ki_names[r[0]] = (r[1], r[2])
+except Exception:
+    pass
 
 # ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -121,12 +128,8 @@ print(f'{len(qualifying)} qualifying items', flush=True)
 
 # ─── HTML helpers ───────────────────────────────────────────────────────────
 
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
-
 def _icon(iid, size=20):
-    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
-        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" class="item-icon" loading="lazy"> '
-    return ''
+    return icon_html(iid, size)
 
 def item_link(iid, icon=True):
     if iid not in items:
@@ -244,7 +247,11 @@ def _recipe_craft_cell(rec):
         if rec[sk] and sk != rec['main_craft']:
             subs.append(f'{CRAFTS.get(sk,sk)} {rec[sk]}')
     sub_h = f' <span class="soft">({", ".join(subs)})</span>' if subs else ''
-    ki = ' <span class="pill ki">key item</span>' if rec['key_item'] else ''
+    ki = ''
+    if rec['key_item']:
+        ki_info = ki_names.get(rec['key_item'])
+        ki_label = escape(ki_info[0]) if ki_info else 'Key Item'
+        ki = f' <span class="pill ki" title="{ki_label} — GP Key Item">{ki_label}</span>'
     tag = rec.get('content_tag') or ''
     tag_h = (' <span class="pill wotg">WotG</span>' if tag == 'WOTG'
              else (f' <span class="pill">{escape(tag)}</span>' if tag else ''))
@@ -376,8 +383,7 @@ def build_page(iid):
         crumbs=[('Home', '/'), (ne, None)])
 
     # Icon
-    icon_path = os.path.join(ROOT, 'public', 'icons', f'{iid}.png')
-    icon_img = f'<img class="item-icon" src="/icons/{iid}.png" alt="" width="32" height="32">' if os.path.exists(icon_path) else ''
+    icon_img = icon_html(iid, 32).rstrip()
 
     # Flags line
     flags = ''
@@ -417,7 +423,7 @@ def build_page(iid):
     desc_text = descriptions.get(str(iid), '')
     tooltip_html = ''
     if desc_text:
-        tt_icon = f'<img class="tt-icon" src="/icons/{iid}.png" alt="">' if os.path.exists(icon_path) else ''
+        tt_icon = icon_html(iid, 20).rstrip()
         tooltip_html = f'<div class="ffxi-tooltip">{tt_icon}<div class="tt-body"><p class="tt-name">{ne}</p><p class="tt-desc">{escape(desc_text)}</p></div></div>'
 
     page += f' <header class="panel pad">\n'

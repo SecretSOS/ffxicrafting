@@ -29,8 +29,8 @@ function populateElements(el){
 populateElements(c1El);
 populateElements(c2El);
 
-function slugify(name){
-  return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+function wikiUrl(name){
+  return'https://wiki.phoenix-xi.com/'+name.replace(/ /g,'_');
 }
 
 function update(){
@@ -75,10 +75,9 @@ function update(){
   sorted.forEach(function(r){
     var iid=r[0],qlo=r[1],qhi=r[2],w=r[3];
     var name=GD.items[iid]||('Item #'+iid);
-    var slug=iid+'-'+slugify(name);
     var pct=totalWeight>0?(w/totalWeight*100).toFixed(1):'—';
     html+='<tr>';
-    html+='<td><a href="/item/'+slug+'" class="icon-link"><img src="/icons/'+iid+'.png" width="20" height="20" alt="" class="item-icon" loading="lazy"> '+name+'</a></td>';
+    html+='<td><a href="'+wikiUrl(name)+'" target="_blank" rel="noopener" class="icon-link">'+iconSpan(iid)+name+'</a></td>';
     html+='<td class="num">'+qlo+'–'+qhi+'</td>';
     html+='<td class="num">'+w+'</td>';
     html+='<td class="num pct">'+pct+'%</td>';

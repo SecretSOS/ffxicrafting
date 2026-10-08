@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,168 +51,65 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Selbina</nav>
 <header class="panel pad"><h1>Selbina</h1>
+<div class="zone-hero">
+<div class="zone-map"><img src="/img/maps/selbina.png" alt="Map of Selbina" loading="lazy"><div class="map-dots"><span class="map-dot npc" style="left:70.0%;top:52.8%" data-name="Thunder Hawk"></span><span class="map-dot npc" style="left:74.8%;top:52.4%" data-name="Serafin"></span><span class="map-dot npc" style="left:74.8%;top:51.9%" data-name="Evrard"></span><span class="map-dot npc" style="left:74.7%;top:54.7%" data-name="Manfried"></span><span class="map-dot npc" style="left:87.0%;top:56.1%" data-name="Velema"></span><span class="map-dot npc" style="left:85.7%;top:37.5%" data-name="Flandiace"></span><span class="map-dot npc" style="left:93.5%;top:51.1%" data-name="Elfriede"></span><span class="map-dot npc" style="left:92.4%;top:52.0%" data-name="Herminia"></span><span class="map-dot npc" style="left:93.4%;top:50.7%" data-name="Pascaut"></span><span class="map-dot obj" style="left:92.7%;top:49.8%" data-name="Valgeir"></span><span class="map-dot npc" style="left:94.0%;top:51.1%" data-name="Torapiont"></span><span class="map-dot npc" style="left:79.0%;top:51.6%" data-name="Mendoline"></span><span class="map-dot npc" style="left:79.2%;top:52.0%" data-name="Graegham"></span><span class="map-dot obj" style="left:71.6%;top:56.2%" data-name="Abelard"></span><span class="map-dot npc" style="left:68.8%;top:53.8%" data-name="Naillina"></span><span class="map-dot npc" style="left:70.3%;top:59.2%" data-name="Dohdjuma"></span><span class="map-dot npc" style="left:79.7%;top:54.9%" data-name="Romeo"></span><span class="map-dot npc" style="left:90.7%;top:52.2%" data-name="Oswald"></span><span class="map-dot obj" style="left:78.3%;top:57.3%" data-name="Jimaida"></span><span class="map-dot obj" style="left:78.0%;top:56.6%" data-name="Yaya"></span><span class="map-dot npc" style="left:79.4%;top:55.0%" data-name="Zaldon"></span><span class="map-dot obj" style="left:78.2%;top:51.5%" data-name="Gabwaleid"></span><span class="map-dot obj" style="left:84.0%;top:53.1%" data-name="Ramona"></span><span class="map-dot npc" style="left:84.0%;top:55.1%" data-name="Mathilde"></span><span class="map-dot obj" style="left:84.3%;top:53.1%" data-name="Mathilde's Son"></span><span class="map-dot npc" style="left:84.4%;top:51.7%" data-name="Tilala"></span><span class="map-dot npc" style="left:84.2%;top:52.0%" data-name="Gibol"></span><span class="map-dot obj" style="left:86.8%;top:54.0%" data-name="Mee"></span><span class="map-dot obj" style="left:82.9%;top:56.1%" data-name="Vuntar"></span><span class="map-dot obj" style="left:70.5%;top:62.6%" data-name="Isacio"></span><span class="map-dot npc" style="left:89.3%;top:46.0%" data-name="Devean"></span><span class="map-dot npc" style="left:84.5%;top:56.6%" data-name="Wachiwi"></span><span class="map-dot npc" style="left:86.9%;top:38.6%" data-name="Lombaria"></span><span class="map-dot npc" style="left:82.8%;top:52.2%" data-name="Quelpia"></span><span class="map-dot npc" style="left:80.6%;top:52.4%" data-name="Chutarmire"></span><span class="map-dot obj" style="left:88.6%;top:47.0%" data-name="Home Point #1"></span><span class="map-dot obj" style="left:70.1%;top:53.3%" data-name="Door:Mayor's Residence"></span><span class="map-dot obj" style="left:77.7%;top:52.2%" data-name="Door:Fishermen's Guild"></span><span class="map-dot obj" style="left:85.7%;top:52.2%" data-name="Door:Weavers' Guild"></span><span class="map-dot obj" style="left:93.3%;top:52.4%" data-name="Door:Shepherd's Muster"></span><span class="map-dot npc" style="left:87.5%;top:59.4%" data-name="Lucia"></span><span class="map-dot npc" style="left:86.1%;top:60.1%" data-name="Catus"></span><span class="map-dot npc" style="left:87.5%;top:60.1%" data-name="Aleria"></span><span class="map-dot npc" style="left:86.1%;top:59.4%" data-name="Bretta"></span><span class="map-dot npc" style="left:88.1%;top:59.2%" data-name="Raging Tiger"></span><span class="map-dot npc" style="left:85.5%;top:59.1%" data-name="Sleeping Lizard"></span><span class="map-dot npc" style="left:85.1%;top:65.0%" data-name="Humilitie"></span><span class="map-dot obj" style="left:85.6%;top:59.1%" data-name="_6wx"></span><span class="map-dot obj" style="left:85.1%;top:65.1%" data-name="_6ww"></span><span class="map-dot obj" style="left:93.5%;top:51.8%" data-name="Sneaking Tiger"></span><span class="map-dot obj" style="left:87.2%;top:65.4%" data-name="???"></span><span class="map-dot npc" style="left:87.2%;top:52.2%" data-name="Louverance"></span><span class="map-dot obj" style="left:95.1%;top:53.9%" data-name="Nomad Moogle"></span><span class="map-dot obj" style="left:94.5%;top:54.6%" data-name="Nomad Moogle"></span><span class="map-dot obj" style="left:83.6%;top:41.6%" data-name="Explorer Moogle"></span><span class="map-dot npc" style="left:84.5%;top:40.9%" data-name="mgtest"></span><span class="map-dot npc" style="left:82.8%;top:52.8%" data-name="Falgima"></span><span class="map-dot npc" style="left:79.0%;top:51.9%" data-name="Chenon"></span><span class="map-dot obj" style="left:92.4%;top:52.9%" data-name="Porter Moogle"></span><span class="map-dot npc" style="left:75.9%;top:59.5%" data-name="Jillia"></span><span class="map-dot obj" style="left:75.6%;top:59.4%" data-name="Proto-Waypoint"></span><span class="map-dot npc" style="left:85.4%;top:51.4%" data-name="Helina"></span><span class="map-dot npc" style="left:87.1%;top:42.7%" data-name="Esteban"></span><span class="map-dot npc" style="left:78.9%;top:59.6%" data-name="Pacomart"></span><span class="map-dot obj" style="left:83.6%;top:40.1%" data-name="Veridical Conflux"></span></div></div>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">4 NPCs, 31 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
 <div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">40 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Dohdjuma <span class="badge">9 items</span></h3>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17395-lugworm" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17395.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lugworm</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/611-bag-of-rye-flour" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/611.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bag Of Rye Flour</a><span class="vendor-price gil">40g</span></div>
-<div class="vendor-row"><a href="/item/4378-jug-of-selbina-milk" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4378.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Jug Of Selbina Milk</a><span class="vendor-price gil">61g</span></div>
-<div class="vendor-row"><a href="/item/4148-antidote" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4148.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antidote</a><span class="vendor-price gil">316g</span></div>
-<div class="vendor-row"><a href="/item/4490-pickled-herring" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4490.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pickled Herring</a><span class="vendor-price gil">480g</span></div>
-<div class="vendor-row"><a href="/item/4112-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4112.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Potion</a><span class="vendor-price gil">910g</span></div>
-<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4150.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
-<div class="vendor-row"><a href="/item/4559-serving-of-herb-quus" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4559.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Serving Of Herb Quus</a><span class="vendor-price gil">4,984g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:29;--isz:20px"></span> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Lugworm" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:30;--isz:20px;--is:2"></span> Lugworm</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Rye_Flour" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:19;--ir:3;--isz:20px"></span> Bag Of Rye Flour</a><span class="vendor-price gil">40g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Selbina_Milk" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:27;--isz:20px"></span> Jug Of Selbina Milk</a><span class="vendor-price gil">61g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Antidote" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:25;--isz:20px"></span> Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Pickled_Herring" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:29;--isz:20px"></span> Pickled Herring</a><span class="vendor-price gil">480g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Potion" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:24;--isz:20px"></span> Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Eye_Drops" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:25;--isz:20px"></span> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Herb_Quus" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:30;--isz:20px"></span> Serving Of Herb Quus</a><span class="vendor-price gil">4,984g</span></div>
 <h3>Herminia <span class="badge">8 items</span></h3>
-<div class="vendor-row"><a href="/item/12992-solea" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12992.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Solea</a><span class="vendor-price gil">605g</span></div>
-<div class="vendor-row"><a href="/item/12968-kyahan" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12968.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kyahan</a><span class="vendor-price gil">635g</span></div>
-<div class="vendor-row"><a href="/item/12736-mitts" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12736.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mitts</a><span class="vendor-price gil">655g</span></div>
-<div class="vendor-row"><a href="/item/12712-tekko" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12712.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tekko</a><span class="vendor-price gil">685g</span></div>
-<div class="vendor-row"><a href="/item/12456-hachimaki" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12456.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hachimaki</a><span class="vendor-price gil">825g</span></div>
-<div class="vendor-row"><a href="/item/12840-sitabaki" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12840.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sitabaki</a><span class="vendor-price gil">995g</span></div>
-<div class="vendor-row"><a href="/item/12584-kenpogi" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12584.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kenpogi</a><span class="vendor-price gil">1,245g</span></div>
-<div class="vendor-row"><a href="/item/12608-tunic" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12608.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tunic</a><span class="vendor-price gil">1,400g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Solea" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:24;--isz:20px;--is:1"></span> Solea</a><span class="vendor-price gil">605g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Kyahan" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:23;--isz:20px;--is:1"></span> Kyahan</a><span class="vendor-price gil">635g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mitts" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:12;--ir:21;--isz:20px;--is:1"></span> Mitts</a><span class="vendor-price gil">655g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tekko" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:20;--isz:20px;--is:1"></span> Tekko</a><span class="vendor-price gil">685g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Hachimaki" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:17;--isz:20px;--is:1"></span> Hachimaki</a><span class="vendor-price gil">825g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Sitabaki" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:22;--ir:22;--isz:20px;--is:1"></span> Sitabaki</a><span class="vendor-price gil">995g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Kenpogi" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:23;--ir:19;--isz:20px;--is:1"></span> Kenpogi</a><span class="vendor-price gil">1,245g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tunic" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:19;--isz:20px;--is:1"></span> Tunic</a><span class="vendor-price gil">1,400g</span></div>
 <h3>Quelpia <span class="badge">1 items</span></h3>
-<div class="vendor-row"><a href="/item/4665-scroll-of-haste" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4665.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scroll Of Haste</a><span class="vendor-price gil">20,000g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Scroll_of_Haste" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:31;--isz:20px"></span> Scroll Of Haste</a><span class="vendor-price gil">20,000g</span></div>
 <h3>Torapiont <span class="badge">13 items</span></h3>
-<div class="vendor-row"><a href="/item/17318-wooden-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17318.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/17307-dart" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17307.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dart</a><span class="vendor-price gil">10g</span></div>
-<div class="vendor-row"><a href="/item/17050-willow-wand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17050.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Willow Wand</a><span class="vendor-price gil">370g</span></div>
-<div class="vendor-row"><a href="/item/17089-holly-staff" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17089.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Holly Staff</a><span class="vendor-price gil">635g</span></div>
-<div class="vendor-row"><a href="/item/17051-yew-wand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17051.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Yew Wand</a><span class="vendor-price gil">1,566g</span></div>
-<div class="vendor-row"><a href="/item/16705-greataxe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16705.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Greataxe</a><span class="vendor-price gil">4,550g</span></div>
-<div class="vendor-row"><a href="/item/16451-mythril-dagger" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16451.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Dagger</a><span class="vendor-price gil">8,586g</span></div>
-<div class="vendor-row"><a href="/item/16643-battleaxe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16643.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Battleaxe</a><span class="vendor-price gil">12,267g</span></div>
-<div class="vendor-row"><a href="/item/16411-claws" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16411.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Claws</a><span class="vendor-price gil">12,768g</span></div>
-<div class="vendor-row"><a href="/item/16513-tuck" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16513.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tuck</a><span class="vendor-price gil">12,876g</span></div>
-<div class="vendor-row"><a href="/item/16584-mythril-claymore" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/16584.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mythril Claymore</a><span class="vendor-price gil">42,000g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Wooden_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:29;--isz:20px;--is:2"></span> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Crossbow_Bolt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:29;--isz:20px;--is:2"></span> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Iron_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:8;--ir:29;--isz:20px;--is:2"></span> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Dart" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:60;--ir:28;--isz:20px;--is:2"></span> Dart</a><span class="vendor-price gil">10g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Willow_Wand" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:1;--ir:26;--isz:20px;--is:2"></span> Willow Wand</a><span class="vendor-price gil">370g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Holly_Staff" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:25;--ir:26;--isz:20px;--is:2"></span> Holly Staff</a><span class="vendor-price gil">635g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Yew_Wand" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:2;--ir:26;--isz:20px;--is:2"></span> Yew Wand</a><span class="vendor-price gil">1,566g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Greataxe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:22;--isz:20px;--is:2"></span> Greataxe</a><span class="vendor-price gil">4,550g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mythril_Dagger" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:19;--isz:20px;--is:2"></span> Mythril Dagger</a><span class="vendor-price gil">8,586g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Battleaxe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:25;--ir:21;--isz:20px;--is:2"></span> Battleaxe</a><span class="vendor-price gil">12,267g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Claws" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:32;--ir:18;--isz:20px;--is:2"></span> Claws</a><span class="vendor-price gil">12,768g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tuck" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:19;--isz:20px;--is:2"></span> Tuck</a><span class="vendor-price gil">12,876g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mythril_Claymore" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:20;--isz:20px;--is:2"></span> Mythril Claymore</a><span class="vendor-price gil">42,000g</span></div>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

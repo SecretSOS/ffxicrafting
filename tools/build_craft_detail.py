@@ -12,7 +12,8 @@ DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_craf
 OUT_DIR = os.path.join(ROOT, 'public', 'crafts')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end, CRAFTS_ORDERED
+from page_template import html_head, layout_open, layout_close, page_end, CRAFTS_ORDERED, icon_html
+from wiki import phoenix_url
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 DAYS = ["Firesday", "Earthsday", "Watersday", "Windsday",
@@ -95,16 +96,8 @@ def pretty(n):
     return ' '.join(x.lower() if k and x in ('Of', 'The', 'And', 'A') else x for k, x in enumerate(w))
 
 
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
-
-def _icon(iid, size=20):
-    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
-        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
-    return ''
-
 def item_link(item_id, name):
-    slug = name.lower().replace(' ', '-').replace("'", '')
-    return f'<a href="/item/{item_id}-{slug}" style="display:inline-flex;align-items:center;gap:4px">{_icon(item_id)}{escape(name)}</a>'
+    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{icon_html(item_id)}{escape(name)}</a>'
 
 
 def format_gil(g):
@@ -242,12 +235,30 @@ for code, craft_name, css_var in CRAFTS_ORDERED:
     """, (guild_key,)).fetchall()
 
     # --- Rank-up tests ---
-    rank_tests = db.execute("""
-        SELECT g.rank_index, g.rank_name, g.item_id, g.skill_cap, i.name
-        FROM guild_rank_tests g LEFT JOIN items i ON g.item_id=i.id
-        WHERE g.guild=?
-        ORDER BY g.rank_index
-    """, (guild_key,)).fetchall()
+    try:
+        rank_tests = db.execute("""
+            SELECT g.rank_index, g.rank_name, g.item_id, g.skill_cap, i.name
+            FROM guild_rank_tests g LEFT JOIN items i ON g.item_id=i.id
+            WHERE g.guild=?
+            ORDER BY g.rank_index
+        """, (guild_key,)).fetchall()
+    except Exception:
+        rank_tests = []
+
+    # --- Key item recipe counts ---
+    ki_recipe_counts = {}
+    try:
+        for row in db.execute(f"""
+            SELECT r.key_item, COUNT(*) as cnt
+            FROM recipes r
+            WHERE r.key_item IS NOT NULL AND r.key_item != 0
+            AND r.desynth = 0
+            AND (r.content_tag IS NULL OR r.content_tag IN {ERA})
+            GROUP BY r.key_item
+        """).fetchall():
+            ki_recipe_counts[row['key_item']] = row['cnt']
+    except Exception:
+        pass
 
     # --- Build HTML ---
     slug = craft_name.lower()
@@ -349,12 +360,11 @@ details.guild-section>summary h2{{margin:0;font-size:1.1rem}}'''
         html += ' <details open class="guild-section panel pad">\n'
         html += f'  <summary><h2 id="rank-up">Rank-up tests</h2></summary>\n'
         html += f'  <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">To advance your guild rank, reach the required skill level and turn in the test item to the guild master. Skill must be within 2 of the rank cap.</p>\n'
-        html += '  <table class="rank-tbl"><thead><tr><th>From</th><th>To</th><th>Skill</th><th>Test item</th></tr></thead><tbody>\n'
+        html += '  <table class="rank-tbl"><thead><tr><th>Rank</th><th>Cap</th><th>Test item</th></tr></thead><tbody>\n'
         for rt in rank_tests:
-            from_rank = RANK_ORDER[rt['rank_index'] - 1].title() if rt['rank_index'] > 0 else '—'
             to_rank = rt['rank_name']
             name = pretty(rt['name']) if rt['name'] else f'Item {rt["item_id"]}'
-            html += f'    <tr><td>{from_rank}</td><td class="rn">{to_rank}</td><td class="cap">{rt["skill_cap"]}</td><td>{item_link(rt["item_id"], name)}</td></tr>\n'
+            html += f'    <tr><td class="rn">{to_rank}</td><td class="cap">{rt["skill_cap"]}</td><td>{item_link(rt["item_id"], name)}</td></tr>\n'
         html += '  </tbody></table>\n </details>\n\n'
 
     # Guild shop inventory
@@ -409,11 +419,17 @@ details.guild-section>summary h2{{margin:0;font-size:1.1rem}}'''
                 html += f'   <div class="reward-row"><span class="nm">{link}</span><span class="rk">{r["min_rank"]}</span><span class="gp">{format_gil(r["cost"])} GP</span></div>\n'
             html += '  </div>\n'
         if reward_ki:
-            html += '  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:16px 0 8px">Key items</h3>\n'
+            html += '  <h3 style="font-size:.95rem;color:var(--ink-soft);margin:16px 0 8px">Key items <span style="font-weight:400;color:var(--loss)">(required for certain recipes)</span></h3>\n'
             html += '  <div class="reward-grid">\n'
             for r in reward_ki:
                 name = pretty(r['name'])
-                html += f'   <div class="reward-row"><span class="nm">{escape(name)}</span><span class="rk">{r["min_rank"]}</span><span class="gp">{format_gil(r["cost"])} GP</span></div>\n'
+                # Look up recipe count for this key item
+                ki_row = db.execute("SELECT key_item_id FROM guild_key_items WHERE name=? COLLATE NOCASE", (r['name'].replace('_', ' '),)).fetchone()
+                if not ki_row:
+                    ki_row = db.execute("SELECT key_item_id FROM guild_key_items WHERE REPLACE(LOWER(name),' ','_')=?", (r['name'],)).fetchone()
+                cnt = ki_recipe_counts.get(ki_row['key_item_id'], 0) if ki_row else 0
+                cnt_h = f' <span style="color:var(--loss);font-size:.78rem">({cnt} recipe{"s" if cnt != 1 else ""})</span>' if cnt else ''
+                html += f'   <div class="reward-row"><span class="nm"><span class="pill ki">{escape(name)}</span>{cnt_h}</span><span class="rk">{r["min_rank"]}</span><span class="gp">{format_gil(r["cost"])} GP</span></div>\n'
             html += '  </div>\n'
         html += ' </details>\n\n'
 

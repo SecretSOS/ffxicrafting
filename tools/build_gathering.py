@@ -9,7 +9,8 @@ OUT = os.path.join(ROOT, 'public', 'gathering')
 os.makedirs(OUT, exist_ok=True)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end
+from page_template import html_head, layout_open, layout_close, page_end, icon_html
+from wiki import phoenix_url
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 ABYSSEA_ZONES = {'abyssea_attohwa', 'abyssea_konschtat', 'abyssea_la_theine',
@@ -41,20 +42,16 @@ def esc(s):
 def item_name(iid):
     return ITEMS.get(iid, f'Item #{iid}')
 
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
-
 def _icon(iid, size=20):
-    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
-        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
-    return ''
+    return icon_html(iid, size)
 
 def item_link(iid):
     n = item_name(iid)
-    return f'<a href="/item/{iid}-{slugify(n)}" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
+    return f'<a href="{phoenix_url(n)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
 
 def fish_link(iid):
     n = item_name(iid)
-    icon = f'<img src="/icons/{iid}.png" width="24" height="24" alt="" class="item-icon" loading="lazy"> ' if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')) else ''
+    icon = icon_html(iid, 24)
     return f'<a href="/fishing/fish/{slugify(n)}" class="icon-link" style="display:inline-flex;align-items:center;gap:6px">{icon}{esc(n)}</a>'
 
 ELEMENTS = {0:'None', 1:'Fire', 2:'Ice', 3:'Wind', 4:'Earth', 5:'Lightning', 6:'Water', 7:'Light', 8:'Dark'}
@@ -547,7 +544,7 @@ def build_gardening():
         body += '</tbody></table>\n'
         body += '</div></details></section>\n'
 
-    gd_scripts = '\n<script src="/gardening-data.js"></script>\n<script src="/gardening-tool.js"></script>\n'
+    gd_scripts = '\n<script src="/icon-sprite.js"></script>\n<script src="/gardening-data.js"></script>\n<script src="/gardening-tool.js"></script>\n'
     out = page('Gardening', 'Gardening seed and crystal combinations with exact drop weights.', 'gardening', body,
                extra_css_append=TOOL_CSS, extra_scripts=gd_scripts)
     fp = os.path.join(OUT, 'gardening.html')
@@ -576,14 +573,10 @@ def build_fishing():
     for a in areas:
         fish_zones[a['fish_item_id']].add(a['zone'])
 
-    body = '<header class="panel pad"><h1>Fishing</h1>'
-    body += '<p class="lede">Fish, rods, baits, and fishing areas from the server source. Skill is the minimum to hook; difficulty affects the fight.</p>'
-    body += '<p style="margin-top:.8em;color:var(--ink-soft);font-size:.88rem;line-height:1.5">'
-    body += 'Equip a rod and bait, <code>/fish</code> at water. Rod size must match the fish — mismatched costs 10s off the timer. '
-    body += 'Higher rod ATK = faster catch; lower REC = fish heals less on miss. Rods break on fish above their max rank. '
-    body += 'Bait determines what species you attract; lures are reusable, baits are consumed each catch.</p>'
-    body += '<p style="margin-top:.6em"><a href="/fishing-101" style="color:var(--accent)">Fishing 101 Guide</a> &mdash; rod progression, leveling path, skill-up mechanics, Lu Shang\'s quest.</p></header>\n'
+    guild_html = load_template('fishing_guild_section.html')
+    guild_html += '<p style="margin-top:12px;font-size:.92rem"><a href="/fishing-101" style="color:var(--accent)">Fishing 101 Guide</a> &mdash; rod progression, leveling path, skill-up mechanics, Lu Shang\'s quest.</p>\n'
 
+    body = guild_html
     body += FISHING_TOOL_HTML
 
     body += '<details class="collapsible panel pad">\n'
@@ -662,11 +655,10 @@ def build_fishing():
 
     body += '</div></details>\n'
 
-    guild_html = load_template('fishing_guild_section.html')
-    tool_scripts = '<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'
+    tool_scripts = '<script src="/icon-sprite.js"></script>\n<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'
 
     out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body,
-               extra_css_append=TOOL_CSS, extra_body=guild_html, extra_scripts=tool_scripts)
+               extra_css_append=TOOL_CSS, extra_scripts=tool_scripts)
     fp = os.path.join(OUT, 'fishing.html')
     with open(fp, 'w', encoding='utf-8') as f:
         f.write(out)

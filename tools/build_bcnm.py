@@ -9,10 +9,9 @@ from html import escape
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT = os.path.join(ROOT, 'public', 'bcnm.html')
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
-
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end
+from page_template import html_head, layout_open, layout_close, page_end, icon_html
+from wiki import phoenix_url
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
@@ -31,17 +30,9 @@ def pretty(n):
 def esc(s):
     return escape(str(s))
 
-def icon_exists(iid):
-    return os.path.isfile(os.path.join(ICON_DIR, f'{iid}.png'))
-
-def icon_html(iid, size=16):
-    if not icon_exists(iid):
-        return ''
-    return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="image-rendering:pixelated;vertical-align:middle;border-radius:2px" loading="lazy"> '
-
 def item_link(iid, name):
     pn = pretty(name)
-    return f'<a href="/item/{iid}-{slug(name)}" style="display:inline-flex;align-items:center;gap:4px">{icon_html(iid, 20)}{esc(pn)}</a>'
+    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{icon_html(iid, 20)}{esc(pn)}</a>'
 
 def gil_fmt(g):
     if g is None:

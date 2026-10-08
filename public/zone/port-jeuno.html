@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,164 +51,61 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Port Jeuno</nav>
 <header class="panel pad"><h1>Port Jeuno</h1>
+<div class="zone-hero">
+<div class="zone-map"><img src="/img/maps/port_jeuno.png" alt="Map of Port Jeuno" loading="lazy"><div class="map-dots"><span class="map-dot npc" style="left:51.3%;top:62.4%" data-name="Gekko"></span><span class="map-dot npc" style="left:51.3%;top:61.0%" data-name="Leyla"></span><span class="map-dot npc" style="left:53.1%;top:63.4%" data-name="Karl"></span><span class="map-dot npc" style="left:53.4%;top:63.8%" data-name="Jaha Amariyo"></span><span class="map-dot npc" style="left:27.5%;top:58.8%" data-name="Cumetouflaix"></span><span class="map-dot npc" style="left:15.9%;top:60.1%" data-name="Yurugu-Homurugu"></span><span class="map-dot npc" style="left:48.3%;top:58.2%" data-name="Chudigrimane"></span><span class="map-dot npc" style="left:52.9%;top:43.4%" data-name="Haubijoux"></span><span class="map-dot npc" style="left:53.7%;top:44.1%" data-name="Roupatour"></span><span class="map-dot npc" style="left:48.1%;top:43.3%" data-name="Moulloie"></span><span class="map-dot npc" style="left:48.9%;top:44.2%" data-name="Purequane"></span><span class="map-dot npc" style="left:54.4%;top:48.3%" data-name="Naravime"></span><span class="map-dot npc" style="left:52.1%;top:45.1%" data-name="Ceno"></span><span class="map-dot npc" style="left:49.7%;top:48.3%" data-name="Asolmieu"></span><span class="map-dot npc" style="left:47.3%;top:45.1%" data-name="Phouminnet"></span><span class="map-dot npc" style="left:53.3%;top:78.3%" data-name="Gatita"></span><span class="map-dot npc" style="left:52.4%;top:77.5%" data-name="Zedduva"></span><span class="map-dot npc" style="left:48.5%;top:78.2%" data-name="Nikki"></span><span class="map-dot npc" style="left:47.7%;top:77.6%" data-name="White Beetle"></span><span class="map-dot npc" style="left:48.1%;top:63.3%" data-name="Raging Lion"></span><span class="map-dot npc" style="left:47.0%;top:73.3%" data-name="Inesh"></span><span class="map-dot npc" style="left:49.3%;top:76.5%" data-name="Anneliese"></span><span class="map-dot npc" style="left:51.7%;top:73.4%" data-name="Pranab"></span><span class="map-dot npc" style="left:54.0%;top:76.5%" data-name="Cheli"></span><span class="map-dot npc" style="left:72.2%;top:78.4%" data-name="Rachocho"></span><span class="map-dot npc" style="left:71.6%;top:77.3%" data-name="Omiro-Zamiro"></span><span class="map-dot npc" style="left:67.5%;top:78.4%" data-name="Funono"></span><span class="map-dot npc" style="left:66.8%;top:77.4%" data-name="Kuya-Moya"></span><span class="map-dot npc" style="left:74.4%;top:63.4%" data-name="Supiroro"></span><span class="map-dot npc" style="left:68.2%;top:76.6%" data-name="Puhn Dapojal"></span><span class="map-dot npc" style="left:65.9%;top:73.4%" data-name="Vikhu Nakuaino"></span><span class="map-dot npc" style="left:70.5%;top:73.4%" data-name="Yon Boskoti"></span><span class="map-dot npc" style="left:73.0%;top:76.5%" data-name="Dhaso Toehprin"></span><span class="map-dot npc" style="left:56.8%;top:59.7%" data-name="Ramicharaux"></span><span class="map-dot npc" style="left:49.0%;top:69.1%" data-name="Silent Lynx"></span><span class="map-dot npc" style="left:74.6%;top:58.2%" data-name="Chaka Skitimah"></span><span class="map-dot npc" style="left:71.8%;top:43.4%" data-name="Jhuo Halmanzoh"></span><span class="map-dot npc" style="left:72.6%;top:44.1%" data-name="Daju"></span><span class="map-dot npc" style="left:67.0%;top:43.3%" data-name="Tautorie"></span><span class="map-dot npc" style="left:67.8%;top:44.2%" data-name="Illauvolahaut"></span><span class="map-dot npc" style="left:73.3%;top:48.3%" data-name="Dapol"></span><span class="map-dot npc" style="left:71.0%;top:45.1%" data-name="Saprut"></span><span class="map-dot npc" style="left:68.7%;top:48.3%" data-name="Gavin"></span><span class="map-dot npc" style="left:66.2%;top:45.1%" data-name="Tsolag"></span><span class="map-dot obj" style="left:70.1%;top:59.6%" data-name="Chocobo"></span><span class="map-dot obj" style="left:71.5%;top:59.6%" data-name="Chocobo"></span><span class="map-dot npc" style="left:65.9%;top:60.3%" data-name="Challoux"></span><span class="map-dot npc" style="left:71.1%;top:60.4%" data-name="Narsha"></span><span class="map-dot obj" style="left:82.1%;top:58.2%" data-name="Home Point #1"></span><span class="map-dot obj" style="left:25.2%;top:62.0%" data-name="Home Point #2"></span><span class="map-dot npc" style="left:82.8%;top:64.0%" data-name="Leffquen"></span><span class="map-dot npc" style="left:40.0%;top:63.0%" data-name="Marnie"></span><span class="map-dot npc" style="left:19.3%;top:62.0%" data-name="Zona Shodhun"></span><span class="map-dot obj" style="left:26.7%;top:60.8%" data-name="Guide Stone"></span><span class="map-dot npc" style="left:83.8%;top:62.5%" data-name="Naurmaire"></span><span class="map-dot npc" style="left:78.2%;top:59.0%" data-name="Khumo Daramasteh"></span><span class="map-dot npc" style="left:42.5%;top:61.8%" data-name="Red Ghost"></span><span class="map-dot npc" style="left:68.6%;top:58.6%" data-name="Falak"></span><span class="map-dot npc" style="left:52.2%;top:47.1%" data-name="Pitantimand"></span><span class="map-dot obj" style="left:55.5%;top:62.8%" data-name="???"></span><span class="map-dot npc" style="left:58.4%;top:62.0%" data-name="Basmus"></span><span class="map-dot npc" style="left:60.7%;top:62.0%" data-name="Kouang"></span><span class="map-dot npc" style="left:61.9%;top:59.7%" data-name="Rilve-Hitolve"></span><span class="map-dot npc" style="left:59.6%;top:59.7%" data-name="Sapladrepoin"></span><span class="map-dot npc" style="left:55.5%;top:60.5%" data-name="Digaga"></span><span class="map-dot npc" style="left:65.1%;top:61.7%" data-name="Veujaie"></span><span class="map-dot npc" style="left:83.3%;top:58.7%" data-name="Kochahy-Muwachahy"></span><span class="map-dot obj" style="left:53.0%;top:49.5%" data-name="Door:Arrivals Exit"></span><span class="map-dot obj" style="left:53.0%;top:43.6%" data-name="Door:Arrivals Entrance"></span><span class="map-dot obj" style="left:48.3%;top:49.6%" data-name="Door:Departures Entrance"></span><span class="map-dot obj" style="left:48.3%;top:43.7%" data-name="Door:Departures Exit"></span><span class="map-dot obj" style="left:72.0%;top:49.5%" data-name="Door:Arrivals Exit"></span><span class="map-dot obj" style="left:72.0%;top:43.6%" data-name="Door:Arrivals Entrance"></span><span class="map-dot obj" style="left:67.3%;top:49.5%" data-name="Door:Departures Entrance"></span><span class="map-dot obj" style="left:67.3%;top:43.7%" data-name="Door:Departures Exit"></span><span class="map-dot obj" style="left:53.0%;top:72.1%" data-name="Door:Departures Entrance"></span><span class="map-dot obj" style="left:53.0%;top:77.9%" data-name="Door:Departures Exit"></span><span class="map-dot obj" style="left:48.3%;top:72.1%" data-name="Door:Arrivals Exit"></span><span class="map-dot obj" style="left:48.3%;top:78.0%" data-name="Door:Arrivals Entrance"></span><span class="map-dot obj" style="left:72.0%;top:72.1%" data-name="Door:Departures Entrance"></span><span class="map-dot obj" style="left:72.0%;top:77.9%" data-name="Door:Departures Exit"></span><span class="map-dot obj" style="left:67.3%;top:72.1%" data-name="Door:Arrivals Exit"></span><span class="map-dot obj" style="left:67.3%;top:78.0%" data-name="Door:Arrivals Entrance"></span><span class="map-dot obj" style="left:54.1%;top:62.0%" data-name="Door:Jeuno Duty-Free"></span><span class="map-dot obj" style="left:66.2%;top:59.6%" data-name="Door:Chocobo Stables"></span><span class="map-dot obj" style="left:46.0%;top:26.2%" data-name="_6us"></span><span class="map-dot obj" style="left:55.4%;top:95.4%" data-name="_6ut"></span><span class="map-dot obj" style="left:74.3%;top:95.5%" data-name="_6uu"></span><span class="map-dot obj" style="left:64.9%;top:26.2%" data-name="_6uv"></span><span class="map-dot obj" style="left:71.7%;top:63.0%" data-name="Symphonic Curator"></span><span class="map-dot npc" style="left:66.0%;top:48.3%" data-name="Guddal"></span><span class="map-dot npc" style="left:52.5%;top:60.6%" data-name="Sanosuke"></span><span class="map-dot npc" style="left:66.2%;top:58.2%" data-name="Palometa"></span><span class="map-dot npc" style="left:67.3%;top:58.3%" data-name="Luto Mewrilah"></span><span class="map-dot npc" style="left:72.6%;top:58.8%" data-name="???"></span><span class="map-dot npc" style="left:70.4%;top:63.9%" data-name="Sagheera"></span><span class="map-dot obj" style="left:64.0%;top:59.0%" data-name="Game Table"></span><span class="map-dot obj" style="left:77.9%;top:57.1%" data-name="Gate: Chocobo Circuit"></span><span class="map-dot npc" style="left:66.1%;top:58.4%" data-name="Synergy Engineer"></span><span class="map-dot npc" style="left:51.9%;top:58.1%" data-name="Synergy Engineer"></span><span class="map-dot obj" style="left:67.3%;top:58.1%" data-name="Synergy Furnace"></span><span class="map-dot obj" style="left:65.2%;top:58.1%" data-name="Synergy Furnace"></span><span class="map-dot obj" style="left:51.0%;top:57.8%" data-name="Synergy Furnace"></span><span class="map-dot obj" style="left:52.8%;top:57.8%" data-name="Synergy Furnace"></span><span class="map-dot npc" style="left:50.1%;top:57.8%" data-name="Synergy Enthusiast"></span><span class="map-dot npc" style="left:55.5%;top:63.8%" data-name="Joachim"></span><span class="map-dot npc" style="left:55.0%;top:63.8%" data-name="Horst"></span><span class="map-dot obj" style="left:55.7%;top:64.1%" data-name="Treasure Coffer"></span><span class="map-dot obj" style="left:54.7%;top:63.9%" data-name="Abyssea Campaign"></span><span class="map-dot npc" style="left:82.1%;top:63.9%" data-name="Voidwatch Purveyor"></span><span class="map-dot npc" style="left:17.8%;top:35.3%" data-name="Oboro"></span><span class="map-dot npc" style="left:69.3%;top:64.1%" data-name="Monisette"></span><span class="map-dot obj" style="left:54.2%;top:57.9%" data-name="Shami's Coffer"></span><span class="map-dot obj" style="left:54.7%;top:57.9%" data-name="Shami's Crate"></span><span class="map-dot obj" style="left:53.8%;top:57.9%" data-name="Shami's Chest"></span><span class="map-dot npc" style="left:44.8%;top:63.7%" data-name="Mewk Chorosap"></span><span class="map-dot obj" style="left:43.6%;top:63.8%" data-name="Synthesis Focuser II"></span><span class="map-dot obj" style="left:21.4%;top:35.5%" data-name="Munitions Moogle"></span><span class="map-dot obj" style="left:25.4%;top:58.8%" data-name="Tales' Beginning"></span></div></div>
 <div class="infobox"><div class="infobox-head">Zone Information</div>
 <div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">5 NPCs, 26 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
 <div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">38 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Challoux <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/840-chocobo-feather" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/840.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Chocobo Feather</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/17307-dart" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17307.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dart</a><span class="vendor-price gil">10g</span></div>
-<div class="vendor-row"><a href="/item/4545-bunch-of-gysahl-greens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4545.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Bunch Of Gysahl Greens</a><span class="vendor-price gil">68g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Chocobo_Feather" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:6;--isz:20px"></span> Chocobo Feather</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Dart" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:60;--ir:28;--isz:20px;--is:2"></span> Dart</a><span class="vendor-price gil">10g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Gysahl_Greens" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:30;--isz:20px"></span> Bunch Of Gysahl Greens</a><span class="vendor-price gil">68g</span></div>
 <h3>Gekko <span class="badge">6 items</span></h3>
-<div class="vendor-row"><a href="/item/4365-rolanberry" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4365.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Rolanberry</a><span class="vendor-price gil">120g</span></div>
-<div class="vendor-row"><a href="/item/4148-antidote" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4148.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Antidote</a><span class="vendor-price gil">316g</span></div>
-<div class="vendor-row"><a href="/item/4151-flask-of-echo-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4151.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
-<div class="vendor-row"><a href="/item/4112-potion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4112.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Potion</a><span class="vendor-price gil">910g</span></div>
-<div class="vendor-row"><a href="/item/4150-flask-of-eye-drops" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4150.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
-<div class="vendor-row"><a href="/item/4128-ether" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4128.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ether</a><span class="vendor-price gil">4,832g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Rolanberry" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:49;--ir:27;--isz:20px"></span> Rolanberry</a><span class="vendor-price gil">120g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Antidote" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:18;--ir:25;--isz:20px"></span> Antidote</a><span class="vendor-price gil">316g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Echo_Drops" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:21;--ir:25;--isz:20px"></span> Flask Of Echo Drops</a><span class="vendor-price gil">800g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Potion" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:24;--isz:20px"></span> Potion</a><span class="vendor-price gil">910g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Eye_Drops" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:20;--ir:25;--isz:20px"></span> Flask Of Eye Drops</a><span class="vendor-price gil">2,595g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Ether" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:0;--ir:25;--isz:20px"></span> Ether</a><span class="vendor-price gil">4,832g</span></div>
 <h3>Kindlix <span class="badge">9 items</span></h3>
-<div class="vendor-row"><a href="/item/4167-cracker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4167.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cracker</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4168-twinkle-shower" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4168.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Twinkle Shower</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4169-little-comet" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4169.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Little Comet</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4217-sparkling-hand" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4217.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Sparkling Hand</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4215-popstar" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4215.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Popstar</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4216-brilliant-snow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4216.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Brilliant Snow</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4186-airborne" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4186.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Airborne</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/4218-air-rider" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4218.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Air Rider</a><span class="vendor-price gil">100g</span></div>
-<div class="vendor-row"><a href="/item/4257-papillion" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4257.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Papillion</a><span class="vendor-price gil">300g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Cracker" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:35;--ir:25;--isz:20px"></span> Cracker</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Twinkle_Shower" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:36;--ir:25;--isz:20px"></span> Twinkle Shower</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Little_Comet" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:37;--ir:25;--isz:20px"></span> Little Comet</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Sparkling_Hand" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:60;--ir:25;--isz:20px"></span> Sparkling Hand</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Popstar" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:58;--ir:25;--isz:20px"></span> Popstar</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Brilliant_Snow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:59;--ir:25;--isz:20px"></span> Brilliant Snow</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Airborne" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:25;--isz:20px"></span> Airborne</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Air_Rider" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:25;--isz:20px"></span> Air Rider</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Papillion" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:15;--ir:26;--isz:20px"></span> Papillion</a><span class="vendor-price gil">300g</span></div>
 <h3>Leyla <span class="badge">4 items</span></h3>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/4509-flask-of-distilled-water" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4509.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
-<div class="vendor-row"><a href="/item/17308-hawkeye" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17308.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hawkeye</a><span class="vendor-price gil">60g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Crossbow_Bolt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:29;--isz:20px;--is:2"></span> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Iron_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:8;--ir:29;--isz:20px;--is:2"></span> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Distilled_Water" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:62;--ir:29;--isz:20px"></span> Flask Of Distilled Water</a><span class="vendor-price gil">12g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Hawkeye" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:61;--ir:28;--isz:20px;--is:2"></span> Hawkeye</a><span class="vendor-price gil">60g</span></div>
 <h3>Pyropox <span class="badge">4 items</span></h3>
-<div class="vendor-row"><a href="/item/4256-ouka-ranman" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4256.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ouka Ranman</a><span class="vendor-price gil">25g</span></div>
-<div class="vendor-row"><a href="/item/4184-kongou-inaho" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4184.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Kongou Inaho</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4185-meifu-goma" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4185.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Meifu Goma</a><span class="vendor-price gil">50g</span></div>
-<div class="vendor-row"><a href="/item/4183-konron-hassen" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/4183.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Konron Hassen</a><span class="vendor-price gil">100g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Ouka_Ranman" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:14;--ir:26;--isz:20px"></span> Ouka Ranman</a><span class="vendor-price gil">25g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Kongou_Inaho" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:25;--isz:20px"></span> Kongou Inaho</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Meifu_Goma" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:25;--isz:20px"></span> Meifu Goma</a><span class="vendor-price gil">50g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Konron_Hassen" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:25;--isz:20px"></span> Konron Hassen</a><span class="vendor-price gil">100g</span></div>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

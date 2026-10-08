@@ -2,13 +2,42 @@
 """Generate public/fishing-cooking.html — LOW COST Fishing + Cooking skill-up guide."""
 import json, os, sqlite3, html
 from page_template import full_page
+from wiki import phoenix_url
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT  = os.path.join(ROOT, 'public', 'fishing-cooking.html')
+CFG  = os.path.join(ROOT, 'data', 'cfg-notes.json')
+
+cfg_notes = []
+if os.path.exists(CFG):
+    with open(CFG, encoding='utf-8') as f:
+        cfg_notes = json.load(f)
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
+
+ERA = "('ROTZ','COP','TOAU','WOTG')"
+
+ki_names = {}
+try:
+    for r in db.execute('SELECT key_item_id, name, gp_cost FROM guild_key_items'):
+        ki_names[r[0]] = (r[1], r[2])
+except Exception:
+    pass
+
+def get_ki_recipes_in_range(lo, hi):
+    """Return key-item-gated cooking recipes in a level range."""
+    rows = db.execute(f'''
+        SELECT r.name, r.main_level, r.key_item, r.result
+        FROM recipes r
+        WHERE r.main_craft='cook' AND r.desynth=0
+        AND r.main_level BETWEEN ? AND ?
+        AND r.key_item IS NOT NULL AND r.key_item != 0
+        AND (r.content_tag IS NULL OR r.content_tag IN {ERA})
+        ORDER BY r.main_level, r.name
+    ''', (lo, hi)).fetchall()
+    return rows
 
 def name(item_id):
     r = db.execute('SELECT name FROM items WHERE id=?', (item_id,)).fetchone()
@@ -18,11 +47,7 @@ def pretty(n):
     return n.replace('_', ' ').title() if n else ''
 
 def item_url(item_id):
-    n = name(item_id)
-    slug = n.lower().replace(' ', '-').replace("'", '').replace('+', '-plus')
-    import re
-    slug = re.sub(r'[^a-z0-9-]', '', slug).strip('-')
-    return f'/item/{item_id}-{slug}'
+    return phoenix_url(name(item_id))
 
 def esc(s):
     return html.escape(str(s))
@@ -229,24 +254,24 @@ def build_recipe_card(r):
     if r.get('fish') and r.get('fish_id'):
         fi = get_fish_info(r['fish_id'])
         fish_skill = fi['skill'] if fi else '?'
-        h.append(f'<a href="{item_url(r["fish_id"])}" class="fc-ing fc-ing-fish">{esc(pretty(r["fish"]))} <span class="fc-fish-skill">(Fish Lv {fish_skill})</span></a>')
+        h.append(f'<a href="{item_url(r["fish_id"])}" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">{esc(pretty(r["fish"]))} <span class="fc-fish-skill">(Fish Lv {fish_skill})</span></a>')
         if r.get('alt_fish'):
             for af_name, af_id in r['alt_fish']:
                 afi = get_fish_info(af_id)
                 af_skill = afi['skill'] if afi else '?'
-                h.append(f' or <a href="{item_url(af_id)}" class="fc-ing fc-ing-fish">{esc(pretty(af_name))} <span class="fc-fish-skill">(Fish Lv {af_skill})</span></a>')
+                h.append(f' or <a href="{item_url(af_id)}" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">{esc(pretty(af_name))} <span class="fc-fish-skill">(Fish Lv {af_skill})</span></a>')
     if r.get('extra_items'):
         for ei in r['extra_items']:
             if len(ei) == 3:
                 iname, iid, qty = ei
                 vp = get_vendor_price(iid)
                 cost_str = f' — {gil_span(vp)}' if vp else ''
-                h.append(f'<a href="{item_url(iid)}" class="fc-ing">{esc(iname)} x{qty}{cost_str}</a>')
+                h.append(f'<a href="{item_url(iid)}" target="_blank" rel="noopener" class="fc-ing">{esc(iname)} x{qty}{cost_str}</a>')
             else:
                 iname, iid = ei
                 vp = get_vendor_price(iid)
                 cost_str = f' — {gil_span(vp)}' if vp else ''
-                h.append(f'<a href="{item_url(iid)}" class="fc-ing">{esc(iname)}{cost_str}</a>')
+                h.append(f'<a href="{item_url(iid)}" target="_blank" rel="noopener" class="fc-ing">{esc(iname)}{cost_str}</a>')
     h.append('</div></div>')
 
     # Where to fish
@@ -278,7 +303,7 @@ def build_recipe_card(r):
                 elif craftable:
                     cost_str = ' <span class="fc-craftable">(craft it!)</span>'
                 btype = 'lure' if b['type'] == 'lure' else 'bait'
-                h.append(f'<span class="fc-bait-item"><a href="{item_url(b["bait_item_id"])}">{esc(b["name"])}</a> <span class="fc-power">pwr {b["power"]}</span> <span class="fc-btype">{btype}</span>{cost_str}</span>')
+                h.append(f'<span class="fc-bait-item"><a href="{item_url(b["bait_item_id"])}" target="_blank" rel="noopener">{esc(b["name"])}</a> <span class="fc-power">pwr {b["power"]}</span> <span class="fc-btype">{btype}</span>{cost_str}</span>')
             h.append('</div></div>')
 
     if r.get('note'):
@@ -292,10 +317,34 @@ def build_tier(tier):
     h.append(f'<section class="fc-tier" id="{tier["name"].split(":")[0].lower().replace(" ","-")}">')
     h.append(f'<h2>{esc(tier["name"])} <span class="fc-range">Cook {esc(tier["range"])}</span></h2>')
     h.append(f'<p class="fc-intro">{esc(tier["intro"])}</p>')
+    lo, hi = tier['cook_range']
+    for n in cfg_notes:
+        if n['craft'] in ('cook', 'fish') and lo <= n['level'] <= hi:
+            label = 'Fishing' if n['craft'] == 'fish' else 'Cooking'
+            h.append(f'<div class="guide-tip"><strong>{label} Lv {n["level"]}:</strong> {esc(n["note"])}</div>')
     h.append('<div class="fc-recipes">')
     for r in tier['recipes']:
         h.append(build_recipe_card(r))
     h.append('</div>')
+
+    ki_recs = get_ki_recipes_in_range(lo, hi)
+    if ki_recs:
+        by_ki = {}
+        for kr in ki_recs:
+            ki_id = kr['key_item']
+            info = ki_names.get(ki_id, (f'Key Item #{ki_id}', 0))
+            by_ki.setdefault(ki_id, {'name': info[0], 'gp': info[1], 'recipes': []})
+            pair = (kr['name'], kr['main_level'])
+            if pair not in by_ki[ki_id]['recipes']:
+                by_ki[ki_id]['recipes'].append(pair)
+        h.append('<div class="fc-ki-note">')
+        h.append(f'<div class="fc-ki-head"><span class="pill ki">GP Key Item</span> Recipes in this range requiring GP key items:</div>')
+        h.append('<div class="fc-ki-list">')
+        for ki_id, data in sorted(by_ki.items(), key=lambda x: x[1]['recipes'][0][1]):
+            rlist = ', '.join(f'{pretty(rn)} (Lv {rl})' for rn, rl in data['recipes'])
+            h.append(f'<div class="fc-ki-row"><strong>{esc(data["name"])}</strong> <span class="fc-ki-cost">({data["gp"]:,} GP)</span> — {esc(rlist)}</div>')
+        h.append('</div></div>')
+
     h.append('</section>')
     return '\n'.join(h)
 
@@ -404,6 +453,14 @@ CUSTOM_CSS = '''\
 
 .gil{display:inline-flex;align-items:center;gap:2px}
 .gil svg{width:12px;height:12px;color:goldenrod}
+
+.fc-ki-note{margin:14px 0 0;padding:14px 16px;border:1px solid color-mix(in srgb,var(--loss) 30%,var(--border));border-radius:8px;background:color-mix(in srgb,var(--loss) 5%,var(--surface));font-size:.88rem}
+.fc-ki-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;font-size:.85rem;color:var(--ink-soft)}
+.fc-ki-list{display:flex;flex-direction:column;gap:4px}
+.fc-ki-row{font-size:.85rem;color:var(--ink-soft);line-height:1.5}
+.fc-ki-row strong{color:var(--loss)}
+.fc-ki-cost{font-size:.78rem;color:var(--ink-faint)}
+.pill.ki{border-color:var(--loss);color:var(--loss);font-size:.72rem;padding:1px 6px;border:1px solid;border-radius:4px;font-weight:600}
 
 @media(max-width:640px){
  .fc-loop-diagram{flex-direction:column;gap:8px}

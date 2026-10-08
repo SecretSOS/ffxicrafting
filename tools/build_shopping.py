@@ -89,8 +89,7 @@ function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
 function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.v||0):0;}
 function sell(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.b||0):0;}
-function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
-function itemUrl(id){var it=I[id];return it?'/item/'+id+'-'+slugify(it.n):'#';}
+function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
 var W=[[85,15,0,0,0],[85,15,0,0,0],[85,15,0,0,0],[80,20,0,0,0],[80,20,0,0,0],[70,30,0,0,0],[70,30,0,0,0],[60,40,0,0,0],[60,40,0,0,0],[50,40,10,0,0],[40,40,20,0,0],[40,40,20,0,0],[15,45,30,10,0],[10,40,25,25,0],[0,40,30,20,10]];
 function avgGain(diff,skill){if(skill>=60)return 0.1;var w=W[Math.max(0,Math.min(14,diff))],s=0;for(var i=0;i<5;i++)s+=w[i]*(i+1)/10;return s/100;}
 function costEach(r){var c=price(r.cry);r.ing.forEach(function(p){c+=price(p[0])*p[1];});return c;}
@@ -184,7 +183,7 @@ function renderPath(path){
       ingList.push((cryIt?esc(cryIt.n):'Crystal')+' ×'+fmt(step.totalSynths));
       step.r.ing.forEach(function(p){var pi=I[p[0]];ingList.push((pi?esc(pi.n):'?')+' ×'+fmt(Math.ceil(p[1]*step.totalSynths)));});
       html+='<div class="step"><span class="step-range">'+step.lo+'–'+step.hi+'</span>'+
-        '<div class="step-name"><a href="'+itemUrl(step.r.res)+'">'+esc(it?it.n:'?')+'</a>'+(step.r.rq>1?' ×'+step.r.rq:'')+
+        '<div class="step-name"><a href="'+itemUrl(step.r.res)+'" target="_blank" rel="noopener">'+esc(it?it.n:'?')+'</a>'+(step.r.rq>1?' ×'+step.r.rq:'')+
         '<div class="step-meta">recipe lv '+step.r.lv+' · '+fmt(step.synthsPerLv)+' synths/level · '+fmt(step.totalSynths)+' total</div>'+
         '<div class="step-ings">'+ingList.join(' · ')+'</div></div>'+
         '<span class="step-synths">'+gil(step.costPerLv*step.levels)+'</span></div>';
@@ -217,7 +216,7 @@ function renderMats(g,totalCost){
       else if(it&&it.m)detail='mob drop '+it.m+'%';
       else if(it&&it.c!==undefined&&it.c!==null)detail='craft lv '+it.c;
       html+='<div class="mat"><span class="mat-qty">×'+fmt(m.qty)+'</span>'+
-        '<span class="mat-name"><a href="'+itemUrl(m.id)+'">'+esc(it?it.n:'Item #'+m.id)+'</a>'+
+        '<span class="mat-name"><a href="'+itemUrl(m.id)+'" target="_blank" rel="noopener">'+esc(it?it.n:'Item #'+m.id)+'</a>'+
         (detail?' <span class="mat-detail">— '+esc(detail)+'</span>':'')+'</span>'+
         (pr?'<span class="mat-cost">'+gil(pr)+' each = '+gil(cost)+'</span>':'')+'</div>';
     });

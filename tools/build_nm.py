@@ -10,13 +10,12 @@ OUT  = os.path.join(ROOT, 'public', 'nm')
 
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import full_page
+from page_template import full_page, icon_html
+from wiki import phoenix_url
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
 lsb_commit = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()['v']
-
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
 ITEMS = {}
 for r in db.execute("SELECT id, name FROM items"):
     ITEMS[r['id']] = r['name'].replace('_', ' ').title()
@@ -32,11 +31,7 @@ def slugify(s):
 
 def item_link(iid):
     name = ITEMS.get(iid, f'Item {iid}')
-    slug = name.lower().replace(' ', '-').replace("'", '')
-    icon = ''
-    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
-        icon = f'<img src="/icons/{iid}.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
-    return f'<a href="/item/{iid}-{slug}">{icon}{esc(name)}</a>'
+    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener">{icon_html(iid)}{esc(name)}</a>'
 
 def fmt_pct(p):
     if p is None: return '?%'

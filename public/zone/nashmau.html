@@ -14,6 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 <style>
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -40,209 +51,143 @@ details.mob .mob-body{padding:6px 0 14px 18px}
 <script src="/powertools.js"></script>
 </head>
 <body>
-<svg style="display:none" aria-hidden="true">
- <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>
- <symbol id="i-smith" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h10"/><path d="M6 20V9"/><path d="M4 9h11l5-4v6l-5-2z"/></symbol>
- <symbol id="i-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l4 5-4 13-4-13z"/><path d="M8 8h8"/></symbol>
- <symbol id="i-cloth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4c4 3 10 3 14 0"/><path d="M5 4v16c4-3 10-3 14 0V4"/><path d="M9 8c2 2 4 4 6 8"/></symbol>
- <symbol id="i-leather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4c6-1 12 1 13 6-1 6-7 10-13 10-2-5-2-11 0-16z"/><path d="M9 9c3 1 5 3 6 6"/></symbol>
- <symbol id="i-bone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 15l10-6"/><circle cx="5" cy="17" r="2.2"/><circle cx="7.5" cy="19" r="2"/><circle cx="19" cy="7" r="2.2"/><circle cx="16.5" cy="5" r="2"/></symbol>
- <symbol id="i-alchemy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3h4"/><path d="M11 3v6l-5 8a3 3 0 002 5h8a3 3 0 002-5l-5-8V3"/><path d="M8 15h8"/></symbol>
- <symbol id="i-cook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13h16a8 8 0 01-16 0z"/><path d="M12 5v3"/><path d="M8 21h8"/></symbol>
- <symbol id="i-fish" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></symbol>
- <symbol id="i-gil" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".9"/><circle cx="8" cy="8" r="4.6" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="1"/></symbol>
- <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></symbol>
- <symbol id="i-profit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/></symbol>
- <symbol id="i-shop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
- <symbol id="i-bcnm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
- <symbol id="i-desynth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></symbol>
- <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>
- <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>
- <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>
- <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>
-</svg>
 <nav class="top-bar" id="topBar"></nav>
 <nav class="guild-bar" id="guildBar"></nav>
-<script>initNav()</script>
+<script>initChrome()</script>
 <div class="site-layout">
-<aside class="sidebar" id="sidebar">
- <div class="vana-week" id="vanaWeek"></div>
- <div class="sb-section">
-  <div class="sb-heading">Tools</div>
-  <a href="/calculator"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-calc"/></svg>Crafting Calculator</span></a>
-  <a href="/profit"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-profit"/></svg>Profit Finder</span></a>
-  <a href="/shopping"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-shop"/></svg>Shopping List</span></a>
-  <a href="/fishing-101"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing 101</span></a>
-  <a href="/gathering/fishing"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-fish"/></svg>Fishing Lookup</span></a>
-  <a href="/gathering/gardening"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-garden"/></svg>Gardening Lookup</span></a>
-
-  <a href="/bcnm-tool"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-bcnm"/></svg>BCNM Profit Ranker</span></a>
-  <a href="/desynth"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-desynth"/></svg>Desynth Calculator</span></a>
-  <a href="/guild-points"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-gp"/></svg>Guild Points</span></a>
-  <a href="/recipe-tree"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-tree"/></svg>Ingredient Tree</span></a>
-  <a href="/fishing-cooking"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-guide"/></svg>Fishing + Cooking</span></a>
-
- </div>
- <div id="ahStatus" class="ah-status" style="display:none"></div>
-</aside>
+<aside class="sidebar" id="sidebar"></aside>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="main">
 <nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span><a href="/zone/">Zones</a><span class="sep">&rsaquo;</span>Nashmau</nav>
 <header class="panel pad"><h1>Nashmau</h1>
+<div class="zone-hero">
 <div class="infobox"><div class="infobox-head">Zone Information</div>
-<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">6 NPCs, 70 items</span></div>
+<div class="infobox-row"><span class="infobox-label">Vendors</span><span class="infobox-val">11 NPCs, 103 items</span></div>
 <div class="infobox-row"><span class="infobox-label">Fishing</span><span class="infobox-val">Yes</span></div>
-<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">78 rows</span></div>
+<div class="infobox-row"><span class="infobox-label">Sources</span><span class="infobox-val">111 rows</span></div>
 </div>
-<div style="clear:both"></div></header>
+</div>
+</header>
 <section class="panel pad" id="vendors"><h2>NPCs &amp; vendors</h2>
 <h3>Jajaroon <span class="badge">8 items</span></h3>
-<div class="vendor-row"><a href="/item/2176-fire-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2176.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fire Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2177-ice-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2177.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ice Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2178-wind-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2178.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wind Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2179-earth-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2179.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Earth Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2180-thunder-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2180.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Thunder Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2181-water-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2181.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Water Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2182-light-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2182.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Light Card</a><span class="vendor-price gil">48g</span></div>
-<div class="vendor-row"><a href="/item/2183-dark-card" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2183.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Dark Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Fire_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:16;--isz:20px"></span> Fire Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Ice_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:16;--isz:20px"></span> Ice Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Wind_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:16;--isz:20px"></span> Wind Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Earth_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:16;--isz:20px"></span> Earth Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Thunder_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:16;--isz:20px"></span> Thunder Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Water_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:16;--isz:20px"></span> Water Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Light_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:16;--isz:20px"></span> Light Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Dark_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:16;--isz:20px"></span> Dark Card</a><span class="vendor-price gil">48g</span></div>
 <h3>Mamaroon <span class="badge">2 items</span></h3>
-<div class="vendor-row"><a href="/item/2501-black-puppet-turban" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2501.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Black Puppet Turban</a><span class="vendor-price gil">29,950g</span></div>
-<div class="vendor-row"><a href="/item/2502-white-puppet-turban" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2502.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> White Puppet Turban</a><span class="vendor-price gil">29,950g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Black_Puppet_Turban" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:19;--isz:20px"></span> Black Puppet Turban</a><span class="vendor-price gil">29,950g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/White_Puppet_Turban" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:19;--isz:20px"></span> White Puppet Turban</a><span class="vendor-price gil">29,950g</span></div>
 <h3>Pipiroon <span class="badge">3 items</span></h3>
-<div class="vendor-row"><a href="/item/928-pinch-of-bomb-ash" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/928.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pinch Of Bomb Ash</a><span class="vendor-price gil">515g</span></div>
-<div class="vendor-row"><a href="/item/17313-grenade" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17313.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Grenade</a><span class="vendor-price gil">1,204g</span></div>
-<div class="vendor-row"><a href="/item/17315-riot-grenade" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17315.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Riot Grenade</a><span class="vendor-price gil">6,000g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bomb_Ash" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:9;--ir:8;--isz:20px"></span> Pinch Of Bomb Ash</a><span class="vendor-price gil">515g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Grenade" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:1;--ir:29;--isz:20px;--is:2"></span> Grenade</a><span class="vendor-price gil">1,204g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Riot_Grenade" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:29;--isz:20px;--is:2"></span> Riot Grenade</a><span class="vendor-price gil">6,000g</span></div>
 <h3>Poporoon <span class="badge">4 items</span></h3>
-<div class="vendor-row"><a href="/item/12952-leather-highboots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12952.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Leather Highboots</a><span class="vendor-price gil">336g</span></div>
-<div class="vendor-row"><a href="/item/12953-lizard-ledelsens" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12953.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Lizard Ledelsens</a><span class="vendor-price gil">3,438g</span></div>
-<div class="vendor-row"><a href="/item/12954-studded-boots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12954.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Studded Boots</a><span class="vendor-price gil">11,172g</span></div>
-<div class="vendor-row"><a href="/item/12955-cuir-highboots" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/12955.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Cuir Highboots</a><span class="vendor-price gil">20,532g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Highboots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:23;--isz:20px;--is:1"></span> Leather Highboots</a><span class="vendor-price gil">336g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Lizard_Ledelsens" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:23;--isz:20px;--is:1"></span> Lizard Ledelsens</a><span class="vendor-price gil">3,438g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Studded_Boots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:23;--isz:20px;--is:1"></span> Studded Boots</a><span class="vendor-price gil">11,172g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Cuir_Highboots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:23;--isz:20px;--is:1"></span> Cuir Highboots</a><span class="vendor-price gil">20,532g</span></div>
 <h3>Wata Khamazom <span class="badge">11 items</span></h3>
-<div class="vendor-row"><a href="/item/17318-wooden-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17318.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
-<div class="vendor-row"><a href="/item/17336-crossbow-bolt" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17336.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
-<div class="vendor-row"><a href="/item/17320-iron-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17320.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
-<div class="vendor-row"><a href="/item/17321-silver-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17321.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Silver Arrow</a><span class="vendor-price gil">18g</span></div>
-<div class="vendor-row"><a href="/item/17152-shortbow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17152.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shortbow</a><span class="vendor-price gil">44g</span></div>
-<div class="vendor-row"><a href="/item/17322-fire-arrow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17322.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Fire Arrow</a><span class="vendor-price gil">140g</span></div>
-<div class="vendor-row"><a href="/item/18258-throwing-tomahawk" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/18258.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Throwing Tomahawk</a><span class="vendor-price gil">248g</span></div>
-<div class="vendor-row"><a href="/item/17160-longbow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17160.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Longbow</a><span class="vendor-price gil">492g</span></div>
-<div class="vendor-row"><a href="/item/17153-self-bow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17153.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Self Bow</a><span class="vendor-price gil">536g</span></div>
-<div class="vendor-row"><a href="/item/17154-wrapped-bow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17154.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Wrapped Bow</a><span class="vendor-price gil">7,920g</span></div>
-<div class="vendor-row"><a href="/item/17162-great-bow" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/17162.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Great Bow</a><span class="vendor-price gil">21,812g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Wooden_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:6;--ir:29;--isz:20px;--is:2"></span> Wooden Arrow</a><span class="vendor-price gil">4g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Crossbow_Bolt" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:17;--ir:29;--isz:20px;--is:2"></span> Crossbow Bolt</a><span class="vendor-price gil">6g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Iron_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:8;--ir:29;--isz:20px;--is:2"></span> Iron Arrow</a><span class="vendor-price gil">8g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Silver_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:9;--ir:29;--isz:20px;--is:2"></span> Silver Arrow</a><span class="vendor-price gil">18g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Shortbow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:7;--ir:27;--isz:20px;--is:2"></span> Shortbow</a><span class="vendor-price gil">44g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Fire_Arrow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:10;--ir:29;--isz:20px;--is:2"></span> Fire Arrow</a><span class="vendor-price gil">140g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Throwing_Tomahawk" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:6;--isz:20px;--is:3"></span> Throwing Tomahawk</a><span class="vendor-price gil">248g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Longbow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:14;--ir:27;--isz:20px;--is:2"></span> Longbow</a><span class="vendor-price gil">492g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Self_Bow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:8;--ir:27;--isz:20px;--is:2"></span> Self Bow</a><span class="vendor-price gil">536g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Wrapped_Bow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:9;--ir:27;--isz:20px;--is:2"></span> Wrapped Bow</a><span class="vendor-price gil">7,920g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Great_Bow" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:16;--ir:27;--isz:20px;--is:2"></span> Great Bow</a><span class="vendor-price gil">21,812g</span></div>
 <h3>Yoyoroon <span class="badge">42 items</span></h3>
-<div class="vendor-row"><a href="/item/2239-tension-spring" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2239.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tension Spring</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2243-loudspeaker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2243.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Loudspeaker</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2246-accelerator" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2246.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Accelerator</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2251-armor-plate" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2251.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Armor Plate</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2254-stabilizer" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2254.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Stabilizer</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2258-mana-jammer" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2258.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Jammer</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2262-auto-repair-kit" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2262.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Auto-Repair Kit</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2266-mana-tank" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2266.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Tank</a><span class="vendor-price gil">4,940g</span></div>
-<div class="vendor-row"><a href="/item/2240-inhibitor" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2240.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Inhibitor</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2242-mana-booster" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2242.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Booster</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2247-scope" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2247.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scope</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2250-shock-absorber" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2250.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Shock Absorber</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2255-volt-gun" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2255.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Volt Gun</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2260-stealth-screen" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2260.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Stealth Screen</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2264-damage-gauge" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2264.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Damage Gauge</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2268-mana-conserver" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2268.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Conserver</a><span class="vendor-price gil">9,925g</span></div>
-<div class="vendor-row"><a href="/item/2238-strobe" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2238.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Strobe</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2248-pattern-reader" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2248.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Pattern Reader</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2252-analyzer" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2252.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Analyzer</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2256-heat-seeker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2256.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Heat Seeker</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2259-heatsink" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2259.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Heatsink</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2263-flashbulb" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2263.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flashbulb</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2267-mana-converter" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2267.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Converter</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2409-flame-holder" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2409.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Flame Holder</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2410-ice-maker" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2410.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Ice Maker</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2411-replicator" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2411.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Replicator</a><span class="vendor-price gil">19,890g</span></div>
-<div class="vendor-row"><a href="/item/2241-tension-spring-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2241.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tension Spring Ii</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2244-scanner" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2244.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Scanner</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2245-loudspeaker-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2245.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Loudspeaker Ii</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2249-accelerator-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2249.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Accelerator Ii</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2253-armor-plate-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2253.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Armor Plate Ii</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2257-stabilizer-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2257.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Stabilizer Ii</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2261-mana-jammer-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2261.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Jammer Ii</a><span class="vendor-price gil">29,640g</span></div>
-<div class="vendor-row"><a href="/item/2265-auto-repair-kit-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2265.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Auto-Repair Kit Ii</a><span class="vendor-price gil">41,496g</span></div>
-<div class="vendor-row"><a href="/item/2269-mana-tank-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2269.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Mana Tank Ii</a><span class="vendor-price gil">41,496g</span></div>
-<div class="vendor-row"><a href="/item/2412-hammermill" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/2412.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Hammermill</a><span class="vendor-price gil">41,496g</span></div>
-<div class="vendor-row"><a href="/item/9032-strobe-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9032.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Strobe Ii</a><span class="vendor-price gil">53,352g</span></div>
-<div class="vendor-row"><a href="/item/9033-tension-spring-iii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9033.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Tension Spring Iii</a><span class="vendor-price gil">65,208g</span></div>
-<div class="vendor-row"><a href="/item/9066-amplifier" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9066.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Amplifier</a><span class="vendor-price gil">65,208g</span></div>
-<div class="vendor-row"><a href="/item/9043-stealth-screen-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9043.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Stealth Screen Ii</a><span class="vendor-price gil">82,992g</span></div>
-<div class="vendor-row"><a href="/item/9065-inhibitor-ii" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9065.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Inhibitor Ii</a><span class="vendor-price gil">82,992g</span></div>
-<div class="vendor-row"><a href="/item/9067-repeater" style="display:inline-flex;align-items:center;gap:4px"><img src="/icons/9067.png" width="20" height="20" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> Repeater</a><span class="vendor-price gil">82,992g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tension_Spring" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:17;--isz:20px"></span> Tension Spring</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Loudspeaker" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:17;--isz:20px"></span> Loudspeaker</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Accelerator" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:34;--ir:17;--isz:20px"></span> Accelerator</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Armor_Plate" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:39;--ir:17;--isz:20px"></span> Armor Plate</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Stabilizer" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:42;--ir:17;--isz:20px"></span> Stabilizer</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Jammer" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:17;--isz:20px"></span> Mana Jammer</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Auto-Repair_Kit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:17;--isz:20px"></span> Auto-Repair Kit</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Tank" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:17;--isz:20px"></span> Mana Tank</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Inhibitor" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:28;--ir:17;--isz:20px"></span> Inhibitor</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Booster" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:30;--ir:17;--isz:20px"></span> Mana Booster</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Scope" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:35;--ir:17;--isz:20px"></span> Scope</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Shock_Absorber" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:38;--ir:17;--isz:20px"></span> Shock Absorber</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Volt_Gun" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:43;--ir:17;--isz:20px"></span> Volt Gun</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Stealth_Screen" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:17;--isz:20px"></span> Stealth Screen</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Damage_Gauge" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:17;--isz:20px"></span> Damage Gauge</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Conserver" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:17;--isz:20px"></span> Mana Conserver</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Strobe" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:26;--ir:17;--isz:20px"></span> Strobe</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Pattern_Reader" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:36;--ir:17;--isz:20px"></span> Pattern Reader</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Analyzer" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:17;--isz:20px"></span> Analyzer</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Heat_Seeker" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:44;--ir:17;--isz:20px"></span> Heat Seeker</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Heatsink" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:17;--isz:20px"></span> Heatsink</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Flashbulb" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:17;--isz:20px"></span> Flashbulb</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Converter" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:17;--isz:20px"></span> Mana Converter</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Flame_Holder" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:2;--ir:19;--isz:20px"></span> Flame Holder</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Ice_Maker" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:19;--isz:20px"></span> Ice Maker</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Replicator" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:4;--ir:19;--isz:20px"></span> Replicator</a><span class="vendor-price gil">19,890g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tension_Spring_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:29;--ir:17;--isz:20px"></span> Tension Spring Ii</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Scanner" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:32;--ir:17;--isz:20px"></span> Scanner</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Loudspeaker_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:33;--ir:17;--isz:20px"></span> Loudspeaker Ii</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Accelerator_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:37;--ir:17;--isz:20px"></span> Accelerator Ii</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Armor_Plate_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:41;--ir:17;--isz:20px"></span> Armor Plate Ii</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Stabilizer_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:17;--isz:20px"></span> Stabilizer Ii</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Jammer_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:49;--ir:17;--isz:20px"></span> Mana Jammer Ii</a><span class="vendor-price gil">29,640g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Auto-Repair_Kit_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:17;--isz:20px"></span> Auto-Repair Kit Ii</a><span class="vendor-price gil">41,496g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Tank_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:17;--isz:20px"></span> Mana Tank Ii</a><span class="vendor-price gil">41,496g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Hammermill" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:5;--ir:19;--isz:20px"></span> Hammermill</a><span class="vendor-price gil">41,496g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Strobe_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:39;--ir:10;--isz:20px;--is:1"></span> Strobe Ii</a><span class="vendor-price gil">53,352g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tension_Spring_III" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:40;--ir:10;--isz:20px;--is:1"></span> Tension Spring Iii</a><span class="vendor-price gil">65,208g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Amplifier" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:10;--isz:20px;--is:1"></span> Amplifier</a><span class="vendor-price gil">65,208g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Stealth_Screen_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:43;--ir:10;--isz:20px;--is:1"></span> Stealth Screen Ii</a><span class="vendor-price gil">82,992g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Inhibitor_II" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:10;--isz:20px;--is:1"></span> Inhibitor Ii</a><span class="vendor-price gil">82,992g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Repeater" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:10;--isz:20px;--is:1"></span> Repeater</a><span class="vendor-price gil">82,992g</span></div>
+<h3>jajaroon <span class="badge">8 items</span></h3>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Fire_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:16;--isz:20px"></span> Fire Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Ice_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:51;--ir:16;--isz:20px"></span> Ice Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Wind_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:16;--isz:20px"></span> Wind Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Earth_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:53;--ir:16;--isz:20px"></span> Earth Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Thunder_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:16;--isz:20px"></span> Thunder Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Water_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:55;--ir:16;--isz:20px"></span> Water Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Light_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:16;--isz:20px"></span> Light Card</a><span class="vendor-price gil">48g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Dark_Card" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:16;--isz:20px"></span> Dark Card</a><span class="vendor-price gil">48g</span></div>
+<h3>mamaroon <span class="badge">2 items</span></h3>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Black_Puppet_Turban" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:19;--isz:20px"></span> Black Puppet Turban</a><span class="vendor-price gil">29,950g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/White_Puppet_Turban" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:57;--ir:19;--isz:20px"></span> White Puppet Turban</a><span class="vendor-price gil">29,950g</span></div>
+<h3>pipiroon <span class="badge">3 items</span></h3>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Bomb_Ash" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:9;--ir:8;--isz:20px"></span> Pinch Of Bomb Ash</a><span class="vendor-price gil">515g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Grenade" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:1;--ir:29;--isz:20px;--is:2"></span> Grenade</a><span class="vendor-price gil">1,204g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Riot_Grenade" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:3;--ir:29;--isz:20px;--is:2"></span> Riot Grenade</a><span class="vendor-price gil">6,000g</span></div>
+<h3>poporoon <span class="badge">4 items</span></h3>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Leather_Highboots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:45;--ir:23;--isz:20px;--is:1"></span> Leather Highboots</a><span class="vendor-price gil">336g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Lizard_Ledelsens" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:23;--isz:20px;--is:1"></span> Lizard Ledelsens</a><span class="vendor-price gil">3,438g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Studded_Boots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:47;--ir:23;--isz:20px;--is:1"></span> Studded Boots</a><span class="vendor-price gil">11,172g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Cuir_Highboots" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:23;--isz:20px;--is:1"></span> Cuir Highboots</a><span class="vendor-price gil">20,832g</span></div>
+<h3>yoyoroon <span class="badge">16 items</span></h3>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Tension_Spring" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:27;--ir:17;--isz:20px"></span> Tension Spring</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Loudspeaker" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:31;--ir:17;--isz:20px"></span> Loudspeaker</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Accelerator" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:34;--ir:17;--isz:20px"></span> Accelerator</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Armor_Plate" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:39;--ir:17;--isz:20px"></span> Armor Plate</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Stabilizer" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:42;--ir:17;--isz:20px"></span> Stabilizer</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Jammer" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:46;--ir:17;--isz:20px"></span> Mana Jammer</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Auto-Repair_Kit" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:50;--ir:17;--isz:20px"></span> Auto-Repair Kit</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Tank" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:54;--ir:17;--isz:20px"></span> Mana Tank</a><span class="vendor-price gil">4,940g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Inhibitor" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:28;--ir:17;--isz:20px"></span> Inhibitor</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Booster" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:30;--ir:17;--isz:20px"></span> Mana Booster</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Scope" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:35;--ir:17;--isz:20px"></span> Scope</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Shock_Absorber" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:38;--ir:17;--isz:20px"></span> Shock Absorber</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Volt_Gun" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:43;--ir:17;--isz:20px"></span> Volt Gun</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Stealth_Screen" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:48;--ir:17;--isz:20px"></span> Stealth Screen</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Damage_Gauge" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:52;--ir:17;--isz:20px"></span> Damage Gauge</a><span class="vendor-price gil">9,925g</span></div>
+<div class="vendor-row"><a href="https://wiki.phoenix-xi.com/Mana_Conserver" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><span class="icon" style="--ic:56;--ir:17;--isz:20px"></span> Mana Conserver</a><span class="vendor-price gil">9,925g</span></div>
 </section>
-<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn’t have</h2><p>No map — maps live in the game client, not the server source. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. No respawn timers for the same reason.</p></section>
-<footer class="site-footer panel pad">
- <p class="made">Made by <strong>Secretsos</strong></p>
- <p>A fan resource. Final Fantasy XI is &copy; Square Enix. Server data parsed from <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> (GPLv3) at commit <a href="https://github.com/LandSandBoat/server/tree/c2826b6a0b9a2c9bd374a7344181a7e53f680b1c" rel="noopener"><code style="font-size:.85em">c2826b6a0b</code></a>. <a href="/about-the-data">About the data</a>.</p>
-</footer>
+<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem"><h2>What this page doesn't have</h2><p>No map for this zone yet. No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet. No respawn timers for the same reason.</p></section>
+<footer id="siteFooter"></footer>
 </main>
 </div>
-<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem("phoenix-theme");if(t)r.setAttribute("data-theme",t)}catch(e){}document.getElementById("themeBtn").addEventListener("click",function(){var now=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark");var next=now==="light"?"dark":"light";r.setAttribute("data-theme",next);try{localStorage.setItem("phoenix-theme",next)}catch(e){}})})();</script>
-<script>(function(){var btn=document.getElementById("menuBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay");if(!btn)return;btn.addEventListener("click",function(){sb.classList.toggle("open");ov.classList.toggle("open")});ov.addEventListener("click",function(){sb.classList.remove("open");ov.classList.remove("open")})})();</script>
-<script>(function(){
-var EPOCH=1009810800,
-DAYS=["Firesday","Earthsday","Watersday","Windsday","Iceday","Lightningsday","Lightsday","Darksday"],
-ABBR=["Fire","Earth","Water","Wind","Ice","Lightning","Light","Dark"],
-DCOL=["var(--fire)","var(--earth)","var(--water)","var(--wind)","var(--ice)","var(--lightning)","var(--light)","var(--dark)"],
-GD={wood:[6,21,0],smith:[8,23,2],gold:[8,23,4],cloth:[6,21,0],leather:[3,18,4],bone:[8,23,3],alchemy:[8,23,4],cook:[5,20,7],fish:[3,18,5]},
-MNAMES=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","Waning Gibbous","Last Quarter","Waning Crescent"];
-function pad(n){return n<10?"0"+n:""+n}
-function moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
- var pi;
- if(pct<=5)pi=wax?0:0;
- else if(pct<=30)pi=wax?1:7;
- else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
- else pi=4;
- return{pct:pct,wax:wax,phase:MNAMES[pi],pos:md};
-}
-function moonSvg(pct,wax){
- var r=11,cx=12,cy=12;
- var lit='#e8e0c8',shade='#2a2a2e',edge='#555';
- var f=pct/100;
- var dx=Math.round(r*(1-2*f));
- if(!wax)dx=-dx;
- var sweep=f>0.5?1:0;
- if(!wax)sweep=f>0.5?0:1;
- return '<svg viewBox="0 0 24 24" class="moon-orb">'
-  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+shade+'" stroke="'+edge+'" stroke-width=".5"/>'
-  +'<path d="M'+cx+' '+(cy-r)+' A'+r+' '+r+' 0 0 '+(wax?1:0)+' '+cx+' '+(cy+r)
-  +' A'+Math.abs(dx)+' '+r+' 0 0 '+sweep+' '+cx+' '+(cy-r)+'Z" fill="'+lit+'"/>'
-  +'</svg>';
-}
-function tick(){
- var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25,
- vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
- hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana\u2019diel</span><span class="vw-time">'+pad(hr)+':'+pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+DCOL[di]+'"></span><span class="vw-name">'+ABBR[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
-  var mi=moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' \u25B2':' \u25BC'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  wk.innerHTML=h;
- }
- var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
-}
-tick();setInterval(tick,2400);
-})();</script>
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
 <script src="/table-tools.js" defer></script>

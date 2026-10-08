@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate zone pages in public/zone/."""
-import sqlite3, os, sys, re
+import sqlite3, os, sys, re, yaml
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,7 +9,8 @@ OUT = os.path.join(ROOT, 'public', 'zone')
 os.makedirs(OUT, exist_ok=True)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end
+from page_template import html_head, layout_open, layout_close, page_end, icon_html
+from wiki import phoenix_url
 
 ERA_CONTENT = (None, '', 'rotz', 'cop', 'toau', 'wotg')
 EXCLUDE_PREFIXES = ('abyssea', 'dynamis', 'walk_of_echoes', 'escha_', 'reisenjima')
@@ -50,16 +51,95 @@ def esc(s):
 def item_name(iid):
     return ITEMS.get(iid, f'Item #{iid}')
 
-ICON_DIR = os.path.join(ROOT, 'public', 'icons')
+MAP_DIR = os.path.join(ROOT, 'public', 'img', 'maps')
 
 def _icon(iid, size=20):
-    if os.path.exists(os.path.join(ICON_DIR, f'{iid}.png')):
-        return f'<img src="/icons/{iid}.png" width="{size}" height="{size}" alt="" style="vertical-align:middle;image-rendering:pixelated;border-radius:2px" loading="lazy"> '
-    return ''
+    return icon_html(iid, size)
+
+def _map_slug(zone_name):
+    s = zone_name.lower().replace("'", '').replace('[', '').replace(']', '')
+    return re.sub(r'^_+|_+$', '', re.sub(r'[^a-z0-9]+', '_', s))
+
+def _has_map(zone_name):
+    return os.path.exists(os.path.join(MAP_DIR, f'{_map_slug(zone_name)}.png'))
+
+LSB_DIR = os.path.join(os.path.dirname(ROOT), 'lsb-server')
+
+def _load_npc_positions(zone_name):
+    """Load NPC positions from LandSandBoat YAML data.
+    Returns list of (name, pct_x, pct_y) for map overlay positioning."""
+    npc_path = os.path.join(LSB_DIR, 'data', 'zones', zone_name, 'npcs.yaml')
+    zone_path = os.path.join(LSB_DIR, 'data', 'zones', zone_name, 'zone.yaml')
+    if not os.path.exists(npc_path):
+        return []
+
+    with open(npc_path, 'r', encoding='utf-8') as f:
+        npc_data = yaml.safe_load(f) or {}
+    npcs = npc_data.get('npcs', {})
+
+    all_x, all_z = [], []
+    npc_entries = []
+    for npc_id, npc in npcs.items():
+        if not isinstance(npc, dict) or 'at' not in npc:
+            continue
+        pos = npc['at']
+        x, z = pos[0], pos[2]
+        all_x.append(x)
+        all_z.append(z)
+        lt = npc.get('render', {}).get('look', {}).get('type', '')
+        ef = npc.get('render', {}).get('entity_flags')
+        if lt == 'standard' and ef == 27:
+            continue
+        name = npc.get('display_name', npc.get('script', ''))
+        if not name or name == 'blank':
+            continue
+        npc_entries.append((name, x, z, lt))
+
+    if os.path.exists(zone_path):
+        with open(zone_path, 'r', encoding='utf-8') as f:
+            zone_data = yaml.safe_load(f) or {}
+        for zl in (zone_data.get('zonelines') or {}).values():
+            fr = zl.get('from', [])
+            if len(fr) >= 3:
+                all_x.append(fr[0])
+                all_z.append(fr[2])
+
+    if not all_x or not npc_entries:
+        return []
+
+    min_x, max_x = min(all_x), max(all_x)
+    min_z, max_z = min(all_z), max(all_z)
+    pad_x = (max_x - min_x) * 0.05 or 50
+    pad_z = (max_z - min_z) * 0.05 or 50
+    min_x -= pad_x; max_x += pad_x
+    min_z -= pad_z; max_z += pad_z
+    range_x = max_x - min_x or 1
+    range_z = max_z - min_z or 1
+    if range_x > range_z:
+        diff = range_x - range_z
+        min_z -= diff / 2; max_z += diff / 2; range_z = max_z - min_z
+    else:
+        diff = range_z - range_x
+        min_x -= diff / 2; max_x += diff / 2; range_x = max_x - min_x
+
+    seen = set()
+    result = []
+    for name, x, z, lt in npc_entries:
+        pct_x = (x - min_x) / range_x * 100
+        pct_y = (max_z - z) / range_z * 100
+        pct_x = max(0, min(100, pct_x))
+        pct_y = max(0, min(100, pct_y))
+        key = (round(pct_x, 1), round(pct_y, 1))
+        if key in seen:
+            continue
+        seen.add(key)
+        kind = 'npc' if lt == 'equipped' else 'obj'
+        result.append((name, pct_x, pct_y, kind))
+    return result
 
 def item_link(iid):
     n = item_name(iid)
-    return f'<a href="/item/{iid}-{slugify(n)}" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
+    return f'<a href="{phoenix_url(n)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
 
 def fmt_pct(p):
     if p is None: return '—'
@@ -68,6 +148,17 @@ def fmt_pct(p):
     return f'{p:.3f}%'
 
 ZONE_CSS = """\
+.zone-hero{display:flex;gap:16px;align-items:flex-start;margin-top:8px}
+.zone-map{border-radius:8px;overflow:hidden;border:1px solid var(--rule);position:relative;flex:0 0 320px;max-width:320px}
+.zone-map img{display:block;width:100%;height:auto;image-rendering:auto}
+.zone-hero .infobox{float:none;width:auto;flex:1;margin:0;min-width:180px}
+.map-dots{position:absolute;inset:0;pointer-events:none}
+.map-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:auto;cursor:help;border:1px solid rgba(255,255,255,.7);box-sizing:border-box}
+.map-dot.npc{background:var(--accent)}
+.map-dot.obj{background:#5ba8c8}
+.map-dot:hover{z-index:2;width:10px;height:10px;border-width:2px}
+.map-dot[data-name]:hover::after{content:attr(data-name);position:absolute;left:12px;top:-2px;background:var(--bg);color:var(--ink);font-size:.72rem;padding:2px 6px;border-radius:4px;border:1px solid var(--rule);white-space:nowrap;pointer-events:none}
+@media(max-width:600px){.zone-hero{flex-direction:column}.zone-map{flex:none;max-width:100%;width:100%}}
 .pct{font-variant-numeric:tabular-nums;white-space:nowrap}
 .badge-nm{border-color:var(--gil);color:var(--gil)}
 .badge-wotg{border-color:var(--lightning);color:var(--lightning)}
@@ -360,8 +451,19 @@ def build_zone_page(zone_name, sources):
     page += layout_open(active='zones', crumbs=[('Home', '/'), ('Zones', '/zone/'), (zn, None)])
 
     page += f'<header class="panel pad"><h1>{esc(zn)}</h1>\n'
+    page += '<div class="zone-hero">\n'
+    if _has_map(zone_name):
+        ms = _map_slug(zone_name)
+        page += f'<div class="zone-map"><img src="/img/maps/{ms}.png" alt="Map of {esc(zn)}" loading="lazy">'
+        npc_pos = _load_npc_positions(zone_name)
+        if npc_pos:
+            page += '<div class="map-dots">'
+            for name, px, py, kind in npc_pos:
+                page += f'<span class="map-dot {kind}" style="left:{px:.1f}%;top:{py:.1f}%" data-name="{esc(name)}"></span>'
+            page += '</div>'
+        page += '</div>\n'
     page += infobox
-    page += '<div style="clear:both"></div></header>\n'
+    page += '</div>\n</header>\n'
 
     if len(sections) > 2:
         page += '<div class="jump">'
@@ -374,10 +476,13 @@ def build_zone_page(zone_name, sources):
 
     # Honest gaps
     page += '<section class="panel pad" style="color:var(--ink-faint);font-size:.85rem">'
-    page += '<h2>What this page doesn’t have</h2>'
-    page += '<p>No map — maps live in the game client, not the server source. '
-    page += 'No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven’t parsed yet. '
-    page += 'No respawn timers for the same reason.</p></section>\n'
+    page += "<h2>What this page doesn't have</h2>"
+    gaps = []
+    if not _has_map(zone_name):
+        gaps.append('No map for this zone yet.')
+    gaps.append("No mob aggro/link/detect behaviour — those are in mob pool Lua files we haven't parsed yet.")
+    gaps.append('No respawn timers for the same reason.')
+    page += '<p>' + ' '.join(gaps) + '</p></section>\n'
 
     page += layout_close(lsb_commit)
     page += page_end()

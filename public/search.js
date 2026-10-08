@@ -10,7 +10,7 @@ var box=document.getElementById('searchResults');
 if(!input||!box) return;
 var index=null, active=-1, shown=[];
 
-function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function wikiUrl(n){return'https://wiki.phoenix-xi.com/'+n.replace(/ /g,'_');}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 function load(cb){
@@ -29,7 +29,7 @@ function search(q){
   var it=index.i[i], nl=it[1].toLowerCase();
   var pos=nl.indexOf(ql);
   if(pos===-1) continue;
-  var entry={n:it[1],t:'item',u:'/item/'+it[0]+'-'+slugify(it[1]),id:it[0]};
+  var entry={n:it[1],t:'item',u:wikiUrl(it[1]),id:it[0]};
   if(pos===0) prefix.push(entry);
   else if(nl.charAt(pos-1)===' ') word.push(entry);
   else sub.push(entry);
@@ -50,7 +50,7 @@ function render(){
  for(var i=0;i<shown.length;i++){
   var m=shown[i];
   var ic=m.id?'<img src="/img/item/'+m.id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;flex-shrink:0;align-self:center" onerror="this.style.display=\'none\'">':'';
-  h+='<a class="sr-item" href="'+m.u+'" data-i="'+i+'">'+ic+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
+  var ext=m.u.indexOf('://')>-1?' target="_blank" rel="noopener"':'';h+='<a class="sr-item" href="'+m.u+'"'+ext+' data-i="'+i+'">'+ic+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
  }
  box.innerHTML=h;
  box.hidden=false;
