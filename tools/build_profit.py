@@ -108,7 +108,7 @@ function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);va
 function npcSell(id){var it=I[id];return it?(it.b||0):0;}
 function ahPrice(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];return 0;}
 function bestSell(id){return ahPrice(id)||npcSell(id);}
-function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
+function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/ /g,'_').replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
 function icoHtml(id){return'<img src="/img/item/'+id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;vertical-align:-2px;margin-right:2px" onerror="this.style.display=\'none\'">';}
 function hqChance(gap){if(gap<0)return 0;if(gap<=10)return 0.0156;if(gap<=30)return 0.0625;if(gap<=50)return 0.25;return 0.50;}
 function computeRow(r){

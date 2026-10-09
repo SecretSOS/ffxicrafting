@@ -19,10 +19,14 @@ def _title(s):
         elif x.startswith('+'): out.append(x)
         else: out.append('-'.join(p[:1].upper()+p[1:] for p in x.split('-')))
     return ' '.join(poss(out))
+_PREFIX_RE=r'^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton|pile|ear|ball|loop|pod|roll|bundle|slab|onz|copy|orb|phial|cone|cube|wedge|mug|branch|cut|container|dollop|fragment|hunk|saucer|segment|remnant|ingot|suit|page|flasque|tuft)_of_'
 def wiki_title(name, sortname):
     if name.startswith('scroll_of_'): return _title(name)
-    if sortname and '.' not in sortname: return _title(sortname)
-    return _title(re.sub(r'^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton|chunk)_of_','',name))
+    stripped = re.sub(_PREFIX_RE,'',name)
+    if sortname and '.' not in sortname:
+        if len(sortname.split('_')) >= len(stripped.split('_')):
+            return _title(sortname)
+    return _title(stripped)
 def wiki_url(title):
     return 'https://horizonffxi.wiki/w/index.php?'+urllib.parse.urlencode({'search':title,'title':'Special:Search','go':'Go'})
 def db_url(name):

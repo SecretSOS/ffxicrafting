@@ -110,7 +110,7 @@ function saveSkills(){try{localStorage.setItem('phoenix-skills',JSON.stringify(s
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
-function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
+function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/ /g,'_').replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton)_of_/,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
 function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.v||it.b||0):0;}
 function sellPrice(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.b||0):0;}
 function successRate(skill,lv){return Math.max(0,Math.min(40,40-5*(lv-skill)))/100;}
