@@ -20,7 +20,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 AH   = os.path.join(ROOT, 'public', 'data', 'ah-prices.json')
 CHAR = os.path.join(ROOT, 'data', 'character.json')
+INV  = os.path.join(ROOT, 'data', 'inventory.json')
 LSB  = os.path.join(ROOT, '..', 'lsb-server')
+
+PHOENIX_CHARS = ['Secrets', 'Secret']
+PHOENIX_API   = 'https://api.phoenix-xi.com/api/v1'
 
 CRAFTS = ['wood','smith','gold','cloth','leather','bone','alchemy','cook']
 CRAFT_NAMES = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing',
@@ -211,6 +215,163 @@ def store_ah_snapshot(prices, stack_prices, bazaar_prices):
         db.commit()
     db.close()
     return len(rows)
+
+
+def load_inventory():
+    if os.path.exists(INV):
+        with open(INV, encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def save_inventory(data):
+    os.makedirs(os.path.dirname(INV), exist_ok=True)
+    with open(INV, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
+
+
+FAME_THRESHOLDS = [0, 50, 125, 255, 500, 850, 1300, 1900, 2500]
+
+def fame_rank(points):
+    rank = 1
+    for i, t in enumerate(FAME_THRESHOLDS):
+        if points >= t:
+            rank = i + 1
+    return rank
+
+
+def _get_phoenix_token():
+    token = os.environ.get('PHOENIX_TOKEN', '')
+    token_file = os.path.join(ROOT, 'data', 'phoenix-token.txt')
+    if not token and os.path.exists(token_file):
+        with open(token_file) as f:
+            token = f.read().strip()
+    return token
+
+def _save_phoenix_token(token):
+    token_file = os.path.join(ROOT, 'data', 'phoenix-token.txt')
+    os.makedirs(os.path.dirname(token_file), exist_ok=True)
+    with open(token_file, 'w') as f:
+        f.write(token)
+
+def _phoenix_headers(token):
+    return {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Cookie': token,
+        'Referer': 'https://phoenix-xi.com/',
+        'Origin': 'https://phoenix-xi.com'
+    }
+
+def fetch_phoenix_data(token=None):
+    """Fetch inventory, profile, and crafting from Phoenix API (all require auth)."""
+    if not token:
+        token = _get_phoenix_token()
+    if not token:
+        return {'error': 'No Phoenix auth token. Paste your cookie in the Phoenix Sync section.'}
+
+    results = {'characters': {}, 'fetched': int(time.time())}
+    on_hand = {}
+    headers = _phoenix_headers(token)
+    auth_ok = False
+
+    for char_name in PHOENIX_CHARS:
+        try:
+            url = f'{PHOENIX_API}/characters/{char_name}/inventory'
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read())
+            auth_ok = True
+            char_data = data.get('data', {})
+            containers = char_data.get('containers', {})
+            char_inv = {}
+            for cname, items_list in containers.items():
+                char_inv[cname] = items_list
+                for item in items_list:
+                    iid = item.get('itemId')
+                    qty = item.get('quantity', 1)
+                    if iid and iid != 65535:
+                        on_hand[iid] = on_hand.get(iid, 0) + qty
+            results['characters'][char_name] = {
+                'containers': char_inv,
+                'totalItems': char_data.get('totalItems', 0)
+            }
+        except urllib.error.HTTPError as e:
+            if e.code == 401:
+                return {'error': 'Auth token expired or invalid. Get a fresh cookie from phoenix-xi.com.'}
+            results['characters'][char_name] = {'error': str(e)}
+        except Exception as e:
+            results['characters'][char_name] = {'error': str(e)}
+
+    if not auth_ok:
+        return {'error': 'Could not connect to Phoenix API.'}
+
+    _save_phoenix_token(token)
+
+    main_char = PHOENIX_CHARS[0]
+    try:
+        req = urllib.request.Request(f'{PHOENIX_API}/characters/{main_char}/crafting', headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            results['crafting'] = json.loads(resp.read()).get('data', {})
+    except Exception:
+        pass
+    try:
+        req = urllib.request.Request(f'{PHOENIX_API}/characters/{main_char}', headers=headers)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            results['profile'] = json.loads(resp.read()).get('data', {})
+    except Exception:
+        pass
+
+    results['onHand'] = {str(k): v for k, v in on_hand.items()}
+    save_inventory(results)
+
+    if 'crafting' in results or 'profile' in results:
+        _update_character_from_api(results)
+
+    total_items = sum(c.get('totalItems', 0) for c in results['characters'].values() if 'error' not in c)
+    return {
+        'chars': len([c for c in results['characters'].values() if 'error' not in c]),
+        'totalItems': total_items,
+        'onHandUnique': len(on_hand),
+        'hasProfile': 'crafting' in results or 'profile' in results,
+    }
+
+
+def _update_character_from_api(phoenix_data):
+    char = load_character()
+    profile = phoenix_data.get('profile', {})
+    crafting = phoenix_data.get('crafting', {})
+
+    if profile.get('name'):
+        char['name'] = profile['name']
+    if profile.get('nation'):
+        char['nation'] = profile['nation']
+
+    if crafting.get('skills'):
+        sk = crafting['skills']
+        char['skills'] = {
+            'fish': int(sk.get('Fishing', {}).get('level', 0)),
+            'cook': int(sk.get('Cooking', {}).get('level', 0)),
+            'alchemy': int(sk.get('Alchemy', {}).get('level', 0)),
+            'wood': int(sk.get('Woodworking', {}).get('level', 0)),
+            'smith': int(sk.get('Smithing', {}).get('level', 0)),
+            'gold': int(sk.get('Goldsmithing', {}).get('level', 0)),
+            'cloth': int(sk.get('Clothcraft', {}).get('level', 0)),
+            'leather': int(sk.get('Leathercraft', {}).get('level', 0)),
+            'bone': int(sk.get('Bonecraft', {}).get('level', 0)),
+        }
+
+    if profile.get('fame'):
+        fm = profile['fame']
+        char['fame'] = {
+            'sandy': fame_rank(fm.get('sandoria', 0)),
+            'bastok': fame_rank(fm.get('bastok', 0)),
+            'windy': fame_rank(fm.get('windurst', 0)),
+            'norg': fame_rank(fm.get('norg', 0)),
+            'jeuno': fame_rank(fm.get('jeuno', 0)),
+        }
+
+    save_character(char)
+
 
 def get_ah_history(item_id, limit=50):
     db = sqlite3.connect(DB)
@@ -1018,16 +1179,17 @@ def load_all():
             it = items.get(iid)
             iname = it['name'] if it else str(iid)
             if iid in fish_id_set:
-                fd = db.execute('SELECT skill, size_type, ranking FROM fish WHERE item_id=?',
+                fd = db.execute('SELECT skill, size_type, ranking, hour_pattern FROM fish WHERE item_id=?',
                                 (iid,)).fetchone()
                 fskill = fd['skill'] if fd else 0
                 fsize = fd['size_type'] if fd else '?'
                 franking = fd['ranking'] if fd else 0
+                fhour = fd['hour_pattern'] if fd else 0
                 zones = sorted(fish_zone_map.get(iid, []))[:5]
                 baits = fish_bait_map.get(iid, [])
                 fish_ings.append({'id': iid, 'name': name(iid), 'qty': ing['qty'],
                                   'skill': fskill, 'size': fsize, 'ranking': franking,
-                                  'zones': zones, 'baits': baits})
+                                  'hourPat': fhour, 'zones': zones, 'baits': baits})
             else:
                 src = db.execute("SELECT price FROM sources WHERE item_id=? AND type IN ('npc_shop','guild_shop') ORDER BY price LIMIT 1",
                                  (iid,)).fetchone()
@@ -1257,6 +1419,7 @@ def load_all():
         'ahTimestamps': {str(k): v for k, v in ah_timestamps.items()},
         'nmMaps': load_nm_maps(),
         'character': load_character(),
+        'inventory': load_inventory(),
         'ahDeltas': get_ah_deltas(),
         'stats': {
             'profitableFlips': len([f for f in flips if f.get('profit') and f['profit'] > 0]),
@@ -1510,6 +1673,7 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
       <label style="font-size:11px"><input type="checkbox" id="craftNpcOnly"> NPC mats only</label>
       <label style="font-size:11px"><input type="checkbox" id="craftHideUnpriced"> Hide unpriced</label>
       <label style="font-size:11px" title="You fish your own ingredients - set their cost to 0"><input type="checkbox" id="craftFreeFish"> Caught (0g)</label>
+      <label style="font-size:11px" title="Only show recipes where all materials are in inventory"><input type="checkbox" id="craftOnHand"> On Hand</label>
       <span class="dim" id="craftSkillInfo" style="font-size:11px"></span>
       <span class="count" id="craftFilterCount"></span>
     </div>
@@ -1584,6 +1748,7 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 <div class="statusbar" id="statusbar">
   <span id="sbItems">-</span>
   <span id="sbAH">-</span>
+  <span id="sbInv">-</span>
   <span id="sbScan">-</span>
   <span style="margin-left:auto" id="sbTime"></span>
 </div>
@@ -1629,6 +1794,14 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
     </div>
   </div>
   <button class="save-btn" id="charSave">Save Profile</button>
+  <div class="char-section" style="margin-top:12px;border-top:1px solid var(--rule);padding-top:12px">
+    <h4>Phoenix Sync</h4>
+    <p class="dim" style="font-size:11px;margin-bottom:6px">Pulls inventory, craft levels &amp; fame from phoenix-xi.com</p>
+    <p class="dim" style="font-size:10px;margin-bottom:8px;line-height:1.4">To get your cookie: log into phoenix-xi.com → F12 → Application → Cookies → copy the full cookie string (or just the connect.sid value)</p>
+    <input type="text" id="pxToken" placeholder="Paste cookie here (saved for future scans)" style="width:100%;font-size:11px;margin-bottom:6px;padding:6px 8px">
+    <button class="save-btn" id="charSync" style="background:var(--bg3)">⟳ Sync from Phoenix</button>
+    <div id="invSummary" style="font-size:11px;margin-top:8px"></div>
+  </div>
 </div>
 
 <!-- TOAST -->
@@ -1726,6 +1899,8 @@ FC.MOONPAT=[
 ];
 FC.getMonthMod=function(fish){var vt=getVanaTime();var fn=FC.MONTHPAT[fish.monthPat||0];return(fn?fn(vt.month):0.5)+0.25;};
 FC.getHourMod=function(fish){var vt=getVanaTime();var fn=FC.HOURPAT[fish.hourPat||0];return(fn?fn(vt.hour):0.5)+0.25;};
+FC.HOUR_LABELS=['','Dawn/Dusk','High Tide','Low Tide','Night','Day','Day/Night','Day'];
+function hourBadge(hp){if(hp===4)return' <span class="sell-badge" style="background:rgba(128,90,213,0.18);color:#c4a0ff;border:1px solid rgba(128,90,213,0.35);font-size:9px">NIGHT</span>';return '';}
 FC.getMoonMod=function(fish){var vt=getVanaTime();var fn=FC.MOONPAT[fish.moonPat||0];return(fn?fn(vt.moonIdx):1.0)+0.25;};
 FC.hookChance=function(skill,fish,bait,rod){
   var monthMod=FC.getMonthMod(fish);var hourMod=FC.getHourMod(fish)*2;var moonMod=FC.getMoonMod(fish)*3;
@@ -1773,6 +1948,17 @@ FC.skillupChance=function(charSkill,catchLevel){
   if(catchLevel<=charSkill)return 0;var diff=catchLevel-charSkill;if(diff>50)return 0;
   var normDist=Math.exp(-0.5*Math.log(2*Math.PI)-Math.log(5)-Math.pow(diff-11,2)/50);
   return Math.min(Math.max(4,Math.floor(normDist*200)+Math.floor((100-charSkill)/10)-Math.floor(charSkill/10)),100);
+};
+FC.catchRate=function(charSkill,catchLevel){
+  var diff=catchLevel-charSkill;if(diff<=0)return 95;
+  var losePen=0;if(diff>7){losePen=Math.min(55,Math.floor((diff-7)*5));}
+  var snapPen=0;if(diff>=10){snapPen=Math.min(30,Math.floor((diff-9)*3));}
+  return Math.max(5,95-losePen-snapPen);
+};
+FC.effectiveSkillup=function(charSkill,catchLevel){
+  var raw=FC.skillupChance(charSkill,catchLevel);
+  var cr=FC.catchRate(charSkill,catchLevel);
+  return Math.round(raw*cr/100);
 };
 
 // ── Character Panel ──
@@ -1960,7 +2146,8 @@ function renderMarket(){
   var show=list.slice(0,200);
   for(var i=0;i<show.length;i++){
     var x=show[i];
-    t+='<tr data-iid="'+x.id+'" style="cursor:pointer"><td>'+h(x.n)+'</td><td class="soft" style="font-size:11px">'+h(x.vendor)+(isCraft&&x.matSrc?' <span class="dim">mats: '+h(x.matSrc)+'</span>':(x.zone&&!isCraftArb?' <span class="dim">'+h(x.zone)+'</span>':''))+'</td>';
+    var ohDot=getOnHand(x.id)>0?' <span class="g" title="'+getOnHand(x.id)+' on hand">●</span>':'';
+    t+='<tr data-iid="'+x.id+'" style="cursor:pointer"><td>'+h(x.n)+ohDot+'</td><td class="soft" style="font-size:11px">'+h(x.vendor)+(isCraft&&x.matSrc?' <span class="dim">mats: '+h(x.matSrc)+'</span>':(x.zone&&!isCraftArb?' <span class="dim">'+h(x.zone)+'</span>':''))+'</td>';
     t+='<td class="r-align mono-cell">'+gil(x.npc)+'</td><td class="r-align mono-cell">'+gil(x.ah)+'</td>';
     if(isCraft){var st=x.sellTo==='ah'?'AH':'NPC';t+='<td><span class="sell-badge sell-'+(x.sellTo||'npc')+'">'+st+'</span></td>';}
     t+='<td class="r-align mono-cell g">'+gil(x.profit)+'</td><td class="r-align mono-cell">'+pct(x.margin)+'</td>';
@@ -1985,6 +2172,7 @@ function renderCraft(){
   var npcOnly=$('craftNpcOnly').checked;
   var hideUnpriced=$('craftHideUnpriced').checked;
   var freeFish=$('craftFreeFish').checked;
+  var onHandOnly=$('craftOnHand').checked;
   var fishSet=null;
   if(freeFish){var fids=D.fishItemIds||[];fishSet={};for(var fi=0;fi<fids.length;fi++)fishSet[fids[fi]]=1;}
   var charSkill=0;
@@ -2003,6 +2191,7 @@ function renderCraft(){
     if(hideUnpriced&&(!c.profit||c.missing))return false;
     if(isCraft&&charSkill>0&&c.level>maxLv)return false;
     if(maxLoss!==null&&c.matCost!=null&&c.matCost>maxLoss)return false;
+    if(onHandOnly&&c.mats){var allOh=true;for(var oi=0;oi<c.mats.length;oi++){if(getOnHand(c.mats[oi].id)<c.mats[oi].qty){allOh=false;break;}}if(!allOh)return false;}
     return true;
   });
   if(freeFish&&fishSet){
@@ -2034,9 +2223,10 @@ function renderCraft(){
       success='<td class="r-align mono-cell'+(rate>=90?' g':rate<50?' r':'')+'">'+rate+'%</td>';
     }
     var mc=c._mc,pr=c._pr,mg=c._mg;
-    var matStr='';if(c.mats){var mats=c.mats.slice(0,4);matStr=mats.map(function(m){var fn=fishSet&&fishSet[m.id]?'✔️':'';return fn+h(m.name);}).join(', ');if(c.mats.length>4)matStr+='...';}
+    var matStr='';var allOnHand=true;if(c.mats){var mats=c.mats.slice(0,4);matStr=mats.map(function(m){var fn=fishSet&&fishSet[m.id]?'✔️':'';var oh=getOnHand(m.id);if(oh>=m.qty)fn='<span class="g" title="'+oh+' on hand">●</span>';else allOnHand=false;return fn+h(m.name);}).join(', ');if(c.mats.length>4)matStr+='...';}else{allOnHand=false;}
     var pCls=pr>0?'g':pr<0?'r':'';
-    t+='<tr data-iid="'+(c.resultId||c.id)+'" style="cursor:pointer"><td>'+h(c.name)+'</td><td class="r-align mono-cell">'+c.level+'</td>';
+    var ohBadge=allOnHand&&c.mats&&c.mats.length?' <span class="sell-badge" style="background:#2e7d32;color:#fff" title="All mats on hand">OH</span>':'';
+    t+='<tr data-iid="'+(c.resultId||c.id)+'" style="cursor:pointer"><td>'+h(c.name)+ohBadge+'</td><td class="r-align mono-cell">'+c.level+'</td>';
     t+='<td class="r-align mono-cell">'+(mc!=null?gil(mc):'-')+'</td>';
     var sellBadge=c.result&&c.result.src?(' <span class="sell-badge sell-'+(c.result.src==='ah'?'ah':'npc')+'">'+(c.result.src==='ah'?'AH':'NPC')+'</span>'):'';
     t+='<td class="r-align mono-cell">'+(c.result?gil(c.result.price):'-')+sellBadge+'</td>';
@@ -2081,11 +2271,13 @@ function renderFishPool(el){
     html+='<option'+(zoneList[i]===FISH_ZONE?' selected':'')+'>'+h(zoneList[i])+'</option>';
   }
   html+='</select>';
+  var sortedRods=rods.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
   html+='<h4>Rod</h4><select id="fishRodSel" style="width:100%;margin-bottom:8px"><option value="">Any rod</option>';
-  for(var i=0;i<rods.length;i++){html+='<option value="'+rods[i].id+'"'+(FISH_ROD&&FISH_ROD.id===rods[i].id?' selected':'')+'>'+h(rods[i].name)+' (Rank '+rods[i].minRank+'-'+rods[i].maxRank+')</option>';}
+  for(var i=0;i<sortedRods.length;i++){html+='<option value="'+sortedRods[i].id+'"'+(FISH_ROD&&FISH_ROD.id===sortedRods[i].id?' selected':'')+'>'+h(sortedRods[i].name)+' (Rank '+sortedRods[i].minRank+'-'+sortedRods[i].maxRank+')</option>';}
   html+='</select>';
+  var sortedBaits=baits.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
   html+='<h4>Bait</h4><select id="fishBaitSel" style="width:100%;margin-bottom:8px"><option value="">Any bait</option>';
-  for(var i=0;i<baits.length;i++){html+='<option value="'+baits[i].id+'"'+(FISH_BAIT&&FISH_BAIT.id===baits[i].id?' selected':'')+'>'+h(baits[i].name)+' ('+baits[i].type+')</option>';}
+  for(var i=0;i<sortedBaits.length;i++){html+='<option value="'+sortedBaits[i].id+'"'+(FISH_BAIT&&FISH_BAIT.id===sortedBaits[i].id?' selected':'')+'>'+h(sortedBaits[i].name)+' ('+sortedBaits[i].type+')</option>';}
   html+='</select>';
   var zoneFish=[];var seenF={};
   for(var i=0;i<fishing.length;i++){var f=fishing[i];if(!f.zones||seenF[f.id])continue;if(!FISH_ZONE){seenF[f.id]=1;zoneFish.push(f);continue;}for(var j=0;j<f.zones.length;j++){if((f.zones[j].zone||'Unknown')===FISH_ZONE){seenF[f.id]=1;zoneFish.push(f);break;}}}
@@ -2126,7 +2318,7 @@ function renderFishPoolTable(){
     if(f.baits){sortedBaits=f.baits.slice().sort(function(a,b){return b.power-a.power;});}
     var ahP=0;var items=D.allItems||[];
     for(var k=0;k<items.length;k++){if(items[k].id===f.id){ahP=items[k].ah||0;break;}}
-    pool.push({id:f.id,name:f.name,skill:f.skill,hook:hookC,brk:breakC,snap:snapC,skillup:skillC,baits:sortedBaits,ah:ahP,rarity:f.rarity||1000,size:f.sizeType||'small'});
+    pool.push({id:f.id,name:f.name,skill:f.skill,hook:hookC,brk:breakC,snap:snapC,skillup:skillC,baits:sortedBaits,ah:ahP,rarity:f.rarity||1000,size:f.sizeType||'small',hourPat:f.hourPat||0});
   }
   pool.sort(function(a,b){return b.hook-a.hook;});
   var isEst=!fishSkill;
@@ -2136,7 +2328,7 @@ function renderFishPoolTable(){
   for(var i=0;i<pool.length;i++){
     var p=pool[i];
     var hCls=p.hook>=80?'g':p.hook>=50?'a':p.hook>=30?'w':'r';
-    t+='<tr data-iid="'+p.id+'" style="cursor:pointer"><td>'+h(p.name)+' <span class="dim">('+p.size+')</span></td>';
+    t+='<tr data-iid="'+p.id+'" style="cursor:pointer"><td>'+h(p.name)+' <span class="dim">('+p.size+')</span>'+hourBadge(p.hourPat)+'</td>';
     t+='<td class="r-align mono-cell">'+p.skill+'</td>';
     t+='<td class="r-align mono-cell '+hCls+(isEst?' dim':'')+'">'+p.hook+(isEst?'~':'')+'</td>';
     var brkWarn=p.brk>0?' <span class="sell-badge" style="background:rgba(255,60,60,0.15);color:#ff4444;border:1px solid rgba(255,60,60,0.3);font-size:9px">BREAK</span>':'';
@@ -2180,6 +2372,7 @@ function renderFishDetail(fid){
   t+='<h3 style="margin:0;font-size:18px">'+h(fish.name)+'</h3>';
   t+='<span class="dim" style="font-size:12px">Skill '+fish.skill+' · '+h(fish.sizeType)+' · '+(fish.water||'?')+' water';
   if(fish.legendary)t+=' · <span style="color:var(--warn)">★ Legendary</span>';
+  t+=hourBadge(fish.hourPat);
   t+='</span></div>';
   // Stats row
   t+='<div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:16px;font-size:12px">';
@@ -2210,7 +2403,7 @@ function renderFishDetail(fid){
     var cls=(!c.sizeMatch||!c.rankOk)?'dim':'';
     var tags=[];if(!c.sizeMatch)tags.push('wrong size');if(!c.rankOk)tags.push('out of rank');
     t+='<tr class="'+cls+'"><td>'+h(r.name)+(r.breakable?'':' <span class="g" style="font-size:10px">unbreakable</span>')+'</td>';
-    t+='<td class="mono-cell'+(c.sizeMatch?' g':' r')+'">'+r.sizeType+'</td>';
+    t+='<td class="mono-cell">'+r.sizeType+(c.sizeMatch?' <span class="g">✓</span>':' <span class="r">✗</span>')+'</td>';
     t+='<td class="r-align mono-cell">'+r.minRank+'-'+r.maxRank+(c.rankOk?'':' <span class="r">✗</span>')+'</td>';
     var brkW=c.brk>0?' <span class="sell-badge" style="background:rgba(255,60,60,0.15);color:#ff4444;border:1px solid rgba(255,60,60,0.3);font-size:9px">BREAK</span>':'';
     var snpW=c.snap>0?' <span class="sell-badge" style="background:rgba(255,160,0,0.15);color:#ffa000;border:1px solid rgba(255,160,0,0.3);font-size:9px">SNAP</span>':'';
@@ -2267,7 +2460,7 @@ function renderFishMatrix(el){
   $('matrixFishSel').onchange=function(){var fid=+this.value;if(!fid)return;$('matrixBaitSel').value='';
     var fish=fishing.find(function(f){return f.id===fid;});if(!fish)return;
     var fishSkill=(CHAR.skills&&CHAR.skills.fish)||50;
-    var out='<h4 style="margin:8px 0">'+h(fish.name)+' — Skill '+fish.skill+', '+fish.sizeType+', Rank '+(fish.ranking||'?')+'</h4>';
+    var out='<h4 style="margin:8px 0">'+h(fish.name)+hourBadge(fish.hourPat)+' — Skill '+fish.skill+', '+fish.sizeType+', Rank '+(fish.ranking||'?')+'</h4>';
     var mRods=D.rods||[];
     out+='<table class="tbl" style="margin-bottom:12px"><thead><tr><th>Rod</th><th>Size</th><th class="r-align">Max Rank</th><th class="r-align">Break%</th><th class="r-align">Snap%</th></tr></thead><tbody>';
     var mCompat=[];
@@ -2277,7 +2470,7 @@ function renderFishMatrix(el){
       var bw=mc.brk>0?' <span class="sell-badge" style="background:rgba(255,60,60,0.15);color:#ff4444;border:1px solid rgba(255,60,60,0.3);font-size:9px">BREAK</span>':'';
       var sw=mc.snap>0?' <span class="sell-badge" style="background:rgba(255,160,0,0.15);color:#ffa000;border:1px solid rgba(255,160,0,0.3);font-size:9px">SNAP</span>':'';
       out+='<tr class="'+(mc.sm?'':'dim')+'"><td>'+h(r.name)+(r.breakable?'':' <span class="g" style="font-size:10px">unbreakable</span>')+'</td>';
-      out+='<td class="mono-cell'+(mc.sm?' g':' r')+'">'+r.sizeType+'</td>';
+      out+='<td class="mono-cell">'+r.sizeType+(mc.sm?' <span class="g">✓</span>':' <span class="r">✗</span>')+'</td>';
       out+='<td class="r-align mono-cell">'+r.maxRank+'</td>';
       out+='<td class="r-align mono-cell'+(mc.brk>0?' r':'')+'">'+mc.brk+bw+'</td>';
       out+='<td class="r-align mono-cell'+(mc.snap>0?' r':'')+'">'+mc.snap+sw+'</td></tr>';
@@ -2308,29 +2501,66 @@ function renderFishMatrix(el){
   };
 }
 function renderFishSkillup(el){
-  var fishing=D.fishing||[];var fishSkill=(CHAR.skills&&CHAR.skills.fish)||0;
+  var fishing=D.fishing||[];var rods=D.rods||[];var fishSkill=(CHAR.skills&&CHAR.skills.fish)||0;
   var html='<h3 style="margin-bottom:8px">Skill-Up Advisor</h3>';
-  html+='<p class="soft" style="margin-bottom:12px;font-size:12px">Peak skill-up chance is at fish +11 levels above your skill (Phoenix source: normal distribution, σ=5).</p>';
-  html+='<div class="filter-row"><label style="font-size:12px">Fishing Skill: <input type="number" id="fishSkillInput" value="'+fishSkill+'" min="0" max="110" style="width:60px"></label></div>';
+  html+='<p class="soft" style="margin-bottom:12px;font-size:12px">Pick your rod to see real effective skill-up rates. Rod rank mismatch causes break/snap every round — this matters more than level gap.</p>';
+  html+='<div class="filter-row" style="gap:12px;flex-wrap:wrap">';
+  html+='<label style="font-size:12px">Fishing Skill: <input type="number" id="fishSkillInput" value="'+fishSkill+'" min="0" max="110" style="width:60px"></label>';
+  var sortedRods=rods.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
+  html+='<label style="font-size:12px">Rod: <select id="skillupRodSel" style="min-width:180px"><option value="">No rod (raw math only)</option>';
+  for(var i=0;i<sortedRods.length;i++){var r=sortedRods[i];html+='<option value="'+r.id+'"'+(FISH_ROD&&FISH_ROD.id===r.id?' selected':'')+'>'+h(r.name)+' (Rank '+r.minRank+'-'+r.maxRank+', '+r.sizeType+')</option>';}
+  html+='</select></label></div>';
   html+='<div id="skillupTable"></div>';
   el.innerHTML=html;
+  var selRod=FISH_ROD||null;
   function renderTable(){
     var sk=+$('fishSkillInput').value||0;
     var recs=[];
     for(var i=0;i<fishing.length;i++){
       var f=fishing[i];var c=FC.skillupChance(sk,f.skill);
-      if(c>0)recs.push({name:f.name,skill:f.skill,diff:f.skill-sk,chance:c,zones:f.zones?f.zones.map(function(a){return a.zone;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(', '):'?'});
+      if(c<=0)continue;
+      var diff=f.skill-sk;
+      var brk=0,snap=0,rodOk=true,sizeMismatch=false;
+      if(selRod){
+        brk=FC.breakChance(sk,f,selRod);snap=FC.snapChance(sk,f,selRod);
+        rodOk=(f.ranking||0)<=selRod.maxRank;
+        sizeMismatch=f.sizeType!==selRod.sizeType;
+      }
+      var lossRate=Math.min(95,brk+snap);
+      var landRate=Math.max(5,100-lossRate);
+      var eff=selRod?Math.round(c*landRate/100):Math.round(c*FC.catchRate(sk,f.skill)/100);
+      recs.push({name:f.name,skill:f.skill,diff:diff,chance:c,landRate:landRate,effective:eff,
+        brk:brk,snap:snap,rodOk:rodOk,sizeMismatch:sizeMismatch,
+        sweet:diff>=8&&diff<=9,buffSweet:diff===10,hourPat:f.hourPat||0,
+        zones:f.zones?f.zones.map(function(a){return a.zone;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(', '):'?'});
     }
-    recs.sort(function(a,b){return b.chance-a.chance;});
-    var t='<table class="tbl"><thead><tr><th>Fish</th><th class="r-align">Skill</th><th class="r-align">Diff</th><th class="r-align">Skill-Up %</th><th>Zones</th></tr></thead><tbody>';
+    recs.sort(function(a,b){return b.effective-a.effective||b.chance-a.chance;});
+    var hasRod=!!selRod;
+    var t='<table class="tbl"><thead><tr><th>Fish</th><th class="r-align">Skill</th><th class="r-align">+Diff</th>';
+    if(hasRod)t+='<th class="r-align">Rod</th><th class="r-align">Break%</th><th class="r-align">Snap%</th>';
+    t+='<th class="r-align">Land %</th><th class="r-align">Skill-Up %</th><th class="r-align">Effective %</th><th>Zones</th></tr></thead><tbody>';
     for(var i=0;i<Math.min(50,recs.length);i++){
-      var r=recs[i];var cls=r.chance>=10?'g':r.chance>=5?'a':'';
-      t+='<tr><td>'+h(r.name)+'</td><td class="r-align mono-cell">'+r.skill+'</td><td class="r-align mono-cell">+'+r.diff+'</td>';
-      t+='<td class="r-align mono-cell '+cls+'">'+r.chance+'%</td><td class="soft" style="font-size:11px;max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(r.zones)+'</td></tr>';
+      var r=recs[i];var cls=r.effective>=10?'g':r.effective>=5?'a':'';
+      var tag=r.sweet?' <span style="color:#e3a75e;font-weight:700;font-size:10px">★ SWEET SPOT</span>':r.buffSweet?' <span style="color:#7eb8da;font-size:10px">w/ buffs</span>':'';
+      var dimRow=hasRod&&!r.rodOk?' style="opacity:0.4"':'';
+      t+='<tr'+dimRow+'><td>'+h(r.name)+hourBadge(r.hourPat)+tag+'</td><td class="r-align mono-cell">'+r.skill+'</td><td class="r-align mono-cell">+'+r.diff+'</td>';
+      if(hasRod){
+        var rodBadge=r.rodOk?(r.sizeMismatch?'<span class="sell-badge" style="background:rgba(255,160,0,0.15);color:#ffa000;border:1px solid rgba(255,160,0,0.3);font-size:9px">SIZE</span>':'<span class="g">OK</span>'):'<span class="r">RANK</span>';
+        t+='<td class="r-align">'+rodBadge+'</td>';
+        t+='<td class="r-align mono-cell'+(r.brk>0?' r':'')+'">'+r.brk+'</td>';
+        t+='<td class="r-align mono-cell'+(r.snap>0?' r':'')+'">'+r.snap+'</td>';
+      }
+      var landCls=r.landRate>=80?'g':r.landRate>=50?'a':r.landRate>=30?'w':'r';
+      t+='<td class="r-align mono-cell '+landCls+'">'+r.landRate+'%</td>';
+      t+='<td class="r-align mono-cell">'+r.chance+'%</td>';
+      t+='<td class="r-align mono-cell '+cls+'">'+r.effective+'%</td>';
+      t+='<td class="soft" style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(r.zones)+'</td></tr>';
     }
     t+='</tbody></table>';
+    if(hasRod)t+='<p class="soft" style="font-size:11px;margin-top:6px">Effective % = Skill-Up % × Land %. Dimmed rows = rod rank too low. Best baits shown in Catch Pool tab.</p>';
     $('skillupTable').innerHTML=t;
   }
+  $('skillupRodSel').onchange=function(){var v=this.value;selRod=v?rods.find(function(r){return r.id==v;}):null;renderTable();};
   $('fishSkillInput').onchange=renderTable;$('fishSkillInput').oninput=renderTable;
   renderTable();
 }
@@ -2355,7 +2585,7 @@ function renderFishProfit(el){
       var hookC=fishSkill?FC.hookChance(fishSkill,f,null,null):50;
       var ahP=0;var allItems=D.allItems||[];
       for(var k=0;k<allItems.length;k++){if(allItems[k].id===f.id){ahP=allItems[k].ah||allItems[k].bp||0;break;}}
-      pool.push({name:f.name,hook:hookC,price:ahP,skill:f.skill});
+      pool.push({name:f.name,hook:hookC,price:ahP,skill:f.skill,hourPat:f.hourPat||0});
       totalHook+=hookC;
     }
     if(!pool.length){$('profitResult').innerHTML='<p class="dim">No fish in this zone.</p>';return;}
@@ -2368,7 +2598,7 @@ function renderFishProfit(el){
       var catchPct=totalHook>0?((p.hook/totalHook)*100):0;
       var ev=p.price*(catchPct/100);
       totalEV+=ev;
-      t+='<tr><td>'+h(p.name)+'</td><td class="r-align mono-cell">'+p.hook+'</td>';
+      t+='<tr><td>'+h(p.name)+hourBadge(p.hourPat)+'</td><td class="r-align mono-cell">'+p.hook+'</td>';
       t+='<td class="r-align mono-cell">'+catchPct.toFixed(1)+'%</td>';
       t+='<td class="r-align mono-cell">'+gil(p.price)+'</td>';
       t+='<td class="r-align mono-cell gl">'+gil(Math.round(ev))+'</td></tr>';
@@ -2386,7 +2616,7 @@ function renderFishGuide(el){
   for(var i=0;i<sorted.length;i++){
     var f=sorted[i];
     var zones=f.zones?f.zones.map(function(a){return a.zone;}).filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,3).join(', '):'';
-    t+='<tr><td>'+h(f.name)+(f.legendary?' <span class="gl">★</span>':'')+'</td>';
+    t+='<tr><td>'+h(f.name)+(f.legendary?' <span class="gl">★</span>':'')+hourBadge(f.hourPat)+'</td>';
     t+='<td class="r-align mono-cell">'+f.skill+'</td><td>'+f.sizeType+'</td>';
     t+='<td class="r-align mono-cell">'+(f.ranking||'-')+'</td>';
     t+='<td class="r-align mono-cell">'+(f.rarity||1000)+'</td>';
@@ -2453,7 +2683,7 @@ function renderFishCookLvl(el){
       var baitStr=fish.baits.length?fish.baits.map(function(b){return h(b.name);}).join(', '):'?';
       t+='<tr data-iid="'+g.resultId+'" style="cursor:pointer">';
       t+='<td><b>'+h(g.recipe)+'</b></td>';
-      t+='<td class="mono-cell">'+h(fish.name)+(fish.qty>1?' x'+fish.qty:'')+' <span class="dim">(lv'+fish.skill+' '+fish.size+')</span><br>'+fishBadge+'</td>';
+      t+='<td class="mono-cell">'+h(fish.name)+(fish.qty>1?' x'+fish.qty:'')+hourBadge(fish.hourPat)+' <span class="dim">(lv'+fish.skill+' '+fish.size+')</span><br>'+fishBadge+'</td>';
       t+='<td class="soft" style="font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(zones)+'</td>';
       t+='<td class="soft" style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+baitStr+'</td>';
       t+='<td class="soft" style="font-size:11px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(g.crystal)+(otherStr?', '+otherStr:'')+'</td>';
@@ -2516,6 +2746,7 @@ function renderItemDetail(el,id){
   var fl=[];if(item.ex)fl.push('<span style="color:var(--warn)">Ex</span>');if(item.ra)fl.push('<span style="color:var(--warn)">Rare</span>');if(item.na)fl.push('<span style="color:var(--warn)">No AH</span>');
   if(fl.length)t+='<span style="font-size:12px">'+fl.join(' · ')+'</span>';
   if(item.s&&item.s>1)t+='<span class="dim" style="font-size:12px">Stack: '+item.s+'</span>';
+  var ohQty=getOnHand(item.id);if(ohQty>0)t+='<span style="font-size:12px;color:var(--gain);font-weight:600">'+ohQty+' on hand</span>';
   t+='</div>';
 
   // Price card
@@ -2574,20 +2805,48 @@ function renderItemDetail(el,id){
     t+='<h4 style="margin-bottom:6px">Crafted By <span class="dim">('+craftedBy.length+' recipe'+(craftedBy.length>1?'s':'')+')</span></h4>';
     for(var ci=0;ci<craftedBy.length;ci++){
       var c=craftedBy[ci];
-      t+='<div class="card" style="margin-bottom:8px">';
+      var rcId='rc'+ci;
+      t+='<div class="card" style="margin-bottom:8px" id="'+rcId+'">';
       t+='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap">';
       t+='<span style="font-weight:600">'+h(c.craft)+' Lv'+c.level+'</span>';
-      if(c.profit!=null)t+='<span class="mono-cell '+(c.profit>0?'g':'r')+'">Profit: '+gil(c.profit)+'</span>';
+      t+='<span class="dim" style="font-size:11px">Uncheck = free (farmed/fished)</span>';
       t+='</div>';
-      // Crystal + ingredients
+      // Crystal + ingredients with cost toggles
       t+='<div style="margin-top:6px;font-size:12px">';
-      if(c.crystal)t+='<div class="dim">'+h(c.crystal.name)+' (crystal)</div>';
-      for(var mi=0;mi<c.mats.length;mi++){var m=c.mats[mi];
-        t+='<div style="cursor:pointer;color:var(--ink1)" data-nav-item="'+m.id+'" onclick="navigateToItem('+m.id+')">'+m.qty+'x '+h(m.name);
-        if(m.price!=null)t+=' — <span class="mono-cell">'+gil(m.price)+'</span> <span class="dim">('+m.src+')</span>';
-        t+='</div>';
+      if(c.crystal){
+        var cryP=c.crystal.price||0;
+        t+='<label class="cost-row" style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer">';
+        t+='<input type="checkbox" class="mat-chk" data-rc="'+ci+'" data-price="'+cryP+'" data-qty="1" checked>';
+        t+='<span class="dim">'+h(c.crystal.name)+'</span>';
+        if(cryP)t+=' <span class="mono-cell dim">'+gil(cryP)+'</span>';
+        t+='</label>';
       }
-      if(c.matCost!=null)t+='<div style="margin-top:4px"><span class="dim">Total cost:</span> <span class="mono-cell">'+gil(c.matCost)+'</span></div>';
+      for(var mi=0;mi<c.mats.length;mi++){var m=c.mats[mi];
+        var mp=m.price||0;var mt=mp*m.qty;
+        t+='<label class="cost-row" style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer">';
+        t+='<input type="checkbox" class="mat-chk" data-rc="'+ci+'" data-price="'+mp+'" data-qty="'+m.qty+'" checked>';
+        t+='<span style="color:var(--ink1)" data-nav-item="'+m.id+'">'+m.qty+'x '+h(m.name)+'</span>';
+        if(mp)t+=' <span class="mono-cell">'+gil(mp)+'</span> <span class="dim">('+m.src+')</span>';
+        else t+=' <span class="dim">no price</span>';
+        if(m.qty>1&&mp)t+=' <span class="dim">= '+gil(mt)+'</span>';
+        t+='</label>';
+      }
+      // Sell price selector + profit summary
+      var npcSell=c.npcSell||0;var ahSingle=c.result?c.result.ahSingle:null;var ahStack=c.result?c.result.ahStack:null;
+      var rqty=c.result?c.result.qty:1;var stk=c.result?c.result.stackSize:1;
+      t+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--rule)">';
+      t+='<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:4px">';
+      t+='<span class="dim" style="font-size:11px">Sell as:</span>';
+      t+='<select class="sell-sel" data-rc="'+ci+'" style="font-size:12px">';
+      if(npcSell)t+='<option value="npc">NPC '+gil(npcSell)+'/ea</option>';
+      if(ahSingle)t+='<option value="ahs" selected>AH Single '+gil(ahSingle)+'</option>';
+      if(ahStack&&stk>1)t+='<option value="ahk">AH Stack '+gil(ahStack)+' ('+stk+')</option>';
+      t+='<option value="custom">Custom...</option>';
+      t+='</select>';
+      t+='<input type="number" class="sell-custom" data-rc="'+ci+'" style="width:80px;font-size:12px;display:none" placeholder="price/ea">';
+      t+='</div>';
+      t+='<div class="profit-line" id="profit'+ci+'" style="font-size:13px;font-weight:600"></div>';
+      t+='</div>';
       t+='</div>';
       // HQ tiers
       if(c.hq&&c.hq.length){t+='<div style="margin-top:4px;font-size:11px;color:var(--ink3)">';
@@ -2674,6 +2933,45 @@ function renderItemDetail(el,id){
   }
 
   el.innerHTML=t;
+  // Wire up cost toggles for Crafted By section
+  if(craftedBy.length){
+    var recipeData=[];
+    for(var ci=0;ci<craftedBy.length;ci++){
+      var c=craftedBy[ci];
+      var npcS=c.npcSell||0;var ahS=c.result?c.result.ahSingle:null;var ahK=c.result?c.result.ahStack:null;
+      var rqty=c.result?c.result.qty:1;var stk=c.result?c.result.stackSize:1;
+      recipeData.push({npcSell:npcS,ahSingle:ahS,ahStack:ahK,rqty:rqty,stk:stk});
+    }
+    function updateProfit(ci){
+      var rd=recipeData[ci];var cost=0;
+      qsa('.mat-chk[data-rc="'+ci+'"]',el).forEach(function(chk){
+        if(chk.checked)cost+=((+chk.dataset.price)||0)*((+chk.dataset.qty)||1);
+      });
+      var sel=qs('.sell-sel[data-rc="'+ci+'"]',el);var cust=qs('.sell-custom[data-rc="'+ci+'"]',el);
+      var sellPer=0;
+      if(sel){var v=sel.value;
+        if(v==='npc')sellPer=rd.npcSell;
+        else if(v==='ahs')sellPer=rd.ahSingle||0;
+        else if(v==='ahk')sellPer=rd.ahStack?(rd.ahStack/rd.stk):0;
+        else if(v==='custom')sellPer=+(cust?cust.value:0)||0;
+      }
+      var rev=Math.floor(sellPer)*rd.rqty;var profit=rev-cost;
+      var line=$('profit'+ci);
+      if(line){
+        line.innerHTML='<span class="dim">Cost:</span> <span class="mono-cell">'+gil(cost)+'</span>'+
+          ' &middot; <span class="dim">Rev:</span> <span class="mono-cell">'+gil(rev)+'</span> <span class="dim">(x'+rd.rqty+')</span>'+
+          ' &middot; <span class="dim">Profit:</span> <span class="mono-cell '+(profit>0?'g':profit<0?'r':'')+'">'+gil(profit)+'</span>';
+      }
+    }
+    qsa('.mat-chk',el).forEach(function(chk){chk.onchange=function(){updateProfit(+this.dataset.rc);};});
+    qsa('.sell-sel',el).forEach(function(sel){sel.onchange=function(){
+      var ci=+this.dataset.rc;var cust=qs('.sell-custom[data-rc="'+ci+'"]',el);
+      if(cust)cust.style.display=this.value==='custom'?'inline-block':'none';
+      updateProfit(ci);
+    };});
+    qsa('.sell-custom',el).forEach(function(inp){inp.oninput=function(){updateProfit(+this.dataset.rc);};});
+    for(var ci=0;ci<craftedBy.length;ci++)updateProfit(ci);
+  }
 }
 function renderVendors(el){
   var vendors=D.itemVendors||{};
@@ -2954,10 +3252,27 @@ function searchCmd(q){
 function updateStatus(){
   var items=D.allItems||[];var ahCount=D.ahCount||0;var fetched=D.ahFetched||0;
   var s=D.stats||{};
+  var inv=D.inventory||{};var oh=inv.onHand||{};var ohCount=Object.keys(oh).length;
   $('sbItems').textContent=items.length+' items';
   $('sbAH').textContent='AH: '+ahCount+' prices';
+  $('sbInv').textContent=ohCount?('Inv: '+ohCount+' items on hand'):'No inventory';
   $('sbScan').textContent=fetched?'Last scan '+ago(fetched):'No scan data';
   $('sbTime').textContent='1-7: tabs · Ctrl+K: search · S: scan · R: refresh · Ctrl+P: character';
+  updateInvSummary();
+}
+function getOnHand(iid){var inv=D.inventory||{};var oh=inv.onHand||{};return oh[String(iid)]||0;}
+function updateInvSummary(){
+  var inv=D.inventory||{};var chars=inv.characters||{};var el=$('invSummary');if(!el)return;
+  if(!inv.fetched){el.innerHTML='<span class="dim">Not synced yet</span>';return;}
+  var html='<span class="dim">Synced '+ago(inv.fetched)+'</span>';
+  for(var cn in chars){
+    var c=chars[cn];
+    if(c.error){html+='<br><span class="r">'+h(cn)+': error</span>';continue;}
+    var containers=c.containers||{};var names=Object.keys(containers);
+    var total=0;for(var i=0;i<names.length;i++){total+=containers[names[i]].length;}
+    html+='<br><b>'+h(cn)+'</b>: '+total+' items ('+names.length+' bags)';
+  }
+  el.innerHTML=html;
 }
 
 // ── Init ──
@@ -2977,6 +3292,25 @@ function init(){
   $('btnChar').onclick=function(){$('charDrawer').classList.toggle('open');};
   $('charClose').onclick=function(){$('charDrawer').classList.remove('open');};
   $('charSave').onclick=saveChar;
+  $('charSync').onclick=function(){
+    var btn=$('charSync');btn.textContent='Syncing...';btn.disabled=true;
+    var token=$('pxToken').value.trim();
+    var body=token?JSON.stringify({token:token}):'{}';
+    fetch('/api/scan-phoenix',{method:'POST',headers:{'Content-Type':'application/json'},body:body}).then(function(r){
+      if(!r.ok)throw new Error('Server error '+r.status);return r.json();
+    }).then(function(data){
+      var px=data.pxScanStats||{};
+      btn.textContent='⟳ Sync from Phoenix';btn.disabled=false;
+      if(px.error){toast(px.error);return;}
+      D=data;loadChar();updateStatus();renderActive();
+      if(token)$('pxToken').value='';
+      var msg='Phoenix sync: '+px.totalItems+' items across '+px.chars+' chars, '+px.onHandUnique+' unique on hand';
+      if(px.hasProfile)msg+=' + profile updated';
+      toast(msg);
+    }).catch(function(e){
+      btn.textContent='⟳ Sync from Phoenix';btn.disabled=false;toast('Sync failed: '+e.message);
+    });
+  };
 
   $('btnScan').onclick=function(){
     var btn=$('btnScan');btn.textContent='Scanning...';btn.disabled=true;
@@ -2984,12 +3318,13 @@ function init(){
       fetch('/api/scan-ah',{method:'POST'}).then(function(r){
         if(!r.ok)throw new Error('Server error '+r.status);return r.json();
       }).then(function(data){
-        var stats=data.ahScanStats||{};
-        D=data;renderTicker();renderActive();updateStatus();
+        var stats=data.ahScanStats||{};var px=data.pxScanStats||{};
+        D=data;loadChar();renderTicker();renderActive();updateStatus();
         btn.textContent='↻ Scan';btn.disabled=false;
-        var msg='AH scan complete: '+((stats.total||0))+' prices';
+        var msg='AH scan: '+((stats.total||0))+' prices';
         if(stats.cached)msg+=(' (cached'+(stats.note?': '+stats.note:'')+')');
         else msg+=' ('+(stats.new||0)+' new, '+(stats.updated||0)+' updated)';
+        if(px.totalItems)msg+=' · Inv: '+px.onHandUnique+' items on hand';
         toast(msg);
       }).catch(function(e){
         if(tries>1){btn.textContent='Retrying...';setTimeout(function(){doScan(tries-1);},1000);return;}
@@ -3013,7 +3348,7 @@ function init(){
     CRAFT_TAB=this.dataset.craft;qsa('#craftTabs .sub-tab').forEach(function(x){x.classList.remove('on');});this.classList.add('on');renderCraft();
   };});
   $('craftSearch').oninput=renderCraft;$('craftSort').onchange=renderCraft;
-  $('craftNpcOnly').onchange=renderCraft;$('craftHideUnpriced').onchange=renderCraft;$('craftFreeFish').onchange=renderCraft;
+  $('craftNpcOnly').onchange=renderCraft;$('craftHideUnpriced').onchange=renderCraft;$('craftFreeFish').onchange=renderCraft;$('craftOnHand').onchange=renderCraft;
   $('craftRange').onchange=renderCraft;$('craftRange').oninput=renderCraft;
   $('craftMaxLoss').onchange=renderCraft;$('craftMaxLoss').oninput=renderCraft;
 
@@ -3117,9 +3452,45 @@ def make_handler(state, html_bytes):
             elif self.path == '/api/scan-ah':
                 try:
                     ah_stats = fetch_ah_prices()
+                    px_stats = {}
+                    try:
+                        px_stats = fetch_phoenix_data()
+                    except Exception:
+                        pass
                     data = load_all()
                     state['json'] = json.dumps(data, separators=(',', ':')).encode()
-                    resp = json.dumps({**data, 'ahScanStats': ah_stats})
+                    resp = json.dumps({**data, 'ahScanStats': ah_stats, 'pxScanStats': px_stats})
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Cache-Control', 'no-cache')
+                    self.end_headers()
+                    self.wfile.write(resp.encode())
+                except Exception as e:
+                    self.send_response(500)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'error': str(e)}).encode())
+            elif self.path == '/api/scan-phoenix':
+                try:
+                    length = int(self.headers.get('Content-Length', 0))
+                    body = self.rfile.read(length) if length else b''
+                    token = None
+                    if body:
+                        try:
+                            params = json.loads(body)
+                            token = params.get('token', '').strip() or None
+                        except Exception:
+                            pass
+                    px_stats = fetch_phoenix_data(token=token)
+                    if 'error' in px_stats:
+                        self.send_response(200)
+                        self.send_header('Content-Type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({'pxScanStats': px_stats}).encode())
+                        return
+                    data = load_all()
+                    state['json'] = json.dumps(data, separators=(',', ':')).encode()
+                    resp = json.dumps({**data, 'pxScanStats': px_stats})
                     self.send_response(200)
                     self.send_header('Content-Type', 'application/json')
                     self.send_header('Cache-Control', 'no-cache')
@@ -3254,6 +3625,14 @@ def main():
 
     print(f"  {s['totalRecipes']} craft recipes, {s['totalDesynth']} desynth, {s['totalBCNM']} BCNMs")
     print(f"  {data['ahCount']} AH prices loaded")
+    inv = data.get('inventory', {})
+    oh = inv.get('onHand', {})
+    inv_chars = inv.get('characters', {})
+    inv_count = sum(c.get('totalItems', 0) for c in inv_chars.values() if 'error' not in c)
+    if oh:
+        print(f"  Inventory: {inv_count} items across {len(inv_chars)} chars, {len(oh)} unique on hand")
+    else:
+        print(f"  Inventory: not synced (use Scan or Sync from Phoenix)")
     print(f"  {s['profitableFlips']} profitable vendor flips, {s['ahVendorFlips']} AH->vendor flips")
     print(f"  {s['profitableCrafts']} profitable crafts ({len(gc)} guaranteed NPC-mat)")
 
