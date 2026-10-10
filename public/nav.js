@@ -82,6 +82,13 @@ function _vanaTick(){
   h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' ▲':' ▼'):'')+'</span></div></div>';
   h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
   h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
+  var isLow=(hr===5||hr===17),tideLbl=isLow?'Low Tide':'High Tide';
+  var nxt=isLow?(hr===5?6:18):(hr<5?5:(hr<17?17:29)),til=((nxt-hr)*60-mn);
+  if(til<=0)til+=1440;var trm=Math.floor(Math.floor(til*2.4)/60),tcd;
+  if(trm<60)tcd=trm+'m';else tcd=Math.floor(trm/60)+'h'+_pad(trm%60)+'m';
+  h+='<div class="vw-tide"><svg class="vw-tide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c1.5-2 3-3 5-3s3.5 1 5 3 3 3 5 3 3.5-1 5-3"/><path d="M2 17c1.5-2 3-3 5-3s3.5 1 5 3 3 3 5 3 3.5-1 5-3" opacity=".4"/></svg>';
+  h+='<span class="vw-tide-lbl'+(isLow?' low':'')+'">'+tideLbl+'</span>';
+  h+='<span class="vw-tide-cd">'+tcd+'</span></div>';
   wk.innerHTML=h;
  }
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
