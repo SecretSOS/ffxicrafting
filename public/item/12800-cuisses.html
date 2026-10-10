@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cuisses — FFXI Crafting</title>
+<meta name="description" content="Where to get Cuisses in FFXI — sources, recipes, prices">
+<meta property="og:title" content="Cuisses — FFXI Crafting">
+<meta property="og:description" content="Where to get Cuisses in FFXI — sources, recipes, prices">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/item/12800-cuisses">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.item-head{display:flex;align-items:center;gap:14px}
+.item-icon{image-rendering:pixelated;flex-shrink:0;vertical-align:middle;border-radius:2px}
+.icon-link{display:inline-flex;align-items:center;gap:4px}
+h1{font-size:clamp(1.6rem,3.5vw,2.2rem)}
+h2{font-size:1.25rem;padding-bottom:.4em;border-bottom:1px solid var(--rule);border-left:none;padding-left:0}
+h3{font-size:1rem;margin:1.2em 0 .4em;color:var(--ink-soft)}
+h3:first-child{margin-top:0}
+.meta{color:var(--ink-soft);margin:.15em 0 0;font-size:.9rem}
+.flag{display:inline-block;font-size:.72rem;border-radius:4px;padding:1px 7px;margin-right:4px;border:1px solid var(--rule);color:var(--ink-faint)}
+.flag.ex{border-color:var(--gil);color:var(--gil)}
+.flag.rare{border-color:var(--best);color:var(--best)}
+table{font-size:.88rem;margin-bottom:.4em}
+.soft{color:var(--ink-soft);font-size:.85rem}
+.ings{font-size:.84rem;color:var(--ink-soft)}
+.src-toggle{font-size:.76rem;color:var(--ink-faint);cursor:pointer;border-bottom:1px dashed var(--rule);margin-left:8px}
+.src-toggle:hover{color:var(--ink-soft)}
+.src-cell{font-size:.72rem;color:var(--ink-faint);font-family:ui-monospace,monospace;word-break:break-all}
+.ffxi-tooltip{background:#1e2244;border:2px solid #5a5e8a;border-radius:0;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;margin-top:14px;max-width:480px;box-shadow:inset 0 0 0 1px #0d1028,0 2px 8px rgba(0,0,0,.4)}
+.ffxi-tooltip .tt-icon{image-rendering:pixelated;flex-shrink:0;width:32px;height:32px;margin-top:2px}
+.ffxi-tooltip .tt-body{flex:1;min-width:0}
+.ffxi-tooltip .tt-name{color:#e8e4d0;font-size:14px;font-weight:600;margin:0 0 4px;font-family:var(--font-body);line-height:1.3}
+.ffxi-tooltip .tt-desc{color:#b0acc0;font-size:12.5px;line-height:1.5;margin:0;font-family:var(--font-body)}
+@media(max-width:700px){table{font-size:.8rem}.ffxi-tooltip{max-width:100%}}
+</style>
+<script src="/nav.js"></script>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Cuisses</nav>
+ <header class="panel pad">
+  <div class="infobox"><div class="infobox-head">Cuisses</div><div class="infobox-row"><span class="infobox-label">Item ID</span><span class="infobox-val">12800</span></div><div class="infobox-row"><span class="infobox-label">Stack</span><span class="infobox-val">1</span></div><div class="infobox-row"><span class="infobox-label">Base Price</span><span class="infobox-val">1,800 gil</span></div></div>
+  <div class="item-head"><span class="icon" style="--ic:51;--ir:21;--isz:32px;--is:1"></span><div>
+  <h1>Cuisses</h1>
+  <p class="meta">Stack: 1 · NPC: 1,800g</p>
+  </div></div>
+  <div class="ffxi-tooltip"><span class="icon" style="--ic:51;--ir:21;--isz:20px;--is:1"></span><div class="tt-body"><p class="tt-name">Cuisses</p><p class="tt-desc">DEF:23</p></div></div>
+ </header>
+ <section class="panel pad" id="sources"><h2>Where to get it <span class="src-toggle" id="srcToggle" role="button" tabindex="0">show sources</span></h2><h3>Vendors</h3><table><thead><tr><th>NPC</th><th>Zone</th><th class="num">Price</th><th class="hide-sm">Notes</th></tr></thead><tbody><tr data-src="scripts/zones/Bastok_Markets/npcs/Charging_Chocobo.lua"><td>Charging_Chocobo <span class="pill">nation top-2 in conquest</span></td><td>Bastok Markets</td><td class="num">37,800</td><td class="soft hide-sm"></td></tr><tr data-src="scripts/zones/Upper_Jeuno/npcs/Khe_Chalahko.lua"><td>Khe_Chalahko</td><td>Upper Jeuno</td><td class="num">37,800</td><td class="soft hide-sm"></td></tr><tr data-src="pxi:era/lua/zones/bastok_markets/npcs/bastok_markets_vendors.lua"><td>charging_chocobo <span class="pill">nation top-2 in conquest</span></td><td>Bastok Markets</td><td class="num">37,800</td><td class="soft hide-sm"></td></tr><tr data-src="scripts/data/guild_shops.lua"><td>Amulya <span class="pill">player-sold only</span></td><td></td><td class="num">189,000</td><td class="soft hide-sm">price is at empty shelf; restock 0/day</td></tr><tr data-src="scripts/data/guild_shops.lua"><td>Vicious_Eye <span class="pill">player-sold only</span></td><td></td><td class="num">189,000</td><td class="soft hide-sm">price is at empty shelf; restock 0/day</td></tr></tbody></table><h3>Mob Drops</h3><table><thead><tr><th>Monster</th><th>Zone</th><th class="num">Rate</th><th class="hide-sm">Level</th><th class="hide-sm">Info</th></tr></thead><tbody><tr data-src="data/zones/beadeaux/mobs.yaml"><td>Elder_Quadav</td><td>Beadeaux</td><td class="num">0.1%</td><td class="hide-sm">42–46</td><td class="soft hide-sm">15 spawns</td></tr><tr data-src="data/zones/beadeaux/mobs.yaml"><td>Iron_Quadav</td><td>Beadeaux</td><td class="num">0.1%</td><td class="hide-sm">43–47</td><td class="soft hide-sm">15 spawns</td></tr><tr data-src="data/zones/castle_zvahl_baileys/mobs.yaml"><td>Elder_Quadav</td><td>Castle Zvahl Baileys</td><td class="num">0.1%</td><td class="hide-sm">47–49</td><td class="soft hide-sm">5 spawns</td></tr><tr data-src="data/zones/castle_zvahl_baileys/mobs.yaml"><td>Iron_Quadav</td><td>Castle Zvahl Baileys</td><td class="num">0.1%</td><td class="hide-sm">47–49</td><td class="soft hide-sm">5 spawns</td></tr><tr data-src="data/zones/castle_zvahl_baileys/mobs.yaml"><td>Orcish_Trooper</td><td>Castle Zvahl Baileys</td><td class="num">0.1%</td><td class="hide-sm">47–49</td><td class="soft hide-sm">5 spawns</td></tr><tr data-src="data/zones/castle_zvahl_keep/mobs.yaml"><td>Elder_Quadav</td><td>Castle Zvahl Keep</td><td class="num">0.1%</td><td class="hide-sm">47–49</td><td class="soft hide-sm">5 spawns</td></tr><tr data-src="data/zones/castle_zvahl_keep/mobs.yaml"><td>Iron_Quadav</td><td>Castle Zvahl Keep</td><td class="num">0.1%</td><td class="hide-sm">47–49</td><td class="soft hide-sm">5 spawns</td></tr><tr data-src="data/zones/castle_zvahl_keep/mobs.yaml"><td>Orcish_Trooper</td><td>Castle Zvahl Keep</td><td class="num">0.1%</td><td class="hide-sm">47–49</td><td class="soft hide-sm">5 spawns</td></tr><tr data-src="data/zones/davoi/mobs.yaml"><td>Orcish_Trooper</td><td>Davoi</td><td class="num">0.1%</td><td class="hide-sm">46–49</td><td class="soft hide-sm">26 spawns</td></tr><tr data-src="data/zones/monastic_cavern/mobs.yaml"><td>Orcish_Trooper</td><td>Monastic Cavern</td><td class="num">0.1%</td><td class="hide-sm">45–49</td><td class="soft hide-sm">8 spawns</td></tr></tbody></table></section><section class="panel pad"><h2>Made by</h2><p class="soft">Synthesis recipes that produce this item.</p><table><thead><tr><th>Recipe</th><th>Result</th><th class="hide-sm">Ingredients</th></tr></thead><tbody><tr><td>Smithing 54</td><td><a href="/item/12800-cuisses" class="icon-link"><span class="icon" style="--ic:51;--ir:21;--isz:20px;--is:1"></span> Cuisses</a> <span class="soft">HQ: <a href="/item/12916-cuisses-1" class="icon-link"><span class="icon" style="--ic:17;--ir:23;--isz:20px;--is:1"></span> Cuisses +1</a> / <a href="/item/12916-cuisses-1" class="icon-link"><span class="icon" style="--ic:17;--ir:23;--isz:20px;--is:1"></span> Cuisses +1</a> / <a href="/item/12916-cuisses-1" class="icon-link"><span class="icon" style="--ic:17;--ir:23;--isz:20px;--is:1"></span> Cuisses +1</a></span></td><td class="ings hide-sm"><a href="/item/4096-fire-crystal" class="icon-link"><span class="icon" style="--ic:32;--ir:24;--isz:20px"></span> Fire Crystal</a> · <a href="/item/662-iron-sheet" class="icon-link"><span class="icon" style="--ic:5;--ir:4;--isz:20px"></span> Iron Sheet</a> ×2 · <a href="/item/850-square-of-sheep-leather" class="icon-link"><span class="icon" style="--ic:1;--ir:7;--isz:20px"></span> Square of Sheep Leather</a></td></tr></tbody></table></section><section class="panel pad"><h2>Can be desynthed</h2><p class="soft">Break this item to obtain:</p><table><thead><tr><th>Craft</th><th>Results</th></tr></thead><tbody><tr><td>Smithing 54</td><td><a href="/item/850-square-of-sheep-leather" class="icon-link"><span class="icon" style="--ic:1;--ir:7;--isz:20px"></span> Square of Sheep Leather</a> / <a href="/item/651-iron-ingot" class="icon-link"><span class="icon" style="--ic:58;--ir:3;--isz:20px"></span> Iron Ingot</a> <span class="soft">(HQ1)</span> / <a href="/item/651-iron-ingot" class="icon-link"><span class="icon" style="--ic:58;--ir:3;--isz:20px"></span> Iron Ingot</a> <span class="soft">(HQ2)</span> / <a href="/item/651-iron-ingot" class="icon-link"><span class="icon" style="--ic:58;--ir:3;--isz:20px"></span> Iron Ingot</a> <span class="soft">(HQ3)</span></td></tr></tbody></table></section>
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script>
+var st=document.getElementById('srcToggle');
+if(st){var on=false;function toggleSrc(){on=!on;st.textContent=on?'hide sources':'show sources';
+document.querySelectorAll('#sources tr[data-src]').forEach(function(tr){
+var ex=tr.querySelector('.src-cell');
+if(on&&!ex){var td=document.createElement('td');td.className='src-cell';td.textContent=tr.getAttribute('data-src');tr.appendChild(td)}
+else if(!on&&ex){ex.remove()}});
+document.querySelectorAll('#sources thead tr').forEach(function(tr){
+var ex=tr.querySelector('.src-th');
+if(on&&!ex){var th=document.createElement('th');th.className='src-th';th.textContent='Source';tr.appendChild(th)}
+else if(!on&&ex){ex.remove()}});
+}st.onclick=toggleSrc;st.onkeydown=function(e){if(e.key==='Enter')toggleSrc()}}
+</script>
+<script src="/ah-prices.js"></script>
+<script src="/search.js"></script>
+<script src="/icon-sprite.js"></script>
+<script src="/item-popup.js"></script>
+<script src="/table-tools.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

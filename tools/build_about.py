@@ -131,7 +131,7 @@ html += f"""\
 
  <section class="panel pad">
   <h2>Verify it yourself</h2>
-  <p>The full source is at <a href="https://github.com/LandSandBoat/server" rel="noopener">github.com/LandSandBoat/server</a>. Item links point to the <a href="https://wiki.phoenix-xi.com/" target="_blank" rel="noopener">Phoenix wiki</a>. All data was parsed from commit <a href="{COMMIT_URL}" rel="noopener"><code>{short_hash}</code></a>.</p>
+  <p>The full source is at <a href="https://github.com/LandSandBoat/server" rel="noopener">github.com/LandSandBoat/server</a>. Every item has its own page with sources, recipes, and prices. All data was parsed from commit <a href="{COMMIT_URL}" rel="noopener"><code>{short_hash}</code></a>.</p>
  </section>
 """
 

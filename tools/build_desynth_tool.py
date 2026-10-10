@@ -110,7 +110,7 @@ function saveSkills(){try{localStorage.setItem('phoenix-skills',JSON.stringify(s
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
-function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/ /g,'_').replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton|pile|ear|ball|loop|pod|roll|bundle|slab|onz|copy|orb|phial|cone|cube|wedge|mug|branch|cut|container|dollop|fragment|hunk|saucer|segment|remnant|ingot|suit|page|flasque|tuft)_of_/i,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
+function itemUrl(id){return'/item/'+id;}
 function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.v||it.b||0):0;}
 function sellPrice(id){var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.b||0):0;}
 function successRate(skill,lv){return Math.max(0,Math.min(40,40-5*(lv-skill)))/100;}
@@ -162,7 +162,7 @@ function renderResults(){
     if(r.h1&&I[r.h1]&&r.h1!==r.res)outputs+=' / '+esc(I[r.h1].n)+(r.h1q>1?' ×'+r.h1q:'');
     var profitCls=x.profit>=0?'gain':'loss';
     var ratePct=Math.round(x.rate*100);
-    html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r['in'])+'" target="_blank" rel="noopener">'+esc(inIt.n)+'</a>'+
+    html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r['in'])+'" data-item="'+r['in']+'">'+esc(inIt.n)+'</a>'+
       '<span class="craft-tag" style="--c:var(--'+r.cr+')">'+SHORT[r.cr]+' '+r.lv+'</span></div>'+
       '<div class="ings">→ '+outputs+'</div></td>'+
       '<td class="num">'+r.lv+'</td>'+

@@ -13,7 +13,6 @@ OUT_DIR = os.path.join(ROOT, 'public', 'crafts')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, CRAFTS_ORDERED, icon_html
-from wiki import phoenix_url
 
 ERA = ("ROTZ", "COP", "TOAU", "WOTG")
 DAYS = ["Firesday", "Earthsday", "Watersday", "Windsday",
@@ -97,7 +96,7 @@ def pretty(n):
 
 
 def item_link(item_id, name):
-    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{icon_html(item_id)}{escape(name)}</a>'
+    return f'<a href="/item/{item_id}" data-item="{item_id}" style="display:inline-flex;align-items:center;gap:4px">{icon_html(item_id)}{escape(name)}</a>'
 
 
 def format_gil(g):

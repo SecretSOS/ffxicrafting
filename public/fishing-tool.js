@@ -20,8 +20,7 @@ var zoneEl=document.getElementById('ft-zone'),
     rodGuideEl=document.getElementById('ft-rod-guide'),
     gearCheckEl=document.getElementById('ft-gear-check');
 
-function wikiUrl(name){return'https://wiki.phoenix-xi.com/'+name.replace(/ /g,'_');}
-function itemLink(id,name){return '<a href="'+wikiUrl(name)+'" target="_blank" rel="noopener" class="icon-link">'+iconSpan(id)+name+'</a>';}
+function itemLink(id,name){return '<a href="/item/'+id+'" data-item="'+id+'" class="icon-link">'+iconSpan(id)+name+'</a>';}
 function prettyZone(z){if(!z)return '';return z.replace(/_/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase()});}
 function pwStars(p){
   if(p===3)return '<span class="fl-pw fl-pw3" title="Best">&#9733;&#9733;&#9733;</span>';

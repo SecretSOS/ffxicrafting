@@ -11,7 +11,6 @@ OUT  = os.path.join(ROOT, 'public', 'nm')
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import full_page, icon_html
-from wiki import phoenix_url
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
@@ -31,7 +30,7 @@ def slugify(s):
 
 def item_link(iid):
     name = ITEMS.get(iid, f'Item {iid}')
-    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener">{icon_html(iid)}{esc(name)}</a>'
+    return f'<a href="/item/{iid}" data-item="{iid}">{icon_html(iid)}{esc(name)}</a>'
 
 def fmt_pct(p):
     if p is None: return '?%'

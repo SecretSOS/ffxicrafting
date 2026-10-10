@@ -10,7 +10,7 @@ var box=document.getElementById('searchResults');
 if(!input||!box) return;
 var index=null, active=-1, shown=[];
 
-function wikiUrl(n){return'https://wiki.phoenix-xi.com/'+n.replace(/ /g,'_').replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton|pile|ear|ball|loop|pod|roll|bundle|slab|onz|copy|orb|phial|cone|cube|wedge|mug|branch|cut|container|dollop|fragment|hunk|saucer|segment|remnant|ingot|suit|page|flasque|tuft)_[Oo]f_/i,'');}
+function itemPageUrl(id){return'/item/'+id;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 function load(cb){
@@ -29,7 +29,7 @@ function search(q){
   var it=index.i[i], nl=it[1].toLowerCase();
   var pos=nl.indexOf(ql);
   if(pos===-1) continue;
-  var entry={n:it[1],t:'item',u:wikiUrl(it[1]),id:it[0]};
+  var entry={n:it[1],t:'item',u:itemPageUrl(it[0]),id:it[0]};
   if(pos===0) prefix.push(entry);
   else if(nl.charAt(pos-1)===' ') word.push(entry);
   else sub.push(entry);
@@ -50,7 +50,9 @@ function render(){
  for(var i=0;i<shown.length;i++){
   var m=shown[i];
   var ic=m.id?'<img src="/img/item/'+m.id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;flex-shrink:0;align-self:center" onerror="this.style.display=\'none\'">':'';
-  var ext=m.u.indexOf('://')>-1?' target="_blank" rel="noopener"':'';h+='<a class="sr-item" href="'+m.u+'"'+ext+' data-i="'+i+'">'+ic+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
+  var ext=m.u.indexOf('://')>-1?' target="_blank" rel="noopener"':'';
+  var dataAttr=m.id&&m.t==='item'?' data-item="'+m.id+'"':'';
+  h+='<a class="sr-item" href="'+m.u+'"'+ext+dataAttr+' data-i="'+i+'">'+ic+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
  }
  box.innerHTML=h;
  box.hidden=false;
@@ -71,7 +73,7 @@ input.addEventListener('keydown',function(e){
  if(box.hidden) return;
  if(e.key==='ArrowDown'){e.preventDefault();setActive(Math.min(active+1,shown.length-1));}
  else if(e.key==='ArrowUp'){e.preventDefault();setActive(Math.max(active-1,-1));}
- else if(e.key==='Enter'&&active>=0){e.preventDefault();var su=shown[active].u;if(su.indexOf('://')>-1)window.open(su,'_blank');else window.location.href=su;}
+ else if(e.key==='Enter'&&active>=0){e.preventDefault();var sa=shown[active];if(sa.id&&sa.t==='item'&&window.openItemPopup){window.openItemPopup(sa.id);hide();}else if(sa.u.indexOf('://')>-1){window.open(sa.u,'_blank');}else{window.location.href=sa.u;}}
  else if(e.key==='Escape'){hide();input.blur();}
 });
 document.addEventListener('keydown',function(e){
@@ -84,8 +86,10 @@ box.addEventListener('click',function(e){
  if(a&&a.href){
   e.preventDefault();
   e.stopPropagation();
-  if(a.href.indexOf('://')>-1) window.open(a.href,'_blank','noopener');
-  else window.location.href=a.href;
+  var di=a.getAttribute('data-item');
+  if(di&&window.openItemPopup){window.openItemPopup(di);}
+  else if(a.href.indexOf('://')>-1){window.open(a.href,'_blank','noopener');}
+  else{window.location.href=a.href;}
   hide();
  }
 });

@@ -10,7 +10,6 @@ os.makedirs(OUT, exist_ok=True)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, icon_html
-from wiki import phoenix_url
 
 ERA_CONTENT = (None, '', 'rotz', 'cop', 'toau', 'wotg')
 EXCLUDE_PREFIXES = ('abyssea', 'dynamis', 'walk_of_echoes', 'escha_', 'reisenjima')
@@ -139,7 +138,7 @@ def _load_npc_positions(zone_name):
 
 def item_link(iid):
     n = item_name(iid)
-    return f'<a href="{phoenix_url(n)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
+    return f'<a href="/item/{iid}" data-item="{iid}" style="display:inline-flex;align-items:center;gap:4px">{_icon(iid)}{esc(n)}</a>'
 
 def fmt_pct(p):
     if p is None: return '—'

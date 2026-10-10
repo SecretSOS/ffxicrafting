@@ -31,18 +31,18 @@
  --fire:#c2432a;--ice:#1f7fae;--wind:#2d8a54;--earth:#8a6a2a;--lightning:#6b45b0;--water:#1c69b8;--light:#9a8536;--dark:#6a4a96;
  --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34;--fish:#1c7fa8}
 
-/* --- Harvest theme (dark + Halloween) --- */
+/* --- Harvest theme (Autumn Hearth — warm brown + purple undertone) --- */
 :root[data-theme="harvest"]{
- --bg:#110c14;--surface:#1a1422;--surface-2:#231a2e;--border:#38284a;--frame:#503868;
- --ink:#f0e8df;--ink-soft:#d4c8b8;--ink-faint:#8a7e70;--link:#b08ed0;
- --accent:#d4682e;--accent-soft:#2e1a10;--gain:#5cb87a;--loss:#cc3a3a;--best:#5cb87a;
+ --bg:#1a1316;--surface:#231a20;--surface-2:#2c2228;--border:#44343e;--frame:#584a52;
+ --ink:#f2ebe0;--ink-soft:#d8cbb8;--ink-faint:#9a8a74;--link:#c89868;
+ --accent:#d87030;--accent-soft:#2e1c0e;--gain:#6abb7a;--loss:#d04838;--best:#6abb7a;
  --fire:#e05a3a;--ice:#7ab0d0;--wind:#6aae80;--earth:#c49a50;--lightning:#b88ae0;--water:#5a90c8;--light:#e0d0a0;--dark:#9878b8;
- --wood:#7a5a30;--smith:#7a8090;--gold:#c89a38;--cloth:#b878a0;--leather:#a06830;--bone:#c8bca0;--alchemy:#60a888;--cook:#c87858;--fish:#4890a8;
- --panel-top:#231a2e;--panel-bot:#1a1422;--rule:#38284a;--gil:#d4682e;--sidebar-bg:#1a1422}
+ --wood:#8a6a38;--smith:#8a8e98;--gold:#d4a040;--cloth:#c080a0;--leather:#a87030;--bone:#d0c4a8;--alchemy:#68b090;--cook:#d08058;--fish:#4890a8;
+ --panel-top:#2c2228;--panel-bot:#231a20;--rule:#44343e;--gil:#d87030;--sidebar-bg:#231a20}
 :root[data-theme="harvest"] .top-bar .logo::before{content:'\1F383';margin-right:6px;font-size:.9em}
 :root[data-theme="harvest"] .top-bar .logo::after{content:'\1F342';margin-left:6px;font-size:.75em;opacity:.7}
-:root[data-theme="harvest"] .top-bar{border-bottom-color:#3a1e10}
-:root[data-theme="harvest"] .guild-bar{border-bottom-color:#2e1608}
+:root[data-theme="harvest"] .top-bar{border-bottom-color:#3a2218}
+:root[data-theme="harvest"] .guild-bar{border-bottom-color:#301c12}
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:inherit}
@@ -573,3 +573,44 @@ li{margin-bottom:.4em}
 }
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ============================================================
+   Item Popup Panel
+   ============================================================ */
+.ip-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;opacity:0;pointer-events:none;transition:opacity .2s}
+.ip-overlay.open{opacity:1;pointer-events:auto}
+.ip-panel{position:fixed;top:0;right:0;bottom:0;width:min(480px,90vw);background:var(--surface);border-left:1px solid var(--border);
+ z-index:901;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.3)}
+.ip-panel.open{transform:translateX(0)}
+.ip-header{display:flex;justify-content:flex-end;padding:10px 14px;border-bottom:1px solid var(--rule);flex-shrink:0}
+.ip-close{background:none;border:none;color:var(--ink-faint);font-size:1.6rem;cursor:pointer;padding:2px 8px;border-radius:4px;line-height:1}
+.ip-close:hover{color:var(--ink);background:var(--surface-2)}
+.ip-body{flex:1;overflow-y:auto;padding:16px 20px;font-size:.9rem}
+.ip-loading{text-align:center;padding:40px 0;color:var(--ink-faint)}
+.ip-item-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ip-name{font-family:var(--font-display);font-size:1.35rem;margin:0;color:var(--ink)}
+.ip-meta{margin:4px 0 0;font-size:.82rem;color:var(--ink-soft)}
+.ip-flag{display:inline-block;font-size:.72rem;border-radius:4px;padding:1px 7px;margin-right:4px;border:1px solid var(--rule);color:var(--ink-faint)}
+.ip-flag.ex{border-color:var(--gil);color:var(--gil)}
+.ip-flag.rare{border-color:var(--best);color:var(--best)}
+.ip-ah{background:var(--accent-soft);border:1px solid var(--accent);border-radius:6px;padding:6px 12px;font-size:.85rem;color:var(--accent);margin-bottom:14px;font-variant-numeric:tabular-nums}
+.ip-section{margin-bottom:18px}
+.ip-section h3{font-family:var(--font-display);font-size:1.05rem;margin:0 0 8px;padding-bottom:5px;border-bottom:1px solid var(--rule);color:var(--ink)}
+.ip-group{font-size:.82rem!important;color:var(--ink-faint)!important;margin:10px 0 4px!important;padding:0!important;border:none!important;text-transform:uppercase;letter-spacing:.04em}
+.ip-tbl{width:100%;font-size:.82rem;margin-bottom:8px}
+.ip-tbl td{padding:3px 8px 3px 0;border-bottom:1px solid color-mix(in srgb,var(--rule) 50%,transparent);color:var(--ink-soft);vertical-align:top}
+.ip-tbl th{text-align:left;padding:3px 8px 3px 0;color:var(--ink-faint);font-size:.78rem;font-weight:400;text-transform:uppercase;letter-spacing:.03em}
+.ip-src-type{color:var(--ink-faint);font-size:.76rem;white-space:nowrap}
+.ip-zone{color:var(--ink-faint);font-size:.78rem}
+.ip-num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.ip-ings{font-size:.78rem;color:var(--ink-faint)}
+.ip-hq{font-size:.78rem;color:var(--ink-faint)}
+.ip-counts{font-size:.82rem;color:var(--ink-faint)}
+.ip-link{display:inline-flex;align-items:center;gap:3px;color:var(--link)}
+.ip-link:hover{text-decoration:underline}
+.ip-footer-link{text-align:center;padding-top:8px;border-top:1px solid var(--rule)}
+.ip-full-link{font-size:.85rem;color:var(--accent)}
+@media(max-width:500px){
+ .ip-panel{width:100vw}
+ .ip-body{padding:12px 16px}
+}

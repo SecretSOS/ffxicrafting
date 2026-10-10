@@ -126,7 +126,7 @@ function savePrices(){try{localStorage.setItem('phoenix-prices-v2',JSON.stringif
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
 function fmt(n){return Math.round(n).toLocaleString('en-US');}
 function gil(n){return'<span class="gil"><svg><use href="#i-gil"/></svg>'+fmt(n)+'</span>';}
-function itemUrl(id){var it=I[id];if(!it)return'#';var n=it.n.replace(/ /g,'_').replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton|pile|ear|ball|loop|pod|roll|bundle|slab|onz|copy|orb|phial|cone|cube|wedge|mug|branch|cut|container|dollop|fragment|hunk|saucer|segment|remnant|ingot|suit|page|flasque|tuft)_of_/i,'');return'https://wiki.phoenix-xi.com/'+n.split('_').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1)}).join('_');}
+function itemUrl(id){return'/item/'+id;}
 function itemVal(id){
   var p=prices['s'+id];if(p!==undefined&&p!=='')return Number(p);
   p=prices[id];if(p!==undefined&&p!=='')return Number(p);
@@ -197,7 +197,7 @@ function renderCard(bf){
       }else if(it.id){
         var info=I[it.id]||{n:'?'};
         var exTag=info.x?'<span class="loot-ex">Ex</span>':'';
-        h+='<span class="loot-name"><a href="'+itemUrl(it.id)+'" target="_blank" rel="noopener">'+esc(info.n)+'</a>'+exTag+'</span>';
+        h+='<span class="loot-name"><a href="'+itemUrl(it.id)+'" data-item="'+it.id+'">'+esc(info.n)+'</a>'+exTag+'</span>';
         if(!info.x){
           var curP=prices['s'+it.id]||prices[it.id]||'';
           h+='<span class="loot-price"><input type="number" min="0" data-id="'+it.id+'" value="'+(curP||'')+'" placeholder="'+(info.b||0)+'" class="'+(curP?'set':'')+'" aria-label="'+esc(info.n)+' price"></span>';

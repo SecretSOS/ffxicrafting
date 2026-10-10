@@ -2,7 +2,6 @@
 """Generate public/fishing-cooking.html — LOW COST Fishing + Cooking skill-up guide."""
 import json, os, sqlite3, html
 from page_template import full_page
-from wiki import phoenix_url
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
@@ -47,7 +46,7 @@ def pretty(n):
     return n.replace('_', ' ').title() if n else ''
 
 def item_url(item_id):
-    return phoenix_url(name(item_id))
+    return f'/item/{item_id}'
 
 def esc(s):
     return html.escape(str(s))
@@ -254,24 +253,24 @@ def build_recipe_card(r):
     if r.get('fish') and r.get('fish_id'):
         fi = get_fish_info(r['fish_id'])
         fish_skill = fi['skill'] if fi else '?'
-        h.append(f'<a href="{item_url(r["fish_id"])}" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">{esc(pretty(r["fish"]))} <span class="fc-fish-skill">(Fish Lv {fish_skill})</span></a>')
+        h.append(f'<a href="{item_url(r["fish_id"])}" data-item="{r["fish_id"]}" class="fc-ing fc-ing-fish">{esc(pretty(r["fish"]))} <span class="fc-fish-skill">(Fish Lv {fish_skill})</span></a>')
         if r.get('alt_fish'):
             for af_name, af_id in r['alt_fish']:
                 afi = get_fish_info(af_id)
                 af_skill = afi['skill'] if afi else '?'
-                h.append(f' or <a href="{item_url(af_id)}" target="_blank" rel="noopener" class="fc-ing fc-ing-fish">{esc(pretty(af_name))} <span class="fc-fish-skill">(Fish Lv {af_skill})</span></a>')
+                h.append(f' or <a href="{item_url(af_id)}" data-item="{af_id}" class="fc-ing fc-ing-fish">{esc(pretty(af_name))} <span class="fc-fish-skill">(Fish Lv {af_skill})</span></a>')
     if r.get('extra_items'):
         for ei in r['extra_items']:
             if len(ei) == 3:
                 iname, iid, qty = ei
                 vp = get_vendor_price(iid)
                 cost_str = f' — {gil_span(vp)}' if vp else ''
-                h.append(f'<a href="{item_url(iid)}" target="_blank" rel="noopener" class="fc-ing">{esc(iname)} x{qty}{cost_str}</a>')
+                h.append(f'<a href="{item_url(iid)}" data-item="{iid}" class="fc-ing">{esc(iname)} x{qty}{cost_str}</a>')
             else:
                 iname, iid = ei
                 vp = get_vendor_price(iid)
                 cost_str = f' — {gil_span(vp)}' if vp else ''
-                h.append(f'<a href="{item_url(iid)}" target="_blank" rel="noopener" class="fc-ing">{esc(iname)}{cost_str}</a>')
+                h.append(f'<a href="{item_url(iid)}" data-item="{iid}" class="fc-ing">{esc(iname)}{cost_str}</a>')
     h.append('</div></div>')
 
     # Where to fish
@@ -303,7 +302,7 @@ def build_recipe_card(r):
                 elif craftable:
                     cost_str = ' <span class="fc-craftable">(craft it!)</span>'
                 btype = 'lure' if b['type'] == 'lure' else 'bait'
-                h.append(f'<span class="fc-bait-item"><a href="{item_url(b["bait_item_id"])}" target="_blank" rel="noopener">{esc(b["name"])}</a> <span class="fc-power">pwr {b["power"]}</span> <span class="fc-btype">{btype}</span>{cost_str}</span>')
+                h.append(f'<span class="fc-bait-item"><a href="{item_url(b["bait_item_id"])}" data-item="{b["bait_item_id"]}">{esc(b["name"])}</a> <span class="fc-power">pwr {b["power"]}</span> <span class="fc-btype">{btype}</span>{cost_str}</span>')
             h.append('</div></div>')
 
     if r.get('note'):

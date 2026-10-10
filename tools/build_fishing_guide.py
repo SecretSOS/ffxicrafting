@@ -9,7 +9,6 @@ OUT = os.path.join(ROOT, 'public', 'fishing-101.html')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, icon_html
-from wiki import phoenix_url
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
@@ -19,7 +18,7 @@ def _icon(iid, size=20):
     return icon_html(iid, size)
 
 def item_link(item_id, name):
-    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{_icon(item_id)}{escape(name)}</a>'
+    return f'<a href="/item/{item_id}" data-item="{item_id}" style="display:inline-flex;align-items:center;gap:4px">{_icon(item_id)}{escape(name)}</a>'
 
 def lookup(name_str):
     r = db.execute("SELECT id, name FROM items WHERE LOWER(name)=LOWER(?)", (name_str,)).fetchone()

@@ -11,7 +11,6 @@ DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_craf
 OUT = os.path.join(ROOT, 'public', 'bcnm.html')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, icon_html
-from wiki import phoenix_url
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
@@ -32,7 +31,7 @@ def esc(s):
 
 def item_link(iid, name):
     pn = pretty(name)
-    return f'<a href="{phoenix_url(name)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px">{icon_html(iid, 20)}{esc(pn)}</a>'
+    return f'<a href="/item/{iid}" data-item="{iid}" style="display:inline-flex;align-items:center;gap:4px">{icon_html(iid, 20)}{esc(pn)}</a>'
 
 def gil_fmt(g):
     if g is None:

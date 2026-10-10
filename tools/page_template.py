@@ -89,6 +89,8 @@ def page_scripts():
     return '''\
 <script src="/ah-prices.js"></script>
 <script src="/search.js"></script>
+<script src="/icon-sprite.js"></script>
+<script src="/item-popup.js"></script>
 <script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
 '''

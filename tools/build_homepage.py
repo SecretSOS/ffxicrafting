@@ -89,6 +89,7 @@ BODY = '''\
     <p style="margin:0 0 .5em;max-width:52ch">The idea of this site is to give people an ad-free modern site for this amazing MMO. To help new and old players understand what they are doing and make the most gil they can. This site only costs me hosting, and I will not be putting ads on it, ever.</p>
     <p style="margin:0 0 .3em">In-game: <strong style="color:#e63946">Secrets</strong> (main) <strong style="color:#e63946">Secret</strong> (alt) &mdash; Phoenix XI</p>
     <p style="margin:0 0 .3em">Send Errors &amp; Ideas to <strong style="color:#e63946">SECRETSOS</strong> on Discord</p>
+    <p style="margin:.6em 0 0;font-size:.9em;color:var(--ink-faint)">More servers are on the roadmap, but Phoenix XI is home &mdash; so it gets built first.</p>
    </div>
   </div>
  </div>
@@ -124,6 +125,7 @@ BODY = '''\
   </div>
   <div class="source-note">
    <p>Drop rates, crafting math, vendor inventories &mdash; all read from the <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> source code, not wikis.</p>
+   <p style="margin-top:.5em">Click any item name to see its sources, recipes, and prices &mdash; no wiki needed.</p>
   </div>
  </section>
 '''
