@@ -114,7 +114,7 @@ function initChrome(){
   var gPages=[
    ['/gathering/mining','Mining'],['/gathering/logging','Logging'],
    ['/gathering/harvesting','Harvesting'],['/gathering/excavation','Excavation'],
-   ['/gathering/gardening','Gardening'],['/fishing/','Fishing'],
+   ['/gathering/gardening','Gardening'],['/fishinglookup','Fishing'],
    ['/gathering/digging','Chocobo Digging'],['/gathering/clamming','Clamming']
   ];
   var gdd='<div class="nav-dd"><span class="nav-dd-btn'+ac(isGathering)+'">Gathering <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
@@ -189,12 +189,11 @@ function initChrome(){
     ['/profit','Profit Finder','profit'],
     ['/shopping','Shopping List','shop'],
     ['/fishing-101','Fishing 101','guide'],
-    ['/gathering/fishing','Fishing Lookup','fish'],
-    ['/gathering/gardening','Gardening Lookup','garden'],
+    ['/fishinglookup','Fishing Lookup','fish'],
+    ['/gardening/lookup','Gardening Lookup','garden'],
     ['/bcnm-tool','BCNM Profit Ranker','bcnm'],
     ['/desynth','Desynth Calculator','desynth'],
     ['/guild-points','Guild Points','gp'],
-    ['/recipe-tree','Ingredient Tree','tree'],
     ['/fishing-cooking','Fishing + Cooking','guide']
    ];
    var sh='<div class="vana-week" id="vanaWeek"></div>';

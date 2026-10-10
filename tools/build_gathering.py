@@ -555,114 +555,27 @@ def build_gardening():
 # ─── Fishing ────────────────────────────────────────────────────────
 
 def build_fishing():
-    fish = db.execute("SELECT * FROM fish ORDER BY skill, name").fetchall()
-    rods = db.execute("SELECT * FROM fishing_rods ORDER BY min_rank").fetchall()
-    baits = db.execute("SELECT * FROM fishing_baits ORDER BY name").fetchall()
-    bait_for = db.execute("SELECT * FROM fishing_bait_for").fetchall()
-    areas = db.execute("SELECT * FROM fishing_areas ORDER BY zone, area").fetchall()
-
-    bait_map = defaultdict(list)
-    for bf in bait_for:
-        bait_map[bf['fish_item_id']].append(bf['bait_item_id'])
-
-    zone_fish = defaultdict(set)
-    for a in areas:
-        zone_fish[a['zone']].add(a['fish_item_id'])
-
-    fish_zones = defaultdict(set)
-    for a in areas:
-        fish_zones[a['fish_item_id']].add(a['zone'])
+    fish_count = db.execute("SELECT COUNT(*) FROM fish").fetchone()[0]
+    rod_count = db.execute("SELECT COUNT(*) FROM fishing_rods").fetchone()[0]
+    bait_count = db.execute("SELECT COUNT(*) FROM fishing_baits").fetchone()[0]
+    zone_count = db.execute("SELECT COUNT(DISTINCT zone) FROM fishing_areas").fetchone()[0]
 
     guild_html = load_template('fishing_guild_section.html')
     guild_html += '<p style="margin-top:12px;font-size:.92rem"><a href="/fishing-101" style="color:var(--accent)">Fishing 101 Guide</a> &mdash; rod progression, leveling path, skill-up mechanics, Lu Shang\'s quest.</p>\n'
 
     body = guild_html
-    body += FISHING_TOOL_HTML
 
-    body += '<details class="collapsible panel pad">\n'
-    body += f'<summary class="collapse-summary"><span class="collapse-title">Fish Database ({len(fish)} fish, {len(rods)} rods, {len(baits)} baits)</span><span class="collapse-arrow">▼</span></summary>\n'
-    body += f'<div class="tab-bar" data-tabs style="margin-top:14px">'
-    body += f'<button class="active" data-tab="tab-fish">Fish ({len(fish)})</button>'
-    body += f'<button data-tab="tab-rods">Rods ({len(rods)})</button>'
-    body += f'<button data-tab="tab-baits">Baits ({len(baits)})</button>'
-    body += f'<button data-tab="tab-areas">Areas ({len(zone_fish)} zones)</button>'
-    body += '</div>\n'
-    body += '<div id="tab-fish"><h2>Fish</h2>\n'
-    body += '<div class="filter-bar"><input class="filter-input" type="text" placeholder="Filter fish…" data-filter-target="fishTable" data-filter-count="fishCount"><span class="filter-count" id="fishCount"></span></div>\n'
-    body += '<div style="overflow-x:auto"><table id="fishTable"><thead><tr><th data-sort="text">Fish</th><th data-sort="num">Skill</th><th data-sort="text">Size</th><th data-sort="text">Water</th><th data-sort="num">Baits</th><th data-sort="num">Zones</th></tr></thead><tbody>\n'
-    for f in fish:
-        fid = f['item_id']
-        zone_count = len(fish_zones.get(fid, set()))
-        bait_count = len(bait_map.get(fid, []))
-        legendary = ' <span class="legendary-badge">legendary</span>' if f['legendary'] else ''
-        water = f['water_type'] or ''
+    body += '<section class="panel pad" style="text-align:center;padding:2em">\n'
+    body += f'<h2 style="border:none;padding:0">Fishing Lookup</h2>\n'
+    body += f'<p style="color:var(--ink-soft);margin:.6em 0 1.2em">{fish_count} fish, {rod_count} rods, {bait_count} baits across {zone_count} zones &mdash; with skill-up advisor, profit calculator, and rod compatibility tools.</p>\n'
+    body += '<a href="/fishinglookup/" class="cta-btn" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none">Open Fishing Lookup</a>\n'
+    body += '</section>\n'
 
-        body += f'<tr><td>{fish_link(fid)}{legendary}</td><td>{f["skill"]}</td>'
-        body += f'<td>{f["size_type"] or ""}</td><td>{esc(water)}</td>'
-        body += f'<td>{bait_count}</td><td>{zone_count}</td></tr>\n'
-
-    body += '</tbody></table></div></div>\n'
-
-    # Rods tab
-    body += '<div id="tab-rods" hidden><h2>Fishing rods</h2>\n'
-    body += '<div class="rod-legend">'
-    body += '<p style="margin:0 0 .6em;color:var(--ink-soft);font-size:.88rem;line-height:1.6">'
-    body += '<strong>Rod stat guide</strong> <span style="color:var(--ink-faint)">(from LandSandBoat source: <code>fishingutils.cpp</code>)</span></p>'
-    body += '<dl class="rod-dl">'
-    body += '<dt>ATK <span class="rod-hint">fishAttack</span></dt><dd>Damage per successful arrow input. Higher = catch faster.</dd>'
-    body += '<dt>REC <span class="rod-hint">fishRecovery</span></dt><dd>How much the fish heals when you miss. Higher = fish recovers more HP = harder fight. Lower is better.</dd>'
-    body += '<dt>Timer <span class="rod-hint">fishTime</span></dt><dd>Base catch time limit (seconds). Reduced by 10s on size mismatch. Higher = more time to land the catch.</dd>'
-    body += '<dt>Rank <span class="rod-hint">minRank–maxRank</span></dt><dd>Fish skill range the rod handles. Fish outside this window = higher snap and lose chance.</dd>'
-    body += '<dt>Size</dt><dd>Small or large. Must match the fish\'s size type or you lose time and risk breaking the rod.</dd>'
-    body += '</dl></div>\n'
-    body += '<div style="overflow-x:auto"><table><thead><tr>'
-    body += '<th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th>'
-    body += '<th data-sort="num" title="Damage per successful input — higher is better">ATK</th>'
-    body += '<th data-sort="num" title="Fish heal on miss — lower is better">REC</th>'
-    body += '<th data-sort="num" title="Base catch time limit in seconds">Timer</th>'
-    body += '<th>Breakable</th></tr></thead><tbody>\n'
-    for r in rods:
-        rank_str = f'{r["min_rank"]}–{r["max_rank"]}' if r['min_rank'] != r['max_rank'] else str(r['min_rank'])
-        brk = 'Yes' if r['breakable'] else 'No'
-        body += f'<tr><td>{item_link(r["item_id"])}</td><td>{r["size_type"] or ""}</td><td>{rank_str}</td>'
-        body += f'<td>{r["fish_attack"]}</td><td>{r["fish_recovery"]}</td><td>{r["fish_time"]}s</td><td>{brk}</td></tr>\n'
-
-    body += '</tbody></table></div></div>\n'
-
-    # Baits tab
-    body += '<div id="tab-baits" hidden><h2>Baits &amp; lures</h2>\n'
-    body += '<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Bait</th><th data-sort="text">Type</th><th data-sort="num">Max Hook</th><th>Losable</th><th data-sort="num">Rank Mod</th></tr></thead><tbody>\n'
-    for b in baits:
-        losable = 'Yes' if b['losable'] else 'No'
-        body += f'<tr><td>{item_link(b["item_id"])}</td><td>{b["type"] or ""}</td><td>{b["max_hook"]}</td>'
-        body += f'<td>{losable}</td><td>{b["rank_mod"]:+d}</td></tr>\n'
-
-    body += '</tbody></table></div></div>\n'
-
-    # Areas tab
-    body += '<div id="tab-areas" hidden><h2>Fishing areas by zone</h2>\n'
-    zones = defaultdict(list)
-    for a in areas:
-        zones[a['zone']].append(a)
-
-    for z in sorted(zones.keys()):
-        zone_areas = zones[z]
-        body += f'<details class="zone"><summary>{esc(pretty(z))} <span class="badge">{len(zone_areas)} fish</span></summary>\n'
-        body += '<div class="zone-body"><table><thead><tr><th data-sort="text">Fish</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>\n'
-        for a in sorted(zone_areas, key=lambda x: x['rarity']):
-            body += f'<tr><td>{item_link(a["fish_item_id"])}</td><td>{esc(a["area"] or "")}</td><td class="pct">{a["rarity"]}</td></tr>\n'
-        body += '</tbody></table></div></details>\n'
-
-    body += '</div></details>\n'
-
-    tool_scripts = '<script src="/icon-sprite.js"></script>\n<script src="/fishing-data.js"></script>\n<script src="/fishing-tool.js"></script>\n'
-
-    out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body,
-               extra_css_append=TOOL_CSS, extra_scripts=tool_scripts)
+    out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body)
     fp = os.path.join(OUT, 'fishing.html')
     with open(fp, 'w', encoding='utf-8') as f:
         f.write(out)
-    print(f"  fishing.html: {len(fish)} fish, {len(rods)} rods, {len(baits)} baits, {len(zones)} zones ({os.path.getsize(fp)/1024:.0f} KB)")
+    print(f"  fishing.html: guild info + link to /fishinglookup/ ({os.path.getsize(fp)/1024:.0f} KB)")
 
 # ─── Index page ─────────────────────────────────────────────────────
 

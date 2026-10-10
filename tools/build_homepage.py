@@ -40,8 +40,7 @@ BODY = '''\
    <img src="/img/wip.png" alt="Work in Progress">
    <div class="wip-text">
     <p style="margin:0 0 .5em;max-width:52ch">The idea of this site is to give people an ad-free modern site for this amazing MMO. To help new and old players understand what they are doing and make the most gil they can. This site only costs me hosting, and I will not be putting ads on it, ever.</p>
-    <p style="margin:0 0 .3em">Send Errors &amp; Ideas to <strong>SECRETSOS</strong> on Discord</p>
-    <p style="margin:0;font-size:.85rem;color:var(--ink-faint)">Gil donations always welcome! In-game name: <strong>Secrets</strong> &mdash; Phoenix XI Private Server</p>
+    <p style="margin:0 0 .3em">Send Errors &amp; Ideas to <strong style="color:#e63946">SECRETSOS</strong> on Discord</p>
    </div>
   </div>
   <h1>FFXI Crafting Tools</h1>
@@ -77,15 +76,10 @@ BODY = '''\
     <h3>Guild Points</h3></div>
     <p>Cheapest turn-in for today&#8217;s GP pattern. Cost per point for every item the guild accepts.</p>
    </a>
-   <a class="tool-card" href="/recipe-tree">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></svg>
-    <h3>Ingredient Tree</h3></div>
-    <p>Full crafting chain for any recipe &mdash; sub-combines, raw materials, total base cost.</p>
-   </a>
-   <a class="tool-card" href="/gathering/fishing">
+   <a class="tool-card" href="/fishinglookup">
     <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
     <h3>Fishing Lookup</h3></div>
-    <p>Zone and bait lookup &mdash; what to catch, skill needed, rarity, best rod and bait combos.</p>
+    <p>138 fish with rod compatibility, break/snap rates, skill-up advisor, profit calculator, and bait matrix.</p>
    </a>
    <a class="tool-card" href="/gathering/gardening">
     <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></svg>

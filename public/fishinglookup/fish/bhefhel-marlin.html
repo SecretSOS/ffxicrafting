@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bhefhel Marlin — Fishing Database</title>
+<meta name="description" content="Bhefhel Marlin: skill 61 large fish. Bait affinities, zones, and rod compatibility.">
+<meta property="og:title" content="Bhefhel Marlin — Fishing Database">
+<meta property="og:description" content="Bhefhel Marlin: skill 61 large fish. Bait affinities, zones, and rod compatibility.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/fishinglookup/fish/bhefhel-marlin">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+table{font-size:.84rem}
+td,th{padding:3px 6px}
+.fish-icon{vertical-align:middle;image-rendering:pixelated;border-radius:3px}
+.icon-link{display:inline-flex;align-items:center;gap:4px}
+.header-icon{image-rendering:pixelated;border-radius:4px;border:2px solid var(--rule);background:var(--bg);flex-shrink:0}
+.fish-header{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:1.2em}
+.fish-title h1{margin:0;font-size:1.6rem}
+.fish-title .desc{color:var(--ink-soft);margin:.3em 0 0;font-size:.88rem;line-height:1.4}
+.fish-badges{display:flex;gap:6px;flex-wrap:wrap;margin:.4em 0}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:1.2em}
+.stat-card{border:1px solid var(--rule);border-radius:6px;padding:10px 12px;background:color-mix(in srgb,var(--bg) 50%,transparent)}
+.stat-card .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:1px}
+.stat-card .value{font-size:1.05rem;font-weight:700;font-variant-numeric:tabular-nums}
+.pw{font-size:.82rem;letter-spacing:1px;white-space:nowrap}
+.pw3{color:var(--gil)}
+.pw2{color:var(--water)}
+.pw1{color:var(--ink-faint)}
+.wt{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:700}
+.wt-sea{background:color-mix(in srgb,var(--water) 18%,transparent);color:var(--water)}
+.wt-fresh{background:color-mix(in srgb,var(--wind) 18%,transparent);color:var(--wind)}
+.sz{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:700;background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--ink)}
+.legendary-badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:700;background:color-mix(in srgb,var(--gil) 20%,transparent);color:var(--gil)}
+.detail-section{margin-bottom:1.4em}
+.detail-section h2{font-family:var(--font-display);font-size:1.05rem;margin:0 0 .4em;padding-bottom:4px;border-bottom:1px solid var(--rule)}
+.detail-section table{width:100%}
+.detail-section td,.detail-section th{padding:3px 6px}
+.zone-rarity{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.82rem}
+.rod-compat .ok{color:var(--wind)}
+.rod-compat .warn{color:var(--gil)}
+.rod-compat .bad{color:var(--fire)}
+.bait-type{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.72rem;font-weight:700;background:color-mix(in srgb,var(--ink-faint) 15%,transparent)}
+.idx-count{color:var(--ink-faint);font-size:.82rem;margin-left:4px}
+.dim{color:var(--ink-faint)}
+.r-align{text-align:right;font-variant-numeric:tabular-nums}
+.price-col{color:var(--gil);font-weight:600;white-space:nowrap}
+.hr-badge{display:inline-block;padding:0 5px;border-radius:3px;font-size:.62rem;font-weight:700;letter-spacing:.03em;vertical-align:middle;margin-left:3px}
+.hr-night{background:rgba(128,90,213,0.18);color:#c4a0ff;border:1px solid rgba(128,90,213,0.35)}
+.hr-dusk{background:rgba(213,160,90,0.18);color:#e3a75e;border:1px solid rgba(213,160,90,0.35)}
+.hr-tide{background:rgba(90,160,213,0.18);color:#7ec8e3;border:1px solid rgba(90,160,213,0.35)}
+.hr-day{background:rgba(213,200,90,0.15);color:#c8b84d;border:1px solid rgba(213,200,90,0.3)}
+.hr-daynight{background:rgba(150,150,150,0.15);color:var(--ink-soft);border:1px solid rgba(150,150,150,0.3)}
+.rc-badge{display:inline-block;padding:0 6px;border-radius:3px;font-size:.68rem;font-weight:700;letter-spacing:.04em}
+.rc-ok{background:rgba(80,200,120,0.18);color:#5ece7b;border:1px solid rgba(80,200,120,0.35)}
+.rc-rank{background:rgba(230,180,50,0.18);color:#e3a75e;border:1px solid rgba(230,180,50,0.35)}
+.rc-size{background:rgba(230,80,80,0.18);color:#e05555;border:1px solid rgba(230,80,80,0.35)}
+.brk-pct{font-variant-numeric:tabular-nums;font-size:.8rem}
+.brk-ok{color:var(--wind)}
+.brk-warn{color:var(--gil)}
+.brk-bad{color:var(--fire)}
+.tool-form{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:.8em;padding:10px 12px;border:1px solid var(--rule);border-radius:6px;background:color-mix(in srgb,var(--bg) 50%,transparent)}
+.tool-form label{font-size:.78rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:3px}
+.tool-form input,.tool-form select{padding:4px 8px;border:1px solid var(--rule);border-radius:5px;background:var(--bg);color:var(--ink);font-size:.86rem;font-variant-numeric:tabular-nums}
+.tool-form input[type=number]{width:70px}
+.dim-row{opacity:.4}
+.mono-cell{font-variant-numeric:tabular-nums;font-size:.82rem}
+
+</style>
+<script src="/nav.js"></script>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/fishinglookup/">Fishing Lookup</a><span class="sep">&rsaquo;</span>Bhefhel Marlin</nav>
+<header class="panel pad">
+<div class="fish-header">
+<span class="icon" style="--ic:33;--ir:29;--isz:48px"></span> 
+<div class="fish-title">
+<h1>Bhefhel Marlin<span class="hr-badge hr-day">DAY</span></h1>
+<p class="desc">Bhefhel Marlin</p>
+<div class="fish-badges">
+<span class="wt wt-sea">Saltwater</span><span class="sz">Large</span></div>
+</div></div>
+<div class="stat-grid">
+<div class="stat-card"><div class="label">Skill</div><div class="value">61</div></div>
+<div class="stat-card"><div class="label">Ranking</div><div class="value">23</div></div>
+<div class="stat-card"><div class="label">Size</div><div class="value">Large</div></div>
+<div class="stat-card"><div class="label">Active Hours</div><div class="value" style="font-size:.95rem">Daytime</div></div>
+<div class="stat-card"><div class="label">Moon Phase</div><div class="value" style="font-size:.95rem">Any phase</div></div>
+<div class="stat-card"><div class="label">Zones</div><div class="value">4</div></div>
+<div class="stat-card"><div class="label">NPC Price</div><div class="value price-col">300g</div></div>
+</div>
+</header>
+<section class="panel pad detail-section rod-compat">
+<h2>Rod Compatibility</h2>
+<p style="color:var(--ink-soft);font-size:.85rem;margin-bottom:.8em">Break% and Snap% assume your fishing skill equals this fish's skill level. Rank mismatch and size mismatch increase these rates per round of the fight.</p>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Rod</th><th data-sort="text">Size</th><th>Rank</th><th>Status</th><th data-sort="num">Break%</th><th data-sort="num">Snap%</th><th data-sort="num">Land%</th></tr></thead><tbody>
+<tr><td><a href="/fishinglookup/rod/bamboo-fishing-rod" class="icon-link"><span class="icon" style="--ic:1;--ir:30;--isz:20px;--is:2"></span> Bamboo Fishing Rod</a></td><td>small</td><td>1&ndash;7</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-bad" data-v="20">20%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="25">25%</td></tr>
+<tr><td><a href="/fishinglookup/rod/carbon-fishing-rod" class="icon-link"><span class="icon" style="--ic:60;--ir:29;--isz:20px;--is:2"></span> Carbon Fishing Rod</a></td><td>small</td><td>1&ndash;13</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-warn" data-v="13">13%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="32">32%</td></tr>
+<tr><td><a href="/fishinglookup/rod/ebisu-fishing-rod" class="icon-link"><span class="icon" style="--ic:29;--ir:25;--isz:20px;--is:2"></span> Ebisu Fishing Rod</a></td><td>small</td><td>1&ndash;30</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishinglookup/rod/ebisu-fishing-rod-1" class="icon-link"><span class="icon" style="--ic:21;--ir:10;--isz:20px;--is:3"></span> Ebisu Fishing Rod +1</a></td><td>small</td><td>1&ndash;30</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishinglookup/rod/fastwater-fishing-rod" class="icon-link"><span class="icon" style="--ic:0;--ir:30;--isz:20px;--is:2"></span> Fastwater Fishing Rod</a></td><td>small</td><td>1&ndash;8</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-warn" data-v="19">19%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="26">26%</td></tr>
+<tr><td><a href="/fishinglookup/rod/glass-fiber-fishing-rod" class="icon-link"><span class="icon" style="--ic:61;--ir:29;--isz:20px;--is:2"></span> Glass Fiber Fishing Rod</a></td><td>small</td><td>1&ndash;12</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-warn" data-v="14">14%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="31">31%</td></tr>
+<tr><td><a href="/fishinglookup/rod/goldfish-basket" class="icon-link"><span class="icon" style="--ic:31;--ir:25;--isz:20px;--is:2"></span> Goldfish Basket</a></td><td>small</td><td>1&ndash;5</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="45">45%</td></tr>
+<tr><td><a href="/fishinglookup/rod/halcyon-rod" class="icon-link"><span class="icon" style="--ic:33;--ir:25;--isz:20px;--is:2"></span> Halcyon Rod</a></td><td>small</td><td>1&ndash;18</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-warn" data-v="6">6%</td><td class="r-align brk-pct brk-bad" data-v="42">42%</td><td class="r-align brk-pct brk-warn" data-v="52">52%</td></tr>
+<tr><td><a href="/fishinglookup/rod/hume-fishing-rod" class="icon-link"><span class="icon" style="--ic:32;--ir:25;--isz:20px;--is:2"></span> Hume Fishing Rod</a></td><td>small</td><td>1&ndash;15</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-warn" data-v="10">10%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="35">35%</td></tr>
+<tr><td><a href="/fishinglookup/rod/judges-rod" class="icon-link"><span class="icon" style="--ic:30;--ir:25;--isz:20px;--is:2"></span> Judges Rod</a></td><td>small</td><td>1&ndash;40</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishinglookup/rod/maze-monger-fishing-rod" class="icon-link"><span class="icon" style="--ic:19;--ir:10;--isz:20px;--is:3"></span> Maze Monger Fishing Rod</a></td><td>small</td><td>1&ndash;25</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishinglookup/rod/tarutaru-fishing-rod" class="icon-link"><span class="icon" style="--ic:63;--ir:29;--isz:20px;--is:2"></span> Tarutaru Fishing Rod</a></td><td>small</td><td>1&ndash;9</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-warn" data-v="18">18%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="27">27%</td></tr>
+<tr><td><a href="/fishinglookup/rod/willow-fishing-rod" class="icon-link"><span class="icon" style="--ic:3;--ir:30;--isz:20px;--is:2"></span> Willow Fishing Rod</a></td><td>small</td><td>1&ndash;5</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-bad" data-v="23">23%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="22">22%</td></tr>
+<tr><td><a href="/fishinglookup/rod/yew-fishing-rod" class="icon-link"><span class="icon" style="--ic:2;--ir:30;--isz:20px;--is:2"></span> Yew Fishing Rod</a></td><td>small</td><td>1&ndash;6</td><td><span class="rc-badge rc-size">SIZE</span></td><td class="r-align brk-pct brk-bad" data-v="22">22%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="23">23%</td></tr>
+<tr><td><a href="/fishinglookup/rod/mithran-fishing-rod" class="icon-link"><span class="icon" style="--ic:56;--ir:29;--isz:20px;--is:2"></span> Mithran Fishing Rod</a></td><td>large</td><td>8&ndash;18</td><td><span class="rc-badge rc-rank">RANK</span></td><td class="r-align brk-pct brk-warn" data-v="3">3%</td><td class="r-align brk-pct brk-bad" data-v="25">25%</td><td class="r-align brk-pct brk-warn" data-v="72">72%</td></tr>
+<tr><td><a href="/fishinglookup/rod/composite-fishing-rod" class="icon-link"><span class="icon" style="--ic:57;--ir:29;--isz:20px;--is:2"></span> Composite Fishing Rod</a></td><td>large</td><td>11&ndash;24</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishinglookup/rod/clothespole" class="icon-link"><span class="icon" style="--ic:59;--ir:29;--isz:20px;--is:2"></span> Clothespole</a></td><td>large</td><td>12&ndash;12</td><td><span class="rc-badge rc-rank">RANK</span></td><td class="r-align brk-pct brk-warn" data-v="11">11%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="34">34%</td></tr>
+<tr><td><a href="/fishinglookup/rod/single-hook-fishing-rod" class="icon-link"><span class="icon" style="--ic:58;--ir:29;--isz:20px;--is:2"></span> Single Hook Fishing Rod</a></td><td>large</td><td>14&ndash;13</td><td><span class="rc-badge rc-rank">RANK</span></td><td class="r-align brk-pct brk-warn" data-v="10">10%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="35">35%</td></tr>
+</tbody></table></div></section>
+<section class="panel pad detail-section">
+<h2>Bait Affinity (4)</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Bait</th><th data-sort="num">Power</th><th data-sort="text">Type</th><th data-sort="num">Max Hook</th></tr></thead><tbody>
+<tr><td><a href="/fishinglookup/bait/slice-of-bluetail" class="icon-link"><span class="icon" style="--ic:10;--ir:25;--isz:20px;--is:2"></span> Slice Of Bluetail</a></td><td data-v="3"><span class="pw pw3" title="Best affinity">&#9733;&#9733;&#9733;</span></td><td>bait</td><td>1</td></tr>
+<tr><td><a href="/fishinglookup/bait/peeled-lobster" class="icon-link"><span class="icon" style="--ic:6;--ir:30;--isz:20px;--is:2"></span> Peeled Lobster</a></td><td data-v="2"><span class="pw pw2" title="Good affinity">&#9733;&#9733;</span></td><td>bait</td><td>1</td></tr>
+<tr><td><a href="/fishinglookup/bait/robber-rig" class="icon-link"><span class="icon" style="--ic:20;--ir:25;--isz:20px;--is:2"></span> Robber Rig</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>lure</td><td>1</td></tr>
+<tr><td><a href="/fishinglookup/bait/rogue-rig" class="icon-link"><span class="icon" style="--ic:10;--ir:30;--isz:20px;--is:2"></span> Rogue Rig</a></td><td data-v="1"><span class="pw pw1" title="Weak affinity">&#9733;</span></td><td>lure</td><td>1</td></tr>
+</tbody></table></div></section>
+<section class="panel pad detail-section">
+<h2>Fishing Locations (4 zones)</h2>
+<div style="overflow-x:auto"><table><thead><tr><th data-sort="text">Zone</th><th data-sort="text">Area</th><th data-sort="num">Rarity</th></tr></thead><tbody>
+<tr><td><a href="/zone/ship-bound-for-mhaura">Ship Bound for Mhaura</a></td><td>Whole Zone</td><td class="zone-rarity">700</td></tr>
+<tr><td><a href="/zone/ship-bound-for-mhaura-pirates">Ship Bound for Mhaura Pirates</a></td><td>Whole Zone</td><td class="zone-rarity">700</td></tr>
+<tr><td><a href="/zone/ship-bound-for-selbina">Ship Bound for Selbina</a></td><td>Whole Zone</td><td class="zone-rarity">700</td></tr>
+<tr><td><a href="/zone/ship-bound-for-selbina-pirates">Ship Bound for Selbina Pirates</a></td><td>Whole Zone</td><td class="zone-rarity">700</td></tr>
+</tbody></table></div></section>
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script src="/ah-prices.js"></script>
+<script src="/search.js"></script>
+<script src="/table-tools.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
