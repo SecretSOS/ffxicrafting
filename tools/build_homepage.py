@@ -87,7 +87,7 @@ BODY = '''\
    <img src="/img/wip.png" alt="Work in Progress">
    <div class="wip-text">
     <p style="margin:0 0 .5em;max-width:52ch">The idea of this site is to give people an ad-free modern site for this amazing MMO. To help new and old players understand what they are doing and make the most gil they can. This site only costs me hosting, and I will not be putting ads on it, ever.</p>
-    <p style="margin:0 0 .3em">In-game name: <strong style="color:#e63946">Secrets</strong> &mdash; Phoenix XI Private Server</p>
+    <p style="margin:0 0 .3em">In-game: <strong style="color:#e63946">Secrets</strong> (main) <strong style="color:#e63946">Secret</strong> (alt) &mdash; Phoenix XI</p>
     <p style="margin:0 0 .3em">Send Errors &amp; Ideas to <strong style="color:#e63946">SECRETSOS</strong> on Discord</p>
    </div>
   </div>
