@@ -466,6 +466,10 @@ for i, iid in enumerate(qualifying):
     with open(path, 'w', encoding='utf-8') as f:
         f.write(html)
     total_bytes += len(html.encode('utf-8'))
+    item_slug = slug(items[iid]['name'])
+    redir = f'<!doctype html><meta http-equiv="refresh" content="0;url=/item/{iid}-{item_slug}"><link rel="canonical" href="/item/{iid}-{item_slug}">'
+    with open(os.path.join(ITEM_DIR, f'{iid}.html'), 'w', encoding='utf-8') as f:
+        f.write(redir)
     if (i + 1) % 1000 == 0:
         print(f'  {i+1}/{len(qualifying)}...', flush=True)
 
