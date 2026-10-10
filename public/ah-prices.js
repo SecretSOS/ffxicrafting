@@ -1,6 +1,6 @@
 (function(){
 "use strict";
-var CACHE_KEY='phoenix-ah-v1',MAX_AGE=3600;
+var CACHE_KEY='phoenix-ah-v1',MAX_AGE=86400;
 window.AH=null;
 function load(){
  try{
