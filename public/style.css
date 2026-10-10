@@ -422,29 +422,28 @@ li{margin-bottom:.4em}
 .ah-dot{width:6px;height:6px;border-radius:50%;background:var(--gain);flex-shrink:0}
 
 /* --- Sidebar week calendar --- */
-.vana-week{padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:6px;font-size:.82rem}
-.vw-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:var(--ink-faint);
- font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
-.vw-time{font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums;font-size:.82rem;text-transform:none;letter-spacing:0}
-.vw-day{display:flex;align-items:center;gap:6px;padding:2px 0;color:var(--ink-faint);font-size:.8rem}
-.vw-day.now{color:var(--ink);font-weight:700}
-.vw-dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
-.vw-name{flex:1}
-.vw-cd{font-variant-numeric:tabular-nums;font-size:.72rem;color:var(--ink-faint)}
-.vw-day.now .vw-cd{color:var(--ink-soft)}
-.vw-moon{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
-.moon-orb{width:28px;height:28px;flex:0 0 28px}
-.vw-moon-info{display:flex;flex-direction:column;gap:1px}
-.vw-moon-phase{font-size:.78rem;color:var(--ink-soft);font-weight:600}
-.vw-moon-pct{font-size:.7rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
-.vw-moon-track{position:relative;height:4px;background:var(--border);border-radius:2px;margin-top:6px;overflow:visible}
-.vw-moon-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#2a2a2e 0%,#e8e0c8 50%,#2a2a2e 100%)}
-.vw-moon-pip{position:absolute;top:-2px;width:8px;height:8px;border-radius:50%;background:#e8e0c8;border:1.5px solid var(--border);transform:translateX(-50%);box-shadow:0 0 4px rgba(232,224,200,.5)}
-.vw-tide{display:flex;align-items:center;gap:8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
-.vw-tide-icon{width:20px;height:20px;flex:0 0 20px;color:#5aa0d5}
-.vw-tide-lbl{font-size:.78rem;color:#5aa0d5;font-weight:600;flex:1}
-.vw-tide-lbl.low{color:#7ec8e3}
-.vw-tide-cd{font-size:.7rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.vana-week{padding:14px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:8px;font-size:.88rem}
+.vw-center{text-align:center;margin-bottom:10px}
+.vw-big{font-family:var(--font-display);font-size:2.2rem;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.vw-daytag{font-size:.82rem;color:#c4b692;margin-top:3px}
+.vw-el{font-weight:700}
+.vw-tod{font-size:.78rem;color:#8a7e6a;margin-top:4px}
+.vw-tod-em{color:var(--accent);font-weight:700}
+.vw-sep{border-top:1px solid var(--border);margin:10px 0}
+.vw-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vw-info-box{text-align:center}
+.vw-info-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#8a7e6a;margin-bottom:4px}
+.vw-info-main{font-size:.88rem;font-weight:600;color:#c4b692;line-height:1.3;display:flex;align-items:center;justify-content:center;gap:4px}
+.vw-info-sub{font-size:.72rem;color:#8a7e6a;font-variant-numeric:tabular-nums}
+.moon-orb{width:22px;height:22px;flex:0 0 22px}
+.vw-tdot{display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle}
+.vw-tdot.high{background:#5aa0d5;box-shadow:0 0 5px #5aa0d5}
+.vw-tdot.low{background:#7ec8e3;box-shadow:0 0 5px #7ec8e3}
+.vw-week{display:flex;flex-direction:column;gap:4px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.vw-week-row{display:flex;gap:4px}
+.vw-badge{flex:1;display:flex;align-items:center;justify-content:center;gap:3px;padding:3px 0;border-radius:4px;font-size:.72rem;color:#8a7e6a;border:1px solid var(--border);font-weight:600}
+.vw-badge.now{background:rgba(227,167,94,.1);color:var(--accent);border-color:rgba(227,167,94,.35)}
+.vw-bdot{width:5px;height:5px;border-radius:50%;flex:0 0 5px}
 
 /* --- Main content (sidebar layout) --- */
 .main{min-width:0;padding:16px 0 70px;display:flex;flex-direction:column;gap:16px}

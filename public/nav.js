@@ -71,24 +71,34 @@ function _vanaTick(){
  var wk=document.getElementById("vanaWeek");
  if(wk){
   var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var h='<div class="vw-head"><span>Vana’diel</span><span class="vw-time">'+_pad(hr)+':'+_pad(mn)+'</span></div>';
-  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0,lb;
-   if(cur)lb='now';else{var ts=rs+(i-1)*3456,m=Math.floor(ts/60);if(m<60)lb=m+'m';else lb=Math.floor(m/60)+'h'+_pad(m%60)+'m';}
-   h+='<div class="vw-day'+(cur?' now':'')+'"><span class="vw-dot" style="background:'+_VC[di]+'"></span><span class="vw-name">'+_VA[di]+'.</span><span class="vw-cd">'+lb+'</span></div>';}
+  var _DAB=["Fire","Erth","Watr","Wind","Ice","Ltng","Lght","Dark"];
+  var tod;
+  if(hr>=18&&hr<19)tod='Dusk';else if(hr>=4&&hr<7)tod='Dawn';else if(hr>=19||hr<4)tod='Night';else tod='Day';
+  var h='<div class="vw-center"><div class="vw-big">'+_pad(hr)+':'+_pad(mn)+'</div>';
+  h+='<div class="vw-daytag"><span class="vw-el" style="color:'+_VC[wd]+'">'+_VDN[wd]+'</span></div>';
+  h+='<div class="vw-tod"><span class="vw-tod-em">'+tod+'</span></div></div>';
+  h+='<div class="vw-sep"></div>';
   var mi=_moonInfo(vd);
-  h+='<div class="vw-moon">';
-  h+=_moonSvg(mi.pct,mi.wax);
-  h+='<div class="vw-moon-info"><span class="vw-moon-phase">'+mi.phase+'</span>';
-  h+='<span class="vw-moon-pct">'+mi.pct+'%'+(mi.pct>0&&mi.pct<100?(mi.wax?' ▲':' ▼'):'')+'</span></div></div>';
-  h+='<div class="vw-moon-track"><div class="vw-moon-fill" style="width:'+Math.round(mi.pos/84*100)+'%"></div>';
-  h+='<div class="vw-moon-pip" style="left:'+Math.round(mi.pos/84*100)+'%"></div></div>';
-  var isLow=(hr===5||hr===17),tideLbl=isLow?'Low Tide':'High Tide';
-  var nxt=isLow?(hr===5?6:18):(hr<5?5:(hr<17?17:29)),til=((nxt-hr)*60-mn);
-  if(til<=0)til+=1440;var trm=Math.floor(Math.floor(til*2.4)/60),tcd;
-  if(trm<60)tcd=trm+'m';else tcd=Math.floor(trm/60)+'h'+_pad(trm%60)+'m';
-  h+='<div class="vw-tide"><svg class="vw-tide-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c1.5-2 3-3 5-3s3.5 1 5 3 3 3 5 3 3.5-1 5-3"/><path d="M2 17c1.5-2 3-3 5-3s3.5 1 5 3 3 3 5 3 3.5-1 5-3" opacity=".4"/></svg>';
-  h+='<span class="vw-tide-lbl'+(isLow?' low':'')+'">'+tideLbl+'</span>';
-  h+='<span class="vw-tide-cd">'+tcd+'</span></div>';
+  h+='<div class="vw-info-grid">';
+  h+='<div class="vw-info-box"><div class="vw-info-label">Moon</div>';
+  h+='<div class="vw-info-main">'+_moonSvg(mi.pct,mi.wax)+' '+mi.pct+'%</div>';
+  h+='<div class="vw-info-sub">'+mi.phase+'</div></div>';
+  var isLow=(hr===5||hr===17);
+  var loNxt,hiNxt;
+  if(isLow){loNxt=0;hiNxt=(hr===5?6:18);}
+  else{hiNxt=0;loNxt=hr<5?5:(hr<17?17:(24+5));}
+  function _tideCD(target){var t=((target-hr)*60-mn);if(t<=0)t+=1440;var rm=Math.floor(Math.floor(t*2.4)/60);if(rm<60)return rm+'m';return Math.floor(rm/60)+'h'+_pad(rm%60)+'m';}
+  var tcls=isLow?'low':'high',tlbl=isLow?'Low':'High',tnxt=isLow?'High':'Low',tcd=isLow?_tideCD(hiNxt):_tideCD(loNxt);
+  h+='<div class="vw-info-box"><div class="vw-info-label">Tide</div>';
+  h+='<div class="vw-info-main"><span class="vw-tdot '+tcls+'"></span>'+tlbl+' Tide</div>';
+  h+='<div class="vw-info-sub">'+tnxt+' in '+tcd+'</div></div>';
+  h+='</div>';
+  h+='<div class="vw-week">';
+  for(var r=0;r<2;r++){h+='<div class="vw-week-row">';
+   for(var c=0;c<4;c++){var i=r*4+c,di=(wd+i)%8,cur=i===0;
+    h+='<span class="vw-badge'+(cur?' now':'')+'" style="--bc:'+_VC[di]+'"><span class="vw-bdot" style="background:'+_VC[di]+'"></span>'+_DAB[di]+'</span>';}
+   h+='</div>';}
+  h+='</div>';
   wk.innerHTML=h;
  }
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
