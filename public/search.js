@@ -10,7 +10,7 @@ var box=document.getElementById('searchResults');
 if(!input||!box) return;
 var index=null, active=-1, shown=[];
 
-function wikiUrl(n){return'https://wiki.phoenix-xi.com/'+n.replace(/ /g,'_');}
+function wikiUrl(n){return'https://wiki.phoenix-xi.com/'+n.replace(/ /g,'_').replace(/^(chunk|pinch|handful|bag|jar|flask|square|piece|slice|vial|bottle|pot|bunch|clump|sprig|bulb|sheet|lump|spool|coil|strip|block|stick|loaf|plate|cluster|pair|set|box|bolt|quiver|stack|tin|can|bowl|dish|serving|cup|glass|head|lock|sack|jug|carton|pile|ear|ball|loop|pod|roll|bundle|slab|onz|copy|orb|phial|cone|cube|wedge|mug|branch|cut|container|dollop|fragment|hunk|saucer|segment|remnant|ingot|suit|page|flasque|tuft)_[Oo]f_/i,'');}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 function load(cb){
@@ -71,7 +71,7 @@ input.addEventListener('keydown',function(e){
  if(box.hidden) return;
  if(e.key==='ArrowDown'){e.preventDefault();setActive(Math.min(active+1,shown.length-1));}
  else if(e.key==='ArrowUp'){e.preventDefault();setActive(Math.max(active-1,-1));}
- else if(e.key==='Enter'&&active>=0){e.preventDefault();window.location.href=shown[active].u;}
+ else if(e.key==='Enter'&&active>=0){e.preventDefault();var su=shown[active].u;if(su.indexOf('://')>-1)window.open(su,'_blank');else window.location.href=su;}
  else if(e.key==='Escape'){hide();input.blur();}
 });
 document.addEventListener('keydown',function(e){
