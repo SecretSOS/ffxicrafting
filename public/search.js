@@ -79,6 +79,16 @@ document.addEventListener('keydown',function(e){
     document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'&&
     !e.ctrlKey&&!e.metaKey){e.preventDefault();input.focus();}
 });
+box.addEventListener('click',function(e){
+ var a=e.target.closest('a');
+ if(a&&a.href){
+  e.preventDefault();
+  e.stopPropagation();
+  if(a.href.indexOf('://')>-1) window.open(a.href,'_blank','noopener');
+  else window.location.href=a.href;
+  hide();
+ }
+});
 document.addEventListener('click',function(e){
  if(!input.contains(e.target)&&!box.contains(e.target)) hide();
 });
