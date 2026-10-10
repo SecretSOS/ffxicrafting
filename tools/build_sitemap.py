@@ -20,7 +20,6 @@ sm += f'<url><loc>{SITE}/desynth</loc></url>\n'
 sm += f'<url><loc>{SITE}/fishing-101</loc></url>\n'
 sm += f'<url><loc>{SITE}/fishing-cooking</loc></url>\n'
 sm += f'<url><loc>{SITE}/guild-points</loc></url>\n'
-sm += f'<url><loc>{SITE}/recipe-tree</loc></url>\n'
 sm += f'<url><loc>{SITE}/nm/</loc></url>\n'
 
 crafts_dir = os.path.join(ROOT, 'public', 'crafts')
@@ -36,6 +35,22 @@ for gp in ('mining', 'logging', 'harvesting', 'excavation', 'gardening', 'diggin
     p = os.path.join(gathering_dir, f'{gp}.html')
     if os.path.isfile(p):
         sm += f'<url><loc>{SITE}/gathering/{gp}</loc></url>\n'
+
+fishing_dir = os.path.join(ROOT, 'public', 'fishinglookup')
+sm += f'<url><loc>{SITE}/fishinglookup</loc></url>\n'
+if os.path.isdir(fishing_dir):
+    for sub in ('fish', 'rod', 'bait'):
+        sd = os.path.join(fishing_dir, sub)
+        if os.path.isdir(sd):
+            for ff in sorted(os.listdir(sd)):
+                if ff.endswith('.html'):
+                    sm += f'<url><loc>{SITE}/fishinglookup/{sub}/{ff[:-5]}</loc></url>\n'
+
+nm_dir = os.path.join(ROOT, 'public', 'nm')
+if os.path.isdir(nm_dir):
+    for nf in sorted(os.listdir(nm_dir)):
+        if nf.endswith('.html') and nf != 'index.html':
+            sm += f'<url><loc>{SITE}/nm/{nf[:-5]}</loc></url>\n'
 
 zone_dir = os.path.join(ROOT, 'public', 'zone')
 sm += f'<url><loc>{SITE}/zone/</loc></url>\n'

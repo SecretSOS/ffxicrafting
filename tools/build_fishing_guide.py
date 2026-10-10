@@ -163,7 +163,7 @@ html = html_head(
     extra_css)
 html += layout_open(
     active='fishing-101',
-    crumbs=[('Home', '/'), ('Guides', '/guides/'), ('Fishing 101', None)])
+    crumbs=[('Home', '/'), ('Fishing 101', None)])
 
 # ── Hero ─────────────────────────────────────────────────────────────────────
 

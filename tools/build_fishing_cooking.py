@@ -516,7 +516,7 @@ page = full_page(
     og_url='https://ffxicrafting.com/fishing-cooking',
     body_html=body,
     active='fishing-cooking',
-    crumbs=[('Home', '/'), ('Guides', '/guides/'), ('Fishing + Cooking', '')],
+    crumbs=[('Home', '/'), ('Fishing + Cooking', '')],
     lsb_commit=LSB_COMMIT,
     extra_css=CUSTOM_CSS,
 )

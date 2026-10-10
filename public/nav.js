@@ -190,7 +190,7 @@ function initChrome(){
     ['/shopping','Shopping List','shop'],
     ['/fishing-101','Fishing 101','guide'],
     ['/fishinglookup','Fishing Lookup','fish'],
-    ['/gardening/lookup','Gardening Lookup','garden'],
+    ['/gathering/gardening','Gardening Lookup','garden'],
     ['/bcnm-tool','BCNM Profit Ranker','bcnm'],
     ['/desynth','Desynth Calculator','desynth'],
     ['/guild-points','Guild Points','gp'],
