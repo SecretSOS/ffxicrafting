@@ -39,6 +39,10 @@
  --fire:#e05a3a;--ice:#7ab0d0;--wind:#6aae80;--earth:#c49a50;--lightning:#b88ae0;--water:#5a90c8;--light:#e0d0a0;--dark:#9878b8;
  --wood:#7a5a30;--smith:#7a8090;--gold:#c89a38;--cloth:#b878a0;--leather:#a06830;--bone:#c8bca0;--alchemy:#60a888;--cook:#c87858;--fish:#4890a8;
  --panel-top:#231a2e;--panel-bot:#1a1422;--rule:#38284a;--gil:#d4682e;--sidebar-bg:#1a1422}
+:root[data-theme="harvest"] .top-bar .logo::before{content:'\1F383';margin-right:6px;font-size:.9em}
+:root[data-theme="harvest"] .top-bar .logo::after{content:'\1F342';margin-left:6px;font-size:.75em;opacity:.7}
+:root[data-theme="harvest"] .top-bar{border-bottom-color:#3a1e10}
+:root[data-theme="harvest"] .guild-bar{border-bottom-color:#2e1608}
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:inherit}
