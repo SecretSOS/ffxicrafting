@@ -245,11 +245,17 @@ function initChrome(){
 
   var themeBtn=document.getElementById('themeBtn');
   if(themeBtn){
+   var _tNames={dark:'Dark',light:'Light',harvest:'Harvest'};
+   var _tOrder=['dark','light','harvest'];
+   var _curTheme=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+   themeBtn.textContent=_tNames[_curTheme]||'Theme';
    themeBtn.addEventListener('click',function(){
     var r=document.documentElement;
     var now=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
-    var next=now==='light'?'dark':'light';
+    var i=_tOrder.indexOf(now);
+    var next=_tOrder[(i+1)%_tOrder.length];
     r.setAttribute('data-theme',next);
+    themeBtn.textContent=_tNames[next];
     try{localStorage.setItem('phoenix-theme',next)}catch(e){}
    });
   }

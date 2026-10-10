@@ -31,6 +31,15 @@
  --fire:#c2432a;--ice:#1f7fae;--wind:#2d8a54;--earth:#8a6a2a;--lightning:#6b45b0;--water:#1c69b8;--light:#9a8536;--dark:#6a4a96;
  --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34;--fish:#1c7fa8}
 
+/* --- Harvest theme (dark + Halloween) --- */
+:root[data-theme="harvest"]{
+ --bg:#110c14;--surface:#1a1422;--surface-2:#231a2e;--border:#38284a;--frame:#503868;
+ --ink:#f0e8df;--ink-soft:#d4c8b8;--ink-faint:#8a7e70;--link:#b08ed0;
+ --accent:#d4682e;--accent-soft:#2e1a10;--gain:#5cb87a;--loss:#cc3a3a;--best:#5cb87a;
+ --fire:#e05a3a;--ice:#7ab0d0;--wind:#6aae80;--earth:#c49a50;--lightning:#b88ae0;--water:#5a90c8;--light:#e0d0a0;--dark:#9878b8;
+ --wood:#7a5a30;--smith:#7a8090;--gold:#c89a38;--cloth:#b878a0;--leather:#a06830;--bone:#c8bca0;--alchemy:#60a888;--cook:#c87858;--fish:#4890a8;
+ --panel-top:#231a2e;--panel-bot:#1a1422;--rule:#38284a;--gil:#d4682e;--sidebar-bg:#1a1422}
+
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
