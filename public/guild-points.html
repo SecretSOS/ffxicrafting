@@ -72,8 +72,9 @@ td{padding:8px 10px;border-bottom:1px solid var(--rule);font-size:.88rem}
 var CRAFTS=['wood','smith','gold','cloth','leather','bone','alchemy','cook','fish'];
 var CVAR={wood:'--wood',smith:'--smith',gold:'--gold',cloth:'--cloth',leather:'--leather',bone:'--bone',alchemy:'--alchemy',cook:'--cook',fish:'--fish'};
 var NAME={wood:'Woodworking',smith:'Smithing',gold:'Goldsmithing',cloth:'Clothcraft',leather:'Leathercraft',bone:'Bonecraft',alchemy:'Alchemy',cook:'Cooking',fish:'Fishing'};
-var PATTERNS=['Pattern 1','Pattern 2','Pattern 3','Pattern 4','Pattern 5','Pattern 6','Pattern 7','Pattern 8'];
-var HOLIDAYS={wood:0,smith:2,gold:4,cloth:0,leather:4,bone:3,alchemy:4,cook:7,fish:5};
+var PATTERNS=['Pattern 1','Pattern 2','Pattern 3','Pattern 4','Pattern 5','Pattern 6','Pattern 7','Pattern 8','Holidays'];
+var HOLIDAY_DAYS=['Firesday','Earthsday','Watersday','Windsday','Iceday','Lightningsday','Lightsday','Darksday'];
+var HOLIDAYS={wood:'Firesday',smith:'Watersday',gold:'Iceday',cloth:'Firesday',leather:'Iceday',bone:'Windsday',alchemy:'Iceday',cook:'Darksday',fish:'Lightningsday'};
 var G={},I={},RC={},prices={},curGuild='wood',curDay=0;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
 function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.v||it.b||0):0;}
@@ -99,18 +100,25 @@ function renderDays(){
   PATTERNS.forEach(function(d,i){
     var cls='day-btn';
     if(i===curDay)cls+=' active';
-    h+='<button class="'+cls+'" type="button" data-d="'+i+'">'+d.replace('Pattern ','#')+'</button>';
+    var label=i===8?'Holidays':d.replace('Pattern ','#');
+    h+='<button class="'+cls+'" type="button" data-d="'+i+'"'+(i===8?' style="margin-left:6px"':'')+'>'+label+'</button>';
   });
   document.getElementById('dayRow').innerHTML=h;
 }
 function render(){
   renderGuilds();renderDays();
-  var pattern=G[curGuild];if(!pattern){document.getElementById('results').innerHTML='';return;}
-  if(curDay===HOLIDAYS[curGuild]){
-    document.getElementById('results').innerHTML='<div class="holiday">Guild holiday — no turn-ins today.</div>';
-    document.getElementById('count').textContent='';
+  if(curDay===8){
+    var html='<table><thead><tr><th>Guild</th><th>Holiday</th></tr></thead><tbody>';
+    CRAFTS.forEach(function(c){
+      html+='<tr><td style="display:flex;align-items:center;gap:6px"><svg style="width:16px;height:16px;color:var('+CVAR[c]+')"><use href="#i-'+(c==='fish'?'fish':c)+'"/></svg><b>'+NAME[c]+'</b></td>';
+      html+='<td>'+HOLIDAYS[c]+'</td></tr>';
+    });
+    html+='</tbody></table>';
+    document.getElementById('results').innerHTML=html;
+    document.getElementById('count').textContent='Guild holidays — each guild closes one day per Vanadiel week';
     return;
   }
+  var pattern=G[curGuild];if(!pattern){document.getElementById('results').innerHTML='';return;}
   var items=pattern[String(curDay)];
   if(!items||!items.length){
     document.getElementById('results').innerHTML='<tr><td colspan="5" style="padding:20px;color:var(--ink-faint)">No turn-in data for this pattern.</td></tr>';
