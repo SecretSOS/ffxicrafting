@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Guild Points Optimizer · Phoenix era 75</title>
-<meta name="description" content="Cheapest GP turn-in for each craft, based on today&#x27;s Vana&#x27;diel pattern.">
+<meta name="description" content="Cheapest GP turn-in for each craft. Pattern changes daily at JST midnight.">
 <meta property="og:title" content="Guild Points Optimizer · Phoenix era 75">
-<meta property="og:description" content="Cheapest GP turn-in for each craft, based on today&#x27;s Vana&#x27;diel pattern.">
+<meta property="og:description" content="Cheapest GP turn-in for each craft. Pattern changes daily at JST midnight.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/guild-points">
 <meta name="theme-color" content="#0c1728">
@@ -58,7 +58,7 @@ td{padding:8px 10px;border-bottom:1px solid var(--rule);font-size:.88rem}
   <p class="lede">Find the cheapest item to turn in for guild points today. Costs are based on ingredient vendor prices — set your own in the <a href="/calculator">calculator</a>.</p>
   <div class="crafts" id="crafts"></div>
   <div class="day-row" id="dayRow"></div>
-  <p class="gp-note">The current Vana'diel day is marked with ●. Each guild is closed one day per week (holiday).</p>
+  <p class="gp-note">The guild turn-in item changes once per <b>Earth day</b> at midnight JST (10 AM EST / 7 AM PST). The pattern is random — check in-game which item your guild wants, then match it to a pattern here to see craft costs.</p>
  </header>
  <section class="panel">
   <div class="count" id="count"></div>
@@ -72,12 +72,10 @@ td{padding:8px 10px;border-bottom:1px solid var(--rule);font-size:.88rem}
 var CRAFTS=['wood','smith','gold','cloth','leather','bone','alchemy','cook','fish'];
 var CVAR={wood:'--wood',smith:'--smith',gold:'--gold',cloth:'--cloth',leather:'--leather',bone:'--bone',alchemy:'--alchemy',cook:'--cook',fish:'--fish'};
 var NAME={wood:'Woodworking',smith:'Smithing',gold:'Goldsmithing',cloth:'Clothcraft',leather:'Leathercraft',bone:'Bonecraft',alchemy:'Alchemy',cook:'Cooking',fish:'Fishing'};
-var DAYS=['Firesday','Earthsday','Watersday','Windsday','Iceday','Lightningsday','Lightsday','Darksday'];
+var PATTERNS=['Pattern 1','Pattern 2','Pattern 3','Pattern 4','Pattern 5','Pattern 6','Pattern 7','Pattern 8'];
 var HOLIDAYS={wood:0,smith:2,gold:4,cloth:0,leather:4,bone:3,alchemy:4,cook:7,fish:5};
-var G={},I={},RC={},prices={},curGuild='wood',curDay=-1;
-var EPOCH=1009810800;
+var G={},I={},RC={},prices={},curGuild='wood',curDay=0;
 try{prices=JSON.parse(localStorage.getItem('phoenix-prices-v2')||'{}');}catch(e){}
-function vanaDay(){var s=Math.floor(Date.now()/1000),vs=(s-EPOCH)*25;return Math.floor(vs/60/60/24)%8;}
 function price(id){var p=prices[id];if(p!==undefined&&p!=='')return Number(p);var a=window.AH;if(window.PT&&a&&a[id])return a[id];var it=I[id];return it?(it.v||it.b||0):0;}
 function craftCost(itemId){
   var rc=RC[String(itemId)];if(!rc)return null;
@@ -97,14 +95,11 @@ function renderGuilds(){
   document.getElementById('crafts').innerHTML=h;
 }
 function renderDays(){
-  var today=vanaDay();
-  if(curDay<0)curDay=today;
-  var h='<span style="font-size:.82rem;color:var(--ink-faint)">Day:</span>';
-  DAYS.forEach(function(d,i){
+  var h='<span style="font-size:.82rem;color:var(--ink-faint)">Pattern:</span>';
+  PATTERNS.forEach(function(d,i){
     var cls='day-btn';
     if(i===curDay)cls+=' active';
-    if(i===today)cls+=' today';
-    h+='<button class="'+cls+'" type="button" data-d="'+i+'">'+d.replace('day','')+(i===today?' ●':'')+'</button>';
+    h+='<button class="'+cls+'" type="button" data-d="'+i+'">'+d.replace('Pattern ','#')+'</button>';
   });
   document.getElementById('dayRow').innerHTML=h;
 }
@@ -156,7 +151,7 @@ function render(){
   });
   html+='</tbody></table>';
   document.getElementById('results').innerHTML=html;
-  document.getElementById('count').textContent=rows.length+' turn-in item'+(rows.length!==1?'s':'')+' for '+NAME[curGuild]+' on '+DAYS[curDay];
+  document.getElementById('count').textContent=rows.length+' turn-in item'+(rows.length!==1?'s':'')+' for '+NAME[curGuild]+' — '+PATTERNS[curDay];
 }
 document.getElementById('results').innerHTML='<p style="padding:20px;color:var(--ink-faint)">Loading data…</p>';
 var x=new XMLHttpRequest();x.open('GET','/data/gp-tool.json');
