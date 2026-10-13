@@ -1,4 +1,7 @@
 [
+  {"level": 8, "craft": "fish", "priority": "critical", "note": "GET A HALCYON ROD ASAP. This rod covers rank 1-18 (every small fish through skill 50). Start Moorish Idols at skill 8+ in Bibiki Bay (Purgonorgo Isle) with Lugworm or Shrimp Lure — skill 26 fish, rank 9, perfect rod match. Rod rank mismatch kills catch rate more than level gap. One rod, one spot, skill 8 to 50. This changes the game.", "date": "2026-10-12"},
   {"level": 32, "craft": "fish", "note": "Frog Lure in Giddeus — Dark Bass to Red Terrapin, no gear swap needed. Carbon Rod the whole way.", "date": "2026-10-07"},
-  {"level": 41, "craft": "cook", "note": "Millioncorn from Benaige in Southern San d'Oria is 48g, not 240g guild price. Cornstarch is vendor trash but cheap to make — float alchemy levels with it.", "date": "2026-10-07"}
+  {"level": 41, "craft": "cook", "note": "Millioncorn from Benaige in Southern San d'Oria is 48g, not 240g guild price. Cornstarch is vendor trash but cheap to make — float alchemy levels with it.", "date": "2026-10-07"},
+  {"level": 48, "craft": "fish", "note": "Halcyon Rod + Minnow Lure still lands Bastore Breams (skill 86, rank 22) at fishing 48. That's 38 levels under and 4 ranks past the rod's max of 18 — you'll lose some to 'lack of skill' but they DO land. The rod punches way above its stats. Skill-ups all the way to 86 from one spot.", "date": "2026-10-12"},
+  {"level": 53, "craft": "cook", "note": "Serving Of Beaugreen Saute bridges 53-55 (cook 55). Fire Crystal + Selbina Butter (60g guild vendor) + Beaugreens (105g regional vendor, 500g guild). Cheap if your nation holds regions.", "date": "2026-10-11"}
 ]

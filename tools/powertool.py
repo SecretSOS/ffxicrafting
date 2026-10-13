@@ -1073,6 +1073,90 @@ def load_all():
             'src': 'ah' if ap else ('npc' if vp else 'base'),
         })
 
+    # ── Gardening Profit ──
+    GARDEN_SEEDS = {
+        1: (574, 'Fruit Seeds', True),
+        2: (572, 'Herb Seeds', False),
+        3: (575, 'Grain Seeds', False),
+        4: (573, 'Vegetable Seeds', False),
+        5: (1236,'Cactus Stems', False),
+        6: (1237,'Tree Cuttings', True),
+        7: (0,   'Tree Saplings', True),
+        8: (2235,'Wildgrass Seeds', True),
+    }
+    GARDEN_ELEMS = ['None','Fire','Ice','Wind','Earth','Lightning','Water','Light','Dark']
+    CRYSTAL_IDS = {1:4096, 2:4097, 3:4098, 4:4099, 5:4100, 6:4101, 7:4102, 8:4103}
+
+    def crystal_cost(elem_idx):
+        if elem_idx == 0:
+            return 0
+        cid = CRYSTAL_IDS.get(elem_idx, 0)
+        return ah_prices.get(cid) or items.get(cid, {}).get('base_price', 0) or 0
+
+    garden_combos = []
+    for sid in range(1, 9):
+        seed_item_id, seed_name, dual = GARDEN_SEEDS[sid]
+        seed_cost = 0
+        if seed_item_id:
+            seed_cost = ah_prices.get(seed_item_id) or vendor_best.get(seed_item_id, (0,))[0] or items.get(seed_item_id, {}).get('base_price', 0) or 0
+
+        rows = db.execute('''
+            SELECT s.item_id, i.name, s.where_, s.qty_lo, s.qty_hi, s.notes
+            FROM sources s JOIN items i ON s.item_id=i.id
+            WHERE s.type='gardening' AND s.where_ LIKE 'seed ' || ? || ' / %'
+        ''', (sid,)).fetchall()
+
+        combos_map = {}
+        for row in rows:
+            iid, iname, where, qlo, qhi, notes = row
+            m = re.search(r'elem (\d+)\+(\d+)', where)
+            if not m:
+                continue
+            c1, c2 = int(m.group(1)), int(m.group(2))
+            w = 0
+            if notes:
+                wm = re.search(r'weight (\d+)', notes)
+                if wm:
+                    w = int(wm.group(1))
+            key = (c1, c2)
+            combos_map.setdefault(key, []).append((iid, iname, qlo, qhi, w))
+
+        for (c1, c2), outcomes in combos_map.items():
+            total_w = sum(o[4] for o in outcomes)
+            if total_w <= 0:
+                continue
+            cc = crystal_cost(c1) + crystal_cost(c2)
+            ev = 0
+            outcome_list = []
+            for iid, iname, qlo, qhi, w in outcomes:
+                qty_avg = ((qlo or 1) + (qhi or 1)) / 2.0
+                ap = ah_prices.get(iid)
+                vb_p = vendor_best.get(iid, (0,))[0]
+                bp = items.get(iid, {}).get('base_price', 0) or 0
+                sell = ap or vb_p or bp
+                pct = w / total_w * 100.0
+                item_ev = sell * qty_avg * w / total_w
+                ev += item_ev
+                outcome_list.append({
+                    'id': iid, 'n': name(iid), 'w': w, 'pct': round(pct, 1),
+                    'qlo': qlo or 1, 'qhi': qhi or 1, 'sell': sell,
+                    'ev': round(item_ev),
+                    'src': 'ah' if ap else ('npc' if vb_p else 'base'),
+                })
+            outcome_list.sort(key=lambda o: -o['ev'])
+            total_cost = seed_cost + cc
+            profit = round(ev - total_cost)
+            c1_name = GARDEN_ELEMS[c1] if c1 < len(GARDEN_ELEMS) else '?'
+            c2_name = GARDEN_ELEMS[c2] if c2 < len(GARDEN_ELEMS) else '?'
+            garden_combos.append({
+                'seed': seed_name, 'seedId': seed_item_id, 'seedCost': seed_cost,
+                'c1': c1_name, 'c2': c2_name, 'cc': cc,
+                'cost': total_cost, 'ev': round(ev), 'profit': profit,
+                'outcomes': outcome_list,
+                'dual': dual,
+            })
+    garden_combos.sort(key=lambda g: -g['profit'])
+
     # ── Fishing ──
     fish_list = []
     for f in db.execute('''
@@ -1128,6 +1212,7 @@ def load_all():
             'rarity': f[13], 'baseDelay': f[14], 'baseMove': f[15],
             'flags': f[16], 'maxHook': f[17],
             'sell': sell, 'sellSrc': sell_src, 'ah': ap, 'npc': bp,
+            'stack': (it.get('stack') or 1) if it else 1,
             'ex': ex_flag, 'rare': rare_flag, 'noAH': no_ah,
             'zones': zones,
             'baits': baits,
@@ -1404,6 +1489,7 @@ def load_all():
         'rankTests': rank_tests,
         'drops': drops,
         'gathering': gathering,
+        'gardenCombos': garden_combos,
         'tree': {'R': recipes_by_result, 'I': items_slim, 'S': search_items},
         'fishing': fish_list,
         'fishItemIds': fish_item_ids,
@@ -1577,6 +1663,33 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 .nmmap-wrap canvas{display:block;max-width:100%}
 .nmmap-ctrl{display:flex;gap:8px;margin-bottom:8px;align-items:center}
 
+.px-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:50;align-items:flex-start;justify-content:center;padding-top:10vh}
+.px-overlay.open{display:flex}
+.px-box{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;width:540px;max-width:90vw;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.px-box h3{padding:12px 16px;margin:0;font-size:14px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;background:var(--bg1)}
+.px-box h3 .close-btn{cursor:pointer;color:var(--ink3);font-size:18px}
+.px-box h3 .close-btn:hover{color:var(--ink)}
+.px-body{padding:16px;max-height:60vh;overflow-y:auto}
+.px-body p{font-size:12px;color:var(--ink2);margin:0 0 8px;line-height:1.5}
+.px-body .step{display:flex;gap:8px;margin-bottom:10px;font-size:12px}
+.px-body .step-num{background:var(--acc);color:#000;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0}
+.px-body .step-text{color:var(--ink)}
+.px-modes{display:flex;gap:8px;margin:12px 0}
+.px-mode{flex:1;padding:10px;border:1px solid var(--rule);border-radius:var(--rad);cursor:pointer;text-align:center;font-size:11px;transition:border-color 0.15s}
+.px-mode:hover{border-color:var(--acc)}
+.px-mode.on{border-color:var(--acc);background:rgba(227,167,94,0.1)}
+.px-mode .mode-title{font-weight:700;font-size:13px;margin-bottom:4px}
+.px-mode .mode-stat{color:var(--ink3)}
+.px-actions{display:flex;gap:8px;margin-top:12px}
+.px-actions button{flex:1;padding:8px;border:none;border-radius:var(--rad);font-weight:600;cursor:pointer;font-size:12px}
+.px-copy{background:var(--acc);color:#000}
+.px-copy:hover{opacity:0.9}
+.px-import{background:#2563eb;color:#fff}
+.px-import:hover{background:#1d4ed8}
+.px-status{margin-top:12px;padding:10px;background:var(--bg1);border-radius:var(--rad);font-size:11px;font-family:var(--mono);display:none}
+.px-status.show{display:block}
+.px-drop{margin-top:10px;border:2px dashed var(--rule);border-radius:var(--rad);padding:20px;text-align:center;font-size:12px;color:var(--ink3);cursor:pointer;transition:border-color 0.15s}
+.px-drop:hover,.px-drop.dragover{border-color:var(--acc);color:var(--acc)}
 .cmd-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:50;align-items:flex-start;justify-content:center;padding-top:15vh}
 .cmd-overlay.open{display:flex}
 .cmd-box{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;width:500px;max-width:90vw;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
@@ -1617,7 +1730,8 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
   </div>
   <div class="search-box"><input type="text" id="globalSearch" placeholder="Search items... (Ctrl+K)"></div>
   <button class="btn-sm btn-char" id="btnChar" title="Character Panel">☰ Char</button>
-  <button class="btn-sm" id="btnScan" title="Scan AH Prices">↻ Scan</button>
+  <button class="btn-sm" id="btnScan" title="Scan AH Prices (PSXI)">↻ Scan</button>
+  <button class="btn-sm" id="btnPhoenixScan" title="Phoenix XI AH Scanner" style="background:#b45309;color:#fff">🔥 Phoenix</button>
   <button class="btn-sm" id="btnRefresh" title="Refresh Data">⟳</button>
 </div>
 
@@ -1628,7 +1742,9 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
   <a href="#sources" data-tab="sources" title="Sources"><span>📦</span><span class="tip">Sources</span></a>
   <a href="#combat" data-tab="combat" title="Combat"><span>⚔</span><span class="tip">Combat</span></a>
   <a href="#gilhr" data-tab="gilhr" title="Gil/Hr"><span>💰</span><span class="tip">Gil/Hr</span></a>
+  <a href="#garden" data-tab="garden" title="Gardening"><span>🌱</span><span class="tip">Garden</span></a>
   <a href="#nmmaps" data-tab="nmmaps" title="NM Maps"><span>🗺</span><span class="tip">NM Maps</span></a>
+  <a href="#chocobo" data-tab="chocobo" title="Chocobo"><span>🐥</span><span class="tip">Chocobo</span></a>
 </nav>
 
 <div class="main" id="mainContent">
@@ -1723,6 +1839,18 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
     <div id="gilhrContent"></div>
   </div>
 
+  <!-- GARDENING -->
+  <div class="pane" id="pane-garden">
+    <h2>Gardening Profit</h2>
+    <div class="filter-row">
+      <input type="text" id="gardenSearch" placeholder="Filter seed or item...">
+      <select id="gardenSeed"><option value="">All Seeds</option></select>
+      <label style="font-size:11px"><input type="checkbox" id="gardenProfitOnly" checked> Profitable only</label>
+      <span class="count" id="gardenCount"></span>
+    </div>
+    <div id="gardenContent"></div>
+  </div>
+
   <!-- NM MAPS -->
   <div class="pane" id="pane-nmmaps">
     <h2>NM Maps</h2>
@@ -1734,6 +1862,18 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
       <canvas id="nmCanvas" width="544" height="544"></canvas>
       <div id="nmTooltip" style="display:none;position:absolute;background:var(--bg4);border:1px solid var(--rule);border-radius:4px;padding:4px 8px;font-size:11px;pointer-events:none;z-index:10"></div>
     </div>
+  </div>
+
+  <!-- CHOCOBO -->
+  <div class="pane" id="pane-chocobo">
+    <h2>Chocobo Care Optimizer</h2>
+    <div class="sub-tabs" id="chocoTabs">
+      <div class="sub-tab on" data-choco="optimizer">Optimizer</div>
+      <div class="sub-tab" data-choco="simulator">Day-by-Day Sim</div>
+      <div class="sub-tab" data-choco="reference">Reference</div>
+      <div class="sub-tab" data-choco="digging">Digging</div>
+    </div>
+    <div id="chocoContent"></div>
   </div>
 </div>
 
@@ -1806,6 +1946,40 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
+
+<!-- PHOENIX SCANNER MODAL -->
+<div class="px-overlay" id="pxOverlay">
+  <div class="px-box">
+    <h3>🔥 Phoenix XI AH Scanner <span class="close-btn" id="pxClose">✕</span></h3>
+    <div class="px-body">
+      <div class="step"><span class="step-num">1</span><span class="step-text">Go to <b>phoenix-xi.com</b> and log in (scanner needs your session cookie)</span></div>
+      <div class="step"><span class="step-num">2</span><span class="step-text">Open browser DevTools console (<b>F12 → Console</b>)</span></div>
+      <div class="step"><span class="step-num">3</span><span class="step-text">Choose a scan mode below and click <b>Copy Scanner JS</b></span></div>
+      <div class="step"><span class="step-num">4</span><span class="step-text">Paste into the console and hit Enter — scanner auto-downloads results when done</span></div>
+      <div class="step"><span class="step-num">5</span><span class="step-text">Drop the downloaded JSON file below, or use the curl command logged in the console</span></div>
+      <div class="px-modes">
+        <div class="px-mode on" id="pxModeHot" data-mode="hot">
+          <div class="mode-title">🔥 Hot Scan</div>
+          <div class="mode-stat" id="pxHotCount">— items</div>
+          <div class="mode-stat">30/min · ~— min</div>
+        </div>
+        <div class="px-mode" id="pxModeFull" data-mode="full">
+          <div class="mode-title">🌐 Full Scan</div>
+          <div class="mode-stat" id="pxFullCount">— items</div>
+          <div class="mode-stat">10/min · ~— min</div>
+        </div>
+      </div>
+      <div class="px-actions">
+        <button class="px-copy" id="pxCopy">📋 Copy Scanner JS</button>
+      </div>
+      <div class="px-drop" id="pxDrop">
+        📁 Drop scan results JSON here to import
+        <input type="file" id="pxFile" accept=".json" style="display:none">
+      </div>
+      <div class="px-status" id="pxStatus"></div>
+    </div>
+  </div>
+</div>
 
 <!-- COMMAND PALETTE -->
 <div class="cmd-overlay" id="cmdOverlay">
@@ -2009,8 +2183,10 @@ function renderActive(){
   else if(ACTIVE_TAB==='fish')renderFish();
   else if(ACTIVE_TAB==='sources')renderSources();
   else if(ACTIVE_TAB==='combat')renderCombat();
+  else if(ACTIVE_TAB==='garden')renderGarden();
   else if(ACTIVE_TAB==='gilhr')renderGilHr();
   else if(ACTIVE_TAB==='nmmaps')initNmMap();
+  else if(ACTIVE_TAB==='chocobo')renderChocobo();
 }
 var ITEM_DETAIL=null;
 function navigateToItem(id){
@@ -2564,50 +2740,82 @@ function renderFishSkillup(el){
   $('fishSkillInput').onchange=renderTable;$('fishSkillInput').oninput=renderTable;
   renderTable();
 }
+var FISH_PROFIT_SORT='profit';var FISH_PROFIT_DESC=true;var FISH_PROFIT_R9=false;var FISH_PROFIT_FILTER='';
+function vendorPrice(base,rank){return Math.max(1,Math.floor(base*(rank+389)/400));}
 function renderFishProfit(el){
-  var fishing=D.fishing||[];var fishSkill=(CHAR.skills&&CHAR.skills.fish)||0;
-  var html='<h3 style="margin-bottom:8px">Fishing Profit Calculator</h3>';
-  html+='<p class="soft" style="margin-bottom:12px;font-size:12px">Expected gil/hour based on catch pool weighted by hook chance, factoring in bait cost and rod breakage.</p>';
-  html+='<div class="filter-row"><select id="profitZoneSel"><option value="">— Select Zone —</option>';
-  var zones={};
-  for(var i=0;i<fishing.length;i++){var f=fishing[i];if(f.zones)for(var j=0;j<f.zones.length;j++){zones[f.zones[j].zone||'Unknown']=1;}}
-  Object.keys(zones).sort().forEach(function(z){html+='<option>'+h(z)+'</option>';});
-  html+='</select></div><div id="profitResult"></div>';
-  el.innerHTML=html;
-  $('profitZoneSel').onchange=function(){
-    var zone=this.value;if(!zone){$('profitResult').innerHTML='';return;}
-    var pool=[];var totalHook=0;
-    for(var i=0;i<fishing.length;i++){
-      var f=fishing[i];if(!f.zones)continue;
-      var inZone=false;
-      for(var j=0;j<f.zones.length;j++){if((f.zones[j].zone||'Unknown')===zone){inZone=true;break;}}
-      if(!inZone)continue;
-      var hookC=fishSkill?FC.hookChance(fishSkill,f,null,null):50;
-      var ahP=0;var allItems=D.allItems||[];
-      for(var k=0;k<allItems.length;k++){if(allItems[k].id===f.id){ahP=allItems[k].ah||allItems[k].bp||0;break;}}
-      pool.push({name:f.name,hook:hookC,price:ahP,skill:f.skill,hourPat:f.hourPat||0});
-      totalHook+=hookC;
-    }
-    if(!pool.length){$('profitResult').innerHTML='<p class="dim">No fish in this zone.</p>';return;}
-    var castsPerHour=60;
-    var totalEV=0;
-    var t='<table class="tbl"><thead><tr><th>Fish</th><th class="r-align">Hook%</th><th class="r-align">Catch%</th><th class="r-align">Price</th><th class="r-align">EV/Cast</th></tr></thead><tbody>';
-    pool.sort(function(a,b){return b.hook-a.hook;});
-    for(var i=0;i<pool.length;i++){
-      var p=pool[i];
-      var catchPct=totalHook>0?((p.hook/totalHook)*100):0;
-      var ev=p.price*(catchPct/100);
-      totalEV+=ev;
-      t+='<tr><td>'+h(p.name)+hourBadge(p.hourPat)+'</td><td class="r-align mono-cell">'+p.hook+'</td>';
-      t+='<td class="r-align mono-cell">'+catchPct.toFixed(1)+'%</td>';
-      t+='<td class="r-align mono-cell">'+gil(p.price)+'</td>';
-      t+='<td class="r-align mono-cell gl">'+gil(Math.round(ev))+'</td></tr>';
-    }
-    t+='</tbody></table>';
-    var gilHr=Math.round(totalEV*castsPerHour);
-    t='<div class="fc-grid"><div class="fc-panel"><h4>Summary</h4><div class="fc-stat"><span>Fish in zone:</span><span class="v">'+pool.length+'</span></div><div class="fc-stat"><span>Est. casts/hr:</span><span class="v">~'+castsPerHour+'</span></div><div class="fc-stat"><span>Avg EV/cast:</span><span class="v gl">'+gil(Math.round(totalEV))+'</span></div><div class="fc-stat"><span>Est. Gil/Hr:</span><span class="v g" style="font-size:16px;font-weight:700">'+gil(gilHr)+'</span></div></div><div class="fc-panel"><h4>Catch Breakdown</h4>'+t+'</div></div>';
-    $('profitResult').innerHTML=t;
+  var fishing=D.fishing||[];
+  var t='<h3 style="margin-bottom:8px">Fish Pricing</h3>';
+  t+='<div class="filter-row" style="gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px">';
+  t+='<input type="text" id="fishProfitFilter" placeholder="Filter fish..." value="'+h(FISH_PROFIT_FILTER)+'" style="width:160px;padding:4px 8px;border-radius:4px;background:var(--bg2);color:var(--fg);border:1px solid var(--rule);font-size:12px">';
+  t+='<label style="font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px"><input type="checkbox" id="fishR9Toggle"'+(FISH_PROFIT_R9?' checked':'')+'>r9VP (Max Fame Vendor)</label>';
+  t+='</div>';
+  t+='<div id="fishProfitTable"></div>';
+  el.innerHTML=t;
+  $('fishR9Toggle').onchange=function(){FISH_PROFIT_R9=this.checked;renderFishProfitTable();};
+  $('fishProfitFilter').oninput=function(){FISH_PROFIT_FILTER=this.value;renderFishProfitTable();};
+  renderFishProfitTable();
+}
+function renderFishProfitTable(){
+  var fishing=D.fishing||[];
+  var filter=FISH_PROFIT_FILTER.toLowerCase();
+  var rows=[];
+  for(var i=0;i<fishing.length;i++){
+    var f=fishing[i];
+    if(filter&&f.name.toLowerCase().indexOf(filter)<0)continue;
+    var ahP=f.ah||0;
+    var bp=f.npc||0;
+    var vp1=bp?vendorPrice(bp,1):0;
+    var vp9=bp?vendorPrice(bp,21):0;
+    var bestSell=Math.max(ahP,FISH_PROFIT_R9?vp9:vp1);
+    var sellTo=ahP>=vp1?'AH':'Vendor';
+    if(FISH_PROFIT_R9&&vp9>ahP)sellTo='r9VP';
+    rows.push({name:f.name,id:f.id,skill:f.skill,ah:ahP,vp:vp1,vp9:vp9,best:bestSell,sellTo:sellTo,ex:f.ex,rare:f.rare,noAH:f.noAH,stack:f.stack||1,hourPat:f.hourPat||0});
+  }
+  var sk=FISH_PROFIT_SORT;var desc=FISH_PROFIT_DESC;
+  rows.sort(function(a,b){var av=a[sk],bv=b[sk];if(typeof av==='string')return desc?bv.localeCompare(av):av.localeCompare(bv);return desc?(bv-av):(av-bv);});
+  var hdr=function(label,key,cls){
+    var arrow=FISH_PROFIT_SORT===key?(FISH_PROFIT_DESC?' ▼':' ▲'):'';
+    return '<th class="'+(cls||'')+'" style="cursor:pointer" data-sort="'+key+'">'+label+arrow+'</th>';
   };
+  var t='<table class="tbl"><thead><tr>';
+  t+=hdr('Fish','name','');
+  t+=hdr('Skill','skill','r-align');
+  t+=hdr('Stack','stack','r-align');
+  t+=hdr('AH Price','ah','r-align');
+  t+=hdr('Vendor','vp','r-align');
+  if(FISH_PROFIT_R9)t+=hdr('r9VP','vp9','r-align');
+  t+=hdr('Best Sell','best','r-align');
+  t+='<th>Sell To</th>';
+  t+='</tr></thead><tbody>';
+  var count=0;
+  for(var i=0;i<rows.length;i++){
+    var r=rows[i];
+    if(!r.ah&&!r.vp)continue;
+    count++;
+    var flags='';if(r.ex)flags+='<span class="badge" style="background:#5c3a1e;color:#e8a84c;font-size:9px;margin-left:4px">Ex</span>';
+    if(r.rare)flags+='<span class="badge" style="background:#1e3a5c;color:#4ca8e8;font-size:9px;margin-left:4px">Ra</span>';
+    if(r.noAH)flags+='<span class="badge" style="background:#3a1e1e;color:#e84c4c;font-size:9px;margin-left:4px">NoAH</span>';
+    t+='<tr><td>'+h(r.name)+flags+hourBadge(r.hourPat)+'</td>';
+    t+='<td class="r-align mono-cell">'+r.skill+'</td>';
+    t+='<td class="r-align mono-cell">'+(r.stack>1?r.stack:'<span class="dim">1</span>')+'</td>';
+    t+='<td class="r-align mono-cell">'+(r.ah?gil(r.ah):'<span class="dim">—</span>')+'</td>';
+    t+='<td class="r-align mono-cell">'+(r.vp?gil(r.vp):'<span class="dim">—</span>')+'</td>';
+    if(FISH_PROFIT_R9)t+='<td class="r-align mono-cell" style="color:var(--gold)">'+(r.vp9?gil(r.vp9):'<span class="dim">—</span>')+'</td>';
+    var bestCol=r.best===r.ah?'var(--gain)':(FISH_PROFIT_R9&&r.best===r.vp9?'var(--gold)':'var(--fg)');
+    t+='<td class="r-align mono-cell" style="color:'+bestCol+'">'+gil(r.best)+'</td>';
+    t+='<td style="font-size:11px">'+r.sellTo+'</td></tr>';
+  }
+  t+='</tbody></table>';
+  t='<p class="soft" style="font-size:11px;margin-bottom:6px">'+count+' fish with pricing · Vendor = fame rank 1 · r9VP = max fame (rank 21) · formula: floor(base × (rank+389)/400)</p>'+t;
+  $('fishProfitTable').innerHTML=t;
+  qsa('#fishProfitTable th[data-sort]').forEach(function(th){
+    th.onclick=function(){
+      var key=this.dataset.sort;
+      if(FISH_PROFIT_SORT===key)FISH_PROFIT_DESC=!FISH_PROFIT_DESC;
+      else{FISH_PROFIT_SORT=key;FISH_PROFIT_DESC=true;}
+      renderFishProfitTable();
+    };
+  });
 }
 function renderFishGuide(el){
   var fishing=D.fishing||[];
@@ -3100,6 +3308,84 @@ function renderQuests(el){
   el.innerHTML=t;
 }
 
+// ── Gardening Section ──
+var GARDEN_EXPANDED={};
+function renderGarden(){
+  var el=$('gardenContent');
+  var combos=D.gardenCombos||[];
+  var q=($('gardenSearch')||{}).value||'';q=q.toLowerCase();
+  var seedF=($('gardenSeed')||{}).value||'';
+  var profitOnly=$('gardenProfitOnly')?$('gardenProfitOnly').checked:true;
+
+  var seedSet={};
+  for(var i=0;i<combos.length;i++)seedSet[combos[i].seed]=1;
+  var sel=$('gardenSeed');
+  if(sel&&sel.options.length<=1){
+    var sk=Object.keys(seedSet).sort();
+    for(var i=0;i<sk.length;i++){var o=document.createElement('option');o.value=sk[i];o.textContent=sk[i];sel.appendChild(o);}
+  }
+
+  var filtered=[];
+  for(var i=0;i<combos.length;i++){
+    var c=combos[i];
+    if(profitOnly&&c.profit<=0)continue;
+    if(seedF&&c.seed!==seedF)continue;
+    if(q){
+      var match=c.seed.toLowerCase().indexOf(q)>=0||c.c1.toLowerCase().indexOf(q)>=0||c.c2.toLowerCase().indexOf(q)>=0;
+      if(!match){for(var j=0;j<c.outcomes.length;j++){if(c.outcomes[j].n.toLowerCase().indexOf(q)>=0){match=true;break;}}}
+      if(!match)continue;
+    }
+    filtered.push(c);
+  }
+
+  var cnt=$('gardenCount');if(cnt)cnt.textContent=filtered.length+' combos';
+
+  var t='<table class="tbl"><thead><tr><th>Seed</th><th>Crystal(s)</th><th class="r-align">Seed Cost</th><th class="r-align">Crystal Cost</th><th class="r-align">EV</th><th class="r-align">Profit</th><th></th></tr></thead><tbody>';
+  for(var i=0;i<Math.min(filtered.length,200);i++){
+    var c=filtered[i];
+    var cls=c.profit>0?'gain':'loss';
+    var crys=c.c1==='None'?'None':c.c1;
+    if(c.dual&&c.c2!=='None')crys+=' + '+c.c2;
+    var key=c.seed+'-'+c.c1+'-'+c.c2;
+    var expanded=GARDEN_EXPANDED[key];
+    t+='<tr class="garden-row" data-gkey="'+key+'" style="cursor:pointer">';
+    t+='<td>'+h(c.seed)+'</td>';
+    t+='<td>'+h(crys)+'</td>';
+    t+='<td class="r-align mono-cell gl">'+gil(c.seedCost)+'</td>';
+    t+='<td class="r-align mono-cell gl">'+gil(c.cc)+'</td>';
+    t+='<td class="r-align mono-cell gl">'+gil(c.ev)+'</td>';
+    t+='<td class="r-align mono-cell '+cls+'">'+(c.profit>=0?'+':'-')+gil(Math.abs(c.profit))+'</td>';
+    t+='<td style="font-size:11px;color:var(--fg3)">'+(expanded?'▼':'▶')+' '+c.outcomes.length+' items</td>';
+    t+='</tr>';
+    if(expanded){
+      t+='<tr class="garden-detail"><td colspan="7"><table class="tbl" style="margin:4px 0 8px 20px;font-size:12px"><thead><tr><th>Item</th><th class="r-align">Chance</th><th class="r-align">Qty</th><th class="r-align">Sell</th><th class="r-align">Price Src</th><th class="r-align">EV</th></tr></thead><tbody>';
+      for(var j=0;j<c.outcomes.length;j++){
+        var o=c.outcomes[j];
+        var qtyStr=o.qlo===o.qhi?''+o.qlo:o.qlo+'-'+o.qhi;
+        var srcTag=o.src==='ah'?'<span style="color:var(--accent)">AH</span>':o.src==='npc'?'<span style="color:var(--fg3)">NPC</span>':'<span style="color:var(--fg4)">base</span>';
+        t+='<tr><td><a href="#" data-nav-item="'+o.id+'" style="color:var(--acc);text-decoration:none">'+h(o.n)+'</a></td>';
+        t+='<td class="r-align">'+o.pct+'%</td>';
+        t+='<td class="r-align">'+qtyStr+'</td>';
+        t+='<td class="r-align mono-cell gl">'+gil(o.sell)+'</td>';
+        t+='<td class="r-align">'+srcTag+'</td>';
+        t+='<td class="r-align mono-cell gl">'+gil(o.ev)+'</td></tr>';
+      }
+      t+='</tbody></table></td></tr>';
+    }
+  }
+  t+='</tbody></table>';
+  if(filtered.length>200)t+='<div class="soft" style="padding:8px;font-size:12px">Showing 200 of '+filtered.length+'</div>';
+  el.innerHTML=t;
+
+  qsa('.garden-row').forEach(function(row){
+    row.onclick=function(){
+      var k=this.dataset.gkey;
+      GARDEN_EXPANDED[k]=!GARDEN_EXPANDED[k];
+      renderGarden();
+    };
+  });
+}
+
 // ── Gil/Hr Section ──
 function renderGilHr(){
   var el=$('gilhrContent');
@@ -3115,6 +3401,713 @@ function renderGilHr(){
   }
   t+='</tbody></table>';
   el.innerHTML='<p class="soft" style="margin-bottom:12px;font-size:12px">Estimated gil/hr across all activities. Crafting assumes ~12 synths/hr. Vendor flips show stack profit.</p>'+t;
+}
+
+// ── Chocobo Care Optimizer ──
+var CHOCO_TAB='optimizer';
+var CHOCO_PLANS=[
+  {id:'basic',     name:'Basic Care',           str:1,  end:1,  dis:1,  rec:1,  aff:-1,  ene:-1, cost:0,   stage:0},
+  {id:'rest',      name:'Resting',              str:0,  end:0,  dis:0,  rec:0,  aff:0,   ene:1,  cost:0,   stage:1},
+  {id:'walk',      name:'Taking a Walk',        str:1,  end:1,  dis:-1, rec:-1, aff:-1,  ene:-1, cost:0,   stage:1},
+  {id:'music',     name:'Listening to Music',   str:-1, end:-1, dis:1,  rec:1,  aff:-1,  ene:-1, cost:0,   stage:1},
+  {id:'exalone',   name:'Exercising Alone',     str:1,  end:0,  dis:-1, rec:-1, aff:-1,  ene:-1, cost:0,   stage:2},
+  {id:'exgroup',   name:'Exercising in Group',  str:0,  end:1,  dis:-1, rec:-1, aff:-1,  ene:-1, cost:0,   stage:2},
+  {id:'children',  name:'Playing w/ Children',  str:-1, end:-1, dis:1,  rec:0,  aff:-1,  ene:-1, cost:0,   stage:2},
+  {id:'chocobos',  name:'Playing w/ Chocobos',  str:-1, end:-1, dis:0,  rec:1,  aff:-1,  ene:-1, cost:0,   stage:2},
+  {id:'packages',  name:'Carrying Packages',    str:5,  end:5,  dis:-5, rec:-5, aff:-10, ene:-5, cost:100, stage:2},
+  {id:'exhibit',   name:'Exhibiting to Public', str:-5, end:-5, dis:5,  rec:5,  aff:-10, ene:-5, cost:100, stage:2},
+  {id:'deliver',   name:'Delivering Messages',  str:10, end:0,  dis:0,  rec:-5, aff:-10, ene:-10,cost:100, stage:3},
+  {id:'dig',       name:'Digging for Treasure', str:0,  end:-5, dis:10, rec:0,  aff:-10, ene:-10,cost:100, stage:3},
+  {id:'play',      name:'Acting in a Play',     str:-5, end:0,  dis:0,  rec:10, aff:-10, ene:-10,cost:100, stage:3}
+];
+var CHOCO_STAGES=[
+  {id:0, name:'Egg',        days:[0,3],   label:'Egg (Day 0-3, ~72h)'},
+  {id:1, name:'Chick',      days:[4,18],  label:'Chick (Day 4-18, ~2 wks)'},
+  {id:2, name:'Adolescent', days:[19,28], label:'Adolescent (Day 19-28, ~1 mo)'},
+  {id:3, name:'Adult 1',    days:[29,42], label:'Adult 1 (Day 29-42, ~6 wks)'},
+  {id:4, name:'Adult 2',    days:[43,63], label:'Adult 2 (Day 43-63, ~2 mo)'},
+  {id:5, name:'Adult 3',    days:[64,128],label:'Adult 3 (Day 64-128, ~4 mo)'}
+];
+var CHOCO_RANKS=['F','E','D','C','B','A','S','SS'];
+var CHOCO_ABILITIES=[
+  {name:'Gallop',    story:'Story of an Impatient Chocobo', effect:'+1 STR rank for riding speed'},
+  {name:'Canter',    story:'Story of a Curious Chocobo',    effect:'+1 END rank for riding time'},
+  {name:'Burrow',    story:'Story of a Worrisome Chocobo',  effect:'Digging bonus (not on Phoenix yet)'},
+  {name:'Bore',      story:'Story of a Youthful Chocobo',   effect:'Digging bonus (not on Phoenix yet)'},
+  {name:'Auto-Regen',story:'Story of a Happy Chocobo',      effect:'HP regen while riding'},
+  {name:'Treasure Finder',story:'Story of a Diligent Chocobo',effect:'Better digging finds'}
+];
+
+function chocoRank(val){return CHOCO_RANKS[Math.min(7,Math.floor(val/32))];}
+function chocoRankIdx(val){return Math.min(7,Math.floor(val/32));}
+function chocoStageAt(day){for(var i=CHOCO_STAGES.length-1;i>=0;i--){if(day>=CHOCO_STAGES[i].days[0])return CHOCO_STAGES[i];}return CHOCO_STAGES[0];}
+function chocoClamp(v,max){return Math.max(0,Math.min(max,v));}
+
+function chocoGetAvailPlans(stageId){
+  var out=[];
+  for(var i=0;i<CHOCO_PLANS.length;i++){
+    if(stageId===0&&CHOCO_PLANS[i].id!=='basic')continue;
+    if(CHOCO_PLANS[i].stage<=stageId)out.push(CHOCO_PLANS[i]);
+    else if(stageId>=3&&CHOCO_PLANS[i].stage<=3)out.push(CHOCO_PLANS[i]);
+  }
+  return out;
+}
+
+function chocoSimulate(goal,budget){
+  budget=budget||999999;
+  var stats={str:0,end:0,dis:0,rec:0,aff:128,ene:100};
+  var schedule=[];var totalCost=0;
+  var goalStat=goal==='speed'?'str':goal==='time'?'end':goal==='dig'?'dis':'str';
+  var secStat=goal==='speed'?'end':goal==='time'?'str':goal==='dig'?'rec':'end';
+  var FEED_AFF=10;
+
+  for(var day=0;day<=128;day++){
+    var stage=chocoStageAt(day);
+    if(stage.id===0){
+      var basic=CHOCO_PLANS[0];
+      stats.str=chocoClamp(stats.str+basic.str,255);
+      stats.end=chocoClamp(stats.end+basic.end,255);
+      stats.dis=chocoClamp(stats.dis+basic.dis,255);
+      stats.rec=chocoClamp(stats.rec+basic.rec,255);
+      stats.aff=chocoClamp(stats.aff+basic.aff+FEED_AFF,255);
+      stats.ene=chocoClamp(stats.ene+basic.ene,100);
+      schedule.push({day:day,plan:basic,stats:{str:stats.str,end:stats.end,dis:stats.dis,rec:stats.rec,aff:stats.aff,ene:stats.ene},stage:stage,cost:totalCost});
+      continue;
+    }
+
+    var avail=chocoGetAvailPlans(stage.id);
+
+    var ranked=[];
+    for(var p=0;p<avail.length;p++){
+      var plan=avail[p];
+      if(plan.id==='rest')continue;
+      if(plan.cost>0&&totalCost+plan.cost>budget)continue;
+      var gain=plan[goalStat];
+      if(gain<=0)continue;
+      ranked.push({plan:plan,eff:gain,gain:gain});
+    }
+    ranked.sort(function(a,b){return b.eff-a.eff;});
+
+    var chosen=null;
+    if(ranked.length>0){
+      chosen=ranked[0].plan;
+    }else{
+      var fallbacks=[];
+      for(var p=0;p<avail.length;p++){
+        var plan=avail[p];if(plan.id==='rest')continue;
+        if(plan.cost>0&&totalCost+plan.cost>budget)continue;
+        var gain=plan[goalStat]+plan[secStat]*0.3;
+        var eneAfter=chocoClamp(stats.ene+plan.ene,100);
+        if(gain>0&&eneAfter>0)fallbacks.push({plan:plan,gain:gain});
+      }
+      fallbacks.sort(function(a,b){return b.gain-a.gain;});
+      if(fallbacks.length>0)chosen=fallbacks[0].plan;
+      else chosen=CHOCO_PLANS[0];
+    }
+
+    stats.str=chocoClamp(stats.str+chosen.str,255);
+    stats.end=chocoClamp(stats.end+chosen.end,255);
+    stats.dis=chocoClamp(stats.dis+chosen.dis,255);
+    stats.rec=chocoClamp(stats.rec+chosen.rec,255);
+    stats.aff=chocoClamp(stats.aff+chosen.aff+FEED_AFF,255);
+    stats.ene=chocoClamp(stats.ene+chosen.ene,100);
+    totalCost+=chosen.cost;
+
+    schedule.push({day:day,plan:chosen,stats:{str:stats.str,end:stats.end,dis:stats.dis,rec:stats.rec,aff:stats.aff,ene:stats.ene},stage:stage,cost:totalCost});
+  }
+  return {schedule:schedule,finalStats:stats,totalCost:totalCost};
+}
+
+function chocoRidingSpeed(strVal,hasGallop,hasSilks){
+  var ranks=chocoRankIdx(strVal)+(hasGallop?1:0)+(hasSilks?1:0);
+  ranks=Math.min(ranks,8);
+  return Math.min(100,80+ranks*2.5);
+}
+function chocoRidingTime(endVal,hasCanter,hasSilks){
+  var ranks=chocoRankIdx(endVal)+(hasCanter?1:0)+(hasSilks?1:0);
+  ranks=Math.min(ranks,8);
+  return Math.min(45,17+ranks*4);
+}
+
+function renderChocobo(){
+  var el=$('chocoContent');if(!el)return;
+  if(CHOCO_TAB==='optimizer')renderChocoOptimizer(el);
+  else if(CHOCO_TAB==='simulator')renderChocoSim(el);
+  else if(CHOCO_TAB==='reference')renderChocoRef(el);
+  else if(CHOCO_TAB==='digging')renderChocoDig(el);
+}
+
+function renderChocoOptimizer(el){
+  var t='<div style="margin-bottom:16px">';
+  t+='<p class="soft" style="font-size:12px;margin-bottom:12px">Select your goal and the optimizer will calculate the best care plan sequence across the full 129-day chocobo lifespan. Assumes daily feeding (+10 affection/day from Gysahl Greens).</p>';
+  t+='<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-bottom:16px">';
+  t+='<div><label style="font-size:12px;display:block;margin-bottom:4px">Goal</label>';
+  t+='<select id="chocoGoal" style="padding:6px 10px;border-radius:4px;background:var(--bg2);color:var(--fg);border:1px solid var(--rule)">';
+  t+='<option value="speed">Max Riding Speed (STR)</option>';
+  t+='<option value="time">Max Riding Time (END)</option>';
+  t+='<option value="dig">Max Digging (DIS)</option>';
+  t+='</select></div>';
+  t+='<div><label style="font-size:12px;display:block;margin-bottom:4px">Budget (gil)</label>';
+  t+='<input type="number" id="chocoBudget" value="50000" min="0" style="width:80px;padding:6px;border-radius:4px;background:var(--bg2);color:var(--fg);border:1px solid var(--rule)"></div>';
+  t+='<button class="btn-sm" id="chocoRunBtn" style="padding:6px 16px">Calculate</button>';
+  t+='</div></div>';
+  t+='<div id="chocoResult"></div>';
+  el.innerHTML=t;
+
+  var runOpt=function(){
+    var goal=$('chocoGoal').value;
+    var budget=+$('chocoBudget').value||999999;
+    var sim=chocoSimulate(goal,budget);
+    var fs=sim.finalStats;
+    var goalStat=goal==='speed'?'str':goal==='time'?'end':'dis';
+    var goalLabel=goal==='speed'?'Riding Speed':goal==='time'?'Riding Time':'Digging';
+
+    var out='<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">';
+
+    out+='<div style="background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:16px;flex:1;min-width:200px">';
+    out+='<div style="font-size:11px;color:var(--fg3);margin-bottom:4px">Primary: '+goalLabel+'</div>';
+    out+='<div style="font-size:28px;font-weight:700;color:var(--acc)">'+chocoRank(fs[goalStat])+' <span style="font-size:14px;color:var(--fg3)">('+fs[goalStat]+')</span></div>';
+    if(goal==='speed'){
+      out+='<div style="font-size:12px;margin-top:4px">Speed: <b>'+chocoRidingSpeed(fs.str,false,false)+'%</b>';
+      out+=' → <b class="g">'+chocoRidingSpeed(fs.str,true,true)+'%</b> w/ Gallop+Silks</div>';
+    }else if(goal==='time'){
+      out+='<div style="font-size:12px;margin-top:4px">Time: <b>'+chocoRidingTime(fs.end,false,false)+' min</b>';
+      out+=' → <b class="g">'+chocoRidingTime(fs.end,true,true)+' min</b> w/ Canter+Silks</div>';
+    }else{
+      out+='<div style="font-size:12px;margin-top:4px;color:var(--fg3)">Burrow/Bore not yet on Phoenix</div>';
+    }
+    out+='</div>';
+
+    out+='<div style="background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:16px;flex:1;min-width:200px">';
+    out+='<div style="font-size:11px;color:var(--fg3);margin-bottom:4px">All Stats</div>';
+    var statNames=[['STR','str'],['END','end'],['DIS','dis'],['REC','rec']];
+    for(var i=0;i<statNames.length;i++){
+      var sn=statNames[i];var v=fs[sn[1]];var ri=chocoRankIdx(v);
+      var barW=Math.round(v/255*100);
+      var barClr=sn[1]===goalStat?'var(--acc)':'var(--fg4)';
+      out+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;font-size:11px">';
+      out+='<span style="width:28px;color:var(--fg3)">'+sn[0]+'</span>';
+      out+='<div style="flex:1;height:10px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+barW+'%;background:'+barClr+';border-radius:3px"></div></div>';
+      out+='<span style="width:50px;text-align:right;font-weight:600">'+chocoRank(v)+' ('+v+')</span>';
+      out+='</div>';
+    }
+    out+='<div style="margin-top:6px;font-size:11px;color:var(--fg3)">AFF: '+fs.aff+' | ENE: '+fs.ene+' | Cost: '+gil(sim.totalCost)+'</div>';
+    out+='</div>';
+
+    if(goal==='speed'||goal==='time'){
+      out+='<div style="background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:16px;flex:1;min-width:200px">';
+      out+='<div style="font-size:11px;color:var(--fg3);margin-bottom:4px">Recommended Abilities</div>';
+      if(goal==='speed'){
+        out+='<div style="margin-bottom:6px"><b style="color:var(--acc)">Gallop</b> <span style="font-size:11px;color:var(--fg3)">(+1 STR rank)</span></div>';
+        out+='<div style="font-size:11px">Tell: Story of an Impatient Chocobo</div>';
+        out+='<div style="font-size:11px;color:var(--fg3)">25% chance per telling, needs DIS ≥ D rank (64)</div>';
+        out+='<div style="margin-top:8px"><b>Purple Race Silks</b> <span style="font-size:11px;color:var(--fg3)">(+1 STR rank)</span></div>';
+      }else{
+        out+='<div style="margin-bottom:6px"><b style="color:var(--acc)">Canter</b> <span style="font-size:11px;color:var(--fg3)">(+1 END rank)</span></div>';
+        out+='<div style="font-size:11px">Tell: Story of a Curious Chocobo</div>';
+        out+='<div style="font-size:11px;color:var(--fg3)">25% chance per telling, needs DIS ≥ D rank (64)</div>';
+        out+='<div style="margin-top:8px"><b>Red Race Silks</b> <span style="font-size:11px;color:var(--fg3)">(+1 END rank)</span></div>';
+      }
+      out+='</div>';
+    }
+    out+='</div>';
+
+    out+='<h3 style="margin:16px 0 8px;font-size:14px">Care Plan Schedule</h3>';
+    out+='<p class="soft" style="font-size:11px;margin-bottom:8px">Grouped by stage. Days where affection/energy drop low automatically switch to Resting.</p>';
+
+    var groups=[];var cur=null;
+    for(var d=0;d<sim.schedule.length;d++){
+      var s=sim.schedule[d];
+      if(!cur||cur.plan!==s.plan.id||cur.stage!==s.stage.id){
+        if(cur)groups.push(cur);
+        cur={plan:s.plan.id,planName:s.plan.name,stage:s.stage.id,stageName:s.stage.name,dayStart:s.day,dayEnd:s.day,count:1,cost:s.plan.cost,endStats:s.stats};
+      }else{
+        cur.dayEnd=s.day;cur.count++;cur.endStats=s.stats;
+      }
+    }
+    if(cur)groups.push(cur);
+
+    out+='<table class="tbl"><thead><tr><th>Days</th><th>Stage</th><th>Care Plan</th><th class="r-align">#</th><th class="r-align">Cost</th>';
+    out+='<th class="r-align">STR</th><th class="r-align">END</th><th class="r-align">DIS</th><th class="r-align">REC</th></tr></thead><tbody>';
+    for(var i=0;i<groups.length;i++){
+      var g=groups[i];var isPrimary=false;
+      var plan=null;for(var p=0;p<CHOCO_PLANS.length;p++){if(CHOCO_PLANS[p].id===g.plan){plan=CHOCO_PLANS[p];break;}}
+      if(plan&&plan[goalStat]>0)isPrimary=true;
+      var rowCls=isPrimary?' style="background:rgba(79,195,247,0.08)"':'';
+      out+='<tr'+rowCls+'>';
+      out+='<td>'+g.dayStart+(g.dayEnd!==g.dayStart?'-'+g.dayEnd:'')+'</td>';
+      out+='<td class="soft" style="font-size:11px">'+g.stageName+'</td>';
+      out+='<td'+(isPrimary?' style="color:var(--acc);font-weight:600"':'')+'>'+h(g.planName)+'</td>';
+      out+='<td class="r-align">'+g.count+'</td>';
+      out+='<td class="r-align mono-cell">'+(g.cost>0?gil(g.cost*g.count):'-')+'</td>';
+      var es=g.endStats;
+      out+='<td class="r-align mono-cell'+(goalStat==='str'?' g':'')+'">'+chocoRank(es.str)+' '+es.str+'</td>';
+      out+='<td class="r-align mono-cell'+(goalStat==='end'?' g':'')+'">'+chocoRank(es.end)+' '+es.end+'</td>';
+      out+='<td class="r-align mono-cell'+(goalStat==='dis'?' g':'')+'">'+chocoRank(es.dis)+' '+es.dis+'</td>';
+      out+='<td class="r-align mono-cell">'+chocoRank(es.rec)+' '+es.rec+'</td>';
+      out+='</tr>';
+    }
+    out+='</tbody></table>';
+
+    $('chocoResult').innerHTML=out;
+  };
+  $('chocoRunBtn').onclick=runOpt;
+  runOpt();
+}
+
+function renderChocoSim(el){
+  var t='<p class="soft" style="font-size:12px;margin-bottom:12px">Full 129-day simulation showing every Vanadiel day. Select a goal to see the optimal plan for each day.</p>';
+  t+='<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px">';
+  t+='<div><label style="font-size:12px">Goal</label><br><select id="chocoSimGoal" style="padding:4px 8px;border-radius:4px;background:var(--bg2);color:var(--fg);border:1px solid var(--rule)">';
+  t+='<option value="speed">Max Speed (STR)</option><option value="time">Max Time (END)</option><option value="dig" selected>Max Digging (DIS)</option></select></div>';
+  t+='<div><label style="font-size:12px">Budget (gil)</label><br><input id="chocoSimBudget" type="number" value="50000" style="width:80px;padding:4px 8px;border-radius:4px;background:var(--bg2);color:var(--fg);border:1px solid var(--rule)"></div>';
+  t+='<button class="btn-sm" id="chocoSimRun" style="margin-top:16px">Simulate</button>';
+  t+='</div>';
+  t+='<div id="chocoSimResult"></div>';
+  el.innerHTML=t;
+
+  var runSim=function(){
+    var goalStat=$('chocoSimGoal').value;
+    var budget=parseInt($('chocoSimBudget').value)||50000;
+    var sim=chocoSimulate(goalStat,budget);
+    var out='';
+    out+='<table class="tbl" style="font-size:11px"><thead><tr><th>Day</th><th>Stage</th><th>Care Plan</th><th class="r-align">Cost</th>';
+    out+='<th class="r-align">STR</th><th class="r-align">END</th><th class="r-align">DIS</th><th class="r-align">REC</th><th class="r-align">AFF</th><th class="r-align">ENE</th></tr></thead><tbody>';
+    var totalCost=0;
+    for(var d=0;d<sim.schedule.length;d++){
+      var s=sim.schedule[d];
+      totalCost+=s.plan.cost||0;
+      var isPrimary=s.plan[goalStat]>0;
+      var rowCls=isPrimary?' style="background:rgba(79,195,247,0.06)"':'';
+      var isNewStage=d===0||(sim.schedule[d-1]&&sim.schedule[d-1].stage.id!==s.stage.id);
+      if(isNewStage)rowCls=' style="background:rgba(79,195,247,0.06);border-top:2px solid var(--acc)"';
+      out+='<tr'+rowCls+'>';
+      out+='<td>'+s.day+'</td>';
+      out+='<td class="soft" style="font-size:10px">'+s.stage.name+'</td>';
+      out+='<td'+(isPrimary?' style="color:var(--acc)"':'')+'>'+h(s.plan.name)+'</td>';
+      out+='<td class="r-align mono-cell">'+(s.plan.cost?s.plan.cost+'g':'-')+'</td>';
+      out+='<td class="r-align mono-cell">'+s.stats.str+'</td>';
+      out+='<td class="r-align mono-cell">'+s.stats.end+'</td>';
+      out+='<td class="r-align mono-cell'+(goalStat==='dis'?' g':'')+'">'+s.stats.dis+'</td>';
+      out+='<td class="r-align mono-cell">'+s.stats.rec+'</td>';
+      out+='<td class="r-align mono-cell">'+(s.stats.aff<30?'<span style="color:var(--loss)">'+s.stats.aff+'</span>':s.stats.aff)+'</td>';
+      out+='<td class="r-align mono-cell">'+(s.stats.ene<=0?'<span style="color:var(--loss)">'+s.stats.ene+'</span>':s.stats.ene)+'</td>';
+      out+='</tr>';
+    }
+    out+='</tbody></table>';
+    var totalDays=sim.schedule.length;
+    var totalWeeks=Math.round(totalDays/7*10)/10;
+    out+='<div style="margin-top:8px;font-size:12px"><b>Total cost:</b> '+gil(totalCost)+' + Gysahl Greens (10g/day)</div>';
+    out+='<div style="margin-top:4px;font-size:12px"><b>Real time:</b> '+totalDays+' Earth days (~'+totalWeeks+' weeks)</div>';
+    $('chocoSimResult').innerHTML=out;
+  };
+  $('chocoSimRun').onclick=runSim;
+  runSim();
+}
+
+function renderChocoRef(el){
+  var t='<div style="max-width:900px">';
+  t+='<h3 style="margin:0 0 12px;font-size:15px">Chocobo Raising Reference</h3>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Growth Stages</h4>';
+  t+='<p class="soft" style="font-size:11px;margin:0 0 8px;color:var(--acc)">⚠ Days = REAL EARTH DAYS (24h each), not Vanadiel days. Source: dayLength = 86400s in LSB.</p>';
+  t+='<table class="tbl"><thead><tr><th>Stage</th><th>Days</th><th>Real Time</th><th>Plans Unlocked</th><th>NPC Dialog Hint</th></tr></thead><tbody>';
+  t+='<tr><td>Egg</td><td>0-3</td><td>0-3 days</td><td>Basic Care only</td><td class="soft" style="font-size:11px">"I have some information to relay to you regarding your egg."</td></tr>';
+  t+='<tr><td>Chick</td><td>4-18</td><td>4-18 days</td><td>+Resting, Walk, Music</td><td class="soft" style="font-size:11px">"Your chocobo has hatched!" → can now feed Gysahl Greens</td></tr>';
+  t+='<tr><td>Adolescent</td><td>19-28</td><td>~3-4 weeks</td><td>+Exercise, Children, Chocobos, Packages, Exhibit</td><td class="soft" style="font-size:11px">⭐ First key visit — set Exhibit + Dig plans here</td></tr>';
+  t+='<tr><td>Adult 1</td><td>29-42</td><td>~1 month</td><td>+Deliver, Dig Treasure, Act in Play</td><td class="soft" style="font-size:11px">Can ride (Chocobo Whistle quest). "Finally grown large enough to ride."</td></tr>';
+  t+='<tr><td>Adult 2</td><td>43-63</td><td>~6-9 weeks</td><td>All plans</td><td class="soft" style="font-size:11px">"Best time to improve its attributes."</td></tr>';
+  t+='<tr><td>Adult 3</td><td>64-128</td><td>~2-4 months</td><td>All plans</td><td class="soft" style="font-size:11px">"Growth has stabilized. Quite a distinguished air."</td></tr>';
+  t+='<tr><td>Retired</td><td>129+</td><td>~4.3 months</td><td>Done raising</td><td class="soft" style="font-size:11px">Chocobo retires — register or release</td></tr>';
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Care Plans</h4>';
+  t+='<table class="tbl"><thead><tr><th>Plan</th><th class="r-align">STR</th><th class="r-align">END</th><th class="r-align">DIS</th><th class="r-align">REC</th><th class="r-align">AFF</th><th class="r-align">ENE</th><th class="r-align">Cost</th><th>Unlocks</th></tr></thead><tbody>';
+  for(var i=0;i<CHOCO_PLANS.length;i++){
+    var p=CHOCO_PLANS[i];var stg=['Egg','Chick','Adol.','Adult'][Math.min(3,p.stage)];
+    t+='<tr>';t+='<td>'+h(p.name)+'</td>';
+    var stats=['str','end','dis','rec','aff','ene'];
+    for(var s=0;s<stats.length;s++){
+      var v=p[stats[s]];var cls=v>0?' g':v<0?' r':'';
+      t+='<td class="r-align mono-cell'+cls+'">'+(v>0?'+':'')+v+'</td>';
+    }
+    t+='<td class="r-align mono-cell">'+(p.cost||'-')+'</td>';
+    t+='<td class="soft" style="font-size:11px">'+stg+'</td>';
+    t+='</tr>';
+  }
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Stat Ranks</h4>';
+  t+='<table class="tbl"><thead><tr><th>Rank</th><th>Range</th><th>Speed Bonus</th><th>Time Bonus</th></tr></thead><tbody>';
+  for(var r=0;r<CHOCO_RANKS.length;r++){
+    var lo=r*32;var hi=Math.min(255,r*32+31);
+    t+='<tr><td><b>'+CHOCO_RANKS[r]+'</b></td><td>'+lo+'-'+hi+'</td>';
+    t+='<td class="r-align mono-cell">'+(80+r*2.5)+'%</td>';
+    t+='<td class="r-align mono-cell">'+(17+r*4)+' min</td></tr>';
+  }
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Abilities</h4>';
+  t+='<table class="tbl"><thead><tr><th>Ability</th><th>Story to Tell</th><th>Effect</th></tr></thead><tbody>';
+  for(var a=0;a<CHOCO_ABILITIES.length;a++){
+    var ab=CHOCO_ABILITIES[a];
+    t+='<tr><td><b>'+h(ab.name)+'</b></td><td>'+h(ab.story)+'</td><td class="soft" style="font-size:11px">'+h(ab.effect)+'</td></tr>';
+  }
+  t+='</tbody></table>';
+  t+='<p class="soft" style="font-size:11px;margin-top:8px">25% chance per telling. Chocobo needs DIS ≥ D rank (64+) to learn.</p>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Riding Formulas</h4>';
+  t+='<div style="font-size:12px;line-height:1.8">';
+  t+='<b>Speed:</b> 80% + 2.5% per STR rank. Gallop +1 rank, Purple Race Silks +1 rank. Cap 100%.<br>';
+  t+='<b>Time:</b> 17 min + 4 min per END rank. Canter +1 rank, Red Race Silks +1 rank. Cap 45 min.<br>';
+  t+='<b>Digging:</b> Related to Discernment. Burrow/Bore abilities add bonuses (not yet on Phoenix).<br>';
+  t+='</div>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Appearance</h4>';
+  t+='<div style="font-size:12px;line-height:1.8">';
+  t+='DIS ≥ 128 (B rank) → Enlarged crest<br>';
+  t+='STR ≥ 128 (B rank) → Enlarged feet<br>';
+  t+='END ≥ 128 (B rank) → More tail feathers<br>';
+  t+='</div>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">NPC Condition Dialog</h4>';
+  t+='<p class="soft" style="font-size:11px;margin:0 0 8px">What the NPC says when you check on your chocobo — tells you its current state.</p>';
+  t+='<table class="tbl"><thead><tr><th>Condition</th><th>NPC Says</th><th>Action</th></tr></thead><tbody>';
+  t+='<tr><td>Healthy</td><td class="soft" style="font-size:11px">"full of energy" / "bright and focused"</td><td class="soft" style="font-size:11px">Normal care</td></tr>';
+  t+='<tr><td>Hungry</td><td class="soft" style="font-size:11px">"seems hungry" / "quite famished"</td><td class="soft" style="font-size:11px">Feed Gysahl Greens</td></tr>';
+  t+='<tr><td>Bored</td><td class="soft" style="font-size:11px">"bored and restless"</td><td class="soft" style="font-size:11px">Change care plan</td></tr>';
+  t+='<tr><td>Lonely</td><td class="soft" style="font-size:11px">"seems lonely"</td><td class="soft" style="font-size:11px">Visit more often / group plans</td></tr>';
+  t+='<tr><td>Spoiled</td><td class="soft" style="font-size:11px">"behaving quite spoiled"</td><td class="soft" style="font-size:11px">Less pampering, more exercise</td></tr>';
+  t+='<tr><td>Sick</td><td class="soft" style="font-size:11px">"seems to have a stomachache" / "very ill"</td><td class="soft" style="font-size:11px">Gavotte/Gausebit Herb</td></tr>';
+  t+='<tr><td>Injured</td><td class="soft" style="font-size:11px">"is injured"</td><td class="soft" style="font-size:11px">Rest plan + time</td></tr>';
+  t+='<tr><td>Sleeping</td><td class="soft" style="font-size:11px">"sleeping soundly"</td><td class="soft" style="font-size:11px">Normal — don\'t disturb</td></tr>';
+  t+='<tr><td>Run Away</td><td class="soft" style="font-size:11px">"has run away"</td><td class="soft" style="font-size:11px">Low AFF — recover with care</td></tr>';
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Affection Levels</h4>';
+  t+='<div style="font-size:12px;line-height:1.8">';
+  t+='Doesn\'t Care → Can Endure → Slightly Enjoys → Likes → Likes Pretty Well → Likes A Lot → All The Time → <b style="color:var(--acc)">Parent</b><br>';
+  t+='<span class="soft" style="font-size:11px">AFF stat determines how well your chocobo cooperates. Keep above 30 to avoid runaway risk. Parent rank needed for breeding.</span>';
+  t+='</div>';
+
+  t+='<h4 style="margin:16px 0 8px;font-size:13px;color:var(--acc)">Timeline Reality Check</h4>';
+  t+='<div style="font-size:12px;line-height:1.8;padding:8px;border:1px solid var(--acc);border-radius:6px;background:rgba(227,167,94,0.05)">';
+  t+='<b>Egg → Rideable:</b> ~29 Earth days (1 month)<br>';
+  t+='<b>Egg → Retirement:</b> ~129 Earth days (4.3 months)<br>';
+  t+='<b>Egg → Full SS DIS Build:</b> ~90+ days of daily care<br>';
+  t+='<span class="soft" style="font-size:11px">This is a marathon, not a sprint. Plan your care visits around real-life schedule. You can miss a day — the chocobo won\'t die — but affection and energy drop.</span>';
+  t+='</div>';
+
+  t+='</div>';
+  el.innerHTML=t;
+}
+
+// ── Chocobo Digging ──
+var DIG_RANK_NAMES=['Amateur','Recruit','Initiate','Novice','Apprentice','Journeyman','Craftsman','Artisan','Adept'];
+var DIG_RANK_SKILL=[0,10,20,30,40,50,60,70,80];
+var DIG_ZONES=[
+{z:'West Ronfaure',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:17396,n:'Little Worm',w:50,r:0,l:'r'},{i:4504,n:'Acorn',w:50,r:0,l:'r'},{i:688,n:'Arrowwood Log',w:50,r:0,l:'r'},
+{i:833,n:'Moko Grass',w:50,r:1,l:'r'},{i:691,n:'Maple Log',w:50,r:1,l:'r'},{i:698,n:'Ash Log',w:50,r:1,l:'r'},
+{i:694,n:'Chestnut Log',w:10,r:2,l:'r'},{i:840,n:'Chocobo Feather',w:50,r:2,l:'r'},
+{i:573,n:'Vegetable Seeds',w:10,r:3,l:'r'},{i:639,n:'Ronfaure Chestnut',w:10,r:3,l:'r'},{i:918,n:'Mistletoe',w:10,r:3,l:'r'}]},
+{z:'East Ronfaure',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:17396,n:'Little Worm',w:50,r:0,l:'r'},{i:4504,n:'Acorn',w:50,r:0,l:'r'},{i:688,n:'Arrowwood Log',w:50,r:0,l:'r'},
+{i:691,n:'Maple Log',w:50,r:1,l:'r'},{i:698,n:'Ash Log',w:50,r:1,l:'r'},
+{i:694,n:'Chestnut Log',w:10,r:2,l:'r'},{i:574,n:'Fruit Seeds',w:10,r:2,l:'r'},
+{i:639,n:'Ronfaure Chestnut',w:10,r:3,l:'r'},{i:840,n:'Chocobo Feather',w:50,r:3,l:'r'},
+{i:918,n:'Mistletoe',w:10,r:4,l:'r'},{i:4386,n:'King Truffle',w:10,r:7,l:'r'}]},
+{z:'La Theine Plateau',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2605,n:'Coin of Glory',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:17396,n:'Little Worm',w:50,r:0,l:'r'},{i:641,n:'Tin Ore',w:50,r:0,l:'r'},{i:688,n:'Arrowwood Log',w:50,r:0,l:'r'},
+{i:840,n:'Chocobo Feather',w:50,r:1,l:'r'},{i:642,n:'Zinc Ore',w:50,r:1,l:'r'},{i:696,n:'Yew Log',w:50,r:1,l:'r'},
+{i:694,n:'Chestnut Log',w:10,r:2,l:'r'},{i:700,n:'Mahogany Log',w:10,r:3,l:'r'},{i:622,n:'Dried Marjoram',w:10,r:4,l:'r'}]},
+{z:'Valkurm Dunes',items:[
+{i:2606,n:'Coin of Decay',w:5,r:8,l:'t'},{i:1452,n:'Ordelle Bronzepiece',w:5,r:8,l:'t'},{i:1455,n:'One Byne Bill',w:5,r:8,l:'t'},{i:1449,n:'Tukuku Whiteshell',w:5,r:8,l:'t'},
+{i:17395,n:'Lugworm',w:50,r:0,l:'r'},{i:880,n:'Bone Chip',w:100,r:0,l:'r'},
+{i:864,n:'Fish Scales',w:50,r:1,l:'r'},{i:888,n:'Seashell',w:150,r:1,l:'r'},
+{i:17397,n:'Shell Bug',w:50,r:2,l:'r'},{i:893,n:'Giant Femur',w:50,r:3,l:'r'},{i:869,n:'Lizard Molt',w:50,r:3,l:'r'},
+{i:4484,n:'Shall Shell',w:50,r:6,l:'r'},{i:885,n:'Turtle Shell',w:50,r:7,l:'r'}]},
+{z:'Jugner Forest',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2603,n:'Coin of Birth',w:5,r:8,l:'t'},{i:4386,n:'King Truffle',w:5,r:8,l:'t'},
+{i:17396,n:'Little Worm',w:50,r:0,l:'r'},{i:4504,n:'Acorn',w:50,r:0,l:'r'},
+{i:691,n:'Maple Log',w:50,r:1,l:'r'},{i:695,n:'Willow Log',w:50,r:1,l:'r'},
+{i:699,n:'Oak Log',w:50,r:2,l:'r'},{i:697,n:'Holly Log',w:50,r:3,l:'r'},{i:918,n:'Mistletoe',w:10,r:3,l:'r'},
+{i:4447,n:'Scream Fungus',w:5,r:6,l:'r'}]},
+{z:'Batallia Downs',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2604,n:'Coin of Advancement',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:768,n:'Flint Stone',w:50,r:0,l:'r'},{i:880,n:'Bone Chip',w:50,r:0,l:'r'},
+{i:640,n:'Copper Ore',w:50,r:1,l:'r'},{i:847,n:'Bird Feather',w:50,r:1,l:'r'},
+{i:643,n:'Iron Ore',w:50,r:2,l:'r'},{i:106,n:'Red Jar',w:50,r:3,l:'r'},
+{i:845,n:'Black Chocobo Feather',w:5,r:4,l:'r'},{i:4449,n:'Reishi Mushroom',w:5,r:5,l:'r'}]},
+{z:'North Gustaberg',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2605,n:'Coin of Glory',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:17396,n:'Little Worm',w:50,r:0,l:'r'},{i:880,n:'Bone Chip',w:50,r:0,l:'r'},{i:847,n:'Bird Feather',w:50,r:0,l:'r'},{i:864,n:'Fish Scales',w:50,r:0,l:'r'},{i:846,n:'Insect Wing',w:50,r:0,l:'r'},
+{i:1236,n:'Cactus Stems',w:10,r:1,l:'r'},{i:869,n:'Lizard Molt',w:50,r:1,l:'r'},
+{i:749,n:'Mythril Beastcoin',w:10,r:4,l:'r'},{i:644,n:'Mythril Ore',w:10,r:4,l:'r'},{i:645,n:'Darksteel Ore',w:10,r:7,l:'r'}]},
+{z:'South Gustaberg',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2606,n:'Coin of Decay',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:17396,n:'Little Worm',w:50,r:0,l:'r'},{i:880,n:'Bone Chip',w:50,r:0,l:'r'},{i:847,n:'Bird Feather',w:50,r:0,l:'r'},{i:936,n:'Rock Salt',w:50,r:0,l:'r'},{i:846,n:'Insect Wing',w:50,r:0,l:'r'},
+{i:575,n:'Grain Seeds',w:50,r:1,l:'r'},{i:869,n:'Lizard Molt',w:50,r:1,l:'r'},
+{i:749,n:'Mythril Beastcoin',w:50,r:4,l:'r'},{i:644,n:'Mythril Ore',w:10,r:4,l:'r'}]},
+{z:'Konschtat Highlands',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2603,n:'Coin of Birth',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:768,n:'Flint Stone',w:50,r:0,l:'r'},{i:880,n:'Bone Chip',w:50,r:0,l:'r'},{i:864,n:'Fish Scales',w:50,r:0,l:'r'},{i:642,n:'Zinc Ore',w:50,r:0,l:'r'},
+{i:847,n:'Bird Feather',w:10,r:1,l:'r'},{i:869,n:'Lizard Molt',w:50,r:1,l:'r'},
+{i:749,n:'Mythril Beastcoin',w:5,r:4,l:'r'},{i:690,n:'Elm Log',w:5,r:4,l:'r'}]},
+{z:'Pashhow Marshlands',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2604,n:'Coin of Advancement',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:846,n:'Insect Wing',w:50,r:0,l:'r'},
+{i:869,n:'Lizard Molt',w:50,r:1,l:'r'},{i:736,n:'Silver Ore',w:50,r:1,l:'r'},
+{i:749,n:'Mythril Beastcoin',w:10,r:2,l:'r'},{i:885,n:'Turtle Shell',w:10,r:2,l:'r'},{i:695,n:'Willow Log',w:10,r:2,l:'r'},
+{i:703,n:'Petrified Log',w:5,r:3,l:'r'},{i:4448,n:'Puffball',w:5,r:4,l:'r'}]},
+{z:'Rolanberry Fields',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2605,n:'Coin of Glory',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:100,r:0,l:'r'},{i:17396,n:'Little Worm',w:100,r:0,l:'r'},{i:768,n:'Flint Stone',w:100,r:0,l:'r'},
+{i:846,n:'Insect Wing',w:50,r:1,l:'r'},{i:749,n:'Mythril Beastcoin',w:10,r:2,l:'r'},{i:638,n:'Sage',w:10,r:2,l:'r'},
+{i:106,n:'Red Jar',w:10,r:3,l:'r'},{i:748,n:'Gold Beastcoin',w:5,r:6,l:'r'},{i:739,n:'Orichalcum Ore',w:5,r:6,l:'r'}]},
+{z:'West Sarutabaruta',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2606,n:'Coin of Decay',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:17396,n:'Little Worm',w:50,r:0,l:'r'},
+{i:833,n:'Moko Grass',w:50,r:1,l:'r'},{i:689,n:'Lauan Log',w:50,r:1,l:'r'},{i:846,n:'Insect Wing',w:50,r:1,l:'r'},
+{i:841,n:'Yagudo Feather',w:50,r:2,l:'r'},{i:847,n:'Bird Feather',w:10,r:2,l:'r'},{i:834,n:'Saruta Cotton',w:10,r:2,l:'r'},
+{i:701,n:'Rosewood Log',w:5,r:3,l:'r'}]},
+{z:'East Sarutabaruta',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:938,n:'Papaka Grass',w:50,r:0,l:'r'},{i:689,n:'Lauan Log',w:50,r:0,l:'r'},
+{i:846,n:'Insect Wing',w:50,r:1,l:'r'},{i:841,n:'Yagudo Feather',w:50,r:1,l:'r'},{i:834,n:'Saruta Cotton',w:50,r:1,l:'r'},
+{i:572,n:'Herb Seeds',w:50,r:2,l:'r'},{i:847,n:'Bird Feather',w:10,r:2,l:'r'},{i:702,n:'Ebony Log',w:10,r:2,l:'r'},
+{i:701,n:'Rosewood Log',w:5,r:3,l:'r'}]},
+{z:'Tahrongi Canyon',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2604,n:'Coin of Advancement',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:50,r:0,l:'r'},{i:880,n:'Bone Chip',w:50,r:0,l:'r'},
+{i:888,n:'Seashell',w:50,r:1,l:'r'},{i:641,n:'Tin Ore',w:50,r:1,l:'r'},
+{i:893,n:'Giant Femur',w:50,r:2,l:'r'},{i:846,n:'Insect Wing',w:50,r:2,l:'r'},
+{i:841,n:'Yagudo Feather',w:50,r:3,l:'r'},{i:748,n:'Gold Beastcoin',w:10,r:4,l:'r'},{i:737,n:'Gold Ore',w:10,r:4,l:'r'}]},
+{z:'Buburimu Peninsula',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2603,n:'Coin of Birth',w:5,r:8,l:'t'},{i:1452,n:'Ordelle Bronzepiece',w:5,r:8,l:'t'},{i:1455,n:'One Byne Bill',w:5,r:8,l:'t'},{i:1449,n:'Tukuku Whiteshell',w:5,r:8,l:'t'},
+{i:17395,n:'Lugworm',w:100,r:0,l:'r'},{i:17397,n:'Shell Bug',w:100,r:0,l:'r'},{i:888,n:'Seashell',w:100,r:0,l:'r'},
+{i:4484,n:'Shall Shell',w:50,r:1,l:'r'},{i:847,n:'Bird Feather',w:50,r:1,l:'r'},
+{i:641,n:'Tin Ore',w:10,r:2,l:'r'},{i:893,n:'Giant Femur',w:10,r:2,l:'r'},
+{i:738,n:'Platinum Ore',w:5,r:4,l:'r'},{i:887,n:'Coral Fragment',w:5,r:6,l:'r'}]},
+{z:'Meriphataud Mountains',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2604,n:'Coin of Advancement',w:5,r:8,l:'t'},
+{i:768,n:'Flint Stone',w:240,r:0,l:'r'},{i:17296,n:'Pebble',w:100,r:0,l:'r'},
+{i:640,n:'Copper Ore',w:50,r:1,l:'r'},{i:893,n:'Giant Femur',w:50,r:1,l:'r'},
+{i:869,n:'Lizard Molt',w:50,r:2,l:'r'},{i:845,n:'Black Chocobo Feather',w:10,r:3,l:'r'},
+{i:748,n:'Gold Beastcoin',w:10,r:4,l:'r'},{i:646,n:'Adaman Ore',w:5,r:5,l:'r'}]},
+{z:'Sauromugue Champaign',ele:true,items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2605,n:'Coin of Glory',w:5,r:8,l:'t'},
+{i:768,n:'Flint Stone',w:240,r:0,l:'r'},{i:17296,n:'Pebble',w:100,r:0,l:'r'},{i:880,n:'Bone Chip',w:100,r:0,l:'r'},
+{i:846,n:'Insect Wing',w:50,r:1,l:'r'},{i:869,n:'Lizard Molt',w:50,r:1,l:'r'},
+{i:643,n:'Iron Ore',w:50,r:2,l:'r'},{i:845,n:'Black Chocobo Feather',w:10,r:3,l:'r'},{i:106,n:'Red Jar',w:10,r:3,l:'r'},
+{i:748,n:'Gold Beastcoin',w:5,r:4,l:'r'}]},
+{z:'Eastern Altepa Desert',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:768,n:'Flint Stone',w:240,r:0,l:'r'},{i:880,n:'Bone Chip',w:100,r:0,l:'r'},
+{i:17296,n:'Pebble',w:50,r:1,l:'r'},{i:642,n:'Zinc Ore',w:50,r:1,l:'r'},
+{i:736,n:'Silver Ore',w:50,r:2,l:'r'},{i:893,n:'Giant Femur',w:50,r:3,l:'r'},
+{i:866,n:'Wyvern Scales',w:50,r:4,l:'r'},{i:644,n:'Mythril Ore',w:10,r:5,l:'r'},{i:738,n:'Platinum Ore',w:10,r:5,l:'r'},
+{i:942,n:'Philosophers Stone',w:5,r:6,l:'r'}]},
+{z:'Western Altepa Desert',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:880,n:'Bone Chip',w:240,r:0,l:'r'},{i:17296,n:'Pebble',w:150,r:0,l:'r'},
+{i:642,n:'Zinc Ore',w:100,r:1,l:'r'},{i:893,n:'Giant Femur',w:100,r:1,l:'r'},
+{i:643,n:'Iron Ore',w:50,r:2,l:'r'},{i:645,n:'Darksteel Ore',w:10,r:3,l:'r'},{i:737,n:'Gold Ore',w:10,r:3,l:'r'},
+{i:887,n:'Coral Fragment',w:5,r:4,l:'r'},{i:942,n:'Philosophers Stone',w:5,r:4,l:'r'}]},
+{z:'Sanctuary of Zi\'Tah',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2606,n:'Coin of Decay',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:100,r:0,l:'r'},{i:833,n:'Moko Grass',w:100,r:0,l:'r'},{i:880,n:'Bone Chip',w:100,r:0,l:'r'},
+{i:688,n:'Arrowwood Log',w:50,r:1,l:'r'},{i:696,n:'Yew Log',w:50,r:1,l:'r'},
+{i:690,n:'Elm Log',w:50,r:2,l:'r'},{i:4386,n:'King Truffle',w:5,r:3,l:'r'},{i:703,n:'Petrified Log',w:5,r:4,l:'r'}]},
+{z:'Yuhtunga Jungle',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:880,n:'Bone Chip',w:100,r:0,l:'r'},{i:4375,n:'Danceshroom',w:100,r:0,l:'r'},
+{i:628,n:'Cinnamon',w:50,r:1,l:'r'},{i:721,n:'Rattan Lumber',w:50,r:1,l:'r'},
+{i:701,n:'Rosewood Log',w:50,r:2,l:'r'},{i:4448,n:'Puffball',w:50,r:2,l:'r'},
+{i:703,n:'Petrified Log',w:10,r:3,l:'r'},{i:4386,n:'King Truffle',w:10,r:3,l:'r'},{i:702,n:'Ebony Log',w:5,r:5,l:'r'}]},
+{z:'Yhoator Jungle',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},
+{i:880,n:'Bone Chip',w:100,r:0,l:'r'},{i:4432,n:'Kazham Pineapple',w:50,r:0,l:'r'},{i:689,n:'Lauan Log',w:50,r:0,l:'r'},
+{i:700,n:'Mahogany Log',w:50,r:1,l:'r'},{i:923,n:'Dryad Root',w:50,r:1,l:'r'},{i:4449,n:'Reishi Mushroom',w:10,r:1,l:'r'},
+{i:4450,n:'Coral Fungus',w:10,r:3,l:'r'},{i:702,n:'Ebony Log',w:5,r:5,l:'r'}]},
+{z:'Carpenter\'s Landing',items:[
+{i:4386,n:'King Truffle',w:5,r:8,l:'t'},
+{i:17396,n:'Little Worm',w:100,r:0,l:'r'},{i:688,n:'Arrowwood Log',w:100,r:0,l:'r'},
+{i:4504,n:'Acorn',w:50,r:1,l:'r'},{i:695,n:'Willow Log',w:50,r:1,l:'r'},
+{i:691,n:'Maple Log',w:50,r:2,l:'r'},{i:697,n:'Holly Log',w:50,r:2,l:'r'},
+{i:918,n:'Mistletoe',w:10,r:5,l:'r'},{i:4447,n:'Scream Fungus',w:10,r:6,l:'r'}]},
+{z:'Bibiki Bay',items:[
+{i:3509,n:'Heavy Metal',w:5,r:8,l:'t'},{i:2603,n:'Coin of Birth',w:5,r:8,l:'t'},
+{i:641,n:'Tin Ore',w:50,r:0,l:'r'},{i:17395,n:'Lugworm',w:50,r:0,l:'r'},
+{i:17397,n:'Shell Bug',w:10,r:1,l:'r'},{i:888,n:'Seashell',w:100,r:1,l:'r'},{i:4484,n:'Shall Shell',w:50,r:2,l:'r'},{i:847,n:'Bird Feather',w:50,r:2,l:'r'},{i:893,n:'Giant Femur',w:50,r:2,l:'r'},
+{i:738,n:'Platinum Ore',w:5,r:7,l:'r'},{i:887,n:'Coral Fragment',w:5,r:7,l:'r'}]},
+{z:'Wajaom Woodlands',items:[
+{i:2488,n:'Alexandrite',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:100,r:0,l:'r'},{i:833,n:'Moko Grass',w:100,r:0,l:'r'},
+{i:2213,n:'Pine Nuts',w:50,r:1,l:'r'},{i:845,n:'Black Chocobo Feather',w:50,r:1,l:'r'},
+{i:702,n:'Ebony Log',w:50,r:2,l:'r'},{i:838,n:'Spider Web',w:10,r:3,l:'r'},{i:2164,n:'Pephredo Hive Chip',w:10,r:4,l:'r'},
+{i:646,n:'Adaman Ore',w:10,r:6,l:'r'}]},
+{z:'Bhaflau Thickets',items:[
+{i:2488,n:'Alexandrite',w:5,r:8,l:'t'},
+{i:17296,n:'Pebble',w:100,r:0,l:'r'},{i:768,n:'Flint Stone',w:100,r:0,l:'r'},{i:2213,n:'Pine Nuts',w:50,r:0,l:'r'},{i:622,n:'Dried Marjoram',w:50,r:0,l:'r'},
+{i:2150,n:'Colibri Feather',w:50,r:1,l:'r'},{i:2155,n:'Lesser Chigoe',w:10,r:2,l:'r'},
+{i:703,n:'Petrified Log',w:50,r:3,l:'r'},{i:838,n:'Spider Web',w:10,r:4,l:'r'},
+{i:739,n:'Orichalcum Ore',w:5,r:7,l:'r'}]}
+];
+
+var DIG_DAY_ROCKS=[
+{day:'Firesday',rock:'Red Rock',ore:'Fire Ore'},
+{day:'Earthsday',rock:'Yellow Rock',ore:'Earth Ore'},
+{day:'Watersday',rock:'Blue Rock',ore:'Water Ore'},
+{day:'Windsday',rock:'Green Rock',ore:'Wind Ore'},
+{day:'Iceday',rock:'Translucent Rock',ore:'Ice Ore'},
+{day:'Lightningday',rock:'Purple Rock',ore:'Lightning Ore'},
+{day:'Lightsday',rock:'White Rock',ore:'Light Ore'},
+{day:'Darksday',rock:'Black Rock',ore:'Dark Ore'}
+];
+
+var DIG_ELE_ORE_ZONES=['La Theine Plateau','Jugner Forest','Batallia Downs','Konschtat Highlands','Pashhow Marshlands','Rolanberry Fields','Tahrongi Canyon','Meriphataud Mountains','Sauromugue Champaign'];
+
+function digItemPrice(id){
+  var items=D.allItems||[];
+  for(var i=0;i<items.length;i++){if(items[i].id===id)return items[i].ah||items[i].bp||0;}
+  return 0;
+}
+function fmtDigGil(v){if(!v)return'—';if(v>=10000)return(v/1000).toFixed(v>=100000?0:1)+'k';return v.toLocaleString();}
+
+function renderChocoDig(el){
+  var t='<div style="max-width:900px">';
+
+  // ── Care Guide ──
+  t+='<h3 style="color:var(--acc);margin:0 0 8px">Digging Care Guide — Max DIS (SS Rank)</h3>';
+  t+='<div style="background:var(--bg2);padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:12px;line-height:1.7">';
+  t+='<p style="margin:0 0 8px"><b>Goal:</b> Maximize Discernment (DIS) to SS rank (224+). Care plan stats apply every day of the block regardless of Energy, so never rest — always pick the highest DIS plan available.</p>';
+  t+='<p style="margin:0 0 12px;color:var(--soft)">Set Plan 1 + Plan 2 (3 or 7 days each) as a queue. The chocobo runs Plan 1 first, then Plan 2. Up to 14 V-days of AFK care (~13.5 real hours).</p>';
+
+  t+='<table class="tbl" style="font-size:12px;margin-bottom:8px"><thead><tr><th>Stage</th><th>V-Days</th><th>Real Time</th><th>Care Plan</th><th>DIS/day</th><th>DIS Total</th><th>Cost</th></tr></thead><tbody>';
+  t+='<tr><td>Egg</td><td>0–3 (4d)</td><td>~4 hrs</td><td>Basic Care (only option)</td><td>+1</td><td>4</td><td>Free</td></tr>';
+  t+='<tr><td>Chick</td><td>4–18 (15d)</td><td>~14.5 hrs</td><td>Listening to Music</td><td>+1</td><td>19</td><td>Free</td></tr>';
+  t+='<tr><td>Adolescent</td><td>19–28 (10d)</td><td>~9.7 hrs</td><td>Exhibiting to Public</td><td>+5</td><td>69</td><td>1,000g</td></tr>';
+  t+='<tr style="color:var(--gain)"><td>Adult</td><td>29–46 (18d)</td><td>~17.4 hrs</td><td><b>Digging for Treasure</b></td><td><b>+10</b></td><td><b>249 (SS!)</b></td><td>1,800g</td></tr>';
+  t+='<tr><td>Adult</td><td>47–128 (82d)</td><td>~79 hrs</td><td>Dig (DIS capped at 255)</td><td>—</td><td>255</td><td>8,200g</td></tr>';
+  t+='</tbody></table>';
+  t+='<div style="margin-top:8px;padding:8px 12px;background:var(--bg);border-radius:4px">';
+  t+='<b style="color:var(--gain)">SS rank DIS by day 46!</b> DIS caps at 255. Total cost for 100 days of paid plans: ~11,000g + Gysahl Greens (10g/day).<br>';
+  t+='<span style="color:var(--soft)">1 Vanadiel day ≈ 58 real minutes. The full 129-day raising cycle takes ~5 real days. Energy goes to 0 but stats still apply.</span>';
+  t+='</div></div>';
+
+  // ── Riding Routes ──
+  t+='<h3 style="color:var(--acc);margin:0 0 8px">Chocobo Routes</h3>';
+  t+='<div style="background:var(--bg2);padding:12px 16px;border-radius:6px;margin-bottom:16px;font-size:12px;line-height:1.7">';
+  t+='<p style="margin:0 0 8px;color:var(--soft)">Approximate ride times at decent speed (~B rank STR). Each zone takes ~3–4 min on chocobo.</p>';
+  t+='<table class="tbl" style="font-size:12px"><thead><tr><th>Route</th><th>Zones</th><th>~Time</th><th>Path</th></tr></thead><tbody>';
+  t+='<tr><td>Sandy → Bastok</td><td>5</td><td>~15 min</td><td>E.Ronfaure → La Theine → Valkurm → Konschtat → N.Gustaberg</td></tr>';
+  t+='<tr><td>Sandy → Jeuno</td><td>4</td><td>~12 min</td><td>E.Ronfaure → La Theine → Jugner → Batallia</td></tr>';
+  t+='<tr><td>Sandy → Windurst</td><td>7</td><td>~21 min</td><td>E.Ronfaure → La Theine → Valkurm → Konschtat → Pashhow → Tahrongi → E.Sarutabaruta</td></tr>';
+  t+='<tr><td>Bastok → Jeuno</td><td>4</td><td>~12 min</td><td>N.Gustaberg → Konschtat → Pashhow → Rolanberry</td></tr>';
+  t+='<tr><td>Bastok → Windurst</td><td>5</td><td>~15 min</td><td>N.Gustaberg → Konschtat → Pashhow → Tahrongi → E.Sarutabaruta</td></tr>';
+  t+='<tr><td>Windurst → Jeuno</td><td>4</td><td>~12 min</td><td>E.Sarutabaruta → Tahrongi → Meriphataud → Sauromugue</td></tr>';
+  t+='</tbody></table>';
+  t+='<div style="margin-top:8px;padding:6px 10px;background:var(--bg);border-radius:4px;font-size:11px">';
+  t+='<b>Riding Speed:</b> 80% + 2.5% per STR rank (cap 100%). Gallop ability +1 rank.<br>';
+  t+='<b>Riding Time:</b> 17 min + 4 min per END rank (cap 45 min). Canter ability +1 rank.';
+  t+='</div></div>';
+
+  // ── Zone Loot Tables ──
+  t+='<h3 style="color:var(--acc);margin:0 0 8px">Zone Loot Tables</h3>';
+  t+='<p class="soft" style="font-size:12px;margin-bottom:8px">Only TREASURE and REGULAR layers shown — Burrow/Bore are not yet implemented on Phoenix. Treasure items are checked first (rare); if none hit, regular items roll. Weather crystals (10%), day-element rocks (5%), and elemental ores (10% in specific zones) are separate bonus rolls.</p>';
+  t+='<div style="margin-bottom:12px"><select id="digZoneSelect" style="padding:6px 10px;border-radius:4px;background:var(--bg2);color:var(--fg);border:1px solid var(--rule);min-width:220px">';
+  for(var z=0;z<DIG_ZONES.length;z++){
+    t+='<option value="'+z+'">'+h(DIG_ZONES[z].z)+(DIG_ZONES[z].ele?' ⚡':'')+'</option>';
+  }
+  t+='</select> <span class="soft" style="font-size:11px">⚡ = Elemental Ore zone</span></div>';
+  t+='<div id="digZoneLoot"></div>';
+
+  // ── Mechanics Reference ──
+  t+='<h3 style="color:var(--acc);margin:16px 0 8px">Digging Mechanics</h3>';
+  t+='<div style="background:var(--bg2);padding:12px 16px;border-radius:6px;font-size:12px;line-height:1.7">';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Dig Skill Ranks</h4>';
+  t+='<table class="tbl" style="font-size:12px;margin-bottom:12px"><thead><tr><th>Rank</th><th>Skill</th><th>Zone CD</th><th>Dig CD</th></tr></thead><tbody>';
+  for(var r=0;r<DIG_RANK_NAMES.length;r++){
+    var zoneCD=Math.max(10,60-r*5);
+    var digCD=Math.max(3,15-r*5);
+    t+='<tr><td>'+DIG_RANK_NAMES[r]+'</td><td>'+DIG_RANK_SKILL[r]+'-'+(DIG_RANK_SKILL[r]+9)+'</td><td>'+zoneCD+'s</td><td>'+digCD+'s</td></tr>';
+  }
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Moon Phase</h4>';
+  t+='<p style="margin:0 0 8px">Moon affects item roll chance. Multiplier = <code>1.5 - |moon% - 50| / 50</code>. New/Full moon (0% or 100%) = 0.5× (easier to find items). Half moon (50%) = 1.5× (harder). Lower multiplier = better odds.</p>';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Weather Crystals (10% chance per dig)</h4>';
+  t+='<p style="margin:0 0 4px">When weather is active, 10% chance to dig a crystal matching that element. Double weather → cluster instead. Weight 100/1000.</p>';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Day-Element Rocks (5% chance, Novice+ rank)</h4>';
+  t+='<table class="tbl" style="font-size:12px;margin-bottom:12px"><thead><tr><th>Day</th><th>Rock</th></tr></thead><tbody>';
+  for(var d=0;d<DIG_DAY_ROCKS.length;d++){
+    t+='<tr><td>'+DIG_DAY_ROCKS[d].day+'</td><td>'+DIG_DAY_ROCKS[d].rock+'</td></tr>';
+  }
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Elemental Ores (Craftsman+ rank, elemental weather, 9 zones)</h4>';
+  t+='<p style="margin:0 0 4px">In these zones, during matching elemental weather, with Craftsman rank (60+) and moon phase 7–21%, 10% chance to dig the day\'s elemental ore:</p>';
+  t+='<div style="margin:0 0 8px;columns:2;font-size:11px">';
+  for(var e=0;e<DIG_ELE_ORE_ZONES.length;e++){t+='<div>• '+DIG_ELE_ORE_ZONES[e]+'</div>';}
+  t+='</div>';
+  t+='<table class="tbl" style="font-size:12px;margin-bottom:12px"><thead><tr><th>Day</th><th>Elemental Ore</th></tr></thead><tbody>';
+  for(var d=0;d<DIG_DAY_ROCKS.length;d++){
+    t+='<tr><td>'+DIG_DAY_ROCKS[d].day+'</td><td>'+DIG_DAY_ROCKS[d].ore+'</td></tr>';
+  }
+  t+='</tbody></table>';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Skill-Up</h4>';
+  t+='<p style="margin:0 0 8px">15% chance per successful dig. Rank auto-increments at skill 10, 20, 30, etc.</p>';
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Daily Dig Limit</h4>';
+  t+='<p style="margin:0 0 0">100 successful digs per Vanadiel day (server setting). Failed digs don\'t count.</p>';
+
+  t+='</div>';
+
+  t+='</div>';
+  el.innerHTML=t;
+
+  var sel=$('digZoneSelect');
+  if(sel){sel.onchange=function(){renderDigZoneLoot();};renderDigZoneLoot();}
+}
+
+function renderDigZoneLoot(){
+  var sel=$('digZoneSelect');if(!sel)return;
+  var zd=DIG_ZONES[parseInt(sel.value)];if(!zd)return;
+  var el=$('digZoneLoot');if(!el)return;
+  var treasure=zd.items.filter(function(x){return x.l==='t';});
+  var regular=zd.items.filter(function(x){return x.l==='r';});
+
+  var t='<div style="background:var(--bg2);padding:12px 16px;border-radius:6px;margin-bottom:16px">';
+  if(zd.ele){t+='<div style="margin-bottom:8px;font-size:12px;color:var(--acc)">⚡ Elemental Ore zone — can dig elemental ores here during matching weather at Craftsman+ rank</div>';}
+
+  if(treasure.length){
+    t+='<h4 style="margin:0 0 6px;font-size:13px;color:#f0c040">Treasure Layer (priority, Adept rank required)</h4>';
+    t+='<table class="tbl" style="font-size:12px;margin-bottom:12px"><thead><tr><th>Item</th><th>Weight</th><th>AH Price</th></tr></thead><tbody>';
+    for(var i=0;i<treasure.length;i++){
+      var p=digItemPrice(treasure[i].i);
+      t+='<tr><td>'+h(treasure[i].n)+'</td><td>'+treasure[i].w+'</td><td>'+fmtDigGil(p)+'</td></tr>';
+    }
+    t+='</tbody></table>';
+  }
+
+  t+='<h4 style="margin:0 0 6px;font-size:13px">Regular Layer</h4>';
+  t+='<table class="tbl" style="font-size:12px"><thead><tr><th>Item</th><th>Weight</th><th>Rank Req</th><th>AH Price</th></tr></thead><tbody>';
+  for(var i=0;i<regular.length;i++){
+    var p=digItemPrice(regular[i].i);
+    var rn=DIG_RANK_NAMES[regular[i].r]||'?';
+    t+='<tr><td>'+h(regular[i].n)+'</td><td>'+regular[i].w+'</td><td>'+rn+'</td><td>'+fmtDigGil(p)+'</td></tr>';
+  }
+  t+='</tbody></table>';
+  t+='</div>';
+  el.innerHTML=t;
 }
 
 // ── NM Maps (preserved from original) ──
@@ -3339,6 +4332,58 @@ function init(){
     });
   };
 
+  var PX_MODE='hot';
+  function openPx(){
+    $('pxOverlay').classList.add('open');
+    fetch('/api/scanner-config').then(function(r){return r.json();}).then(function(cfg){
+      $('pxHotCount').textContent=cfg.hotCount+' items';
+      $('pxFullCount').textContent=cfg.fullCount+' items';
+      $('pxModeHot').querySelector('.mode-stat:last-child').textContent='30/min · ~'+Math.ceil(cfg.hotCount/30)+' min';
+      $('pxModeFull').querySelector('.mode-stat:last-child').textContent='10/min · ~'+Math.ceil(cfg.fullCount/10)+' min';
+    });
+  }
+  function closePx(){$('pxOverlay').classList.remove('open');}
+  $('btnPhoenixScan').onclick=openPx;
+  $('pxClose').onclick=closePx;
+  $('pxOverlay').onclick=function(e){if(e.target===this)closePx();};
+  $('pxModeHot').onclick=function(){PX_MODE='hot';$('pxModeHot').classList.add('on');$('pxModeFull').classList.remove('on');};
+  $('pxModeFull').onclick=function(){PX_MODE='full';$('pxModeFull').classList.add('on');$('pxModeHot').classList.remove('on');};
+  $('pxCopy').onclick=function(){
+    var btn=$('pxCopy');btn.textContent='Loading...';btn.disabled=true;
+    fetch('/api/scanner.js').then(function(r){return r.text();}).then(function(js){
+      return navigator.clipboard.writeText(js);
+    }).then(function(){
+      btn.textContent='✓ Copied!';setTimeout(function(){btn.textContent='📋 Copy Scanner JS';btn.disabled=false;},2000);
+      $('pxStatus').classList.add('show');
+      $('pxStatus').textContent='Scanner JS copied! Paste into phoenix-xi.com console.\nRun: phoenixScan("'+PX_MODE+'")';
+    }).catch(function(e){
+      btn.textContent='📋 Copy Scanner JS';btn.disabled=false;toast('Copy failed: '+e.message);
+    });
+  };
+  function importScanFile(file){
+    var st=$('pxStatus');st.classList.add('show');st.textContent='Reading '+file.name+'...';
+    var reader=new FileReader();
+    reader.onload=function(e){
+      try{var data=JSON.parse(e.target.result);}catch(ex){st.textContent='Error: invalid JSON';return;}
+      st.textContent='Importing '+Object.keys(data.prices||{}).length+' singles, '+Object.keys(data.stackPrices||{}).length+' stacks...';
+      fetch('/api/phoenix-ah-import',{method:'POST',headers:{'Content-Type':'application/json'},body:e.target.result}).then(function(r){
+        if(!r.ok)throw new Error('Server error '+r.status);return r.json();
+      }).then(function(res){
+        var s=res.ahScanStats||{};
+        st.textContent='Imported! '+s.single+' singles, '+s.stack+' stacks ('+s['new']+' new, '+s.updated+' updated)';
+        fetch('/api/refresh',{method:'POST'}).then(function(r){return r.json();}).then(function(data){
+          D=data;renderTicker();renderActive();updateStatus();
+        });
+      }).catch(function(ex){st.textContent='Import failed: '+ex.message;});
+    };
+    reader.readAsText(file);
+  }
+  $('pxDrop').onclick=function(){$('pxFile').click();};
+  $('pxFile').onchange=function(){if(this.files[0])importScanFile(this.files[0]);this.value='';};
+  $('pxDrop').ondragover=function(e){e.preventDefault();this.classList.add('dragover');};
+  $('pxDrop').ondragleave=function(){this.classList.remove('dragover');};
+  $('pxDrop').ondrop=function(e){e.preventDefault();this.classList.remove('dragover');if(e.dataTransfer.files[0])importScanFile(e.dataTransfer.files[0]);};
+
   qsa('.arb-card').forEach(function(c){c.onclick=function(){
     MKT_ARB=this.dataset.arb;qsa('.arb-card').forEach(function(x){x.classList.remove('on');});this.classList.add('on');renderMarket();
   };});
@@ -3364,14 +4409,20 @@ function init(){
     COMBAT_TAB=this.dataset.combat;qsa('#combatTabs .sub-tab').forEach(function(x){x.classList.remove('on');});this.classList.add('on');renderCombat();
   };});
 
+  qsa('#chocoTabs .sub-tab').forEach(function(t){t.onclick=function(){
+    CHOCO_TAB=this.dataset.choco;qsa('#chocoTabs .sub-tab').forEach(function(x){x.classList.remove('on');});this.classList.add('on');renderChocobo();
+  };});
+
+  $('gardenSearch').oninput=renderGarden;$('gardenSeed').onchange=renderGarden;$('gardenProfitOnly').onchange=renderGarden;
+
   var tickerSorts=['spread','delta','recent'];var tsi=0;
   $('tickerSort').onclick=function(){tsi=(tsi+1)%tickerSorts.length;TICKER_SORT=tickerSorts[tsi];
     this.textContent='▼ '+tickerSorts[tsi].charAt(0).toUpperCase()+tickerSorts[tsi].slice(1);renderTicker();};
 
-  var TAB_KEYS={'1':'market','2':'craft','3':'fish','4':'sources','5':'combat','6':'gilhr','7':'nmmaps'};
+  var TAB_KEYS={'1':'market','2':'craft','3':'fish','4':'sources','5':'combat','6':'garden','7':'gilhr','8':'nmmaps','9':'chocobo'};
   document.addEventListener('keydown',function(e){
     if(e.ctrlKey&&e.key==='k'){e.preventDefault();openCmd();return;}
-    if(e.key==='Escape'){closeCmd();$('charDrawer').classList.remove('open');return;}
+    if(e.key==='Escape'){closeCmd();closePx();$('charDrawer').classList.remove('open');return;}
     if(e.ctrlKey&&e.key==='p'){e.preventDefault();$('charDrawer').classList.toggle('open');return;}
     if(document.activeElement&&(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='SELECT'))return;
     if(TAB_KEYS[e.key]){e.preventDefault();switchTab(TAB_KEYS[e.key]);return;}
@@ -3409,6 +4460,12 @@ window.addEventListener('DOMContentLoaded',init);
 
 def make_handler(state, html_bytes):
     class H(SimpleHTTPRequestHandler):
+        def do_OPTIONS(self):
+            self.send_response(204)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
         def do_GET(self):
             if self.path == '/':
                 self.send_response(200)
@@ -3437,6 +4494,25 @@ def make_handler(state, html_bytes):
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps(get_ah_deltas()).encode())
+            elif self.path.startswith('/api/scanner'):
+                self._serve_scanner()
+            else:
+                self.send_error(404)
+        def _serve_scanner(self):
+            if self.path == '/api/scanner-config':
+                config = get_scanner_config()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Cache-Control', 'no-cache')
+                self.end_headers()
+                self.wfile.write(json.dumps(config).encode())
+            elif self.path == '/api/scanner.js':
+                js = generate_scanner_js()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/javascript; charset=utf-8')
+                self.send_header('Cache-Control', 'no-cache')
+                self.end_headers()
+                self.wfile.write(js.encode())
             else:
                 self.send_error(404)
         def do_POST(self):
@@ -3468,6 +4544,26 @@ def make_handler(state, html_bytes):
                 except Exception as e:
                     self.send_response(500)
                     self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'error': str(e)}).encode())
+            elif self.path == '/api/phoenix-ah-import':
+                try:
+                    length = int(self.headers.get('Content-Length', 0))
+                    body = json.loads(self.rfile.read(length)) if length else {}
+                    ah_stats = import_phoenix_ah_prices(body)
+                    data = load_all()
+                    state['json'] = json.dumps(data, separators=(',', ':')).encode()
+                    resp = json.dumps({'ok': True, 'ahScanStats': ah_stats})
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Cache-Control', 'no-cache')
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.end_headers()
+                    self.wfile.write(resp.encode())
+                except Exception as e:
+                    self.send_response(500)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Access-Control-Allow-Origin', '*')
                     self.end_headers()
                     self.wfile.write(json.dumps({'error': str(e)}).encode())
             elif self.path == '/api/scan-phoenix':
@@ -3611,6 +4707,154 @@ def fetch_ah_prices():
         snap_count = 0
     return {'single': len(prices), 'stack': len(stack_prices), 'bazaar': len(bazaar_prices),
             'total': total, 'new': new_count, 'updated': updated_count, 'snapshots': snap_count}
+
+
+def get_scanner_config():
+    """Build scan config: full list (all crafting items) and hot list (items with known prices)."""
+    scan_file = os.path.join(ROOT, 'data', 'scan-items.json')
+    full_ids = []
+    if os.path.exists(scan_file):
+        with open(scan_file) as f:
+            full_ids = json.load(f)
+
+    hot_ids = []
+    if os.path.exists(AH):
+        with open(AH) as f:
+            ah = json.load(f)
+        priced = set(ah.get('prices', {}).keys()) | set(ah.get('stackPrices', {}).keys())
+        full_set = set(str(x) for x in full_ids)
+        hot_ids = sorted(int(x) for x in priced & full_set)
+
+    return {
+        'full': full_ids,
+        'hot': hot_ids,
+        'fullCount': len(full_ids),
+        'hotCount': len(hot_ids),
+    }
+
+
+def generate_scanner_js():
+    """Generate standalone scanner JS with embedded item IDs."""
+    config = get_scanner_config()
+    full_json = json.dumps(config['full'], separators=(',', ':'))
+    hot_json = json.dumps(config['hot'], separators=(',', ':'))
+    return f"""// === Phoenix XI AH Scanner ===
+// Paste into console on https://phoenix-xi.com/item-browser
+// Usage: phoenixScan('hot')  — items with known prices ({config['hotCount']} items, 30/min)
+//        phoenixScan('full') — all crafting items ({config['fullCount']} items, 10/min)
+//        phoenixScan('full', {{rate: 20}}) — custom rate
+(function(){{
+var FULL={full_json};
+var HOT={hot_json};
+var API='https://api.phoenix-xi.com/api/v1';
+var wait=function(ms){{return new Promise(function(r){{setTimeout(r,ms);}});}};
+window.phoenixScan=async function(mode,opts){{
+mode=mode||'hot';opts=opts||{{}};
+var defaultRate=mode==='full'?10:30;
+var rate=opts.rate||defaultRate;
+var delayMs=Math.ceil(60000/rate);
+var ids=mode==='full'?FULL:HOT;
+if(!ids.length){{console.error('[Scanner] No items for mode "'+mode+'". Run a full scan first.');return;}}
+console.log('[Scanner] Mode: '+mode+', Items: '+ids.length+', Rate: '+rate+'/min, Est: '+Math.ceil(ids.length/rate)+' min');
+window._scanStatus={{mode:mode,phase:'scanning',done:0,total:ids.length,singles:0,stacks:0,errors:0,rate:rate,startTime:Date.now(),finished:false}};
+window._scanResults={{prices:{{}},stackPrices:{{}}}};
+var S=window._scanStatus,R=window._scanResults;
+for(var i=0;i<ids.length;i++){{
+if(S.killed){{S.phase='killed';console.log('[Scanner] Killed');return;}}
+var id=ids[i];
+try{{
+var r=await fetch(API+'/items/'+id+'/prices',{{credentials:'include'}});
+if(r.status===429){{
+var resetTs=parseInt(r.headers.get('x-ratelimit-reset')||'0');
+var waitSec=Math.max(resetTs-Math.floor(Date.now()/1000),10)+2;
+console.log('[Scanner] Rate limited, waiting '+waitSec+'s...');
+await wait(waitSec*1000);i--;continue;
+}}
+if(!r.ok){{S.errors++;S.done++;continue;}}
+var d=await r.json();var data=d.data;
+if(!data){{S.done++;continue;}}
+var key=String(id);var sales=data.sales||[];
+var sg=sales.filter(function(s){{return(s.quantity||1)===1&&s.price>0;}}).map(function(s){{return s.price;}});
+var st=sales.filter(function(s){{return(s.quantity||1)>1&&s.price>0;}}).map(function(s){{return s.price;}});
+if(sg.length){{sg.sort(function(a,b){{return a-b;}});R.prices[key]=sg[Math.floor(sg.length/2)];}}
+else if(data.stats&&data.stats.averagePrice>0&&!st.length)R.prices[key]=Math.round(data.stats.averagePrice);
+if(st.length){{st.sort(function(a,b){{return a-b;}});R.stackPrices[key]=st[Math.floor(st.length/2)];}}
+S.done++;S.singles=Object.keys(R.prices).length;S.stacks=Object.keys(R.stackPrices).length;
+if(S.done%100===0){{
+var elapsed=((Date.now()-S.startTime)/60000).toFixed(1);
+var eta=((ids.length-S.done)/(S.done/elapsed)).toFixed(0);
+console.log('[Scanner] '+S.done+'/'+ids.length+' ('+S.singles+'s/'+S.stacks+'st) '+elapsed+'m elapsed, ~'+eta+'m left');
+}}
+}}catch(e){{S.errors++;S.done++;}}
+await wait(delayMs);
+}}
+S.phase='done';S.finished=true;
+var totalMin=((Date.now()-S.startTime)/60000).toFixed(1);
+console.log('[Scanner] COMPLETE: '+S.singles+' singles, '+S.stacks+' stacks, '+S.errors+' errors, '+totalMin+' min');
+var payload=JSON.stringify({{prices:R.prices,stackPrices:R.stackPrices,items_scanned:ids.length,mode:mode,scannedAt:new Date().toISOString()}});
+var blob=new Blob([payload],{{type:'application/json'}});
+var url=URL.createObjectURL(blob);
+var a=document.createElement('a');a.href=url;
+a.download='phoenix-scan-'+mode+'-'+new Date().toISOString().slice(0,10)+'.json';
+document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+console.log('[Scanner] Results downloaded as '+a.download);
+console.log('[Scanner] Import: curl -X POST -H "Content-Type: application/json" -d @~/Downloads/'+a.download+' http://localhost:8090/api/phoenix-ah-import');
+}};
+window.phoenixScanKill=function(){{if(window._scanStatus)window._scanStatus.killed=true;}};
+console.log('=== Phoenix XI AH Scanner loaded ===');
+console.log('  phoenixScan("hot")    — {config['hotCount']} items, 30/min, ~'+Math.ceil({config['hotCount']}/30)+' min');
+console.log('  phoenixScan("full")   — {config['fullCount']} items, 10/min, ~'+Math.ceil({config['fullCount']}/10)+' min');
+console.log('  phoenixScan("full",{{rate:20}}) — custom rate');
+console.log('  phoenixScanKill()     — stop scan');
+console.log('  _scanStatus           — check progress');
+}})();"""
+
+
+def import_phoenix_ah_prices(incoming):
+    """Import AH prices POSTed from browser-side Phoenix scanner into ah-prices.json."""
+    existing = {}
+    if os.path.exists(AH):
+        with open(AH) as f:
+            existing = json.load(f)
+
+    prices = dict(existing.get('prices', {}))
+    stack_prices = dict(existing.get('stackPrices', {}))
+    timestamps = dict(existing.get('timestamps', {}))
+    now = int(time.time())
+    new_count = 0
+    updated_count = 0
+
+    for key, val in incoming.get('prices', {}).items():
+        if val and val > 0:
+            was_new = key not in prices
+            prices[key] = int(val)
+            timestamps[key] = now
+            if was_new:
+                new_count += 1
+            else:
+                updated_count += 1
+
+    for key, val in incoming.get('stackPrices', {}).items():
+        if val and val > 0:
+            stack_prices[key] = int(val)
+
+    total_unique = len(set(list(prices.keys()) + list(stack_prices.keys())))
+    result = {
+        'prices': prices, 'stackPrices': stack_prices,
+        'bazaarPrices': existing.get('bazaarPrices', {}),
+        'timestamps': timestamps,
+        'server': 'phoenixxi', 'fetched': now, 'count': total_unique,
+    }
+    os.makedirs(os.path.dirname(AH), exist_ok=True)
+    with open(AH, 'w', encoding='utf-8') as f:
+        json.dump(result, separators=(',', ':'), fp=f)
+    try:
+        snap_count = store_ah_snapshot(prices, stack_prices, existing.get('bazaarPrices', {}))
+    except Exception:
+        snap_count = 0
+    return {'single': len(prices), 'stack': len(stack_prices),
+            'total': total_unique, 'new': new_count, 'updated': updated_count,
+            'items_scanned': incoming.get('items_scanned', 0), 'snapshots': snap_count}
 
 
 def main():

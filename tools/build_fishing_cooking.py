@@ -320,7 +320,8 @@ def build_tier(tier):
     for n in cfg_notes:
         if n['craft'] in ('cook', 'fish') and lo <= n['level'] <= hi:
             label = 'Fishing' if n['craft'] == 'fish' else 'Cooking'
-            h.append(f'<div class="guide-tip"><strong>{label} Lv {n["level"]}:</strong> {esc(n["note"])}</div>')
+            cls = 'guide-protip' if n.get('priority') == 'critical' else 'guide-tip'
+            h.append(f'<div class="{cls}"><strong>{label} Lv {n["level"]}:</strong> {esc(n["note"])}</div>')
     h.append('<div class="fc-recipes">')
     for r in tier['recipes']:
         h.append(build_recipe_card(r))

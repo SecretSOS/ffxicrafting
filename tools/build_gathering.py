@@ -505,6 +505,10 @@ def build_gardening():
     body += 'Gardening is a popular way to obtain crafting materials, rare seeds, and elemental ores without leaving town. '
     body += 'You can tend up to 10 flowerpots across your Mog House and storage, making it a reliable passive income source.</p></header>\n'
 
+    body += '<div class="guide-tip" style="margin:0 1.2em 1em"><strong>Moghancement: Gardening</strong> — '
+    body += 'Use <b>Earthen Flower Pots</b> (or any pot with Earth aura). 7 Workbenches + your 10 pots gives you medium Moghancement: Gardening for cheap. '
+    body += 'Moghancement increases yield and can affect rare seed drops.</div>\n'
+
     body += GARDENING_TOOL_HTML
 
     for seed_num in sorted(data.keys()):

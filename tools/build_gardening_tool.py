@@ -10,14 +10,14 @@ DB = os.path.join(os.path.dirname(__file__), '..', 'data', 'ffxi_crafting.db')
 OUT = os.path.join(os.path.dirname(__file__), '..', 'public', 'gardening-data.js')
 
 SEEDS = {
-    1: {"name": "Herb Seeds", "id": 572, "dual": True},
-    2: {"name": "Vegetable Seeds", "id": 573, "dual": False},
+    1: {"name": "Fruit Seeds", "id": 574, "dual": True},
+    2: {"name": "Herb Seeds", "id": 572, "dual": False},
     3: {"name": "Grain Seeds", "id": 575, "dual": False},
-    4: {"name": "Wildflower Seeds", "id": 0, "dual": False},
-    5: {"name": "Tree Cuttings", "id": 1237, "dual": True},
-    6: {"name": "Tree Saplings", "id": 0, "dual": True},
-    7: {"name": "Wildgrass Seeds", "id": 2235, "dual": True},
-    8: {"name": "Cactus Stems", "id": 1236, "dual": False},
+    4: {"name": "Vegetable Seeds", "id": 573, "dual": False},
+    5: {"name": "Cactus Stems", "id": 1236, "dual": False},
+    6: {"name": "Tree Cuttings", "id": 1237, "dual": True},
+    7: {"name": "Tree Saplings", "id": 0, "dual": True},
+    8: {"name": "Wildgrass Seeds", "id": 2235, "dual": True},
 }
 
 ELEMENTS = ["None", "Fire", "Ice", "Wind", "Earth", "Lightning", "Water", "Light", "Dark"]

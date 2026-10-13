@@ -5,20 +5,20 @@
   "conq2": "",
   "conq3": "",
   "skills": {
-    "fish": 37,
-    "cook": 50,
-    "alchemy": 9,
+    "fish": 47,
+    "cook": 58,
+    "alchemy": 10,
     "wood": 4,
-    "smith": 0,
+    "smith": 1,
     "gold": 0,
-    "cloth": 0,
+    "cloth": 4,
     "leather": 0,
     "bone": 0
   },
   "fame": {
     "sandy": 9,
     "bastok": 1,
-    "windy": 1,
+    "windy": 2,
     "norg": 1,
     "jeuno": 5
   }
