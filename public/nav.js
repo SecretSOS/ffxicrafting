@@ -158,8 +158,6 @@ function initChrome(){
    '<button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>'+
    '<a href="/" class="logo">FFXI Crafting</a>'+
    '<div class="nav-links">'+gdd+
-   /* zones hidden — WIP */
-   '
    guides+holidays+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+

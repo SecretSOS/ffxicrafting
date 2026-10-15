@@ -40,7 +40,6 @@
  --wood:#8a6a38;--smith:#8a8e98;--gold:#d4a040;--cloth:#c080a0;--leather:#a87030;--bone:#d0c4a8;--alchemy:#68b090;--cook:#d08058;--fish:#4890a8;
  --panel-top:#2c2228;--panel-bot:#231a20;--rule:#44343e;--gil:#d87030;--sidebar-bg:#231a20}
 :root[data-theme="harvest"] .top-bar .logo::before{content:'\1F383';margin-right:6px;font-size:.9em}
-:root[data-theme="harvest"] .top-bar .logo::after{content:'\1F342';margin-left:6px;font-size:.75em;opacity:.7}
 :root[data-theme="harvest"] .top-bar{border-bottom-color:#3a2218}
 :root[data-theme="harvest"] .guild-bar{border-bottom-color:#301c12}
 
