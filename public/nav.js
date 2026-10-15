@@ -158,7 +158,8 @@ function initChrome(){
    '<button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>'+
    '<a href="/" class="logo">FFXI Crafting</a>'+
    '<div class="nav-links">'+gdd+
-   '<a href="/zone/" class="nav-link'+ac(isZones)+'">Zones</a>'+
+   /* zones hidden — WIP */
+   '
    guides+holidays+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
@@ -209,16 +210,17 @@ function initChrome(){
     ['/fishinglookup','Fishing Lookup','fish'],
     ['/gathering/gardening','Gardening Lookup','garden'],
     ['/bcnm-tool','BCNM Profit Ranker','bcnm'],
-    ['/desynth','Desynth Calculator','desynth'],
+    ['/desynth','Desynth Calculator','desynth',true],
     ['/guild-points','Guild Points','gp'],
     ['/fishing-cooking','Fishing + Cooking','guide']
    ];
    var sh='<div class="vana-week" id="vanaWeek"></div>';
-   sh+='<div class="sb-section"><div class="sb-heading">Tools</div>';
+   sh+='<div class="sb-section"><div class="sb-heading" style="font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Tools</div>';
    for(var i=0;i<tools.length;i++){
-    var t=tools[i],href=t[0],label=t[1],icon=t[2];
+    var t=tools[i],href=t[0],label=t[1],icon=t[2],soon=t[3];
+    if(soon){sh+='<span style="opacity:.4;padding:4px 8px;font-size:13px;display:block">'+label+' (soon)</span>';continue;}
     var isAct=p===href.replace(/\/$/,'');
-    sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool"><svg aria-hidden="true"><use href="#i-'+icon+'"/></svg>'+label+'</span></a>';
+    sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool">'+label+'</span></a>';
    }
    sh+='</div>';
    sh+='<div id="ahStatus" class="ah-status" style="display:none"></div>';
