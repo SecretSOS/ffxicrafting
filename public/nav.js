@@ -193,8 +193,7 @@ function initChrome(){
   tb.innerHTML=
    '<button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>'+
    '<a href="/" class="logo">FFXI Crafting</a>'+
-   '<div class="nav-links">'+toolsDD+craftsDD+gdd+
-   '<a href="/zone/" class="nav-link'+ac(isZones)+'">Zones</a>'+
+   '<div class="nav-links">'+toolsDD+gdd+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
    guides+holidays+
@@ -261,7 +260,7 @@ function initChrome(){
     var t=tools[i],href=t[0],label=t[1],icon=t[2],soon=t[3];
     if(soon){sh+='<span style="opacity:.4;padding:4px 8px;font-size:13px;display:block">'+label+' (soon)</span>';continue;}
     var isAct=p===href.replace(/\/$/,'');
-    sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool">'+label+'</span></a>';
+    sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool"><svg aria-hidden="true"><use href="#i-'+icon+'"/></svg>'+label+'</span></a>';
    }
    sh+='</div>';
    sh+='<div class="sb-footer"><div class="sb-footer-card">';
