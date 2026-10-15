@@ -3,16 +3,20 @@
    Tokens + layout matching the Astro global.css design system
    ============================================================ */
 
+/* Overlay: pull lining digits from the body font so Marcellus old-style "IOO" reads as "100" */
+@font-face{font-family:'MDigits';src:local('Atkinson Hyperlegible'),local('Atkinson Hyperlegible Regular');
+ unicode-range:U+0030-0039,U+002C,U+002E,U+0025,U+2013,U+2014,U+2212}
+
 /* --- Tokens (dark default) --- */
 :root{
  --bg:#0c0f16;--surface:#141a26;--surface-2:#1b2333;--border:#2b3448;--frame:#3d4f6a;
  --ink:#fff;--ink-soft:#fff;--ink-faint:#ccc;--link:#8ec1e8;
  --accent:#e3a75e;--accent-soft:#3a2f22;--gain:#74d3a0;--loss:#ff8f7d;--best:#74d3a0;
  --fire:#ff7a5c;--ice:#7fd2ff;--wind:#8ce0a8;--earth:#d9b678;--lightning:#c9a0ff;--water:#6fb8ff;--light:#f2e6c0;--dark:#b492d8;
- --wood:#8a6a3f;--smith:#8d94a3;--gold:#e0b64c;--cloth:#c98fb5;--leather:#b5763f;--bone:#ded3bb;--alchemy:#7fc4a8;--cook:#e08f6a;--fish:#5ba8c8;
+ --wood:#8a6a3f;--smith:#8d94a3;--gold:#e0b64c;--cloth:#c98fb5;--leather:#b5763f;--bone:#ded3bb;--alchemy:#5eb8a0;--cook:#e08f6a;--fish:#5ba8c8;
  /* backward compat aliases for generated pages */
  --panel-top:#1b2333;--panel-bot:#141a26;--rule:#2b3448;--gil:#e3a75e;--sidebar-bg:#141a26;
- --font-display:'Marcellus',Georgia,serif;--font-body:'Atkinson Hyperlegible',system-ui,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
+ --font-display:'MDigits','Marcellus',Georgia,serif;--font-body:'Atkinson Hyperlegible',system-ui,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 
 /* --- Light theme --- */
@@ -41,7 +45,7 @@
  --panel-top:#2c2228;--panel-bot:#231a20;--rule:#44343e;--gil:#d87030;--sidebar-bg:#231a20}
 :root[data-theme="harvest"] .top-bar .logo::before{content:'\1F383';margin-right:6px;font-size:.9em}
 :root[data-theme="harvest"] .top-bar{border-bottom-color:#3a2218}
-:root[data-theme="harvest"] .guild-bar{border-bottom-color:#301c12}
+:root[data-theme="harvest"] .cg-bar{border-bottom-color:#301c12}
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:inherit}
@@ -354,41 +358,69 @@ li{margin-bottom:.4em}
    ============================================================ */
 
 /* --- Old top bar (for generated pages) --- */
-.top-bar{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);
- max-width:1600px;width:92%;margin:0 auto}
+.top-bar{display:flex;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid var(--border);
+ background:var(--surface-2);max-width:1600px;width:92%;margin:0 auto}
 .top-bar .logo{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--ink);white-space:nowrap}
 .top-bar .logo:hover{color:var(--accent)}
 .hamburger{display:none;background:none;border:1px solid var(--border);color:var(--ink-soft);border-radius:6px;
  padding:6px 8px;cursor:pointer;font-size:1.1rem;line-height:1;flex-shrink:0}
 .hamburger:hover{color:var(--ink);border-color:var(--frame)}
-.top-bar .act{flex-shrink:0}
-.nav-server{margin-left:auto;display:flex;align-items:center;gap:6px;padding:4px 10px;
- background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
- border-radius:6px;font-size:.78rem;cursor:default;flex-shrink:0}
-.nav-server strong{font-family:var(--font-display);font-weight:600;color:var(--accent);font-size:.85rem}
-.nav-server span{color:var(--ink-faint);font-size:.72rem;white-space:nowrap}
 
 /* --- Nav links (old style) --- */
-.nav-links{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1}
 .nav-link{display:block;color:var(--ink-soft);font-size:.86rem;white-space:nowrap;padding:6px 10px;border-radius:4px}
 .nav-link:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 6%,transparent)}
 .nav-link.active{color:var(--accent)}
 
-/* --- Guild bar (second nav row) --- */
-.guild-bar{display:flex;align-items:center;gap:0;padding:0;border-bottom:1px solid var(--border);
- max-width:1600px;width:92%;margin:0 auto;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-.guild-bar::-webkit-scrollbar{display:none}
-.guild-bar a{display:flex;align-items:center;gap:5px;padding:8px 12px;color:var(--ink-soft);font-size:.82rem;
- white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s}
-.guild-bar a:hover{color:var(--ink);text-decoration:none;border-bottom-color:color-mix(in srgb,var(--ink) 20%,transparent)}
-.guild-bar a.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
-.guild-bar svg{width:15px;height:15px;flex-shrink:0}
-.guild-bar .gb-dot{width:6px;height:6px;border-radius:50%;flex:0 0 6px}
-.guild-bar .gb-dot.open{background:var(--gain);box-shadow:0 0 3px color-mix(in srgb,var(--gain) 60%,transparent)}
-.guild-bar .gb-dot.closed{background:var(--loss);opacity:.5}
-.guild-bar .gb-hrs{font-size:.65rem;color:var(--ink-faint);margin-left:-2px}
+/* --- Combined clock + guild bar --- */
+.cg-bar{display:flex;border-bottom:1px solid var(--frame);background:var(--surface-2);max-width:1600px;width:92%;margin:0 auto}
+.cg-left{display:flex;flex-direction:column;border-right:1px solid var(--frame);flex-shrink:0}
+.cg-data{display:flex;align-items:center;padding:6px 16px;gap:0}
+.cg-clock{display:flex;flex-direction:column;justify-content:center;padding-right:14px;border-right:1px solid var(--frame);width:120px;flex:0 0 120px}
+.cg-time{font-family:var(--font-display);font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1;letter-spacing:.02em}
+.cg-day-row{display:flex;align-items:center;gap:6px;margin-top:3px}
+.cg-day{font-size:.75rem;font-weight:700;line-height:1}
+.cg-tod-badge{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:1px 5px;border-radius:3px;line-height:1.2;
+ background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+.cg-moon{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 14px;border-right:1px solid var(--frame)}
+.cg-moon-top{display:flex;align-items:center;gap:5px}
+.moon-orb{width:22px;height:22px;flex:0 0 22px}
+.cg-moon-pct{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.cg-moon-phase{font-size:.62rem;color:var(--ink-faint);margin-top:1px;white-space:nowrap}
+.cg-moon-next{font-size:.58rem;color:var(--ink-faint);opacity:.7;white-space:nowrap}
+.cg-tide{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 14px}
+.cg-tide-now{display:flex;align-items:center;gap:5px}
+.tide-dot{display:inline-block;width:8px;height:8px;border-radius:50%}
+.tide-dot.high{background:#5aa0d5;box-shadow:0 0 5px #5aa0d5}
+.tide-dot.low{background:#7ec8e3;box-shadow:0 0 5px #7ec8e3}
+.cg-tide-label{font-size:.88rem;font-weight:700;color:var(--ink)}
+.cg-tide-cd{font-size:.6rem;color:var(--ink-faint);margin-top:1px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cg-forecast{display:flex;gap:3px;padding:4px 16px 5px;border-top:1px solid var(--frame)}
+.day-badge{flex:1;display:flex;align-items:center;justify-content:center;gap:3px;padding:2px 0;border-radius:3px;font-size:.65rem;
+ color:var(--ink-faint);border:1px solid var(--border);font-weight:600}
+.day-badge.now{background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.day-badge .bdot{width:5px;height:5px;border-radius:50%;flex:0 0 5px}
+.cg-guilds{display:grid;grid-template-columns:repeat(5,1fr);gap:2px 4px;padding:6px 8px;flex:1;max-width:680px;align-content:center}
+.gc{display:flex;align-items:center;gap:7px;padding:3px 6px;text-decoration:none;border-radius:4px;transition:background .15s}
+.gc:hover{background:color-mix(in srgb,var(--ink) 4%,transparent);text-decoration:none}
+.gc.active{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.gc-icon-box{width:28px;height:28px;flex:0 0 28px;display:flex;align-items:center;justify-content:center;border-radius:4px;
+ background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.gc-icon{width:20px;height:20px}
+.gc-info{display:flex;flex-direction:column;gap:0;min-width:0}
+.gc-row1{display:flex;align-items:center;gap:5px}
+.gc-name{font-size:.72rem;font-weight:700;line-height:1.2;white-space:nowrap}
+.gc-dot{width:6px;height:6px;border-radius:50%;flex:0 0 6px}
+.gc-dot.open{background:var(--gain);box-shadow:0 0 3px color-mix(in srgb,var(--gain) 60%,transparent)}
+.gc-dot.closed{background:#ff4040;box-shadow:0 0 5px #ff4040}
+.gc-row2{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.gc-hrs{font-size:.58rem;color:var(--ink-faint);line-height:1;font-variant-numeric:tabular-nums}
+.gc-closed{font-size:.54rem;color:var(--loss);line-height:1;opacity:.8;display:inline-flex;align-items:center;gap:3px}
+.gc-closed-dot{width:5px;height:5px;border-radius:50%;flex:0 0 5px}
 @media(max-width:820px){
- .guild-bar{width:100%;padding:0 16px}
+ .cg-bar{flex-direction:column}
+ .cg-left{border-right:none;border-bottom:1px solid var(--frame)}
+ .cg-guilds{grid-template-columns:repeat(3,1fr);padding:6px 12px}
 }
 
 /* --- Nav dropdown --- */
@@ -410,7 +442,7 @@ li{margin-bottom:.4em}
 .site-layout{display:grid;grid-template-columns:210px 1fr;gap:28px;max-width:1600px;width:92%;margin:0 auto;padding:0 16px;align-items:start}
 
 /* --- Sidebar --- */
-.sidebar{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 80px);overflow-y:auto;padding:16px 10px 16px 0;scrollbar-width:thin}
+.sidebar{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 80px);overflow-y:auto;padding:16px 10px 16px 0;scrollbar-width:thin;display:flex;flex-direction:column}
 .sb-section{margin-bottom:16px}
 .sb-heading{font-family:var(--font-display);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;
  color:var(--ink-faint);padding:6px 12px 4px;margin-bottom:2px}
@@ -430,32 +462,33 @@ li{margin-bottom:.4em}
 .sb-guild{width:7px;height:7px;border-radius:50%;margin-left:auto;flex:0 0 7px}
 .sb-guild.open{background:var(--gain);box-shadow:0 0 4px color-mix(in srgb,var(--gain) 60%,transparent)}
 .sb-guild.closed{background:var(--loss);opacity:.5}
+.sb-search{position:relative;padding:0 8px 12px}
+.sb-search input[type=search]{width:100%;font:inherit;font-size:.88rem;color:var(--ink);background:color-mix(in srgb,var(--bg) 55%,transparent);
+ border:1px solid var(--rule);border-radius:6px;padding:8px 30px 8px 10px}
+.sb-search input[type=search]:focus{border-color:var(--accent);outline:none}
+.sb-search .kbd{position:absolute;right:16px;top:8px;font-size:.68rem;
+ color:var(--ink-faint);border:1px solid var(--border);border-radius:3px;padding:1px 5px;pointer-events:none}
+.sb-search:focus-within .kbd{display:none}
+.sb-search .search-results{position:fixed;z-index:200;width:320px;max-height:min(400px,60vh)}
+.sb-footer{margin-top:auto;padding:8px 8px 6px}
+.sb-footer-card{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.sb-footer-info{padding:12px 14px 10px;text-align:center}
+.sb-server{display:flex;align-items:baseline;justify-content:center;gap:6px;margin-bottom:3px}
+.sb-server strong{font-family:var(--font-display);font-weight:600;color:var(--accent);font-size:.95rem;letter-spacing:.02em}
+.sb-server span{color:var(--ink-faint);font-size:.72rem}
+.sb-chars-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin:6px 0 2px;opacity:.7}
+.sb-chars{font-size:.78rem;color:var(--ink-faint)}
+.sb-chars span{color:var(--accent);font-weight:600}
+.sb-theme-toggle{display:flex!important;align-items:center;gap:8px;width:100%;font:inherit;font-size:.82rem;color:var(--ink-faint);
+ background:color-mix(in srgb,var(--ink) 3%,transparent);border:none;border-top:1px solid var(--border);
+ padding:8px 14px;cursor:pointer;transition:color .15s,background .15s;box-sizing:border-box}
+.sb-theme-toggle:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.sb-theme-toggle svg{width:14px;height:14px;flex:0 0 14px;opacity:.6}
+.sb-theme-toggle .sb-theme-label{flex:1;text-align:left}
+.sb-theme-toggle .sb-theme-mode{font-size:.7rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;opacity:.7}
 .ah-status{padding:8px 12px;font-size:.75rem;color:var(--ink-faint);display:flex;align-items:center;gap:6px;border-top:1px solid var(--border);margin-top:auto}
 .ah-dot{width:6px;height:6px;border-radius:50%;background:var(--gain);flex-shrink:0}
 
-/* --- Sidebar week calendar --- */
-.vana-week{padding:14px 12px;margin-bottom:8px;border:1px solid var(--border);border-radius:8px;font-size:.88rem}
-.vw-center{text-align:center;margin-bottom:10px}
-.vw-big{font-family:var(--font-display);font-size:2.2rem;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
-.vw-daytag{font-size:.82rem;color:#c4b692;margin-top:3px}
-.vw-el{font-weight:700}
-.vw-tod{font-size:.78rem;color:#8a7e6a;margin-top:4px}
-.vw-tod-em{color:var(--accent);font-weight:700}
-.vw-sep{border-top:1px solid var(--border);margin:10px 0}
-.vw-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.vw-info-box{text-align:center}
-.vw-info-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:#8a7e6a;margin-bottom:4px}
-.vw-info-main{font-size:.88rem;font-weight:600;color:#c4b692;line-height:1.3;display:flex;align-items:center;justify-content:center;gap:4px}
-.vw-info-sub{font-size:.72rem;color:#8a7e6a;font-variant-numeric:tabular-nums}
-.moon-orb{width:22px;height:22px;flex:0 0 22px}
-.vw-tdot{display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle}
-.vw-tdot.high{background:#5aa0d5;box-shadow:0 0 5px #5aa0d5}
-.vw-tdot.low{background:#7ec8e3;box-shadow:0 0 5px #7ec8e3}
-.vw-week{display:flex;flex-direction:column;gap:4px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.vw-week-row{display:flex;gap:4px}
-.vw-badge{flex:1;display:flex;align-items:center;justify-content:center;gap:3px;padding:3px 0;border-radius:4px;font-size:.72rem;color:#8a7e6a;border:1px solid var(--border);font-weight:600}
-.vw-badge.now{background:rgba(227,167,94,.1);color:var(--accent);border-color:rgba(227,167,94,.35)}
-.vw-bdot{width:5px;height:5px;border-radius:50%;flex:0 0 5px}
 
 /* --- Main content (sidebar layout) --- */
 .main{min-width:0;padding:16px 0 70px;display:flex;flex-direction:column;gap:16px}
@@ -555,7 +588,6 @@ li{margin-bottom:.4em}
  .nav-links{display:none}
  .hide-sm{display:none}
  .top-bar{gap:10px}
- .nav-server span{display:none}
  th,td{padding:5px 6px}
 }
 @media(min-width:821px){

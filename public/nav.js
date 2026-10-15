@@ -41,12 +41,18 @@ function _moonInfo(vd){
  if(md<=41){pct=Math.round(100*md/42);wax=true;}
  else{pct=Math.round(100*(84-md)/42);wax=false;}
  var pi;
- if(pct<=5)pi=wax?0:0;
+ if(pct<=5)pi=0;
  else if(pct<=30)pi=wax?1:7;
  else if(pct<=55)pi=wax?2:6;
  else if(pct<=80)pi=wax?3:5;
  else pi=4;
- return{pct:pct,wax:wax,phase:_MN[pi],pos:md};
+ var dF,dN;
+ if(md<=42){dF=42-md;dN=84-md;}else{dF=84-md+42;dN=84-md;}
+ var rF=Math.round(dF*57.6),rN=Math.round(dN*57.6);
+ var nt,nl,nv;
+ if(dF<=dN){nt='Full';nv=rF;}else{nt='New';nv=rN;}
+ if(nv<60)nl=nv+'m';else nl=Math.floor(nv/60)+'h '+_pad(nv%60)+'m';
+ return{pct:pct,wax:wax,phase:_MN[pi],pos:md,nt:nt,nl:nl};
 }
 
 function _moonSvg(pct,wax){
@@ -64,47 +70,65 @@ function _moonSvg(pct,wax){
   +'</svg>';
 }
 
+var _lastWD=-1;
+
 function _vanaTick(){
  var s=Math.floor(Date.now()/1000),vs=(s-_VE)*25,
  vm=Math.floor(vs/60),vh=Math.floor(vm/60),vd=Math.floor(vh/24),
  hr=vh%24,mn=vm%60,wd=vd%8;
- var wk=document.getElementById("vanaWeek");
- if(wk){
-  var ml=1440-(hr*60+mn),rs=ml*2.4;
-  var _DAB=["Fire","Erth","Watr","Wind","Ice","Ltng","Lght","Dark"];
+ var ck=document.getElementById('cgClock');
+ if(ck){
   var tod;
   if(hr>=18&&hr<19)tod='Dusk';else if(hr>=4&&hr<7)tod='Dawn';else if(hr>=19||hr<4)tod='Night';else tod='Day';
-  var h='<div class="vw-center"><div class="vw-big">'+_pad(hr)+':'+_pad(mn)+'</div>';
-  h+='<div class="vw-daytag"><span class="vw-el" style="color:'+_VC[wd]+'">'+_VDN[wd]+'</span></div>';
-  h+='<div class="vw-tod"><span class="vw-tod-em">'+tod+'</span></div></div>';
-  h+='<div class="vw-sep"></div>';
+  ck.innerHTML='<div class="cg-time">'+_pad(hr)+':'+_pad(mn)+'</div>'
+   +'<div class="cg-day-row"><span class="cg-day" style="color:'+_VC[wd]+'">'+_VDN[wd]+'</span>'
+   +'<span class="cg-tod-badge">'+tod+'</span></div>';
+ }
+ var mo=document.getElementById('cgMoon');
+ if(mo){
   var mi=_moonInfo(vd);
-  h+='<div class="vw-info-grid">';
-  h+='<div class="vw-info-box"><div class="vw-info-label">Moon</div>';
-  h+='<div class="vw-info-main">'+_moonSvg(mi.pct,mi.wax)+' '+mi.pct+'%</div>';
-  h+='<div class="vw-info-sub">'+mi.phase+'</div></div>';
+  mo.innerHTML='<div class="cg-moon-top">'+_moonSvg(mi.pct,mi.wax)+' <span class="cg-moon-pct">'+mi.pct+'%</span></div>'
+   +'<div class="cg-moon-phase">'+mi.phase+'</div>'
+   +'<div class="cg-moon-next">'+mi.nt+' in '+mi.nl+'</div>';
+ }
+ var td=document.getElementById('cgTide');
+ if(td){
   var isLow=(hr===5||hr===17);
+  var tLbl=isLow?'Low Tide':'High Tide',tCls=isLow?'low':'high';
   var loNxt,hiNxt;
   if(isLow){loNxt=0;hiNxt=(hr===5?6:18);}
   else{hiNxt=0;loNxt=hr<5?5:(hr<17?17:(24+5));}
-  function _tideCD(target){var t=((target-hr)*60-mn);if(t<=0)t+=1440;var rm=Math.floor(Math.floor(t*2.4)/60);if(rm<60)return rm+'m';return Math.floor(rm/60)+'h'+_pad(rm%60)+'m';}
-  var tcls=isLow?'low':'high',tlbl=isLow?'Low':'High',tnxt=isLow?'High':'Low',tcd=isLow?_tideCD(hiNxt):_tideCD(loNxt);
-  h+='<div class="vw-info-box"><div class="vw-info-label">Tide</div>';
-  h+='<div class="vw-info-main"><span class="vw-tdot '+tcls+'"></span>'+tlbl+' Tide</div>';
-  h+='<div class="vw-info-sub">'+tnxt+' in '+tcd+'</div></div>';
-  h+='</div>';
-  h+='<div class="vw-week">';
-  for(var r=0;r<2;r++){h+='<div class="vw-week-row">';
-   for(var c=0;c<4;c++){var i=r*4+c,di=(wd+i)%8,cur=i===0;
-    h+='<span class="vw-badge'+(cur?' now':'')+'" style="--bc:'+_VC[di]+'"><span class="vw-bdot" style="background:'+_VC[di]+'"></span>'+_DAB[di]+'</span>';}
-   h+='</div>';}
-  h+='</div>';
-  wk.innerHTML=h;
+  var tgt=isLow?hiNxt:loNxt;
+  var tVM=(tgt-hr)*60-mn;if(tVM<=0)tVM+=1440;
+  var tVS=tVM*60-Math.floor(vs%60);
+  var tRS=Math.floor(tVS/25);
+  var rm=Math.floor(tRS/60),rs=tRS%60;
+  var tcd;
+  if(rm>=60)tcd=Math.floor(rm/60)+'h '+_pad(rm%60)+'m';
+  else tcd=_pad(rm)+'m '+_pad(rs)+'s';
+  var tNxt=isLow?'High':'Low';
+  td.innerHTML='<div class="cg-tide-now"><span class="tide-dot '+tCls+'"></span> <span class="cg-tide-label">'+tLbl+'</span></div>'
+   +'<div class="cg-tide-cd">'+tNxt+' in '+tcd+'</div>';
+ }
+ var fc=document.getElementById('cgForecast');
+ if(fc){
+  var _DAB=["Fire","Erth","Watr","Wind","Ice","Ltng","Lght","Dark"];
+  var fh='';
+  for(var i=0;i<8;i++){var di=(wd+i)%8,cur=i===0;
+   fh+='<span class="day-badge'+(cur?' now':'')+'">'
+    +'<span class="bdot" style="background:'+_VC[di]+'"></span>'+_DAB[di]+'</span>';}
+  fc.innerHTML=fh;
  }
  var gc=["wood","smith","gold","cloth","leather","bone","alchemy","cook","fish"];
- for(var g=0;g<gc.length;g++){var k=gc[g],d=document.getElementById("guild-"+k);
-  if(!d)continue;var gv=_GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
-  d.className=(d.classList.contains("gb-dot")?"gb-dot ":"sb-guild ")+(op?"open":"closed");d.title=op?"Guild open":"Closed"+(wd===gv[2]?" (holiday)":"");}
+ var wdChanged=wd!==_lastWD;if(wdChanged)_lastWD=wd;
+ for(var g=0;g<gc.length;g++){
+  var k=gc[g],gv=_GD[k],op=wd!==gv[2]&&hr>=gv[0]&&hr<gv[1];
+  var d=document.getElementById("guild-"+k);
+  if(d)d.className="gc-dot "+(op?"open":"closed");
+  if(wdChanged){var cl=document.getElementById("gcl-"+k);
+   if(cl){if(wd===gv[2])cl.innerHTML='Closed today';
+    else cl.innerHTML='Closed on <span class="gc-closed-dot" style="background:'+_VC[gv[2]]+'"></span>';}}
+ }
 }
 
 function initChrome(){
@@ -118,8 +142,8 @@ function initChrome(){
  var isZones=p.indexOf('/zone')===0;
  var isNM=p==='/nm'||p.indexOf('/nm/')===0;
  var isBCNM=p==='/bcnm';
- var isFC=p==='/fishing-cooking';
- var isF101=p==='/fishing-101';
+ var isFC=p==='/guides/fishing-cooking';
+ var isF101=p==='/guides/fishing-101';
  var isGuide=isFC||isF101;
  var isCrafts=/^\/crafts/.test(p);
  var isHarvest=p==='/harvest-festival';
@@ -131,7 +155,7 @@ function initChrome(){
   var gPages=[
    ['/gathering/mining','Mining'],['/gathering/logging','Logging'],
    ['/gathering/harvesting','Harvesting'],['/gathering/excavation','Excavation'],
-   ['/gathering/gardening','Gardening'],['/fishinglookup','Fishing'],
+   ['/gathering/gardening','Gardening'],['/fishing-lookup','Fishing'],
    ['/gathering/digging','Chocobo Digging'],['/gathering/clamming','Clamming']
   ];
   var gdd='<div class="nav-dd"><span class="nav-dd-btn'+ac(isGathering)+'">Gathering <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
@@ -143,8 +167,8 @@ function initChrome(){
   gdd+='</div></div>';
 
   var guides='<div class="nav-dd"><span class="nav-dd-btn'+ac(isGuide)+'">Guides <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
-  guides+='<a href="/fishing-cooking"'+acl(isFC)+'>Fishing + Cooking</a>';
-  guides+='<a href="/fishing-101"'+acl(isF101)+'>Fishing 101</a>';
+  guides+='<a href="/guides/fishing-cooking"'+acl(isFC)+'>Fishing + Cooking</a>';
+  guides+='<a href="/guides/fishing-101"'+acl(isF101)+'>Fishing 101</a>';
   guides+='</div></div>';
 
   // Hidden until Oct 18 launch
@@ -154,43 +178,64 @@ function initChrome(){
   craftsDD+='<a href="/crafts"'+acl(p==='/crafts')+'>All Crafts</a>';
   craftsDD+='</div></div>';
 
+  var isCalc=p==='/calculator',isProfit=p==='/profit',isShopping=p==='/shopping',
+      isBCNMProfit=p==='/bcnm/profit',isDesynth=p==='/desynth',isGP=p==='/guild-points';
+  var isTool=isCalc||isProfit||isShopping||isBCNMProfit||isDesynth||isGP;
+  var toolsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isTool)+'">Tools <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
+  toolsDD+='<a href="/calculator"'+acl(isCalc)+'>Crafting Calculator</a>';
+  toolsDD+='<a href="/profit"'+acl(isProfit)+'>Profit Finder</a>';
+  toolsDD+='<a href="/shopping"'+acl(isShopping)+'>Shopping List</a>';
+  toolsDD+='<a href="/desynth"'+acl(isDesynth)+'>Desynth Calculator</a>';
+  toolsDD+='<a href="/guild-points"'+acl(isGP)+'>Guild Points</a>';
+  toolsDD+='<a href="/bcnm/profit"'+acl(isBCNMProfit)+'>BCNM Profit Ranker</a>';
+  toolsDD+='</div></div>';
+
   tb.innerHTML=
    '<button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>'+
    '<a href="/" class="logo">FFXI Crafting</a>'+
-   '<div class="nav-links">'+gdd+
-   guides+holidays+
+   '<div class="nav-links">'+toolsDD+craftsDD+gdd+
+   '<a href="/zone/" class="nav-link'+ac(isZones)+'">Zones</a>'+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
-   '</div>'+
-   '<div class="search-wrap"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>'+
-   '<div class="nav-server" id="navServer"><strong>Phoenix</strong><span>era 75 · ToAU</span></div>'+
-   '<button class="act" id="themeBtn" type="button">Theme</button>';
+   guides+holidays+
+   '</div>';
  }
 
- // === GUILD BAR ===
+ // === COMBINED CLOCK + GUILD BAR ===
  var gb=document.getElementById('guildBar');
  if(gb){
-  var crafts=[
-   ['wood','Woodworking','--wood','/crafts/woodworking','06–21'],
-   ['smith','Smithing','--smith','/crafts/smithing','08–23'],
-   ['gold','Goldsmithing','--gold','/crafts/goldsmithing','08–23'],
-   ['cloth','Clothcraft','--cloth','/crafts/clothcraft','06–21'],
-   ['leather','Leathercraft','--leather','/crafts/leathercraft','03–18'],
-   ['bone','Bonecraft','--bone','/crafts/bonecraft','08–23'],
-   ['alchemy','Alchemy','--alchemy','/crafts/alchemy','08–23'],
-   ['cook','Cooking','--cook','/crafts/cooking','05–20'],
-   ['fish','Fishing','--fish','/gathering/fishing','03–18']
+  gb.className='cg-bar';
+  var _guilds=[
+   ['wood','Wood','--wood','/crafts/woodworking','06–21',0],
+   ['smith','Smith','--smith','/crafts/smithing','08–23',2],
+   ['gold','Gold','--gold','/crafts/goldsmithing','08–23',4],
+   ['cloth','Cloth','--cloth','/crafts/clothcraft','06–21',0],
+   ['leather','Leather','--leather','/crafts/leathercraft','03–18',4],
+   ['bone','Bone','--bone','/crafts/bonecraft','08–23',3],
+   ['alchemy','Alchemy','--alchemy','/crafts/alchemy','08–23',4],
+   ['cook','Cooking','--cook','/crafts/cooking','05–20',7],
+   ['fish','Fishing','--fish','/gathering/fishing','03–18',5]
   ];
-  var cbh='';
-  for(var i=0;i<crafts.length;i++){
-   var c=crafts[i],code=c[0],name=c[1],cssvar=c[2],href=c[3],hrs=c[4];
-   var icon=code==='fish'?'fish':code==='cook'?'cook':code;
-   var isActive=p===href;
-   cbh+='<a href="'+href+'"'+(isActive?' class="active"':'')+' style="color:var('+cssvar+')">'+
-    '<svg aria-hidden="true"><use href="#i-'+icon+'"/></svg>'+name+
-    '<span class="gb-hrs">'+hrs+'</span>'+
-    '<span id="guild-'+code+'" class="gb-dot"></span></a>';
+  var cbh='<div class="cg-left">'
+   +'<div class="cg-data">'
+   +'<div class="cg-clock" id="cgClock"></div>'
+   +'<div class="cg-moon" id="cgMoon"></div>'
+   +'<div class="cg-tide" id="cgTide"></div>'
+   +'</div>'
+   +'<div class="cg-forecast" id="cgForecast"></div>'
+   +'</div>'
+   +'<div class="cg-guilds">';
+  for(var i=0;i<_guilds.length;i++){
+   var c=_guilds[i],code=c[0],name=c[1],cssvar=c[2],href=c[3],hrs=c[4],hd=c[5];
+   var isActive=p===href.replace(/\/$/,'');
+   cbh+='<a class="gc'+(isActive?' active':'')+'" href="'+href+'" style="color:var('+cssvar+')">'
+    +'<div class="gc-icon-box"><svg class="gc-icon" aria-hidden="true"><use href="#i-'+code+'"/></svg></div>'
+    +'<div class="gc-info">'
+    +'<div class="gc-row1"><span class="gc-name">'+name+'</span><span id="guild-'+code+'" class="gc-dot"></span></div>'
+    +'<div class="gc-row2"><span class="gc-hrs">'+hrs+'</span><span id="gcl-'+code+'" class="gc-closed">Closed on <span class="gc-closed-dot" style="background:'+_VC[hd]+'"></span></span></div>'
+    +'</div></a>';
   }
+  cbh+='</div>';
   gb.innerHTML=cbh;
  }
 
@@ -204,15 +249,13 @@ function initChrome(){
     ['/calculator','Crafting Calculator','calc'],
     ['/profit','Profit Finder','profit'],
     ['/shopping','Shopping List','shop'],
-    ['/fishing-101','Fishing 101','guide'],
-    ['/fishinglookup','Fishing Lookup','fish'],
-    ['/gathering/gardening','Gardening Lookup','garden'],
-    ['/bcnm-tool','BCNM Profit Ranker','bcnm'],
-    ['/desynth','Desynth Calculator','desynth',true],
+    ['/bcnm/profit','BCNM Profit Ranker','bcnm'],
+    ['/desynth','Desynth Calculator','desynth'],
     ['/guild-points','Guild Points','gp'],
-    ['/fishing-cooking','Fishing + Cooking','guide']
+    ['/fishing-lookup','Fishing Lookup','fish'],
+    ['/gathering/gardening','Gardening Lookup','garden']
    ];
-   var sh='<div class="vana-week" id="vanaWeek"></div>';
+   var sh='<div class="sb-search"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>';
    sh+='<div class="sb-section"><div class="sb-heading" style="font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Tools</div>';
    for(var i=0;i<tools.length;i++){
     var t=tools[i],href=t[0],label=t[1],icon=t[2],soon=t[3];
@@ -221,6 +264,18 @@ function initChrome(){
     sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool">'+label+'</span></a>';
    }
    sh+='</div>';
+   sh+='<div class="sb-footer"><div class="sb-footer-card">';
+   sh+='<div class="sb-footer-info">';
+   sh+='<div class="sb-server"><strong>Phoenix</strong> <span>era 75 · ToAU</span></div>';
+   sh+='<div class="sb-chars-label">In-Game Characters</div>';
+   sh+='<div class="sb-chars"><span>Secrets</span> · <span>Secret</span></div>';
+   sh+='</div>';
+   sh+='<button class="sb-theme-toggle" id="themeBtn" type="button">';
+   sh+='<svg class="sb-theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>';
+   sh+='<span class="sb-theme-label">Theme</span>';
+   sh+='<span class="sb-theme-mode" id="themeMode"></span>';
+   sh+='</button>';
+   sh+='</div></div>';
    sh+='<div id="ahStatus" class="ah-status" style="display:none"></div>';
    sb.innerHTML=sh;
 
@@ -244,24 +299,25 @@ function initChrome(){
   }
 
   var themeBtn=document.getElementById('themeBtn');
+  var themeMode=document.getElementById('themeMode');
   if(themeBtn){
    var _tNames={dark:'Dark',light:'Light',harvest:'Harvest'};
    var _tOrder=['dark','light','harvest'];
    var _curTheme=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
-   themeBtn.textContent=_tNames[_curTheme]||'Theme';
+   if(themeMode) themeMode.textContent=_tNames[_curTheme]||'Dark';
    themeBtn.addEventListener('click',function(){
     var r=document.documentElement;
     var now=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
     var i=_tOrder.indexOf(now);
     var next=_tOrder[(i+1)%_tOrder.length];
     r.setAttribute('data-theme',next);
-    themeBtn.textContent=_tNames[next];
+    if(themeMode) themeMode.textContent=_tNames[next];
     try{localStorage.setItem('phoenix-theme',next)}catch(e){}
    });
   }
 
   _vanaTick();
-  setInterval(_vanaTick,2400);
+  setInterval(_vanaTick,1000);
  }
 
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',_initDeferred);
