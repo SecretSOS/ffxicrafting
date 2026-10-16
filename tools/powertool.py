@@ -409,154 +409,6 @@ def get_ah_deltas():
     return deltas
 
 
-NM_MAP_ZONES = [
-    {
-        'zone': 'East_Sarutabaruta',
-        'img': 'Sarutabaruta-east_NM.webp',
-    },
-    {
-        'zone': 'West_Ronfaure',
-        'img': 'Ronfaure-west_NM.webp',
-    },
-]
-
-MAP_BG_BOUNDS = {'imgLeft': 16, 'imgTop': 16, 'imgRight': 528, 'imgBottom': 528, 'imgW': 512, 'imgH': 512}
-
-
-def _load_zone_nm_data(zone_name, img_filename):
-    """Parse one zone's LandSandBoat data for NM spawn maps."""
-    zone_dir = os.path.join(LSB, 'data', 'zones', zone_name.lower().replace(' ', '_'))
-    if not os.path.isdir(zone_dir):
-        zone_dir = os.path.join(LSB, 'data', 'zones', zone_name)
-    regions_file = os.path.join(zone_dir, 'regions.yaml')
-    mobs_file = os.path.join(zone_dir, 'mobs.yaml')
-    if not os.path.exists(regions_file) or not os.path.exists(mobs_file):
-        return None
-
-    with open(regions_file, encoding='utf-8') as f:
-        rdata = yaml.safe_load(f)
-    with open(mobs_file, encoding='utf-8') as f:
-        mdata = yaml.safe_load(f)
-
-    regions = {}
-    for rid, rinfo in (rdata.get('regions') or {}).items():
-        poly = rinfo.get('poly', [])
-        regions[rid] = [[p[0], p[2]] for p in poly]
-
-    templates = {}
-    for tname, tinfo in (mdata.get('templates') or {}).items():
-        attrs = tinfo.get('attributes', {})
-        spawn = attrs.get('spawn', {}) if attrs else {}
-        templates[tname] = {
-            'id': tinfo.get('id'),
-            'species': tinfo.get('species', ''),
-            'type': tinfo.get('type', []),
-            'spawnType': spawn.get('type', []),
-            'respawn': spawn.get('respawn', 0),
-        }
-
-    spawns = {}
-    for sid_str, sinfo in (mdata.get('spawns') or {}).items():
-        sid = int(sid_str)
-        spawns[sid] = {
-            'template': sinfo.get('template', ''),
-            'region': sinfo.get('region', ''),
-            'level': sinfo.get('level', []),
-        }
-
-    lottery_nms = []
-    for tname, t in templates.items():
-        if 'notorious' in t.get('type', []) and 'lottery' in t.get('spawnType', []):
-            lottery_nms.append(tname)
-
-    scripts_zone = zone_name
-    scripts_dir = os.path.join(LSB, 'scripts', 'zones', scripts_zone, 'mobs')
-    if not os.path.isdir(scripts_dir):
-        scripts_dir = os.path.join(LSB, 'scripts', 'zones', zone_name.replace(' ', '_'), 'mobs')
-
-    nm_data = []
-    for nm_name in sorted(lottery_nms):
-        lua_file = os.path.join(scripts_dir, nm_name + '.lua')
-        ph_offsets = []
-        if os.path.exists(lua_file):
-            with open(lua_file, encoding='utf-8', errors='ignore') as f:
-                lua = f.read()
-            for m in re.finditer(r'\[ID\.mob\.\w+\s*-\s*(\d+)\]', lua):
-                ph_offsets.append(int(m.group(1)))
-            if not ph_offsets:
-                ph_offsets = [1]
-        else:
-            ph_offsets = [1]
-
-        nm_spawns = [(sid, s) for sid, s in spawns.items() if s['template'] == nm_name]
-        for nm_sid, nm_s in nm_spawns:
-            phs = []
-            for off in ph_offsets:
-                ph_sid = nm_sid - off
-                if ph_sid in spawns:
-                    ph_s = spawns[ph_sid]
-                    phs.append({
-                        'id': ph_sid,
-                        'name': ph_s['template'].replace('_', ' '),
-                        'level': ph_s['level'],
-                        'region': ph_s['region'],
-                    })
-            display = nm_name.replace('_', ' ').replace('-', '-')
-            nm_data.append({
-                'name': display,
-                'template': nm_name,
-                'id': nm_sid,
-                'level': nm_s['level'],
-                'region': nm_s['region'],
-                'species': templates[nm_name]['species'],
-                'phs': phs,
-            })
-
-    mob_by_region = {}
-    for sid, s in spawns.items():
-        r = s['region']
-        t = s['template']
-        tpl = templates.get(t, {})
-        is_nm = 'notorious' in tpl.get('type', [])
-        if r not in mob_by_region:
-            mob_by_region[r] = []
-        mob_by_region[r].append({
-            'name': t.replace('_', ' '),
-            'level': s['level'],
-            'nm': is_nm,
-            'id': sid,
-            'species': tpl.get('species', ''),
-        })
-
-    map_bg = None
-    if img_filename:
-        map_img_path = os.path.join(os.path.expanduser('~'), 'Downloads', img_filename)
-        if os.path.exists(map_img_path):
-            import base64 as b64mod
-            with open(map_img_path, 'rb') as f:
-                map_bg = 'data:image/webp;base64,' + b64mod.b64encode(f.read()).decode('ascii')
-
-    return {
-        'regions': regions,
-        'nms': nm_data,
-        'mobsByRegion': mob_by_region,
-        'mapBg': map_bg,
-        'mapBgBounds': MAP_BG_BOUNDS,
-    }
-
-
-def load_nm_maps():
-    """Parse LandSandBoat zone data for NM spawn maps."""
-    if not yaml:
-        return {}
-    result = {}
-    for z in NM_MAP_ZONES:
-        data = _load_zone_nm_data(z['zone'], z.get('img'))
-        if data:
-            result[z['zone']] = data
-    return result
-
-
 def load_all():
     db = sqlite3.connect(DB)
     db.row_factory = sqlite3.Row
@@ -1061,6 +913,7 @@ def load_all():
             'type': r[1], 'zone': (r[2] or '').replace('_', ' ').title(),
             'pct': pct, 'sell': sell, 'ev': ev,
             'src': 'ah' if ap else ('npc' if vp else 'base'),
+            'ah': ap or 0, 'vend': bp,
         })
 
     # ── Gardening Profit ──
@@ -1493,7 +1346,6 @@ def load_all():
         'ahFetched': ah_fetched,
         'ahCount': ah_count,
         'ahTimestamps': {str(k): v for k, v in ah_timestamps.items()},
-        'nmMaps': load_nm_maps(),
         'character': load_character(),
         'inventory': load_inventory(),
         'ahDeltas': get_ah_deltas(),
@@ -1653,9 +1505,6 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 .craft-pill:hover{border-color:var(--acc)}
 .craft-pill.on{background:var(--acc);color:var(--bg1);border-color:var(--acc);font-weight:600}
 
-.nmmap-wrap{position:relative}
-.nmmap-wrap canvas{display:block;max-width:100%}
-.nmmap-ctrl{display:flex;gap:8px;margin-bottom:8px;align-items:center}
 
 .px-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:50;align-items:flex-start;justify-content:center;padding-top:10vh}
 .px-overlay.open{display:flex}
@@ -1734,9 +1583,9 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
   <a href="#fish" data-tab="fish" title="Fishing"><span>🎣</span><span class="tip">Fishing</span></a>
   <a href="#sources" data-tab="sources" title="Sources"><span>📦</span><span class="tip">Sources</span></a>
   <a href="#combat" data-tab="combat" title="Combat"><span>⚔</span><span class="tip">Combat</span></a>
+  <a href="#harvest" data-tab="harvest" title="Gathering"><span>⛏</span><span class="tip">Gather</span></a>
   <a href="#gilhr" data-tab="gilhr" title="Gil/Hr"><span>💰</span><span class="tip">Gil/Hr</span></a>
   <a href="#garden" data-tab="garden" title="Gardening"><span>🌱</span><span class="tip">Garden</span></a>
-  <a href="#nmmaps" data-tab="nmmaps" title="NM Maps"><span>🗺</span><span class="tip">NM Maps</span></a>
   <a href="#chocobo" data-tab="chocobo" title="Chocobo"><span>🐥</span><span class="tip">Chocobo</span></a>
 </nav>
 
@@ -1835,6 +1684,18 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
     <div id="combatContent"></div>
   </div>
 
+  <!-- GATHERING -->
+  <div class="pane" id="pane-harvest">
+    <h2>Gathering</h2>
+    <div class="filter-row">
+      <input type="text" id="harvestSearch" placeholder="Filter items or zones...">
+      <select id="harvestType"><option value="">All Types</option><option value="mining">Mining</option><option value="logging">Logging</option><option value="harvesting">Harvesting</option><option value="excavation">Excavation</option><option value="clamming">Clamming</option></select>
+      <select id="harvestSort"><option value="profit">Best Sell</option><option value="name">Name</option><option value="ah">AH Price</option><option value="vendor">Vendor</option></select>
+      <span class="count" id="harvestCount"></span>
+    </div>
+    <div id="harvestContent" style="overflow-x:auto"></div>
+  </div>
+
   <!-- GIL/HR -->
   <div class="pane" id="pane-gilhr">
     <h2>Gil/Hr Rankings</h2>
@@ -1851,19 +1712,6 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
       <span class="count" id="gardenCount"></span>
     </div>
     <div id="gardenContent"></div>
-  </div>
-
-  <!-- NM MAPS -->
-  <div class="pane" id="pane-nmmaps">
-    <h2>NM Maps</h2>
-    <div class="nmmap-ctrl">
-      <select id="nmZoneSelect"></select>
-      <label style="font-size:11px"><input type="checkbox" id="nmShowSpawns" checked> Show spawns</label>
-    </div>
-    <div class="nmmap-wrap">
-      <canvas id="nmCanvas" width="544" height="544"></canvas>
-      <div id="nmTooltip" style="display:none;position:absolute;background:var(--bg4);border:1px solid var(--rule);border-radius:4px;padding:4px 8px;font-size:11px;pointer-events:none;z-index:10"></div>
-    </div>
   </div>
 
   <!-- CHOCOBO -->
@@ -2205,9 +2053,9 @@ function renderActive(){
   else if(ACTIVE_TAB==='fish')renderFish();
   else if(ACTIVE_TAB==='sources')renderSources();
   else if(ACTIVE_TAB==='combat')renderCombat();
+  else if(ACTIVE_TAB==='harvest')renderHarvest();
   else if(ACTIVE_TAB==='garden')renderGarden();
   else if(ACTIVE_TAB==='gilhr')renderGilHr();
-  else if(ACTIVE_TAB==='nmmaps')initNmMap();
   else if(ACTIVE_TAB==='chocobo')renderChocobo();
 }
 var ITEM_DETAIL=null;
@@ -3428,6 +3276,69 @@ function renderGarden(){
   });
 }
 
+// ── Gathering Section ──
+var GTYPE_COLORS={mining:'#c97a3a',logging:'#5a9e4b',harvesting:'#8a7e3a',excavation:'#7a7a9e',clamming:'#4a8a9e'};
+function renderHarvest(){
+  var el=$('harvestContent');if(!el)return;
+  var raw=D.gathering||[];
+  var q=($('harvestSearch')||{}).value||'';q=q.toLowerCase();
+  var sortBy=($('harvestSort')||{}).value||'profit';
+  var typeF=($('harvestType')||{}).value||'';
+
+  var byItem={};
+  for(var i=0;i<raw.length;i++){
+    var g=raw[i];
+    if(typeF&&g.type!==typeF)continue;
+    var key=g.id+'_'+g.type;
+    if(!byItem[key]){byItem[key]={id:g.id,name:g.name,type:g.type,ah:g.ah,vend:g.vend,sell:g.sell,src:g.src,zones:[]};}
+    if(byItem[key].ah<g.ah){byItem[key].ah=g.ah;byItem[key].sell=g.sell;byItem[key].src=g.src;}
+    byItem[key].zones.push({zone:g.zone,pct:g.pct});
+  }
+  var items=[];for(var k in byItem)items.push(byItem[k]);
+
+  if(q){
+    items=items.filter(function(it){
+      if(it.name.toLowerCase().indexOf(q)>=0)return true;
+      if(it.type.toLowerCase().indexOf(q)>=0)return true;
+      for(var j=0;j<it.zones.length;j++){if(it.zones[j].zone.toLowerCase().indexOf(q)>=0)return true;}
+      return false;
+    });
+  }
+
+  items.sort(function(a,b){
+    if(sortBy==='name')return a.name.localeCompare(b.name);
+    if(sortBy==='ah')return(b.ah||0)-(a.ah||0);
+    if(sortBy==='vendor')return(b.vend||0)-(a.vend||0);
+    return(b.sell||0)-(a.sell||0);
+  });
+
+  var cnt=$('harvestCount');if(cnt)cnt.textContent=items.length+' items';
+
+  var t='<table class="tbl"><thead><tr><th>Item</th><th>Type</th><th class="r-align">AH Price</th><th class="r-align">Vendor</th><th class="r-align">Best Sell</th><th>Sell To</th></tr></thead><tbody>';
+  for(var i=0;i<items.length;i++){
+    var it=items[i];
+    var srcTag=it.src==='ah'?'<span style="color:var(--accent)">AH</span>':it.src==='npc'?'<span style="color:var(--fg3)">NPC</span>':'<span style="color:var(--fg4)">Vendor</span>';
+    var tc=GTYPE_COLORS[it.type]||'var(--fg2)';
+    var typeLabel=it.type.charAt(0).toUpperCase()+it.type.slice(1);
+    it.zones.sort(function(a,b){return b.pct-a.pct;});
+    var zoneTags='';
+    for(var j=0;j<it.zones.length;j++){
+      zoneTags+='<span style="display:inline-block;font-size:10px;padding:1px 6px;margin:1px 3px 1px 0;border-radius:3px;background:var(--bg3);color:var(--fg2)">'+h(it.zones[j].zone)+' '+it.zones[j].pct.toFixed(1)+'%</span>';
+    }
+    t+='<tr>';
+    t+='<td><a href="#" data-nav-item="'+it.id+'" style="color:var(--acc);text-decoration:none;font-weight:600">'+h(it.name)+'</a><div style="margin-top:3px">'+zoneTags+'</div></td>';
+    t+='<td><span style="font-size:11px;padding:2px 7px;border-radius:3px;background:'+tc+'22;color:'+tc+';font-weight:600">'+typeLabel+'</span></td>';
+    t+='<td class="r-align mono-cell">'+(it.ah?'<span class="gl">'+gil(it.ah)+'</span>':'<span class="dim">-</span>')+'</td>';
+    t+='<td class="r-align mono-cell">'+(it.vend?'<span class="gl">'+gil(it.vend)+'</span>':'<span class="dim">-</span>')+'</td>';
+    t+='<td class="r-align mono-cell">'+(it.sell?'<span class="gl">'+gil(it.sell)+'</span>':'<span class="dim">-</span>')+'</td>';
+    t+='<td>'+srcTag+'</td>';
+    t+='</tr>';
+  }
+  t+='</tbody></table>';
+  el.innerHTML=t;
+
+  qsa('[data-nav-item]',el).forEach(function(a){a.onclick=function(e){e.preventDefault();navigateToItem(Number(this.dataset.navItem));};});
+}
 // ── Gil/Hr Section ──
 function renderGilHr(){
   var el=$('gilhrContent');
@@ -3528,7 +3439,12 @@ function chocoSimulate(goal,budget){
       if(gain<=0)continue;
       ranked.push({plan:plan,eff:gain,gain:gain});
     }
-    ranked.sort(function(a,b){return b.eff-a.eff;});
+    ranked.sort(function(a,b){
+      if(b.eff!==a.eff)return b.eff-a.eff;
+      var nonGoal=['str','end','dis','rec'];var aW=0,bW=0;
+      for(var s=0;s<nonGoal.length;s++){if(nonGoal[s]===goalStat||nonGoal[s]===secStat)continue;aW+=Math.max(0,a.plan[nonGoal[s]]);bW+=Math.max(0,b.plan[nonGoal[s]]);}
+      return aW-bW;
+    });
 
     var chosen=null;
     if(ranked.length>0){
@@ -4152,96 +4068,6 @@ function renderDigZoneLoot(){
   el.innerHTML=t;
 }
 
-// ── NM Maps (preserved from original) ──
-function initNmMap(){
-  var nmData=D.nmMaps;if(!nmData)return;
-  var zones=Object.keys(nmData);if(!zones.length)return;
-  var sel=$('nmZoneSelect');
-  if(!sel.options.length){
-    for(var i=0;i<zones.length;i++){var o=document.createElement('option');o.value=zones[i];o.textContent=zones[i].replace(/_/g,' ');sel.appendChild(o);}
-  }
-  var zone=sel.value||zones[0];
-  var zd=nmData[zone];if(!zd)return;
-  var canvas=$('nmCanvas');var ctx=canvas.getContext('2d');
-  var W=544,H=544;canvas.width=W;canvas.height=H;
-  var regions=zd.regions||{};var nms=zd.nms||[];var mobsByRegion=zd.mobsByRegion||{};
-  var bounds=zd.bounds||{imgLeft:16,imgTop:16,imgRight:528,imgBottom:528};
-  var coordBounds=zd.coordBounds||{xMin:-1000,xMax:1000,zMin:-1000,zMax:1000};
-  function gameToCanvas(gx,gz){
-    var cx=bounds.imgLeft+(gx-coordBounds.xMin)/(coordBounds.xMax-coordBounds.xMin)*(bounds.imgRight-bounds.imgLeft);
-    var cy=bounds.imgTop+(gz-coordBounds.zMin)/(coordBounds.zMax-coordBounds.zMin)*(bounds.imgBottom-bounds.imgTop);
-    return[cx,cy];
-  }
-  var speciesColor={rabbit:'#7ecf7e',bat:'#9b7ecf',orc:'#cf7e7e',beetle:'#7ebfcf',worm:'#cfb07e',funguar:'#7ecfa0',bomb:'#cf7e7e',sheep:'#cfcf7e',goblin:'#cf9b7e',skeleton:'#b0b0cf',spider:'#9b9bcf',bee:'#cfcf7e',sapling:'#7ecf7e',pugil:'#7e9bcf',crab:'#cf7e9b',leech:'#9bcf7e',mandragora:'#7ecfcf',bird:'#cfcf9b',yagudo:'#cf9bcf',crawler:'#9bcf9b'};
-  var speciesGlyph={rabbit:'R',bat:'B',orc:'O',beetle:'Be',worm:'W',funguar:'F',bomb:'Bo',sheep:'S',goblin:'G',skeleton:'Sk',spider:'Sp',bee:'Be',sapling:'Sa',pugil:'P',crab:'Cr',leech:'L',mandragora:'M',bird:'Bi',yagudo:'Y',crawler:'Cw',hare:'R',treant:'T',hound:'H',flock_bat:'B',evil_weapon:'Ew',ghost:'Gh',pixie:'Px',ahriman:'Ah',armored_goblin:'G',grimoire:'Gr',swords:'Sw'};
-
-  function draw(){
-    ctx.fillStyle='#0a0e17';ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='#1a2840';ctx.lineWidth=0.5;
-    for(var rid in regions){
-      var reg=regions[rid];if(!reg.poly||reg.poly.length<3)continue;
-      ctx.beginPath();
-      var p0=gameToCanvas(reg.poly[0][0],reg.poly[0][1]);
-      ctx.moveTo(p0[0],p0[1]);
-      for(var k=1;k<reg.poly.length;k++){var pk=gameToCanvas(reg.poly[k][0],reg.poly[k][1]);ctx.lineTo(pk[0],pk[1]);}
-      ctx.closePath();
-      ctx.fillStyle='rgba(30,48,80,0.15)';ctx.fill();
-      ctx.stroke();
-    }
-    for(var i=0;i<nms.length;i++){
-      var nm=nms[i];var p=gameToCanvas(nm.x||0,nm.z||0);
-      ctx.beginPath();ctx.arc(p[0],p[1],5,0,Math.PI*2);
-      ctx.fillStyle='#e53935';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();
-      ctx.fillStyle='#fff';ctx.font='bold 9px '+getComputedStyle(document.body).fontFamily;
-      ctx.textAlign='center';ctx.textBaseline='bottom';
-      ctx.fillText(nm.name.replace(/_/g,' '),p[0],p[1]-7);
-    }
-    if($('nmShowSpawns').checked){
-      for(var rid in mobsByRegion){
-        var mobs=mobsByRegion[rid];var reg=regions[rid];if(!reg||!reg.poly)continue;
-        var cx=0,cy=0;
-        for(var k=0;k<reg.poly.length;k++){cx+=reg.poly[k][0];cy+=reg.poly[k][1];}
-        cx/=reg.poly.length;cy/=reg.poly.length;
-        var species={};
-        for(var k=0;k<mobs.length;k++){var m=mobs[k];if(m.nm||!m.species)continue;var sp=m.species;if(!species[sp])species[sp]=0;species[sp]++;}
-        var spList=Object.keys(species);
-        var angle=0,step=spList.length>1?Math.PI*2/spList.length:0;
-        var spread=spList.length>1?12:0;
-        for(var s=0;s<spList.length;s++){
-          var sp=spList[s];var count=species[sp];
-          var dx=spread*Math.cos(angle),dy=spread*Math.sin(angle);
-          var cp=gameToCanvas(cx+dx*3,cy+dy*3);
-          var col=speciesColor[sp]||'#888';
-          ctx.beginPath();ctx.arc(cp[0],cp[1],8,0,Math.PI*2);
-          ctx.fillStyle=col+'44';ctx.fill();
-          ctx.strokeStyle=col;ctx.lineWidth=1;ctx.stroke();
-          ctx.fillStyle=col;ctx.font='bold 7px '+getComputedStyle(document.body).fontFamily;
-          ctx.textAlign='center';ctx.textBaseline='middle';
-          ctx.fillText(speciesGlyph[sp]||'?',cp[0],cp[1]);
-          if(count>1){ctx.font='bold 6px '+getComputedStyle(document.body).fontFamily;ctx.fillText('×'+count,cp[0],cp[1]+10);}
-          angle+=step;
-        }
-      }
-    }
-  }
-  draw();
-  sel.onchange=function(){initNmMap();};
-  $('nmShowSpawns').onchange=function(){draw();};
-  var tooltip=$('nmTooltip');
-  canvas.onmousemove=function(e){
-    var rect=canvas.getBoundingClientRect();var mx=e.clientX-rect.left;var my=e.clientY-rect.top;
-    var found=null;
-    for(var i=0;i<nms.length;i++){
-      var nm=nms[i];var p=gameToCanvas(nm.x||0,nm.z||0);
-      if(Math.abs(mx-p[0])<10&&Math.abs(my-p[1])<10){found=nm;break;}
-    }
-    if(found){tooltip.style.display='block';tooltip.style.left=(mx+12)+'px';tooltip.style.top=(my-8)+'px';
-      tooltip.innerHTML='<b style="color:var(--loss)">'+h(found.name.replace(/_/g,' '))+'</b><br>Lv '+found.level+(found.species?' ('+found.species+')':'');
-    }else{tooltip.style.display='none';}
-  };
-  canvas.onmouseleave=function(){tooltip.style.display='none';};
-}
-
 // ── Command Palette ──
 function toast(msg,dur){
   var t=$('toast');t.textContent=msg;t.classList.add('show');
@@ -4458,12 +4284,13 @@ function init(){
   };});
 
   $('gardenSearch').oninput=renderGarden;$('gardenSeed').onchange=renderGarden;$('gardenProfitOnly').onchange=renderGarden;
+  $('harvestSearch').oninput=renderHarvest;$('harvestType').onchange=renderHarvest;$('harvestSort').onchange=renderHarvest;
 
   var tickerSorts=['spread','delta','recent'];var tsi=0;
   $('tickerSort').onclick=function(){tsi=(tsi+1)%tickerSorts.length;TICKER_SORT=tickerSorts[tsi];
     this.textContent='▼ '+tickerSorts[tsi].charAt(0).toUpperCase()+tickerSorts[tsi].slice(1);renderTicker();};
 
-  var TAB_KEYS={'1':'market','2':'craft','3':'fish','4':'sources','5':'combat','6':'garden','7':'gilhr','8':'nmmaps','9':'chocobo'};
+  var TAB_KEYS={'1':'market','2':'craft','3':'fish','4':'sources','5':'combat','6':'gilhr','7':'garden','8':'harvest','9':'chocobo'};
   document.addEventListener('keydown',function(e){
     if(e.ctrlKey&&e.key==='k'){e.preventDefault();openCmd();return;}
     if(e.key==='Escape'){closeCmd();closePx();$('charDrawer').classList.remove('open');return;}

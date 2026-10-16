@@ -2,18 +2,18 @@
   "name": "Secrets",
   "nation": "San d'Oria",
   "conq1": "",
-  "conq2": "",
+  "conq2": "San d'Oria",
   "conq3": "",
   "skills": {
-    "fish": 47,
-    "cook": 58,
+    "fish": 52,
+    "cook": 64,
     "alchemy": 10,
     "wood": 4,
     "smith": 1,
-    "gold": 0,
-    "cloth": 4,
-    "leather": 0,
-    "bone": 0
+    "gold": 1,
+    "cloth": 1,
+    "leather": 1,
+    "bone": 4
   },
   "fame": {
     "sandy": 9,
