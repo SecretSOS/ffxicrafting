@@ -54,7 +54,8 @@
 .stat .gil svg{width:.62em;height:.62em}
 .stat b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.55rem;font-variant-numeric:tabular-nums;line-height:1.2}
 .stat span{color:var(--ink-faint);font-size:.8rem}
-.warn{grid-column:1/-1;color:var(--loss);font-size:.9rem}
+.warn{grid-column:1/-1;color:var(--ink-faint);font-size:.9rem}
+.hint{grid-column:1/-1;color:var(--ink-soft);font-size:.9rem;padding:10px 16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:6px;border-left:3px solid var(--accent)}
 .price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:2px 22px;padding:0 22px 18px}
 .price-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
 .price-row .nm{min-width:0;overflow-wrap:anywhere}
@@ -333,7 +334,11 @@ function renderBrackets(){
   });
   document.getElementById('brackets').innerHTML=html;
   var netNpc=totalNpc-totalCost, netAh=totalAh-totalCost;
-  var sumHtml=
+  var sumHtml='';
+  if(firstRun&&totalCost>0){
+    sumHtml+='<div class="hint">Pick a craft, then price your materials to see real profit. The numbers below assume vendor prices until you set your own.</div>';
+  }
+  sumHtml+=
     '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 100, cheapest path</span></div>'+
     '<div class="stat"><b>'+fmt(totalSynths)+'</b><span>synths</span></div>'+
     '<div class="stat"><b>'+gil(totalNpc)+'</b><span>vendor sell recovery</span></div>'+
@@ -343,7 +348,7 @@ function renderBrackets(){
       '<div class="stat"><b class="'+(netAh>=0?'gain':'loss')+'">'+(netAh>=0?'+':'−')+fmt(Math.abs(netAh))+'</b><span>net (AH)</span></div>';
   }
   sumHtml+='<div class="stat"><b>'+gil(totalCost/99)+'</b><span>per skill level, average</span></div>';
-  if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials and are greyed out. Price them in the panel above to bring them into the comparison.</div>';
+  if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials — price them in the panel above to include them in the comparison.</div>';
   document.getElementById('summary').innerHTML=sumHtml;
 }
 function renderAll(){ renderCrafts(); renderPrices(); renderBrackets(); }

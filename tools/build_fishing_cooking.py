@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate public/fishing-cooking.html — LOW COST Fishing + Cooking skill-up guide."""
+"""Generate public/guides/fishing-cooking.html — LOW COST Fishing + Cooking skill-up guide."""
 import json, os, sqlite3, html
 from page_template import full_page
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
-OUT  = os.path.join(ROOT, 'public', 'fishing-cooking.html')
+OUT  = os.path.join(ROOT, 'public', 'guides', 'fishing-cooking.html')
 CFG  = os.path.join(ROOT, 'data', 'cfg-notes.json')
 
 cfg_notes = []
@@ -513,9 +513,9 @@ body = BODY.replace('LOOP_PLACEHOLDER', loop_html).replace('TIERS_PLACEHOLDER', 
 page = full_page(
     title='LOW COST Fishing + Cooking Guide \u00b7 Phoenix era 75',
     description='Level cooking from 0 to 60 for almost nothing. Fish for free ingredients, cook them for skill-ups, use the results as bait. Rinse and repeat.',
-    og_url='https://ffxicrafting.com/fishing-cooking',
+    og_url='https://ffxicrafting.com/guides/fishing-cooking',
     body_html=body,
-    active='fishing-cooking',
+    active='guides/fishing-cooking',
     crumbs=[('Home', '/'), ('Fishing + Cooking', '')],
     lsb_commit=LSB_COMMIT,
     extra_css=CUSTOM_CSS,

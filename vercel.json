@@ -5,6 +5,12 @@
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/fishinglookup/:path*", "destination": "/fishing-lookup/:path*", "permanent": true },
+    { "source": "/bcnm-tool", "destination": "/bcnm/profit", "permanent": true },
+    { "source": "/fishing-cooking", "destination": "/guides/fishing-cooking", "permanent": true },
+    { "source": "/fishing-101", "destination": "/guides/fishing-101", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

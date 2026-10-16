@@ -15,10 +15,10 @@ sm += f'<url><loc>{SITE}/profit</loc></url>\n'
 sm += f'<url><loc>{SITE}/shopping</loc></url>\n'
 sm += f'<url><loc>{SITE}/about-the-data</loc></url>\n'
 sm += f'<url><loc>{SITE}/bcnm</loc></url>\n'
-sm += f'<url><loc>{SITE}/bcnm-tool</loc></url>\n'
+sm += f'<url><loc>{SITE}/bcnm/profit</loc></url>\n'
 sm += f'<url><loc>{SITE}/desynth</loc></url>\n'
-sm += f'<url><loc>{SITE}/fishing-101</loc></url>\n'
-sm += f'<url><loc>{SITE}/fishing-cooking</loc></url>\n'
+sm += f'<url><loc>{SITE}/guides/fishing-101</loc></url>\n'
+sm += f'<url><loc>{SITE}/guides/fishing-cooking</loc></url>\n'
 sm += f'<url><loc>{SITE}/guild-points</loc></url>\n'
 sm += f'<url><loc>{SITE}/nm/</loc></url>\n'
 
@@ -36,15 +36,15 @@ for gp in ('mining', 'logging', 'harvesting', 'excavation', 'gardening', 'diggin
     if os.path.isfile(p):
         sm += f'<url><loc>{SITE}/gathering/{gp}</loc></url>\n'
 
-fishing_dir = os.path.join(ROOT, 'public', 'fishinglookup')
-sm += f'<url><loc>{SITE}/fishinglookup</loc></url>\n'
+fishing_dir = os.path.join(ROOT, 'public', 'fishing-lookup')
+sm += f'<url><loc>{SITE}/fishing-lookup</loc></url>\n'
 if os.path.isdir(fishing_dir):
     for sub in ('fish', 'rod', 'bait'):
         sd = os.path.join(fishing_dir, sub)
         if os.path.isdir(sd):
             for ff in sorted(os.listdir(sd)):
                 if ff.endswith('.html'):
-                    sm += f'<url><loc>{SITE}/fishinglookup/{sub}/{ff[:-5]}</loc></url>\n'
+                    sm += f'<url><loc>{SITE}/fishing-lookup/{sub}/{ff[:-5]}</loc></url>\n'
 
 nm_dir = os.path.join(ROOT, 'public', 'nm')
 if os.path.isdir(nm_dir):

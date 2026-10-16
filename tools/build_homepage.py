@@ -54,7 +54,7 @@ BODY = '''\
     <h3>Shopping List</h3></div>
     <p>Pick a craft and skill range, get every material you need &mdash; vendors, drops, gathering, other synths.</p>
    </a>
-   <a class="tool-card" href="/bcnm-tool">
+   <a class="tool-card" href="/bcnm/profit">
     <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
     <h3>BCNM Profit Ranker</h3></div>
     <p>61 orb fights ranked by gil per seal. Enter sell prices to see which BCNMs are worth running.</p>
@@ -69,7 +69,7 @@ BODY = '''\
     <h3>Guild Points</h3></div>
     <p>Cheapest turn-in for today&#8217;s GP pattern. Cost per point for every item the guild accepts.</p>
    </a>
-   <a class="tool-card" href="/fishinglookup">
+   <a class="tool-card" href="/fishing-lookup">
     <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
     <h3>Fishing Lookup</h3></div>
     <p>138 fish with rod compatibility, break/snap rates, skill-up advisor, profit calculator, and bait matrix.</p>
@@ -118,7 +118,7 @@ BODY = '''\
     <h3>BCNMs</h3>
     <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
    </a>
-   <a class="data-card" href="/fishing-cooking">
+   <a class="data-card" href="/guides/fishing-cooking">
     <h3>Guides</h3>
     <p>Skill-up routes, gil-making strats, server-specific notes.</p>
    </a>

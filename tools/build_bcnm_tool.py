@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate public/bcnm-tool.html and public/data/bcnm-tool.json for the BCNM profit ranker."""
+"""Generate public/bcnm/profit.html and public/data/bcnm-tool.json for the BCNM profit ranker."""
 import sqlite3, json, os, sys
 from html import escape
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
-OUT = os.path.join(ROOT, 'public', 'bcnm-tool.html')
+OUT = os.path.join(ROOT, 'public', 'bcnm', 'profit.html')
 DATA_DIR = os.path.join(ROOT, 'public', 'data')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -299,7 +299,7 @@ BODY = """\
 html = html_head(
     'BCNM Profit Ranker · Phoenix era 75',
     'All 61 orb BCNMs ranked by gil per seal. Plug in your sell prices.',
-    'https://ffxicrafting.com/bcnm-tool',
+    'https://ffxicrafting.com/bcnm/profit',
     EXTRA_CSS)
 html += layout_open(active='bcnm', crumbs=[('Home', '/'), ('BCNMs', '/bcnm'), ('Profit Ranker', None)])
 html += BODY
@@ -307,6 +307,7 @@ html += layout_close(LSB_COMMIT)
 html += f'<script>\n{JS}\n</script>\n'
 html += page_end()
 
+os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html)
-print(f"bcnm-tool.html: {os.path.getsize(OUT)/1024:.0f} KB")
+print(f"bcnm/profit.html: {os.path.getsize(OUT)/1024:.0f} KB")

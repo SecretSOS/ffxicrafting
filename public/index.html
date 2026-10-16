@@ -17,7 +17,7 @@
 .tag{color:var(--ink-soft);max-width:62ch;margin:0 0 1.2em;font-size:1.05rem}
 h1{font-size:clamp(2.1rem,5vw,3.2rem)}
 h2{border-left:none;padding-left:0}
-.hero-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:1.2em}
+.hero-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:1.2em}
 .tool-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px 12px;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s}
 .tool-card:hover{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);text-decoration:none}
 .tool-card .tc-head{display:flex;align-items:center;gap:10px;margin:0 0 6px}
@@ -69,7 +69,7 @@ h2{border-left:none;padding-left:0}
     <h3>Shopping List</h3></div>
     <p>Pick a craft and skill range, get every material you need &mdash; vendors, drops, gathering, other synths.</p>
    </a>
-   <a class="tool-card" href="/bcnm-tool">
+   <a class="tool-card" href="/bcnm/profit">
     <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
     <h3>BCNM Profit Ranker</h3></div>
     <p>61 orb fights ranked by gil per seal. Enter sell prices to see which BCNMs are worth running.</p>
@@ -84,7 +84,7 @@ h2{border-left:none;padding-left:0}
     <h3>Guild Points</h3></div>
     <p>Cheapest turn-in for today&#8217;s GP pattern. Cost per point for every item the guild accepts.</p>
    </a>
-   <a class="tool-card" href="/fishinglookup">
+   <a class="tool-card" href="/fishing-lookup">
     <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
     <h3>Fishing Lookup</h3></div>
     <p>138 fish with rod compatibility, break/snap rates, skill-up advisor, profit calculator, and bait matrix.</p>
@@ -97,17 +97,23 @@ h2{border-left:none;padding-left:0}
   </div>
  </header>
 
- <div class="panel pad">
-  <div class="wip-banner">
-   <img src="/img/wip.png" alt="Work in Progress">
-   <div class="wip-text">
-    <p style="margin:0 0 .5em;max-width:52ch">The idea of this site is to give people an ad-free modern site for this amazing MMO. To help new and old players understand what they are doing and make the most gil they can. This site only costs me hosting, and I will not be putting ads on it, ever.</p>
-    <p style="margin:0 0 .3em">In-game: <strong style="color:#e63946">Secrets</strong> (main) <strong style="color:#e63946">Secret</strong> (alt) &mdash; Phoenix XI</p>
-    <p style="margin:0 0 .3em">Send Errors &amp; Ideas to <strong style="color:#e63946">SECRETSOS</strong> on Discord</p>
-    <p style="margin:.6em 0 0;font-size:.9em;color:var(--ink-faint)">More servers are on the roadmap, but Phoenix XI is home &mdash; so it gets built first.</p>
-   </div>
-  </div>
+ <div class="panel" style="padding:10px 20px;font-size:.85rem;color:var(--ink-faint);border-left:3px solid var(--accent)">
+  Work in progress &mdash; <a href="/about-the-data">about this site</a> · report errors to <strong style="color:var(--accent)">SECRETSOS</strong> on Discord
  </div>
+
+ <section class="panel pad">
+  <h2>Guides</h2>
+  <div class="data-grid">
+   <a class="data-card" href="/guides/fishing-cooking">
+    <h3>Fishing + Cooking</h3>
+    <p>Skill-up routes, gil-making strats, and recipes that turn your catch into profit.</p>
+   </a>
+   <a class="data-card" href="/guides/fishing-101">
+    <h3>Fishing 101</h3>
+    <p>Rods, bait, mechanics, and everything you need to start fishing from scratch.</p>
+   </a>
+  </div>
+ </section>
 
  <section class="panel pad">
   <h2>Data &amp; Lookups</h2>
@@ -133,7 +139,7 @@ h2{border-left:none;padding-left:0}
     <h3>BCNMs</h3>
     <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
    </a>
-   <a class="data-card" href="/fishing-cooking">
+   <a class="data-card" href="/guides/fishing-cooking">
     <h3>Guides</h3>
     <p>Skill-up routes, gil-making strats, server-specific notes.</p>
    </a>

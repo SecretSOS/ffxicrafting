@@ -14,7 +14,7 @@ from html import escape as esc
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
-OUT = os.path.join(ROOT, 'public', 'fishinglookup')
+OUT = os.path.join(ROOT, 'public', 'fishing-lookup')
 
 for d in ('fish', 'bait', 'rod'):
     os.makedirs(os.path.join(OUT, d), exist_ok=True)
@@ -81,17 +81,17 @@ def zone_link(z):
 def fish_link(fid, show_icon=True):
     name = item_name(fid)
     ico = icon_html(fid) if show_icon else ''
-    return f'<a href="/fishinglookup/fish/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
+    return f'<a href="/fishing-lookup/fish/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
 
 def bait_link(bid, show_icon=True):
     name = item_name(bid)
     ico = icon_html(bid) if show_icon else ''
-    return f'<a href="/fishinglookup/bait/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
+    return f'<a href="/fishing-lookup/bait/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
 
 def rod_link(rid, show_icon=True):
     name = item_name(rid)
     ico = icon_html(rid) if show_icon else ''
-    return f'<a href="/fishinglookup/rod/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
+    return f'<a href="/fishing-lookup/rod/{slugify(name)}" class="icon-link">{ico}{esc(name)}</a>'
 
 def power_badge(p):
     if p == 3:
@@ -384,11 +384,11 @@ def build_fish_page(f):
             body += f'<td class="zone-rarity">{z["rarity"]}</td></tr>\n'
         body += '</tbody></table></div></section>\n'
 
-    crumbs = [('Fishing Lookup', '/fishinglookup/'), (name, None)]
+    crumbs = [('Fishing Lookup', '/fishing-lookup/'), (name, None)]
     page_html = full_page(
         f'{name} — Fishing Database',
         f'{name}: skill {f["skill"]} {f["size_type"] or ""} fish. Bait affinities, zones, and rod compatibility.',
-        f'https://ffxicrafting.com/fishinglookup/fish/{slug}',
+        f'https://ffxicrafting.com/fishing-lookup/fish/{slug}',
         body, active='gathering', crumbs=crumbs, lsb_commit=LSB_COMMIT, extra_css=FISHING_CSS
     )
 
@@ -455,11 +455,11 @@ def build_bait_page(b):
             body += f'{price_cell(fb["fish_id"])}</tr>\n'
         body += '</tbody></table></div></section>\n'
 
-    crumbs = [('Fishing Lookup', '/fishinglookup/'), ('Bait', '/fishinglookup/#tab-baits'), (name, None)]
+    crumbs = [('Fishing Lookup', '/fishing-lookup/'), ('Bait', '/fishing-lookup/#tab-baits'), (name, None)]
     page_html = full_page(
         f'{name} — Bait',
         f'{name}: catches {len(fishes)} fish species. Type: {btype}, max hook: {b["max_hook"]}.',
-        f'https://ffxicrafting.com/fishinglookup/bait/{slug}',
+        f'https://ffxicrafting.com/fishing-lookup/bait/{slug}',
         body, active='gathering', crumbs=crumbs, lsb_commit=LSB_COMMIT, extra_css=FISHING_CSS
     )
 
@@ -531,11 +531,11 @@ def build_rod_page(r):
 
     body += '</tbody></table></div></section>\n'
 
-    crumbs = [('Fishing Lookup', '/fishinglookup/'), ('Rods', '/fishinglookup/#tab-rods'), (name, None)]
+    crumbs = [('Fishing Lookup', '/fishing-lookup/'), ('Rods', '/fishing-lookup/#tab-rods'), (name, None)]
     page_html = full_page(
         f'{name} — Fishing Rod',
         f'{name}: {r["size_type"]} rod, rank {r["min_rank"]}–{r["max_rank"]}, attack {r["fish_attack"]}.',
-        f'https://ffxicrafting.com/fishinglookup/rod/{slug}',
+        f'https://ffxicrafting.com/fishing-lookup/rod/{slug}',
         body, active='gathering', crumbs=crumbs, lsb_commit=LSB_COMMIT, extra_css=FISHING_CSS
     )
 
@@ -638,9 +638,9 @@ function pctCls(v,inv){
   return v===0?'brk-ok':v<20?'brk-warn':'brk-bad';
 }
 function h(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function fLink(f){return'<a href="/fishinglookup/fish/'+f.slug+'" class="icon-link">'+h(f.name)+'</a>'+hBadge(f.hp);}
-function bLink(b){return'<a href="/fishinglookup/bait/'+b.slug+'">'+h(b.name)+'</a>';}
-function rLink(r){return'<a href="/fishinglookup/rod/'+r.slug+'">'+h(r.name)+'</a>';}
+function fLink(f){return'<a href="/fishing-lookup/fish/'+f.slug+'" class="icon-link">'+h(f.name)+'</a>'+hBadge(f.hp);}
+function bLink(b){return'<a href="/fishing-lookup/bait/'+b.slug+'">'+h(b.name)+'</a>';}
+function rLink(r){return'<a href="/fishing-lookup/rod/'+r.slug+'">'+h(r.name)+'</a>';}
 
 // ── Catch Pools ──
 function renderPool(){
@@ -953,7 +953,7 @@ def build_index():
     page_html = full_page(
         'Fishing Lookup — FFXI Crafting',
         f'Fishing intelligence: catch pools, skill-up advisor, profit calculator, and rod/bait matrix for {len(fish_all)} fish.',
-        'https://ffxicrafting.com/fishinglookup/',
+        'https://ffxicrafting.com/fishing-lookup/',
         body, active='gathering', crumbs=crumbs, lsb_commit=LSB_COMMIT, extra_css=FISHING_CSS
     )
 
@@ -981,4 +981,4 @@ for r in rods_all:
 print(f"  rod/: {len(rods_all)} detail pages (with compat badges, break%/snap%)")
 
 total = 1 + len(fish_all) + len(baits_all) + len(rods_all)
-print(f"Done — {total} pages generated in public/fishinglookup/")
+print(f"Done — {total} pages generated in public/fishing-lookup/")

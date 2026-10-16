@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate public/fishing-101.html — Fishing 101 strategy guide (Brady Games style)."""
+"""Generate public/guides/fishing-101.html — Fishing 101 strategy guide (Brady Games style)."""
 import os, sys, sqlite3
 from html import escape
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
-OUT = os.path.join(ROOT, 'public', 'fishing-101.html')
+OUT = os.path.join(ROOT, 'public', 'guides', 'fishing-101.html')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, icon_html
@@ -158,10 +158,10 @@ CHAPTERS = [
 html = html_head(
     'Fishing 101 · FFXI Crafting',
     'Complete fishing strategy guide for FFXI era-75 servers. Mechanics, leveling routes 1-100, fish locations, bait affinities, daily limits, and Lu Shang quest details.',
-    'https://ffxicrafting.com/fishing-101',
+    'https://ffxicrafting.com/guides/fishing-101',
     extra_css)
 html += layout_open(
-    active='fishing-101',
+    active='guides/fishing-101',
     crumbs=[('Home', '/'), ('Fishing 101', None)])
 
 # ── Hero ─────────────────────────────────────────────────────────────────────
@@ -665,7 +665,8 @@ html += '''\
 html += layout_close(lsb_commit)
 html += page_end()
 
+os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html)
 size = os.path.getsize(OUT) / 1024
-print(f"fishing-101.html: {size:.0f} KB")
+print(f"guides/fishing-101.html: {size:.0f} KB")

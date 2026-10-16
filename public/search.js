@@ -1,4 +1,5 @@
 (function(){
+function _initSearch(){
 var CRAFTS=[
  {n:'Woodworking',u:'/calculator'},{n:'Smithing',u:'/calculator'},
  {n:'Goldsmithing',u:'/calculator'},{n:'Clothcraft',u:'/calculator'},
@@ -55,6 +56,10 @@ function render(){
   h+='<a class="sr-item" href="'+m.u+'"'+ext+dataAttr+' data-i="'+i+'">'+ic+esc(m.n)+'<span class="sr-type">'+m.t+'</span></a>';
  }
  box.innerHTML=h;
+ var r=input.getBoundingClientRect();
+ box.style.top=(r.bottom+4)+'px';
+ box.style.left=r.left+'px';
+ if(!box.style.width) box.style.width=Math.max(r.width,280)+'px';
  box.hidden=false;
 }
 
@@ -96,4 +101,7 @@ box.addEventListener('click',function(e){
 document.addEventListener('click',function(e){
  if(!input.contains(e.target)&&!box.contains(e.target)) hide();
 });
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',_initSearch);
+else _initSearch();
 })();

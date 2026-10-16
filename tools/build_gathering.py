@@ -564,21 +564,21 @@ def build_fishing():
     zone_count = db.execute("SELECT COUNT(DISTINCT zone) FROM fishing_areas").fetchone()[0]
 
     guild_html = load_template('fishing_guild_section.html')
-    guild_html += '<p style="margin-top:12px;font-size:.92rem"><a href="/fishing-101" style="color:var(--accent)">Fishing 101 Guide</a> &mdash; rod progression, leveling path, skill-up mechanics, Lu Shang\'s quest.</p>\n'
+    guild_html += '<p style="margin-top:12px;font-size:.92rem"><a href="/guides/fishing-101" style="color:var(--accent)">Fishing 101 Guide</a> &mdash; rod progression, leveling path, skill-up mechanics, Lu Shang\'s quest.</p>\n'
 
     body = guild_html
 
     body += '<section class="panel pad" style="text-align:center;padding:2em">\n'
     body += f'<h2 style="border:none;padding:0">Fishing Lookup</h2>\n'
     body += f'<p style="color:var(--ink-soft);margin:.6em 0 1.2em">{fish_count} fish, {rod_count} rods, {bait_count} baits across {zone_count} zones &mdash; with skill-up advisor, profit calculator, and rod compatibility tools.</p>\n'
-    body += '<a href="/fishinglookup/" class="cta-btn" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none">Open Fishing Lookup</a>\n'
+    body += '<a href="/fishing-lookup/" class="cta-btn" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none">Open Fishing Lookup</a>\n'
     body += '</section>\n'
 
     out = page('Fishing', 'Complete fishing data: fish by skill, rods, baits, and fishing areas by zone.', 'fishing', body)
     fp = os.path.join(OUT, 'fishing.html')
     with open(fp, 'w', encoding='utf-8') as f:
         f.write(out)
-    print(f"  fishing.html: guild info + link to /fishinglookup/ ({os.path.getsize(fp)/1024:.0f} KB)")
+    print(f"  fishing.html: guild info + link to /fishing-lookup/ ({os.path.getsize(fp)/1024:.0f} KB)")
 
 # ─── Index page ─────────────────────────────────────────────────────
 

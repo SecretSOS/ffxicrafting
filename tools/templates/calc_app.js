@@ -154,7 +154,11 @@ function renderBrackets(){
   });
   document.getElementById('brackets').innerHTML=html;
   var netNpc=totalNpc-totalCost, netAh=totalAh-totalCost;
-  var sumHtml=
+  var sumHtml='';
+  if(firstRun&&totalCost>0){
+    sumHtml+='<div class="hint">Pick a craft, then price your materials to see real profit. The numbers below assume vendor prices until you set your own.</div>';
+  }
+  sumHtml+=
     '<div class="stat"><b>'+gil(totalCost)+'</b><span>materials, skill 1 to 100, cheapest path</span></div>'+
     '<div class="stat"><b>'+fmt(totalSynths)+'</b><span>synths</span></div>'+
     '<div class="stat"><b>'+gil(totalNpc)+'</b><span>vendor sell recovery</span></div>'+
@@ -164,7 +168,7 @@ function renderBrackets(){
       '<div class="stat"><b class="'+(netAh>=0?'gain':'loss')+'">'+(netAh>=0?'+':'−')+fmt(Math.abs(netAh))+'</b><span>net (AH)</span></div>';
   }
   sumHtml+='<div class="stat"><b>'+gil(totalCost/99)+'</b><span>per skill level, average</span></div>';
-  if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials and are greyed out. Price them in the panel above to bring them into the comparison.</div>';
+  if(missing) sumHtml+='<div class="warn">'+missing+' recipes have unpriced materials — price them in the panel above to include them in the comparison.</div>';
   document.getElementById('summary').innerHTML=sumHtml;
 }
 function renderAll(){ renderCrafts(); renderPrices(); renderBrackets(); }

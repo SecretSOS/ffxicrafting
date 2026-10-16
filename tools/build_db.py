@@ -464,9 +464,10 @@ for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),'([^']*)',(\d+)
     cur.execute("INSERT OR REPLACE INTO fish VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], int(g[2]), int(g[3]), int(g[6]), int(g[7]),
         SIZE.get(int(g[9]), str(g[9])), WATER.get(int(g[10]), str(g[10])), int(g[18]), int(g[15]), int(g[16]), int(g[17]), int(g[8]),
         int(g[22]), int(g[4]), int(g[5]), int(g[14]), int(g[21]), int(g[20])))
-for m in re.finditer(r"INSERT INTO `fishing_rod` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_rod.sql'))):
+for m in re.finditer(r"INSERT INTO `fishing_rod` VALUES \((\d+),'((?:[^'\\]|\\.)*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_rod.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
-    cur.execute("INSERT OR REPLACE INTO fishing_rods VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], SIZE.get(int(g[3]), str(g[3])),
+    rod_name = g[1].replace("\\'", "'")
+    cur.execute("INSERT OR REPLACE INTO fishing_rods VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (iid, rod_name, SIZE.get(int(g[3]), str(g[3])),
         int(g[5]), int(g[6]), int(g[7]), int(g[9]), int(g[10]), int(g[17]), int(g[18]),
         int(g[20]), int(g[2]), int(g[8]), int(g[11]), int(g[12]), int(g[13]), int(g[14]), int(g[15]),
         int(g[16]), int(g[4]), int(g[21])))
