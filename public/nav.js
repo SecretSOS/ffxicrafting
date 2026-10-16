@@ -144,7 +144,8 @@ function initChrome(){
  var isBCNM=p==='/bcnm';
  var isFC=p==='/guides/fishing-cooking';
  var isF101=p==='/guides/fishing-101';
- var isGuide=isFC||isF101;
+ var isFLvl=p==='/guides/fishing-leveling';
+ var isGuide=isFC||isF101||isFLvl;
  var isCrafts=/^\/crafts/.test(p);
  var isHarvest=p==='/harvest-festival';
  var isHoliday=isHarvest;
@@ -169,6 +170,7 @@ function initChrome(){
   var guides='<div class="nav-dd"><span class="nav-dd-btn'+ac(isGuide)+'">Guides <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
   guides+='<a href="/guides/fishing-cooking"'+acl(isFC)+'>Fishing + Cooking</a>';
   guides+='<a href="/guides/fishing-101"'+acl(isF101)+'>Fishing 101</a>';
+  guides+='<a href="/guides/fishing-leveling"'+acl(isFLvl)+'>Fishing Leveling 1-85</a>';
   guides+='</div></div>';
 
   // Hidden until Oct 18 launch
