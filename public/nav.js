@@ -173,22 +173,19 @@ function initChrome(){
   guides+='<a href="/guides/fishing-leveling"'+acl(isFLvl)+'>Fishing Leveling 1-85</a>';
   guides+='</div></div>';
 
-  // Hidden until Oct 18 launch
-  var holidays='';
+  var holidays='<a href="/harvest-festival" class="nav-link'+ac(isHarvest)+'">Harvest Festival</a>';
 
   var craftsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isCrafts)+'">Crafts <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
   craftsDD+='<a href="/crafts"'+acl(p==='/crafts')+'>All Crafts</a>';
   craftsDD+='</div></div>';
 
   var isCalc=p==='/calculator',isProfit=p==='/profit',isShopping=p==='/shopping',
-      isBCNMProfit=p==='/bcnm/profit',isDesynth=p==='/desynth',isGP=p==='/guild-points';
-  var isTool=isCalc||isProfit||isShopping||isBCNMProfit||isDesynth||isGP;
+      isBCNMProfit=p==='/bcnm/profit';
+  var isTool=isCalc||isProfit||isShopping||isBCNMProfit;
   var toolsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isTool)+'">Tools <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
   toolsDD+='<a href="/calculator"'+acl(isCalc)+'>Crafting Calculator</a>';
   toolsDD+='<a href="/profit"'+acl(isProfit)+'>Profit Finder</a>';
   toolsDD+='<a href="/shopping"'+acl(isShopping)+'>Shopping List</a>';
-  toolsDD+='<a href="/desynth"'+acl(isDesynth)+'>Desynth Calculator</a>';
-  toolsDD+='<a href="/guild-points"'+acl(isGP)+'>Guild Points</a>';
   toolsDD+='<a href="/bcnm/profit"'+acl(isBCNMProfit)+'>BCNM Profit Ranker</a>';
   toolsDD+='</div></div>';
 
@@ -251,8 +248,6 @@ function initChrome(){
     ['/profit','Profit Finder','profit'],
     ['/shopping','Shopping List','shop'],
     ['/bcnm/profit','BCNM Profit Ranker','bcnm'],
-    ['/desynth','Desynth Calculator','desynth'],
-    ['/guild-points','Guild Points','gp'],
     ['/fishing-lookup','Fishing Lookup','fish'],
     ['/gathering/gardening','Gardening Lookup','garden']
    ];
