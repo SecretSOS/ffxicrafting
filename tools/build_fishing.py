@@ -267,6 +267,18 @@ td,th{padding:3px 6px}
 .tool-form input[type=number]{width:70px}
 .dim-row{opacity:.4}
 .mono-cell{font-variant-numeric:tabular-nums;font-size:.82rem}
+.iso-score{display:inline-block;min-width:28px;text-align:center;padding:1px 6px;border-radius:4px;font-size:.82rem;font-weight:700;font-variant-numeric:tabular-nums}
+.iso-0{background:rgba(80,200,120,0.22);color:#4caf50}
+.iso-1{background:rgba(80,200,120,0.14);color:#6abd6a}
+.iso-2{background:rgba(200,180,60,0.16);color:#c8b84d}
+.iso-3{background:rgba(230,160,50,0.16);color:#e3a75e}
+.iso-4{background:rgba(230,80,80,0.14);color:#e05555}
+.iso-hi{background:rgba(230,80,80,0.10);color:var(--ink-faint)}
+.iso-best{outline:2px solid var(--wind);outline-offset:-1px}
+.iso-rod-ok{color:var(--wind);font-weight:700}
+.iso-rod-warn{color:var(--gil);font-weight:700}
+.iso-bycatch{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.iso-bycatch span{font-size:.8rem;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
 """
 
 # ─── Fish detail pages ───────────────────────────────────────────────
@@ -749,70 +761,93 @@ function renderProfit(){
   document.getElementById('prCount').textContent=sorted.length+' fish';
 }
 
-// ── Rod / Bait Matrix ──
-function renderMatrix(){
-  var mode=document.querySelector('input[name=mxMode]:checked').value;
-  var out=document.getElementById('mxOut');
-  var fishMap={};for(var i=0;i<FD.length;i++)fishMap[FD[i].id]=FD[i];
-  if(mode==='bait'){
-    var bidx=parseInt(document.getElementById('mxBait').value);
-    document.getElementById('mxBaitWrap').style.display='';
-    document.getElementById('mxRodWrap').style.display='none';
-    if(bidx<0){out.innerHTML='<p class="dim">Select a bait above.</p>';return;}
-    var b=BD[bidx];
-    var entries=[];
-    for(var j=0;j<b.fish.length;j++){
-      var c=b.fish[j],f=fishMap[c.fid];
-      if(f)entries.push({f:f,pw:c.pw});
-    }
-    entries.sort(function(a,b){return b.pw-a.pw||a.f.skill-b.f.skill;});
-    var t='<table><thead><tr><th>Fish</th><th>Power</th><th>Skill</th><th>Rank</th>';
-    t+='<th>Size</th><th>NPC</th><th>Stack Value</th></tr></thead><tbody>';
-    for(var k=0;k<entries.length;k++){
-      var e=entries[k],f=e.f;
-      var sv=f.npc*f.stack;
-      t+='<tr><td>'+fLink(f)+'</td>';
-      t+='<td>'+pwBadge(e.pw)+'</td><td class="r-align">'+f.skill+'</td><td class="r-align">'+f.ranking+'</td>';
-      t+='<td>'+h(f.size)+'</td>';
-      t+='<td class="r-align price-col">'+(f.npc>0?f.npc.toLocaleString()+'g':'--')+'</td>';
-      t+='<td class="r-align price-col" style="font-weight:700">'+(sv>0?sv.toLocaleString()+'g':'--')+'</td>';
-      t+='</tr>';
-    }
-    t+='</tbody></table>';
-    out.innerHTML=t;
-  } else {
-    var ridx=parseInt(document.getElementById('mxRod').value);
-    document.getElementById('mxBaitWrap').style.display='none';
-    document.getElementById('mxRodWrap').style.display='';
-    if(ridx<0){out.innerHTML='<p class="dim">Select a rod above.</p>';return;}
-    var rod=RD[ridx];
-    var rows=[];
-    for(var m=0;m<FD.length;m++){
-      var f=FD[m];
-      var badge=rcBadge(f,rod);
-      var brk=breakC(f.skill,f,rod);
-      var snp=snapC(f.skill,f,rod);
-      var land=Math.max(0,100-brk-snp);
-      rows.push({f:f,badge:badge,brk:brk,snp:snp,land:land});
-    }
-    rows.sort(function(a,b){return a.f.skill-b.f.skill;});
-    var t='<table><thead><tr><th>Fish</th><th>Skill</th><th>Rank</th><th>Status</th>';
-    t+='<th>Break%</th><th>Snap%</th><th>Land%</th><th>NPC</th></tr></thead><tbody>';
-    for(var n=0;n<rows.length;n++){
-      var r=rows[n],f=r.f;
-      var dim=r.land<50?' class="dim-row"':'';
-      t+='<tr'+dim+'><td>'+fLink(f)+'</td>';
-      t+='<td class="r-align">'+f.skill+'</td><td class="r-align">'+f.ranking+'</td>';
-      t+='<td>'+r.badge+'</td>';
-      t+='<td class="r-align brk-pct '+pctCls(r.brk,false)+'">'+r.brk+'%</td>';
-      t+='<td class="r-align brk-pct '+pctCls(r.snp,false)+'">'+r.snp+'%</td>';
-      t+='<td class="r-align brk-pct '+pctCls(r.land,true)+'">'+r.land+'%</td>';
-      t+='<td class="r-align price-col">'+(f.npc>0?f.npc.toLocaleString()+'g':'--')+'</td>';
-      t+='</tr>';
-    }
-    t+='</tbody></table>';
-    out.innerHTML=t;
+// ── Isolation ──
+function renderIsolation(){
+  var fidx=parseInt(document.getElementById('isoFish').value);
+  var out=document.getElementById('isoOut');
+  var cnt=document.getElementById('isoCount');
+  if(fidx<0){out.innerHTML='<p class="dim">Select a target fish above.</p>';if(cnt)cnt.textContent='';return;}
+  var target=FD[fidx];
+  if(!target){out.innerHTML='<p class="dim">Fish not found.</p>';return;}
+  var uniqueZones={};
+  for(var z=0;z<target.zones.length;z++){
+    var zn=target.zones[z].z;
+    if(!uniqueZones[zn])uniqueZones[zn]={name:zn,rarity:target.zones[z].r,areas:[]};
+    uniqueZones[zn].areas.push(target.zones[z].a);
+    if(target.zones[z].r>uniqueZones[zn].rarity)uniqueZones[zn].rarity=target.zones[z].r;
   }
+  var zoneFish={};
+  for(var j=0;j<FD.length;j++){
+    var f=FD[j];
+    for(var k=0;k<f.zones.length;k++){
+      var zk=f.zones[k].z;
+      if(!uniqueZones[zk])continue;
+      if(!zoneFish[zk])zoneFish[zk]={};
+      zoneFish[zk][f.id]=f;
+    }
+  }
+  var baitFishMap={};
+  for(var b=0;b<BD.length;b++){
+    var bt=BD[b];
+    var catchSet={};
+    for(var c=0;c<bt.fish.length;c++)catchSet[bt.fish[c].fid]=bt.fish[c].pw;
+    baitFishMap[b]={bait:bt,catchSet:catchSet};
+  }
+  var results=[];
+  for(var bi=0;bi<target.baits.length;bi++){
+    var baitId=target.baits[bi].bid;
+    var baitPw=target.baits[bi].pw;
+    var bIdx=-1;
+    for(var m=0;m<BD.length;m++){if(BD[m].id===baitId){bIdx=m;break;}}
+    if(bIdx<0)continue;
+    var bData=baitFishMap[bIdx];
+    for(var zn2 in uniqueZones){
+      var poolFish=zoneFish[zn2]||{};
+      var bycatch=[];
+      for(var fid in poolFish){
+        if(parseInt(fid)===target.id)continue;
+        if(bData.catchSet[fid])bycatch.push({f:poolFish[fid],pw:bData.catchSet[fid]});
+      }
+      bycatch.sort(function(a,b2){return b2.pw-a.pw||a.f.skill-b2.f.skill;});
+      var bestRod=null;
+      for(var ri=0;ri<RD.length;ri++){
+        var r=RD[ri];
+        if(r.legendary||r.id===17013)continue;
+        if(r.size!==target.size)continue;
+        if(target.ranking>r.maxR)continue;
+        if(!bestRod||r.maxR<bestRod.maxR)bestRod=r;
+      }
+      results.push({zone:uniqueZones[zn2],bait:bData.bait,baitPw:baitPw,bycatch:bycatch,count:bycatch.length,bestRod:bestRod});
+    }
+  }
+  results.sort(function(a,b2){return a.count-b2.count||b2.baitPw-a.baitPw||b2.zone.rarity-a.zone.rarity;});
+  if(cnt)cnt.textContent=results.length+' combos';
+  if(!results.length){out.innerHTML='<p class="dim">No bait+zone combos found for this fish.</p>';return;}
+  var bestCount=results[0].count;
+  var t='<table><thead><tr><th>Bait</th><th>Power</th><th>Zone</th><th>Bycatch</th><th>Rod</th><th>Other fish in pool</th></tr></thead><tbody>';
+  for(var q=0;q<results.length;q++){
+    var row=results[q];
+    var sc=row.count;
+    var scCls=sc===0?'iso-0':sc<=1?'iso-1':sc<=2?'iso-2':sc<=3?'iso-3':sc<=5?'iso-4':'iso-hi';
+    if(sc===bestCount)scCls+=' iso-best';
+    var rodStr='--';
+    if(row.bestRod)rodStr='<span class="iso-rod-ok">'+h(row.bestRod.name)+'</span>';
+    var byNames=[];
+    for(var bn=0;bn<row.bycatch.length;bn++){
+      var bf=row.bycatch[bn];
+      byNames.push('<span>'+h(bf.f.name)+' <span class="dim">('+bf.f.skill+')</span></span>');
+    }
+    t+='<tr>';
+    t+='<td>'+bLink(row.bait)+'</td>';
+    t+='<td>'+pwBadge(row.baitPw)+'</td>';
+    t+='<td>'+h(row.zone.name)+'</td>';
+    t+='<td><span class="iso-score '+scCls+'">'+sc+'</span></td>';
+    t+='<td>'+rodStr+'</td>';
+    t+='<td style="font-size:.8rem">'+(byNames.length?'<div class="iso-bycatch">'+byNames.join('')+'</div>':'<span style="color:var(--wind);font-weight:600">Perfect isolation!</span>')+'</td>';
+    t+='</tr>';
+  }
+  t+='</tbody></table>';
+  out.innerHTML=t;
 }
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -828,10 +863,18 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('prSkill').addEventListener('input',renderProfit);
   renderProfit();
 
-  document.getElementById('mxBait').addEventListener('change',renderMatrix);
-  document.getElementById('mxRod').addEventListener('change',renderMatrix);
-  var radios=document.querySelectorAll('input[name=mxMode]');
-  for(var i=0;i<radios.length;i++)radios[i].addEventListener('change',renderMatrix);
+  var isoSel=document.getElementById('isoFish');
+  if(isoSel){
+    var sorted=FD.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
+    for(var fi=0;fi<sorted.length;fi++){
+      var idx=-1;for(var fj=0;fj<FD.length;fj++){if(FD[fj]===sorted[fi]){idx=fj;break;}}
+      var o=document.createElement('option');
+      o.value=idx;
+      o.textContent=sorted[fi].name+' (skill '+sorted[fi].skill+')';
+      isoSel.appendChild(o);
+    }
+    isoSel.addEventListener('change',renderIsolation);
+  }
 });
 """
 
@@ -852,7 +895,7 @@ def build_index():
     body += '<button class="active" data-tab="tab-pool">Catch Pools</button>'
     body += '<button data-tab="tab-skillup">Skill-Up Advisor</button>'
     body += '<button data-tab="tab-profit">Profit Calculator</button>'
-    body += '<button data-tab="tab-matrix">Rod / Bait Matrix</button>'
+    body += '<button data-tab="tab-isolate">Isolation</button>'
     body += '</div>\n'
 
     # ── Catch Pools
@@ -918,29 +961,16 @@ def build_index():
     body += '<tbody id="profBody"></tbody></table></div>\n'
     body += '</div>\n'
 
-    # ── Rod / Bait Matrix
-    body += '<div id="tab-matrix" hidden>\n'
-    body += '<h2>Rod / Bait Matrix</h2>\n'
+    # ── Isolation
+    body += '<div id="tab-isolate" hidden>\n'
+    body += '<h2>Fish Isolation</h2>\n'
     body += '<p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:1em">'
-    body += 'Select a bait to see what it catches, or a rod to see compatibility, break%, and snap% for every fish.</p>\n'
+    body += 'Pick a target fish to find the best bait + zone combo that minimizes bycatch. Lower bycatch = more of your target per trip.</p>\n'
     body += '<div class="tool-form">\n'
-    body += '<label style="flex-direction:row;gap:12px;align-items:center">'
-    body += '<label><input type="radio" name="mxMode" value="bait" checked> Bait</label>'
-    body += '<label><input type="radio" name="mxMode" value="rod"> Rod</label>'
-    body += '</label>\n'
-    body += '<span id="mxBaitWrap"><label>Bait<select id="mxBait"><option value="-1">-- Select bait --</option>\n'
-    for i, b in enumerate(baits_all):
-        bname = item_name(b['item_id'])
-        n_fish = len(bait_fish_map.get(b['item_id'], []))
-        body += f'<option value="{i}">{esc(bname)} ({n_fish} fish)</option>\n'
-    body += '</select></label></span>\n'
-    body += '<span id="mxRodWrap" style="display:none"><label>Rod<select id="mxRod"><option value="-1">-- Select rod --</option>\n'
-    for i, r in enumerate(rods_all):
-        rname = item_name(r['item_id'])
-        body += f'<option value="{i}">{esc(rname)} ({r["min_rank"]}-{r["max_rank"]})</option>\n'
-    body += '</select></label></span>\n'
+    body += '<label>Target Fish<select id="isoFish"><option value="-1">-- Pick a fish --</option></select></label>\n'
+    body += '<span class="dim" id="isoCount"></span>\n'
     body += '</div>\n'
-    body += '<div style="overflow-x:auto" id="mxOut"><p class="dim">Select a bait or rod above.</p></div>\n'
+    body += '<div style="overflow-x:auto" id="isoOut"><p class="dim">Select a target fish above.</p></div>\n'
     body += '</div>\n'
 
     body += '</section>\n'
@@ -966,7 +996,7 @@ def build_index():
 print("Building fishing database…")
 
 build_index()
-print(f"  index.html ({len(fish_all)} fish, {len(rods_all)} rods, {len(baits_all)} baits, +3 interactive tools)")
+print(f"  index.html ({len(fish_all)} fish, {len(rods_all)} rods, {len(baits_all)} baits, +4 interactive tools)")
 
 for f in fish_all:
     build_fish_page(f)

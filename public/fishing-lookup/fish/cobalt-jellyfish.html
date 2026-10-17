@@ -69,6 +69,18 @@ td,th{padding:3px 6px}
 .tool-form input[type=number]{width:70px}
 .dim-row{opacity:.4}
 .mono-cell{font-variant-numeric:tabular-nums;font-size:.82rem}
+.iso-score{display:inline-block;min-width:28px;text-align:center;padding:1px 6px;border-radius:4px;font-size:.82rem;font-weight:700;font-variant-numeric:tabular-nums}
+.iso-0{background:rgba(80,200,120,0.22);color:#4caf50}
+.iso-1{background:rgba(80,200,120,0.14);color:#6abd6a}
+.iso-2{background:rgba(200,180,60,0.16);color:#c8b84d}
+.iso-3{background:rgba(230,160,50,0.16);color:#e3a75e}
+.iso-4{background:rgba(230,80,80,0.14);color:#e05555}
+.iso-hi{background:rgba(230,80,80,0.10);color:var(--ink-faint)}
+.iso-best{outline:2px solid var(--wind);outline-offset:-1px}
+.iso-rod-ok{color:var(--wind);font-weight:700}
+.iso-rod-warn{color:var(--gil);font-weight:700}
+.iso-bycatch{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.iso-bycatch span{font-size:.8rem;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
 
 </style>
 <script src="/nav.js"></script>
@@ -117,6 +129,8 @@ td,th{padding:3px 6px}
 <tr><td><a href="/fishing-lookup/rod/halcyon-rod" class="icon-link"><span class="icon" style="--ic:33;--ir:25;--isz:20px;--is:2"></span> Halcyon Rod</a></td><td>small</td><td>1&ndash;18</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
 <tr><td><a href="/fishing-lookup/rod/hume-fishing-rod" class="icon-link"><span class="icon" style="--ic:32;--ir:25;--isz:20px;--is:2"></span> Hume Fishing Rod</a></td><td>small</td><td>1&ndash;15</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
 <tr><td><a href="/fishing-lookup/rod/judges-rod" class="icon-link"><span class="icon" style="--ic:30;--ir:25;--isz:20px;--is:2"></span> Judges Rod</a></td><td>small</td><td>1&ndash;40</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishing-lookup/rod/lu-shangs-fishing-rod" class="icon-link"><span class="icon" style="--ic:62;--ir:29;--isz:20px;--is:2"></span> Lu Shangs Fishing Rod</a></td><td>small</td><td>1&ndash;28</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
+<tr><td><a href="/fishing-lookup/rod/lu-shangs-fishing-rod-1" class="icon-link"><span class="icon" style="--ic:20;--ir:10;--isz:20px;--is:3"></span> Lu Shangs Fishing Rod +1</a></td><td>small</td><td>1&ndash;28</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
 <tr><td><a href="/fishing-lookup/rod/maze-monger-fishing-rod" class="icon-link"><span class="icon" style="--ic:19;--ir:10;--isz:20px;--is:3"></span> Maze Monger Fishing Rod</a></td><td>small</td><td>1&ndash;25</td><td><span class="rc-badge rc-ok">OK</span></td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="0">0%</td><td class="r-align brk-pct brk-ok" data-v="100">100%</td></tr>
 <tr><td><a href="/fishing-lookup/rod/tarutaru-fishing-rod" class="icon-link"><span class="icon" style="--ic:63;--ir:29;--isz:20px;--is:2"></span> Tarutaru Fishing Rod</a></td><td>small</td><td>1&ndash;9</td><td><span class="rc-badge rc-rank">RANK</span></td><td class="r-align brk-pct brk-warn" data-v="3">3%</td><td class="r-align brk-pct brk-bad" data-v="25">25%</td><td class="r-align brk-pct brk-warn" data-v="72">72%</td></tr>
 <tr><td><a href="/fishing-lookup/rod/willow-fishing-rod" class="icon-link"><span class="icon" style="--ic:3;--ir:30;--isz:20px;--is:2"></span> Willow Fishing Rod</a></td><td>small</td><td>1&ndash;5</td><td><span class="rc-badge rc-rank">RANK</span></td><td class="r-align brk-pct brk-warn" data-v="9">9%</td><td class="r-align brk-pct brk-bad" data-v="55">55%</td><td class="r-align brk-pct brk-bad" data-v="36">36%</td></tr>
