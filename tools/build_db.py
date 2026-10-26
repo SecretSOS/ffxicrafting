@@ -337,8 +337,11 @@ for m in re.finditer(r"\['([^']+)'\s*\]\s*=\s*\{\s*xi\.region\.(\w+),\s*xi\.nati
     vendors[m[2]].append(f"{m[1]} ({m[3].title()})")
 si0 = shp.index('local regionalStockTable'); si1 = shp.index('\n}\n', si0)
 for rm in re.finditer(r"\[xi\.region\.(\w+)\]\s*=\s*\{(.*?)\n    \},", shp[si0:si1], re.S):
-    for m in re.finditer(r"\{\s*xi\.item\.(\w+),\s*(\d+)\s*\}", rm[2]):
-        S(enum.get(m[1]), 'regional_vendor', rm[1].lower(), ', '.join(vendors[rm[1]]), None, gate='vendor nation must control ' + rm[1].lower(), price=int(m[2]), file='scripts/globals/shop.lua')
+    for m in re.finditer(r"\{\s*xi\.item\.(\w+),\s*(\d+),?\s*\}", rm[2]):
+        iid = enum.get(m[1])
+        if iid and iid in items and not cur.execute("SELECT 1 FROM items WHERE id=?", (iid,)).fetchone():
+            cur.execute("INSERT INTO items VALUES (?,?,?,?,?,?,?,?,?)", items[iid])
+        S(iid, 'regional_vendor', rm[1].lower(), ', '.join(vendors[rm[1]]), None, gate='vendor nation must control ' + rm[1].lower(), price=int(m[2]), file='scripts/globals/shop.lua')
 # ---------- 16. curio vendor moogle (key-item gated; Rhapsodies of Vana'diel = post-era)
 ci0 = shp.index('xi.shop.curioVendorMoogleStock'); ci1 = shp.index('\n}\n', ci0)
 for m in re.finditer(r"\{\s*xi\.item\.(\w+),\s*(\d+),\s*xi\.keyItem\.(\w+)", shp[ci0:ci1]):

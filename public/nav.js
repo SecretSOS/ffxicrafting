@@ -22,6 +22,7 @@ var _SVG='<svg style="display:none" aria-hidden="true">'
 +' <symbol id="i-gp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></symbol>'
 +' <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="8" y="2" width="8" height="5" rx="1"/><rect x="2" y="17" width="7" height="5" rx="1"/><rect x="15" y="17" width="7" height="5" rx="1"/><path d="M12 7v5m0 0l-6.5 5m6.5-5l6.5 5"/></symbol>'
 +' <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>'
++' <symbol id="i-regional" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V8l9-6 9 6v13"/><path d="M9 21v-6h6v6"/><path d="M3 8h18"/></symbol>'
 +' <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>'
 +'</svg>';
 
@@ -147,6 +148,7 @@ function initChrome(){
  var isFLvl=p==='/guides/fishing-leveling';
  var isGuide=isFC||isF101||isFLvl;
  var isCrafts=/^\/crafts/.test(p);
+ var isRegional=p==='/regional-merchants';
  var isHarvest=p==='/harvest-festival';
  var isHoliday=isHarvest;
 
@@ -195,6 +197,7 @@ function initChrome(){
    '<div class="nav-links">'+toolsDD+gdd+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
+   '<a href="/regional-merchants" class="nav-link'+ac(isRegional)+'">Regional</a>'+
    guides+holidays+
    '</div>';
  }
@@ -249,7 +252,8 @@ function initChrome(){
     ['/shopping','Shopping List','shop'],
     ['/bcnm/profit','BCNM Profit Ranker','bcnm'],
     ['/fishing-lookup','Fishing Lookup','fish'],
-    ['/gathering/gardening','Gardening Lookup','garden']
+    ['/gathering/gardening','Gardening Lookup','garden'],
+    ['/regional-merchants','Regional Merchants','regional']
    ];
    var sh='<div class="sb-search"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>';
    sh+='<div class="sb-section"><div class="sb-heading" style="font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Tools</div>';

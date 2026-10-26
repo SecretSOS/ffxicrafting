@@ -1,12 +1,12 @@
 {
   "name": "Secrets",
   "nation": "San d'Oria",
-  "conq1": "",
-  "conq2": "San d'Oria",
-  "conq3": "",
+  "conq1": "San d'Oria",
+  "conq2": "Windurst",
+  "conq3": "Bastok",
   "skills": {
-    "fish": 54,
-    "cook": 70,
+    "fish": 65,
+    "cook": 90,
     "alchemy": 10,
     "wood": 4,
     "smith": 1,
