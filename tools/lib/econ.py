@@ -1,10 +1,10 @@
 """Shared pricing logic for ffxicrafting build scripts and PowerTool.
 
-Centralizes AH price loading, buy/sell price resolution, and profit calculation.
-Build scripts use the standalone functions; PowerTool uses ptdata.PriceResolver
-which wraps the same logic with richer context.
+Centralizes AH price loading, buy/sell price resolution, profit calculation,
+and the Phoenix API price scan/write pipeline shared by PowerTool and
+scan_phoenix_prices.py.
 """
-import json, os
+import json, os, time
 
 _DEFAULT_AH = os.path.join(os.path.dirname(__file__), '..', '..', 'public', 'data', 'ah-prices.json')
 
@@ -78,3 +78,83 @@ def margin_pct(sell, buy):
     if sell and buy and buy > 0:
         return round((sell - buy) / buy * 100, 1)
     return None
+
+
+# --- Phoenix AH price scan pipeline ---
+
+def parse_phoenix_sales(data):
+    """Parse a Phoenix API item price response into median prices.
+    Returns (single_price, stack_price, sale_count) — any may be None/0."""
+    if not data:
+        return None, None, 0
+    sales = data.get('sales') or []
+    singles = sorted([s['price'] for s in sales
+                      if (s.get('quantity') or 1) == 1 and s.get('price', 0) > 0])
+    stacks = sorted([s['price'] for s in sales
+                     if (s.get('quantity') or 1) > 1 and s.get('price', 0) > 0])
+    single_price = singles[len(singles) // 2] if singles else None
+    if not single_price and not stacks:
+        avg = data.get('stats', {}).get('averagePrice', 0)
+        if avg > 0:
+            single_price = round(avg)
+    stack_price = stacks[len(stacks) // 2] if stacks else None
+    return single_price, stack_price, len(sales)
+
+
+def merge_ah_prices(new_prices, new_stacks, new_counts=None, new_last_sale=None, path=None):
+    """Merge scanned prices into ah-prices.json and write atomically.
+    Returns summary dict with counts."""
+    path = path or _DEFAULT_AH
+    existing = {}
+    if os.path.exists(path):
+        with open(path, encoding='utf-8') as f:
+            existing = json.load(f)
+
+    prices = dict(existing.get('prices', {}))
+    stack_prices = dict(existing.get('stackPrices', {}))
+    timestamps = dict(existing.get('timestamps', {}))
+    sale_counts = dict(existing.get('saleCounts', {}))
+    last_sale = dict(existing.get('lastSale', {}))
+    now = int(time.time())
+    new_count = 0
+    updated_count = 0
+
+    for key, val in new_prices.items():
+        if val and val > 0:
+            was_new = key not in prices
+            prices[key] = int(val)
+            timestamps[key] = now
+            if was_new:
+                new_count += 1
+            else:
+                updated_count += 1
+
+    for key, val in new_stacks.items():
+        if val and val > 0:
+            stack_prices[key] = int(val)
+
+    if new_counts:
+        for key, val in new_counts.items():
+            if val and val > 0:
+                sale_counts[key] = int(val)
+
+    if new_last_sale:
+        for key, val in new_last_sale.items():
+            if val and val > 0:
+                last_sale[key] = int(val)
+
+    total_unique = len(set(list(prices.keys()) + list(stack_prices.keys())))
+    result = {
+        'prices': prices, 'stackPrices': stack_prices,
+        'bazaarPrices': existing.get('bazaarPrices', {}),
+        'timestamps': timestamps, 'saleCounts': sale_counts, 'lastSale': last_sale,
+        'server': 'phoenixxi', 'fetched': now, 'count': total_unique,
+    }
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(result, separators=(',', ':'), fp=f)
+
+    return {
+        'single': len(prices), 'stack': len(stack_prices),
+        'total': total_unique, 'new': new_count, 'updated': updated_count,
+    }
