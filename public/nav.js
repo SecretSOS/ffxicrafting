@@ -38,17 +38,17 @@ _MN=["New Moon","Waxing Crescent","First Quarter","Waxing Gibbous","Full Moon","
 function _pad(n){return n<10?"0"+n:""+n}
 
 function _moonInfo(vd){
- var md=(vd+26)%84,pct,wax;
- if(md<=41){pct=Math.round(100*md/42);wax=true;}
- else{pct=Math.round(100*(84-md)/42);wax=false;}
+ var md=(vd+38)%84,pct,wax;
+ if(md>=42){pct=Math.round(100*(md-42)/42);wax=true;}
+ else{pct=Math.round(100*(1-md/42));wax=false;}
  var pi;
- if(pct<=5)pi=0;
- else if(pct<=30)pi=wax?1:7;
+ if(pct<=10)pi=0;
+ else if(pct<=33)pi=wax?1:7;
  else if(pct<=55)pi=wax?2:6;
- else if(pct<=80)pi=wax?3:5;
+ else if(pct<=90)pi=wax?3:5;
  else pi=4;
  var dF,dN;
- if(md<=42){dF=42-md;dN=84-md;}else{dF=84-md+42;dN=84-md;}
+ if(md<42){dN=42-md;dF=84-md;}else{dF=84-md;dN=84-md+42;}
  var rF=Math.round(dF*57.6),rN=Math.round(dN*57.6);
  var nt,nl,nv;
  if(dF<=dN){nt='Full';nv=rF;}else{nt='New';nv=rN;}
