@@ -16,14 +16,20 @@ class ItemDB:
             cache_mtime = os.path.getmtime(cache_path)
             if cache_mtime > src_mtime:
                 self._load_cache(cache_path)
+                self._add_aliases()
                 return
 
         self._items = parse_item_basic(sql_path)
         self._furnishing = parse_item_furnishing(furn_path)
         self._by_name = {v['name']: k for k, v in self._items.items()}
+        self._add_aliases()
 
         if cache_path:
             self._save_cache(cache_path)
+
+    def _add_aliases(self):
+        for d in self._items.values():
+            d['base_price'] = d.get('base_sell', 0)
 
     def _load_cache(self, path):
         db = sqlite3.connect(path)
