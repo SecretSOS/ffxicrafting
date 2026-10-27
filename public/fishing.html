@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Fishing Codex — FFXI Crafting</title>
-<meta name="description" content="Complete fishing database: 138 fish, 39 baits, 20 rods. Zones, conditions, rod compatibility, recipes, and AH prices.">
+<meta name="description" content="Fishing intelligence: catch pools, skill-up advisor, profit calculator, isolation, and full codex for 138 fish, 39 baits, 20 rods.">
 <meta property="og:title" content="Fishing Codex — FFXI Crafting">
-<meta property="og:description" content="Complete fishing database for era-75 FFXI. Every fish, bait, and rod with full catch data.">
+<meta property="og:description" content="Fishing intelligence for era-75 — catch pools, skill-up advisor, profit calc, isolation, and full codex.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ffxicrafting.com/fishing">
 <meta name="theme-color" content="#0c1728">
@@ -164,6 +164,35 @@
 .rod-stat .rsl{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint)}
 .rod-stat .rsv{font-family:var(--font-mono);font-size:.95rem;font-weight:700}
 
+/* ── Tool navigation ── */
+.tool-nav{display:flex;gap:4px;margin-bottom:18px;flex-wrap:wrap}
+.tool-btn{padding:10px 18px;border-radius:8px;font-size:.84rem;font-weight:700;color:var(--ink-faint);background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-family:var(--font-body)}
+.tool-btn:hover{border-color:var(--fish);color:var(--fish)}
+.tool-btn.active{background:color-mix(in srgb,var(--fish) 12%,transparent);color:var(--fish);border-color:var(--fish)}
+.tool-pane{display:none}
+.tool-pane.active{display:block}
+.tool-form{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-bottom:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+.tool-form label{font-size:.78rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:3px}
+.tool-form input,.tool-form select{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--ink);font-size:.84rem;font-variant-numeric:tabular-nums;font-family:var(--font-body)}
+.tool-form input[type=number]{width:75px}
+.tool-tbl{width:100%;font-size:.82rem;border-collapse:collapse}
+.tool-tbl th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint);padding:6px 8px;border-bottom:1px solid var(--border)}
+.tool-tbl td{padding:5px 8px;font-variant-numeric:tabular-nums;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
+.tool-tbl tr:hover{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.tool-tbl .ra{text-align:right}
+.tool-count{font-size:.82rem;color:var(--ink-faint);margin-left:auto}
+.dim-row{opacity:.4}
+.iso-score{display:inline-block;min-width:28px;text-align:center;padding:2px 8px;border-radius:5px;font-size:.82rem;font-weight:700;font-variant-numeric:tabular-nums}
+.iso-0{background:color-mix(in srgb,var(--gain) 22%,transparent);color:var(--gain)}
+.iso-1{background:color-mix(in srgb,var(--gain) 14%,transparent);color:var(--gain)}
+.iso-2{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.iso-3{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
+.iso-4{background:color-mix(in srgb,var(--loss) 14%,transparent);color:var(--loss)}
+.iso-hi{background:color-mix(in srgb,var(--loss) 10%,transparent);color:var(--ink-faint)}
+.iso-best{outline:2px solid var(--gain);outline-offset:-1px}
+.iso-bycatch{display:flex;flex-wrap:wrap;gap:5px}
+.iso-bycatch span{font-size:.78rem;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
 /* ── Responsive ── */
 @media(max-width:700px){
   .cdx-head{padding:10px 12px;gap:8px}
@@ -173,6 +202,8 @@
   .cdx-stats{grid-template-columns:repeat(3,1fr)}
   .cdx-sec-body{padding:0 12px 10px}
   .rod-tbl{font-size:.72rem}
+  .tool-btn{padding:8px 12px;font-size:.78rem}
+  .tool-tbl{font-size:.74rem}
 }
 </style>
 <script src="/nav.js"></script>
@@ -190,9 +221,18 @@
 
 <header class="panel pad" style="padding-bottom:18px">
 <h1 style="margin:0 0 4px;font-size:1.5rem">Fishing Codex</h1>
-<p style="color:var(--ink-faint);margin:0;font-size:.88rem">Complete fishing database — every fish, bait, and rod from the LandSandBoat source</p>
+<p style="color:var(--ink-faint);margin:0;font-size:.88rem">Fishing intelligence for era-75 &mdash; 138 fish, 20 rods, 39 baits across 95 zones</p>
 </header>
 
+<div class="tool-nav" id="toolNav">
+  <div class="tool-btn active" data-tool="codex">Codex</div>
+  <div class="tool-btn" data-tool="pools">Catch Pools</div>
+  <div class="tool-btn" data-tool="skillup">Skill-Up Advisor</div>
+  <div class="tool-btn" data-tool="profit">Profit Calculator</div>
+  <div class="tool-btn" data-tool="isolate">Isolation</div>
+</div>
+
+<div class="tool-pane active" id="tool-codex">
 <div class="codex-tabs" id="codexTabs">
   <div class="codex-tab active" data-tab="fish">Fish <span class="tab-count" id="tcFish"></span></div>
   <div class="codex-tab" data-tab="baits">Baits <span class="tab-count" id="tcBaits"></span></div>
@@ -298,6 +338,54 @@
   </div>
   <div class="result-count" id="rodCount"></div>
   <div class="codex-list" id="rodList"></div>
+</div>
+</div><!-- /tool-codex -->
+
+<!-- ═══ CATCH POOLS ═══ -->
+<div class="tool-pane" id="tool-pools">
+  <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:0 0 6px">Catch Pools</h2>
+  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Filter by zone, bait, and skill level to see what you can catch. All filters stack.</p>
+  <div class="tool-form">
+    <label>Zone<select id="cpZone"><option value="">-- All zones --</option></select></label>
+    <label>Bait<select id="cpBait"><option value="">-- All baits --</option></select></label>
+    <label>Max Skill<input type="number" id="cpSkill" min="0" max="120" value="0" placeholder="0 = all"></label>
+    <span class="tool-count" id="cpCount"></span>
+  </div>
+  <div style="overflow-x:auto" id="cpOut"></div>
+</div>
+
+<!-- ═══ SKILL-UP ADVISOR ═══ -->
+<div class="tool-pane" id="tool-skillup">
+  <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:0 0 6px">Skill-Up Advisor</h2>
+  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Enter your fishing skill and select a rod to see which fish give the best effective skill-up rate. Effective% = Skill-Up Chance &times; Land Rate.</p>
+  <div class="tool-form">
+    <label>Fishing Skill<input type="number" id="suSkill" min="1" max="120" value="35"></label>
+    <label>Rod<select id="suRod"><option value="-1">-- No rod --</option></select></label>
+    <span class="tool-count" id="suCount"></span>
+  </div>
+  <div style="overflow-x:auto" id="suOut"></div>
+</div>
+
+<!-- ═══ PROFIT CALCULATOR ═══ -->
+<div class="tool-pane" id="tool-profit">
+  <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:0 0 6px">Profit Calculator</h2>
+  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Fish ranked by NPC vendor stack value. Set your skill to filter to catchable fish. No cooking required.</p>
+  <div class="tool-form">
+    <label>Max Skill<input type="number" id="prSkill" min="0" max="120" value="0" placeholder="0 = all"></label>
+    <span class="tool-count" id="prCount"></span>
+  </div>
+  <div style="overflow-x:auto" id="prOut"></div>
+</div>
+
+<!-- ═══ ISOLATION ═══ -->
+<div class="tool-pane" id="tool-isolate">
+  <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:0 0 6px">Fish Isolation</h2>
+  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Pick a target fish to find the best bait + zone combo that minimizes bycatch. Lower bycatch = more of your target per trip.</p>
+  <div class="tool-form">
+    <label>Target Fish<select id="isoFish"><option value="-1">-- Pick a fish --</option></select></label>
+    <span class="tool-count" id="isoCount"></span>
+  </div>
+  <div style="overflow-x:auto" id="isoOut"><p style="color:var(--ink-faint)">Select a target fish above.</p></div>
 </div>
 
 <footer id="siteFooter"></footer>
@@ -810,14 +898,317 @@ function handleDeepLink(){
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   TOOL NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+var toolBtns=document.querySelectorAll('.tool-btn');
+var toolPanes=document.querySelectorAll('.tool-pane');
+var cpInit=false,suInit=false,prInit=false,isoInit=false;
+
+toolBtns.forEach(function(btn){
+  btn.onclick=function(){
+    toolBtns.forEach(function(b){b.classList.remove('active');});
+    toolPanes.forEach(function(p){p.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById('tool-'+btn.dataset.tool).classList.add('active');
+    if(btn.dataset.tool==='pools'&&!cpInit) initPools();
+    if(btn.dataset.tool==='skillup'&&!suInit) initSkillup();
+    if(btn.dataset.tool==='profit'&&!prInit) initProfit();
+    if(btn.dataset.tool==='isolate'&&!isoInit) initIsolation();
+    history.replaceState(null,'','#'+btn.dataset.tool);
+  };
+});
+
+window.switchToCodex=function(fid){
+  toolBtns.forEach(function(b){b.classList.remove('active');});
+  toolPanes.forEach(function(p){p.classList.remove('active');});
+  document.querySelector('[data-tool="codex"]').classList.add('active');
+  document.getElementById('tool-codex').classList.add('active');
+  tabs.forEach(function(t){t.classList.remove('active');});
+  panes.forEach(function(p){p.classList.remove('active');});
+  document.querySelector('[data-tab="fish"]').classList.add('active');
+  document.getElementById('pane-fish').classList.add('active');
+  setTimeout(function(){
+    var el=document.getElementById('fish-'+fid);
+    if(el){el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'start'});}
+  },50);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   TOOL HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+function skillupC(sk,lv){
+  if(lv<=sk)return 0;var d=lv-sk;if(d>50)return 0;
+  var nd=Math.exp(-0.5*Math.log(2*Math.PI)-Math.log(5)-Math.pow(d-11,2)/50);
+  return Math.min(Math.max(4,Math.floor(nd*200)+Math.floor((100-sk)/10)-Math.floor(sk/10)),100);
+}
+function toolBreakC(sk,fishSkill,fishRank,fishSize,rod){
+  if(!rod[8])return 0;
+  var lb=(sk+10>fishSkill)?2:0,sp=0;
+  var fl=fishSize==='large'?1:0,rl=rod[2]==='large'?1:0;
+  if(fl>rl)sp=2;
+  if(fishRank>rod[4]+lb){var d=fishRank-(rod[4]+lb);return Math.max(0,Math.min(55,Math.floor((d+sp)*1.3)));}
+  return 0;
+}
+function toolSnapC(sk,fishSkill,fishRank,fishSize,fishLeg,rod){
+  var lb=(sk+10>fishSkill)?2:0,sp=0;
+  var fl=fishSize==='large'?1:0,rl=rod[2]==='large'?1:0;
+  if(fl>rl)sp=2;
+  if(fishLeg)sp+=3;
+  var td=rod[4]+lb-sp;
+  if(fishRank>td){var d=fishRank-td;return Math.max(0,Math.min(55,Math.floor(d*8.5)));}
+  return 0;
+}
+function toolRcBadge(fishRank,fishSize,rod){
+  if(fishSize==='large'&&rod[2]==='small')return '<span class="rc-badge rc-size">SIZE</span>';
+  if(fishRank>rod[4])return '<span class="rc-badge rc-rank">RANK</span>';
+  return '<span class="rc-badge rc-ok">OK</span>';
+}
+function toolPctCls(v,inv){
+  if(inv)return v>=80?'brk-ok':v>=50?'brk-warn':'brk-bad';
+  return v===0?'brk-ok':v<20?'brk-warn':'brk-bad';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CATCH POOLS
+   ═══════════════════════════════════════════════════════════════ */
+function initPools(){
+  cpInit=true;
+  var cpZ=document.getElementById('cpZone');
+  var cpB=document.getElementById('cpBait');
+  Object.keys(FD.zf).sort().forEach(function(z){
+    var o=document.createElement('option');o.value=z;o.textContent=z;cpZ.appendChild(o);
+  });
+  Object.keys(B).sort(function(a,b){return B[a][0].localeCompare(B[b][0]);}).forEach(function(id){
+    var o=document.createElement('option');o.value=id;
+    o.textContent=B[id][0]+(B[id][1]==='lure'?' (lure)':'');cpB.appendChild(o);
+  });
+  cpZ.onchange=renderPool;cpB.onchange=renderPool;
+  document.getElementById('cpSkill').oninput=renderPool;
+  renderPool();
+}
+function renderPool(){
+  var zone=document.getElementById('cpZone').value;
+  var baitId=document.getElementById('cpBait').value;
+  var sk=parseInt(document.getElementById('cpSkill').value)||0;
+  var baitCatches={};
+  if(baitId&&FD.bf[baitId])FD.bf[baitId].forEach(function(e){baitCatches[String(e[0])]=e[1];});
+  var zoneFishIds=null;
+  if(zone&&FD.zf[zone]){zoneFishIds=new Set();FD.zf[zone].forEach(function(e){zoneFishIds.add(String(e[0]));});}
+  var results=[];
+  Object.keys(F).forEach(function(id){
+    var f=F[id];if(isJunk(id))return;
+    if(zone&&zoneFishIds&&!zoneFishIds.has(id))return;
+    if(baitId&&!(id in baitCatches))return;
+    if(sk>0&&f[1]>sk+50)return;
+    var pw=baitId?baitCatches[id]||0:0;
+    var rarity=0;
+    if(zone&&FD.zf[zone])FD.zf[zone].forEach(function(e){if(String(e[0])===id)rarity=e[1];});
+    results.push({id:id,name:f[0],skill:f[1],rank:f[6],size:f[3],water:f[4],legendary:f[5],npc:f[12],stack:f[11],pw:pw,rarity:rarity});
+  });
+  results.sort(function(a,b){return b.pw-a.pw||a.skill-b.skill;});
+  document.getElementById('cpCount').textContent=results.length+' fish';
+  if(!zone&&!baitId&&!sk){document.getElementById('cpOut').innerHTML='<p style="color:var(--ink-faint);text-align:center;padding:24px">Select a filter to begin</p>';return;}
+  var t='<table class="tool-tbl"><thead><tr><th>Fish</th><th class="ra">Skill</th><th class="ra">Rank</th>';
+  if(baitId)t+='<th>Power</th>';
+  t+='<th>Size</th><th>Water</th>';
+  if(zone)t+='<th class="ra">Rarity</th>';
+  t+='<th class="ra">NPC</th><th class="ra">Stack Val</th></tr></thead><tbody>';
+  results.forEach(function(r){
+    var sv=r.npc*r.stack;
+    t+='<tr><td>'+(typeof iconSpan==='function'?iconSpan(r.id):'')+'<a href="#" onclick="switchToCodex(\''+r.id+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.name)+'</a>';
+    if(r.legendary)t+=' <span class="bdg bdg-legend">Legend</span>';
+    t+='</td><td class="ra">'+r.skill+'</td><td class="ra">'+r.rank+'</td>';
+    if(baitId)t+='<td>'+pwStars(r.pw)+'</td>';
+    t+='<td>'+r.size+'</td><td>'+r.water+'</td>';
+    if(zone)t+='<td class="ra" style="color:var(--ink-faint)">'+r.rarity+'</td>';
+    t+='<td class="ra" style="color:var(--gil)">'+(r.npc?gilFmt(r.npc):'—')+'</td>';
+    t+='<td class="ra" style="color:var(--gil);font-weight:700">'+(sv?gilFmt(sv):'—')+'</td></tr>';
+  });
+  t+='</tbody></table>';
+  document.getElementById('cpOut').innerHTML=results.length?t:'<p style="color:var(--ink-faint);text-align:center;padding:24px">No fish match this combination</p>';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SKILL-UP ADVISOR
+   ═══════════════════════════════════════════════════════════════ */
+function initSkillup(){
+  suInit=true;
+  var suR=document.getElementById('suRod');
+  R.forEach(function(rod,i){
+    var o=document.createElement('option');o.value=i;
+    o.textContent=rod[1]+' (rank '+rod[4]+', '+rod[2]+')';suR.appendChild(o);
+  });
+  document.getElementById('suSkill').oninput=renderSkillup;
+  suR.onchange=renderSkillup;
+  renderSkillup();
+}
+function renderSkillup(){
+  var sk=parseInt(document.getElementById('suSkill').value)||1;
+  var ridx=parseInt(document.getElementById('suRod').value);
+  var rod=ridx>=0?R[ridx]:null;
+  var rows=[];
+  Object.keys(F).forEach(function(id){
+    var f=F[id];if(isJunk(id))return;
+    if(f[1]<=sk)return;
+    var diff=f[1]-sk;if(diff>50)return;
+    var suc=skillupC(sk,f[1]);
+    var brk=rod?toolBreakC(sk,f[1],f[6],f[3],rod):0;
+    var snp=rod?toolSnapC(sk,f[1],f[6],f[3],f[5],rod):0;
+    var land=Math.max(0,100-brk-snp);
+    var eff=rod?Math.round(suc*land/100):suc;
+    var badge=rod?toolRcBadge(f[6],f[3],rod):'';
+    var dim=rod&&land<50;
+    rows.push({id:id,name:f[0],skill:f[1],diff:diff,rank:f[6],suc:suc,brk:brk,snp:snp,land:land,eff:eff,badge:badge,dim:dim});
+  });
+  rows.sort(function(a,b){return b.eff-a.eff||a.diff-b.diff;});
+  document.getElementById('suCount').textContent=rows.length+' fish';
+  var t='<table class="tool-tbl"><thead><tr><th>Fish</th><th class="ra">Skill</th><th class="ra">Gap</th><th class="ra">Rank</th><th class="ra">Chance%</th>';
+  if(rod)t+='<th>Rod</th><th class="ra">Break%</th><th class="ra">Snap%</th><th class="ra">Land%</th>';
+  t+='<th class="ra">Effective%</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    t+='<tr'+(r.dim?' class="dim-row"':'')+'>';
+    t+='<td>'+(typeof iconSpan==='function'?iconSpan(r.id):'')+'<a href="#" onclick="switchToCodex(\''+r.id+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.name)+'</a></td>';
+    t+='<td class="ra">'+r.skill+'</td><td class="ra">+'+r.diff+'</td>';
+    t+='<td class="ra">'+r.rank+'</td>';
+    t+='<td class="ra '+toolPctCls(r.suc,true)+'">'+r.suc+'%</td>';
+    if(rod){
+      t+='<td>'+r.badge+'</td>';
+      t+='<td class="ra '+toolPctCls(r.brk,false)+'">'+r.brk+'%</td>';
+      t+='<td class="ra '+toolPctCls(r.snp,false)+'">'+r.snp+'%</td>';
+      t+='<td class="ra '+toolPctCls(r.land,true)+'">'+r.land+'%</td>';
+    }
+    t+='<td class="ra '+toolPctCls(r.eff,true)+'" style="font-weight:700">'+r.eff+'%</td></tr>';
+  });
+  t+='</tbody></table>';
+  document.getElementById('suOut').innerHTML=rows.length?t:'<p style="color:var(--ink-faint);text-align:center;padding:24px">No fish above your skill level</p>';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROFIT CALCULATOR
+   ═══════════════════════════════════════════════════════════════ */
+function initProfit(){
+  prInit=true;
+  document.getElementById('prSkill').oninput=renderProfit;
+  renderProfit();
+}
+function renderProfit(){
+  var sk=parseInt(document.getElementById('prSkill').value)||0;
+  var rows=[];
+  Object.keys(F).forEach(function(id){
+    var f=F[id];if(isJunk(id))return;
+    if(!f[12]||f[12]<=0)return;
+    if(sk>0&&f[1]>sk+10)return;
+    var sv=f[12]*f[11];
+    var ap=ahPrice(id);
+    rows.push({id:id,name:f[0],skill:f[1],rank:f[6],npc:f[12],stack:f[11],sv:sv,ah:ap});
+  });
+  rows.sort(function(a,b){return b.sv-a.sv;});
+  document.getElementById('prCount').textContent=rows.length+' fish';
+  var t='<table class="tool-tbl"><thead><tr><th>Fish</th><th class="ra">Skill</th><th class="ra">Rank</th><th class="ra">NPC Each</th><th class="ra">Stack</th><th class="ra">Stack Value</th><th class="ra">AH Price</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    t+='<tr><td>'+(typeof iconSpan==='function'?iconSpan(r.id):'')+'<a href="#" onclick="switchToCodex(\''+r.id+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.name)+'</a></td>';
+    t+='<td class="ra">'+r.skill+'</td><td class="ra">'+r.rank+'</td>';
+    t+='<td class="ra" style="color:var(--gil)">'+gilFmt(r.npc)+'</td>';
+    t+='<td class="ra">'+r.stack+'</td>';
+    t+='<td class="ra" style="color:var(--gil);font-weight:700">'+gilFmt(r.sv)+'</td>';
+    t+='<td class="ra"'+(r.ah?' style="color:var(--gain)"':'')+'>'+gilFmt(r.ah)+'</td></tr>';
+  });
+  t+='</tbody></table>';
+  document.getElementById('prOut').innerHTML=rows.length?t:'<p style="color:var(--ink-faint);text-align:center;padding:24px">No profitable fish at this skill level</p>';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ISOLATION
+   ═══════════════════════════════════════════════════════════════ */
+function initIsolation(){
+  isoInit=true;
+  var isoSel=document.getElementById('isoFish');
+  Object.keys(F).filter(function(id){return !isJunk(id);}).sort(function(a,b){return F[a][0].localeCompare(F[b][0]);}).forEach(function(id){
+    var o=document.createElement('option');o.value=id;
+    o.textContent=F[id][0]+' (skill '+F[id][1]+')';isoSel.appendChild(o);
+  });
+  isoSel.onchange=renderIsolation;
+}
+function renderIsolation(){
+  var targetId=document.getElementById('isoFish').value;
+  var out=document.getElementById('isoOut');
+  var cnt=document.getElementById('isoCount');
+  if(!targetId||targetId==='-1'){out.innerHTML='<p style="color:var(--ink-faint)">Select a target fish above.</p>';if(cnt)cnt.textContent='';return;}
+  var target=F[targetId];
+  if(!target){out.innerHTML='<p style="color:var(--ink-faint)">Fish not found.</p>';return;}
+  var targetZones=FD.fz[targetId]||[];
+  var targetBaits=FD.fb[targetId]||[];
+  var zoneFishMap={};
+  targetZones.forEach(function(tz){
+    var zone=tz[0];
+    if(!zoneFishMap[zone]){zoneFishMap[zone]=new Set();(FD.zf[zone]||[]).forEach(function(e){zoneFishMap[zone].add(String(e[0]));});}
+  });
+  var baitCatchMap={};
+  targetBaits.forEach(function(tb){
+    var bid=String(tb[0]);
+    if(!baitCatchMap[bid]){baitCatchMap[bid]=new Set();(FD.bf[bid]||[]).forEach(function(e){baitCatchMap[bid].add(String(e[0]));});}
+  });
+  var uniqueZones={};
+  targetZones.forEach(function(tz){if(!uniqueZones[tz[0]]||tz[1]>uniqueZones[tz[0]])uniqueZones[tz[0]]=tz[1];});
+  var results=[];
+  targetBaits.forEach(function(tb){
+    var baitId=String(tb[0]);var baitPw=tb[1];
+    var baitName=B[baitId]?B[baitId][0]:'Bait #'+baitId;
+    var baitCatches=baitCatchMap[baitId]||new Set();
+    Object.keys(uniqueZones).forEach(function(zone){
+      var zoneFish=zoneFishMap[zone]||new Set();
+      var bycatch=[];
+      zoneFish.forEach(function(fid){
+        if(fid===targetId)return;if(!baitCatches.has(fid))return;
+        var f=F[fid];if(!f)return;
+        bycatch.push({id:fid,name:f[0],skill:f[1]});
+      });
+      bycatch.sort(function(a,b){return a.skill-b.skill;});
+      var bestRod=null;
+      R.forEach(function(rod){
+        if(rod[2]!==target[3])return;if(target[6]>rod[4])return;
+        if(!bestRod||rod[4]<bestRod[4])bestRod=rod;
+      });
+      results.push({baitId:baitId,baitName:baitName,baitPw:baitPw,zone:zone,rarity:uniqueZones[zone],bycatch:bycatch,count:bycatch.length,bestRod:bestRod});
+    });
+  });
+  results.sort(function(a,b){return a.count-b.count||b.baitPw-a.baitPw||b.rarity-a.rarity;});
+  if(cnt)cnt.textContent=results.length+' combos';
+  if(!results.length){out.innerHTML='<p style="color:var(--ink-faint)">No bait+zone combos found.</p>';return;}
+  var bestCount=results[0].count;
+  var t='<table class="tool-tbl"><thead><tr><th>Bait</th><th>Power</th><th>Zone</th><th class="ra">Bycatch</th><th>Rod</th><th>Other fish in pool</th></tr></thead><tbody>';
+  results.forEach(function(r){
+    var scCls=r.count===0?'iso-0':r.count<=1?'iso-1':r.count<=2?'iso-2':r.count<=3?'iso-3':r.count<=5?'iso-4':'iso-hi';
+    if(r.count===bestCount)scCls+=' iso-best';
+    var rodStr=r.bestRod?('<span style="color:var(--gain);font-weight:600">'+h(r.bestRod[1])+'</span>'):'—';
+    var byHtml='';
+    if(r.bycatch.length){
+      byHtml='<div class="iso-bycatch">';
+      r.bycatch.forEach(function(bc){byHtml+='<span>'+h(bc.name)+' <span style="opacity:.5">'+bc.skill+'</span></span>';});
+      byHtml+='</div>';
+    }else{byHtml='<span style="color:var(--gain);font-weight:600">Perfect isolation!</span>';}
+    t+='<tr><td>'+(typeof iconSpan==='function'?iconSpan(r.baitId):'')+'<a href="#" onclick="switchToCodex(\''+r.baitId+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.baitName)+'</a></td>';
+    t+='<td>'+pwStars(r.baitPw)+'</td><td>'+h(r.zone)+'</td>';
+    t+='<td class="ra"><span class="iso-score '+scCls+'">'+r.count+'</span></td>';
+    t+='<td>'+rodStr+'</td><td>'+byHtml+'</td></tr>';
+  });
+  t+='</tbody></table>';
+  out.innerHTML=t;
+}
+
 /* ── Initial render ── */
 renderFishTab();
 renderBaitTab();
 renderRodTab();
 
-// Handle hash on load for tab switching
+// Handle hash on load for tab/tool switching
+var toolHashes={pools:1,skillup:1,profit:1,isolate:1};
 var initHash=location.hash.replace('#','');
-if(initHash==='baits'||initHash==='rods'){
+if(toolHashes[initHash]){
+  var btn=document.querySelector('[data-tool="'+initHash+'"]');
+  if(btn)btn.click();
+}else if(initHash==='baits'||initHash==='rods'){
   tabs.forEach(function(t){t.classList.remove('active');});
   panes.forEach(function(p){p.classList.remove('active');});
   document.querySelector('[data-tab="'+initHash+'"]').classList.add('active');
@@ -827,6 +1218,12 @@ if(initHash==='baits'||initHash==='rods'){
 }
 
 window.addEventListener('hashchange',handleDeepLink);
+
+// Re-render after icon-positions.json loads
+(function waitIcons(){
+  if(Object.keys(window._iconPos||{}).length){renderFishTab();renderBaitTab();renderRodTab();return;}
+  setTimeout(waitIcons,150);
+})();
 
 })();
 </script>
