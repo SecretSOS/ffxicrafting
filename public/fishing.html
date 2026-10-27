@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fishing Codex — FFXI Crafting</title>
+<meta name="description" content="Complete fishing database: 138 fish, 39 baits, 20 rods. Zones, conditions, rod compatibility, recipes, and AH prices.">
+<meta property="og:title" content="Fishing Codex — FFXI Crafting">
+<meta property="og:description" content="Complete fishing database for era-75 FFXI. Every fish, bait, and rod with full catch data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/fishing">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+/* ── Codex layout ── */
+.codex-tabs{display:flex;gap:2px;margin-bottom:16px;border-bottom:2px solid var(--border)}
+.codex-tab{padding:10px 20px;font-size:.88rem;font-weight:700;color:var(--ink-faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s}
+.codex-tab:hover{color:var(--ink)}
+.codex-tab.active{color:var(--fish);border-bottom-color:var(--fish)}
+.codex-tab .tab-count{font-weight:400;font-size:.78rem;margin-left:4px;opacity:.6}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── Search & filters ── */
+.codex-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.codex-search{flex:1;min-width:200px;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--ink);font:14px var(--font-body);outline:none;transition:border-color .2s}
+.codex-search:focus{border-color:var(--fish)}
+.codex-search::placeholder{color:var(--ink-faint)}
+.codex-sort{padding:7px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--ink);font:13px var(--font-body);cursor:pointer}
+.codex-sort:focus{border-color:var(--fish);outline:none}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.fchip{padding:5px 12px;border-radius:16px;font-size:.78rem;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--ink-faint);cursor:pointer;transition:all .15s;user-select:none}
+.fchip:hover{border-color:var(--fish);color:var(--fish)}
+.fchip.on{border-color:var(--fish);color:var(--fish);background:color-mix(in srgb,var(--fish) 12%,transparent)}
+.fchip-junk{margin-left:auto}
+.result-count{font-size:.82rem;color:var(--ink-faint);margin-bottom:12px}
+
+/* ── Codex cards ── */
+.codex-list{display:flex;flex-direction:column;gap:8px}
+.cdx-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .15s}
+.cdx-card:hover{border-color:color-mix(in srgb,var(--fish) 40%,var(--border))}
+.cdx-head{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;user-select:none}
+.cdx-icon{width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;background:color-mix(in srgb,var(--fish) 10%,transparent)}
+.cdx-icon.fresh{background:color-mix(in srgb,var(--wind) 10%,transparent)}
+.cdx-icon.junk{background:color-mix(in srgb,var(--ink-faint) 10%,transparent);font-size:16px}
+.cdx-title{flex:1;min-width:0}
+.cdx-title h3{margin:0;font-size:.95rem;font-weight:700;font-family:var(--font-display);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cdx-meta{color:var(--ink-faint);font-size:.76rem;display:flex;gap:10px;margin-top:2px;font-variant-numeric:tabular-nums}
+.cdx-badges{display:flex;gap:5px;flex-wrap:wrap;flex-shrink:0}
+.cdx-arrow{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-size:12px;transition:transform .25s;flex-shrink:0}
+.cdx-card.open .cdx-arrow{transform:rotate(180deg)}
+
+/* ── Badges ── */
+.bdg{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.68rem;font-weight:700;letter-spacing:.03em;white-space:nowrap}
+.bdg-skill{background:color-mix(in srgb,var(--fish) 15%,transparent);color:var(--fish);border:1px solid color-mix(in srgb,var(--fish) 30%,transparent)}
+.bdg-sm{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink-soft);border:1px solid color-mix(in srgb,var(--ink) 15%,transparent)}
+.bdg-lg{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+.bdg-sea{background:color-mix(in srgb,var(--water) 12%,transparent);color:var(--water);border:1px solid color-mix(in srgb,var(--water) 25%,transparent)}
+.bdg-fresh{background:color-mix(in srgb,var(--wind) 12%,transparent);color:var(--wind);border:1px solid color-mix(in srgb,var(--wind) 25%,transparent)}
+.bdg-legend{background:color-mix(in srgb,var(--gil) 15%,transparent);color:var(--gil);border:1px solid color-mix(in srgb,var(--gil) 30%,transparent)}
+.bdg-night{background:color-mix(in srgb,var(--lightning) 14%,transparent);color:var(--lightning);border:1px solid color-mix(in srgb,var(--lightning) 28%,transparent)}
+.bdg-hour{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent)}
+.bdg-moon{background:color-mix(in srgb,var(--lightning) 12%,transparent);color:var(--lightning);border:1px solid color-mix(in srgb,var(--lightning) 22%,transparent)}
+.bdg-season{background:color-mix(in srgb,var(--wind) 12%,transparent);color:var(--wind);border:1px solid color-mix(in srgb,var(--wind) 22%,transparent)}
+.bdg-ex{background:color-mix(in srgb,var(--loss) 12%,transparent);color:var(--loss);border:1px solid color-mix(in srgb,var(--loss) 22%,transparent)}
+.bdg-rare{background:color-mix(in srgb,var(--lightning) 12%,transparent);color:var(--lightning);border:1px solid color-mix(in srgb,var(--lightning) 22%,transparent)}
+.bdg-bait{background:color-mix(in srgb,var(--earth) 12%,transparent);color:var(--earth);border:1px solid color-mix(in srgb,var(--earth) 22%,transparent)}
+.bdg-lure{background:color-mix(in srgb,var(--water) 12%,transparent);color:var(--water);border:1px solid color-mix(in srgb,var(--water) 22%,transparent)}
+
+/* ── Card body ── */
+.cdx-body{display:none;border-top:1px solid var(--border)}
+.cdx-card.open .cdx-body{display:block}
+.cdx-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:var(--border)}
+.cdx-stat{background:var(--surface);padding:10px 14px;text-align:center}
+.cdx-stat .sl{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);margin-bottom:2px}
+.cdx-stat .sv{font-family:var(--font-mono);font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.sv-gain{color:var(--gain)}
+.sv-fish{color:var(--fish)}
+.sv-warn{color:var(--accent)}
+.sv-loss{color:var(--loss)}
+.sv-gil{color:var(--gil)}
+
+/* ── Collapsible sections ── */
+.cdx-sec{border-top:1px solid var(--border)}
+.cdx-sec-head{display:flex;align-items:center;gap:8px;padding:10px 18px;cursor:pointer;user-select:none;font-size:.82rem;font-weight:600;color:var(--ink-faint);transition:color .15s}
+.cdx-sec-head:hover{color:var(--ink)}
+.cdx-sec-head .sec-ct{margin-left:auto;font-size:.72rem;font-weight:500;padding:1px 7px;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:8px}
+.cdx-sec-head .sec-arr{font-size:10px;transition:transform .2s;color:var(--ink-faint)}
+.cdx-sec.open .sec-arr{transform:rotate(180deg)}
+.cdx-sec-body{display:none;padding:0 18px 14px}
+.cdx-sec.open .cdx-sec-body{display:block}
+
+/* ── Conditions grid ── */
+.cond-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:600px){.cond-grid{grid-template-columns:1fr}}
+.cond-card{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center}
+.cond-card .ci{font-size:18px;margin-bottom:2px}
+.cond-card .cl{font-size:.65rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint)}
+.cond-card .cn{font-size:.82rem;font-weight:600;margin:3px 0}
+.cond-card .cd{font-size:.72rem;color:var(--ink-faint)}
+
+/* ── Zone pills ── */
+.zone-pills{display:flex;flex-wrap:wrap;gap:5px}
+.zpill{padding:4px 10px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;font-size:.78rem;color:var(--ink);transition:border-color .15s;text-decoration:none}
+.zpill:hover{border-color:var(--fish);text-decoration:none}
+.zpill .zr{color:var(--ink-faint);font-size:.7rem;margin-left:3px}
+
+/* ── Bait rows ── */
+.bait-rows{display:flex;flex-direction:column;gap:3px}
+.bait-row{display:flex;align-items:center;gap:10px;padding:6px 10px;background:var(--surface-2);border-radius:6px;font-size:.82rem}
+.bait-row .bn{flex:1;font-weight:500}
+.bait-row .bt{color:var(--ink-faint);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+.pw{font-size:.82rem;letter-spacing:1px;white-space:nowrap}
+.pw3{color:var(--gil)}
+.pw2{color:var(--water)}
+.pw1{color:var(--ink-faint)}
+
+/* ── Rod table ── */
+.rod-tbl{width:100%;font-size:.8rem;border-collapse:collapse}
+.rod-tbl th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-faint);padding:4px 6px;border-bottom:1px solid var(--border)}
+.rod-tbl td{padding:4px 6px;font-variant-numeric:tabular-nums}
+.rod-tbl tr:hover{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.rc-badge{display:inline-block;padding:0 6px;border-radius:3px;font-size:.66rem;font-weight:700;letter-spacing:.03em}
+.rc-ok{background:color-mix(in srgb,var(--gain) 18%,transparent);color:var(--gain);border:1px solid color-mix(in srgb,var(--gain) 35%,transparent)}
+.rc-rank{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+.rc-size{background:color-mix(in srgb,var(--loss) 18%,transparent);color:var(--loss);border:1px solid color-mix(in srgb,var(--loss) 35%,transparent)}
+.brk-ok{color:var(--gain)}
+.brk-warn{color:var(--accent)}
+.brk-bad{color:var(--loss)}
+
+/* ── Recipe cards ── */
+.rcp-list{display:flex;flex-wrap:wrap;gap:6px}
+.rcp-card{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;font-size:.82rem;transition:border-color .15s}
+.rcp-card:hover{border-color:var(--accent)}
+.rcp-card .rlv{font-family:var(--font-mono);font-size:.72rem;padding:1px 6px;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:8px;color:var(--fish);white-space:nowrap}
+.rcp-card .rn{font-weight:500}
+.rcp-card .rr{color:var(--ink-faint);font-size:.76rem}
+.rcp-desynth{font-style:italic;color:var(--ink-faint)}
+
+/* ── Intel panel ── */
+.intel-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;overflow:hidden}
+.intel-toggle{display:flex;align-items:center;gap:8px;padding:12px 18px;cursor:pointer;user-select:none;font-size:.88rem;font-weight:600;color:var(--fish)}
+.intel-toggle .it-arr{font-size:10px;margin-left:auto;transition:transform .25s;color:var(--ink-faint)}
+.intel-panel.open .it-arr{transform:rotate(180deg)}
+.intel-body{display:none;padding:0 18px 16px}
+.intel-panel.open .intel-body{display:block}
+.intel-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:650px){.intel-cols{grid-template-columns:1fr}}
+.intel-section h4{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--fish);margin:0 0 6px}
+.intel-row{display:flex;gap:6px;align-items:flex-start;padding:3px 0;font-size:.78rem;line-height:1.5}
+.intel-row .il{flex-shrink:0;min-width:90px;color:var(--ink-faint);font-weight:500}
+.intel-row .iv{color:var(--ink-soft)}
+.intel-div{border-top:1px solid var(--border);margin:8px 0}
+
+/* ── Bait/rod tab cards ── */
+.cdx-head-sub{font-size:.82rem;color:var(--ink-faint);margin-top:1px}
+.fish-mini{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.fish-mini a{display:inline-block;padding:3px 8px;border-radius:4px;font-size:.76rem;background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink);text-decoration:none;transition:background .15s}
+.fish-mini a:hover{background:color-mix(in srgb,var(--fish) 15%,transparent);text-decoration:none}
+.rod-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:10px}
+.rod-stat{text-align:center;padding:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px}
+.rod-stat .rsl{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint)}
+.rod-stat .rsv{font-family:var(--font-mono);font-size:.95rem;font-weight:700}
+
+/* ── Responsive ── */
+@media(max-width:700px){
+  .cdx-head{padding:10px 12px;gap:8px}
+  .cdx-icon{width:32px;height:32px;font-size:16px}
+  .cdx-badges{gap:3px}
+  .bdg{font-size:.62rem;padding:1px 6px}
+  .cdx-stats{grid-template-columns:repeat(3,1fr)}
+  .cdx-sec-body{padding:0 12px 10px}
+  .rod-tbl{font-size:.72rem}
+}
+</style>
+<script src="/nav.js"></script>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Fishing Codex</nav>
+
+<header class="panel pad" style="padding-bottom:18px">
+<h1 style="margin:0 0 4px;font-size:1.5rem">Fishing Codex</h1>
+<p style="color:var(--ink-faint);margin:0;font-size:.88rem">Complete fishing database — every fish, bait, and rod from the LandSandBoat source</p>
+</header>
+
+<div class="codex-tabs" id="codexTabs">
+  <div class="codex-tab active" data-tab="fish">Fish <span class="tab-count" id="tcFish"></span></div>
+  <div class="codex-tab" data-tab="baits">Baits <span class="tab-count" id="tcBaits"></span></div>
+  <div class="codex-tab" data-tab="rods">Rods <span class="tab-count" id="tcRods"></span></div>
+</div>
+
+<!-- ═══ FISH TAB ═══ -->
+<div class="tab-pane active" id="pane-fish">
+  <div class="codex-controls">
+    <input type="text" class="codex-search" id="fishSearch" placeholder="Search fish by name, zone, or bait...">
+    <select class="codex-sort" id="fishSort">
+      <option value="skill">Sort: Skill</option>
+      <option value="name">Sort: Name</option>
+      <option value="ranking">Sort: Ranking</option>
+      <option value="rarity">Sort: Rarity (rare first)</option>
+      <option value="npc">Sort: NPC Price</option>
+    </select>
+  </div>
+  <div class="filter-row" id="fishFilters">
+    <span class="fchip on" data-f="all">All</span>
+    <span class="fchip" data-f="sea">Saltwater</span>
+    <span class="fchip" data-f="fresh">Freshwater</span>
+    <span class="fchip" data-f="night">Night</span>
+    <span class="fchip" data-f="legendary">Legendary</span>
+    <span class="fchip" data-f="cookable">Cookable</span>
+    <span class="fchip fchip-junk" data-f="junk">Show Junk Items</span>
+  </div>
+
+  <div class="intel-panel" id="intelPanel">
+    <div class="intel-toggle" onclick="this.closest('.intel-panel').classList.toggle('open')">
+      <svg width="16" height="16" style="flex-shrink:0"><use href="#i-guide"/></svg>
+      Fishing Intel — What Everything Means
+      <span class="it-arr">&#9660;</span>
+    </div>
+    <div class="intel-body">
+      <div class="intel-cols">
+        <div class="intel-section">
+          <h4>Badges</h4>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-skill">Lv 41</span></span><span class="iv"><b>Skill Level</b> — Minimum fishing skill to hook. Below this you can't catch it.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-sm">Small</span></span><span class="iv"><b>Size</b> — Any rod works for small fish.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-lg">Large</span></span><span class="iv"><b>Large</b> — Requires a large rod (Composite, Mithran, etc). Small rods will snap.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-sea">Salt</span></span><span class="iv"><b>Saltwater</b> — Sea/ocean zones.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-fresh">Fresh</span></span><span class="iv"><b>Freshwater</b> — Rivers, lakes, ponds.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-night">Night</span></span><span class="iv"><b>Night Only</b> — Bites 20:00–04:00 Vanadiel time only.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-legend">Legend</span></span><span class="iv"><b>Legendary</b> — Quest fish / ultra-rare. Special conditions may apply.</span></div>
+          <div class="intel-div"></div>
+          <h4>Condition Badges</h4>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-hour">Tide</span></span><span class="iv"><b>Hour Pattern</b> — Bites more at specific Vanadiel hours. Patterns: Dawn/Dusk, High Tide, Low Tide, Night, Day.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-moon">Moon</span></span><span class="iv"><b>Moon Pattern</b> — Catch rate shifts with moon phase. <b>Strongest modifier</b> (3&times; weight).</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-season">Season</span></span><span class="iv"><b>Season</b> — Bite rate changes by Vanadiel month. Weakest modifier (1&times;).</span></div>
+        </div>
+        <div class="intel-section">
+          <h4>Stats</h4>
+          <div class="intel-row"><span class="il">Skill</span><span class="iv">Fishing skill needed. Can hook up to ~10 levels above, but landing rate drops sharply.</span></div>
+          <div class="intel-row"><span class="il">Ranking</span><span class="iv">Fight difficulty (1–40). Higher = harder to reel. Determines rod break/snap chance.</span></div>
+          <div class="intel-row"><span class="il">Rarity</span><span class="iv">Pool weight (1–1000). Lower = rarer. Controls how often it appears when you cast.</span></div>
+          <div class="intel-row"><span class="il">NPC Sell</span><span class="iv">Gil from any NPC vendor. Guaranteed floor price.</span></div>
+          <div class="intel-row"><span class="il">AH Price</span><span class="iv">Auction House price on Phoenix. Real market data.</span></div>
+          <div class="intel-row"><span class="il">Stack</span><span class="iv">Items per inventory slot. Stack 1 = inventory hog.</span></div>
+          <div class="intel-div"></div>
+          <h4>Modifier Formula</h4>
+          <div class="intel-row"><span class="il">Formula</span><span class="iv"><code style="background:var(--surface-2);padding:1px 5px;border-radius:3px;font-family:var(--font-mono);font-size:.72rem">(moon&times;3 + hour&times;2 + season&times;1) / 3</code></span></div>
+          <div class="intel-row"><span class="il">Each mod</span><span class="iv">Ranges 0.25–1.25. Combined modifier scales the base catch chance.</span></div>
+          <div class="intel-row"><span class="il">Bait Stars</span><span class="iv">&#9733;&#9733;&#9733; = best power. &#9733;&#9733; = good. &#9733; = weak. Higher power = higher hook rate.</span></div>
+          <div class="intel-div"></div>
+          <h4>Rod Compatibility</h4>
+          <div class="intel-row"><span class="il"><span class="rc-badge rc-ok">OK</span></span><span class="iv">Rod handles this fish. Rank in range, size matches.</span></div>
+          <div class="intel-row"><span class="il"><span class="rc-badge rc-rank">RANK</span></span><span class="iv">Fish ranking exceeds rod's max rank. Risk of line snap.</span></div>
+          <div class="intel-row"><span class="il"><span class="rc-badge rc-size">SIZE</span></span><span class="iv">Fish is large but rod is small. Will snap the rod.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-count" id="fishCount"></div>
+  <div class="codex-list" id="fishList"></div>
+</div>
+
+<!-- ═══ BAITS TAB ═══ -->
+<div class="tab-pane" id="pane-baits">
+  <div class="codex-controls">
+    <input type="text" class="codex-search" id="baitSearch" placeholder="Search baits by name...">
+    <select class="codex-sort" id="baitSort">
+      <option value="name">Sort: Name</option>
+      <option value="type">Sort: Type</option>
+      <option value="price">Sort: NPC Price</option>
+      <option value="catches">Sort: Fish Caught</option>
+    </select>
+  </div>
+  <div class="result-count" id="baitCount"></div>
+  <div class="codex-list" id="baitList"></div>
+</div>
+
+<!-- ═══ RODS TAB ═══ -->
+<div class="tab-pane" id="pane-rods">
+  <div class="codex-controls">
+    <input type="text" class="codex-search" id="rodSearch" placeholder="Search rods by name...">
+    <select class="codex-sort" id="rodSort">
+      <option value="rank">Sort: Max Rank</option>
+      <option value="name">Sort: Name</option>
+      <option value="size">Sort: Size</option>
+    </select>
+  </div>
+  <div class="result-count" id="rodCount"></div>
+  <div class="codex-list" id="rodList"></div>
+</div>
+
+<footer id="siteFooter"></footer>
+</main>
+</div>
+
+<script src="/fishing-data.js"></script>
+<script src="/ah-prices.js"></script>
+<script src="/icon-sprite.js"></script>
+<script src="/table-tools.js" defer></script>
+<script>
+(function(){
+'use strict';
+if(typeof FD==='undefined') return;
+
+/* ── Constants ── */
+var HOUR_LABELS=['','Dawn/Dusk','High Tide','Low Tide','Night','Day','Day/Night','Day'];
+var MOON_LABELS=['','New Moon Lover','Full Moon Lover','Waning Prefer','Waxing Prefer',''];
+var MONTH_LABELS=['','Spring','Early Summer','Late Summer','Autumn Peak','Winter','Midsummer','Early Autumn','Midwinter','Late Autumn','Late Spring'];
+var F=FD.fish, B=FD.baits, R=FD.rods;
+
+/* ── Helpers ── */
+function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function gilFmt(n){if(!n)return '—';return n.toLocaleString()+'g';}
+function ahPrice(id){
+  if(!window.AH)return null;
+  var p=window.AH[id];
+  if(p)return p;
+  return null;
+}
+function ahStackPrice(id){
+  if(!window.AH)return null;
+  try{
+    var sp=JSON.parse(localStorage.getItem('phoenix-ah-v1'));
+    if(sp&&sp.stackPrices&&sp.stackPrices[id])return sp.stackPrices[id];
+  }catch(e){}
+  return null;
+}
+function pwStars(p){
+  if(p===3)return '<span class="pw pw3">&#9733;&#9733;&#9733;</span>';
+  if(p===2)return '<span class="pw pw2">&#9733;&#9733;</span>';
+  return '<span class="pw pw1">&#9733;</span>';
+}
+function isJunk(id){
+  var f=F[id];
+  if(!f)return true;
+  if(f[13])return true; // is_item flag
+  if(!FD.fb[id]||FD.fb[id].length===0)return true;
+  return false;
+}
+function fishSlug(name){return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function baitSlug(name){return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+
+/* ── Fish search index (prebuilt for performance) ── */
+var fishSearchIdx={};
+Object.keys(F).forEach(function(id){
+  var f=F[id];
+  var terms=[f[0].toLowerCase()];
+  var zones=FD.fz[id];
+  if(zones)zones.forEach(function(z){terms.push(z[0].toLowerCase());});
+  var baits=FD.fb[id];
+  if(baits)baits.forEach(function(b){var bn=B[b[0]];if(bn)terms.push(bn[0].toLowerCase());});
+  fishSearchIdx[id]=terms.join(' ');
+});
+
+/* ── Tab switching ── */
+var tabs=document.querySelectorAll('.codex-tab');
+var panes=document.querySelectorAll('.tab-pane');
+tabs.forEach(function(tab){
+  tab.onclick=function(){
+    tabs.forEach(function(t){t.classList.remove('active');});
+    panes.forEach(function(p){p.classList.remove('active');});
+    tab.classList.add('active');
+    document.getElementById('pane-'+tab.dataset.tab).classList.add('active');
+    history.replaceState(null,'','#'+tab.dataset.tab);
+  };
+});
+
+/* ── Badge builders ── */
+function skillBadge(skill){return '<span class="bdg bdg-skill">Lv '+skill+'</span>';}
+function sizeBadge(sz){return sz==='large'?'<span class="bdg bdg-lg">Large</span>':'<span class="bdg bdg-sm">Small</span>';}
+function waterBadge(w){return w==='freshwater'?'<span class="bdg bdg-fresh">Fresh</span>':'<span class="bdg bdg-sea">Salt</span>';}
+function condBadges(f){
+  var out='';
+  var hp=f[7],mp=f[8],sp=f[9];
+  if(hp===4)out+='<span class="bdg bdg-night">Night</span>';
+  else if(hp>0)out+='<span class="bdg bdg-hour">'+h(HOUR_LABELS[hp]||'')+'</span>';
+  if(mp>0&&mp<6)out+='<span class="bdg bdg-moon">'+h(MOON_LABELS[mp]||'')+'</span>';
+  if(sp>0)out+='<span class="bdg bdg-season">'+h(MONTH_LABELS[sp]||'')+'</span>';
+  return out;
+}
+
+/* ── Rod compatibility calc ── */
+function rodCompat(fishRank, fishSize, rod){
+  var rodSize=rod[2], rodMin=rod[3], rodMax=rod[4], breakable=rod[8];
+  var status='OK', brk=0, snap=0;
+  if(fishSize==='large'&&rodSize==='small'){
+    status='SIZE';
+    snap=Math.min(100,Math.round(100*(fishRank/(rodMax*1.5))));
+  }else if(fishRank>rodMax){
+    status='RANK';
+    snap=Math.min(100,Math.round(100*((fishRank-rodMax)/rodMax)));
+  }
+  if(fishRank>rodMax&&breakable){
+    brk=Math.min(100,fishRank-rodMax);
+  }
+  var land=Math.max(0,100-brk-snap);
+  return{status:status,brk:brk,snap:snap,land:land};
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FISH TAB
+   ═══════════════════════════════════════════════════════════════ */
+var fishIds=Object.keys(F);
+var activeFilter='all';
+var showJunk=false;
+var fishSortKey='skill';
+
+function sortFish(ids){
+  return ids.slice().sort(function(a,b){
+    var fa=F[a],fb=F[b];
+    switch(fishSortKey){
+      case 'name':return fa[0].localeCompare(fb[0]);
+      case 'ranking':return (fb[6]||0)-(fa[6]||0);
+      case 'rarity':return (fa[10]||1000)-(fb[10]||1000);
+      case 'npc':return (fb[12]||0)-(fa[12]||0);
+      default:return (fa[1]||0)-(fb[1]||0);
+    }
+  });
+}
+
+function filterFish(){
+  var q=(document.getElementById('fishSearch').value||'').toLowerCase().trim();
+  var ids=fishIds.filter(function(id){
+    var f=F[id];
+    if(!showJunk&&isJunk(id))return false;
+    if(activeFilter==='sea'&&f[4]==='freshwater')return false;
+    if(activeFilter==='fresh'&&f[4]!=='freshwater')return false;
+    if(activeFilter==='night'&&f[7]!==4)return false;
+    if(activeFilter==='legendary'&&!f[5])return false;
+    if(activeFilter==='cookable'&&!FD.fr[id])return false;
+    if(activeFilter==='junk'&&!isJunk(id))return false;
+    if(q&&fishSearchIdx[id].indexOf(q)===-1)return false;
+    return true;
+  });
+  return sortFish(ids);
+}
+
+function renderFishCard(id){
+  var f=F[id];
+  var name=f[0],skill=f[1],rank=f[6],size=f[3],water=f[4],legendary=f[5];
+  var rarity=f[10],stack=f[11],npc=f[12],ex=f[14],rare=f[15];
+  var junk=isJunk(id);
+  var zones=FD.fz[id]||[];
+  var baits=FD.fb[id]||[];
+  var recipes=FD.fr[id]||[];
+  var ap=ahPrice(id);
+  var asp=ahStackPrice(id);
+
+  var iconCls=junk?'cdx-icon junk':(water==='freshwater'?'cdx-icon fresh':'cdx-icon');
+  var iconTxt=junk?'&#128465;':(size==='large'?'&#128031;':'&#128031;');
+
+  var badges=skillBadge(skill)+sizeBadge(size)+waterBadge(water);
+  if(legendary)badges+='<span class="bdg bdg-legend">Legend</span>';
+  if(ex)badges+='<span class="bdg bdg-ex">Ex</span>';
+  if(rare)badges+='<span class="bdg bdg-rare">Rare</span>';
+  badges+=condBadges(f);
+
+  var meta='<span>Rank '+rank+'</span>';
+  if(npc)meta+='<span>NPC '+gilFmt(npc)+'</span>';
+  if(stack>1)meta+='<span>Stack '+stack+'</span>';
+
+  // Stats row
+  var stats='<div class="cdx-stats">';
+  stats+='<div class="cdx-stat"><div class="sl">Skill</div><div class="sv sv-fish">'+skill+'</div></div>';
+  stats+='<div class="cdx-stat"><div class="sl">Ranking</div><div class="sv'+(rank>=20?' sv-warn':'')+'">'+rank+'</div></div>';
+  stats+='<div class="cdx-stat"><div class="sl">Rarity</div><div class="sv'+(rarity<=200?' sv-loss':rarity<=500?' sv-warn':'')+'">'+rarity+'</div></div>';
+  stats+='<div class="cdx-stat"><div class="sl">NPC Sell</div><div class="sv sv-gil">'+gilFmt(npc)+'</div></div>';
+  stats+='<div class="cdx-stat"><div class="sl">AH Price</div><div class="sv'+(ap?' sv-gain':'')+'">'+gilFmt(ap)+'</div></div>';
+  if(asp)stats+='<div class="cdx-stat"><div class="sl">AH Stack</div><div class="sv sv-gain">'+gilFmt(asp)+'</div></div>';
+  stats+='<div class="cdx-stat"><div class="sl">Stack</div><div class="sv">'+stack+'</div></div>';
+  stats+='</div>';
+
+  // Conditions section
+  var condHtml='';
+  if(f[7]||f[8]||f[9]){
+    condHtml='<div class="cdx-sec"><div class="cdx-sec-head" onclick="this.closest(\'.cdx-sec\').classList.toggle(\'open\')"><span>Conditions</span><span class="sec-arr">&#9660;</span></div><div class="cdx-sec-body"><div class="cond-grid">';
+    if(f[7]){
+      condHtml+='<div class="cond-card"><div class="ci">&#9200;</div><div class="cl">Time of Day</div><div class="cn">'+h(HOUR_LABELS[f[7]]||'Unknown')+'</div></div>';
+    }
+    if(f[8]){
+      condHtml+='<div class="cond-card"><div class="ci">&#127769;</div><div class="cl">Moon Phase</div><div class="cn">'+h(MOON_LABELS[f[8]]||'Unknown')+'</div></div>';
+    }
+    if(f[9]){
+      condHtml+='<div class="cond-card"><div class="ci">&#127811;</div><div class="cl">Season</div><div class="cn">'+h(MONTH_LABELS[f[9]]||'Unknown')+'</div></div>';
+    }
+    condHtml+='</div></div></div>';
+  }
+
+  // Zones section
+  var zonesHtml='';
+  if(zones.length){
+    var uniqueZones={};
+    zones.forEach(function(z){
+      if(!uniqueZones[z[0]]||z[1]<uniqueZones[z[0]])uniqueZones[z[0]]=z[1];
+    });
+    var zoneNames=Object.keys(uniqueZones).sort();
+    zonesHtml='<div class="cdx-sec"><div class="cdx-sec-head" onclick="this.closest(\'.cdx-sec\').classList.toggle(\'open\')"><span>Zones</span><span class="sec-ct">'+zoneNames.length+'</span><span class="sec-arr">&#9660;</span></div><div class="cdx-sec-body"><div class="zone-pills">';
+    zoneNames.forEach(function(z){
+      var slug=z.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+      var r=uniqueZones[z];
+      zonesHtml+='<a class="zpill" href="/zone/'+slug+'">'+h(z);
+      if(r<1000)zonesHtml+='<span class="zr">'+r+'</span>';
+      zonesHtml+='</a>';
+    });
+    zonesHtml+='</div></div></div>';
+  }
+
+  // Baits section
+  var baitsHtml='';
+  if(baits.length){
+    baitsHtml='<div class="cdx-sec"><div class="cdx-sec-head" onclick="this.closest(\'.cdx-sec\').classList.toggle(\'open\')"><span>Baits</span><span class="sec-ct">'+baits.length+'</span><span class="sec-arr">&#9660;</span></div><div class="cdx-sec-body"><div class="bait-rows">';
+    baits.forEach(function(bp){
+      var b=B[bp[0]];
+      if(!b)return;
+      baitsHtml+='<div class="bait-row"><span class="bn">'+(typeof iconSpan==='function'?iconSpan(bp[0]):'')+'<a href="#bait-'+bp[0]+'" style="color:var(--ink);text-decoration:none">'+h(b[0])+'</a></span><span class="bt">'+h(b[1])+'</span>'+pwStars(bp[1])+'</div>';
+    });
+    baitsHtml+='</div></div></div>';
+  }
+
+  // Rod compatibility section
+  var rodHtml='<div class="cdx-sec"><div class="cdx-sec-head" onclick="this.closest(\'.cdx-sec\').classList.toggle(\'open\')"><span>Rod Compatibility</span><span class="sec-ct">'+R.length+'</span><span class="sec-arr">&#9660;</span></div><div class="cdx-sec-body"><div style="overflow-x:auto"><table class="rod-tbl"><thead><tr><th>Rod</th><th>Size</th><th>Rank</th><th>Status</th><th style="text-align:right">Break%</th><th style="text-align:right">Snap%</th><th style="text-align:right">Land%</th></tr></thead><tbody>';
+  R.forEach(function(rod){
+    var rc=rodCompat(rank,size,rod);
+    var scls=rc.status==='OK'?'rc-ok':rc.status==='RANK'?'rc-rank':'rc-size';
+    var bcls=rc.brk>5?'brk-bad':rc.brk>0?'brk-warn':'brk-ok';
+    var snpcls=rc.snap>20?'brk-bad':rc.snap>0?'brk-warn':'brk-ok';
+    var lcls=rc.land>=95?'brk-ok':rc.land>=70?'brk-warn':'brk-bad';
+    rodHtml+='<tr><td>'+(typeof iconSpan==='function'?iconSpan(rod[0]):'')+'<a href="#rod-'+rod[0]+'" style="color:var(--ink);text-decoration:none">'+h(rod[1])+'</a></td>';
+    rodHtml+='<td>'+rod[2]+'</td><td>'+rod[3]+'&ndash;'+rod[4]+'</td>';
+    rodHtml+='<td><span class="rc-badge '+scls+'">'+rc.status+'</span></td>';
+    rodHtml+='<td style="text-align:right" class="'+bcls+'">'+rc.brk+'%</td>';
+    rodHtml+='<td style="text-align:right" class="'+snpcls+'">'+rc.snap+'%</td>';
+    rodHtml+='<td style="text-align:right" class="'+lcls+'">'+rc.land+'%</td></tr>';
+  });
+  rodHtml+='</tbody></table></div></div></div>';
+
+  // Recipes section
+  var recHtml='';
+  if(recipes.length){
+    recHtml='<div class="cdx-sec"><div class="cdx-sec-head" onclick="this.closest(\'.cdx-sec\').classList.toggle(\'open\')"><span>Recipes</span><span class="sec-ct">'+recipes.length+'</span><span class="sec-arr">&#9660;</span></div><div class="cdx-sec-body"><div class="rcp-list">';
+    recipes.forEach(function(rec){
+      var resultName=FD['in'][String(rec[4])]||'Item #'+rec[4];
+      var craft=rec[2]?rec[2].charAt(0).toUpperCase()+rec[2].slice(1):'';
+      var desynth=rec[6]?' <span class="rcp-desynth">(desynth)</span>':'';
+      recHtml+='<div class="rcp-card"><span class="rlv">'+h(craft)+' '+rec[3]+'</span><span class="rn">'+h(resultName)+'</span>'+desynth+'</div>';
+    });
+    recHtml+='</div></div></div>';
+  }
+
+  return '<div class="cdx-card" id="fish-'+id+'" data-id="'+id+'">'
+    +'<div class="cdx-head" onclick="toggleCard(this)"><div class="'+iconCls+'">'+(typeof iconSpan==='function'?iconSpan(id,32):iconTxt)+'</div>'
+    +'<div class="cdx-title"><h3>'+h(name)+'</h3><div class="cdx-meta">'+meta+'</div></div>'
+    +'<div class="cdx-badges">'+badges+'</div>'
+    +'<div class="cdx-arrow">&#9660;</div></div>'
+    +'<div class="cdx-body">'+stats+condHtml+zonesHtml+baitsHtml+rodHtml+recHtml+'</div></div>';
+}
+
+function renderFishTab(){
+  var ids=filterFish();
+  var realCount=fishIds.filter(function(id){return !isJunk(id)}).length;
+  var junkCount=fishIds.length-realCount;
+  document.getElementById('tcFish').textContent=realCount;
+  document.getElementById('fishCount').textContent=ids.length+' fish'+(activeFilter!=='all'?' (filtered)':'');
+  document.getElementById('fishList').innerHTML=ids.map(renderFishCard).join('');
+  handleDeepLink();
+}
+
+/* ── Fish event listeners ── */
+document.getElementById('fishSearch').oninput=function(){renderFishTab();};
+document.getElementById('fishSort').onchange=function(){fishSortKey=this.value;renderFishTab();};
+document.querySelectorAll('#fishFilters .fchip').forEach(function(chip){
+  chip.onclick=function(){
+    var f=chip.dataset.f;
+    if(f==='junk'){
+      showJunk=!showJunk;
+      chip.classList.toggle('on',showJunk);
+    }else{
+      activeFilter=f;
+      document.querySelectorAll('#fishFilters .fchip:not(.fchip-junk)').forEach(function(c){c.classList.remove('on');});
+      chip.classList.add('on');
+    }
+    renderFishTab();
+  };
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   BAITS TAB
+   ═══════════════════════════════════════════════════════════════ */
+var baitIds=Object.keys(B).sort(function(a,b){return B[a][0].localeCompare(B[b][0])});
+var baitSortKey='name';
+
+function sortBaits(ids){
+  return ids.slice().sort(function(a,b){
+    var ba=B[a],bb=B[b];
+    switch(baitSortKey){
+      case 'type':return ba[1].localeCompare(bb[1])||ba[0].localeCompare(bb[0]);
+      case 'price':return (bb[5]||0)-(ba[5]||0);
+      case 'catches':return ((FD.bf[b]||[]).length)-((FD.bf[a]||[]).length);
+      default:return ba[0].localeCompare(bb[0]);
+    }
+  });
+}
+
+function renderBaitCard(bid){
+  var b=B[bid];
+  var name=b[0],type=b[1],losable=b[2],maxHook=b[3],rankMod=b[4],npc=b[5],stack=b[6];
+  var catches=FD.bf[bid]||[];
+  var typeCls=type==='lure'?'bdg-lure':'bdg-bait';
+
+  var badges='<span class="bdg '+typeCls+'">'+h(type)+'</span>';
+  if(losable)badges+='<span class="bdg bdg-ex">Consumable</span>';
+  if(maxHook>1)badges+='<span class="bdg bdg-skill">Hook '+maxHook+'</span>';
+
+  var meta='<span>NPC '+gilFmt(npc)+'</span>';
+  if(stack>1)meta+='<span>Stack '+stack+'</span>';
+  meta+='<span>Catches '+catches.length+' fish</span>';
+
+  // Fish list grouped by power
+  var fishHtml='';
+  if(catches.length){
+    var byPower={3:[],2:[],1:[]};
+    catches.forEach(function(c){(byPower[c[1]]||(byPower[c[1]]=[])).push(c[0]);});
+    fishHtml='<div style="padding:14px 18px">';
+    [3,2,1].forEach(function(pw){
+      if(!byPower[pw]||!byPower[pw].length)return;
+      fishHtml+='<div style="margin-bottom:8px"><div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:4px">'+pwStars(pw)+' <span style="vertical-align:middle">('+byPower[pw].length+' fish)</span></div><div class="fish-mini">';
+      byPower[pw].sort(function(a,b){return (F[a]?F[a][1]:999)-(F[b]?F[b][1]:999);}).forEach(function(fid){
+        var fn=F[fid];
+        if(!fn)return;
+        fishHtml+='<a href="#fish-'+fid+'" onclick="switchToFish(\''+fid+'\')">'+h(fn[0])+' <span style="opacity:.5">'+fn[1]+'</span></a>';
+      });
+      fishHtml+='</div></div>';
+    });
+    fishHtml+='</div>';
+  }else{
+    fishHtml='<div style="padding:14px 18px;color:var(--ink-faint);font-size:.82rem;font-style:italic">No fish mapped to this bait</div>';
+  }
+
+  return '<div class="cdx-card" id="bait-'+bid+'" data-id="'+bid+'">'
+    +'<div class="cdx-head" onclick="toggleCard(this)"><div class="cdx-icon" style="background:color-mix(in srgb,var(--earth) 10%,transparent)">'+(typeof iconSpan==='function'?iconSpan(bid,32):'&#129707;')+'</div>'
+    +'<div class="cdx-title"><h3>'+h(name)+'</h3><div class="cdx-meta">'+meta+'</div></div>'
+    +'<div class="cdx-badges">'+badges+'</div>'
+    +'<div class="cdx-arrow">&#9660;</div></div>'
+    +'<div class="cdx-body">'+fishHtml+'</div></div>';
+}
+
+function renderBaitTab(){
+  var q=(document.getElementById('baitSearch').value||'').toLowerCase().trim();
+  var ids=sortBaits(baitIds).filter(function(id){
+    if(!q)return true;
+    return B[id][0].toLowerCase().indexOf(q)!==-1;
+  });
+  document.getElementById('tcBaits').textContent=baitIds.length;
+  document.getElementById('baitCount').textContent=ids.length+' baits';
+  document.getElementById('baitList').innerHTML=ids.map(renderBaitCard).join('');
+  handleDeepLink();
+}
+
+document.getElementById('baitSearch').oninput=function(){renderBaitTab();};
+document.getElementById('baitSort').onchange=function(){baitSortKey=this.value;renderBaitTab();};
+
+/* ═══════════════════════════════════════════════════════════════
+   RODS TAB
+   ═══════════════════════════════════════════════════════════════ */
+var rodSortKey='rank';
+
+function sortRods(){
+  return R.slice().sort(function(a,b){
+    switch(rodSortKey){
+      case 'name':return a[1].localeCompare(b[1]);
+      case 'size':return a[2].localeCompare(b[2])||b[4]-a[4];
+      default:return b[4]-a[4];
+    }
+  });
+}
+
+function renderRodCard(rod){
+  var id=rod[0],name=rod[1],size=rod[2],minRank=rod[3],maxRank=rod[4];
+  var atk=rod[5],rec=rod[6],time=rod[7],breakable=rod[8],npc=rod[9];
+
+  var szCls=size==='large'?'bdg-lg':'bdg-sm';
+  var badges='<span class="bdg '+szCls+'">'+h(size)+'</span>';
+  badges+='<span class="bdg bdg-skill">Rank '+minRank+'&ndash;'+maxRank+'</span>';
+  if(!breakable)badges+='<span class="bdg bdg-season">Unbreakable</span>';
+
+  var meta='<span>NPC '+gilFmt(npc)+'</span>';
+
+  // Stats grid
+  var statsHtml='<div class="rod-stat-grid">';
+  statsHtml+='<div class="rod-stat"><div class="rsl">Attack</div><div class="rsv">'+atk+'</div></div>';
+  statsHtml+='<div class="rod-stat"><div class="rsl">Recovery</div><div class="rsv">'+rec+'</div></div>';
+  statsHtml+='<div class="rod-stat"><div class="rsl">Fight Time</div><div class="rsv">'+time+'s</div></div>';
+  statsHtml+='<div class="rod-stat"><div class="rsl">Rank Range</div><div class="rsv">'+minRank+'&ndash;'+maxRank+'</div></div>';
+  statsHtml+='<div class="rod-stat"><div class="rsl">Size</div><div class="rsv">'+size+'</div></div>';
+  statsHtml+='<div class="rod-stat"><div class="rsl">Breakable</div><div class="rsv">'+(breakable?'Yes':'No')+'</div></div>';
+  statsHtml+='</div>';
+
+  // Fish this rod can handle well vs at risk
+  var okFish=[],rankFish=[];
+  Object.keys(F).forEach(function(fid){
+    var f=F[fid];
+    if(isJunk(fid))return;
+    var rc=rodCompat(f[6],f[3],rod);
+    if(rc.status==='OK')okFish.push(fid);
+    else if(rc.status==='RANK'&&rc.land>=50)rankFish.push(fid);
+  });
+  okFish.sort(function(a,b){return F[a][1]-F[b][1];});
+  rankFish.sort(function(a,b){return F[a][1]-F[b][1];});
+
+  var fishHtml='';
+  if(okFish.length){
+    fishHtml+='<div style="margin-bottom:8px"><div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:4px"><span class="rc-badge rc-ok">OK</span> '+okFish.length+' fish in range</div><div class="fish-mini">';
+    okFish.forEach(function(fid){
+      fishHtml+='<a href="#fish-'+fid+'" onclick="switchToFish(\''+fid+'\')">'+h(F[fid][0])+' <span style="opacity:.5">'+F[fid][1]+'</span></a>';
+    });
+    fishHtml+='</div></div>';
+  }
+  if(rankFish.length){
+    fishHtml+='<div><div style="font-size:.76rem;color:var(--ink-faint);margin-bottom:4px"><span class="rc-badge rc-rank">RANK</span> '+rankFish.length+' fish over rank (but landable)</div><div class="fish-mini">';
+    rankFish.forEach(function(fid){
+      fishHtml+='<a href="#fish-'+fid+'" onclick="switchToFish(\''+fid+'\')">'+h(F[fid][0])+' <span style="opacity:.5">'+F[fid][1]+'</span></a>';
+    });
+    fishHtml+='</div></div>';
+  }
+
+  return '<div class="cdx-card" id="rod-'+id+'" data-id="'+id+'">'
+    +'<div class="cdx-head" onclick="toggleCard(this)"><div class="cdx-icon" style="background:color-mix(in srgb,var(--accent) 10%,transparent)">'+(typeof iconSpan==='function'?iconSpan(id,32):'&#127907;')+'</div>'
+    +'<div class="cdx-title"><h3>'+h(name)+'</h3><div class="cdx-meta">'+meta+'</div></div>'
+    +'<div class="cdx-badges">'+badges+'</div>'
+    +'<div class="cdx-arrow">&#9660;</div></div>'
+    +'<div class="cdx-body"><div style="padding:14px 18px">'+statsHtml+fishHtml+'</div></div></div>';
+}
+
+function renderRodTab(){
+  var q=(document.getElementById('rodSearch').value||'').toLowerCase().trim();
+  var rods=sortRods().filter(function(r){
+    if(!q)return true;
+    return r[1].toLowerCase().indexOf(q)!==-1;
+  });
+  document.getElementById('tcRods').textContent=R.length;
+  document.getElementById('rodCount').textContent=rods.length+' rods';
+  document.getElementById('rodList').innerHTML=rods.map(renderRodCard).join('');
+  handleDeepLink();
+}
+
+document.getElementById('rodSearch').oninput=function(){renderRodTab();};
+document.getElementById('rodSort').onchange=function(){rodSortKey=this.value;renderRodTab();};
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD TOGGLE & DEEP LINKING
+   ═══════════════════════════════════════════════════════════════ */
+window.toggleCard=function(headEl){
+  var card=headEl.closest('.cdx-card');
+  card.classList.toggle('open');
+  if(card.classList.contains('open')){
+    history.replaceState(null,'','#'+card.id);
+  }
+};
+
+window.switchToFish=function(fid){
+  tabs.forEach(function(t){t.classList.remove('active');});
+  panes.forEach(function(p){p.classList.remove('active');});
+  document.querySelector('[data-tab="fish"]').classList.add('active');
+  document.getElementById('pane-fish').classList.add('active');
+  setTimeout(function(){
+    var el=document.getElementById('fish-'+fid);
+    if(el){
+      el.classList.add('open');
+      el.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  },50);
+};
+
+function handleDeepLink(){
+  var hash=location.hash.replace('#','');
+  if(!hash)return;
+  // Switch tab if needed
+  if(hash.indexOf('bait-')===0&&!document.getElementById('pane-baits').classList.contains('active')){
+    tabs.forEach(function(t){t.classList.remove('active');});
+    panes.forEach(function(p){p.classList.remove('active');});
+    document.querySelector('[data-tab="baits"]').classList.add('active');
+    document.getElementById('pane-baits').classList.add('active');
+    renderBaitTab();
+    return;
+  }
+  if(hash.indexOf('rod-')===0&&!document.getElementById('pane-rods').classList.contains('active')){
+    tabs.forEach(function(t){t.classList.remove('active');});
+    panes.forEach(function(p){p.classList.remove('active');});
+    document.querySelector('[data-tab="rods"]').classList.add('active');
+    document.getElementById('pane-rods').classList.add('active');
+    renderRodTab();
+    return;
+  }
+  var el=document.getElementById(hash);
+  if(el&&el.classList.contains('cdx-card')){
+    el.classList.add('open');
+    setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'});},100);
+    location.hash=''; // prevent re-trigger
+  }
+}
+
+/* ── Initial render ── */
+renderFishTab();
+renderBaitTab();
+renderRodTab();
+
+// Handle hash on load for tab switching
+var initHash=location.hash.replace('#','');
+if(initHash==='baits'||initHash==='rods'){
+  tabs.forEach(function(t){t.classList.remove('active');});
+  panes.forEach(function(p){p.classList.remove('active');});
+  document.querySelector('[data-tab="'+initHash+'"]').classList.add('active');
+  document.getElementById('pane-'+initHash).classList.add('active');
+}else if(initHash){
+  handleDeepLink();
+}
+
+window.addEventListener('hashchange',handleDeepLink);
+
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

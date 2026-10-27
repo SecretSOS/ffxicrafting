@@ -21,6 +21,7 @@ DB   = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 AH   = os.path.join(ROOT, 'public', 'data', 'ah-prices.json')
 CHAR = os.path.join(ROOT, 'data', 'character.json')
 INV  = os.path.join(ROOT, 'data', 'inventory.json')
+WATCHLIST_FILE = os.path.join(ROOT, 'data', 'watchlist.json')
 LSB  = os.path.join(ROOT, '..', 'lsb-server')
 
 PHOENIX_CHARS = ['Secrets', 'Secret']
@@ -252,6 +253,17 @@ def _save_phoenix_token(token):
     os.makedirs(os.path.dirname(token_file), exist_ok=True)
     with open(token_file, 'w') as f:
         f.write(token)
+
+def get_watchlist():
+    if os.path.exists(WATCHLIST_FILE):
+        with open(WATCHLIST_FILE) as f:
+            return json.load(f)
+    return []
+
+def save_watchlist(ids):
+    os.makedirs(os.path.dirname(WATCHLIST_FILE), exist_ok=True)
+    with open(WATCHLIST_FILE, 'w') as f:
+        json.dump(sorted(set(int(x) for x in ids)), f, separators=(',', ':'))
 
 def _phoenix_headers(token):
     return {
@@ -928,6 +940,8 @@ def load_all():
             if vb: d['v'] = vb[0]
             ap = ah_single_prices.get(iid)
             if ap: d['a'] = ap
+            asp = ah_stack_prices.get(iid)
+            if asp: d['aSt'] = asp
             srcs = db.execute("SELECT type FROM sources WHERE item_id=? GROUP BY type", (iid,)).fetchall()
             src_types = {s[0] for s in srcs}
             if src_types & gather_types: d['sg'] = 1
@@ -1210,17 +1224,20 @@ def load_all():
             it = items.get(iid)
             iname = it['name'] if it else str(iid)
             if iid in fish_id_set:
-                fd = db.execute('SELECT skill, size_type, ranking, hour_pattern FROM fish WHERE item_id=?',
+                fd = db.execute('SELECT skill, size_type, ranking, hour_pattern, moon_pattern, month_pattern FROM fish WHERE item_id=?',
                                 (iid,)).fetchone()
                 fskill = fd['skill'] if fd else 0
                 fsize = fd['size_type'] if fd else '?'
                 franking = fd['ranking'] if fd else 0
                 fhour = fd['hour_pattern'] if fd else 0
+                fmoon = fd['moon_pattern'] if fd else 0
+                fmonth = fd['month_pattern'] if fd else 0
                 zones = sorted(fish_zone_map.get(iid, []))[:5]
                 baits = fish_bait_map.get(iid, [])
                 fish_ings.append({'id': iid, 'name': name(iid), 'qty': ing['qty'],
                                   'skill': fskill, 'size': fsize, 'ranking': franking,
-                                  'hourPat': fhour, 'zones': zones, 'baits': baits})
+                                  'hourPat': fhour, 'moonPat': fmoon, 'monthPat': fmonth,
+                                  'zones': zones, 'baits': baits})
             else:
                 src = db.execute("SELECT price FROM sources WHERE item_id=? AND type IN ('npc_shop','guild_shop') ORDER BY price LIMIT 1",
                                  (iid,)).fetchone()
@@ -1449,6 +1466,7 @@ def load_all():
         'sourceIdx': source_idx,
         'itemVendors': {str(k): v for k, v in item_vendors.items()},
         'regionalVendors': {str(k): v for k, v in regional_vendors.items()},
+        'watchlist': get_watchlist(),
         'ahFetched': ah_fetched,
         'ahCount': ah_count,
         'ahTimestamps': {str(k): v for k, v in ah_timestamps.items()},
@@ -1518,7 +1536,33 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 .search-box input{width:100%;padding:5px 10px 5px 28px;background:var(--bg2);font-size:12px}
 .search-box::before{content:'⌕';position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:14px}
 .topbar .btn-sm{padding:3px 10px;font-size:11px;border-radius:3px}
+.topbar .btn-scan{background:var(--bg3);border:1px solid var(--rule);transition:background 0.15s,border-color 0.15s}
+.topbar .btn-scan:hover{border-color:var(--acc);background:rgba(227,167,94,0.15)}
+.topbar .btn-scan.active{background:var(--acc);color:#000;pointer-events:none}
 .topbar .btn-char{color:var(--acc)}
+.scan-bar-wrap{display:flex;align-items:center;gap:8px;padding:2px 12px;background:var(--bg2);border-bottom:1px solid var(--rule);font-size:11px;font-family:var(--mono);position:relative;height:22px}
+.scan-bar-inner{position:absolute;left:0;top:0;height:100%;background:rgba(227,167,94,0.15);transition:width 0.4s}
+.scan-bar-text{position:relative;color:var(--ink2);white-space:nowrap;overflow:hidden}
+.scan-bar-kill{position:relative;margin-left:auto;background:none;border:none;color:var(--ink3);cursor:pointer;font-size:12px;padding:0 4px}
+.scan-bar-kill:hover{color:#dc2626}
+.wl-section{margin-bottom:16px;border:1px solid var(--rule);border-radius:var(--rad);background:var(--bg2);overflow:hidden}
+.wl-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--rule)}
+.wl-head h3{margin:0;font-size:14px;font-weight:600}
+.wl-count{font-size:11px;color:var(--ink3);font-weight:400;margin-left:6px}
+.wl-actions{display:flex;align-items:center;gap:8px}
+.wl-add-input{width:180px;padding:4px 8px;font-size:11px;background:var(--bg3);border:1px solid var(--rule);border-radius:3px;color:var(--ink)}
+.wl-results{position:absolute;z-index:20;background:var(--bg1);border:1px solid var(--rule);border-radius:4px;max-height:200px;overflow-y:auto;width:250px;right:12px;top:36px;font-size:12px}
+.wl-results .wl-result{padding:6px 10px;cursor:pointer;display:flex;justify-content:space-between}
+.wl-results .wl-result:hover{background:var(--bg3)}
+.wl-results .wl-result .dim{font-size:10px}
+.wl-head{position:relative}
+.wl-row{display:grid;grid-template-columns:1fr 80px 80px 80px 30px;align-items:center;padding:4px 12px;font-size:12px;border-bottom:1px solid var(--rule)}
+.wl-row:hover{background:var(--bg3)}
+.wl-row .wl-name{cursor:pointer;color:var(--acc)}
+.wl-row .wl-name:hover{text-decoration:underline}
+.wl-row .wl-rm{cursor:pointer;color:#dc2626;font-size:14px;text-align:center;border:none;background:none;padding:0;opacity:0.6}
+.wl-row .wl-rm:hover{opacity:1}
+.wl-empty{padding:16px;text-align:center;color:var(--ink3);font-size:12px}
 
 .nav a{display:flex;align-items:center;justify-content:center;width:40px;height:36px;margin:0 6px;border-radius:var(--rad);color:var(--ink3);text-decoration:none;font-size:16px;transition:background 0.15s}
 .nav a:hover{background:var(--bg3);color:var(--ink2)}
@@ -1642,6 +1686,17 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 .fc-panel h4{font-size:12px;color:var(--acc);margin-bottom:8px}
 .fc-stat{display:flex;justify-content:space-between;padding:3px 0;font-size:12px}
 .fc-stat .v{font-family:var(--mono)}
+.env-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:8px;font-weight:600;letter-spacing:0.3px;vertical-align:middle;margin-left:3px}
+.env-up{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3)}
+.env-dn{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3)}
+.env-mid{background:rgba(250,204,21,0.12);color:#facc15;border:1px solid rgba(250,204,21,0.25)}
+.cond-pip{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;margin-left:4px}
+.cond-pip.c-g{background:#4ade80}.cond-pip.c-y{background:#facc15}.cond-pip.c-o{background:#f97316}.cond-pip.c-r{background:#ef4444}
+.fc-cond{margin-top:8px;padding-top:8px;border-top:1px solid var(--rule)}
+.fc-cond h4{margin-bottom:4px}
+.fc-cond-row{display:flex;justify-content:space-between;align-items:center;padding:2px 0;font-size:11px}
+.fc-cond-row .cond-val{font-family:var(--mono);font-weight:600}
+.fc-cond-row .cond-val.up{color:#4ade80}.fc-cond-row .cond-val.mid{color:#facc15}.fc-cond-row .cond-val.dn{color:#ef4444}
 
 .arb-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
 .arb-card{background:var(--bg2);border:1px solid var(--rule);border-radius:var(--rad);padding:10px;text-align:center;cursor:pointer;transition:border-color 0.15s}
@@ -1659,32 +1714,7 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 .craft-pill.on{background:var(--acc);color:var(--bg1);border-color:var(--acc);font-weight:600}
 
 
-.px-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:50;align-items:flex-start;justify-content:center;padding-top:10vh}
-.px-overlay.open{display:flex}
-.px-box{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;width:540px;max-width:90vw;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
-.px-box h3{padding:12px 16px;margin:0;font-size:14px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;background:var(--bg1)}
-.px-box h3 .close-btn{cursor:pointer;color:var(--ink3);font-size:18px}
-.px-box h3 .close-btn:hover{color:var(--ink)}
-.px-body{padding:16px;max-height:60vh;overflow-y:auto}
-.px-body p{font-size:12px;color:var(--ink2);margin:0 0 8px;line-height:1.5}
-.px-body .step{display:flex;gap:8px;margin-bottom:10px;font-size:12px}
-.px-body .step-num{background:var(--acc);color:#000;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0}
-.px-body .step-text{color:var(--ink)}
-.px-modes{display:flex;gap:8px;margin:12px 0}
-.px-mode{flex:1;padding:10px;border:1px solid var(--rule);border-radius:var(--rad);cursor:pointer;text-align:center;font-size:11px;transition:border-color 0.15s}
-.px-mode:hover{border-color:var(--acc)}
-.px-mode.on{border-color:var(--acc);background:rgba(227,167,94,0.1)}
-.px-mode .mode-title{font-weight:700;font-size:13px;margin-bottom:4px}
-.px-mode .mode-stat{color:var(--ink3)}
-.px-actions{display:flex;gap:8px;margin-top:12px}
-.px-actions button{flex:1;padding:8px;border:none;border-radius:var(--rad);font-weight:600;cursor:pointer;font-size:12px}
-.px-copy{background:var(--acc);color:#000}
-.px-copy:hover{opacity:0.9}
-.px-import{background:#2563eb;color:#fff}
-.px-import:hover{background:#1d4ed8}
-.px-status{margin-top:12px;padding:10px;background:var(--bg1);border-radius:var(--rad);font-size:11px;font-family:var(--mono);display:none}
-.px-status.show{display:block}
-.px-drop{margin-top:10px;border:2px dashed var(--rule);border-radius:var(--rad);padding:20px;text-align:center;font-size:12px;color:var(--ink3);cursor:pointer;transition:border-color 0.15s}
+.px-drop{border:2px dashed var(--rule);border-radius:var(--rad);padding:20px;text-align:center;font-size:12px;color:var(--ink3);cursor:pointer;transition:border-color 0.15s}
 .px-drop:hover,.px-drop.dragover{border-color:var(--acc);color:var(--acc)}
 .cmd-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:50;align-items:flex-start;justify-content:center;padding-top:15vh}
 .cmd-overlay.open{display:flex}
@@ -1725,11 +1755,18 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
   </div>
   <div class="search-box"><input type="text" id="globalSearch" placeholder="Search items... (Ctrl+K)"></div>
   <button class="btn-sm btn-char" id="btnChar" title="Character Panel">☰ Char</button>
-  <button class="btn-sm" id="btnScan" title="Reload AH Prices">↻ Scan</button>
-  <button class="btn-sm" id="btnPhoenixScan" title="Phoenix XI AH Scanner" style="background:#b45309;color:#fff">🔥 Phoenix</button>
+  <button class="btn-sm" id="navBackBtn" onclick="navBack()" style="display:none" title="Return to previous view">← Back</button>
+  <button class="btn-sm btn-scan" id="scanMyList" data-scan="watchlist" title="Scan your watchlist items">⭐ My List</button>
+  <button class="btn-sm btn-scan" id="scanHot" data-scan="hot" title="Scan items with existing prices">🔥 Hot</button>
+  <button class="btn-sm btn-scan" id="scanFull" data-scan="full" title="Full scan (auto 3 AM)">🌐 Full</button>
   <button class="btn-sm btn-conquest" id="btnConquest" title="Conquest regional vendors">⚑ <span class="cq-dot" id="conquestDot">0</span></button>
   <button class="stack-toggle" id="sellModeToggle" title="Toggle sell destination: AH (auction) or NPC (vendor)">Sell: AH</button>
   <button class="btn-sm" id="btnRefresh" title="Refresh Data">⟳</button>
+</div>
+<div class="scan-bar-wrap" id="scanBarWrap" style="display:none">
+  <div class="scan-bar-inner" id="scanBarInner"></div>
+  <span class="scan-bar-text" id="scanBarText"></span>
+  <button class="scan-bar-kill" id="scanBarKill" title="Stop scan">✕</button>
 </div>
 
 <nav class="nav" id="nav">
@@ -1753,6 +1790,17 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
         <span class="ticker-sort" id="tickerSort" title="Change sort">▼ Spread</span>
       </div>
       <div id="tickerList"></div>
+    </div>
+    <div class="wl-section" id="wlSection">
+      <div class="wl-head">
+        <h3>⭐ My Watchlist <span class="wl-count" id="wlCount">0</span></h3>
+        <div class="wl-actions">
+          <input type="text" id="wlSearch" placeholder="Add item..." class="wl-add-input">
+          <span class="dim" id="wlAutoLabel" style="font-size:10px"></span>
+        </div>
+      </div>
+      <div class="wl-results" id="wlResults" style="display:none"></div>
+      <div id="wlTable"></div>
     </div>
     <h2>Market Intelligence</h2>
     <div class="arb-cards" id="arbCards">
@@ -1952,9 +2000,13 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
   <div class="char-section" style="margin-top:12px;border-top:1px solid var(--rule);padding-top:12px">
     <h4>Phoenix Sync</h4>
     <p class="dim" style="font-size:11px;margin-bottom:6px">Pulls inventory, craft levels &amp; fame from phoenix-xi.com</p>
-    <p class="dim" style="font-size:10px;margin-bottom:8px;line-height:1.4">To get your cookie: log into phoenix-xi.com → F12 → Application → Cookies → copy the full cookie string (or just the connect.sid value)</p>
-    <input type="text" id="pxToken" placeholder="Paste cookie here (saved for future scans)" style="width:100%;font-size:11px;margin-bottom:6px;padding:6px 8px">
-    <button class="save-btn" id="charSync" style="background:var(--bg3)">⟳ Sync from Phoenix</button>
+    <div id="pxTokenStatus" style="font-size:11px;margin-bottom:8px;padding:4px 8px;border-radius:4px"></div>
+    <button class="save-btn" id="charSync">⟳ Sync from Phoenix</button>
+    <details style="margin-top:8px;font-size:10px;color:var(--ink3)">
+      <summary style="cursor:pointer">Update cookie</summary>
+      <p style="margin:6px 0 4px;line-height:1.4">Log into phoenix-xi.com → F12 → Application → Cookies → copy the Phoenix session cookies</p>
+      <input type="text" id="pxToken" placeholder="Paste cookie here" style="width:100%;font-size:11px;margin-bottom:4px;padding:6px 8px">
+    </details>
     <div id="invSummary" style="font-size:11px;margin-top:8px"></div>
   </div>
 </div>
@@ -1973,42 +2025,10 @@ button:hover{background:var(--bg4);border-color:var(--ink3)}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- PHOENIX SCANNER MODAL -->
-<div class="px-overlay" id="pxOverlay">
-  <div class="px-box">
-    <h3>🔥 Phoenix XI AH Scanner <span class="close-btn" id="pxClose">✕</span></h3>
-    <div class="px-body">
-      <div class="step"><span class="step-num">1</span><span class="step-text">Go to <b>phoenix-xi.com</b> and log in (scanner needs your session cookie)</span></div>
-      <div class="step"><span class="step-num">2</span><span class="step-text">Open browser DevTools console (<b>F12 → Console</b>)</span></div>
-      <div class="step"><span class="step-num">3</span><span class="step-text">Choose a scan mode below and click <b>Copy Scanner JS</b></span></div>
-      <div class="step"><span class="step-num">4</span><span class="step-text">Paste into the console and hit Enter — results auto-import to PowerTool when done</span></div>
-      <div class="px-modes">
-        <div class="px-mode on" id="pxModeHot" data-mode="hot">
-          <div class="mode-title">🔥 Hot Scan</div>
-          <div class="mode-stat" id="pxHotCount">— items</div>
-          <div class="mode-stat">30/min · ~— min</div>
-        </div>
-        <div class="px-mode" id="pxModeFull" data-mode="full">
-          <div class="mode-title">🌐 Full Scan</div>
-          <div class="mode-stat" id="pxFullCount">— items</div>
-          <div class="mode-stat">10/min · ~— min</div>
-        </div>
-        <div class="px-mode" id="pxModeCooking" data-mode="cooking">
-          <div class="mode-title">🍳 Cooking</div>
-          <div class="mode-stat" id="pxCookCount">— items</div>
-          <div class="mode-stat">30/min · ~— min</div>
-        </div>
-      </div>
-      <div style="font-size:11px;color:var(--ink3);margin-top:4px">Also available in console: alchemy, woodworking, smithing, goldsmithing, clothcraft, leathercraft, bonecraft</div>
-      <div class="px-actions">
-        <button class="px-copy" id="pxCopy">📋 Copy Scanner JS</button>
-      </div>
-      <div class="px-drop" id="pxDrop">
-        📁 Drop scan results JSON here to import
-        <input type="file" id="pxFile" accept=".json" style="display:none">
-      </div>
-      <div class="px-status" id="pxStatus"></div>
-    </div>
+<!-- FILE IMPORT (hidden, used by drag-drop or file picker) -->
+<div style="display:none">
+  <div class="px-drop" id="pxDrop">
+    <input type="file" id="pxFile" accept=".json" style="display:none">
   </div>
 </div>
 
@@ -2159,7 +2179,27 @@ FC.MOONPAT=[
 FC.getMonthMod=function(fish){var vt=getVanaTime();var fn=FC.MONTHPAT[fish.monthPat||0];return(fn?fn(vt.month):0.5)+0.25;};
 FC.getHourMod=function(fish){var vt=getVanaTime();var fn=FC.HOURPAT[fish.hourPat||0];return(fn?fn(vt.hour):0.5)+0.25;};
 FC.HOUR_LABELS=['','Dawn/Dusk','High Tide','Low Tide','Night','Day','Day/Night','Day'];
-function hourBadge(hp){if(hp===4)return' <span class="sell-badge" style="background:rgba(128,90,213,0.18);color:#c4a0ff;border:1px solid rgba(128,90,213,0.35);font-size:9px">NIGHT</span>';return '';}
+FC.MOON_LABELS=['New Moon Lover','Full Moon Lover','Waning Prefer','Waxing Prefer','No Preference'];
+FC.MONTH_LABELS=['','Spring','Early Summer','Late Summer','Autumn Peak','Winter','Midsummer','Early Autumn','Midwinter','Late Autumn','Late Spring'];
+function condBadge(fish){
+  var hp=fish.hourPat||0,mp=fish.moonPat||0,sp=fish.monthPat||0;
+  if(!hp&&!mp&&!sp)return '';
+  var out='';
+  if(hp){var hm=FC.getHourMod(fish);var hl=FC.HOUR_LABELS[hp]||'';
+    if(hm>=1.0)out+='<span class="env-badge env-up" title="'+hl+': peak hours now">'+hl+'</span>';
+    else if(hm<=0.5)out+='<span class="env-badge env-dn" title="'+hl+': off-hours now">'+hl+'</span>';
+  }
+  if(mp){var mm=FC.getMoonMod(fish);var vt=getVanaTime();
+    if(mm>=1.3)out+='<span class="env-badge env-up" title="Moon: favorable ('+vt.moonName+')">'+vt.moonGlyph+'</span>';
+    else if(mm<=0.5)out+='<span class="env-badge env-dn" title="Moon: unfavorable ('+vt.moonName+')">'+vt.moonGlyph+'</span>';
+  }
+  if(sp){var sm=FC.getMonthMod(fish);var vt2=getVanaTime();
+    if(sm>=1.0)out+='<span class="env-badge env-up" title="Season: peak ('+vt2.monthName+')">'+vt2.monthName+'</span>';
+    else if(sm<=0.5)out+='<span class="env-badge env-dn" title="Season: off-season">'+vt2.monthName+'</span>';
+  }
+  return out?' '+out:'';
+}
+function hourBadge(hp){return condBadge({hourPat:hp,moonPat:0,monthPat:0});}
 FC.getMoonMod=function(fish){var vt=getVanaTime();var fn=FC.MOONPAT[fish.moonPat||0];return(fn?fn(vt.moonIdx):1.0)+0.25;};
 FC.hookChance=function(skill,fish,bait,rod){
   var monthMod=FC.getMonthMod(fish);var hourMod=FC.getHourMod(fish)*2;var moonMod=FC.getMoonMod(fish)*3;
@@ -2284,6 +2324,7 @@ function switchTab(tab){
   ACTIVE_TAB=tab;
   qsa('.nav a').forEach(function(a){a.classList.toggle('on',a.dataset.tab===tab);});
   qsa('.pane').forEach(function(p){p.classList.toggle('on',p.id==='pane-'+tab);});
+  var bb=qs('#navBackBtn');if(bb)bb.style.display=NAV_HISTORY.length?'inline-block':'none';
   renderActive();
 }
 function renderActive(){
@@ -2298,18 +2339,31 @@ function renderActive(){
   else if(ACTIVE_TAB==='shop')renderShop();
 }
 var ITEM_DETAIL=null;
+var NAV_HISTORY=[];
+function navSave(){
+  return {tab:ACTIVE_TAB,item:ITEM_DETAIL,srcTab:SRC_TAB,fishTab:FISH_TAB,fishZone:FISH_ZONE,craftTab:CRAFT_TAB};
+}
 function navigateToItem(id){
+  NAV_HISTORY.push(navSave());
   ITEM_DETAIL=id;SRC_TAB='find';switchTab('sources');
+}
+function navBack(){
+  var s=NAV_HISTORY.pop();
+  if(!s)return;
+  ITEM_DETAIL=s.item;SRC_TAB=s.srcTab;FISH_TAB=s.fishTab;FISH_ZONE=s.fishZone;CRAFT_TAB=s.craftTab;
+  switchTab(s.tab);
 }
 function navigateToFish(id){
   var fish=null;var fl=D.fishing||[];
   for(var i=0;i<fl.length;i++){if(fl[i].id===id){fish=fl[i];break;}}
   if(!fish)return;
+  NAV_HISTORY.push(navSave());
   FISH_TAB='pool';
   if(fish.zones&&fish.zones.length)FISH_ZONE=fish.zones[0].zone;
   switchTab('fish');
 }
 function navigateToCraft(name,craft){
+  NAV_HISTORY.push(navSave());
   if(craft)CRAFT_TAB=craft;
   switchTab('craft');
   setTimeout(function(){
@@ -2353,7 +2407,39 @@ function renderTicker(){
 
 // ── Market Section ──
 var MKT_ARB='v2ah';
+function renderWatchlist(){
+  var wl=D.watchlist||[];
+  $('wlCount').textContent=wl.length+' items';
+  if(!wl.length){
+    $('wlTable').innerHTML='<div class="wl-empty">No items yet — use the search box above or click ⭐ on any item to add it</div>';
+    $('wlAutoLabel').textContent='';
+    return;
+  }
+  $('wlAutoLabel').textContent='Auto-scans on startup';
+  var items=D.allItems||{};var prices=D.tree?D.tree.I:{};
+  var rows=[];
+  for(var i=0;i<wl.length;i++){
+    var id=wl[i],it=items[id]||{},p=prices[id]||{};
+    var name=p.n||it.n||('Item #'+id);
+    var ahSingle=p.a||0,ahStack=p.aSt||0,vendor=p.v||0;
+    rows.push({id:id,name:name,ahSingle:ahSingle,ahStack:ahStack,vendor:vendor});
+  }
+  var html='<div class="wl-row" style="font-weight:600;color:var(--ink3);font-size:11px;border-bottom:2px solid var(--rule)"><span>ITEM</span><span style="text-align:right">AH Single</span><span style="text-align:right">AH Stack</span><span style="text-align:right">Vendor</span><span></span></div>';
+  for(var r=0;r<rows.length;r++){
+    var d=rows[r];
+    html+='<div class="wl-row"><span class="wl-name" data-id="'+d.id+'">'+h(d.name)+'</span><span style="text-align:right;font-family:var(--mono)">'+(d.ahSingle?gil(d.ahSingle):'—')+'</span><span style="text-align:right;font-family:var(--mono)">'+(d.ahStack?gil(d.ahStack):'—')+'</span><span style="text-align:right;font-family:var(--mono)">'+(d.vendor?gil(d.vendor):'—')+'</span><button class="wl-rm" data-id="'+d.id+'" title="Remove">✕</button></div>';
+  }
+  $('wlTable').innerHTML=html;
+  qsa('.wl-name',$('wlTable')).forEach(function(el){el.onclick=function(){navigateToItem(+this.dataset.id);};});
+  qsa('.wl-rm',$('wlTable')).forEach(function(el){el.onclick=function(){
+    var rid=+this.dataset.id;
+    fetch('/api/watchlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'remove',ids:[rid]})}).then(function(r){return r.json();}).then(function(res){
+      D.watchlist=res.ids;renderWatchlist();toast('Removed from watchlist');
+    });
+  };});
+}
 function renderMarket(){
+  renderWatchlist();
   var flips=D.flips||[];var ahFlips=D.ahVendorFlips||[];
   var pFlips=flips.filter(function(f){return f.profit&&f.profit>0;});
   var pAhFlips=ahFlips.filter(function(f){return f.profit&&f.profit>0;});
@@ -2636,9 +2722,12 @@ function renderFishPool(el){
   html+='</select>';
   html+='<div class="fc-stat"><span>Your Fishing Skill:</span><span class="v'+(fishSkill?' a':' r')+'" style="cursor:pointer" onclick="document.getElementById(\'charDrawer\').classList.add(\'open\')">'+(fishSkill||'Not set ✎')+'</span></div>';
   var vt=getVanaTime();
-  html+='<div class="fc-stat"><span>Current Hour:</span><span class="v">'+vt.hour+':00</span></div>';
-  html+='<div class="fc-stat"><span>Moon Phase:</span><span class="v">'+vt.moonName+'</span></div>';
-  html+='<div class="fc-stat"><span>Month:</span><span class="v">'+vt.monthName+'</span></div>';
+  html+='<div class="fc-cond"><h4>🌐 Vanadiel Conditions</h4>';
+  html+='<div class="fc-cond-row"><span>⏰ Time</span><span class="cond-val" id="fcHour">'+(vt.hour<10?'0':'')+vt.hour+':'+(vt.min<10?'0':'')+vt.min+' — '+vt.dayName+'</span></div>';
+  html+='<div class="fc-cond-row"><span>'+vt.moonGlyph+' Moon</span><span class="cond-val" id="fcMoon">'+vt.moonName+' ('+vt.moonPct+'%)</span></div>';
+  html+='<div class="fc-cond-row"><span>🍃 Season</span><span class="cond-val" id="fcMonth">'+vt.monthName+' '+vt.day+'</span></div>';
+  html+='<div style="margin-top:6px;font-size:10px;color:var(--ink2)">Badges update live · <span style="color:#4ade80">Green</span> = favorable · <span style="color:#ef4444">Red</span> = unfavorable</div>';
+  html+='</div>';
   html+='</div><div class="fc-panel"><h4>Catch Pool'+(FISH_ZONE?' — '+h(FISH_ZONE):' — All Zones')+'</h4><div id="fishPoolTable"></div></div></div>';
   el.innerHTML=html;
   $('fishZoneSel').onchange=function(){FISH_ZONE=this.value;FISH_FILTER='';renderFish();};
@@ -2666,7 +2755,7 @@ function renderFishPoolTable(){
     if(f.baits){sortedBaits=f.baits.slice().sort(function(a,b){return b.power-a.power;});}
     var ahP=0;var items=D.allItems||[];
     for(var k=0;k<items.length;k++){if(items[k].id===f.id){ahP=items[k].ah||0;break;}}
-    pool.push({id:f.id,name:f.name,skill:f.skill,hook:hookC,land:landC,skillup:skillC,baits:sortedBaits,ah:ahP,rarity:f.rarity||1000,size:f.sizeType||'small',hourPat:f.hourPat||0});
+    pool.push({id:f.id,name:f.name,skill:f.skill,hook:hookC,land:landC,skillup:skillC,baits:sortedBaits,ah:ahP,rarity:f.rarity||1000,size:f.sizeType||'small',hourPat:f.hourPat||0,moonPat:f.moonPat||0,monthPat:f.monthPat||0});
   }
   pool.sort(function(a,b){return b.hook-a.hook;});
   var isEst=!fishSkill;
@@ -2676,7 +2765,7 @@ function renderFishPoolTable(){
   for(var i=0;i<pool.length;i++){
     var p=pool[i];
     var hCls=p.hook>=80?'g':p.hook>=50?'a':p.hook>=30?'w':'r';
-    t+='<tr data-iid="'+p.id+'" style="cursor:pointer"><td>'+h(p.name)+' <span class="dim">('+p.size+')</span>'+hourBadge(p.hourPat)+'</td>';
+    t+='<tr data-iid="'+p.id+'" style="cursor:pointer"><td>'+h(p.name)+' <span class="dim">('+p.size+')</span>'+condBadge(p)+'</td>';
     t+='<td class="r-align mono-cell">'+p.skill+'</td>';
     t+='<td class="r-align mono-cell '+hCls+(isEst?' dim':'')+'">'+p.hook+(isEst?'~':'')+'</td>';
     var lCls=p.land>=80?'g':p.land>=50?'a':p.land>=30?'w':'r';
@@ -2718,7 +2807,7 @@ function renderFishDetail(fid){
   t+='<h3 style="margin:0;font-size:18px">'+h(fish.name)+'</h3>';
   t+='<span class="dim" style="font-size:12px">Skill '+fish.skill+' · '+h(fish.sizeType)+' · '+(fish.water||'?')+' water';
   if(fish.legendary)t+=' · <span style="color:var(--warn)">★ Legendary</span>';
-  t+=hourBadge(fish.hourPat);
+  t+=condBadge(fish);
   t+='</span></div>';
   // Stats row
   t+='<div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:16px;font-size:12px">';
@@ -2728,6 +2817,24 @@ function renderFishDetail(fid){
   if(fish.ex)t+='<span style="color:var(--warn)">Ex</span>';
   if(fish.rare)t+='<span style="color:var(--warn)">Rare</span>';
   t+='</div>';
+  // Conditions breakdown
+  if(fish.hourPat||fish.moonPat||fish.monthPat){
+    var vt=getVanaTime();
+    var hm=FC.getHourMod(fish),mm=FC.getMoonMod(fish),sm=FC.getMonthMod(fish);
+    var composite=Math.max(0,(mm*3+hm*2+sm)/3);
+    var condPct=Math.round(((composite-0.5)/2.0)*100);
+    var condCls=condPct>=70?'up':condPct>=40?'mid':'dn';
+    t+='<div style="background:var(--bg2);border:1px solid var(--rule);border-radius:var(--rad);padding:10px;margin-bottom:16px;font-size:12px">';
+    t+='<div style="display:flex;justify-content:space-between;margin-bottom:6px"><b>Current Conditions</b><span class="cond-val '+condCls+'" style="font-family:var(--mono);font-weight:700">'+condPct+'%</span></div>';
+    if(fish.hourPat){var hPct=Math.round(((hm-0.25)/1.0)*100);var hCls=hPct>=70?'up':hPct>=40?'mid':'dn';
+      t+='<div class="fc-cond-row"><span>⏰ Hour ('+vt.hour+':00) — '+(FC.HOUR_LABELS[fish.hourPat]||'')+'</span><span class="cond-val '+hCls+'">'+hPct+'%</span></div>';}
+    if(fish.moonPat){var mPct=Math.round(((mm-0.25)/1.0)*100);var mCls=mPct>=70?'up':mPct>=40?'mid':'dn';
+      t+='<div class="fc-cond-row"><span>'+vt.moonGlyph+' Moon ('+vt.moonName+' '+vt.moonPct+'%)</span><span class="cond-val '+mCls+'">'+mPct+'%</span></div>';}
+    if(fish.monthPat){var sPct=Math.round(((sm-0.25)/1.0)*100);var sCls=sPct>=70?'up':sPct>=40?'mid':'dn';
+      t+='<div class="fc-cond-row"><span>🍃 Season ('+vt.monthName+')</span><span class="cond-val '+sCls+'">'+sPct+'%</span></div>';}
+    t+='<div class="dim" style="margin-top:4px;font-size:10px">Moon ×3 + Hour ×2 + Season ×1 — updates with Vanadiel clock</div>';
+    t+='</div>';
+  }
 
   // Rods section - sort by effectiveness (size match + rank ok + low break/snap)
   var compat=[];
@@ -2801,7 +2908,7 @@ function renderFishMatrix(el){
   $('matrixFishSel').onchange=function(){var fid=+this.value;if(!fid)return;$('matrixBaitSel').value='';
     var fish=fishing.find(function(f){return f.id===fid;});if(!fish)return;
     var fishSkill=(CHAR.skills&&CHAR.skills.fish)||50;
-    var out='<h4 style="margin:8px 0">'+h(fish.name)+hourBadge(fish.hourPat)+' — Skill '+fish.skill+', '+fish.sizeType+', Rank '+(fish.ranking||'?')+'</h4>';
+    var out='<h4 style="margin:8px 0">'+h(fish.name)+condBadge(fish)+' — Skill '+fish.skill+', '+fish.sizeType+', Rank '+(fish.ranking||'?')+'</h4>';
     var mRods=D.rods||[];
     out+='<table class="tbl" style="margin-bottom:12px"><thead><tr><th>Rod</th><th>Size</th><th class="r-align">Max Rank</th><th class="r-align">Land%</th></tr></thead><tbody>';
     var mCompat=[];
@@ -2867,7 +2974,7 @@ function renderFishSkillup(el){
       var eff=Math.round(c*landRate/100);
       recs.push({name:f.name,skill:f.skill,diff:diff,chance:c,landRate:landRate,effective:eff,
         sizeMismatch:sizeMismatch,brkC:brkC,snpC:snpC,losC:losC,
-        sweet:diff>=8&&diff<=9,buffSweet:diff===10,hourPat:f.hourPat||0,
+        sweet:diff>=8&&diff<=9,buffSweet:diff===10,hourPat:f.hourPat||0,moonPat:f.moonPat||0,monthPat:f.monthPat||0,
         zones:f.zones?f.zones.map(function(a){return a.zone;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(', '):'?'});
     }
     recs.sort(function(a,b){return b.effective-a.effective||b.chance-a.chance;});
@@ -2879,7 +2986,7 @@ function renderFishSkillup(el){
       var r=recs[i];var cls=r.effective>=10?'g':r.effective>=5?'a':'';
       var tag=r.sweet?' <span style="color:#e3a75e;font-weight:700;font-size:10px">★ SWEET SPOT</span>':r.buffSweet?' <span style="color:#7eb8da;font-size:10px">w/ buffs</span>':'';
       var dimRow=r.landRate<20?' style="opacity:0.4"':'';
-      t+='<tr'+dimRow+'><td>'+h(r.name)+hourBadge(r.hourPat)+tag+(r.sizeMismatch?' <span class="sell-badge" style="background:rgba(255,160,0,0.15);color:#ffa000;border:1px solid rgba(255,160,0,0.3);font-size:9px">SIZE</span>':'')+'</td><td class="r-align mono-cell">'+r.skill+'</td><td class="r-align mono-cell">+'+r.diff+'</td>';
+      t+='<tr'+dimRow+'><td>'+h(r.name)+condBadge(r)+tag+(r.sizeMismatch?' <span class="sell-badge" style="background:rgba(255,160,0,0.15);color:#ffa000;border:1px solid rgba(255,160,0,0.3);font-size:9px">SIZE</span>':'')+'</td><td class="r-align mono-cell">'+r.skill+'</td><td class="r-align mono-cell">+'+r.diff+'</td>';
       if(hasRod){
         t+='<td class="r-align mono-cell'+(r.brkC>0?' r':'')+'">'+r.brkC+'%</td>';
         t+='<td class="r-align mono-cell'+(r.snpC>0?' r':'')+'">'+r.snpC+'%</td>';
@@ -2928,7 +3035,7 @@ function renderFishProfitTable(){
     var bestSell=Math.max(ahP,FISH_PROFIT_R9?vp9:vp1);
     var sellTo=ahP>=vp1?'AH':'Vendor';
     if(FISH_PROFIT_R9&&vp9>ahP)sellTo='r9VP';
-    rows.push({name:f.name,id:f.id,skill:f.skill,ah:ahP,vp:vp1,vp9:vp9,best:bestSell,sellTo:sellTo,ex:f.ex,rare:f.rare,noAH:f.noAH,stack:f.stack||1,hourPat:f.hourPat||0});
+    rows.push({name:f.name,id:f.id,skill:f.skill,ah:ahP,vp:vp1,vp9:vp9,best:bestSell,sellTo:sellTo,ex:f.ex,rare:f.rare,noAH:f.noAH,stack:f.stack||1,hourPat:f.hourPat||0,moonPat:f.moonPat||0,monthPat:f.monthPat||0});
   }
   var sk=FISH_PROFIT_SORT;var desc=FISH_PROFIT_DESC;
   rows.sort(function(a,b){var av=a[sk],bv=b[sk];if(typeof av==='string')return desc?bv.localeCompare(av):av.localeCompare(bv);return desc?(bv-av):(av-bv);});
@@ -2954,7 +3061,7 @@ function renderFishProfitTable(){
     var flags='';if(r.ex)flags+='<span class="badge" style="background:#5c3a1e;color:#e8a84c;font-size:9px;margin-left:4px">Ex</span>';
     if(r.rare)flags+='<span class="badge" style="background:#1e3a5c;color:#4ca8e8;font-size:9px;margin-left:4px">Ra</span>';
     if(r.noAH)flags+='<span class="badge" style="background:#3a1e1e;color:#e84c4c;font-size:9px;margin-left:4px">NoAH</span>';
-    t+='<tr><td>'+h(r.name)+flags+hourBadge(r.hourPat)+'</td>';
+    t+='<tr><td>'+h(r.name)+flags+condBadge(r)+'</td>';
     t+='<td class="r-align mono-cell">'+r.skill+'</td>';
     t+='<td class="r-align mono-cell">'+(r.stack>1?r.stack:'<span class="dim">1</span>')+'</td>';
     t+='<td class="r-align mono-cell">'+(r.ah?gil(r.ah):'<span class="dim">—</span>')+'</td>';
@@ -2983,7 +3090,7 @@ function renderFishGuide(el){
   for(var i=0;i<sorted.length;i++){
     var f=sorted[i];
     var zones=f.zones?f.zones.map(function(a){return a.zone;}).filter(function(v,i,a){return a.indexOf(v)===i;}).slice(0,3).join(', '):'';
-    t+='<tr><td>'+h(f.name)+(f.legendary?' <span class="gl">★</span>':'')+hourBadge(f.hourPat)+'</td>';
+    t+='<tr><td>'+h(f.name)+(f.legendary?' <span class="gl">★</span>':'')+condBadge(f)+'</td>';
     t+='<td class="r-align mono-cell">'+f.skill+'</td><td>'+f.sizeType+'</td>';
     t+='<td class="r-align mono-cell">'+(f.ranking||'-')+'</td>';
     t+='<td class="r-align mono-cell">'+(f.rarity||1000)+'</td>';
@@ -3050,7 +3157,7 @@ function renderFishCookLvl(el){
       var baitStr=fish.baits.length?fish.baits.map(function(b){return h(b.name);}).join(', '):'?';
       t+='<tr data-iid="'+g.resultId+'" style="cursor:pointer">';
       t+='<td><b>'+h(g.recipe)+'</b></td>';
-      t+='<td class="mono-cell">'+h(fish.name)+(fish.qty>1?' x'+fish.qty:'')+hourBadge(fish.hourPat)+' <span class="dim">(lv'+fish.skill+' '+fish.size+')</span><br>'+fishBadge+'</td>';
+      t+='<td class="mono-cell">'+h(fish.name)+(fish.qty>1?' x'+fish.qty:'')+condBadge(fish)+' <span class="dim">(lv'+fish.skill+' '+fish.size+')</span><br>'+fishBadge+'</td>';
       t+='<td class="soft" style="font-size:11px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(zones)+'</td>';
       t+='<td class="soft" style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+baitStr+'</td>';
       t+='<td class="soft" style="font-size:11px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(g.crystal)+(otherStr?', '+otherStr:'')+'</td>';
@@ -3105,7 +3212,8 @@ function renderItemDetail(el,id){
   var items=D.allItems||[];var item=null;
   for(var i=0;i<items.length;i++){if(items[i].id===id){item=items[i];break;}}
   if(!item){ITEM_DETAIL=null;renderSourceFind(el);return;}
-  var t='<div class="item-back" style="cursor:pointer;color:var(--acc);font-size:12px;margin-bottom:12px">← Back to Search</div>';
+  var backLabel=NAV_HISTORY.length?'← Back':'← Back to Search';
+  var t='<div class="item-back" style="cursor:pointer;color:var(--acc);font-size:12px;margin-bottom:12px">'+backLabel+'</div>';
   // Header
   t+='<div style="display:flex;gap:16px;align-items:baseline;margin-bottom:8px;flex-wrap:wrap">';
   t+='<h3 style="margin:0;font-size:20px">'+h(item.n)+'</h3>';
@@ -4687,8 +4795,21 @@ function init(){
     renderTicker();
     renderActive();
   });
-  setInterval(updateVClock,2400);
-  updateVClock();
+  var _lastVHour=-1;
+  function updateVClockAndCond(){
+    updateVClock();
+    var vt=getVanaTime();
+    var fh=$('fcHour'),fm=$('fcMoon'),fmo=$('fcMonth');
+    if(fh)fh.textContent=(vt.hour<10?'0':'')+vt.hour+':'+(vt.min<10?'0':'')+vt.min+' — '+vt.dayName;
+    if(fm)fm.textContent=vt.moonName+' ('+vt.moonPct+'%)';
+    if(fmo)fmo.textContent=vt.monthName+' '+vt.day;
+    if(vt.hour!==_lastVHour){
+      _lastVHour=vt.hour;
+      if(ACTIVE_TAB==='fish')renderFish();
+    }
+  }
+  setInterval(updateVClockAndCond,2400);
+  updateVClockAndCond();
 
   qsa('.nav a').forEach(function(a){a.onclick=function(e){e.preventDefault();switchTab(this.dataset.tab);};});
 
@@ -4710,7 +4831,7 @@ function init(){
       btn.textContent='⟳ Sync from Phoenix';btn.disabled=false;
       if(px.error){toast(px.error);return;}
       D=data;buildItemIdx();loadChar();updateStatus();renderConquest();renderActive();
-      if(token)$('pxToken').value='';
+      if(token){$('pxToken').value='';updateTokenStatus();}
       var msg='Phoenix sync: '+px.totalItems+' items across '+px.chars+' chars';
       if(px.hasProfile)msg+=' + profile updated';
       toast(msg);
@@ -4719,81 +4840,120 @@ function init(){
     });
   };
 
-  $('btnScan').onclick=function(){
-    var btn=$('btnScan');btn.textContent='Scanning...';btn.disabled=true;
-    var doScan=function(tries){
-      fetch('/api/scan-ah',{method:'POST'}).then(function(r){
-        if(!r.ok)throw new Error('Server error '+r.status);return r.json();
-      }).then(function(data){
-        var stats=data.ahScanStats||{};var px=data.pxScanStats||{};
-        D=data;buildItemIdx();loadChar();renderTicker();renderConquest();renderActive();updateStatus();
-        btn.textContent='↻ Scan';btn.disabled=false;
-        var msg='AH scan: '+((stats.total||0))+' prices';
-        if(stats.cached)msg+=(' (cached'+(stats.note?': '+stats.note:'')+')');
-        else msg+=' ('+(stats.new||0)+' new, '+(stats.updated||0)+' updated)';
-        if(px.totalItems)msg+=' · Inv: '+px.totalItems+' items synced';
-        toast(msg);
-      }).catch(function(e){
-        if(tries>1){btn.textContent='Retrying...';setTimeout(function(){doScan(tries-1);},1000);return;}
-        btn.textContent='↻ Scan';btn.disabled=false;toast('Scan failed: '+e.message);
-      });
-    };
-    doScan(3);
+  var _scanPollTop=null;
+  function startScan(mode){
+    fetch('/api/scanner-start',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:mode})}).then(function(r){return r.json();}).then(function(res){
+      if(res.error){toast(res.error);return;}
+      qsa('.btn-scan').forEach(function(b){b.classList.remove('active');b.disabled=true;});
+      var wrap=$('scanBarWrap');wrap.style.display='flex';
+      $('scanBarInner').style.width='0%';$('scanBarText').textContent='Starting '+mode+' scan...';
+      if(_scanPollTop)clearInterval(_scanPollTop);
+      _scanPollTop=setInterval(pollScanBar,2000);
+      setTimeout(pollScanBar,500);
+    }).catch(function(e){toast('Scan error: '+e.message);});
+  }
+  function pollScanBar(){
+    fetch('/api/scanner-status').then(function(r){return r.json();}).then(function(s){
+      var wrap=$('scanBarWrap'),bar=$('scanBarInner'),txt=$('scanBarText');
+      if(!s.running&&s.phase==='done'){
+        clearInterval(_scanPollTop);_scanPollTop=null;
+        wrap.style.display='none';
+        qsa('.btn-scan').forEach(function(b){b.disabled=false;});
+        var r=s.result||{};
+        toast('Scan done — '+s.singles+'s/'+s.stacks+'st'+(r['new']?' ('+r['new']+' new)':'')+' in '+s.elapsed+'m');
+        fetch('/api/refresh',{method:'POST'}).then(function(r){return r.json();}).then(function(data){
+          D=data;buildItemIdx();renderTicker();renderConquest();renderActive();updateStatus();
+        });
+        return;
+      }
+      if(!s.running){
+        clearInterval(_scanPollTop);_scanPollTop=null;
+        wrap.style.display='none';
+        qsa('.btn-scan').forEach(function(b){b.disabled=false;});
+        if(s.phase==='killed')toast('Scan stopped.');
+        return;
+      }
+      var pct=s.total?Math.round(s.done/s.total*100):0;
+      bar.style.width=pct+'%';
+      var elapsed=((Date.now()/1000-s.startTime)/60).toFixed(1);
+      var rate=s.done>0?(s.done/parseFloat(elapsed||'0.1')):1;
+      var eta=s.done>0?Math.ceil((s.total-s.done)/rate):0;
+      txt.textContent=s.done+'/'+s.total+' ('+pct+'%) '+s.singles+'s/'+s.stacks+'st — '+elapsed+'m, ~'+eta+'m left';
+    }).catch(function(){});
+  }
+  qsa('.btn-scan').forEach(function(b){b.onclick=function(){startScan(this.dataset.scan);};});
+  $('scanBarKill').onclick=function(){
+    fetch('/api/scanner-kill',{method:'POST'});
   };
+  fetch('/api/scanner-status').then(function(r){return r.json();}).then(function(s){
+    if(s.running){
+      qsa('.btn-scan').forEach(function(b){b.disabled=true;});
+      $('scanBarWrap').style.display='flex';
+      _scanPollTop=setInterval(pollScanBar,2000);pollScanBar();
+    }
+  }).catch(function(){});
+  function updateTokenStatus(){
+    fetch('/api/scanner-config').then(function(r){return r.json();}).then(function(c){
+      var el=$('pxTokenStatus');
+      if(c.hasToken){
+        el.style.background='rgba(34,197,94,0.12)';el.style.color='#4ade80';
+        el.textContent='✓ Phoenix cookie saved — scans and sync are ready';
+      }else{
+        el.style.background='rgba(239,68,68,0.12)';el.style.color='#f87171';
+        el.textContent='✗ No cookie saved — expand "Update cookie" below and paste one';
+      }
+    }).catch(function(){});
+  }
+  updateTokenStatus();
+
+  var _wlSearchTimer=null;
+  $('wlSearch').oninput=function(){
+    clearTimeout(_wlSearchTimer);
+    var q=this.value.trim().toLowerCase();
+    if(q.length<2){$('wlResults').style.display='none';return;}
+    _wlSearchTimer=setTimeout(function(){
+      var items=D.tree?D.tree.S:[];var matches=[];
+      for(var i=0;i<items.length&&matches.length<10;i++){
+        if(items[i][1].toLowerCase().indexOf(q)>=0)matches.push({id:items[i][0],name:items[i][1]});
+      }
+      if(!matches.length){$('wlResults').style.display='none';return;}
+      var wl=new Set(D.watchlist||[]);
+      var html='';
+      for(var m=0;m<matches.length;m++){
+        var inWl=wl.has(matches[m].id);
+        html+='<div class="wl-result" data-id="'+matches[m].id+'">'+(inWl?'⭐ ':'')+h(matches[m].name)+'<span class="dim">#'+matches[m].id+'</span></div>';
+      }
+      $('wlResults').innerHTML=html;$('wlResults').style.display='block';
+      qsa('.wl-result',$('wlResults')).forEach(function(el){el.onclick=function(){
+        var aid=+this.dataset.id;
+        fetch('/api/watchlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'add',ids:[aid]})}).then(function(r){return r.json();}).then(function(res){
+          D.watchlist=res.ids;renderWatchlist();toast('Added to watchlist ('+res.count+' items)');
+        });
+        $('wlResults').style.display='none';$('wlSearch').value='';
+      };});
+    },200);
+  };
+  document.addEventListener('click',function(e){if(!$('wlSection').contains(e.target))$('wlResults').style.display='none';});
+
   $('btnRefresh').onclick=function(){
     fetch('/api/refresh',{method:'POST'}).then(function(r){return r.json();}).then(function(data){
       D=data;buildItemIdx();renderTicker();renderConquest();renderActive();updateStatus();
     });
   };
 
-  var PX_MODE='hot';
-  function openPx(){
-    $('pxOverlay').classList.add('open');
-    fetch('/api/scanner-config').then(function(r){return r.json();}).then(function(cfg){
-      $('pxHotCount').textContent=cfg.hotCount+' items';
-      $('pxFullCount').textContent=cfg.fullCount+' items';
-      $('pxModeHot').querySelector('.mode-stat:last-child').textContent='30/min · ~'+Math.ceil(cfg.hotCount/30)+' min';
-      $('pxModeFull').querySelector('.mode-stat:last-child').textContent='10/min · ~'+Math.ceil(cfg.fullCount/10)+' min';
-      var ck=cfg.craftCounts&&cfg.craftCounts.cooking?cfg.craftCounts.cooking:0;
-      $('pxCookCount').textContent=ck+' items';
-      $('pxModeCooking').querySelector('.mode-stat:last-child').textContent='30/min · ~'+Math.ceil(ck/30)+' min';
-    });
-  }
-  function closePx(){$('pxOverlay').classList.remove('open');}
-  $('btnPhoenixScan').onclick=openPx;
-  $('pxClose').onclick=closePx;
-  $('pxOverlay').onclick=function(e){if(e.target===this)closePx();};
-  function setPxMode(m){PX_MODE=m;['pxModeHot','pxModeFull','pxModeCooking'].forEach(function(id){$(id).classList.toggle('on',$(id).dataset.mode===m);});}
-  $('pxModeHot').onclick=function(){setPxMode('hot');};
-  $('pxModeFull').onclick=function(){setPxMode('full');};
-  $('pxModeCooking').onclick=function(){setPxMode('cooking');};
-  $('pxCopy').onclick=function(){
-    var btn=$('pxCopy');btn.textContent='Loading...';btn.disabled=true;
-    fetch('/api/scanner.js').then(function(r){return r.text();}).then(function(js){
-      return navigator.clipboard.writeText(js);
-    }).then(function(){
-      btn.textContent='✓ Copied!';setTimeout(function(){btn.textContent='📋 Copy Scanner JS';btn.disabled=false;},2000);
-      $('pxStatus').classList.add('show');
-      $('pxStatus').textContent='Scanner JS copied! Paste into phoenix-xi.com console.\nRun: phoenixScan("'+PX_MODE+'")';
-    }).catch(function(e){
-      btn.textContent='📋 Copy Scanner JS';btn.disabled=false;toast('Copy failed: '+e.message);
-    });
-  };
   function importScanFile(file){
-    var st=$('pxStatus');st.classList.add('show');st.textContent='Reading '+file.name+'...';
+    toast('Importing '+file.name+'...');
     var reader=new FileReader();
     reader.onload=function(e){
-      try{var data=JSON.parse(e.target.result);}catch(ex){st.textContent='Error: invalid JSON';return;}
-      st.textContent='Importing '+Object.keys(data.prices||{}).length+' singles, '+Object.keys(data.stackPrices||{}).length+' stacks...';
+      try{var data=JSON.parse(e.target.result);}catch(ex){toast('Error: invalid JSON');return;}
       fetch('/api/phoenix-ah-import',{method:'POST',headers:{'Content-Type':'application/json'},body:e.target.result}).then(function(r){
         if(!r.ok)throw new Error('Server error '+r.status);return r.json();
       }).then(function(res){
-        var s=res.ahScanStats||{};
-        st.textContent='Imported! '+s.single+' singles, '+s.stack+' stacks ('+s['new']+' new, '+s.updated+' updated)';
+        toast('Imported! '+res.single+'s/'+res.stack+'st'+(res['new']?' ('+res['new']+' new)':''));
         fetch('/api/refresh',{method:'POST'}).then(function(r){return r.json();}).then(function(data){
           D=data;buildItemIdx();renderTicker();renderConquest();renderActive();updateStatus();
         });
-      }).catch(function(ex){st.textContent='Import failed: '+ex.message;});
+      }).catch(function(ex){toast('Import failed: '+ex.message);});
     };
     reader.readAsText(file);
   }
@@ -4855,12 +5015,18 @@ function init(){
   var TAB_KEYS={'1':'market','2':'craft','3':'fish','4':'sources','5':'combat','6':'garden','7':'harvest','8':'chocobo','9':'shop'};
   document.addEventListener('keydown',function(e){
     if(e.ctrlKey&&e.key==='k'){e.preventDefault();openCmd();return;}
-    if(e.key==='Escape'){closeCmd();closePx();$('charDrawer').classList.remove('open');$('conquestPanel').classList.remove('open');return;}
+    if(e.key==='Escape'){
+      if($('cmdOverlay').classList.contains('open')){closeCmd();return;}
+      if($('charDrawer').classList.contains('open')){$('charDrawer').classList.remove('open');return;}
+      if($('conquestPanel').classList.contains('open')){$('conquestPanel').classList.remove('open');return;}
+      if(NAV_HISTORY.length){navBack();return;}
+      return;
+    }
     if(e.ctrlKey&&e.key==='p'){e.preventDefault();$('charDrawer').classList.toggle('open');return;}
     if(document.activeElement&&(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='SELECT'))return;
     if(TAB_KEYS[e.key]){e.preventDefault();switchTab(TAB_KEYS[e.key]);return;}
     if(e.key==='r'||e.key==='R'){e.preventDefault();$('btnRefresh').click();return;}
-    if(e.key==='s'||e.key==='S'){e.preventDefault();$('btnScan').click();return;}
+    if(e.key==='s'||e.key==='S'){e.preventDefault();startScan('watchlist');return;}
   });
   $('cmdOverlay').onclick=function(e){if(e.target===this)closeCmd();};
   $('cmdInput').oninput=function(){searchCmd(this.value);};
@@ -4873,7 +5039,7 @@ function init(){
   $('mainContent').addEventListener('click',function(e){
     if(e.target.closest('.bait-cell'))return;
     if(e.target.closest('.fish-back')){FISH_DETAIL=null;renderFishPoolTable();return;}
-    if(e.target.closest('.item-back')){ITEM_DETAIL=null;renderSources();return;}
+    if(e.target.closest('.item-back')){if(NAV_HISTORY.length){navBack();}else{ITEM_DETAIL=null;renderSources();}return;}
     var fishLink=e.target.closest('.item-fish-link');
     if(fishLink){var fid=+fishLink.dataset.fishId;FISH_TAB='pool';FISH_DETAIL=fid;var fl=D.fishing||[];for(var i=0;i<fl.length;i++){if(fl[i].id===fid&&fl[i].zones&&fl[i].zones.length){FISH_ZONE=fl[i].zones[0].zone;break;}}switchTab('fish');return;}
     var navItem=e.target.closest('[data-nav-item]');
@@ -4927,6 +5093,12 @@ def make_handler(state, html_bytes):
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
                 self.wfile.write(json.dumps(get_ah_deltas()).encode())
+            elif self.path == '/api/watchlist':
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Cache-Control', 'no-cache')
+                self.end_headers()
+                self.wfile.write(json.dumps(get_watchlist()).encode())
             elif self.path.startswith('/api/scanner'):
                 self._serve_scanner()
             else:
@@ -4936,13 +5108,21 @@ def make_handler(state, html_bytes):
                 config = get_scanner_config()
                 summary = {
                     'full': [], 'hot': [], 'fullCount': config['fullCount'], 'hotCount': config['hotCount'],
+                    'watchlistCount': config.get('watchlistCount', 0),
                     'craftCounts': {k: len(v) for k, v in config.get('crafts', {}).items()},
+                    'hasToken': bool(_get_phoenix_token()),
                 }
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
                 self.send_header('Cache-Control', 'no-cache')
                 self.end_headers()
                 self.wfile.write(json.dumps(summary).encode())
+            elif self.path == '/api/scanner-status':
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Cache-Control', 'no-cache')
+                self.end_headers()
+                self.wfile.write(json.dumps(_scan_state).encode())
             elif self.path == '/api/scanner.js':
                 js = generate_scanner_js()
                 self.send_response(200)
@@ -5034,6 +5214,63 @@ def make_handler(state, html_bytes):
                     self.send_header('Content-Type', 'application/json')
                     self.end_headers()
                     self.wfile.write(json.dumps({'error': str(e)}).encode())
+            elif self.path == '/api/scanner-start':
+                try:
+                    length = int(self.headers.get('Content-Length', 0))
+                    body = json.loads(self.rfile.read(length)) if length else {}
+                    mode = body.get('mode', 'hot')
+                    rate = body.get('rate')
+                    if _scan_state.get('running'):
+                        self.send_response(409)
+                        self.send_header('Content-Type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({'error': 'Scan already running', 'state': _scan_state}).encode())
+                        return
+                    if not _get_phoenix_token():
+                        self.send_response(200)
+                        self.send_header('Content-Type', 'application/json')
+                        self.end_headers()
+                        self.wfile.write(json.dumps({'error': 'No Phoenix token. Open Character panel and Sync from Phoenix first.'}).encode())
+                        return
+                    t = threading.Thread(target=run_server_scan, args=(mode,), kwargs={'rate': rate}, daemon=True)
+                    t.start()
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'ok': True, 'mode': mode}).encode())
+                except Exception as e:
+                    self.send_response(500)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(json.dumps({'error': str(e)}).encode())
+            elif self.path == '/api/scanner-kill':
+                _scan_state['killed'] = True
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({'ok': True}).encode())
+            elif self.path == '/api/watchlist':
+                length = int(self.headers.get('Content-Length', 0))
+                body = json.loads(self.rfile.read(length)) if length else {}
+                action = body.get('action', 'set')
+                if action == 'set':
+                    save_watchlist(body.get('ids', []))
+                elif action == 'add':
+                    wl = get_watchlist()
+                    for item_id in body.get('ids', []):
+                        if int(item_id) not in wl:
+                            wl.append(int(item_id))
+                    save_watchlist(wl)
+                elif action == 'remove':
+                    wl = get_watchlist()
+                    rm = set(int(x) for x in body.get('ids', []))
+                    wl = [x for x in wl if x not in rm]
+                    save_watchlist(wl)
+                result = get_watchlist()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({'ok': True, 'count': len(result), 'ids': result}).encode())
             elif self.path == '/save-character':
                 length = int(self.headers.get('Content-Length', 0))
                 body = self.rfile.read(length) if length else b''
@@ -5088,6 +5325,118 @@ def fetch_ah_prices():
     now = int(time.time())
 
 
+# --- Server-side Phoenix AH Scanner ---
+_scan_state = {'running': False}
+
+def _phoenix_price_fetch(item_id, headers):
+    """Fetch price data for a single item from Phoenix API."""
+    url = f'{PHOENIX_API}/items/{item_id}/prices'
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        return json.loads(resp.read())
+
+def run_server_scan(mode, rate=None):
+    """Run a full AH price scan server-side against Phoenix API."""
+    global _scan_state
+    if _scan_state.get('running'):
+        return
+    token = _get_phoenix_token()
+    if not token:
+        _scan_state = {'running': False, 'error': 'No Phoenix token. Use Character panel → Sync from Phoenix first.'}
+        return
+    headers = _phoenix_headers(token)
+    config = get_scanner_config()
+    if mode == 'full':
+        ids = config['full']
+        rate = rate or 10
+    elif mode == 'hot':
+        ids = config['hot']
+        rate = rate or 30
+    elif mode == 'watchlist':
+        ids = config.get('watchlist', [])
+        rate = rate or 60
+    else:
+        ids = config.get('crafts', {}).get(mode, [])
+        rate = rate or 30
+    if not ids:
+        _scan_state = {'running': False, 'error': f'No items for mode "{mode}"'}
+        return
+
+    delay = 60.0 / rate
+    _scan_state = {
+        'running': True, 'mode': mode, 'done': 0, 'total': len(ids),
+        'singles': 0, 'stacks': 0, 'errors': 0, 'startTime': time.time(),
+    }
+    prices, stack_prices, sale_counts, last_sale = {}, {}, {}, {}
+
+    for i, item_id in enumerate(ids):
+        if _scan_state.get('killed'):
+            _scan_state['running'] = False
+            _scan_state['phase'] = 'killed'
+            return
+        key = str(item_id)
+        try:
+            resp = _phoenix_price_fetch(item_id, headers)
+            data = resp.get('data')
+            if data:
+                sales = data.get('sales') or []
+                sg = sorted([s['price'] for s in sales if (s.get('quantity') or 1) == 1 and s.get('price', 0) > 0])
+                st = sorted([s['price'] for s in sales if (s.get('quantity') or 1) > 1 and s.get('price', 0) > 0])
+                if sg:
+                    prices[key] = sg[len(sg) // 2]
+                elif not st and data.get('stats', {}).get('averagePrice', 0) > 0:
+                    prices[key] = round(data['stats']['averagePrice'])
+                if st:
+                    stack_prices[key] = st[len(st) // 2]
+                if sales:
+                    sale_counts[key] = len(sales)
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                reset_ts = int(e.headers.get('x-ratelimit-reset', '0') or '0')
+                wait_sec = max(reset_ts - int(time.time()), 10) + 2
+                _scan_state['phase'] = f'rate-limited, waiting {wait_sec}s'
+                time.sleep(wait_sec)
+                try:
+                    resp = _phoenix_price_fetch(item_id, headers)
+                    data = resp.get('data')
+                    if data:
+                        sales = data.get('sales') or []
+                        sg = sorted([s['price'] for s in sales if (s.get('quantity') or 1) == 1 and s.get('price', 0) > 0])
+                        st = sorted([s['price'] for s in sales if (s.get('quantity') or 1) > 1 and s.get('price', 0) > 0])
+                        if sg:
+                            prices[key] = sg[len(sg) // 2]
+                        if st:
+                            stack_prices[key] = st[len(st) // 2]
+                        if sales:
+                            sale_counts[key] = len(sales)
+                except Exception:
+                    _scan_state['errors'] = _scan_state.get('errors', 0) + 1
+            else:
+                _scan_state['errors'] = _scan_state.get('errors', 0) + 1
+        except Exception:
+            _scan_state['errors'] = _scan_state.get('errors', 0) + 1
+
+        _scan_state['done'] = i + 1
+        _scan_state['singles'] = len(prices)
+        _scan_state['stacks'] = len(stack_prices)
+        _scan_state['phase'] = 'scanning'
+        if i < len(ids) - 1:
+            time.sleep(delay)
+
+    payload = {
+        'prices': prices, 'stackPrices': stack_prices,
+        'saleCounts': sale_counts, 'lastSale': last_sale,
+        'items_scanned': len(ids), 'mode': mode,
+    }
+    ah_stats = import_phoenix_ah_prices(payload)
+    elapsed = (time.time() - _scan_state['startTime']) / 60
+    _scan_state.update({
+        'running': False, 'phase': 'done', 'elapsed': round(elapsed, 1),
+        'singles': len(prices), 'stacks': len(stack_prices),
+        'result': ah_stats,
+    })
+
+
 def get_scanner_config():
     """Build scan config: full list (all crafting items), hot list, and per-craft lists."""
     scan_file = os.path.join(ROOT, 'data', 'scan-items.json')
@@ -5124,11 +5473,15 @@ def get_scanner_config():
     except Exception:
         pass
 
+    wl_ids = get_watchlist()
+
     return {
         'full': full_ids,
         'hot': hot_ids,
+        'watchlist': wl_ids,
         'fullCount': len(full_ids),
         'hotCount': len(hot_ids),
+        'watchlistCount': len(wl_ids),
         'crafts': craft_ids,
     }
 
@@ -5282,6 +5635,28 @@ def import_phoenix_ah_prices(incoming):
             'items_scanned': incoming.get('items_scanned', 0), 'snapshots': snap_count}
 
 
+_scan_schedule = {'full_hour': 3}
+
+def _scan_scheduler():
+    """Background thread: runs watchlist scan on startup, full scan at scheduled hour."""
+    time.sleep(5)
+    wl = get_watchlist()
+    token = _get_phoenix_token()
+    if wl and token and not _scan_state.get('running'):
+        print(f'  Auto-scan: watchlist ({len(wl)} items)')
+        run_server_scan('watchlist')
+    while True:
+        now = time.localtime()
+        target_hour = _scan_schedule.get('full_hour', 3)
+        secs_to_target = ((target_hour - now.tm_hour) % 24) * 3600 - now.tm_min * 60 - now.tm_sec
+        if secs_to_target <= 0:
+            secs_to_target += 86400
+        time.sleep(secs_to_target)
+        if _get_phoenix_token() and not _scan_state.get('running'):
+            print(f'  Scheduled scan: full ({time.strftime("%H:%M")})')
+            run_server_scan('full')
+
+
 def main():
     print('Initializing...')
     init_ah_snapshots()
@@ -5322,8 +5697,12 @@ def main():
 
     state = {'json': dj}
     server = ThreadedHTTPServer(('127.0.0.1', port), make_handler(state, hb))
+    wl = get_watchlist()
+    sched_hour = _scan_schedule.get('full_hour', 3)
+    print(f'  Watchlist: {len(wl)} items' + (f', full scan at {sched_hour:02d}:00' if _get_phoenix_token() else ''))
     print(f'\n  PowerTool running at http://localhost:{port}')
     print('  Press Ctrl+C to stop.\n')
+    threading.Thread(target=_scan_scheduler, daemon=True).start()
     threading.Timer(0.5, lambda: webbrowser.open(f'http://localhost:{port}')).start()
 
     try:

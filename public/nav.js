@@ -158,7 +158,7 @@ function initChrome(){
   var gPages=[
    ['/gathering/mining','Mining'],['/gathering/logging','Logging'],
    ['/gathering/harvesting','Harvesting'],['/gathering/excavation','Excavation'],
-   ['/gathering/gardening','Gardening'],['/fishing-lookup','Fishing'],
+   ['/gathering/gardening','Gardening'],['/fishing','Fishing'],
    ['/gathering/digging','Chocobo Digging'],['/gathering/clamming','Clamming']
   ];
   var gdd='<div class="nav-dd"><span class="nav-dd-btn'+ac(isGathering)+'">Gathering <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
@@ -181,11 +181,10 @@ function initChrome(){
   craftsDD+='<a href="/crafts"'+acl(p==='/crafts')+'>All Crafts</a>';
   craftsDD+='</div></div>';
 
-  var isCalc=p==='/calculator',isProfit=p==='/profit',isShopping=p==='/shopping',
+  var isProfit=p==='/profit',isShopping=p==='/shopping',
       isBCNMProfit=p==='/bcnm/profit';
-  var isTool=isCalc||isProfit||isShopping||isBCNMProfit;
+  var isTool=isProfit||isShopping||isBCNMProfit;
   var toolsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isTool)+'">Tools <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
-  toolsDD+='<a href="/calculator"'+acl(isCalc)+'>Crafting Calculator</a>';
   toolsDD+='<a href="/profit"'+acl(isProfit)+'>Profit Finder</a>';
   toolsDD+='<a href="/shopping"'+acl(isShopping)+'>Shopping List</a>';
   toolsDD+='<a href="/bcnm/profit"'+acl(isBCNMProfit)+'>BCNM Profit Ranker</a>';
@@ -247,11 +246,11 @@ function initChrome(){
   var sb=document.getElementById('sidebar');
   if(sb){
    var tools=[
-    ['/calculator','Crafting Calculator','calc'],
     ['/profit','Profit Finder','profit'],
     ['/shopping','Shopping List','shop'],
     ['/bcnm/profit','BCNM Profit Ranker','bcnm'],
-    ['/fishing-lookup','Fishing Lookup','fish'],
+    ['/fishing','Fishing Codex','fish'],
+    ['/vendors','Vendor Directory','shop'],
     ['/gathering/gardening','Gardening Lookup','garden'],
     ['/regional-merchants','Regional Merchants','regional']
    ];

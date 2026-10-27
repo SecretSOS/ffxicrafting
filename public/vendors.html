@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vendor Directory — FFXI Crafting</title>
+<meta name="description" content="Every NPC vendor, guild shop, regional vendor, conquest vendor, and Curio Moogle item in FFXI era-75 with locations and prices.">
+<meta property="og:title" content="Vendor Directory — FFXI Crafting">
+<meta property="og:description" content="Complete vendor directory for era-75 FFXI. Every NPC shop, guild merchant, and special vendor with prices and map positions.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/vendors">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+/* ── Tabs ── */
+.vd-tabs{display:flex;gap:2px;margin-bottom:16px;border-bottom:2px solid var(--border);overflow-x:auto}
+.vd-tab{padding:10px 16px;font-size:.84rem;font-weight:700;color:var(--ink-faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap;flex-shrink:0}
+.vd-tab:hover{color:var(--ink)}
+.vd-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.vd-tab .tc{font-weight:400;font-size:.74rem;margin-left:4px;opacity:.6}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* ── Search ── */
+.vd-search-wrap{margin-bottom:16px}
+.vd-search{width:100%;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--ink);font:14px var(--font-body);outline:none;transition:border-color .2s}
+.vd-search:focus{border-color:var(--accent)}
+.vd-search::placeholder{color:var(--ink-faint)}
+.vd-result{font-size:.82rem;color:var(--ink-faint);margin-bottom:12px}
+
+/* ── Zone / Craft sections (collapsible) ── */
+.vd-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.vd-group-head{display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;user-select:none}
+.vd-group-head h2{margin:0;font-size:1rem;font-weight:700;font-family:var(--font-display);flex:1;min-width:0}
+.vd-group-head .vg-count{font-size:.74rem;color:var(--ink-faint);padding:2px 8px;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:8px;white-space:nowrap}
+.vd-group-head .vg-arrow{width:20px;text-align:center;font-size:10px;color:var(--ink-faint);transition:transform .25s}
+.vd-group.open .vg-arrow{transform:rotate(180deg)}
+.vd-group-body{display:none;border-top:1px solid var(--border)}
+.vd-group.open .vd-group-body{display:block}
+
+/* ── NPC sub-section ── */
+.vd-npc{border-top:1px solid var(--border);padding:12px 18px}
+.vd-npc:first-child{border-top:none}
+.vd-npc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.vd-npc-head h3{margin:0;font-size:.88rem;font-weight:600;font-family:var(--font-display)}
+.vd-pos{display:inline-block;padding:1px 7px;border-radius:6px;font-size:.72rem;font-weight:700;font-family:var(--font-mono);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);letter-spacing:.02em}
+.vd-guild-badge{display:inline-block;padding:1px 7px;border-radius:6px;font-size:.68rem;font-weight:700;text-transform:capitalize;color:var(--ink-soft);background:color-mix(in srgb,var(--ink) 8%,transparent);border:1px solid color-mix(in srgb,var(--ink) 15%,transparent)}
+.vd-zone-link{font-size:.78rem;color:var(--ink-faint);text-decoration:none;transition:color .15s}
+.vd-zone-link:hover{color:var(--accent);text-decoration:none}
+
+/* ── Item table ── */
+.vd-tbl{width:100%;border-collapse:collapse;font-size:.82rem}
+.vd-tbl th{text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);padding:4px 6px;border-bottom:1px solid var(--border);white-space:nowrap}
+.vd-tbl th.r{text-align:right}
+.vd-tbl td{padding:5px 6px;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent);font-variant-numeric:tabular-nums}
+.vd-tbl td.r{text-align:right}
+.vd-tbl tr:hover{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.vd-tbl .price{color:var(--gil);font-weight:600}
+.vd-tbl .player-sold{color:var(--ink-faint);font-style:italic}
+.vd-tbl a{color:var(--ink);text-decoration:none}
+.vd-tbl a:hover{color:var(--accent);text-decoration:none}
+.ps-badge{display:inline-block;padding:0 5px;border-radius:4px;font-size:.62rem;font-weight:600;color:var(--ink-faint);background:color-mix(in srgb,var(--ink) 6%,transparent);margin-left:4px;vertical-align:middle}
+
+/* ── Regional cards ── */
+.vd-region-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:10px}
+.vd-region-card h3{margin:0 0 4px;font-size:.95rem;font-weight:700;font-family:var(--font-display)}
+.vd-region-npcs{font-size:.78rem;color:var(--ink-soft);margin-bottom:4px;line-height:1.5}
+.vd-region-gate{font-size:.74rem;color:var(--accent);font-style:italic;margin-bottom:10px}
+
+/* ── Conquest / Curio simple tables ── */
+.vd-simple-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.vd-simple-wrap .vd-tbl td:first-child{padding-left:14px}
+.vd-simple-wrap .vd-tbl th:first-child{padding-left:14px}
+
+/* ── Responsive ── */
+@media(max-width:700px){
+  .vd-tabs{gap:0}
+  .vd-tab{padding:8px 10px;font-size:.78rem}
+  .vd-npc{padding:10px 12px}
+  .vd-group-head{padding:10px 12px}
+  .vd-tbl{font-size:.76rem}
+}
+</style>
+<script src="/nav.js"></script>
+<script src="/powertools.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Vendors</nav>
+
+<header class="panel pad" style="padding-bottom:18px">
+<h1 style="margin:0 0 4px;font-size:1.5rem">Vendor Directory</h1>
+<p style="color:var(--ink-faint);margin:0;font-size:.88rem">Every NPC shop, guild merchant, and special vendor — prices, locations, and grid positions from the LandSandBoat source</p>
+</header>
+
+<div class="vd-search-wrap">
+  <input type="text" class="vd-search" id="vdSearch" placeholder="Search items across all vendors...">
+</div>
+
+<div class="vd-tabs" id="vdTabs">
+  <div class="vd-tab active" data-tab="npc">NPC Shops <span class="tc" id="tcNpc"></span></div>
+  <div class="vd-tab" data-tab="guild">Guild Shops <span class="tc" id="tcGuild"></span></div>
+  <div class="vd-tab" data-tab="regional">Regional <span class="tc" id="tcRegional"></span></div>
+  <div class="vd-tab" data-tab="conquest">Conquest <span class="tc" id="tcConquest"></span></div>
+  <div class="vd-tab" data-tab="curio">Curio Moogle <span class="tc" id="tcCurio"></span></div>
+</div>
+
+<div class="vd-result" id="vdResult"></div>
+
+<div class="tab-pane active" id="pane-npc"></div>
+<div class="tab-pane" id="pane-guild"></div>
+<div class="tab-pane" id="pane-regional"></div>
+<div class="tab-pane" id="pane-conquest"></div>
+<div class="tab-pane" id="pane-curio"></div>
+
+<footer id="siteFooter"></footer>
+</main>
+</div>
+
+<script src="/vendor-data.js"></script>
+<script src="/ah-prices.js"></script>
+<script src="/icon-sprite.js"></script>
+<script src="/item-popup.js"></script>
+<script src="/table-tools.js" defer></script>
+<script>
+(function(){
+'use strict';
+if(typeof VD==='undefined') return;
+
+var I=VD.items;
+
+function h(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function gilFmt(n){if(!n&&n!==0)return '—';return n.toLocaleString();}
+function itemLink(id){
+  var name=I[id]?I[id][0]:'Item #'+id;
+  var icon=(typeof iconSpan==='function')?iconSpan(id):'';
+  return '<a href="/item/'+id+'" data-item="'+id+'" class="icon-link">'+icon+h(name)+'</a>';
+}
+function zoneSlug(z){return z.toLowerCase().replace(/\s*\[s\]\s*/,'_s_').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function zoneLink(z){return '<a class="vd-zone-link" href="/zone/'+zoneSlug(z)+'">'+h(z)+'</a>';}
+
+/* ── Tab switching ── */
+var tabs=document.querySelectorAll('.vd-tab');
+var panes=document.querySelectorAll('.tab-pane');
+tabs.forEach(function(tab){
+  tab.onclick=function(){
+    tabs.forEach(function(t){t.classList.remove('active');});
+    panes.forEach(function(p){p.classList.remove('active');});
+    tab.classList.add('active');
+    document.getElementById('pane-'+tab.dataset.tab).classList.add('active');
+    applySearch();
+  };
+});
+
+/* ── Search ── */
+var searchEl=document.getElementById('vdSearch');
+var resultEl=document.getElementById('vdResult');
+function getQuery(){return (searchEl.value||'').toLowerCase().trim();}
+
+function matchItem(id,q){
+  if(!q)return true;
+  var name=I[id]?I[id][0].toLowerCase():'';
+  return name.indexOf(q)!==-1;
+}
+
+function applySearch(){
+  var q=getQuery();
+  var activeTab=document.querySelector('.vd-tab.active').dataset.tab;
+  if(activeTab==='npc') renderNpc(q);
+  else if(activeTab==='guild') renderGuild(q);
+  else if(activeTab==='regional') renderRegional(q);
+  else if(activeTab==='conquest') renderConquest(q);
+  else if(activeTab==='curio') renderCurio(q);
+}
+searchEl.oninput=applySearch;
+
+/* ═══ NPC SHOPS ═══ */
+function renderNpc(q){
+  var out='';
+  var zones=Object.keys(VD.npc).sort();
+  var totalNpcs=0, totalItems=0, shownItems=0;
+  zones.forEach(function(zone){
+    var npcs=VD.npc[zone];
+    var zoneHtml='';
+    var zoneItemCount=0;
+    npcs.forEach(function(npc){
+      var name=npc[0], pos=npc[1], items=npc[2];
+      var rows='';
+      items.forEach(function(it){
+        totalItems++;
+        if(!matchItem(it[0],q))return;
+        shownItems++;
+        zoneItemCount++;
+        rows+='<tr><td>'+itemLink(it[0])+'</td><td class="r price">'+gilFmt(it[1])+'</td></tr>';
+      });
+      if(!rows)return;
+      totalNpcs++;
+      zoneHtml+='<div class="vd-npc"><div class="vd-npc-head"><h3>'+h(name)+'</h3>';
+      if(pos)zoneHtml+='<span class="vd-pos">'+h(pos)+'</span>';
+      zoneHtml+='</div>';
+      zoneHtml+='<table class="vd-tbl"><thead><tr><th>Item</th><th class="r">Price</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    });
+    if(!zoneHtml)return;
+    out+='<div class="vd-group'+(q?'':'')+'">';
+    out+='<div class="vd-group-head" onclick="this.closest(\'.vd-group\').classList.toggle(\'open\')"><h2>'+zoneLink(zone)+'</h2><span class="vg-count">'+zoneItemCount+' items</span><span class="vg-arrow">&#9660;</span></div>';
+    out+='<div class="vd-group-body">'+zoneHtml+'</div></div>';
+  });
+  document.getElementById('pane-npc').innerHTML=out;
+  document.getElementById('tcNpc').textContent=Object.keys(VD.npc).length+' zones';
+  resultEl.textContent=q?shownItems+' items match "'+q+'"':totalItems+' items across '+Object.keys(VD.npc).length+' zones';
+  if(q) openAllGroups('pane-npc');
+}
+
+/* ═══ GUILD SHOPS ═══ */
+function renderGuild(q){
+  var out='';
+  var crafts=Object.keys(VD.guild).sort();
+  var totalItems=0, shownItems=0;
+  crafts.forEach(function(craft){
+    var npcs=VD.guild[craft];
+    var craftHtml='';
+    var craftItemCount=0;
+    var npcNames=Object.keys(npcs).sort();
+    npcNames.forEach(function(npcName){
+      var info=npcs[npcName];
+      var rows='';
+      info.items.forEach(function(it){
+        totalItems++;
+        if(!matchItem(it[0],q))return;
+        shownItems++;
+        craftItemCount++;
+        var playerSold=it[4]==='player-sold only';
+        rows+='<tr'+(playerSold?' class="player-sold"':'')+'><td>'+itemLink(it[0])+(playerSold?'<span class="ps-badge">player-sold</span>':'')+'</td>';
+        rows+='<td class="r price">'+gilFmt(it[1])+'</td>';
+        rows+='<td class="r">'+it[2]+'</td>';
+        rows+='<td class="r">'+it[3]+'</td></tr>';
+      });
+      if(!rows)return;
+      craftHtml+='<div class="vd-npc"><div class="vd-npc-head"><h3>'+h(npcName)+'</h3>';
+      if(info.pos)craftHtml+='<span class="vd-pos">'+h(info.pos)+'</span>';
+      craftHtml+=' '+zoneLink(info.zone);
+      craftHtml+='</div>';
+      craftHtml+='<table class="vd-tbl"><thead><tr><th>Item</th><th class="r">Buy Max</th><th class="r">Restock/Day</th><th class="r">Target Stock</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    });
+    if(!craftHtml)return;
+    var dispCraft=craft.charAt(0).toUpperCase()+craft.slice(1);
+    out+='<div class="vd-group">';
+    out+='<div class="vd-group-head" onclick="this.closest(\'.vd-group\').classList.toggle(\'open\')"><h2>'+h(dispCraft)+'</h2><span class="vg-count">'+craftItemCount+' items</span><span class="vg-arrow">&#9660;</span></div>';
+    out+='<div class="vd-group-body">'+craftHtml+'</div></div>';
+  });
+  document.getElementById('pane-guild').innerHTML=out;
+  document.getElementById('tcGuild').textContent=crafts.length+' crafts';
+  resultEl.textContent=q?shownItems+' items match "'+q+'"':totalItems+' guild shop items across '+crafts.length+' crafts';
+  if(q) openAllGroups('pane-guild');
+}
+
+/* ═══ REGIONAL VENDORS ═══ */
+function renderRegional(q){
+  var out='';
+  var regions=Object.keys(VD.regional).sort();
+  var totalItems=0, shownItems=0;
+  regions.forEach(function(region){
+    var info=VD.regional[region];
+    var rows='';
+    info.items.forEach(function(it){
+      totalItems++;
+      if(!matchItem(it[0],q))return;
+      shownItems++;
+      rows+='<tr><td>'+itemLink(it[0])+'</td><td class="r price">'+gilFmt(it[1])+'</td></tr>';
+    });
+    if(!rows&&q)return;
+    out+='<div class="vd-region-card">';
+    out+='<h3>'+h(region)+'</h3>';
+    out+='<div class="vd-region-npcs">'+h(info.npcs.replace(/_/g,' '))+'</div>';
+    if(info.gate)out+='<div class="vd-region-gate">'+h(info.gate)+'</div>';
+    if(rows){
+      out+='<table class="vd-tbl"><thead><tr><th>Item</th><th class="r">Price</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    }
+    out+='</div>';
+  });
+  document.getElementById('pane-regional').innerHTML=out;
+  document.getElementById('tcRegional').textContent=regions.length+' regions';
+  resultEl.textContent=q?shownItems+' items match "'+q+'"':totalItems+' regional vendor items across '+regions.length+' regions';
+}
+
+/* ═══ CONQUEST VENDOR ═══ */
+function renderConquest(q){
+  var items=VD.conquest;
+  var rows='';
+  var shown=0;
+  items.forEach(function(it){
+    if(!matchItem(it[0],q))return;
+    shown++;
+    rows+='<tr><td>'+itemLink(it[0])+'</td><td class="r price">'+gilFmt(it[1])+' CP</td><td class="r">'+it[2]+'</td><td>'+h(it[3])+'</td></tr>';
+  });
+  var out='<div class="vd-simple-wrap"><table class="vd-tbl"><thead><tr><th>Item</th><th class="r">CP Cost</th><th class="r">Level Req</th><th>Rank Req</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  document.getElementById('pane-conquest').innerHTML=out;
+  document.getElementById('tcConquest').textContent=items.length;
+  resultEl.textContent=q?shown+' items match "'+q+'"':items.length+' conquest vendor items';
+}
+
+/* ═══ CURIO MOOGLE ═══ */
+function renderCurio(q){
+  var items=VD.curio;
+  var rows='';
+  var shown=0;
+  items.forEach(function(it){
+    if(!matchItem(it[0],q))return;
+    shown++;
+    rows+='<tr><td>'+itemLink(it[0])+'</td><td class="r price">'+gilFmt(it[1])+'</td></tr>';
+  });
+  var out='<div class="vd-simple-wrap"><table class="vd-tbl"><thead><tr><th>Item</th><th class="r">Price</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  document.getElementById('pane-curio').innerHTML=out;
+  document.getElementById('tcCurio').textContent=items.length;
+  resultEl.textContent=q?shown+' items match "'+q+'"':items.length+' Curio Vendor Moogle items';
+}
+
+/* ── Helpers ── */
+function openAllGroups(paneId){
+  document.querySelectorAll('#'+paneId+' .vd-group').forEach(function(g){g.classList.add('open');});
+}
+
+/* ── Hash-based tab switching ── */
+function checkHash(){
+  var hash=location.hash.replace('#','');
+  var validTabs=['npc','guild','regional','conquest','curio'];
+  if(validTabs.indexOf(hash)!==-1){
+    tabs.forEach(function(t){t.classList.remove('active');});
+    panes.forEach(function(p){p.classList.remove('active');});
+    document.querySelector('[data-tab="'+hash+'"]').classList.add('active');
+    document.getElementById('pane-'+hash).classList.add('active');
+  }
+}
+checkHash();
+window.addEventListener('hashchange',checkHash);
+
+/* ── Initial render ── */
+applySearch();
+
+})();
+</script>
+<script src="/search.js"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
