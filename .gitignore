@@ -24,6 +24,10 @@ dist/
 .DS_Store
 Thumbs.db
 
+# PowerTool — local tools, not for the public site
+tools/powertool.py
+tools/scan_phoenix_prices.py
+
 # PowerTool local data (user-specific, not deployable)
 data/ffxi.db
 data/lsb_cache.db
