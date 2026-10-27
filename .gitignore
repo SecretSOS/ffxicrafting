@@ -14,15 +14,20 @@ server/
 CLAUDE.md
 docs/
 
-# Node / Astro
+# Node (Astro removed Oct 2026 — site is static, no build step)
 node_modules/
+package.json
+package-lock.json
 .astro/
 dist/
+src/
+astro.config.*
 
 # Local scratch
 *.log
 .DS_Store
 Thumbs.db
+template.html
 
 # PowerTool — local tools, not for the public site
 tools/powertool.py
