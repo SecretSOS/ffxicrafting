@@ -10,8 +10,7 @@ os.makedirs(OUT, exist_ok=True)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, icon_html
-
-ERA = ("ROTZ", "COP", "TOAU", "WOTG")
+from lib.constants import ERA_TAGS as ERA
 ABYSSEA_ZONES = {'abyssea_attohwa', 'abyssea_konschtat', 'abyssea_la_theine',
                  'abyssea_altepa', 'abyssea_grauberg', 'abyssea_misareaux',
                  'abyssea_vunkerl', 'abyssea_uleguerand', 'abyssea_empyreal'}

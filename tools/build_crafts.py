@@ -8,8 +8,7 @@ OUT = os.path.join(ROOT, 'public', 'crafts.html')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, CRAFTS_ORDERED
-
-ERA = ("ROTZ", "COP", "TOAU", "WOTG")
+from lib.constants import ERA_TAGS as ERA
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row

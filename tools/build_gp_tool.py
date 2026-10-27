@@ -9,14 +9,10 @@ DATA_DIR = os.path.join(ROOT, 'public', 'data')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end
+from lib.constants import ERA_TAGS as ERA, CRAFT_KEYS
 
-ERA = ("ROTZ", "COP", "TOAU", "WOTG")
-
-GUILD_MAP = {
-    'woodworking': 'wood', 'smithing': 'smith', 'goldsmithing': 'gold',
-    'clothcraft': 'cloth', 'leathercraft': 'leather', 'bonecraft': 'bone',
-    'alchemy': 'alchemy', 'cooking': 'cook', 'fishing': 'fish'
-}
+GUILD_MAP = {k.lower(): v for k, v in CRAFT_KEYS.items()}
+GUILD_MAP['fishing'] = 'fish'
 
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()

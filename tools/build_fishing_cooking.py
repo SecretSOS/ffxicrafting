@@ -16,7 +16,9 @@ if os.path.exists(CFG):
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row
 
-ERA = "('ROTZ','COP','TOAU','WOTG')"
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.constants import ERA_SQL as ERA
 
 ki_names = {}
 try:

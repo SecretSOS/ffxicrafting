@@ -15,36 +15,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 AH_PATH = os.path.join(ROOT, 'public', 'data', 'ah-prices.json')
 
-GUILD_HOURS = {
-    'Woodworking':   (6, 21, 'Firesday'),
-    'Smithing':      (8, 23, 'Earthsday'),
-    'Goldsmithing':  (8, 23, 'Iceday'),
-    'Clothcraft':    (6, 21, 'Firesday'),
-    'Leathercraft':  (3, 18, 'Iceday'),
-    'Bonecraft':     (8, 23, 'Windsday'),
-    'Alchemy':       (8, 23, 'Iceday'),
-    'Cooking':       (5, 20, 'Darksday'),
-    'Fishing':       (3, 18, 'Lightningsday'),
-}
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.constants import GUILD_HOURS as _GH, GUILD_NPC_MAP as _GNPC, CRAFT_NAMES
 
-GUILD_NPC_MAP = {
-    'Achika': 'Clothcraft', 'Akamafula': 'Bonecraft', 'Amalasanda': 'Leathercraft',
-    'Amulya': 'Alchemy', 'Babubu': 'Cooking', 'Beugungel': 'Smithing',
-    'Bornahn': 'Smithing', 'Cauzeriste': 'Leathercraft', 'Cehn_Teyohngo': 'Bonecraft',
-    'Celestina': 'Clothcraft', 'Chaupire': 'Woodworking', 'Chomo_Jinjahl': 'Fishing',
-    'Cletae': 'Goldsmithing', 'Dehbi_Moshal': 'Alchemy', 'Doggomehr': 'Smithing',
-    'Gibol': 'Woodworking', 'Graegham': 'Leathercraft', 'Jabbar': 'Goldsmithing',
-    'Jidwahn': 'Smithing', 'Jirokichi': 'Fishing', 'Kamilah': 'Clothcraft',
-    'Kopopo': 'Cooking', 'Kueh_Igunahmori': 'Bonecraft', 'Kuzah_Hpirohpon': 'Cooking',
-    'Lokhong': 'Clothcraft', 'Lucretia': 'Leathercraft', 'Maymunah': 'Goldsmithing',
-    'Mendoline': 'Woodworking', 'Meriri': 'Alchemy', 'Mololo': 'Alchemy',
-    'Ndego': 'Bonecraft', 'Odoba': 'Woodworking', 'Pashi_Maccaleh': 'Cooking',
-    'Rajmonda': 'Smithing', 'Retto-Marutto': 'Goldsmithing', 'Shih_Tayuun': 'Alchemy',
-    'Silver_Owl': 'Goldsmithing', 'Taten-Bilten': 'Bonecraft', 'Teerth': 'Leathercraft',
-    'Tilala': 'Woodworking', 'Tsutsuroon': 'Fishing', 'Vicious_Eye': 'Clothcraft',
-    'Visala': 'Cooking', 'Vuliaie': 'Clothcraft', 'Wahnid': 'Goldsmithing',
-    'Wahraga': 'Leathercraft', 'Yabby_Tanmikey': 'Cooking', 'Yahliq': 'Alchemy',
-}
+GUILD_HOURS = {CRAFT_NAMES.get(k, k): v for k, v in _GH.items()}
+GUILD_NPC_MAP = {npc: CRAFT_NAMES.get(craft, craft) for npc, craft in _GNPC.items()}
 
 
 def build_data():

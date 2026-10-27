@@ -13,8 +13,7 @@ OUT_DIR = os.path.join(ROOT, 'public', 'crafts')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end, CRAFTS_ORDERED, icon_html
-
-ERA = ("ROTZ", "COP", "TOAU", "WOTG")
+from lib.constants import ERA_TAGS as ERA
 DAYS = ["Firesday", "Earthsday", "Watersday", "Windsday",
         "Iceday", "Lightningsday", "Lightsday", "Darksday"]
 

@@ -10,9 +10,7 @@ DATA_DIR = os.path.join(ROOT, 'public', 'data')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from page_template import html_head, layout_open, layout_close, page_end
 
-ERA = ("ROTZ", "COP", "TOAU", "WOTG")
-CRAFTS = {'wood': 'Woodworking', 'smith': 'Smithing', 'gold': 'Goldsmithing', 'cloth': 'Clothcraft',
-          'leather': 'Leathercraft', 'bone': 'Bonecraft', 'alchemy': 'Alchemy', 'cook': 'Cooking'}
+from lib.constants import CRAFT_NAMES as CRAFTS, ERA_TAGS as ERA
 
 db = sqlite3.connect(DB)
 q = lambda s, *a: db.execute(s, a).fetchall()

@@ -11,10 +11,9 @@ import sqlite3, json, os, sys, re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT_DIR = os.path.join(ROOT, 'public', 'data', 'items')
-ERA_SQL = "('ROTZ','COP','TOAU','WOTG')"
 
-CRAFTS = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing','cloth':'Clothcraft',
-          'leather':'Leathercraft','bone':'Bonecraft','alchemy':'Alchemy','cook':'Cooking'}
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.constants import CRAFT_NAMES as CRAFTS, ERA_SQL
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row

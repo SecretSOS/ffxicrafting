@@ -11,14 +11,11 @@ DB   = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_cr
 ITEM_DIR = os.path.join(ROOT, 'public', 'item')
 SITEMAP  = os.path.join(ROOT, 'public', 'sitemap.xml')
 SITE     = 'https://ffxicrafting.com'
-ERA_SQL  = "('ROTZ','COP','TOAU','WOTG')"
-CRAFTS   = {'wood':'Woodworking','smith':'Smithing','gold':'Goldsmithing','cloth':'Clothcraft',
-            'leather':'Leathercraft','bone':'Bonecraft','alchemy':'Alchemy','cook':'Cooking'}
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.constants import CRAFT_NAMES as CRAFTS, ERA_SQL
+from page_template import html_head, layout_open, layout_close, page_end, icon_html
 
 DESC_PATH = os.path.join(ROOT, 'data', 'item_descriptions.json')
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from page_template import html_head, layout_open, layout_close, page_end, icon_html
 
 db = sqlite3.connect(DB)
 db.row_factory = sqlite3.Row

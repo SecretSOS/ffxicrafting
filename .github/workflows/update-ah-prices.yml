@@ -1,8 +1,12 @@
-name: Update AH Prices
+name: Update AH Prices (DISABLED)
 
+# Disabled Oct 2026 — runs were completing in ~15s (should take hours),
+# indicating the Phoenix API changed or rate-limited silently.
+# Price scanning now runs locally via PowerTool scheduled scan.
+# Keep workflow_dispatch for manual testing when needed.
 on:
-  schedule:
-    - cron: '0 8,20 * * *'
+  # schedule:
+  #   - cron: '0 8,20 * * *'
   workflow_dispatch:
     inputs:
       mode:

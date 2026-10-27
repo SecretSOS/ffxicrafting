@@ -8,7 +8,8 @@ import sqlite3, json, os, sys, re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB   = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, 'data', 'ffxi_crafting.db')
 OUT  = os.path.join(ROOT, 'public', 'search-index.json')
-ERA_SQL = "('ROTZ','COP','TOAU','WOTG')"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.constants import ERA_SQL
 
 db = sqlite3.connect(DB)
 

@@ -13,12 +13,8 @@ OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, 'public', 'calcul
 DATA_DIR = os.path.join(os.path.dirname(OUT), 'data')
 TPL = os.path.join(ROOT, 'tools', 'templates')
 
-ERA = ("ROTZ", "COP", "TOAU", "WOTG")   # what counts as era-75 content
-CRAFTS = {'wood': 'Woodworking', 'smith': 'Smithing', 'gold': 'Goldsmithing', 'cloth': 'Clothcraft',
-          'leather': 'Leathercraft', 'bone': 'Bonecraft', 'alchemy': 'Alchemy', 'cook': 'Cooking'}
-SUB = ['wood', 'smith', 'gold', 'cloth', 'leather', 'bone', 'alchemy', 'cook']
-
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.constants import CRAFT_NAMES as CRAFTS, ERA_TAGS as ERA, CRAFTS as SUB
 from page_template import html_head, layout_open, layout_close, page_end
 
 db = sqlite3.connect(DB)
