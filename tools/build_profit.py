@@ -18,18 +18,19 @@ LSB_COMMIT = db.execute("SELECT v FROM meta WHERE k='lsb_commit'").fetchone()[0]
 
 recipes = []
 for code in CRAFTS:
-    for r in q(f"""SELECT id, main_level, crystal, result, result_qty,
+    for r in q(f"""SELECT id, desynth, main_level, crystal, result, result_qty,
                    hq1, hq1_qty, hq2, hq2_qty, hq3, hq3_qty, key_item, content_tag
                    FROM recipes
-                   WHERE main_craft=? AND desynth=0 AND main_level BETWEEN 1 AND 105
+                   WHERE main_craft=? AND main_level BETWEEN 1 AND 105
                    AND (content_tag IS NULL OR content_tag IN {ERA})
                    ORDER BY main_level""", code):
-        rid, lv, crystal, result, rq, h1, h1q, h2, h2q, h3, h3q, ki, tag = r
+        rid, des, lv, crystal, result, rq, h1, h1q, h2, h2q, h3, h3q, ki, tag = r
         ing = q("SELECT item_id, qty FROM recipe_ingredients WHERE recipe_id=?", rid)
         d = {'cr': code, 'lv': lv, 'cry': crystal, 'res': result, 'rq': rq,
              'ing': [[i, qty] for i, qty in ing]}
         if h1: d['hq'] = [[h1, h1q], [h2, h2q], [h3, h3q]]
         if ki: d['ki'] = 1
+        if des: d['des'] = 1
         if tag: d['tag'] = tag
         recipes.append(d)
 
@@ -83,6 +84,8 @@ tr.unpriced{opacity:.45}
 .gain{color:var(--best)}
 .loss{color:var(--loss)}
 .profit-src{color:var(--ink-faint);font-weight:400;margin-left:2px}
+.pill.des{border-color:var(--alchemy);color:var(--alchemy)}
+.note-banner{background:color-mix(in srgb,var(--panel-bot) 80%,transparent);border:1px solid var(--rule);border-radius:6px;padding:8px 14px;margin:10px 0 0;font-size:.82rem;color:var(--ink-soft);line-height:1.4}
 @media(max-width:820px){.price-grid{padding:0 0 14px}}"""
 
 JS = r"""(function(){
@@ -109,18 +112,31 @@ function bestSell(id){return ahPrice(id)||npcSell(id);}
 function itemUrl(id){return'/item/'+id;}
 function icoHtml(id){return'<img src="/img/item/'+id+'.png" width="16" height="16" alt="" style="image-rendering:pixelated;vertical-align:-2px;margin-right:2px" onerror="this.style.display=\'none\'">';}
 function hqChance(gap){if(gap<0)return 0;if(gap<=10)return 0.0156;if(gap<=30)return 0.0625;if(gap<=50)return 0.25;return 0.50;}
+function desynthRate(gap){return gap>=0?0.40:Math.max(0,0.40+gap*0.05);}
 function computeRow(r){
   var craftName=NAME[r.cr],skill=skills[craftName]||60;
   var cost=price(r.cry),unpriced=[];
   r.ing.forEach(function(p){var pr=price(p[0]);if(pr===0)unpriced.push(I[p[0]]?I[p[0]].n:'?');cost+=pr*p[1];});
   var nqSell=bestSell(r.res),nqRev=nqSell*r.rq,usesAH=!!ahPrice(r.res);
-  var gap=skill-r.lv,h=hqChance(gap);
-  var rev=(1-h)*nqRev;
-  if(h>0&&r.hq){var tiers=[h*0.75,h*0.1875,h*0.0625];
-    for(var t=0;t<3;t++){var hid=r.hq[t][0],hqty=r.hq[t][1];
-      if(hid){rev+=tiers[t]*bestSell(hid)*hqty;if(ahPrice(hid))usesAH=true;}
-      else rev+=tiers[t]*nqRev;}}
-  else rev=nqRev;
+  var gap=skill-r.lv,rev;
+  if(r.des){
+    var sRate=desynthRate(gap);
+    var succRev=0.40*nqRev;
+    if(r.hq){var hw=[0.40,0.30,0.30];
+      for(var t=0;t<3;t++){var hid=r.hq[t][0],hqty=r.hq[t][1];
+        if(hid){succRev+=0.60*hw[t]*bestSell(hid)*hqty;if(ahPrice(hid))usesAH=true;}
+        else succRev+=0.60*hw[t]*nqRev;}}
+    else succRev=nqRev;
+    rev=sRate*succRev;
+  }else{
+    var h=hqChance(gap);
+    rev=(1-h)*nqRev;
+    if(h>0&&r.hq){var tiers=[h*0.75,h*0.1875,h*0.0625];
+      for(var t=0;t<3;t++){var hid=r.hq[t][0],hqty=r.hq[t][1];
+        if(hid){rev+=tiers[t]*bestSell(hid)*hqty;if(ahPrice(hid))usesAH=true;}
+        else rev+=tiers[t]*nqRev;}}
+    else rev=nqRev;
+  }
   return{r:r,craft:craftName,cost:cost,rev:rev,profit:rev-cost,margin:cost>0?(rev-cost)/cost*100:0,unpriced:unpriced,skill:skill,usesAH:usesAH};}
 function computeAll(){
   computed=R.map(computeRow);
@@ -196,13 +212,13 @@ function renderResults(){
     var r=x.r,it=I[r.res];if(!it)return;
     var cls=x.unpriced.length?'unpriced':'';
     var hq=hqChance(x.skill-r.lv);
-    var pills=(r.ki?'<span class="pill ki">key item</span>':'')+(r.tag==='WOTG'?'<span class="pill wotg">WotG</span>':'');
+    var pills=(r.ki?'<span class="pill ki">key item</span>':'')+(r.des?'<span class="pill des">Desynth</span>':'')+(r.tag==='WOTG'?'<span class="pill wotg">WotG</span>':'');
     var ings=r.ing.map(function(p){var pi=I[p[0]];return pi?esc(pi.n)+(p[1]>1?' ×'+p[1]:''):'?';}).join(' · ');
     var profitCls=x.profit>=0?'gain':'loss';
     var srcLabel=x.usesAH?' <small class="profit-src">AH</small>':' <small class="profit-src">NPC</small>';
     html+='<tr class="'+cls+'"><td><div class="rname"><a href="'+itemUrl(r.res)+'" data-item="'+r.res+'">'+icoHtml(r.res)+esc(it.n)+'</a>'+(r.rq>1?' ×'+r.rq:'')+
       '<span class="craft-tag" style="--c:var(--'+r.cr+')">'+SHORT[r.cr]+' '+r.lv+'</span>'+pills+'</div>'+
-      (hq>0?'<div class="rmeta">HQ '+Math.round(hq*100)+'%</div>':'')+
+      (r.des?'<div class="rmeta">Success '+Math.round(desynthRate(x.skill-r.lv)*100)+'%</div>':(hq>0?'<div class="rmeta">HQ '+Math.round(hq*100)+'%</div>':''))+
       '<div class="ings">'+ings+'</div></td>'+
       '<td class="num">'+r.lv+'</td>'+
       '<td class="num">'+(x.unpriced.length?'<span style="color:var(--loss)">—</span>':gil(x.cost))+'</td>'+
@@ -256,7 +272,8 @@ function setupListeners(){
 BODY = """\
  <header class="panel pad">
   <h1>Profit finder</h1>
-  <p class="lede">Every era recipe ranked by expected profit. Set your prices here or in the <a href="/calculator">calculator</a> — they share the same data. Adjust skill levels for accurate HQ chances.</p>
+  <p class="lede">Every era recipe ranked by expected profit, including desynths. Set your prices here or in the <a href="/calculator">calculator</a> — they share the same data. Adjust skill levels for accurate HQ chances.</p>
+  <div class="note-banner">Abyssea, Seekers, and Rhapsodies recipes are pending until those patches are enabled on Phoenix.</div>
   <div class="crafts" id="crafts"></div>
   <div class="skills" id="skills"></div>
   <div class="filter-row">
