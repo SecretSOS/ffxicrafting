@@ -462,8 +462,11 @@ CREATE TABLE fishing_areas(zone TEXT, area TEXT, fish_item_id INT, rarity INT, p
 SIZE = {0: 'small', 1: 'large'}
 WATER = {0: 'sea/ocean', 1: 'freshwater'}
 zname = {int(m[0]): m[1].replace('_', ' ') for m in re.findall(r"INSERT INTO `zone_settings` VALUES \((\d+),'[^']*',\d+,'([^']*)'", rd(P('sql/zone_settings.sql')))}
+_disabled_fish = {int(m[1]) for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),[^)]+,(\d+)\)", rd(P('sql/fishing_fish.sql'))) if m[2] == '1'}
 for m in re.finditer(r"INSERT INTO `fishing_fish` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_fish.sql'))):
-    g = m.groups(); iid = int(g[0]); add_item(iid)
+    g = m.groups(); iid = int(g[0])
+    if iid in _disabled_fish: continue
+    add_item(iid)
     cur.execute("INSERT OR REPLACE INTO fish VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (iid, g[1], int(g[2]), int(g[3]), int(g[6]), int(g[7]),
         SIZE.get(int(g[9]), str(g[9])), WATER.get(int(g[10]), str(g[10])), int(g[18]), int(g[15]), int(g[16]), int(g[17]), int(g[8]),
         int(g[22]), int(g[4]), int(g[5]), int(g[14]), int(g[21]), int(g[20])))
@@ -476,7 +479,7 @@ for m in re.finditer(r"INSERT INTO `fishing_rod` VALUES \((\d+),'((?:[^'\\]|\\.)
         int(g[16]), int(g[4]), int(g[21])))
 for m in re.finditer(r"INSERT INTO `fishing_bait` VALUES \((\d+),'([^']*)',(\d+),(\d+),(\d+),(\d+),(\d+),(\d+)", rd(P('sql/fishing_bait.sql'))):
     g = m.groups(); iid = int(g[0]); add_item(iid)
-    cur.execute("INSERT OR REPLACE INTO fishing_baits VALUES (?,?,?,?,?,?,?)", (iid, g[1], {0: 'bait', 1: 'lure'}.get(int(g[2]), g[2]), int(g[3]), int(g[4]), int(g[7]), int(g[5])))
+    cur.execute("INSERT OR REPLACE INTO fishing_baits VALUES (?,?,?,?,?,?,?)", (iid, g[1], {0: 'bait', 1: 'lure', 2: 'special'}.get(int(g[2]), g[2]), int(g[3]), int(g[4]), int(g[7]), int(g[5])))
 for m in re.finditer(r"INSERT INTO `fishing_bait_affinity` VALUES \((\d+),(\d+),(\d+)\)", rd(P('sql/fishing_bait_affinity.sql'))):
     cur.execute("INSERT INTO fishing_bait_for VALUES (?,?,?)", (int(m[1]), int(m[2]), int(m[3])))
 groups = collections.defaultdict(list)
