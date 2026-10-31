@@ -68,6 +68,9 @@
 .bdg-rare{background:color-mix(in srgb,var(--lightning) 12%,transparent);color:var(--lightning);border:1px solid color-mix(in srgb,var(--lightning) 22%,transparent)}
 .bdg-bait{background:color-mix(in srgb,var(--earth) 12%,transparent);color:var(--earth);border:1px solid color-mix(in srgb,var(--earth) 22%,transparent)}
 .bdg-lure{background:color-mix(in srgb,var(--water) 12%,transparent);color:var(--water);border:1px solid color-mix(in srgb,var(--water) 22%,transparent)}
+.bdg-item{background:color-mix(in srgb,var(--ink-faint) 12%,transparent);color:var(--ink-faint);border:1px solid color-mix(in srgb,var(--ink-faint) 25%,transparent)}
+.bdg-sml{background:color-mix(in srgb,var(--wind) 12%,transparent);color:var(--wind);border:1px solid color-mix(in srgb,var(--wind) 25%,transparent)}
+.bdg-lrg{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
 
 /* ── Card body ── */
 .cdx-body{display:none;border-top:1px solid var(--border)}
@@ -192,6 +195,28 @@
 .iso-best{outline:2px solid var(--gain);outline-offset:-1px}
 .iso-bycatch{display:flex;flex-wrap:wrap;gap:5px}
 .iso-bycatch span{font-size:.78rem;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
+/* ── Pool groups ── */
+.pool-zone{margin-bottom:16px}
+.pool-zone-head{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--ink);padding:8px 0 4px;border-bottom:1px solid var(--border);margin-bottom:8px;display:flex;align-items:baseline;gap:8px}
+.pool-zone-head .pzc{font-size:.72rem;font-weight:400;color:var(--ink-faint)}
+.pool-area{margin:0 0 10px 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.pool-area-head{display:flex;align-items:center;gap:8px;padding:8px 14px;font-size:.84rem;font-weight:600;color:var(--fish);cursor:pointer;user-select:none}
+.pool-area-head .pa-ct{margin-left:auto;font-size:.72rem;font-weight:400;color:var(--ink-faint)}
+.pool-area-head .pa-arr{font-size:10px;transition:transform .2s;color:var(--ink-faint)}
+.pool-area.open .pa-arr{transform:rotate(180deg)}
+.pool-area-body{display:none;border-top:1px solid var(--border)}
+.pool-area.open .pool-area-body{display:block}
+.pool-row{display:flex;align-items:center;gap:8px;padding:5px 14px;font-size:.82rem;border-bottom:1px solid color-mix(in srgb,var(--border) 40%,transparent)}
+.pool-row:last-child{border-bottom:none}
+.pool-row .pr-name{flex:1;min-width:0;display:flex;align-items:center;gap:6px}
+.pool-row .pr-name a{color:var(--ink);text-decoration:none}
+.pool-row .pr-name a:hover{color:var(--fish)}
+.pool-row .pr-stat{font-variant-numeric:tabular-nums;font-size:.78rem;color:var(--ink-faint);min-width:50px;text-align:right}
+.pool-row.is-item{opacity:.55}
+.pool-row.is-item:hover{opacity:.8}
+.pool-legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;font-size:.76rem;color:var(--ink-faint)}
+.pool-legend span{display:flex;align-items:center;gap:4px}
 
 /* ── Responsive ── */
 @media(max-width:700px){
@@ -344,14 +369,20 @@
 <!-- ═══ CATCH POOLS ═══ -->
 <div class="tool-pane" id="tool-pools">
   <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:0 0 6px">Catch Pools</h2>
-  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Filter by zone, bait, and skill level to see what you can catch. All filters stack.</p>
+  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Each zone has fishing areas with their own catch pool. Filter by zone, bait, or skill to see what bites where. Areas within a zone have different fish.</p>
   <div class="tool-form">
     <label>Zone<select id="cpZone"><option value="">-- All zones --</option></select></label>
     <label>Bait<select id="cpBait"><option value="">-- All baits --</option></select></label>
     <label>Max Skill<input type="number" id="cpSkill" min="0" max="120" value="0" placeholder="0 = all"></label>
     <span class="tool-count" id="cpCount"></span>
   </div>
-  <div style="overflow-x:auto" id="cpOut"></div>
+  <div class="pool-legend">
+    <span><span class="bdg bdg-sml">Small</span> Small fish</span>
+    <span><span class="bdg bdg-lrg">Large</span> Large fish</span>
+    <span><span class="bdg bdg-legend">Legend</span> Legendary</span>
+    <span><span class="bdg bdg-item">Item</span> Junk / gear</span>
+  </div>
+  <div id="cpOut"></div>
 </div>
 
 <!-- ═══ SKILL-UP ADVISOR ═══ -->
@@ -380,7 +411,7 @@
 <!-- ═══ ISOLATION ═══ -->
 <div class="tool-pane" id="tool-isolate">
   <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:0 0 6px">Fish Isolation</h2>
-  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Pick a target fish to find the best bait + zone combo that minimizes bycatch. Lower bycatch = more of your target per trip.</p>
+  <p style="color:var(--ink-soft);font-size:.86rem;margin:0 0 12px">Pick a target fish to find the best bait + area combo that minimizes bycatch. Each area within a zone has its own pool &mdash; bycatch is counted per area, not per zone. Items (junk) are excluded from bycatch counts.</p>
   <div class="tool-form">
     <label>Target Fish<select id="isoFish"><option value="-1">-- Pick a fish --</option></select></label>
     <span class="tool-count" id="isoCount"></span>
@@ -972,11 +1003,18 @@ function toolPctCls(v,inv){
 /* ═══════════════════════════════════════════════════════════════
    CATCH POOLS
    ═══════════════════════════════════════════════════════════════ */
+function poolTypeBdg(f){
+  if(!f)return '';
+  if(f[13])return '<span class="bdg bdg-item">Item</span>';
+  if(f[5])return '<span class="bdg bdg-legend">Legend</span>';
+  if(f[3]==='large')return '<span class="bdg bdg-lrg">Large</span>';
+  return '<span class="bdg bdg-sml">Small</span>';
+}
 function initPools(){
   cpInit=true;
   var cpZ=document.getElementById('cpZone');
   var cpB=document.getElementById('cpBait');
-  Object.keys(FD.zf).sort().forEach(function(z){
+  Object.keys(FD.za).sort().forEach(function(z){
     var o=document.createElement('option');o.value=z;o.textContent=z;cpZ.appendChild(o);
   });
   Object.keys(B).sort(function(a,b){return B[a][0].localeCompare(B[b][0]);}).forEach(function(id){
@@ -993,40 +1031,56 @@ function renderPool(){
   var sk=parseInt(document.getElementById('cpSkill').value)||0;
   var baitCatches={};
   if(baitId&&FD.bf[baitId])FD.bf[baitId].forEach(function(e){baitCatches[String(e[0])]=e[1];});
-  var zoneFishIds=null;
-  if(zone&&FD.zf[zone]){zoneFishIds=new Set();FD.zf[zone].forEach(function(e){zoneFishIds.add(String(e[0]));});}
-  var results=[];
-  Object.keys(F).forEach(function(id){
-    var f=F[id];if(isJunk(id))return;
-    if(zone&&zoneFishIds&&!zoneFishIds.has(id))return;
-    if(baitId&&!(id in baitCatches))return;
-    if(sk>0&&f[1]>sk+50)return;
-    var pw=baitId?baitCatches[id]||0:0;
-    var rarity=0;
-    if(zone&&FD.zf[zone])FD.zf[zone].forEach(function(e){if(String(e[0])===id)rarity=e[1];});
-    results.push({id:id,name:f[0],skill:f[1],rank:f[6],size:f[3],water:f[4],legendary:f[5],npc:f[12],stack:f[11],pw:pw,rarity:rarity});
+  var out=document.getElementById('cpOut');
+  if(!zone&&!baitId&&!sk){out.innerHTML='<p style="color:var(--ink-faint);text-align:center;padding:24px">Select a filter to begin</p>';return;}
+  var zones=zone?[zone]:Object.keys(FD.za).sort();
+  var totalFish=0;var htm='';
+  zones.forEach(function(zn){
+    var areas=FD.za[zn];if(!areas)return;
+    var areaNames=Object.keys(areas).sort();
+    var zoneHtm='';var zoneFishCt=0;
+    areaNames.forEach(function(aname){
+      var fishList=areas[aname];
+      var rows=[];
+      fishList.forEach(function(entry){
+        var fid=String(entry[0]);var rarity=entry[1];
+        var f=F[fid];if(!f)return;
+        if(baitId&&!(fid in baitCatches))return;
+        if(sk>0&&f[1]>sk+50)return;
+        var pw=baitId?baitCatches[fid]||0:0;
+        rows.push({id:fid,f:f,rarity:rarity,pw:pw});
+      });
+      if(!rows.length)return;
+      var fishCt=rows.filter(function(r){return !r.f[13];}).length;
+      var itemCt=rows.length-fishCt;
+      zoneFishCt+=fishCt;
+      var ctLabel=fishCt+' fish'+(itemCt?' + '+itemCt+' items':'');
+      zoneHtm+='<div class="pool-area open">';
+      zoneHtm+='<div class="pool-area-head" onclick="this.parentElement.classList.toggle(\'open\')"><span>'+h(aname)+'</span><span class="pa-ct">'+ctLabel+'</span><span class="pa-arr">&#9660;</span></div>';
+      zoneHtm+='<div class="pool-area-body">';
+      rows.sort(function(a,b){
+        if(a.f[13]!==b.f[13])return a.f[13]-b.f[13];
+        return b.rarity-a.rarity||a.f[1]-b.f[1];
+      });
+      rows.forEach(function(r){
+        var cls='pool-row'+(r.f[13]?' is-item':'');
+        zoneHtm+='<div class="'+cls+'">';
+        zoneHtm+='<div class="pr-name">'+(typeof iconSpan==='function'?iconSpan(r.id):'')+poolTypeBdg(r.f)+' <a href="#" onclick="switchToCodex(\''+r.id+'\');return false">'+h(r.f[0])+'</a></div>';
+        if(baitId)zoneHtm+='<div class="pr-stat">'+pwStars(r.pw)+'</div>';
+        zoneHtm+='<div class="pr-stat">Sk '+r.f[1]+'</div>';
+        zoneHtm+='<div class="pr-stat" style="color:var(--ink-faint)">'+r.rarity+'</div>';
+        var npc=r.f[12];var sv=npc*(r.f[11]||1);
+        zoneHtm+='<div class="pr-stat" style="color:var(--gil)">'+(sv?gilFmt(sv):'—')+'</div>';
+        zoneHtm+='</div>';
+      });
+      zoneHtm+='</div></div>';
+    });
+    if(!zoneHtm)return;
+    totalFish+=zoneFishCt;
+    htm+='<div class="pool-zone"><div class="pool-zone-head">'+h(zn)+' <span class="pzc">'+zoneFishCt+' fish</span></div>'+zoneHtm+'</div>';
   });
-  results.sort(function(a,b){return b.pw-a.pw||a.skill-b.skill;});
-  document.getElementById('cpCount').textContent=results.length+' fish';
-  if(!zone&&!baitId&&!sk){document.getElementById('cpOut').innerHTML='<p style="color:var(--ink-faint);text-align:center;padding:24px">Select a filter to begin</p>';return;}
-  var t='<table class="tool-tbl"><thead><tr><th>Fish</th><th class="ra">Skill</th><th class="ra">Rank</th>';
-  if(baitId)t+='<th>Power</th>';
-  t+='<th>Size</th><th>Water</th>';
-  if(zone)t+='<th class="ra">Rarity</th>';
-  t+='<th class="ra">NPC</th><th class="ra">Stack Val</th></tr></thead><tbody>';
-  results.forEach(function(r){
-    var sv=r.npc*r.stack;
-    t+='<tr><td>'+(typeof iconSpan==='function'?iconSpan(r.id):'')+'<a href="#" onclick="switchToCodex(\''+r.id+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.name)+'</a>';
-    if(r.legendary)t+=' <span class="bdg bdg-legend">Legend</span>';
-    t+='</td><td class="ra">'+r.skill+'</td><td class="ra">'+r.rank+'</td>';
-    if(baitId)t+='<td>'+pwStars(r.pw)+'</td>';
-    t+='<td>'+r.size+'</td><td>'+r.water+'</td>';
-    if(zone)t+='<td class="ra" style="color:var(--ink-faint)">'+r.rarity+'</td>';
-    t+='<td class="ra" style="color:var(--gil)">'+(r.npc?gilFmt(r.npc):'—')+'</td>';
-    t+='<td class="ra" style="color:var(--gil);font-weight:700">'+(sv?gilFmt(sv):'—')+'</td></tr>';
-  });
-  t+='</tbody></table>';
-  document.getElementById('cpOut').innerHTML=results.length?t:'<p style="color:var(--ink-faint);text-align:center;padding:24px">No fish match this combination</p>';
+  document.getElementById('cpCount').textContent=totalFish+' fish';
+  out.innerHTML=htm||'<p style="color:var(--ink-faint);text-align:center;padding:24px">No fish match this combination</p>';
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1137,32 +1191,29 @@ function renderIsolation(){
   if(!targetId||targetId==='-1'){out.innerHTML='<p style="color:var(--ink-faint)">Select a target fish above.</p>';if(cnt)cnt.textContent='';return;}
   var target=F[targetId];
   if(!target){out.innerHTML='<p style="color:var(--ink-faint)">Fish not found.</p>';return;}
-  var targetZones=FD.fz[targetId]||[];
+  var targetAreas=FD.fa[targetId]||[];
   var targetBaits=FD.fb[targetId]||[];
-  var zoneFishMap={};
-  targetZones.forEach(function(tz){
-    var zone=tz[0];
-    if(!zoneFishMap[zone]){zoneFishMap[zone]=new Set();(FD.zf[zone]||[]).forEach(function(e){zoneFishMap[zone].add(String(e[0]));});}
-  });
   var baitCatchMap={};
   targetBaits.forEach(function(tb){
     var bid=String(tb[0]);
     if(!baitCatchMap[bid]){baitCatchMap[bid]=new Set();(FD.bf[bid]||[]).forEach(function(e){baitCatchMap[bid].add(String(e[0]));});}
   });
-  var uniqueZones={};
-  targetZones.forEach(function(tz){if(!uniqueZones[tz[0]]||tz[1]>uniqueZones[tz[0]])uniqueZones[tz[0]]=tz[1];});
   var results=[];
   targetBaits.forEach(function(tb){
     var baitId=String(tb[0]);var baitPw=tb[1];
     var baitName=B[baitId]?B[baitId][0]:'Bait #'+baitId;
     var baitCatches=baitCatchMap[baitId]||new Set();
-    Object.keys(uniqueZones).forEach(function(zone){
-      var zoneFish=zoneFishMap[zone]||new Set();
+    targetAreas.forEach(function(ta){
+      var zone=ta[0];var area=ta[1];var rarity=ta[2];
+      var areaFish=(FD.za[zone]&&FD.za[zone][area])||[];
       var bycatch=[];
-      zoneFish.forEach(function(fid){
-        if(fid===targetId)return;if(!baitCatches.has(fid))return;
+      areaFish.forEach(function(entry){
+        var fid=String(entry[0]);
+        if(fid===targetId)return;
+        if(!baitCatches.has(fid))return;
         var f=F[fid];if(!f)return;
-        bycatch.push({id:fid,name:f[0],skill:f[1]});
+        if(f[13])return;
+        bycatch.push({id:fid,name:f[0],skill:f[1],size:f[3]});
       });
       bycatch.sort(function(a,b){return a.skill-b.skill;});
       var bestRod=null;
@@ -1170,14 +1221,14 @@ function renderIsolation(){
         if(rod[2]!==target[3])return;if(target[6]>rod[4])return;
         if(!bestRod||rod[4]<bestRod[4])bestRod=rod;
       });
-      results.push({baitId:baitId,baitName:baitName,baitPw:baitPw,zone:zone,rarity:uniqueZones[zone],bycatch:bycatch,count:bycatch.length,bestRod:bestRod});
+      results.push({baitId:baitId,baitName:baitName,baitPw:baitPw,zone:zone,area:area,rarity:rarity,bycatch:bycatch,count:bycatch.length,bestRod:bestRod});
     });
   });
   results.sort(function(a,b){return a.count-b.count||b.baitPw-a.baitPw||b.rarity-a.rarity;});
   if(cnt)cnt.textContent=results.length+' combos';
-  if(!results.length){out.innerHTML='<p style="color:var(--ink-faint)">No bait+zone combos found.</p>';return;}
+  if(!results.length){out.innerHTML='<p style="color:var(--ink-faint)">No bait+area combos found.</p>';return;}
   var bestCount=results[0].count;
-  var t='<table class="tool-tbl"><thead><tr><th>Bait</th><th>Power</th><th>Zone</th><th class="ra">Bycatch</th><th>Rod</th><th>Other fish in pool</th></tr></thead><tbody>';
+  var t='<table class="tool-tbl"><thead><tr><th>Bait</th><th>Power</th><th>Zone</th><th>Area</th><th class="ra">Bycatch</th><th>Min Rod</th><th>Other fish in pool</th></tr></thead><tbody>';
   results.forEach(function(r){
     var scCls=r.count===0?'iso-0':r.count<=1?'iso-1':r.count<=2?'iso-2':r.count<=3?'iso-3':r.count<=5?'iso-4':'iso-hi';
     if(r.count===bestCount)scCls+=' iso-best';
@@ -1185,11 +1236,14 @@ function renderIsolation(){
     var byHtml='';
     if(r.bycatch.length){
       byHtml='<div class="iso-bycatch">';
-      r.bycatch.forEach(function(bc){byHtml+='<span>'+h(bc.name)+' <span style="opacity:.5">'+bc.skill+'</span></span>';});
+      r.bycatch.forEach(function(bc){
+        var sizeBdg=bc.size==='large'?' <span class="bdg bdg-lrg" style="font-size:.6rem">L</span>':'';
+        byHtml+='<span>'+h(bc.name)+sizeBdg+' <span style="opacity:.5">'+bc.skill+'</span></span>';
+      });
       byHtml+='</div>';
     }else{byHtml='<span style="color:var(--gain);font-weight:600">Perfect isolation!</span>';}
     t+='<tr><td>'+(typeof iconSpan==='function'?iconSpan(r.baitId):'')+'<a href="#" onclick="switchToCodex(\''+r.baitId+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.baitName)+'</a></td>';
-    t+='<td>'+pwStars(r.baitPw)+'</td><td>'+h(r.zone)+'</td>';
+    t+='<td>'+pwStars(r.baitPw)+'</td><td>'+h(r.zone)+'</td><td style="color:var(--fish);font-size:.78rem">'+h(r.area)+'</td>';
     t+='<td class="ra"><span class="iso-score '+scCls+'">'+r.count+'</span></td>';
     t+='<td>'+rodStr+'</td><td>'+byHtml+'</td></tr>';
   });

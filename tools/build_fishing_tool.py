@@ -96,6 +96,16 @@ fb = {}
 for r in c.execute('SELECT fish_item_id, bait_item_id, power FROM fishing_bait_for ORDER BY power DESC'):
     fb.setdefault(str(r['fish_item_id']), []).append([r['bait_item_id'], r['power']])
 
+# za: zone -> area -> [[fish_item_id, rarity], ...]
+za = {}
+for r in c.execute('SELECT zone, area, fish_item_id, rarity FROM fishing_areas ORDER BY zone, area, rarity DESC'):
+    za.setdefault(r['zone'], {}).setdefault(r['area'], []).append([r['fish_item_id'], r['rarity']])
+
+# fa: fish_item_id -> [[zone, area, rarity], ...]
+fa = {}
+for r in c.execute('SELECT fish_item_id, zone, area, rarity FROM fishing_areas ORDER BY rarity DESC'):
+    fa.setdefault(str(r['fish_item_id']), []).append([r['zone'], r['area'], r['rarity']])
+
 # Recipes that use fish as ingredients
 fr = {}
 for r in c.execute('''
@@ -136,6 +146,7 @@ for nid in needed_ids:
 data = {
     'fish': fish, 'baits': baits, 'rods': rods,
     'zf': zf, 'bf': bf, 'fz': fz, 'fb': fb,
+    'za': za, 'fa': fa,
     'fr': fr, 'in': item_names,
 }
 js = 'var FD=' + json.dumps(data, separators=(',', ':')) + ';\n'
