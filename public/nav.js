@@ -24,6 +24,8 @@ var _SVG='<svg style="display:none" aria-hidden="true">'
 +' <symbol id="i-garden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></symbol>'
 +' <symbol id="i-regional" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V8l9-6 9 6v13"/><path d="M9 21v-6h6v6"/><path d="M3 8h18"/></symbol>'
 +' <symbol id="i-guide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 012-2h12a2 2 0 012 2v14"/><path d="M4 19a2 2 0 012-2h14v2a1 1 0 01-1 1H6a2 2 0 01-2-2z"/><path d="M8 7h8M8 11h5"/></symbol>'
++' <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3v18"/><path d="M5 3h12l-3 4 3 4H5"/></symbol>'
++' <symbol id="i-updates" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="5" cy="6" r="1.5" fill="currentColor"/><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="5" cy="18" r="1.5" fill="currentColor"/></symbol>'
 +'</svg>';
 
 var _LSB='c2826b6a0b9a2c9bd374a7344181a7e53f680b1c';
@@ -268,6 +270,10 @@ function initChrome(){
    sh+='<div class="sb-server"><strong>Phoenix</strong> <span>era 75 · ToAU</span></div>';
    sh+='<div class="sb-chars-label">In-Game Characters</div>';
    sh+='<div class="sb-chars"><span>Secrets</span> · <span>Secret</span></div>';
+   sh+='</div>';
+   sh+='<div style="display:flex;flex-direction:column;gap:1px;padding:6px 4px;border-top:1px solid var(--border)">';
+   sh+='<a href="/feedback" style="font-size:.8rem"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-flag"/></svg>Report a Bug</span></a>';
+   sh+='<a href="/changelog" style="font-size:.8rem"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-updates"/></svg>Updates</span></a>';
    sh+='</div>';
    sh+='<button class="sb-theme-toggle" id="themeBtn" type="button">';
    sh+='<svg class="sb-theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>';

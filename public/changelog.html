@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Updates — FFXI Crafting</title>
+<meta name="description" content="Recent changes, fixes, and new features on ffxicrafting.com.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+.cl-list{list-style:none;padding:0;margin:0}
+.cl-entry{padding:14px 0;border-bottom:1px solid var(--border)}
+.cl-entry:last-child{border-bottom:none}
+.cl-date{font-size:.72rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em}
+.cl-title{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--ink);margin:2px 0 4px}
+.cl-desc{font-size:.88rem;color:var(--ink-soft);line-height:1.5;margin:0}
+.cl-tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.cl-tag{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:3px;background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
+</style>
+<script src="/nav.js"></script>
+</head>
+<body>
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+ <section class="panel pad">
+  <h1 style="font-size:1.6rem;margin:0 0 .2em">Updates</h1>
+  <p style="color:var(--ink-soft);margin:0 0 1.2em;font-size:.88rem">Recent changes, fixes, and new tools. <a href="/feedback">Found something wrong? Report it.</a></p>
+  <ul class="cl-list" id="clList"><li style="color:var(--ink-faint);font-size:.88rem">Loading&hellip;</li></ul>
+ </section>
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script src="/search.js"></script>
+<script src="/icon-sprite.js"></script>
+<script src="/item-popup.js"></script>
+<script>
+(function(){
+ fetch('/data/changelog.json').then(function(r){return r.json()}).then(function(entries){
+  var el=document.getElementById('clList');
+  if(!entries.length){el.innerHTML='<li style="color:var(--ink-faint)">No updates yet.</li>';return;}
+  var h='';
+  for(var i=0;i<entries.length;i++){
+   var e=entries[i];
+   h+='<li class="cl-entry">';
+   h+='<div class="cl-date">'+e.date+'</div>';
+   h+='<div class="cl-title">'+e.title+'</div>';
+   h+='<p class="cl-desc">'+e.desc+'</p>';
+   if(e.tags&&e.tags.length){
+    h+='<div class="cl-tags">';
+    for(var t=0;t<e.tags.length;t++) h+='<span class="cl-tag">'+e.tags[t]+'</span>';
+    h+='</div>';
+   }
+   h+='</li>';
+  }
+  el.innerHTML=h;
+ }).catch(function(){
+  document.getElementById('clList').innerHTML='<li style="color:var(--ink-faint)">Failed to load changelog.</li>';
+ });
+})();
+</script>
+</body>
+</html>

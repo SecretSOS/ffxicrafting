@@ -97,10 +97,18 @@ h2{border-left:none;padding-left:0}
    <img src="/img/wip.png" alt="Work in progress">
    <div class="wip-text">
     <strong style="color:var(--ink)">Work in progress</strong> &mdash; data is parsed from server source code and cross-checked, but gaps remain.
-    <a href="/about-the-data">About this site</a> · report errors to <strong style="color:var(--accent)">SECRETSOS</strong> on Discord
+    <a href="/about-the-data">About this site</a> · <a href="/feedback" style="color:var(--accent);font-weight:600">report an error</a>
    </div>
   </div>
  </div>
+
+ <section class="panel pad" id="recentUpdates" style="display:none">
+  <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">
+   <h2 style="margin:0">Recent Updates</h2>
+   <a href="/changelog" style="font-size:.82rem;color:var(--accent)">View all &rsaquo;</a>
+  </div>
+  <div id="updatesList"></div>
+ </section>
 
  <section class="panel pad">
   <h2>Guides</h2>
@@ -159,5 +167,27 @@ h2{border-left:none;padding-left:0}
 <script src="/item-popup.js"></script>
 <script src="/table-tools.js" defer></script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script>
+(function(){
+ fetch('/data/changelog.json').then(function(r){return r.json()}).then(function(entries){
+  var sec=document.getElementById('recentUpdates');
+  var el=document.getElementById('updatesList');
+  if(!sec||!el||!entries.length)return;
+  sec.style.display='';
+  var h='',show=Math.min(entries.length,4);
+  for(var i=0;i<show;i++){
+   var e=entries[i];
+   h+='<div style="padding:8px 0;'+(i<show-1?'border-bottom:1px solid var(--border)':'')+'">';
+   h+='<div style="display:flex;align-items:baseline;gap:8px">';
+   h+='<span style="font-size:.72rem;color:var(--ink-faint);white-space:nowrap">'+e.date+'</span>';
+   h+='<span style="font-weight:600;font-size:.92rem;color:var(--ink)">'+e.title+'</span>';
+   h+='</div>';
+   h+='<p style="margin:2px 0 0;font-size:.82rem;color:var(--ink-soft);line-height:1.45">'+e.desc+'</p>';
+   h+='</div>';
+  }
+  el.innerHTML=h;
+ }).catch(function(){});
+})();
+</script>
 </body>
 </html>

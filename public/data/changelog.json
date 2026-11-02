@@ -1,0 +1,44 @@
+[
+  {
+    "date": "2026-11-01",
+    "title": "Bug report form & changelog",
+    "desc": "Added a site feedback form for reporting data errors and a changelog to track updates.",
+    "tags": ["site"]
+  },
+  {
+    "date": "2026-11-01",
+    "title": "Fishing Codex: TBA fish & zones",
+    "desc": "10 WOTG fish marked as TBA (not yet catchable on Phoenix). Skill-Up Advisor now shows fishing zones. TBA fish filtered from advisor and profit calculator.",
+    "tags": ["fishing"]
+  },
+  {
+    "date": "2026-10-29",
+    "title": "Fishing data audit",
+    "desc": "Fixed 5 rod rank values, re-added desynth recipes to profit finder, corrected bait affinities for several fish.",
+    "tags": ["fishing", "data"]
+  },
+  {
+    "date": "2026-10-28",
+    "title": "Vendor Directory launched",
+    "desc": "New tool: browse all NPC shops, guild merchants, regional vendors, conquest vendors, and curio vendors with prices and positions.",
+    "tags": ["tools"]
+  },
+  {
+    "date": "2026-10-15",
+    "title": "Fishing Codex launched",
+    "desc": "New Fishing Codex SPA replacing 198 static pages. 138 fish, 39 baits, 20 rods with zones, conditions, rod compatibility, recipes, and AH prices.",
+    "tags": ["tools", "fishing"]
+  },
+  {
+    "date": "2026-10-01",
+    "title": "Gardening Lookup launched",
+    "desc": "Every seed + pot + crystal combo and what it produces. Find rare material gathering sources.",
+    "tags": ["tools"]
+  },
+  {
+    "date": "2026-09-15",
+    "title": "Guild Points calculator",
+    "desc": "Cheapest turn-in for today's GP pattern. Cost per point for every item the guild accepts.",
+    "tags": ["tools"]
+  }
+]

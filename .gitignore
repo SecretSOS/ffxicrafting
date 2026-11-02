@@ -14,10 +14,8 @@ server/
 CLAUDE.md
 docs/
 
-# Node (Astro removed Oct 2026 — site is static, no build step)
+# Node (package.json needed for Vercel serverless functions)
 node_modules/
-package.json
-package-lock.json
 .astro/
 dist/
 src/
