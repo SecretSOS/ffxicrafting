@@ -64,6 +64,7 @@
 .bdg-hour{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent)}
 .bdg-moon{background:color-mix(in srgb,var(--lightning) 12%,transparent);color:var(--lightning);border:1px solid color-mix(in srgb,var(--lightning) 22%,transparent)}
 .bdg-season{background:color-mix(in srgb,var(--wind) 12%,transparent);color:var(--wind);border:1px solid color-mix(in srgb,var(--wind) 22%,transparent)}
+.bdg-tba{background:color-mix(in srgb,#888 15%,transparent);color:#aaa;border:1px solid color-mix(in srgb,#888 30%,transparent);font-style:italic}
 .bdg-ex{background:color-mix(in srgb,var(--loss) 12%,transparent);color:var(--loss);border:1px solid color-mix(in srgb,var(--loss) 22%,transparent)}
 .bdg-rare{background:color-mix(in srgb,var(--lightning) 12%,transparent);color:var(--lightning);border:1px solid color-mix(in srgb,var(--lightning) 22%,transparent)}
 .bdg-bait{background:color-mix(in srgb,var(--earth) 12%,transparent);color:var(--earth);border:1px solid color-mix(in srgb,var(--earth) 22%,transparent)}
@@ -283,6 +284,7 @@
     <span class="fchip" data-f="night">Night</span>
     <span class="fchip" data-f="legendary">Legendary</span>
     <span class="fchip" data-f="cookable">Cookable</span>
+    <span class="fchip" data-f="tba">TBA</span>
     <span class="fchip fchip-junk" data-f="junk">Show Junk Items</span>
   </div>
 
@@ -303,6 +305,7 @@
           <div class="intel-row"><span class="il"><span class="bdg bdg-fresh">Fresh</span></span><span class="iv"><b>Freshwater</b> — Rivers, lakes, ponds.</span></div>
           <div class="intel-row"><span class="il"><span class="bdg bdg-night">Night</span></span><span class="iv"><b>Night Only</b> — Bites 20:00–04:00 Vanadiel time only.</span></div>
           <div class="intel-row"><span class="il"><span class="bdg bdg-legend">Legend</span></span><span class="iv"><b>Legendary</b> — Quest fish / ultra-rare. Special conditions may apply.</span></div>
+          <div class="intel-row"><span class="il"><span class="bdg bdg-tba">TBA</span></span><span class="iv"><b>Not Yet Available</b> — Fish defined in data but not catchable on Phoenix (WOTG expansion zones not yet enabled).</span></div>
           <div class="intel-div"></div>
           <h4>Condition Badges</h4>
           <div class="intel-row"><span class="il"><span class="bdg bdg-hour">Tide</span></span><span class="iv"><b>Hour Pattern</b> — Bites more at specific Vanadiel hours. Patterns: Dawn/Dusk, High Tide, Low Tide, Night, Day.</span></div>
@@ -558,6 +561,7 @@ function filterFish(){
     if(activeFilter==='night'&&f[7]!==4)return false;
     if(activeFilter==='legendary'&&!f[5])return false;
     if(activeFilter==='cookable'&&!FD.fr[id])return false;
+    if(activeFilter==='tba'&&!f[19])return false;
     if(activeFilter==='junk'&&!isJunk(id))return false;
     if(q&&fishSearchIdx[id].indexOf(q)===-1)return false;
     return true;
@@ -580,6 +584,7 @@ function renderFishCard(id){
   var iconTxt=junk?'&#128465;':(size==='large'?'&#128031;':'&#128031;');
 
   var badges=skillBadge(skill)+sizeBadge(size)+waterBadge(water);
+  if(f[19])badges+='<span class="bdg bdg-tba">TBA</span>';
   if(legendary)badges+='<span class="bdg bdg-legend">Legend</span>';
   if(ex)badges+='<span class="bdg bdg-ex">Ex</span>';
   if(rare)badges+='<span class="bdg bdg-rare">Rare</span>';
@@ -1104,6 +1109,7 @@ function renderSkillup(){
   var rows=[];
   Object.keys(F).forEach(function(id){
     var f=F[id];if(isJunk(id))return;
+    if(f[19])return;
     if(f[1]<=sk)return;
     var diff=f[1]-sk;if(diff>50)return;
     var suc=skillupC(sk,f[1]);
@@ -1113,13 +1119,16 @@ function renderSkillup(){
     var eff=rod?Math.round(suc*land/100):suc;
     var badge=rod?toolRcBadge(f[6],f[3],rod):'';
     var dim=rod&&land<50;
-    rows.push({id:id,name:f[0],skill:f[1],diff:diff,rank:f[6],suc:suc,brk:brk,snp:snp,land:land,eff:eff,badge:badge,dim:dim});
+    var areas=FD.fa[id]||[];
+    var zoneMap={};
+    areas.forEach(function(a){zoneMap[a[0]]=zoneMap[a[0]]||[];zoneMap[a[0]].push(a[1]);});
+    rows.push({id:id,name:f[0],skill:f[1],diff:diff,rank:f[6],suc:suc,brk:brk,snp:snp,land:land,eff:eff,badge:badge,dim:dim,zones:zoneMap});
   });
   rows.sort(function(a,b){return b.eff-a.eff||a.diff-b.diff;});
   document.getElementById('suCount').textContent=rows.length+' fish';
   var t='<table class="tool-tbl"><thead><tr><th>Fish</th><th class="ra">Skill</th><th class="ra">Gap</th><th class="ra">Rank</th><th class="ra">Chance%</th>';
   if(rod)t+='<th>Rod</th><th class="ra">Break%</th><th class="ra">Snap%</th><th class="ra">Land%</th>';
-  t+='<th class="ra">Effective%</th></tr></thead><tbody>';
+  t+='<th class="ra">Effective%</th><th>Zones</th></tr></thead><tbody>';
   rows.forEach(function(r){
     t+='<tr'+(r.dim?' class="dim-row"':'')+'>';
     t+='<td>'+(typeof iconSpan==='function'?iconSpan(r.id):'')+'<a href="#" onclick="switchToCodex(\''+r.id+'\');return false" style="color:var(--ink);text-decoration:none">'+h(r.name)+'</a></td>';
@@ -1132,7 +1141,14 @@ function renderSkillup(){
       t+='<td class="ra '+toolPctCls(r.snp,false)+'">'+r.snp+'%</td>';
       t+='<td class="ra '+toolPctCls(r.land,true)+'">'+r.land+'%</td>';
     }
-    t+='<td class="ra '+toolPctCls(r.eff,true)+'" style="font-weight:700">'+r.eff+'%</td></tr>';
+    t+='<td class="ra '+toolPctCls(r.eff,true)+'" style="font-weight:700">'+r.eff+'%</td>';
+    var zk=Object.keys(r.zones);
+    var zHtml=zk.map(function(z){
+      var aa=r.zones[z];
+      var label=aa.length===1&&aa[0]==='Whole Zone'?z:z+' <span style="opacity:.5;font-size:.8em">('+aa.filter(function(a){return a!=='Whole Zone';}).join(', ')+')</span>';
+      return label;
+    }).join(', ');
+    t+='<td style="font-size:.82em;max-width:260px">'+zHtml+'</td></tr>';
   });
   t+='</tbody></table>';
   document.getElementById('suOut').innerHTML=rows.length?t:'<p style="color:var(--ink-faint);text-align:center;padding:24px">No fish above your skill level</p>';
@@ -1151,6 +1167,7 @@ function renderProfit(){
   var rows=[];
   Object.keys(F).forEach(function(id){
     var f=F[id];if(isJunk(id))return;
+    if(f[19])return;
     if(!f[12]||f[12]<=0)return;
     if(sk>0&&f[1]>sk+10)return;
     var sv=f[12]*f[11];

@@ -38,7 +38,14 @@ for r in c.execute('''
         r['base_delay'] or 0,# 16
         r['base_move'] or 0, # 17
         r['max_hook'] or 1,  # 18
+        0,                   # 19  tba (set below for fish with no area pools)
     ]
+
+# Mark fish that have no fishing_areas entries as TBA (future content)
+area_fish = set(r[0] for r in c.execute('SELECT DISTINCT fish_item_id FROM fishing_areas'))
+for fid, fdata in fish.items():
+    if int(fid) not in area_fish and not fdata[13]:
+        fdata[19] = 1
 
 baits = {}
 for r in c.execute('''
