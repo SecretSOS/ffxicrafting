@@ -60,6 +60,11 @@ fish_by_id = {f['item_id']: f for f in fish_all}
 bait_by_id = {b['item_id']: b for b in baits_all}
 rod_by_id = {r['item_id']: r for r in rods_all}
 
+# Areas that require special access notes (zone, area) → note text
+AREA_ACCESS_NOTES = {
+    ('North Gustaberg', 'Basin of Waterfall'): 'accessed from Dangruf Wadi',
+}
+
 # ─── Helpers ─────────────────────────────────────────────────────────
 
 def slugify(s):
@@ -239,6 +244,7 @@ td,th{padding:3px 6px}
 .detail-section table{width:100%}
 .detail-section td,.detail-section th{padding:3px 6px}
 .zone-rarity{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:.82rem}
+.area-note{font-size:.78rem;color:var(--ink-faint);font-style:italic}
 .rod-compat .ok{color:var(--wind)}
 .rod-compat .warn{color:var(--gil)}
 .rod-compat .bad{color:var(--fire)}
@@ -391,8 +397,12 @@ def build_fish_page(f):
         body += '<th data-sort="text">Zone</th><th data-sort="text">Area</th>'
         body += '<th data-sort="num">Rarity</th></tr></thead><tbody>\n'
         for z in sorted(zones, key=lambda x: (x['zone'], x['rarity'])):
+            area_text = esc(z['area'] or 'Main')
+            note = AREA_ACCESS_NOTES.get((z['zone'], z.get('area', '')))
+            if note:
+                area_text += f' <span class="area-note">({esc(note)})</span>'
             body += f'<tr><td>{zone_link(z["zone"])}</td>'
-            body += f'<td>{esc(z["area"] or "Main")}</td>'
+            body += f'<td>{area_text}</td>'
             body += f'<td class="zone-rarity">{z["rarity"]}</td></tr>\n'
         body += '</tbody></table></div></section>\n'
 
