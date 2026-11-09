@@ -154,8 +154,8 @@ HOUR_NAMES = {
 }
 
 MOON_NAMES = {
-    0: 'Any phase', 1: 'Any phase', 2: 'New moon favored',
-    3: 'Full moon favored', 4: 'Waning favored', 5: 'Waxing favored',
+    0: 'Any phase', 1: 'New moon favored', 2: 'Full moon favored',
+    3: 'Waning favored', 4: 'Waxing favored', 5: 'No preference',
 }
 
 def rod_compat_badge(fish, rod):
