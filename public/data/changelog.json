@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-08",
+    "title": "Fishing moon pattern fix",
+    "desc": "Fixed moon phase labels: 8 fish with pattern 5 showed blank badges, 70 fish with pattern 1 had wrong label. Corrected against server source (fishingutils.h).",
+    "tags": ["fishing", "data"]
+  },
+  {
     "date": "2026-11-01",
     "title": "Bug report form & changelog",
     "desc": "Added a site feedback form for reporting data errors and a changelog to track updates.",
