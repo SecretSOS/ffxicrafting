@@ -69,7 +69,7 @@ rods = []
 for r in c.execute('''
     SELECT r.item_id, r.name, r.size_type, r.min_rank, r.max_rank,
            r.fish_attack, r.fish_recovery, r.fish_time, r.breakable,
-           i.base_price
+           i.base_price, r.legendary
     FROM fishing_rods r
     LEFT JOIN items i ON i.id = r.item_id
     ORDER BY r.size_type, r.max_rank DESC
@@ -85,6 +85,7 @@ for r in c.execute('''
         r['fish_time'],     # 7
         r['breakable'],     # 8
         r['base_price'] or 0,# 9
+        r['legendary'] or 0,# 10
     ])
 
 zf = {}

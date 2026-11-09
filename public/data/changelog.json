@@ -1,9 +1,9 @@
 [
   {
     "date": "2026-11-08",
-    "title": "Fishing moon pattern fix",
-    "desc": "Fixed moon phase labels: 8 fish with pattern 5 showed blank badges, 70 fish with pattern 1 had wrong label. Corrected against server source (fishingutils.h).",
-    "tags": ["fishing", "data"]
+    "title": "Fishing Codex: skill-up advisor overhaul",
+    "desc": "Skill-up advisor now uses current server formulas (break/snap/lose/land), shows lose% column, in-city toggle, condition badges, and correct skill-up percentages. Fixed moon phase labels for 78 fish.",
+    "tags": ["fishing", "tools"]
   },
   {
     "date": "2026-11-01",
