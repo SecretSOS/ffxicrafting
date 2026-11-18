@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate public/index.html — FFXI Crafting homepage."""
-import os
+import json, os
+from html import escape
 from page_template import full_page
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,56 +33,17 @@ h2{border-left:none;padding-left:0}
 .wip-banner .wip-text{font-size:.9rem;color:var(--ink-soft);line-height:1.55}
 .badge-new{display:inline-block;background:#e63946;color:#fff;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle;animation:badge-pulse 2s ease-in-out infinite}
 @keyframes badge-pulse{0%,100%{opacity:1}50%{opacity:.6}}
-@media(max-width:640px){.hero-tools{grid-template-columns:1fr}.wip-banner{flex-direction:column;text-align:center}.wip-banner img{max-width:200px}}'''
+.updates-list{display:flex;flex-direction:column;gap:1px}
+.update-entry{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.update-entry:last-child{border-bottom:none}
+.update-date{flex-shrink:0;font-size:.78rem;color:var(--ink-faint);font-variant-numeric:tabular-nums;min-width:7em;padding-top:2px}
+.update-body strong{font-size:.92rem}
+.update-body p{margin:4px 0 0;font-size:.84rem;color:var(--ink-soft);line-height:1.45}
+.update-tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.update-tag{font-size:.68rem;padding:1px 7px;border-radius:4px;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);font-weight:600;letter-spacing:.03em}
+@media(max-width:640px){.wip-banner{flex-direction:column;text-align:center}.wip-banner img{max-width:200px}.update-entry{flex-direction:column;gap:2px}.update-date{min-width:0}}'''
 
 BODY = '''\
- <header class="panel pad">
-  <h1>FFXI Crafting Tools</h1>
-
-  <div class="hero-tools">
-   <a class="tool-card" href="/calculator">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/><path d="M9 3v18"/><path d="M13 13l4 4m0-4l-4 4"/></svg>
-    <h3>Crafting Calculator</h3></div>
-    <p>All recipes 1&ndash;100. Plug in prices, see cost per synth, success rates, HQ chances.</p>
-   </a>
-   <a class="tool-card" href="/profit">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20V10l4-6h8l4 6v10"/><path d="M4 20h16"/><circle cx="12" cy="14" r="3"/><path d="M12 11v-1m0 8v1m-3-4H8m8 0h-1"/></svg>
-    <h3>Profit Finder</h3></div>
-    <p>Recipes ranked by profit. Enter your skill levels and AH prices to find what&#8217;s worth crafting.</p>
-   </a>
-   <a class="tool-card" href="/shopping">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    <h3>Shopping List</h3></div>
-    <p>Pick a craft and skill range, get every material you need &mdash; vendors, drops, gathering, other synths.</p>
-   </a>
-   <a class="tool-card" href="/bcnm/profit">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-    <h3>BCNM Profit Ranker</h3></div>
-    <p>61 orb fights ranked by gil per seal. Enter sell prices to see which BCNMs are worth running.</p>
-   </a>
-   <a class="tool-card" href="/desynth">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8"/><path d="M8 6l4 4 4-4"/><path d="M5 12h14"/><path d="M8 18l4-4 4 4"/><path d="M12 14v8"/></svg>
-    <h3>Desynth Calculator</h3></div>
-    <p>538 desynth recipes. Success rate at your skill, what you get back, whether it&#8217;s worth breaking.</p>
-   </a>
-   <a class="tool-card" href="/guild-points">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
-    <h3>Guild Points</h3></div>
-    <p>Cheapest turn-in for today&#8217;s GP pattern. Cost per point for every item the guild accepts.</p>
-   </a>
-   <a class="tool-card" href="/fishing-lookup">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v14a4 4 0 01-8 0"/><path d="M9 2h6"/></svg>
-    <h3>Fishing Lookup</h3></div>
-    <p>138 fish with rod compatibility, break/snap rates, skill-up advisor, profit calculator, and bait matrix.</p>
-   </a>
-   <a class="tool-card" href="/gathering/gardening">
-    <div class="tc-head"><svg class="tc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V12"/><path d="M12 12c-3-4-7-3-8 0s2 5 8 0"/><path d="M12 12c3-4 7-3 8 0s-2 5-8 0"/><path d="M7 22h10"/></svg>
-    <h3>Gardening Lookup</h3></div>
-    <p>Every seed + pot + crystal combo and what it produces. Find rare material sources.</p>
-   </a>
-  </div>
- </header>
-
  <div class="panel pad">
   <div class="wip-banner">
    <img src="/img/wip.png" alt="Work in Progress">
@@ -97,46 +59,37 @@ BODY = '''\
  </div>
 
  <section class="panel pad">
-  <h2>Data &amp; Lookups</h2>
-  <p class="tag">7,164 items, 4,443 recipes, 41,000+ sources &mdash; all from the LandSandBoat server source.</p>
-  <div class="data-grid">
-   <a class="data-card" href="/crafts">
-    <h3>Crafts</h3>
-    <p>8 crafts &mdash; recipes, guild hours, rank tests, GP items.</p>
-   </a>
-   <a class="data-card" href="/gathering/">
-    <h3>Gathering</h3>
-    <p>Mining, logging, fishing, gardening, clamming &mdash; drop tables by zone.</p>
-   </a>
-   <a class="data-card" href="/zone/">
-    <h3>Zones</h3>
-    <p>162 zones &mdash; mob drops, vendors, gathering points, chests/coffers.</p>
-   </a>
-   <a class="data-card" href="/nm/">
-    <h3>NMs</h3>
-    <p>530 notorious monsters &mdash; drop tables, rates, spawn types.</p>
-   </a>
-   <a class="data-card" href="/bcnm">
-    <h3>BCNMs</h3>
-    <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
-   </a>
-   <a class="data-card" href="/guides/jobs/beastmaster">
-    <h3>Job Guides</h3>
-    <p>Beastmaster, White Mage, Ninja &mdash; leveling, gear, and strategies.</p>
-   </a>
+  <h2>Recent Updates</h2>
+  <div class="updates-list">
+{updates}
   </div>
-  <div class="source-note">
-   <p>Drop rates, crafting math, vendor inventories &mdash; all read from the <a href="https://github.com/LandSandBoat/server" rel="noopener">LandSandBoat</a> source code, not wikis.</p>
-   <p style="margin-top:.5em">Click any item name to see its sources, recipes, and prices &mdash; no wiki needed.</p>
-  </div>
+  <p style="margin-top:1em;font-size:.85rem"><a href="/changelog">View full changelog &rarr;</a></p>
  </section>
 '''
+
+
+def _build_updates(limit=8):
+    cl_path = os.path.join(ROOT, 'public', 'data', 'changelog.json')
+    with open(cl_path, encoding='utf-8') as f:
+        entries = json.load(f)
+    rows = []
+    for e in entries[:limit]:
+        tags = ''.join(f'<span class="update-tag">{escape(t)}</span>' for t in e.get('tags', []))
+        rows.append(
+            f'   <div class="update-entry">'
+            f'<span class="update-date">{escape(e["date"])}</span>'
+            f'<div class="update-body"><strong>{escape(e["title"])}</strong>'
+            f'<p>{escape(e["desc"])}</p>'
+            f'<div class="update-tags">{tags}</div></div></div>'
+        )
+    return '\n'.join(rows)
+
 
 page = full_page(
     title='FFXI Crafting Tools — calculator, profit finder, shopping list for era-75',
     description='FFXI era-75 crafting calculator, profit finder, and shopping list. Data pulled from the LandSandBoat server source.',
     og_url='https://ffxicrafting.com/',
-    body_html=BODY,
+    body_html=BODY.format(updates=_build_updates()),
     active='',
     crumbs=None,
     lsb_commit=LSB_COMMIT,
