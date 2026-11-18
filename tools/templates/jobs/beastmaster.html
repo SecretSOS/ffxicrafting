@@ -1,0 +1,4814 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beastmaster Tamer's Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#eef1f4; --ink:#14203a; --muted:#56627a; --rule:#c9d1dc;
+ --accent:#d9381e; --gold:#f0b429; --band:#14203a;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+.cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}
+.cover:after{content:"BST";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}
+.cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}
+.cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}
+.cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}
+h1.mast{display:none}
+main>h2:first-of-type{display:none}
+h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+p,li{max-width:72ch}
+em{color:var(--muted)}
+.band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}
+.band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}
+.band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}
+.band+p em{font-size:17px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}
+.toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}
+.toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.toc a:hover,.toc a:focus{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}
+td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}
+tr:nth-child(even) td{background:#f6f8fa}
+code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}
+pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}
+pre code{background:none;color:inherit;padding:0}
+.box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}
+.box p{margin:4px 0}.box ul{margin:6px 0;padding-left:20px}
+.box>p:first-child strong:first-child,.box>ul:first-child{}
+.box strong:first-child{color:var(--c);letter-spacing:.06em}
+.tip{--c:var(--tip)}.warn{--c:var(--warn)}.gil{--c:var(--gil)}.code{--c:var(--code);background:#f5f2fc}.chal{--c:var(--chal)}.check{--c:var(--check)}
+.recap{--c:var(--ink);background:var(--ink);color:#fff}.recap strong:first-child{color:var(--gold)!important}
+.legend{--c:var(--gold);background:#fffaf0}.legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.legend li strong{color:var(--ink)!important}
+.st{color:var(--accent)}.st.off{color:var(--rule)}
+.q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}
+.ok{color:#15803d;font-weight:800;font-size:1.15em}
+.edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}
+.edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}
+.fx{font-size:1.35em;line-height:1;white-space:nowrap}
+.foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.foodchain svg{width:100%;height:auto;display:block}
+.foodchain .fp{font-size:14px}
+.foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}
+.foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}
+.foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}
+.foodchain .fa{stroke:#d9381e;stroke-width:3}
+.foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}
+.foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.set-charm{--s:#c0266d}.set-heal{--s:#15803d}.set-ws{--s:#b91c1c}.set-tp{--s:#1d4ed8}
+.set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}
+.sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}
+.sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}
+.setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}
+.seticon{font-size:26px;line-height:1}
+.settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.set .tw{border-color:var(--s)}.set th{background:var(--s)}
+.set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}
+.fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.fstep b{font-size:22px;line-height:1}.fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}
+.fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}
+.fstep small{font-size:12px;opacity:.9}
+.fstep:hover,.fstep:focus-visible{filter:brightness(1.1)}
+@media (max-width:700px){.flow{grid-template-columns:1fr 1fr;gap:6px}.fstep,.fstep:first-child{clip-path:none}}
+@media (max-width:520px){.band,.cover{margin-left:-16px;margin-right:-16px}main{padding:0 16px 60px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>Beastmaster</h1><p>The complete tamer's handbook: unlock, charm math straight from the server code, 1–75 camps, every era jug, gear, AF, and the NMs worth your time.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">BEASTMASTER</h1>
+<h2>The Complete Tamer's Handbook — Phoenix Edition</h2>
+<p><em>Why fight the monster when you can make it fight for you?</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE BEASTMASTER</a><a href="#chapter-2">CHAPTER 2 · BECOMING A BEASTMASTER</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-5">CHAPTER 5 · CHARM, DECODED</a><a href="#chapter-6">CHAPTER 6 · THE MENAGERIE (JUG PET COMPENDIUM)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · LEGENDARY QUESTS (ARTIFACT ARMOR)</a><a href="#chapter-9">CHAPTER 9 · MOST WANTED (NM HUNTING GUIDE)</a><a href="#chapter-10">CHAPTER 10 · THE ENDGAME TAMER</a><a href="#chapter-11">CHAPTER 11 · GIL LIKE A BEAST</a><a href="#appendix-a">APPENDIX A · MACRO CHEAT SHEET</a><a href="#appendix-b">APPENDIX B · LEVEL-BY-LEVEL CHECKLIST</a><a href="#appendix-c">APPENDIX C · GLOSSARY</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most BST guides on the web describe the game in 2012 or later. This one doesn't. Every level, stat line, drop and quest step here comes from <strong>Phoenix's own server code</strong> (github.com/phoenixffxi/Phoenix), with the era-revert modules applied. Leveling camps come from veteran 75-era guides and were <strong>checked against Phoenix's actual mob levels</strong>. Where a camp didn't line up, it got cut.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves you time or a death</li>
+<li><strong>WARNING</strong> — a common way to die or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>TAMER'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+
+<h2>BST AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Solo powerhouse, pet-tank, puller, money-maker</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> — the best solo job in the era</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — rarely invited to XP parties; shines in all-BST parties</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span></td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — easy to start, deep to master</td>
+</tr>
+<tr>
+<td><strong>Main weapons</strong></td>
+<td>Axe (primary), Scythe (secondary)</td>
+</tr>
+<tr>
+<td><strong>Key stat</strong></td>
+<td>CHR (charm), MND (Reward)</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Low early. Spikes at 50+ (Swift Belt, Light Staff, AF)</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE BEASTMASTER</h2></header>
+<p><em>You don't tank. You don't nuke. You walk up to the scariest thing in the zone, smile, and make it your friend.</em></p>
+<p>BST plays two ways:</p>
+<ol>
+<li><strong>Charm.</strong> Take a wild mob and use it to kill other mobs. Strongest pets, free, and the core of the job from 1–75.</li>
+<li><strong>Call Beast (jug pets).</strong> Equip a jug in the ammo slot and summon a familiar. Weaker than a good charm, but it never breaks free and never turns on you.</li>
+</ol>
+<p>The rhythm of BST soloing:
+<strong>Charm a strong mob → Fight a weak mob → Reward/Heel as needed → kill → repeat → when charm runs low, Leave, then re-charm or kill the pet yourself.</strong></p>
+<h3>Job Abilities on Phoenix (era-reverted)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Familiar</strong> (2-hour)</td>
+<td>2:00:00</td>
+<td>Extends your current pet's charm and boosts its stats.</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>Charm</strong></td>
+<td>0:15</td>
+<td>The heart of the job.</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>Fight</strong></td>
+<td>0:05</td>
+<td>Send the pet at a target.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Gauge</strong></td>
+<td>0:30</td>
+<td>Shows charm odds. No CHARM_CHANCE staff bonus is counted (see Ch.5).</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Heel</strong></td>
+<td>0:10</td>
+<td>Pet returns to you.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Reward</strong></td>
+<td>3:00</td>
+<td>Heal pet with pet food. MND matters.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Stay</strong></td>
+<td>0:10</td>
+<td>Pet stays put.</td>
+</tr>
+<tr>
+<td>23</td>
+<td><strong>Call Beast</strong></td>
+<td>5:00</td>
+<td>Summon a jug pet.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Sic</strong></td>
+<td>2:00</td>
+<td>Pet uses a TP move. Era: Sic, <strong>not</strong> Ready.</td>
+</tr>
+<tr>
+<td>30</td>
+<td><strong>Tame</strong></td>
+<td>10:00</td>
+<td>Pacify/lower enmity on a mob.</td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Leave</strong></td>
+<td>0:10</td>
+<td>Release your pet.</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Snarl</strong></td>
+<td>0:30</td>
+<td>Transfer your hate to the pet. Tagged <em>WotG</em> in Phoenix's data (see note).</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Feral Howl</strong> (merit)</td>
+<td>15:00</td>
+<td>Terror on target.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Killer Instinct</strong> (merit)</td>
+<td>15:00</td>
+<td>Shares pet's Killer effect with party.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — Phoenix's era module (<code>modules/era/sql/soa/job_adjustments.sql</code>) reverts Sic to a 2:00 recast and Ready to 60s. Its jug module re-maps jug pet skill lists so <strong>Sic</strong> uses the right moves, which means the era command is Sic. <strong>Ready</strong> and <strong>Bestial Loyalty</strong> are tagged WotG/SoA and shouldn't be on your bar.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — Snarl.</strong> Phoenix's ability table tags Snarl as WotG content. Whether you actually get it at 45 depends on Phoenix's content flags, which the public repo doesn't show. Check <code>/ja</code> at 45 before you build a strategy around it.</p>
+</aside>
+<h3>Job Traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Vermin Killer</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Resist Slow I</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Bird Killer</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Amorph Killer</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Resist Slow II</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Lizard Killer</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Aquan Killer</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Resist Slow III</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Plantoid Killer</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Beast Killer</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Resist Slow IV</td>
+</tr>
+<tr>
+<td>75 (merit)</td>
+<td>Beast Affinity, Beast Healer</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Tandem Strike/Blow, Stout Servant and Fencer are post-era (RoV/Abyssea) and not part of a Phoenix BST.</em></p>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Charm is your main weapon. Jugs are your safety net.</li>
+<li>Use Sic, not Ready.</li>
+<li>Verify Snarl at 45. Don't assume it.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A BEASTMASTER</h2></header>
+<p><em>Three quests, all in Jeuno. You need a level 30 job.</em></p>
+<h3>Step 1: Chocobo's Wounds (Upper Jeuno)</h3>
+<ol>
+<li>Find the injured <strong>Chocobo</strong> in Upper Jeuno, next to Osker (by the chocobo stables).</li>
+<li>Trade it <strong>Gausebit Wildgrass</strong>, one clump at a time. Each feeding has a ~45 second cooldown, and it takes several feedings. Bring a stack.</li>
+<li>Keep feeding and talking until the quest completes.</li>
+</ol>
+<h3>Step 2: Save My Son (Lower Jeuno → Qufim Island)</h3>
+<ol>
+<li>At level 30+, check the <strong>Merchant's House door</strong> in Lower Jeuno (<code>!pos -82 -7 -168</code>). Accept the quest.</li>
+<li>Talk to <strong>Shalott</strong> in Upper Jeuno.</li>
+<li>Go to <strong>Qufim Island</strong> and examine the <strong>Nightflowers</strong> (<code>!pos -264 -3 28</code>). <strong>Only works from 21:30 to 05:40 Vana'diel time.</strong></li>
+<li>Return to the Merchant's House door in Lower Jeuno.</li>
+<li><strong>Reward:</strong> 2,100 gil + <strong>Beast Whistle</strong> (Neck, Lv24 BST: VIT+2 CHR+2). That's your first charm piece.</li>
+</ol>
+<h3>Step 3: Path of the Beastmaster (Upper Jeuno)</h3>
+<ol>
+<li>Talk to <strong>Brutus</strong> in Upper Jeuno (<code>!pos -55 8 95</code>).</li>
+<li>BST is unlocked. Change jobs at your Mog House.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — Qufim at night is aggro-heavy for a level 30. Bring Sneak/Invisible or Silent Oils/Prism Powders.</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT</strong> — BST unlocked, Beast Whistle in your bag.</p>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>On a ToAU-era server there is no Dancer. That alone kills half the "best BST sub" advice online.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Subjob</th>
+<th>Comes online</th>
+<th>What it gives BST</th>
+<th>Best use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/WHM</strong></td>
+<td>from BST 2</td>
+<td>Cure, Dia, Paralyna/Poisona, <strong>Sneak &amp; Invisible</strong> (BST 40+ as WHM 20)</td>
+<td>Default solo sub. Safety, travel, status removal.</td>
+</tr>
+<tr>
+<td><strong>/NIN</strong></td>
+<td>BST 20+ (Dual Wield), BST 24+ (Utsusemi: Ichi)</td>
+<td>Two axes, shadows</td>
+<td>Fastest kill speed. Strong 50+ with Rampage.</td>
+</tr>
+<tr>
+<td><strong>/THF</strong></td>
+<td>BST 30+ (Sneak Attack, Treasure Hunter), 50+ (Flee)</td>
+<td>TH for drops, Flee to escape breaks</td>
+<td>Farming and gil camps.</td>
+</tr>
+<tr>
+<td><strong>/WAR</strong></td>
+<td>BST 30 (Berserk), 50 (Double Attack)</td>
+<td>Raw damage, Provoke</td>
+<td>Axe or scythe DD, easy weapon swaps.</td>
+</tr>
+<tr>
+<td><strong>/RDM</strong></td>
+<td>—</td>
+<td>Cures, Bind, Gravity, Stoneskin (BST 68+)</td>
+<td>Niche. Bind/Gravity help escape broken charms.</td>
+</tr>
+<tr>
+<td><strong>/BLM</strong></td>
+<td>—</td>
+<td>Sleep, Bind, Escape</td>
+<td>Niche. Crowd control.</td>
+</tr>
+<tr>
+<td><strong>/DRK</strong></td>
+<td>—</td>
+<td>Last Resort, Absorbs</td>
+<td>Rare. Pure damage builds only.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Subjob Showdown — by level bracket</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Bracket</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–20</td>
+<td>/WHM or /WAR</td>
+<td>Cures keep you alive; /WAR if you melee hard</td>
+</tr>
+<tr>
+<td>20–40</td>
+<td>/NIN or /WHM</td>
+<td>Dual Wield at 20; Sneak/Invis needed for travel at 40</td>
+</tr>
+<tr>
+<td>40–60</td>
+<td>/WHM (safety) or /NIN (speed)</td>
+<td>/THF for farming camps</td>
+</tr>
+<tr>
+<td>60–75</td>
+<td>/NIN or /WHM</td>
+<td>/NIN for kill speed, /WHM for dangerous camps</td>
+</tr>
+<tr>
+<td>Endgame</td>
+<td>/NIN, /WHM, /THF</td>
+<td>Depends on the event role</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — The 75-era consensus is that <strong>/NIN is fastest</strong> for XP and <strong>/WHM is safest</strong>. If you skip /WHM, carry <strong>Uleguerand Milk</strong> for regen and a few potions for emergencies.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — Charm success uses your <strong>BST job level even when BST is your subjob</strong>. A lvl 37 /BST charms like a lvl 37 BST, not a lvl 75.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>/WHM and /NIN are the two real choices. /THF is for farming.</li>
+<li>No /DNC exists on Phoenix.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>Every level, family and "can it be charmed?" below comes from Phoenix's own zone files. If a mob can't be charmed on Phoenix, it isn't listed as a pet.</em></p>
+<h2>THE KILL CHART</h2>
+<figure class="foodchain"><svg viewBox="0 0 1130 360" role="img" aria-label="Killer effect food chain: Beasts over Lizards over Vermin over Plantoids over Beasts; Aquans over Amorphs over Birds over Aquans; Undead and Arcana, Dragons and Demons, Luminions and Luminians each over the other."><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#d9381e"/></marker></defs><text x="255" y="22" text-anchor="middle" class="ft">LAND CIRCLE</text><line x1="333" y1="82" x2="405" y2="158" class="fa" marker-end="url(#ah)"/><text x="391.0" y="114.0" text-anchor="middle" class="fl">edge</text><line x1="405" y1="222" x2="333" y2="298" class="fa" marker-end="url(#ah)"/><text x="391.0" y="274.0" text-anchor="middle" class="fl">edge</text><line x1="177" y1="298" x2="105" y2="222" class="fa" marker-end="url(#ah)"/><text x="119.0" y="274.0" text-anchor="middle" class="fl">edge</text><line x1="105" y1="158" x2="177" y2="82" class="fa" marker-end="url(#ah)"/><text x="119.0" y="114.0" text-anchor="middle" class="fl">edge</text><g><rect x="170.0" y="41.0" width="170" height="58" rx="6" fill="#b45309"/><text x="255" y="66" text-anchor="middle" class="fn">🐗 BEASTS</text><text x="255" y="85" text-anchor="middle" class="fs">sheep · tigers · rabbits</text></g><g><rect x="345.0" y="161.0" width="170" height="58" rx="6" fill="#3f7d20"/><text x="430" y="186" text-anchor="middle" class="fn">🦎 LIZARDS</text><text x="430" y="205" text-anchor="middle" class="fs">lizards · raptors · efts</text></g><g><rect x="170.0" y="281.0" width="170" height="58" rx="6" fill="#7c3aed"/><text x="255" y="306" text-anchor="middle" class="fn">🐛 VERMIN</text><text x="255" y="325" text-anchor="middle" class="fs">crawlers · bees · beetles</text></g><g><rect x="-5.0" y="161.0" width="170" height="58" rx="6" fill="#0f766e"/><text x="80" y="186" text-anchor="middle" class="fn">🌿 PLANTOIDS</text><text x="80" y="205" text-anchor="middle" class="fs">mandies · funguars · saplings</text></g><text x="670" y="22" text-anchor="middle" class="ft">SEA &amp; SKY CIRCLE</text><line x1="710" y1="100" x2="775" y2="250" class="fa" marker-end="url(#ah)"/><text x="766.5" y="175.0" text-anchor="middle" class="fl">edge</text><line x1="712" y1="280" x2="628" y2="280" class="fa" marker-end="url(#ah)"/><text x="670.0" y="270.0" text-anchor="middle" class="fl">edge</text><line x1="565" y1="250" x2="630" y2="100" class="fa" marker-end="url(#ah)"/><text x="573.5" y="175.0" text-anchor="middle" class="fl">edge</text><g><rect x="585.0" y="41.0" width="170" height="58" rx="6" fill="#1d4ed8"/><text x="670" y="66" text-anchor="middle" class="fn">🦀 AQUANS</text><text x="670" y="85" text-anchor="middle" class="fs">pugils · crabs · sea monks</text></g><g><rect x="713.0" y="251.0" width="150" height="58" rx="6" fill="#9d174d"/><text x="788" y="276" text-anchor="middle" class="fn">🪱 AMORPHS</text><text x="788" y="295" text-anchor="middle" class="fs">slimes · leeches · worms</text></g><g><rect x="477.0" y="251.0" width="150" height="58" rx="6" fill="#475569"/><text x="552" y="276" text-anchor="middle" class="fn">🐦 BIRDS</text><text x="552" y="295" text-anchor="middle" class="fs">bats · birds · cockatrices</text></g><text x="1000" y="22" text-anchor="middle" class="ft">MUTUAL PAIRS</text><rect x="875" y="54" width="250" height="52" rx="6" fill="#14203a"/><text x="1000" y="76" text-anchor="middle" class="fn fp">💀 UNDEAD ⇄ 💣 ARCANA</text><text x="1000" y="95" text-anchor="middle" class="fs">each has the edge over the other</text><rect x="875" y="144" width="250" height="52" rx="6" fill="#14203a"/><text x="1000" y="166" text-anchor="middle" class="fn fp">🐉 DRAGONS ⇄ 😈 DEMONS</text><text x="1000" y="185" text-anchor="middle" class="fs">each has the edge over the other</text><rect x="875" y="234" width="250" height="52" rx="6" fill="#14203a"/><text x="1000" y="256" text-anchor="middle" class="fn fp">LUMINIONS ⇄ LUMINIANS</text><text x="1000" y="275" text-anchor="middle" class="fs">each has the edge over the other</text><text x="1000" y="320" text-anchor="middle" class="fl">🗡️ Beastmen · Elementals</text><text x="1000" y="338" text-anchor="middle" class="fl">Humanoids: no edge</text></svg><figcaption>Arrow = "has the edge over." The prey family's attacks on the predator fail 5% of the time.</figcaption></figure>
+
+<p><strong>Charm the left column, kill the right.</strong> In the <strong>Edge</strong> column, a glowing family badge (<span class="edge" title="Pet edge">🦎</span>) means your pet's family is the target's natural predator, so the target's swings at your pet sometimes fail. A <strong>gold double badge</strong> (<span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span>) means your own Killer trait covers the target too, so its swings at <em>you</em> can fail as well.</p>
+<p><strong>Family tags:</strong> 🐗 beast · 🦎 lizard · 🐛 vermin · 🌿 plantoid · 🦀 aquan · 🪱 amorph · 🐦 bird · 🗡️ beastmen (no edge either way)</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Your Lv</th>
+<th>Zone</th>
+<th>Charm this (pet)</th>
+<th>To kill this</th>
+<th>Edge</th>
+<th>Jug backup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–5</td>
+<td>W./E. Sarutabaruta</td>
+<td><strong>Crawler</strong> (4–7, 🐛 vermin)</td>
+<td>Mandragora (4–6, 🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>1–5</td>
+<td>W./E. Sarutabaruta</td>
+<td><strong>Mandragora</strong> (4–6, 🌿 plantoid)</td>
+<td>Savanna Rarab (2–6, 🐗 beast)</td>
+<td><span class="edge" title="Pet edge">🌿</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>3–8</td>
+<td>N./S. Gustaberg</td>
+<td><strong>Rock Lizard</strong> (4–8, 🦎 lizard)</td>
+<td>Maneating Hornet (3–6, 🐛 vermin)</td>
+<td><span class="edge" title="Pet edge">🦎</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>3–8</td>
+<td>N./S. Gustaberg</td>
+<td><strong>Ornery Sheep</strong> (5–8, 🐗 beast)</td>
+<td>Rock Lizard (4–8, 🦎 lizard)</td>
+<td><span class="edge" title="Pet edge">🐗</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>6–10</td>
+<td>W./E. Sarutabaruta</td>
+<td><strong>Giant Bee</strong> (7–8, 🐛 vermin)</td>
+<td>Mandragora (4–6, 🌿 plantoid); Pug Pugil (5–8, E. Saru)</td>
+<td><span class="edge" title="Pet edge">🐛</span> / —</td>
+<td>—</td>
+</tr>
+<tr>
+<td>9–12</td>
+<td>Tahrongi Canyon</td>
+<td><strong>Pygmaioi</strong> (8–11, 🌿 plantoid)</td>
+<td>Canyon Rarab (7–11, 🐗 beast)</td>
+<td><span class="edge" title="Pet edge">🌿</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>10–13</td>
+<td>Tahrongi Canyon</td>
+<td><strong>Killer Bee</strong> (10–12, 🐛 vermin)</td>
+<td>Pygmaioi, Strolling Sapling (7–11, 🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>13–17</td>
+<td>Tahrongi Canyon</td>
+<td><strong>Wild Dhalmel</strong> (14–16, 🐗 beast)</td>
+<td>Killer Bee (10–12), Canyon Crawler (12–13), Akbaba (11–13)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>16–20</td>
+<td>Buburimu Peninsula</td>
+<td><strong>Sylvestre</strong> (15–19, 🌿 plantoid)</td>
+<td>Mighty Rarab (15–18, 🐗 beast)</td>
+<td><span class="edge" title="Pet edge">🌿</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>19–23</td>
+<td>Buburimu Peninsula</td>
+<td><strong>Carnivorous Crawler</strong> (20–23, 🐛 vermin)</td>
+<td>Sylvestre (15–19, 🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>21–25</td>
+<td>Buburimu Peninsula</td>
+<td><strong>Zu</strong> (20–24, 🐦 bird)</td>
+<td>Snipper (19–22), Shoal Pugil (24–27) (🦀 aquan)</td>
+<td><span class="edge" title="Pet edge">🐦</span></td>
+<td>Hare / Sheep Familiar (—)</td>
+</tr>
+<tr>
+<td>22–26</td>
+<td>Buburimu Peninsula</td>
+<td><strong>Snipper</strong> (19–22, 🦀 aquan)</td>
+<td>Poison Leech (21–24, 🪱 amorph)</td>
+<td><span class="edge" title="Pet edge">🦀</span></td>
+<td>Crab Familiar <span class="edge" title="Pet edge">🦀</span></td>
+</tr>
+<tr>
+<td>25–28</td>
+<td>Buburimu coast</td>
+<td><strong>Shoal Pugil</strong> (24–27, 🦀 aquan)</td>
+<td>Poison Leech (21–24, 🪱 amorph)</td>
+<td><span class="edge" title="Pet edge">🦀</span></td>
+<td>Crab Familiar <span class="edge" title="Pet edge">🦀</span></td>
+</tr>
+<tr>
+<td>26–31</td>
+<td>Maze of Shakhrami</td>
+<td><strong>Poison Leech</strong> (24–28, 🪱 amorph)</td>
+<td>Combat (20–23), Ancient Bat (26–29) (🐦 bird)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>29–34</td>
+<td>Korroloka Tunnel</td>
+<td><strong>Combat</strong> (27–30, 🐦 bird)</td>
+<td>Clipper (29–32), Greater Pugil (30–33) (🦀 aquan)</td>
+<td><span class="edge" title="Pet edge">🐦</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>30–35</td>
+<td>Korroloka Tunnel</td>
+<td><strong>Clipper</strong> (29–32) / <strong>Greater Pugil</strong> (30–33, 🦀 aquan)</td>
+<td>Thread Leech (28–31), Jelly (23–27) (🪱 amorph)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span></td>
+<td>Crab Familiar <span class="edge" title="Pet edge">🦀</span></td>
+</tr>
+<tr>
+<td>33–36</td>
+<td>Korroloka Tunnel</td>
+<td><strong>Sea Monk</strong> (32–35, 🦀 aquan)</td>
+<td>Thread Leech (28–31, 🪱 amorph)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span></td>
+<td>Lizard / Eft Familiar <span class="edge" title="Pet edge">🦎</span> vs Huge Spiders</td>
+</tr>
+<tr>
+<td>33–37</td>
+<td>Yuhtunga Jungle</td>
+<td><strong>Death Jacket</strong> (34–37, 🐛 vermin)</td>
+<td>Yuhtunga Mandragora (30–33, 🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>Mayfly Familiar <span class="edge" title="Pet edge">🐛</span></td>
+</tr>
+<tr>
+<td>34–38</td>
+<td>Yuhtunga Jungle</td>
+<td><strong>Jungle Coeurl</strong> (35–38) / <strong>Young Opo-opo</strong> (34–36, 🐗 beast)</td>
+<td>Ivory Lizard (32–35, 🦎 lizard)</td>
+<td><span class="edge" title="Pet edge">🐗</span></td>
+<td>Tiger Familiar <span class="edge" title="Pet edge">🐗</span></td>
+</tr>
+<tr>
+<td>35–40</td>
+<td>Yuhtunga Jungle</td>
+<td><strong>Ivory Lizard</strong> (32–35, 🦎 lizard)</td>
+<td>Death Jacket (34–37), Soldier Crawler (37–41) (🐛 vermin)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td>Lizard / Eft Familiar <span class="edge" title="Pet edge">🦎</span></td>
+</tr>
+<tr>
+<td>37–42</td>
+<td>Beadeaux</td>
+<td><strong>Big Jaw</strong> (37–39, 🦀 aquan)</td>
+<td>Gloop (38–40, 🪱 amorph), then 🗡️ Quadavs</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span> / —</td>
+<td>Crab Familiar <span class="edge" title="Pet edge">🦀</span> vs Gloops</td>
+</tr>
+<tr>
+<td>39–44</td>
+<td>Beadeaux</td>
+<td><strong>Broo</strong> (39–41, 🐗 beast)</td>
+<td>🗡️ Bronze → Garnet Quadav (32–39)</td>
+<td>—</td>
+<td>Tiger Familiar (—)</td>
+</tr>
+<tr>
+<td>42–47</td>
+<td>Garlaige Citadel</td>
+<td><strong>Borer Beetle</strong> (41–44, 🐛 vermin)</td>
+<td>Siege Bat (40–43), Citadel Bats (46–48) (🐦 bird)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>44–48</td>
+<td>Eastern Altepa</td>
+<td><strong>Doom Scorpion</strong> (44–47, 🐛 vermin)</td>
+<td>Sabotender (42–46, 🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>Mayfly / Beetle / Antlion <span class="edge" title="Pet edge">🐛</span></td>
+</tr>
+<tr>
+<td>44–49</td>
+<td>Eastern Altepa</td>
+<td><strong>Sabotender</strong> (42–46, 🌿 plantoid)</td>
+<td>Desert Dhalmel (39–44, 🐗 beast)</td>
+<td><span class="edge" title="Pet edge">🌿</span></td>
+<td>Funguar Familiar <span class="edge" title="Pet edge">🌿</span></td>
+</tr>
+<tr>
+<td>47–53</td>
+<td>Crawlers' Nest (Map 1)</td>
+<td><strong>Maze Lizard</strong> (41–43) → <strong>Labyrinth Lizard</strong> (49–51, 🦎 lizard)</td>
+<td>Worker / Soldier Crawler, Death Jacket, Nest Beetle, Soul Stinger (40–50, 🐛 vermin)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td>Coldblood Como <span class="edge" title="Pet edge">🦎</span> (53+)</td>
+</tr>
+<tr>
+<td>48–54</td>
+<td>Crawlers' Nest (Map 1)</td>
+<td><strong>Doom Scorpion</strong> / <strong>Nest Beetle</strong> (45–47) / <strong>Soul Stinger</strong> (48–50, 🐛 vermin)</td>
+<td>Killer Mushroom (45–47), Witch Hazel (50–52), Exoray (51–53) (🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>Mite / Antlion Familiar <span class="edge" title="Pet edge">🐛</span></td>
+</tr>
+<tr>
+<td>50–56</td>
+<td>Misareaux Coast</td>
+<td><strong>Mantrap</strong> (45–49, 🌿 plantoid)</td>
+<td>Bigclaw (45–49), Makara (46–49), Diatryma (47–51)</td>
+<td>—</td>
+<td>Funguar Familiar (—)</td>
+</tr>
+<tr>
+<td>53–58</td>
+<td>Garlaige Citadel</td>
+<td><strong>Chamber Beetle</strong> (56–58, 🐛 vermin)</td>
+<td>Funnel Bats (51–53, 🐦 bird), Acid Grease (52–54, 🪱 amorph)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>55–60</td>
+<td>Crawlers' Nest (Map 2)</td>
+<td><strong>Wespe</strong> (55–57) / <strong>Dragonfly</strong> (55–58, 🐛 vermin)</td>
+<td>Exoray (51–53), Witch Hazel (50–52) (🌿 plantoid)</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>Mite Familiar <span class="edge" title="Pet edge">🐛</span> (caps at 55)</td>
+</tr>
+<tr>
+<td>58–62</td>
+<td>Crawlers' Nest (Map 2)</td>
+<td><strong>Crawler Hunter</strong> (60–62) / <strong>Helm Beetle</strong> (59–62, 🐛 vermin)</td>
+<td>Rumble Crawler, Mushussu, Dragonfly (53–58, 🐛 vermin)</td>
+<td>—</td>
+<td>Ambusher Allie <span class="edge" title="Pet edge">🦎</span> <span class="q">?</span></td>
+</tr>
+<tr>
+<td>60–66</td>
+<td>The Boyahda Tree</td>
+<td><strong>Bark Spider</strong> (60–63, 🐛 vermin)</td>
+<td>Death Cap (60–63), Mourioche (62–68) (🌿 plantoid)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🐛</span></td>
+<td>Panzer Galahad / Lifedrinker Lars <span class="edge" title="Pet edge">🐛</span> <span class="q">?</span></td>
+</tr>
+<tr>
+<td>62–68</td>
+<td>The Boyahda Tree</td>
+<td><strong>Death Cap</strong> (60–63) / <strong>Mourioche</strong> (62–68, 🌿 plantoid)</td>
+<td>Moss Eater (62–66, 🐗 beast)</td>
+<td><span class="edge" title="Pet edge">🌿</span></td>
+<td>Funguar Familiar <span class="edge" title="Pet edge">🌿</span></td>
+</tr>
+<tr>
+<td>62–68</td>
+<td>Kuftal Tunnel</td>
+<td><strong>Sand Lizard</strong> (61–64) / <strong>Deinonychus</strong> (65–68, 🦎 lizard)</td>
+<td>Recluse Spider (63–66), Diplopod (68–71) (🐛 vermin)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td>Coldblood Como <span class="edge" title="Pet edge">🦎</span></td>
+</tr>
+<tr>
+<td>63–68</td>
+<td>Kuftal Tunnel</td>
+<td><strong>Robber Crab</strong> (60–63, 🦀 aquan)</td>
+<td>Cave Worm (60–63), Kuftal Digger (66–69) (🪱 amorph)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span></td>
+<td>Courier Carrie <span class="edge" title="Pet edge">🦀</span></td>
+</tr>
+<tr>
+<td>68–72</td>
+<td>Uleguerand Range</td>
+<td><strong>Polar Hare</strong> (65–68, 🐗 beast)</td>
+<td>Nival Raptor (68–70, 🦎 lizard)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🐗</span></td>
+<td>—</td>
+</tr>
+<tr>
+<td>68–73</td>
+<td>Uleguerand Range</td>
+<td><em>(jug)</em></td>
+<td>Mountain Worm (66–70), Mindgazer (69–72) (🪱 amorph)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span></td>
+<td><strong>Courier Carrie</strong> <span class="edge" title="Pet edge">🦀</span></td>
+</tr>
+<tr>
+<td>72–75</td>
+<td>The Boyahda Tree (deep)</td>
+<td><strong>Processionaire</strong> (72–75, 🐛 vermin)</td>
+<td>Korrigan (72–75), Boyahda Sapling (74–77) (🌿 plantoid)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🐛</span></td>
+<td>Chopsuey Chucky <span class="edge" title="Pet edge">🐛</span> <span class="q">?</span></td>
+</tr>
+<tr>
+<td>72–75</td>
+<td>The Boyahda Tree (deep)</td>
+<td><strong>Steelshell</strong> (73–76, 🦀 aquan)</td>
+<td>Blood Ball (75–78, 🪱 amorph)</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span></td>
+<td>Courier Carrie <span class="edge" title="Pet edge">🦀</span></td>
+</tr>
+<tr>
+<td>70–75</td>
+<td>Ro'Maeve</td>
+<td><em>nothing here can be charmed</em></td>
+<td>Killing / Ominous Weapon (60–65), Magic Flagon (64–69)</td>
+<td>—</td>
+<td>Any jug (no jug has the edge on Arcana)</td>
+</tr>
+</tbody>
+</table></div>
+<p><em><span class="q">?</span> = one of the advanced jugs with no confirmed source on Phoenix (see Chapter 6).</em></p>
+<p><strong>How to read it:</strong> find your level, go to the zone, <strong>charm</strong> the mob in the Charm column, and send it at the mob in the Kill column. When the Edge column shows a glowing badge, your pet is the target's natural predator (see <strong>The food chain</strong> in Chapter 5), so 5% of the target's swings at your pet simply fail. A dash means it's a neutral matchup. That still works fine; you just don't get the bonus.</p>
+<aside class="box warn">
+<p><strong>WARNING — matchups that work against you.</strong> These are pairings older guides recommend. On Phoenix the <strong>target</strong> is the predator, so your pet's swings fail 5% of the time:</p>
+<ul>
+<li><strong>Moss Eaters vs. Boyahda's Death Caps or Mourioche.</strong> Turn it around: charm the plant and kill the rabbit.</li>
+<li><strong>Crabs or Makara vs. Diatryma</strong> in Misareaux. Birds beat Aquans.</li>
+<li><strong>Tiger Familiar vs. Mandragoras.</strong> Plantoids beat Beasts.</li>
+<li><strong>Any Amorph pet vs. Pugils or Crabs.</strong> Aquans beat Amorphs.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — what you can't charm on Phoenix.</strong> It's set per species in <code>data/ecosystems.yaml</code>. Notorious monsters, battlefield mobs and fished mobs are also forced to uncharmable. A failed charm on any of these <strong>Binds</strong> the mob instead.</p>
+<ul>
+<li><strong>Never charmable:</strong> every <strong>Bomb</strong> (Balloon, Grenade, Snoll, Cannonball…), all Undead, Arcana and Demons, Beastmen, <strong>Buffalo</strong>, Manticores, Diatryma, Cockatrices, Goobbues, Morbols, Bugards.</li>
+</ul>
+</aside>
+<h2>THE 15–35 FOOD-CHAIN ATLAS</h2>
+<p><em>The old guides listed whatever camps their writers knew. This list comes from scanning </em><em>every era zone on Phoenix</em><em> for one thing: a charmable pet that's the natural predator of a nearby XP target, at your level. 173 pairings turned up. These are the best of them.</em></p>
+<p><strong>How a camp made the list:</strong></p>
+<ul>
+<li>The pet is <strong>charmable on Phoenix</strong> and <strong>at or below your level</strong> (Decent Challenge or easier), so charms hold.</li>
+<li>The target is within <strong>2 below to 3 above</strong> your level, so it's worth XP.</li>
+<li>The pet has the <strong>edge</strong> over the target, and there are <strong>enough spawns</strong> to camp. Spawn counts come straight from Phoenix's zone files.</li>
+<li><strong>Worms are excluded</strong> (they won't follow you), as is anything Phoenix flags uncharmable.</li>
+</ul>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Your Lv</th>
+<th>Zone</th>
+<th>Charm this (pet)</th>
+<th>To kill this</th>
+<th>Spawns</th>
+<th>Edge</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15–18</td>
+<td><strong>Valkurm Dunes</strong></td>
+<td><strong>Sand Hare</strong> (15–18, 🐗 beast)</td>
+<td>Hill Lizard (15–19, 🦎 lizard)</td>
+<td>42</td>
+<td><span class="edge" title="Pet edge">🐗</span></td>
+<td>Neither one aggros. 51 hares to pick from.</td>
+</tr>
+<tr>
+<td>17–20</td>
+<td><strong>Jugner Forest</strong></td>
+<td><strong>Screamer</strong> (17–18, 🐦 bird)</td>
+<td>Land Pugil / Snipper (19–20, 🦀 aquan)</td>
+<td>44</td>
+<td><span class="edge" title="Pet edge">🐦</span></td>
+<td>Pet 1–2 under the targets. Watch its HP.</td>
+</tr>
+<tr>
+<td>18–21</td>
+<td><strong>Valkurm Dunes</strong></td>
+<td><strong>Hill Lizard</strong> (15–19, 🦎 lizard)</td>
+<td>Damselfly (20–23, 🐛 vermin)</td>
+<td>53</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td>The Valkurm loop: hare beats lizard, lizard beats dragonfly.</td>
+</tr>
+<tr>
+<td>18–21</td>
+<td>Inner Horutoto Ruins</td>
+<td><strong>Blob</strong> (15–18, 🪱 amorph)</td>
+<td>Battle Bat (17–20, 🐦 bird)</td>
+<td>17</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td>Double from 20. Only 2 Blobs, and both mobs aggro.</td>
+</tr>
+<tr>
+<td>20–24</td>
+<td><strong>Jugner Forest</strong></td>
+<td><strong>Land Pugil / Snipper</strong> (19–20, 🦀 aquan)</td>
+<td>Forest Leech (21–22, 🪱 amorph)</td>
+<td>27</td>
+<td><span class="edge" title="Pet edge">🦀</span></td>
+<td>Same zone as the Screamer camp. Flip it when you hit 20.</td>
+</tr>
+<tr>
+<td>20–24</td>
+<td>Pashhow Marshlands</td>
+<td><strong>Land Pugil</strong> (19–20, 🦀 aquan)</td>
+<td>Thread Leech (21–22, 🪱 amorph)</td>
+<td>17</td>
+<td><span class="edge" title="Pet edge">🦀</span></td>
+<td>Jugner's camp again, with fewer leeches.</td>
+</tr>
+<tr>
+<td>21–25</td>
+<td><strong>Meriphataud Mountains</strong></td>
+<td><strong>Hill Lizard</strong> (21–22, 🦎 lizard)</td>
+<td>Crane Fly (20–21) + Stag Beetle (22–23) (🐛 vermin)</td>
+<td>71</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td><strong>The best 21–25 camp on the server.</strong> 46 lizards, 71 bugs, nothing aggros.</td>
+</tr>
+<tr>
+<td>21–26</td>
+<td>Pashhow Marshlands</td>
+<td><strong>Gadfly</strong> (20–21, 🐛 vermin)</td>
+<td>Marsh Funguar (24–25, 🌿 plantoid)</td>
+<td>27</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>52 Gadflies, so pets are never short. Leave the Goobbues alone (uncharmable, tough).</td>
+</tr>
+<tr>
+<td>23–26</td>
+<td>Carpenters' Landing</td>
+<td><strong>Stag Beetle</strong> (20–23, 🐛 vermin)</td>
+<td>Battrap (23–27) / Marsh Funguar (21–24) (🌿 plantoid)</td>
+<td>60</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>Walk in from Jugner Forest. The Marsh Funguars here aggro.</td>
+</tr>
+<tr>
+<td>23–27</td>
+<td><strong>Jugner Forest</strong></td>
+<td><strong>Stag Beetle</strong> (22–23, 🐛 vermin)</td>
+<td>Jugner Funguar (24–25, 🌿 plantoid)</td>
+<td>46</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>Jugner's third tier. You can level 17–27 without leaving the forest.</td>
+</tr>
+<tr>
+<td>24–26</td>
+<td>Buburimu Peninsula</td>
+<td><strong>Poison Leech</strong> (21–24, 🪱 amorph)</td>
+<td>Zu (20–24, 🐦 bird)</td>
+<td>62</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td>The reverse of the usual Zu camp. Bird Killer (20) stacks on it.</td>
+</tr>
+<tr>
+<td>25–28</td>
+<td>Rolanberry Fields</td>
+<td><strong>Clipper</strong> (24–25, 🦀 aquan)</td>
+<td>Poison Leech (25–26, 🪱 amorph)</td>
+<td>15</td>
+<td><span class="edge" title="Pet edge">🦀</span></td>
+<td>Day camp.</td>
+</tr>
+<tr>
+<td>25–28</td>
+<td>Rolanberry Fields</td>
+<td><strong>Poison Leech</strong> (25–26, 🪱 amorph)</td>
+<td>Moon Bat (25–26, 🐦 bird)</td>
+<td>40</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td><strong>Evening only:</strong> Moon Bats spawn at dusk. Swap to the Clipper camp by day.</td>
+</tr>
+<tr>
+<td>25–27</td>
+<td>Batallia Downs</td>
+<td><strong>May Fly</strong> (25–26, 🐛 vermin)</td>
+<td>Stalking Sapling (23–24, 🌿 plantoid)</td>
+<td>81</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>The most targets of any camp here. Saplings get low by 27.</td>
+</tr>
+<tr>
+<td>26–30</td>
+<td><strong>Sauromugue Champaign</strong></td>
+<td><strong>Hill Lizard</strong> (25–26, 🦎 lizard)</td>
+<td>Diving Beetle (27–28, 🐛 vermin)</td>
+<td>17</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td>39 lizards. Charm one 1–2 levels under you so it holds.</td>
+</tr>
+<tr>
+<td>27–29</td>
+<td>Korroloka Tunnel</td>
+<td><strong>Jelly</strong> (23–27, 🪱 amorph)</td>
+<td>Seeker Bats (22–26) + Combat (27–30) (🐦 bird)</td>
+<td>108</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td>The most bats in the game. Jellies aggro, so charm them as they come.</td>
+</tr>
+<tr>
+<td>27–31</td>
+<td><strong>Qufim Island</strong></td>
+<td><strong>Seeker Bats</strong> (26–27) → <strong>Glow Bat</strong> (28–29, 🐦 bird)</td>
+<td>Clipper (28–29) + Greater Pugil (28–29) (🦀 aquan)</td>
+<td>82</td>
+<td><span class="edge" title="Pet edge">🐦</span></td>
+<td>Dark Bats and Glow Bats spawn <strong>in the evening only</strong>. Seeker Bats are there all day.</td>
+</tr>
+<tr>
+<td>30–34</td>
+<td>Qufim Island</td>
+<td><strong>Clipper / Greater Pugil</strong> (28–29, 🦀 aquan)</td>
+<td>Acrophies (33–34, 🪱 amorph)</td>
+<td>18</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦀</span></td>
+<td>Pet 4–5 under the target. Reward often, or the pet loses the race.</td>
+</tr>
+<tr>
+<td>30–34</td>
+<td>Ranguemont Pass</td>
+<td><strong>Ooze</strong> (28–30, 🪱 amorph)</td>
+<td>Stirge (30–33, 🐦 bird)</td>
+<td>40</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td>Only 5 Oozes, and <strong>everything here aggros</strong>. Check your route in before going.</td>
+</tr>
+<tr>
+<td>30–33</td>
+<td>Carpenters' Landing</td>
+<td><strong>Diving Beetle</strong> (27–30, 🐛 vermin)</td>
+<td>Birdtrap (29–33, 🌿 plantoid)</td>
+<td>22</td>
+<td><span class="edge" title="Pet edge">🐛</span></td>
+<td>A CoP zone reached from Jugner Forest. Same zone as the 23–26 Stag Beetle camp.</td>
+</tr>
+<tr>
+<td>31–33</td>
+<td>Korroloka Tunnel</td>
+<td><strong>Thread Leech</strong> (28–31, 🪱 amorph)</td>
+<td>Combat (27–30, 🐦 bird)</td>
+<td>48</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🪱</span></td>
+<td>Pairs with the Clipper → leech camp in the same tunnels.</td>
+</tr>
+<tr>
+<td>32–35</td>
+<td>Davoi</td>
+<td><strong>War Lizard</strong> (29–32, 🦎 lizard)</td>
+<td>Davoi Wasp (30–33, 🐛 vermin)</td>
+<td>15</td>
+<td><span class="edge edge2" title="Double edge: pet + your Killer trait">🦎</span></td>
+<td>The wasps and the Orcs aggro. Sub /WHM.</td>
+</tr>
+<tr>
+<td>32–34</td>
+<td>Sauromugue Champaign</td>
+<td><strong>Sabertooth Tiger</strong> (31–32, 🐗 beast)</td>
+<td>Sauromugue Skink (31–32, 🦎 lizard)</td>
+<td>36</td>
+<td><span class="edge" title="Pet edge">🐗</span></td>
+<td>Only 3 tigers, and both mobs aggro. A high-risk, high-pet-quality camp.</td>
+</tr>
+<tr>
+<td>33–35</td>
+<td><strong>Yuhtunga Jungle</strong></td>
+<td><strong>Yuhtunga Mandragora</strong> (30–33, 🌿 plantoid)</td>
+<td>Young Opo-opo (34–36, 🐗 beast)</td>
+<td><strong>90</strong></td>
+<td><span class="edge" title="Pet edge">🌿</span></td>
+<td><strong>The biggest target pool in the whole 15–35 range.</strong> Leads straight into the 35–40 Yuhtunga loop.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Best pick per level</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Go here</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15–20</td>
+<td><strong>Valkurm Dunes</strong></td>
+<td>Two-step loop (hare → lizard, then lizard → dragonfly), all non-aggro, 140+ mobs</td>
+</tr>
+<tr>
+<td>20–23</td>
+<td><strong>Jugner Forest</strong></td>
+<td>Screamer → Pugils, then Pugil → Leeches, one zone</td>
+</tr>
+<tr>
+<td>21–25</td>
+<td><strong>Meriphataud Mountains</strong></td>
+<td>Lizard on bugs with Vermin Killer stacked. 117 mobs, nothing aggros</td>
+</tr>
+<tr>
+<td>23–27</td>
+<td><strong>Jugner Forest</strong> or <strong>Batallia Downs</strong></td>
+<td>Stag Beetle → Funguars, or May Fly → 81 Saplings</td>
+</tr>
+<tr>
+<td>26–30</td>
+<td><strong>Sauromugue Champaign</strong></td>
+<td>Lizard → Diving Beetle, double edge</td>
+</tr>
+<tr>
+<td>27–31</td>
+<td><strong>Korroloka Tunnel</strong> or <strong>Qufim Island</strong></td>
+<td>108 bats for a Jelly, or Bats → 82 Clippers/Pugils</td>
+</tr>
+<tr>
+<td>31–33</td>
+<td><strong>Korroloka Tunnel</strong></td>
+<td>Thread Leech → Combat, plus Clipper → Leech</td>
+</tr>
+<tr>
+<td>33–35</td>
+<td><strong>Yuhtunga Jungle</strong></td>
+<td>Mandragora → 90 Opo-opos, then stay for 35–40</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — what the data can't tell you.</strong> It doesn't show <strong>how crowded</strong> a camp is on Phoenix, how far apart the spawns are, or what links. Camps flagged "aggro" will bite while you're on a charm cooldown. If a camp is packed, the next row down in the same level band is your backup.</p>
+</aside>
+<h3>The golden rule</h3>
+<p><strong>Charm a mob that checks Decent Challenge or easier to you, and use it to kill mobs that check Even Match to Tough.</strong> You get XP for what the pet kills. The pet should be strong, the target should be worth XP, and ideally the pet is the target's natural predator (the glowing-badge rows above).</p>
+<h3>1–10 · Sarutabaruta / Gustaberg</h3>
+<ul>
+<li><strong>Sarutabaruta (W. or E.):</strong> Charm a <strong>Crawler (4–7)</strong> and kill <strong>Mandragoras (4–6)</strong>: vermin beat plantoids. Or charm a <strong>Mandragora</strong> and kill <strong>Savanna Rarabs (2–6)</strong>: plantoids beat beasts. From 7, <strong>Giant Bees (7–8)</strong> are the strongest pets in the zone.</li>
+<li><strong>Gustaberg (N. or S.):</strong> The cleanest food chain in the starter areas. Charm a <strong>Rock Lizard (4–8)</strong> and kill <strong>Maneating Hornets (3–6)</strong>. Then charm an <strong>Ornery Sheep (5–8)</strong> and kill the <strong>Rock Lizards</strong>.</li>
+</ul>
+<aside class="box warn">
+<p><strong>WARNING</strong> — Don't charm <strong>worms</strong> (Stone Eaters, Tunnel Worms). They won't follow you, and you're stuck until the charm wears off. And watch for the <strong>Bombs</strong> at 8–10 (Balloon, Shrapnel). They aggro, and they can't be charmed.</p>
+</aside>
+<h3>9–17 · Tahrongi Canyon</h3>
+<ul>
+<li><strong>9–12:</strong> Charm a <strong>Pygmaioi (8–11)</strong> (Tahrongi's Mandragoras) and kill <strong>Canyon Rarabs (7–11)</strong>. Plants beat beasts, and the two spawn all over the canyon at the same levels. Rarabs stop giving decent XP around 12–13.</li>
+<li><strong>10–13:</strong> Charm a <strong>Killer Bee (10–12)</strong> and kill <strong>Pygmaioi</strong> and <strong>Strolling Saplings (7–11)</strong>. Vermin beat plants, so this is the same chain one step up.</li>
+<li><strong>13–17:</strong> Charm a <strong>Wild Dhalmel (14–16)</strong> and kill <strong>Killer Bees</strong>, <strong>Canyon Crawlers (12–13)</strong> and <strong>Akbabas (11–13)</strong>.</li>
+<li><strong>Goblins and Yagudo</strong> can't be charmed. A charm attempt on them just Binds them, which makes a good escape (more on that in Ch.5).</li>
+</ul>
+<h3>16–26 · Buburimu Peninsula</h3>
+<p>This is the best food-chain zone in the game. Four families sit side by side:
+- <strong>Sylvestre (15–19, plantoid)</strong> → kill <strong>Mighty Rarabs (15–18)</strong>
+- <strong>Carnivorous Crawler (20–23, vermin)</strong> → kill <strong>Sylvestre</strong>
+- <strong>Zu (20–24, bird)</strong> → kill <strong>Snippers (19–22)</strong> and <strong>Shoal Pugils (24–27)</strong>
+- <strong>Snipper (aquan)</strong> → kill <strong>Poison Leeches (21–24)</strong></p>
+<p><strong>Bull Dhalmels (21–24)</strong> are strong pets with no edge here. At 23 you can pop a <strong>Crab Familiar</strong> (Fish Broth) for the leeches.</p>
+<h3>26–31 · Maze of Shakhrami / Buburimu coast</h3>
+<ul>
+<li><strong>Buburimu coast (25–28):</strong> Charm <strong>Shoal Pugils (24–27)</strong> and kill <strong>Poison Leeches</strong>.</li>
+<li><strong>Maze of Shakhrami (26–31):</strong> Charm a <strong>Poison Leech (24–28)</strong> and kill <strong>Combat</strong> and <strong>Ancient Bats</strong>: amorphs beat birds. <strong>Maze Scorpions (25–27)</strong> and <strong>Labyrinth Scorpions (30–33)</strong> are strong neutral pets, but they <strong>aggro</strong>.</li>
+</ul>
+<h3>29–36 · Korroloka Tunnel</h3>
+<ul>
+<li><strong>Map 1–3:</strong> Charm a <strong>Combat (27–30)</strong> bat and kill <strong>Clippers (29–32)</strong> and <strong>Greater Pugils (30–33)</strong>. Then flip it: charm the <strong>Clipper or Pugil</strong> and kill <strong>Thread Leeches (28–31)</strong> and <strong>Jellies</strong>.</li>
+<li><strong>Map 5 (33+):</strong> Charm the <strong>Sea Monk (32–35)</strong>. Same targets.</li>
+<li><strong>Huge Spiders (28–31)</strong> cast Slow on pets. Kill them with a <strong>Lizard or Eft Familiar</strong> (33+), the vermin's predator.</li>
+</ul>
+<aside class="box warn">
+<p><strong>WARNING</strong> — The <strong>Gigas (35–37)</strong> in Korroloka have big HP and hit hard. Leave them alone.</p>
+</aside>
+<h3>33–40 · Yuhtunga Jungle</h3>
+<p>A complete land loop in one zone:
+- <strong>Death Jacket (34–37, vermin)</strong> → kill <strong>Yuhtunga Mandragoras (30–33)</strong>
+- <strong>Jungle Coeurl (35–38)</strong> or <strong>Young Opo-opo (34–36)</strong> (beasts) → kill <strong>Ivory Lizards (32–35)</strong>
+- <strong>Ivory Lizard</strong> → kill <strong>Death Jackets</strong> and <strong>Soldier Crawlers (37–41)</strong></p>
+<p><strong>Makara (35–38)</strong> are strong, but the Sahagin they'd fight are Beastmen, so there's no edge. Jungle Coeurls aggro.</p>
+<h3>37–44 · Beadeaux</h3>
+<ul>
+<li>Charm <strong>Big Jaws (37–39)</strong> and kill <strong>Gloops (38–40)</strong>, then work into the Quadavs (Bronze → Garnet, 32–39).</li>
+<li>Charm <strong>Broos (39–41)</strong> for the Quadavs. Quadavs are Beastmen, so no pet has an edge on them.</li>
+<li>Watch for <strong>Sheep Song</strong> (sleep) from the Broos and Charging Sheep.</li>
+</ul>
+<h3>42–49 · Garlaige Citadel / Eastern Altepa Desert</h3>
+<ul>
+<li><strong>Garlaige (42–47):</strong> Charm <strong>Borer Beetles (41–44, aggro)</strong> and kill <strong>Siege Bats (40–43)</strong> and <strong>Citadel Bats (46–48)</strong>.</li>
+<li><strong>Eastern Altepa (44–49):</strong> Charm a <strong>Doom Scorpion (44–47)</strong> and kill <strong>Sabotenders (42–46)</strong>. Or charm a <strong>Sabotender</strong> and kill <strong>Desert Dhalmels (39–44)</strong>.</li>
+<li><strong>Giant Spiders (30–34)</strong> and <strong>Sand Beetles (36–40)</strong> are vermin. Use a <strong>Lizard Familiar</strong> if you want the edge.</li>
+</ul>
+<aside class="box gil">
+<p><strong>MONEY MAKER</strong> — Anticans drop <strong>Antican Pauldrons</strong>, used in Antica Broth (Cooking 67). Sub /THF here.</p>
+</aside>
+<h3>47–62 · Crawlers' Nest</h3>
+<p>This is the answer to "how do I kill bees and crawlers": bring a <strong>lizard</strong>. It's also the biggest <strong>double-edge</strong> zone in the game. Your Vermin Killer (from 10) and the lizard's edge both work on nearly every mob here.
+- <strong>Map 1 (47–53):</strong> Charm a <strong>Maze Lizard (41–43)</strong> early, then a <strong>Labyrinth Lizard (49–51, aggro)</strong>. Kill <strong>Worker</strong> and <strong>Soldier Crawlers</strong>, <strong>Death Jackets</strong>, <strong>Nest Beetles</strong> and <strong>Soul Stingers (40–50)</strong>.
+- <strong>Map 1 alt (48–54):</strong> Charm a <strong>Doom Scorpion</strong>, <strong>Nest Beetle</strong> or <strong>Soul Stinger</strong> and kill the plants: <strong>Killer Mushrooms (45–47)</strong>, <strong>Witch Hazels (50–52)</strong> and <strong>Exorays (51–53)</strong>.
+- <strong>Map 2 (55–62):</strong> Charm <strong>Wespes (55–57)</strong> or <strong>Dragonflies (55–58)</strong> and kill <strong>Exorays</strong> and <strong>Witch Hazels</strong>. At 60+, charm a <strong>Crawler Hunter (60–62)</strong> or <strong>Helm Beetle (59–62)</strong>.</p>
+<aside class="box warn">
+<p><strong>WARNING</strong> — The middle Wespe of the horizontal three in Map 2 is a <strong>Demonic Tiphia</strong> placeholder. Charm it and you'll be fighting off NM campers. Leave it.</p>
+</aside>
+<h3>50–58 · Misareaux Coast / Garlaige Citadel (deep)</h3>
+<ul>
+<li><strong>Misareaux (50–56):</strong> Charm a <strong>Mantrap (45–49)</strong> and kill <strong>Bigclaws (45–49)</strong>, <strong>Makara (46–49)</strong> and <strong>Diatryma (47–51)</strong>. The Mantrap is neutral against all of them. <strong>Don't</strong> use a crab pet on Diatryma.</li>
+<li><strong>Garlaige, deep (53–58):</strong> Charm <strong>Chamber Beetles (56–58, aggro)</strong> and kill <strong>Funnel Bats (51–53)</strong> and <strong>Acid Grease (52–54)</strong>.</li>
+</ul>
+<aside class="box gil">
+<p><strong>MONEY MAKER</strong> — Diatryma drop <strong>Giant Bird Feathers/Plumes</strong>, a steady AH seller.</p>
+</aside>
+<h3>60–68 · The Boyahda Tree / Kuftal Tunnel</h3>
+<ul>
+<li><strong>Boyahda Tree:</strong> Charm a <strong>Bark Spider (60–63)</strong> and kill <strong>Death Caps (60–63)</strong> and <strong>Mourioche (62–68)</strong>. Or charm the <strong>Death Cap / Mourioche</strong> and kill <strong>Moss Eaters (62–66)</strong>.</li>
+<li><strong>Kuftal Tunnel:</strong> Charm a <strong>Sand Lizard (61–64)</strong> or <strong>Deinonychus (65–68, aggro)</strong> and kill <strong>Recluse Spiders (63–66)</strong> and <strong>Diplopods (68–71)</strong>. Or charm a <strong>Robber Crab (60–63, aggro)</strong> and kill <strong>Cave Worms</strong> and <strong>Kuftal Diggers (66–69)</strong>.</li>
+</ul>
+<h3>68–75 · Uleguerand Range / Boyahda Tree (deep) / Ro'Maeve</h3>
+<ul>
+<li><strong>Uleguerand Range:</strong> Charm a <strong>Polar Hare (65–68)</strong> and kill <strong>Nival Raptors (68–70, aggro)</strong>. Use <strong>Courier Carrie</strong> (Fish Oil Broth) on the <strong>Mountain Worms</strong> and <strong>Mindgazers</strong>.</li>
+<li><strong>Buffalo and Snolls can't be charmed</strong> on Phoenix. Snolls self-destruct, and Uleguerand Tigers (61–63) paralyze.</li>
+<li><strong>Boyahda Tree, deep (72–75):</strong> Charm a <strong>Processionaire (72–75)</strong> and kill <strong>Korrigans</strong> and <strong>Boyahda Saplings (74–77)</strong>. Or charm a <strong>Steelshell (73–76)</strong> and kill <strong>Blood Balls (75–78)</strong>.</li>
+<li><strong>Ro'Maeve:</strong> Everything here is Arcana and can't be charmed. It's a <strong>jug-only</strong> camp on <strong>Killing/Ominous Weapons (60–65)</strong> near the entrance.</li>
+</ul>
+<h3>/BST Leveling (for a sub)</h3>
+<p>Same camps, faster pace. Charm for 30 minutes, kill while it lasts.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Charm</th>
+<th>Kill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–10</td>
+<td>Outside any city</td>
+<td>Lv4+ rabbit or crow</td>
+<td>Everything else</td>
+</tr>
+<tr>
+<td>9–12</td>
+<td>Tahrongi Canyon</td>
+<td>Pygmaioi</td>
+<td>Canyon Rarabs</td>
+</tr>
+<tr>
+<td>10–14</td>
+<td>Tahrongi Canyon</td>
+<td>Killer Bees</td>
+<td>Pygmaioi, Saplings</td>
+</tr>
+<tr>
+<td>14–20</td>
+<td>Tahrongi Canyon</td>
+<td>Wild Dhalmels</td>
+<td>Bees, Crawlers, Akbabas</td>
+</tr>
+<tr>
+<td>18–27</td>
+<td>Buburimu</td>
+<td>Sylvestre, Crawlers, Zu</td>
+<td>Rarabs, Sylvestre, Snippers</td>
+</tr>
+<tr>
+<td>25–30</td>
+<td>Buburimu coast</td>
+<td>Shoal Pugils</td>
+<td>Poison Leeches</td>
+</tr>
+<tr>
+<td>28–37</td>
+<td>Maze of Shakhrami</td>
+<td>Poison Leeches, Scorpions</td>
+<td>Bats, Crawlers</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box chal">
+<p><strong>TAMER'S CHALLENGE</strong> — Solo Doom Scorpion (44–47) pets in Crawlers' Nest using only charms, no jugs, from 47 to 55.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Charm DC or easier, kill EM–Tough.</li>
+<li>Use jugs when charm targets are bad (Spiders, Slow mobs, Ro'Maeve).</li>
+<li>Start every camp from the <strong>Kill Chart</strong>. Prefer the rows with a glowing badge.</li>
+<li>For 15–35, the <strong>Food-Chain Atlas</strong> lists every edge camp Phoenix has, ranked.</li>
+<li>Respect placeholder mobs.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">CHARM, DECODED</h2></header>
+<p><em>This is where Phoenix's code beats every wiki. These are the formulas the server actually runs.</em></p>
+<h3>Charm success chance</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — <code>scripts/globals/job_utils/beastmaster.lua</code></p>
+<ul>
+<li>Start at <strong>50%</strong> minus the target's charm resistance.</li>
+<li>
+<p>If the mob is <strong>higher level</strong> than your BST level, subtract per level of difference:</p>
+<ul>
+<li>Mob 1–50: <strong>−3% per level</strong></li>
+<li>Mob 51–70: <strong>−5% per level</strong></li>
+<li>Mob 71+: <strong>−10% per level</strong></li>
+</ul>
+</li>
+<li>
+<p>Multiply by the mob's light-resistance rank (light-weak mobs are easier, up to ×1.5).</p>
+</li>
+<li>Add <strong>Charm Chance</strong> gear (staves only: Light Staff +10, Apollo's Staff +15).</li>
+<li>Add <strong>your CHR minus the mob's CHR</strong>.</li>
+<li>Capped between <strong>0% and 95%</strong>.</li>
+</ul>
+</aside>
+<p><strong>What that means:</strong> being 1–2 levels under a level-71+ mob costs you 10–20%. Against a level 40 mob it barely matters. CHR matters 1-for-1, which makes CHR gear meaningful for success rate.</p>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — <strong>Gauge doesn't count staff bonuses</strong> (the code passes <code>includeMods = false</code>). If Gauge says "might be able to charm," your actual odds with a Light Staff are 10% higher.</p>
+</aside>
+<h3>Charm duration</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE</strong></p>
+<ul>
+<li>Base = <strong>1.25 × your CHR + 150 seconds</strong></li>
+<li>× a level-difference multiplier</li>
+<li>
+<ul>
+<li><strong>5% per point</strong> of "Charm +" gear</li>
+</ul>
+</li>
+</ul>
+</aside>
+<p>Here's what level difference does, at CHR 60 (base 225 seconds):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>You vs. Mob</th>
+<th>Multiplier</th>
+<th>Charm lasts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mob 3 levels higher</td>
+<td>×0.19</td>
+<td>~40 sec</td>
+</tr>
+<tr>
+<td>Mob 1 level higher</td>
+<td>×0.66</td>
+<td>~2.5 min</td>
+</tr>
+<tr>
+<td>Same level</td>
+<td>×1.00</td>
+<td>~3.7 min</td>
+</tr>
+<tr>
+<td>You're 2 higher</td>
+<td>×1.78</td>
+<td>~6.7 min</td>
+</tr>
+<tr>
+<td>You're 4 higher</td>
+<td>×2.59</td>
+<td>~9.7 min</td>
+</tr>
+<tr>
+<td>You're 6 higher</td>
+<td>×3.47</td>
+<td>~13 min</td>
+</tr>
+<tr>
+<td>You're 9+ higher</td>
+<td>×6.00 (cap)</td>
+<td>~22.5 min</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The big lesson: level difference matters far more than CHR.</strong> +10 CHR adds 12.5 seconds to the base. Being 2 levels higher instead of even almost doubles the charm. A weaker pet that holds beats a strong pet that breaks.</p>
+<aside class="box warn">
+<p><strong>WARNING</strong> — Charming above your level is a coin flip <strong>and</strong> a 40-second leash. When it breaks you're fighting two mobs.</p>
+</aside>
+<h3>Goblins and uncharmables</h3>
+<p>Uncharmable mobs (Goblins, NMs, etc.) aren't wasted. A failed charm on an uncharmable mob <strong>Binds</strong> it instead (an ice-element resist check). Use that to escape.</p>
+<h3>Leave &amp; re-charm</h3>
+<p><strong>Leave (35)</strong> releases your pet. If it's still within its spawn area, you can charm it again right away. A pet that was resting stays resting when re-charmed quickly.</p>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — A charm timer addon (for example PetMe) is allowed under Phoenix's Rule 6, since it only reads state. <strong>Auto-reacting to the pet's state is not allowed.</strong> Read Rule 6 in the overview doc before installing anything.</p>
+</aside>
+<h3>The food chain (pet intimidation)</h3>
+<p><em>Every monster family has a natural predator. Pick a pet that's the predator of whatever you're fighting, and never send a pet into its own predator.</em></p>
+<figure class="foodchain"><svg viewBox="0 0 1130 360" role="img" aria-label="Killer effect food chain: Beasts over Lizards over Vermin over Plantoids over Beasts; Aquans over Amorphs over Birds over Aquans; Undead and Arcana, Dragons and Demons, Luminions and Luminians each over the other."><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#d9381e"/></marker></defs><text x="255" y="22" text-anchor="middle" class="ft">LAND CIRCLE</text><line x1="333" y1="82" x2="405" y2="158" class="fa" marker-end="url(#ah)"/><text x="391.0" y="114.0" text-anchor="middle" class="fl">edge</text><line x1="405" y1="222" x2="333" y2="298" class="fa" marker-end="url(#ah)"/><text x="391.0" y="274.0" text-anchor="middle" class="fl">edge</text><line x1="177" y1="298" x2="105" y2="222" class="fa" marker-end="url(#ah)"/><text x="119.0" y="274.0" text-anchor="middle" class="fl">edge</text><line x1="105" y1="158" x2="177" y2="82" class="fa" marker-end="url(#ah)"/><text x="119.0" y="114.0" text-anchor="middle" class="fl">edge</text><g><rect x="170.0" y="41.0" width="170" height="58" rx="6" fill="#b45309"/><text x="255" y="66" text-anchor="middle" class="fn">🐗 BEASTS</text><text x="255" y="85" text-anchor="middle" class="fs">sheep · tigers · rabbits</text></g><g><rect x="345.0" y="161.0" width="170" height="58" rx="6" fill="#3f7d20"/><text x="430" y="186" text-anchor="middle" class="fn">🦎 LIZARDS</text><text x="430" y="205" text-anchor="middle" class="fs">lizards · raptors · efts</text></g><g><rect x="170.0" y="281.0" width="170" height="58" rx="6" fill="#7c3aed"/><text x="255" y="306" text-anchor="middle" class="fn">🐛 VERMIN</text><text x="255" y="325" text-anchor="middle" class="fs">crawlers · bees · beetles</text></g><g><rect x="-5.0" y="161.0" width="170" height="58" rx="6" fill="#0f766e"/><text x="80" y="186" text-anchor="middle" class="fn">🌿 PLANTOIDS</text><text x="80" y="205" text-anchor="middle" class="fs">mandies · funguars · saplings</text></g><text x="670" y="22" text-anchor="middle" class="ft">SEA &amp; SKY CIRCLE</text><line x1="710" y1="100" x2="775" y2="250" class="fa" marker-end="url(#ah)"/><text x="766.5" y="175.0" text-anchor="middle" class="fl">edge</text><line x1="712" y1="280" x2="628" y2="280" class="fa" marker-end="url(#ah)"/><text x="670.0" y="270.0" text-anchor="middle" class="fl">edge</text><line x1="565" y1="250" x2="630" y2="100" class="fa" marker-end="url(#ah)"/><text x="573.5" y="175.0" text-anchor="middle" class="fl">edge</text><g><rect x="585.0" y="41.0" width="170" height="58" rx="6" fill="#1d4ed8"/><text x="670" y="66" text-anchor="middle" class="fn">🦀 AQUANS</text><text x="670" y="85" text-anchor="middle" class="fs">pugils · crabs · sea monks</text></g><g><rect x="713.0" y="251.0" width="150" height="58" rx="6" fill="#9d174d"/><text x="788" y="276" text-anchor="middle" class="fn">🪱 AMORPHS</text><text x="788" y="295" text-anchor="middle" class="fs">slimes · leeches · worms</text></g><g><rect x="477.0" y="251.0" width="150" height="58" rx="6" fill="#475569"/><text x="552" y="276" text-anchor="middle" class="fn">🐦 BIRDS</text><text x="552" y="295" text-anchor="middle" class="fs">bats · birds · cockatrices</text></g><text x="1000" y="22" text-anchor="middle" class="ft">MUTUAL PAIRS</text><rect x="875" y="54" width="250" height="52" rx="6" fill="#14203a"/><text x="1000" y="76" text-anchor="middle" class="fn fp">💀 UNDEAD ⇄ 💣 ARCANA</text><text x="1000" y="95" text-anchor="middle" class="fs">each has the edge over the other</text><rect x="875" y="144" width="250" height="52" rx="6" fill="#14203a"/><text x="1000" y="166" text-anchor="middle" class="fn fp">🐉 DRAGONS ⇄ 😈 DEMONS</text><text x="1000" y="185" text-anchor="middle" class="fs">each has the edge over the other</text><rect x="875" y="234" width="250" height="52" rx="6" fill="#14203a"/><text x="1000" y="256" text-anchor="middle" class="fn fp">LUMINIONS ⇄ LUMINIANS</text><text x="1000" y="275" text-anchor="middle" class="fs">each has the edge over the other</text><text x="1000" y="320" text-anchor="middle" class="fl">🗡️ Beastmen · Elementals</text><text x="1000" y="338" text-anchor="middle" class="fl">Humanoids: no edge</text></svg><figcaption>Arrow = "has the edge over." The prey family's attacks on the predator fail 5% of the time.</figcaption></figure>
+
+<p><strong>The two circles and three pairs</strong> (an arrow means "has the edge over"):</p>
+<ul>
+<li><strong>Land circle:</strong> 🐗 Beasts → 🦎 Lizards → 🐛 Vermin → 🌿 Plantoids → back to 🐗 Beasts</li>
+<li><strong>Sea &amp; sky circle:</strong> 🦀 Aquans → 🪱 Amorphs → 🐦 Birds → back to 🦀 Aquans</li>
+<li><strong>Pairs (each has the edge over the other):</strong> 💀 Undead ⇄ 💣 Arcana · 🐉 Dragons ⇄ 😈 Demons · Luminions ⇄ Luminians</li>
+<li><strong>Outside the chain:</strong> 🗡️ Beastmen, Elementals, Humanoids, Empty and Archaic machines. Nobody has the edge over them, and they have no edge over anybody.</li>
+</ul>
+<aside class="box code">
+<p><strong>FROM THE CODE — what "having the edge" actually does on Phoenix.</strong> <code>battleutils.cpp</code> (<code>addEcosystemKillerEffects</code>, <code>IsIntimidated</code>)</p>
+<ul>
+<li>Every mob, every <strong>charmed</strong> mob and every <strong>jug pet</strong> carries a <strong>5% Killer effect</strong> against its prey family.</li>
+<li>When a prey-family mob tries to <strong>melee, cast a spell or use an item</strong> on the predator, there's that much chance it's <strong>intimidated</strong>, and the action simply fails.</li>
+<li>It's <strong>purely defensive</strong>. There's <strong>no damage bonus</strong>. Your pet doesn't hit harder; its prey just misses turns.</li>
+<li><strong>TP moves aren't checked.</strong> A mob's special attacks (and your pet's Sic moves) go off no matter what.</li>
+<li>It works both ways in the same fight. Send a Tiger (Beast) at a Mandragora (Plantoid) and the <em>tiger's</em> swings fail 5% of the time.</li>
+</ul>
+</aside>
+<h3>Family guide — what you're fighting, what to bring</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Common on Phoenix</th>
+<th>Has the edge over</th>
+<th>Preyed on by</th>
+<th>Best pet to bring</th>
+<th>Pet to keep away</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🐗 <strong>Beasts</strong></td>
+<td>Sheep, Rabbits, Tigers, Manticores, Coeurls, Opo-opos, Dhalmels, Rams, Buffalo, Behemoths</td>
+<td>Lizards</td>
+<td>🌿 <strong>Plantoids</strong></td>
+<td>Plantoid: Flowerpot Bill/Ben, Funguar, Flytrap/Voracious Audrey, Homunculus · charm Mandragora, Funguar, Saplings</td>
+<td>Lizards</td>
+</tr>
+<tr>
+<td>🦎 <strong>Lizards</strong></td>
+<td>Lizards, Raptors, Bugards, Adamantoise, Efts, Wivres</td>
+<td>Vermin</td>
+<td>🐗 <strong>Beasts</strong></td>
+<td>Beast: Hare, Sheep, Tiger, Saber Siravarde · charm Sheep, Tigers, Dhalmels, Coeurls</td>
+<td>Vermin</td>
+</tr>
+<tr>
+<td>🐛 <strong>Vermin</strong></td>
+<td>Crawlers, Scorpions, Bees, Beetles, Flies, Spiders, Antlions, Diremites, Wamouras</td>
+<td>Plantoids</td>
+<td>🦎 <strong>Lizards</strong></td>
+<td>Lizard: Lizard/Eft Familiar, Coldblood Como, Ambusher Allie · charm Lizards, Raptors</td>
+<td>Plantoids</td>
+</tr>
+<tr>
+<td>🌿 <strong>Plantoids</strong></td>
+<td>Funguars, Morbols, Treants, Mandragoras, Saplings, Cactuars, Flytraps, Goobbues</td>
+<td>Beasts</td>
+<td>🐛 <strong>Vermin</strong></td>
+<td>Vermin: Mayfly, Beetle, Antlion, Mite, Panzer Galahad, Chopsuey Chucky · charm Crawlers, Bees, Scorpions, Beetles</td>
+<td>Beasts</td>
+</tr>
+<tr>
+<td>🦀 <strong>Aquans</strong></td>
+<td>Pugils, Crabs, Sea Monks, Orobons, Uragnites, Frogs</td>
+<td>Amorphs</td>
+<td>🐦 <strong>Birds</strong></td>
+<td>Bird: <em>no jug</em> · charm Birds, Bats, Cockatrices</td>
+<td>Amorphs</td>
+</tr>
+<tr>
+<td>🪱 <strong>Amorphs</strong></td>
+<td>Slimes, Leeches, Worms, Hecteyes, Flans</td>
+<td>Birds</td>
+<td>🦀 <strong>Aquans</strong></td>
+<td>Aquan: Crab Familiar, Courier Carrie · charm Crabs, Pugils, Sea Monks</td>
+<td>Birds</td>
+</tr>
+<tr>
+<td>🐦 <strong>Birds</strong></td>
+<td>Bats, Birds, Cockatrices, Colibri, Apkallu, Hippogryphs</td>
+<td>Aquans</td>
+<td>🪱 <strong>Amorphs</strong></td>
+<td>Amorph: <em>no jug</em> · charm Slimes, Leeches, Hecteyes (not Worms)</td>
+<td>Aquans</td>
+</tr>
+<tr>
+<td>💀 <strong>Undead</strong></td>
+<td>Skeletons, Fomors, Ghosts, Shadows, Hounds, Doomed, Qutrubs</td>
+<td>Arcana</td>
+<td>💣 <strong>Arcana</strong></td>
+<td>— (no Arcana can be charmed on Phoenix)</td>
+<td>Arcana</td>
+</tr>
+<tr>
+<td>💣 <strong>Arcana</strong></td>
+<td>Bombs, Cardians, Evil Weapons, Dolls, Magic Pots, Golems, Clusters</td>
+<td>Undead</td>
+<td>💀 <strong>Undead</strong></td>
+<td>— (no Undead can be charmed on Phoenix)</td>
+<td>Undead</td>
+</tr>
+<tr>
+<td>🐉 <strong>Dragons</strong></td>
+<td>Dragons, Wyverns, Puks, Wyrms, Hydras</td>
+<td>Demons</td>
+<td>😈 <strong>Demons</strong></td>
+<td>—</td>
+<td>Demons</td>
+</tr>
+<tr>
+<td>😈 <strong>Demons</strong></td>
+<td>Demons, Imps, Ahriman, Soulflayers, Taurus</td>
+<td>Dragons</td>
+<td>🐉 <strong>Dragons</strong></td>
+<td>—</td>
+<td>Dragons</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — read the table both ways.</strong> The <strong>Best pet</strong> column puts the 5% on your side, because the target's swings at your pet fail. The <strong>Pet to keep away</strong> column is the trap: that pet's own swings fail against the target. At a Mandragora camp, leave the Tiger Familiar at home and bring a Mayfly or charm a Bee.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — Aquans and Birds have no jug answer.</strong> None of the era jugs are Birds or Amorphs. At a Pugil or Crab camp the only way to get the edge is to <strong>charm</strong> a bird or bat. If you can't, any non-Amorph pet is fine. It just won't have the bonus.</p>
+</aside>
+<h3>Jug pets by family (quick lookup)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Era jug pets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🐗 <strong>Beast</strong></td>
+<td>Hare Familiar, Sheep Familiar, Tiger Familiar, Keeneared Steffi, Lullaby Melodia, Saber Siravarde</td>
+</tr>
+<tr>
+<td>🦎 <strong>Lizard</strong></td>
+<td>Lizard Familiar, Eft Familiar, Coldblood Como, Ambusher Allie</td>
+</tr>
+<tr>
+<td>🐛 <strong>Vermin</strong></td>
+<td>Mayfly Familiar, Beetle Familiar, Antlion Familiar, Mite Familiar, Shellbuster Orob, Lifedrinker Lars, Panzer Galahad, Chopsuey Chucky</td>
+</tr>
+<tr>
+<td>🌿 <strong>Plantoid</strong></td>
+<td>Flowerpot Bill, Flowerpot Ben, Funguar Familiar, Flytrap Familiar, Voracious Audrey, Amigo Sabotender, <strong>Homunculus</strong> (Phoenix files it as a Mandragora)</td>
+</tr>
+<tr>
+<td>🦀 <strong>Aquan</strong></td>
+<td>Crab Familiar, Courier Carrie</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Your own Killer traits (player intimidation)</h3>
+<p>BST's job traits are the same mechanic, but they protect <strong>you</strong>, not your pet. Each one is <strong>8%</strong> on Phoenix:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Mobs that can fail to hit you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Vermin Killer</td>
+<td>Crawlers, Bees, Scorpions, Beetles, Spiders…</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Bird Killer</td>
+<td>Bats, Birds, Cockatrices</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Amorph Killer</td>
+<td>Slimes, Leeches, Worms, Hecteyes</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Lizard Killer</td>
+<td>Lizards, Raptors, Efts</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Aquan Killer</td>
+<td>Pugils, Crabs, Sea Monks</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Plantoid Killer</td>
+<td>Funguars, Mandragoras, Morbols, Treants</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Beast Killer</td>
+<td>Sheep, Tigers, Coeurls, Manticores</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Beast Trousers</strong> (AF legs) and the <strong>Flawless Ribbon</strong> each add <strong>+1 to all your Killer effects</strong>. <strong>Killer Instinct</strong> (75 merit) lends your <strong>pet's</strong> Killer effect to the party: on Phoenix it's power 10 for 60 seconds.</p>
+<h3>"...is intimidated by your presence"</h3>
+<p>That line in your chat log is a Killer effect going off. The monster tried to attack, cast or use an item and <strong>froze instead</strong>. The message names whoever it was trying to hit:</p>
+<ul>
+<li><strong>"...by your presence"</strong> → <strong>player intimidation</strong>. Your own BST trait fired (8%).</li>
+<li><strong>"...by [pet]'s presence"</strong> → <strong>pet intimidation</strong>. Your pet's family edge fired (5%).</li>
+</ul>
+<h3>Double-edge camps (pet + you)</h3>
+<p>Your traits only matter when the monster swings at <strong>you</strong>: on the pull, when a charm breaks, or when you pull hate while meleeing. Your pet's edge only matters when it swings at the <strong>pet</strong>. The best camps cover both. The target's family is one your pet hunts <strong>and</strong> one your trait covers, so it whiffs on whoever it goes after. These are the <strong>double edge</strong> (gold badge) rows in the Kill Chart:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Your trait</th>
+<th>Target family</th>
+<th>Pet with the edge</th>
+<th>Double-edge camps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 · Vermin Killer</td>
+<td>Bees, crawlers, beetles, scorpions, spiders</td>
+<td>🦎 <strong>Lizard</strong></td>
+<td>Yuhtunga (35–40) · Crawlers' Nest (47–53) · Kuftal Tunnel (62–68) · any vermin with a Lizard/Eft Familiar (33+)</td>
+</tr>
+<tr>
+<td>20 · Bird Killer</td>
+<td>Bats, birds</td>
+<td>🪱 <strong>Amorph</strong></td>
+<td>Maze of Shakhrami: Poison Leech → bats (26–31)</td>
+</tr>
+<tr>
+<td>30 · Amorph Killer</td>
+<td>Leeches, slimes, worms</td>
+<td>🦀 <strong>Aquan</strong></td>
+<td>Korroloka: Clipper / Pugil / Sea Monk → leeches (30–36) · Beadeaux: Big Jaw → Gloop (37–42) · Kuftal: Robber Crab → worms (63–68) · Uleguerand: Courier Carrie → worms (68–73) · Boyahda: Steelshell → Blood Ball (72–75)</td>
+</tr>
+<tr>
+<td>40 · Lizard Killer</td>
+<td>Lizards, raptors, efts</td>
+<td>🐗 <strong>Beast</strong></td>
+<td>Uleguerand: Polar Hare → Nival Raptor (68–72)</td>
+</tr>
+<tr>
+<td>50 · Aquan Killer</td>
+<td>Crabs, pugils, sea monks</td>
+<td>🐦 <strong>Bird</strong></td>
+<td>No good camp. Bird pets at that level are too weak.</td>
+</tr>
+<tr>
+<td>60 · Plantoid Killer</td>
+<td>Mandragoras, funguars, saplings</td>
+<td>🐛 <strong>Vermin</strong></td>
+<td>Boyahda: Bark Spider → Death Cap / Mourioche (60–66) · Boyahda deep: Processionaire → Korrigan (72–75)</td>
+</tr>
+<tr>
+<td>70 · Beast Killer</td>
+<td>Rabbits, sheep, tigers</td>
+<td>🌿 <strong>Plantoid</strong></td>
+<td>No good camp in the chart. Plant pets at 70+ are rare.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — just got a new trait?</strong> Check this table. Vermin Killer at 10 doesn't mean "go kill bees now": at 10 there's no lizard to charm in the canyon. It pays off when you reach a camp where a <strong>lizard pet</strong> is also on the vermin. That's Yuhtunga at 35 and Crawlers' Nest at 47, where nearly everything is vermin.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — Beastmen, Elementals and Humanoids have no family Killer in Phoenix's code, so a Goblin, Orc or Quadav can never intimidate you or your pet. The reverse is also true: your traits do nothing against them.</p>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE MENAGERIE (JUG PET COMPENDIUM)</h2></header>
+<p><em>Equip the jug in your ammo slot, then use Call Beast. Jug level is the BST level needed to equip it.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Jug</th>
+<th>BST Lv</th>
+<th>Pet</th>
+<th>Pet Lv range</th>
+<th>Duration</th>
+<th>Where to get it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Carrot Broth</td>
+<td>23</td>
+<td>Hare Familiar</td>
+<td>23–35</td>
+<td>90 min</td>
+<td>Cooking 3 (4× San d'Orian Carrot), BST vendors*</td>
+</tr>
+<tr>
+<td>Herbal Broth</td>
+<td>23</td>
+<td>Sheep Familiar</td>
+<td>23–35</td>
+<td>60 min</td>
+<td>Cooking 7, vendors*</td>
+</tr>
+<tr>
+<td>Fish Broth</td>
+<td>23</td>
+<td>Crab Familiar</td>
+<td>23–55</td>
+<td>30 min</td>
+<td>Cooking 37 (4× Hamsi), Kazham (Toji Mumosulah)</td>
+</tr>
+<tr>
+<td>Fish Oil Broth</td>
+<td>23</td>
+<td>Courier Carrie</td>
+<td>23–75</td>
+<td>30 min</td>
+<td>Goblin Tamer drop (Kuftal Tunnel)</td>
+</tr>
+<tr>
+<td>Alchemist Water</td>
+<td>23</td>
+<td>Homunculus</td>
+<td>23–75</td>
+<td>60 min</td>
+<td>Alchemy 86</td>
+</tr>
+<tr>
+<td>Humus</td>
+<td>28</td>
+<td>Flowerpot Bill</td>
+<td>28–40</td>
+<td>60 min</td>
+<td>Woodworking 9, Mandragora/Korrigan drops</td>
+</tr>
+<tr>
+<td>Meat Broth</td>
+<td>28</td>
+<td>Tiger Familiar</td>
+<td>28–40</td>
+<td>60 min</td>
+<td>Cooking 28</td>
+</tr>
+<tr>
+<td>Grasshopper Broth</td>
+<td>28</td>
+<td>Flytrap Familiar</td>
+<td>28–40</td>
+<td>60 min</td>
+<td>Cooking 52</td>
+</tr>
+<tr>
+<td>Bug Broth</td>
+<td>33</td>
+<td>Mayfly Familiar</td>
+<td>33–45</td>
+<td>60 min</td>
+<td>Cooking 15, vendors*</td>
+</tr>
+<tr>
+<td>Carrion Broth</td>
+<td>33</td>
+<td>Lizard Familiar</td>
+<td>33–45</td>
+<td>60 min</td>
+<td>Cooking 11, vendors*</td>
+</tr>
+<tr>
+<td>Seedbed Soil</td>
+<td>33</td>
+<td>Funguar Familiar</td>
+<td>33–65</td>
+<td>60 min</td>
+<td>Kazham (Toji Mumosulah)</td>
+</tr>
+<tr>
+<td>Mole Broth</td>
+<td>33</td>
+<td>Eft Familiar</td>
+<td>33–45</td>
+<td>60 min</td>
+<td>Cooking 57</td>
+</tr>
+<tr>
+<td>Tree Sap</td>
+<td>38</td>
+<td>Beetle Familiar</td>
+<td>38–45</td>
+<td>60 min</td>
+<td>Woodworking 12</td>
+</tr>
+<tr>
+<td>Antica Broth</td>
+<td>38</td>
+<td>Antlion Familiar</td>
+<td>38–50</td>
+<td>60 min</td>
+<td>Cooking 67</td>
+</tr>
+<tr>
+<td>Blood Broth</td>
+<td>43</td>
+<td>Mite Familiar</td>
+<td>43–55</td>
+<td>60 min</td>
+<td>Cooking 62</td>
+</tr>
+<tr>
+<td>F. Carrot Broth</td>
+<td>43</td>
+<td>Keeneared Steffi</td>
+<td>43–55</td>
+<td>90 min</td>
+<td><span class="q">?</span> see below</td>
+</tr>
+<tr>
+<td>S. Herbal Broth</td>
+<td>43</td>
+<td>Lullaby Melodia</td>
+<td>43–55</td>
+<td>60 min</td>
+<td>Goblin Shepherd/Veterinarian (rare)</td>
+</tr>
+<tr>
+<td>Rich Humus</td>
+<td>51</td>
+<td>Flowerpot Ben</td>
+<td>51–63</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>W. Meat Broth</td>
+<td>51</td>
+<td>Saber Siravarde</td>
+<td>51–63</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>Qdv. Bug Broth</td>
+<td>53</td>
+<td>Shellbuster Orob</td>
+<td>53–65</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>C. Carrion Broth</td>
+<td>53</td>
+<td>Coldblood Como</td>
+<td>53–65</td>
+<td>60 min</td>
+<td>Goblin Tamer (Kuftal)</td>
+</tr>
+<tr>
+<td>N. Grass. Broth</td>
+<td>53</td>
+<td>Voracious Audrey</td>
+<td>53–75</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>L. Mole Broth</td>
+<td>58</td>
+<td>Ambusher Allie</td>
+<td>58–75</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>Scarlet Sap</td>
+<td>63</td>
+<td>Panzer Galahad</td>
+<td>63–75</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>C. Blood Broth</td>
+<td>63</td>
+<td>Lifedrinker Lars</td>
+<td>63–75</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>F. Antica Broth</td>
+<td>63</td>
+<td>Chopsuey Chucky</td>
+<td>63–85</td>
+<td>60 min</td>
+<td><span class="q">?</span></td>
+</tr>
+<tr>
+<td>Sun Water</td>
+<td>75</td>
+<td>Amigo Sabotender</td>
+<td>75–85</td>
+<td>30 min</td>
+<td>Alchemy 100</td>
+</tr>
+</tbody>
+</table></div>
+<p>*Base BST jugs are sold by <strong>Mamerie (Kazham)</strong>, <strong>Generoit (Rabao)</strong>, <strong>Neigepance (Bastok Mines)</strong>, <strong>Ferdoulemiont (S. San d'Oria)</strong> and <strong>Quesse (Windurst Woods)</strong>. Phoenix's era module <strong>raises their prices</strong> (Carrot Broth ~90 gil instead of 60).</p>
+<aside class="box warn">
+<p><strong>WARNING — <span class="q">?</span> "Advanced" jugs.</strong> Phoenix's code has <strong>no recipe, vendor or quest</strong> for most of the named jugs (Famous Carrot, Rich Humus, Scarlet Sap, etc.). Only some show up as Goblin drops. Either they come from somewhere not in the public repo, or they're effectively unobtainable right now. Check the AH and ask in-game before planning around Keeneared Steffi.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>Post-era jugs.</strong> Wormy Broth (Slippery Silas) and Auroral Broth (Turbid Toloi) exist in the data, but their pet IDs are in the late-addition range. Treat them as post-era unless you see them on the AH.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — Jug pets spawn <strong>up to 2 levels below</strong> their cap at random. Monster Gloves reduce that variance ("Jug level range").</p>
+</aside>
+<h3>Sic moves by pet (era skill lists)</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — <code>modules/era/lua/globals/pets/jug.lua</code> remaps every jug pet to its <strong>Sic</strong> skill list. On Phoenix these are the TP moves your pet picks from when you Sic (or when it reaches TP on its own):</p>
+</aside>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Jug pets</th>
+<th>Sic moves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rabbit</td>
+<td>Hare Familiar, Keeneared Steffi</td>
+<td>Foot Kick, Dust Cloud, Whirl Claws, Wild Carrot (self-heal)</td>
+</tr>
+<tr>
+<td>Mandragora</td>
+<td>Flowerpot Bill, Flowerpot Ben</td>
+<td>Head Butt, Dream Flower (sleep), Wild Oats, Leaf Dagger, Scream</td>
+</tr>
+<tr>
+<td>Tiger</td>
+<td>Tiger Familiar, Saber Siravarde</td>
+<td>Roar, Razor Fang, Claw Cyclone, Crossthrash, Predatory Glare</td>
+</tr>
+<tr>
+<td>Lizard</td>
+<td>Lizard Familiar, Coldblood Como</td>
+<td>Tail Blow, Fireball, Blockhead, Brain Crush, Infrasonics, Secretion</td>
+</tr>
+<tr>
+<td>Sheep</td>
+<td>Sheep Familiar, Lullaby Melodia</td>
+<td>Lamb Chop, Rage, Sheep Charge, Sheep Song (sleep)</td>
+</tr>
+<tr>
+<td>Crab</td>
+<td>Crab Familiar, Courier Carrie</td>
+<td>Bubble Shower, Bubble Curtain, Big Scissors, Scissor Guard, Metallic Body</td>
+</tr>
+<tr>
+<td>Cactuar</td>
+<td>Amigo Sabotender</td>
+<td>Needleshot, Random Needles</td>
+</tr>
+<tr>
+<td>Funguar</td>
+<td>Funguar Familiar</td>
+<td>Frogkick, Spore, Queasyshroom, Numbshroom, Shakeshroom, Silence Gas, Dark Spore</td>
+</tr>
+<tr>
+<td>Beetle</td>
+<td>Beetle Familiar, Shellbuster Orob, Panzer Galahad</td>
+<td>Power Attack, Hi-Freq Field, Rhino Attack, Rhino Guard, Spoil</td>
+</tr>
+<tr>
+<td>Fly</td>
+<td>Mayfly Familiar</td>
+<td>Cursed Sphere, Venom, Somersault</td>
+</tr>
+<tr>
+<td>Antlion</td>
+<td>Antlion Familiar, Chopsuey Chucky</td>
+<td>Sandblast, Sandpit, Venom Spray, Mandibular Bite</td>
+</tr>
+<tr>
+<td>Flytrap</td>
+<td>Flytrap Familiar, Voracious Audrey</td>
+<td>Soporific (sleep), Gloeosuccus, Palsy Pollen</td>
+</tr>
+<tr>
+<td>Eft</td>
+<td>Eft Familiar, Ambusher Allie</td>
+<td>Geist Wall, Numbing Noise, Nimble Snap, Cyclotail, Toxic Spit</td>
+</tr>
+<tr>
+<td>Diremite</td>
+<td>Mite Familiar, Lifedrinker Lars</td>
+<td>Double Claw, Grapple, Spinning Top, Filamented Hold</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING</strong> — <strong>Homunculus</strong> (Alchemist Water) has <strong>no Sic list</strong> in the era mapping. Treat it as melee-only until you've tested it.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — picking a jug by job.</strong> Sheep and Flytrap jugs carry a <strong>sleep</strong> you can Sic onto adds. Rabbits heal themselves with Wild Carrot, which makes them the lowest-maintenance tank. Crabs (Scissor Guard, Metallic Body) are the sturdiest. Tigers and lizards hit hardest.</p>
+</aside>
+<h3>Pet food (Reward)</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — Phoenix reverts biscuits to <strong>pre-Abyssea healing</strong>. Minimum heal per biscuit:</p>
+</aside>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Biscuit</th>
+<th>Min heal</th>
+<th>MND threshold</th>
+<th>Heal per MND above it</th>
+<th>Pet Regen (3 min)</th>
+<th>Recipe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pet Food Alpha</td>
+<td>25</td>
+<td>10</td>
+<td>×2</td>
+<td>1/tick</td>
+<td>Cooking 9 (×12): Horo Flour, Hare Meat, Distilled Water, Bird Egg</td>
+</tr>
+<tr>
+<td>Pet Food Beta</td>
+<td>50</td>
+<td>33</td>
+<td>×1</td>
+<td>2/tick</td>
+<td>Cooking 19 (×12): Giant Sheep Meat version</td>
+</tr>
+<tr>
+<td>Pet Food Gamma</td>
+<td>100</td>
+<td>35</td>
+<td>×1</td>
+<td>3/tick</td>
+<td>Cooking 29 (×6): Dhalmel Meat version</td>
+</tr>
+<tr>
+<td>Pet Food Delta</td>
+<td>150</td>
+<td>40</td>
+<td>×2</td>
+<td>4/tick</td>
+<td>Cooking 39 (×6): Rye Flour, Land Crab Meat</td>
+</tr>
+<tr>
+<td>Pet Food Epsilon</td>
+<td>300</td>
+<td>45</td>
+<td>×2</td>
+<td>5/tick</td>
+<td>Cooking 49 (×4): Rye Flour, Lizard Egg, Ziz/Cockatrice Meat</td>
+</tr>
+<tr>
+<td>Pet Food Zeta</td>
+<td>350</td>
+<td>45</td>
+<td>×3</td>
+<td>6/tick</td>
+<td>Cooking 59 (×4): San d'Orian Flour, Lizard Egg, Coeurl Meat</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>How to read it:</strong> Heal = Min heal + multiplier × (your MND − threshold). At <strong>60 MND</strong>, a Delta heals 150 + 2×20 = <strong>190</strong>, an Epsilon 300 + 2×15 = <strong>330</strong>, and a Zeta 350 + 3×15 = <strong>395</strong>. Reward+ gear then adds its % on top (see Chapter 7, Set 2). Every Reward also gives a 3-minute pet Regen.</p>
+<aside class="box gil">
+<p><strong>MONEY MAKER</strong> — Pet food is cheap to craft and BSTs burn stacks of it. A Cooking alt can supply your own needs and sell the surplus.</p>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>Every item in this chapter was checked against Phoenix's own item tables: level, stats, and where it drops or how it's made. If a piece from another guide is missing here, the "Not on Phoenix" box at the end probably explains why.</em></p>
+<h3>How this chapter is laid out</h3>
+<ul>
+<li><strong>The four sets</strong>, in the order you use them in a fight: <strong>Charm → Healing (Reward) → Combat (WS) → TP</strong>. Each set is a slot-by-slot upgrade path from 1 to 75.</li>
+<li><strong>Quick loadouts</strong> — complete outfits at 30, 50 and 60.</li>
+<li><strong>The weapon rack</strong> — every axe, scythe and shield worth using, with damage and delay.</li>
+<li><strong>Race-locked picks, pet gear, AF &amp; Relic.</strong></li>
+<li><strong>The Item Directory</strong> — every item mentioned above, with its stats and exactly where it comes from.</li>
+<li><strong>Not on Phoenix</strong> — gear other guides recommend that you can't get here.</li>
+</ul>
+<p><strong>Source shorthand</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BCNM30/40/50/60</strong></td>
+<td>Sky/Star/Comet/Moon Orb fight at that level cap</td>
+</tr>
+<tr>
+<td><strong>KSNM30</strong></td>
+<td>Clotho/Lachesis/Atropos Orb fight (30 Kindred's Seals, uncapped)</td>
+</tr>
+<tr>
+<td><strong>KSNM99</strong></td>
+<td>Themis Orb fight (uncapped)</td>
+</tr>
+<tr>
+<td><strong>ENM</strong></td>
+<td>CoP Empty-type battlefield (Boneyard Gully, Bearclaw Pinnacle, Mine Shaft #2716, Spire of Vahzl, Monarch Linn, Shrouded Maw)</td>
+</tr>
+<tr>
+<td><strong>Assault</strong></td>
+<td>ToAU Assault Point shop (Aht Urhgan)</td>
+</tr>
+<tr>
+<td><strong>Conquest</strong></td>
+<td>Signet conquest-point gear from your nation's Regiment vendor</td>
+</tr>
+<tr>
+<td><strong>HQ</strong></td>
+<td>the high-quality result of the listed craft</td>
+</tr>
+</tbody>
+</table></div>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-charm" class="fstep set-charm"><b>♥</b><span>SET 1</span><em>Charm</em><small>Step 1 · Win the pet</small></a><a role="listitem" href="#set-heal" class="fstep set-heal"><b>✚</b><span>SET 2</span><em>Healing</em><small>Step 2 · Keep it alive</small></a><a role="listitem" href="#set-ws" class="fstep set-ws"><b>✦</b><span>SET 3</span><em>Combat (WS)</em><small>Step 3 · Finish it</small></a><a role="listitem" href="#set-tp" class="fstep set-tp"><b>⚔</b><span>SET 4</span><em>TP</em><small>Always on · Swing between swaps</small></a></div>
+<p>Every BST carries four gear sets and swaps between them with macros:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Job</th>
+<th>Stats that matter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 · Charm</strong></td>
+<td>Swapped in for Charm — step one of every fight</td>
+<td>CHR, Charm+, Charm Chance (staff)</td>
+</tr>
+<tr>
+<td><strong>2 · Healing (Reward)</strong></td>
+<td>Swapped in for Reward to keep the pet alive</td>
+<td>MND, Reward HP+, Reward recast</td>
+</tr>
+<tr>
+<td><strong>3 · Combat (WS)</strong></td>
+<td>Swapped in for Rampage / Decimation</td>
+<td>STR, Attack</td>
+</tr>
+<tr>
+<td><strong>4 · TP</strong></td>
+<td>What you wear while meleeing alongside the pet</td>
+<td>Haste, Accuracy, Store TP, DEX/STR</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each table below shows <strong>the best pick per slot for each level bracket</strong>. A number in brackets is the level you can wear it. Stats and drop sources for every item are in the <strong>Item Directory</strong> at the end of this chapter.</p>
+
+<section class="set set-charm" id="set-charm"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">♥</span><h2>CHARM</h2><span class="settag">Step 1 · Win the pet</span></header>
+<p><em>Swap in, Charm, swap out. Success and duration want different gear (see the FROM THE CODE box below the table).</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main</strong></td>
+<td><strong>Monster Signa</strong> [17] (CHR+8)</td>
+<td>De Saintre's Axe [39] (Charm+1, meleeable) → <strong>Chanter's Staff</strong> [40] (CHR+6)</td>
+<td><strong>Light / Apollo's Staff</strong> [51] (Charm Chance +10 / +15)</td>
+<td>Apollo's Staff, or Lohar [69] (CHR+5)</td>
+<td>Apollo's Staff, or <strong>Temperance Axe</strong> (CHR+7)</td>
+</tr>
+<tr>
+<td><strong>Ammo</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Tsar's Egg (CHR+4)</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td>Entrancing Ribbon [11] → <strong>Noble's Ribbon</strong> [14]</td>
+<td>Noble's Ribbon</td>
+<td><strong>Beast Helm</strong> [56] (Charm+4)</td>
+<td>Beast Helm</td>
+<td><strong>Monster Helm</strong> (Charm+5) or Beast Helm +1</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td><strong>Bird Whistle</strong> [15] → Flower Necklace [27]</td>
+<td>Flower Necklace</td>
+<td>Star Necklace [59]</td>
+<td>Star Necklace</td>
+<td><strong>Temp. Torque</strong> (CHR+5)</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>—</td>
+<td>—</td>
+<td>Melody Earring +1 [52]</td>
+<td>Melody Earring +1</td>
+<td><strong>Beastly</strong> + Melody +1</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Garrison Tunica [18] (CHR+1)</td>
+<td>Garrison Tunica</td>
+<td>Gaudy Harness [50] (CHR+3) → <strong>Beast Jackcoat</strong> [58] (Charm+5)</td>
+<td>Beast Jackcoat</td>
+<td><strong>Monster Jackcoat</strong> / Bst. Jackcoat +1 (Charm+6)</td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Beast Gloves</strong> [54] (Charm+3)</td>
+<td><strong>Trainer's Gloves</strong> [70] (CHR+5)</td>
+<td>Trainer's Gloves or Bst. Gloves +1</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>Hope Ring ×2 [14]</td>
+<td><strong>Loyalty Ring ×2</strong> [36]</td>
+<td><strong>Allure Ring ×2</strong> [54]</td>
+<td><strong>Heaven's Ring ×2</strong> [72]</td>
+<td>Heaven's Ring ×2</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>—</td>
+<td><strong>Corsette +1</strong> [40] (CHR+6)</td>
+<td>Corsette +1</td>
+<td><strong>Monster Belt</strong> [70] (CHR+6)</td>
+<td>Monster Belt</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>—</td>
+<td>—</td>
+<td>Dst. Codpiece [50] → <strong>Beast Trousers</strong> [60] (CHR+4, Charm+6)</td>
+<td>Beast Trousers</td>
+<td><strong>Bst. Trousers +1</strong></td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Beast Gaiters</strong> [52] (Charm+2)</td>
+<td>Beast Gaiters</td>
+<td><strong>Bst. Gaiters +1</strong> (CHR+5)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — which half matters.</strong></p>
+<ul>
+<li>Charm <strong>success</strong> counts CHR one-for-one, plus <strong>Charm Chance</strong>, which only the two staves give.</li>
+<li>Charm <strong>duration</strong> counts CHR at ×1.25 seconds, plus <strong>5% per Charm+ point</strong>.</li>
+<li>A full Charm+ set (Monster Helm 5 + Jackcoat 6 + Trousers 6 + Gaiters 2 + Beast Gloves 3 = 22) adds about <strong>+110% duration</strong>.</li>
+<li>Keep two macros: a <strong>staff</strong> macro for risky charms, and the <strong>Charm+</strong> set for long ones.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — two charm macros while leveling.</strong> Before 51, the Monster Signa (CHR+8) / Chanter's Staff (CHR+6) slot is your only Charm Chance substitute. At 51 the Light Staff takes over for risky targets.</p>
+<p><strong>De Saintre's Axe</strong> (BCNM40) is a weaker charm piece. Its Charm+1 is <strong>duration only</strong> (+5%) and adds nothing to success, so a Monster Signa still charms better. Its upside is that you can melee with it (28 DMG / 288 delay), so there's no main-hand swap on every charm.</p>
+<p>It is <strong>not</strong> a Familiar tool. See Set 1b: on a tough mob the axe adds well under a second, and Familiar adds 25–30 minutes no matter what.</p>
+</aside>
+<h3>SET 1b · FAMILIAR GRAB (the big pull)</h3>
+<p>Use this when you want to charm something <strong>well above your level</strong> and hold it with Familiar (2-hour) for a hard fight or a tough camp.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — why duration gear doesn't matter here</strong></p>
+<ul>
+<li>A mob 4+ levels above you gives a base charm of only <strong>~10–20 seconds</strong> (at CHR 60).</li>
+<li>Charm+1 (De Saintre's Axe) adds 5% of that: <strong>under 1 second</strong>.</li>
+<li><strong>Familiar</strong> adds a flat <strong>25–30 minutes</strong> to a charmed pet, plus +10% max HP. It ignores how long the original charm was.</li>
+<li>So the only thing that matters is <strong>landing the charm</strong>. Then hit Familiar right away.</li>
+</ul>
+</aside>
+<p><strong>What raises your chance to land it:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Effect on charm chance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>Each level the mob is above you</td>
+<td>−3% (mob Lv1–50) · −5% (Lv51–70) · −10% (Lv71+)</td>
+</tr>
+<tr>
+<td>CHR difference (yours − the mob's)</td>
+<td>+1% per point</td>
+</tr>
+<tr>
+<td><strong>Light Staff</strong> [51]</td>
+<td>+10%</td>
+</tr>
+<tr>
+<td><strong>Apollo's Staff</strong> [51]</td>
+<td>+15%</td>
+</tr>
+<tr>
+<td><strong>Tame</strong> first, while the mob is <em>not</em> fighting anyone</td>
+<td>+10% on your next Charm of that mob</td>
+</tr>
+<tr>
+<td>Mob is weak to light</td>
+<td>×1.2 to ×1.5</td>
+</tr>
+<tr>
+<td>Cap</td>
+<td>95%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The set:</strong> Apollo's (or Light) Staff + every CHR piece you own. (Iridal and Chatoyant Staff also carry Charm Chance in the item table, but Phoenix's code has no source for either.) Before 51, Chanter's Staff [40] or Monster Signa [17] is the best you have.</p>
+<p><strong>The macro chain:</strong>
+1. <code>/check</code> the mob. "Might be able to charm" means 50%+. "Difficult" means 25–49%.
+2. <strong>Tame</strong> while it's still unclaimed. If it's already fighting you, Tame calms it down instead of giving the +10%.
+3. <strong>Charm</strong> (in the Grab set).
+4. <strong>Familiar</strong> immediately. You have roughly 10–20 seconds before the base charm runs out.</p>
+<aside class="box warn">
+<p><strong>WARNING</strong> — Familiar has a <strong>2-hour</strong> recast on Phoenix (the era value). A failed charm doesn't burn Familiar, since it needs a pet to work, but you're now fighting a mob several levels above you. Have an escape (Leave, a Warp, or a friend) before you try.</p>
+</aside>
+
+</section><section class="set set-heal" id="set-heal"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">✚</span><h2>HEALING (REWARD)</h2><span class="settag">Step 2 · Keep it alive</span></header>
+<p><em>Swap in for Reward. MND raises the base heal, Reward+ gear multiplies it, and Warbonnets shorten the recast.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main</strong></td>
+<td>—</td>
+<td><strong>Chanter's Staff</strong> [40] (MND+6)</td>
+<td><strong>Pride Staff</strong> [53] (MND+7)</td>
+<td>Pride Staff</td>
+<td><strong>Zoraal Ja's Axe</strong> (Reward +10%)</td>
+</tr>
+<tr>
+<td><strong>Sub</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Numinous Shield +1 [69] (MND+3)</td>
+<td>Numinous Shield +1</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td>Garrison Sallet [19]</td>
+<td><strong>Rain Hat</strong> [41]</td>
+<td>Rain Hat</td>
+<td><strong>Bison / Khimaira Warbonnet</strong> [71] (−10 sec recast)</td>
+<td>Warbonnet</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td>Justice Badge [7] → Holy Phial [26]</td>
+<td><strong>Promise Badge</strong> [48] (MND+5)</td>
+<td>Promise Badge</td>
+<td>Promise Badge</td>
+<td>Promise Badge / Faith Torque</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Celestial Earring [67]</td>
+<td>Celestial Earring</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Beast Jackcoat</strong> [58] (cures Para/Poison/Blind)</td>
+<td>Beast Jackcoat</td>
+<td><strong>Bst. Jackcoat +1</strong> (cures 6 ailments)</td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>Ogre Gloves</strong> [70] (Reward +10%)</td>
+<td><strong>Ogre Gloves +1</strong> (+11%)</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>Saintly Ring +1 ×2 [10]</td>
+<td><strong>Solace Ring ×2</strong> [36]</td>
+<td><strong>Serenity Ring ×2</strong> [54]</td>
+<td>Communion Ring [72] + Serenity</td>
+<td><strong>Communion / Aqua</strong> ×2</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Steppe Rope [70] (Taru only)</td>
+<td>Steppe Rope (Taru)</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>—</td>
+<td><strong>Magic Cuisses</strong> [48]</td>
+<td>Magic Cuisses</td>
+<td>Magic Cuisses</td>
+<td>Magic Cuisses</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Beast Gaiters</strong> [52] (Reward +10%)</td>
+<td>Beast Gaiters</td>
+<td><strong>Monster Gaiters</strong> (Reward +20%)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the Reward formula.</strong></p>
+<ul>
+<li>Heal = biscuit minimum + MND multiplier × (<strong>your MND − threshold</strong>). Then add <strong>+% Reward</strong> from gear.</li>
+<li>Zeta biscuit: 350 + 3 × (MND − 45). At 60 MND that's 395. With Monster Gaiters + Ogre Gloves +1 + Zoraal Ja's Axe (+41%), it's about <strong>556</strong>.</li>
+<li><strong>Below the threshold, MND subtracts.</strong> A Zeta at 35 MND heals 320, not 350.</li>
+<li><strong>Warbonnet</strong> is a flat −10 seconds, and the HQ (Brave's/Stout) is no better (<code>char_entity.cpp</code>). Buy the NQ.</li>
+<li><strong>Beast Jackcoat:</strong> cures Paralyze/Poison/Blind.</li>
+<li><strong>Monster Jackcoat:</strong> cures Weight/Slow/Silence.</li>
+<li><strong>Beast Jackcoat +1:</strong> cures all six.</li>
+</ul>
+</aside>
+
+</section><section class="set set-ws" id="set-ws"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">✦</span><h2>COMBAT (WEAPON SKILL)</h2><span class="settag">Step 3 · Finish it</span></header>
+<p><em>Swap in for Rampage (175 skill) and Decimation (240, quest). Both scale off STR and Attack.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ammo</strong></td>
+<td>Tiny Tathlum [15]</td>
+<td>RSE Sachet [30] (Elvaan STR+2)</td>
+<td>Tiphia Sting [58]</td>
+<td>Tiphia Sting</td>
+<td>Tiphia Sting</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td>Emperor Hairpin [24]</td>
+<td>Voyager Sallet [41] → Valkyrie's Mask [43]</td>
+<td><strong>Abtal Turban</strong> [59]</td>
+<td>Celata +1 [68]</td>
+<td><strong>Maat's Cap</strong></td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td><strong>Spike Necklace</strong> [21]</td>
+<td>Spike Necklace</td>
+<td><strong>Storm Gorget</strong> [50]</td>
+<td>Storm Gorget</td>
+<td><strong>Justice Torque</strong></td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>Beetle +1 ×2 [21]</td>
+<td>Tortoise +1 ×2 [45]</td>
+<td>Spike [55] + Assault [58]</td>
+<td>Spike + <strong>Merman's</strong> [63]</td>
+<td><strong>Brutal</strong> + Merman's</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Beetle Harness +1 [21]</td>
+<td>Luisant Haubert [45]</td>
+<td><strong>Byrnie +1</strong> [60]</td>
+<td><strong>Assault Jerkin</strong> [67]</td>
+<td><strong>Adaman / Armada Hauberk</strong></td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>Battle Gloves [14] (Hume/Taru: Goblin Tailor [27])</td>
+<td><strong>Ogygos's Bracelets</strong> [40]</td>
+<td>Spiked Finger Gauntlets [50] / Enkelados's [50] → Pallas's [60]</td>
+<td><strong>Alkyoneus's Bracelets</strong> [70]</td>
+<td>Alkyoneus's Bracelets</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>Courage ×2 [14]</td>
+<td>Rajas [30] + Puissance [36] → Assailant's [42] → Kshama No.8 [49]</td>
+<td>Rajas + <strong>Victory</strong> [54]</td>
+<td>Rajas + Triumph / Harmonius [72]</td>
+<td><strong>Rajas + Mars's</strong></td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>—</td>
+<td>Jaguar Mantle [47]</td>
+<td><strong>Amemet Mantle +1</strong> [61]</td>
+<td><strong>Forager's Mantle</strong> [71]</td>
+<td>Forager's / Cerberus Mantle +1</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>Brave Belt [18]</td>
+<td><strong>Swordbelt +1</strong> [43]</td>
+<td>Swordbelt +1 → Potent Belt [60]</td>
+<td><strong>Warwolf Belt</strong> [71]</td>
+<td>Warwolf Belt</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>Republic Subligar [25]</td>
+<td>Republic Subligar</td>
+<td>Ryl.Kgt. Breeches [55]</td>
+<td><strong>Dusk Trousers</strong> [72]</td>
+<td><strong>Hecatomb Subligar</strong></td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>Leaping Boots [7]</td>
+<td>Leaping Boots</td>
+<td>Leaping Boots (Taru: Creek Clomps [62])</td>
+<td><strong>Rutter Sabatons</strong> [67] → Ogre Ledelsens +1 [70]</td>
+<td>Rutter Sabatons</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — Hecatomb Subligar (−12%) and Rutter Sabatons (−2%) carry <strong>negative Haste</strong>. They belong in this set only. Leaving them on while meleeing costs you more than the attack is worth.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — skill ranks.</strong> Phoenix's era module gives BST <strong>Axe rank A</strong>, which caps at <strong>269</strong> at 75. That's enough for Rampage (175) and Decimation (240). <strong>Scythe is B−</strong> (cap 240).</p>
+</aside>
+
+</section><section class="set set-tp" id="set-tp"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">⚔</span><h2>TP (MELEE)</h2><span class="settag">Always on · Swing between swaps</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main / Sub</strong></td>
+<td>Orcish Axe [5] → Light Axe [11] → Battleaxe +1 [20] → Tigerhunter [26]</td>
+<td>Warrior's Axe [32] → Cmb.Cst. Axe [40] → <strong>Viking Axe ×2</strong> [48]</td>
+<td>Wrath Tabar [56] → <strong>Tungi ×2</strong> [60]</td>
+<td>Dst. Tabar +1 [65] → <strong>Kriegsbeil</strong> [70] → Tabarzin +1 [71]</td>
+<td><strong>Guttler</strong> + Kriegsbeil</td>
+</tr>
+<tr>
+<td><strong>Ammo</strong></td>
+<td>Tiny Tathlum [15]</td>
+<td>RSE Sachet [30]</td>
+<td><strong>Tiphia Sting</strong> [58]</td>
+<td>Tiphia Sting</td>
+<td>Tiphia Sting</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td>Garrison Sallet [19] → <strong>Emperor Hairpin</strong> [24]</td>
+<td>Mrc.Cpt. Headgear [30] → Voyager Sallet [41]</td>
+<td>Abtal Turban [59]</td>
+<td><strong>Optical Hat</strong> [70] → Pln. Qalansuwa [72]</td>
+<td><strong>Walahra Turban</strong></td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td><strong>Spike Necklace</strong> [21]</td>
+<td><strong>Peacock Amulet</strong> [33]</td>
+<td>Ryl.Grd. Collar [55] → Chivalrous Chain [60]</td>
+<td>Chivalrous Chain</td>
+<td>Chivalrous Chain</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>Bone +1 [16] → Beetle +1 ×2 [21]</td>
+<td>Tortoise +1 ×2 [45]</td>
+<td>Spike [55] + Assault [58]</td>
+<td>Merman's [63] + Suppanomimi [72]</td>
+<td><strong>Brutal</strong> + <strong>Suppanomimi</strong></td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Scale Mail [10] → Garrison Tunica [18] → Beetle Harness +1 [21]</td>
+<td>Mrc.Cpt. Doublet [30] → Luisant Haubert [45]</td>
+<td>Scorpion Harness +1 [57] → <strong>Haubergeon +1</strong> [59]</td>
+<td>Hauberk +1 [69] → Pln. Khazagand [72]</td>
+<td><strong>Adaman / Armada Hauberk</strong></td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>Ryl.Ftm. Gloves [10] → <strong>Battle Gloves</strong> [14]</td>
+<td>Battle Gloves (Hume/Taru: Goblin Tailor gloves [27])</td>
+<td><strong>Spiked Finger Gauntlets</strong> [50]</td>
+<td>Tarasque Mitts +1 [70] → <strong>Dusk Gloves</strong> [72]</td>
+<td><strong>Dusk Gloves +1</strong></td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>Courage / Balance ×2 [14]</td>
+<td><strong>Rajas</strong> [30] + Jaeger [35] → Sniper's +1 [40]</td>
+<td>Rajas + Ulthalam's [50] → <strong>Toreador's</strong> [57]</td>
+<td>Rajas + Toreador's</td>
+<td><strong>Rajas + Mars's</strong></td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>—</td>
+<td>Jaguar Mantle [47]</td>
+<td>Behemoth Mantle +1 [60] → <strong>Amemet Mantle +1</strong> [61]</td>
+<td><strong>Forager's Mantle</strong> [71]</td>
+<td>Forager's Mantle</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>Brave Belt [18]</td>
+<td>Tilt Belt [40] → Quick Belt [41] → Life Belt [48]</td>
+<td><strong>Swift Belt</strong> [50] → <strong>Speed Belt</strong> [55]</td>
+<td>Sonic Belt [65]</td>
+<td><strong>Speed / Velocious / Sonic Belt</strong></td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>Garrison Hose [21] → Republic Subligar [25]</td>
+<td>Republic Subligar</td>
+<td>Ryl.Kgt. Breeches [55]</td>
+<td>Thick Breeches +1 [69] → <strong>Dusk Trousers</strong> [72]</td>
+<td><strong>Byakko's Haidate</strong></td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td><strong>Leaping Boots</strong> [7]</td>
+<td>Leaping Boots</td>
+<td>Leaping Boots (Hume: Marine Boots [62])</td>
+<td>Khimaira Gamashes [71] → <strong>Dusk Ledelsens +1</strong> [72]</td>
+<td>Dusk Ledelsens +1</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Haste first.</strong> At 75, <strong>Walahra Turban (5%) + Dusk Gloves +1 (4%) + Speed/Sonic Belt (6%) + Byakko's Haidate (5%) + Dusk Ledelsens +1 (3%)</strong> comes to <strong>23% gear haste</strong>. On a dual-wield /NIN that's your single biggest damage gain. Get the belt first. It's the cheapest 6%.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — /NIN dual wield.</strong> From 20, run two axes. The usual pairs are Viking Axe + Viking Axe (+20 ACC), Tungi + Tungi, and Tungi + Kriegsbeil. Put the higher-damage axe in the main hand, since your weapon skill uses it.</p>
+</aside>
+
+</section><h2>QUICK LOADOUTS</h2>
+<p><strong>Level 30 "first real kit"</strong>
+Main Warrior's Axe · Sub Lantern Shield (or 2nd axe /NIN) · Ammo RSE Sachet · Head Emperor Hairpin · Neck Spike Necklace · Ears Beetle +1 ×2 · Body Mrc.Cpt. Doublet · Hands Battle Gloves (or Goblin Tailor gloves if Hume/Taru) · Rings Rajas + Courage · Back — · Waist Brave Belt · Legs Republic Subligar · Feet Leaping Boots</p>
+<p><strong>Level 50 "Swift Belt day"</strong>
+Main/Sub Viking Axe ×2 (/NIN) · Head Valkyrie's Mask · Neck <strong>Peacock Amulet</strong> · Ears Tortoise +1 ×2 · Body Brigandine +1 / Luisant Haubert · Hands <strong>Spiked Finger Gauntlets</strong> · Rings Rajas + Woodsman · Back Jaguar Mantle · Waist <strong>Swift Belt</strong> · Legs Republic Subligar · Feet Leaping Boots / Beast Gaiters</p>
+<p><strong>Level 60 "Tungi tamer"</strong>
+Main/Sub <strong>Tungi</strong> ×2 · Head Abtal Turban · Neck Peacock / Chivalrous Chain · Ears Spike + Assault · Body <strong>Haubergeon</strong> · Hands Spiked Finger Gauntlets / Pallas's Bracelets · Rings Rajas + Toreador's · Back Amemet Mantle +1 · Waist Swift / Speed Belt · Legs Ryl.Kgt. Breeches · Feet Beast Gaiters (Marine/Creek boots if Hume/Taru)</p>
+
+<h2>THE WEAPON RACK</h2>
+<h3>Main hand — Axe (TP)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Axe</th>
+<th>DMG / Delay</th>
+<th>Bonus</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Bronze Axe +1</td>
+<td>9 / 268</td>
+<td>—</td>
+<td>Smithing 7 (HQ)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Orcish Axe</td>
+<td>10 / 288</td>
+<td>STR+2</td>
+<td>Orcish Fodder (W. Ronfaure, Ghelsba)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Light Axe</td>
+<td>14 / 260</td>
+<td>—</td>
+<td>Quest: <em>The Pickpocket</em> (San d'Oria)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Bone Axe +1</td>
+<td>17 / 268</td>
+<td>—</td>
+<td>Bonecraft 20 (HQ)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Battleaxe +1</td>
+<td>21 / 268</td>
+<td>—</td>
+<td>Smithing 26 (HQ)</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Tigerhunter</td>
+<td>22 / 276</td>
+<td>—</td>
+<td>Tigerbane Bakdak (Davoi NM)</td>
+</tr>
+<tr>
+<td>32</td>
+<td>Warrior's Axe</td>
+<td>25 / 276</td>
+<td>STR+1 DEX+1</td>
+<td>Tigerbane Bakdak (Davoi NM)</td>
+</tr>
+<tr>
+<td>37</td>
+<td>Mythril Axe +1</td>
+<td>30 / 268</td>
+<td>—</td>
+<td>Smithing 42 (HQ)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Combat Caster's Axe</td>
+<td>33 / 280</td>
+<td>ATT+5</td>
+<td>Conquest</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Cmb.Cst. Axe +2</td>
+<td>35 / 264</td>
+<td>ATT+5, latent DEX+3</td>
+<td>Smithing 56 (HQ upgrade)</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Tabar +1</td>
+<td>35 / 280</td>
+<td>—</td>
+<td>Smithing 51 (HQ) · NQ from Trickster Kinetix (Qufim)</td>
+</tr>
+<tr>
+<td>48</td>
+<td><strong>Viking Axe</strong></td>
+<td>36 / 276</td>
+<td><strong>ACC+10</strong>, EVA−10</td>
+<td>Girtab (Toraimarai Canal, rare)</td>
+</tr>
+<tr>
+<td>56</td>
+<td>Darksteel Axe +1</td>
+<td>43 / 281</td>
+<td>—</td>
+<td>Smithing 62 (HQ)</td>
+</tr>
+<tr>
+<td>56</td>
+<td>Wrath Tabar</td>
+<td>45 / 316</td>
+<td>STR+7</td>
+<td>Skull of Wrath (Eldieme NM)</td>
+</tr>
+<tr>
+<td>60</td>
+<td><strong>Tungi</strong></td>
+<td>41 / 260</td>
+<td>fast delay</td>
+<td>Tribunus VII-I (Quicksand Caves NM)</td>
+</tr>
+<tr>
+<td>65</td>
+<td>Darksteel Tabar +1</td>
+<td>46 / 288</td>
+<td>—</td>
+<td>Smithing 83 (HQ)</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Acha Darmas</td>
+<td>46 / 288</td>
+<td>STR+2 DEX+1</td>
+<td>Bloodthirster Madkix (Kuftal NM)</td>
+</tr>
+<tr>
+<td>70</td>
+<td><strong>Kriegsbeil</strong></td>
+<td>48 / 276</td>
+<td>AGI+5</td>
+<td>KSNM99 <em>Horns of War</em> / <em>The Hills Are Alive</em></td>
+</tr>
+<tr>
+<td>70</td>
+<td>Juggernaut</td>
+<td>46 / 288</td>
+<td>STR+3 <strong>ATT+30</strong></td>
+<td>KSNM99 <em>Early Bird Catches the Wyrm</em> · Overlord Bakgodek</td>
+</tr>
+<tr>
+<td>71</td>
+<td><strong>Tabarzin +1</strong></td>
+<td>50 / 280</td>
+<td>HP+11 DEX+3 VIT+3</td>
+<td>Smithing 99 (HQ)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Storm Tabar</td>
+<td>49 / 288</td>
+<td>—</td>
+<td>Assault (Mamool Ja, 15,000 pts)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Woodville's Axe</td>
+<td>50 / 288</td>
+<td>STR+4</td>
+<td>KSNM30 <em>Eye of the Storm</em> / <em>The Scarlet King</em></td>
+</tr>
+<tr>
+<td>72</td>
+<td>Martial Axe</td>
+<td>46 / 276</td>
+<td><strong>TP Bonus</strong></td>
+<td>ENM <em>Sheep in Antlion's Clothing</em></td>
+</tr>
+<tr>
+<td>73</td>
+<td><strong>Maneater</strong></td>
+<td>43 / 276</td>
+<td>latent ATT+18 ACC+5</td>
+<td>ENM <em>Like the Wind</em> (Boneyard Gully)</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Zoraal Ja's Axe</td>
+<td>46 / 276</td>
+<td>Reward +10%</td>
+<td>Zoraal Ja Pkuucha (Wajaom NM)</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Lion Tamer</td>
+<td>44 / 276</td>
+<td>Pet DEF+10</td>
+<td>Brass Borer (Mt. Zhayolm NM)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Sirius Axe</td>
+<td>43 / 288</td>
+<td>latent damage</td>
+<td>Hydra (Wajaom)</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Guttler</strong></td>
+<td>53 / 280</td>
+<td>ATT+20, Onslaught</td>
+<td>Relic (Dynamis)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Main hand — Scythe (optional)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Scythe</th>
+<th>DMG / Delay</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24</td>
+<td>Webcutter</td>
+<td>40 / 480</td>
+<td>Falcatus Aranei (Korroloka NM)</td>
+</tr>
+<tr>
+<td>37</td>
+<td>Harvester</td>
+<td>53 / 480</td>
+<td>Giant Scorpion (Ranguemont, rare)</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Mandibular Sickle / Antlion Sickle</td>
+<td>67–68 / ~495</td>
+<td>Smithing+Bonecraft (CoP)</td>
+</tr>
+<tr>
+<td>57</td>
+<td>Ivory Sickle +1</td>
+<td>81 / 490</td>
+<td>Bonecraft 67 (HQ)</td>
+</tr>
+<tr>
+<td>62</td>
+<td>A L'Outrance</td>
+<td>76 / 480</td>
+<td>Hellion (Onzozo NM, 100%)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Goshisho's Scythe</td>
+<td>80 / 480</td>
+<td>Count Bifrons (Zvahl Keep NM)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Storm Zaghnal</td>
+<td>87 / 480</td>
+<td>Assault (Ilrusi Atoll, 15,000 pts)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Scarecrow Scythe</td>
+<td>86 / 480, Double Attack+1</td>
+<td>Despot (Ru'Aun)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING</strong> — Scythe is B− for BST (cap 240 at 75) and gives up dual wield. Use it for fun or for Guillotine/Spiral Hell experiments, not as your main plan.</p>
+</aside>
+<h3>Sub — shield (when you're not /NIN)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Shield</th>
+<th>Bonus</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19</td>
+<td>Lantern Shield</td>
+<td>ATT+5</td>
+<td>Orcish Barricader (Ghelsba, rare)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Strike Shield</td>
+<td>ATT+6</td>
+<td>BCNM40 <em>Worms' Turn</em></td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Viking Shield</strong></td>
+<td><strong>ATT+12</strong></td>
+<td>Steelfleece Baldarich (Konschtat) / Bloodtear Baldurf (La Theine)</td>
+</tr>
+<tr>
+<td>69</td>
+<td>Numinous Shield +1</td>
+<td>MND+3 (Reward)</td>
+<td>Woodworking 84 (HQ)</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>RACE, PET &amp; ARTIFACT GEAR</h2>
+<h3>Race-locked picks (worth checking for your race)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>Ammo Lv30 (Aroma Fly ???)</th>
+<th>Belt Lv50 (BCNM50 <em>Hostile Herbivores</em> / <em>3, 2, 1…</em>)</th>
+<th>Earring Lv55 (ENM <em>Automaton Assault</em>)</th>
+<th>Sash Lv70 (KSNM30 <em>Infernal Swarm</em>)</th>
+<th>Feet / Hands Lv62 (BCNM60)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>Balm / Millefleurs: STR+1 INT+1</td>
+<td>Ocean Belt: <strong>STR+3 DEX+2</strong></td>
+<td>Belinky's: DEX+1 VIT+1</td>
+<td>Ocean Sash: <strong>STR+4</strong></td>
+<td><strong>Marine Boots: STR+3 DEX+3</strong></td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>Olibanum / Attar: <strong>STR+2</strong></td>
+<td>Forest Belt: DEX+3 AGI+2</td>
+<td><strong>Melnina's: DEX+2 AGI+1</strong></td>
+<td>Forest Sash: <strong>DEX+4</strong></td>
+<td>— (Wood set is mage-leaning)</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>Sweet: INT+2</td>
+<td>Steppe Belt: STR+2 VIT+3</td>
+<td>Waetoto's: STR+2 VIT+1</td>
+<td>Steppe Sash: VIT+4</td>
+<td><strong>Creek Mitts STR+6 · Creek Clomps STR+4 VIT+4</strong></td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>Civet: DEX+1 AGI+1</td>
+<td>Jungle Belt: <strong>STR+3 VIT+2</strong></td>
+<td>Feyuh's: STR+1 VIT+2</td>
+<td>Jungle Sash: <strong>STR+4</strong></td>
+<td>River Gauntlets: VIT+6</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>Musk: VIT+2</td>
+<td>Desert Belt: STR+2 AGI+3</td>
+<td>—</td>
+<td>Desert Sash: AGI+4</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Elvaan BST.</strong> Your race-locked kit is DEX-heavy, so pair it with STR elsewhere. A good 50–70 line is: Olibanum Sachet (ammo, 30) → Forest Belt (waist, 50; Swift Belt beats it once you have one) → Melnina's Earring (55) → Forest Sash (70, a WS-set waist alongside Warwolf Belt).</p>
+</aside>
+
+<h3>Pet &amp; utility pieces</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Effect</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25</td>
+<td><strong>Herder's Subligar</strong></td>
+<td><strong>Pet ACC+10</strong></td>
+<td>Treasure Casket loot</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Chanoix's Gorget</td>
+<td><strong>Pet HP+50</strong></td>
+<td>Quest: <em>The Prince and the Hopper</em> (ToAU)</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Ostreger Mitts</td>
+<td>Pet HP+10, VIT+4</td>
+<td>KSNM30 <em>Prehistoric Pigeons</em> / <em>Contaminated Colosseum</em> / <em>Moa Constrictors</em></td>
+</tr>
+<tr>
+<td>74</td>
+<td>Lion Tamer</td>
+<td>Pet DEF+10</td>
+<td>Brass Borer (Mt. Zhayolm)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Monster Gloves</td>
+<td>Jug level variance tightened, Charm+4</td>
+<td>Dynamis – Xarcabard</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Flawless Ribbon</td>
+<td>+1 to all your Killer effects</td>
+<td>150 Ancient Beastcoins (Sagheera)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>AF &amp; Relic armor at a glance</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats on Phoenix</th>
+<th>+1 / upgrade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Beast Helm</td>
+<td>56</td>
+<td>INT+5, Charm+4</td>
+<td>+1: INT/MND+8</td>
+</tr>
+<tr>
+<td>Beast Jackcoat</td>
+<td>58</td>
+<td>VIT+3, Charm+5, Reward cures</td>
+<td>+1: VIT+6, Charm+6, cures more</td>
+</tr>
+<tr>
+<td>Beast Gloves</td>
+<td>54</td>
+<td>DEX+3, Charm+3</td>
+<td>+1: DEX+5 <strong>CHR+5</strong></td>
+</tr>
+<tr>
+<td>Beast Trousers</td>
+<td>60</td>
+<td><strong>CHR+4 Charm+6</strong>, all Killers+1</td>
+<td>+1: STR+6 CHR+6</td>
+</tr>
+<tr>
+<td>Beast Gaiters</td>
+<td>52</td>
+<td>AGI+3, Charm+2, Reward+10%</td>
+<td>+1: CHR+5, Reward+11%</td>
+</tr>
+<tr>
+<td>Monster Helm</td>
+<td>71</td>
+<td>CHR+4 Charm+5</td>
+<td>Dynamis – San d'Oria</td>
+</tr>
+<tr>
+<td>Monster Jackcoat</td>
+<td>72</td>
+<td>INT+6 Charm+6</td>
+<td>Dynamis – Buburimu</td>
+</tr>
+<tr>
+<td>Monster Trousers</td>
+<td>73</td>
+<td>DEX+4 Charm+2</td>
+<td>Dynamis – San d'Oria</td>
+</tr>
+<tr>
+<td>Monster Gloves</td>
+<td>75</td>
+<td>AGI+4 Charm+4, jug range</td>
+<td>Dynamis – Xarcabard</td>
+</tr>
+<tr>
+<td>Monster Gaiters</td>
+<td>74</td>
+<td>VIT+4 Charm+3 <strong>Reward+20%</strong></td>
+<td>Dynamis – Beaucedine</td>
+</tr>
+</tbody>
+</table></div>
+<p>AF +1 upgrades come from <strong>Sagheera</strong> (Port Jeuno): AF piece + Smalt Leather + Fetid Lanolin + a third material + Ancient Beastcoins (Helm 30, Jackcoat 40, Gloves 20, Trousers 30, Gaiters 20).</p>
+
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Every item from the four set tables, with Phoenix stats and sources, sorted by slot and level.</em></p>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19</td>
+<td>Garrison Sallet</td>
+<td>MND+1 CHR+1</td>
+<td>Conquest Garrison</td>
+</tr>
+<tr>
+<td>24</td>
+<td><strong>Emperor Hairpin</strong></td>
+<td>DEX+3 AGI+3 EVA+10</td>
+<td>BCNM30 <em>Dropping Like Flies</em> (Empress Hairpin from Valkurm Emperor NM is the Rare/Ex twin)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Mrc.Cpt. Headgear</td>
+<td>STR+1 DEX+1</td>
+<td>Conquest</td>
+</tr>
+<tr>
+<td>41</td>
+<td>Voyager Sallet</td>
+<td>STR+3 DEX+4</td>
+<td>Carmine Dobsonfly (Riverne A01 NM)</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Valkyrie's Mask</td>
+<td>ATT+7</td>
+<td>GaBhu Unvanquished (Beadeaux NM)</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Abtal Turban</td>
+<td>STR+4 AGI+4</td>
+<td>Goldsmithing/Clothcraft 85 (HQ of Sipahi Turban)</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Celata +1</td>
+<td>ATT+5 ACC+3</td>
+<td>Smithing 87 (HQ)</td>
+</tr>
+<tr>
+<td>70</td>
+<td><strong>Optical Hat</strong></td>
+<td><strong>ACC+10</strong> EVA+10</td>
+<td>Hakutaku (Den of Rancor NM, 100%)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Maat's Cap</td>
+<td>All stats +7</td>
+<td>Quest: <em>Beyond the Sun</em> (Limit Break 5 chain)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Pln. Qalansuwa</td>
+<td>ATT+5 ACC+7</td>
+<td>Assault (Leujaoam, 20,000 pts)</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Walahra Turban</strong></td>
+<td><strong>Haste +5%</strong></td>
+<td>Donate 1,000 Imperial Bronze Pieces to Gajaad (Al Zahbi)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Scale Mail</td>
+<td>DEF</td>
+<td>Smithing 17</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Garrison Tunica</td>
+<td>DEX+1 CHR+1</td>
+<td>Conquest Garrison</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Beetle Harness +1</td>
+<td>DEF</td>
+<td>Bonecraft 36 (HQ)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Mrc.Cpt. Doublet</td>
+<td>DEX+1 AGI+1</td>
+<td>Conquest</td>
+</tr>
+<tr>
+<td>33</td>
+<td>Goblin Tailor body (race)</td>
+<td>HP+24–36, small stats</td>
+<td>Quest: <em>The Goblin Tailor</em> (Guttrix, Lower Jeuno)</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Brigandine +1 / Luisant Haubert</td>
+<td>DEX+3 VIT+3 / STR+2 DEX+2 ATT+3 ACC+3</td>
+<td>Craft (HQ)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Jaridah / Akinji Peti</td>
+<td>ATT+5/6 ACC+5/6</td>
+<td>ToAU craft (Leathercraft 66)</td>
+</tr>
+<tr>
+<td>57</td>
+<td>Scorpion Harness +1</td>
+<td><strong>ACC+12</strong> EVA+12</td>
+<td>Bonecraft 69 (HQ)</td>
+</tr>
+<tr>
+<td>59</td>
+<td><strong>Haubergeon / +1</strong></td>
+<td>STR+5/6 DEX+5/6 ATT+10/12 ACC+10/12</td>
+<td>Smithing 69</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Byrnie +1</td>
+<td>STR+5 <strong>ATT+25</strong> (WS)</td>
+<td>Leathercraft 69 (HQ)</td>
+</tr>
+<tr>
+<td>67</td>
+<td>Assault Jerkin</td>
+<td><strong>ATT+18</strong> ACC+3</td>
+<td>Ose (Onzozo NM)</td>
+</tr>
+<tr>
+<td>69</td>
+<td>Hauberk / +1</td>
+<td>STR+5/6 DEX+5/6 ATT+10/12 ACC+10/12, less EVA loss</td>
+<td>Smithing 89</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Pln. Khazagand</td>
+<td><strong>ACC+10</strong>, Crit+1</td>
+<td>Assault (Ilrusi Atoll, 20,000 pts)</td>
+</tr>
+<tr>
+<td>73</td>
+<td><strong>Adaman Hauberk</strong> (Armada = HQ)</td>
+<td>STR+10 DEX+10 ATT+15 ACC+15</td>
+<td>Earthen Abjuration: Body (Nidhogg) + cursed base</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Kirin's Osode</td>
+<td>All stats +10</td>
+<td>Kirin (Ru'Avitau)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Ryl.Ftm. Gloves / Lgn. Mittens</td>
+<td>ATT+3</td>
+<td>Conquest</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Battle Gloves</td>
+<td>ACC+3 EVA+3</td>
+<td>King Ranperre's Tomb treasure chest</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Goblin Tailor gloves (race)</td>
+<td>Hume STR+3 DEX+3 · Taru STR+3 · Elvaan DEX+2 (see race table)</td>
+<td>Quest: <em>The Goblin Tailor</em></td>
+</tr>
+<tr>
+<td>40</td>
+<td>Ogygos's Bracelets</td>
+<td>STR+5</td>
+<td>Ogygos (Middle Delkfutt NM)</td>
+</tr>
+<tr>
+<td>50</td>
+<td><strong>Spiked Finger Gauntlets</strong></td>
+<td><strong>ATT+12</strong></td>
+<td>BCNM50 <em>Eye of the Tiger</em> / <em>Rapid Raptors</em> / <em>Awful Autopsy</em></td>
+</tr>
+<tr>
+<td>50</td>
+<td>Enkelados's Bracelets</td>
+<td>STR+7</td>
+<td>Enkelados (Upper Delkfutt NM)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Pallas's Bracelets</td>
+<td>STR+9</td>
+<td>Pallas (Upper Delkfutt NM, rare)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Alkyoneus's Bracelets</td>
+<td><strong>STR+11</strong> (WS)</td>
+<td>Alkyoneus (Upper Delkfutt NM, rare)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Tarasque Mitts +1</td>
+<td>ATT+12</td>
+<td>Leathercraft 45 (HQ)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Pln. Dastanas</td>
+<td>ACC+5</td>
+<td>Assault (Lebros, 20,000 pts)</td>
+</tr>
+<tr>
+<td>72</td>
+<td><strong>Dusk Gloves / +1</strong></td>
+<td><strong>Haste +3/4%</strong> ATT+5/6</td>
+<td>Leathercraft 99</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>21</td>
+<td>Garrison Hose</td>
+<td>STR+1 DEX+1</td>
+<td>Conquest Garrison</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Republic Subligar</td>
+<td>ATT+5</td>
+<td>Goldsmithing 21 (HQ)</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Goblin Tailor legs (race)</td>
+<td>HP/MP, small stats</td>
+<td>Quest: <em>The Goblin Tailor</em></td>
+</tr>
+<tr>
+<td>55</td>
+<td>Ryl.Kgt. Breeches</td>
+<td>STR+2 DEX+2 ATT+3</td>
+<td>Conquest</td>
+</tr>
+<tr>
+<td>69</td>
+<td>Thick Breeches +1</td>
+<td>ATT+6 ACC+2</td>
+<td>Smithing 86 (HQ)</td>
+</tr>
+<tr>
+<td>72</td>
+<td><strong>Dusk Trousers / +1</strong></td>
+<td><strong>ATT+14/15</strong></td>
+<td>Leathercraft 93</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Pln. Seraweels</td>
+<td>STR+3 ACC+4</td>
+<td>Assault (Mamool Ja, 20,000 pts)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Hecatomb Subligar</td>
+<td>DEX+8 <strong>ATT+20</strong>, Haste −12% (WS only)</td>
+<td>Dryadic Abjuration: Legs (Byakko)</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Byakko's Haidate</strong></td>
+<td><strong>DEX+15 Haste +5%</strong></td>
+<td>Byakko (Ru'Aun)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td><strong>Leaping Boots</strong></td>
+<td>DEX+3 AGI+3</td>
+<td>BCNM30 <em>Petrifying Pair</em> (Bounding Boots = Leaping Lizzy NM, Rare/Ex)</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Goblin Tailor feet (race)</td>
+<td>STR+2–3</td>
+<td>Quest: <em>The Goblin Tailor</em></td>
+</tr>
+<tr>
+<td>62</td>
+<td>Marine (Hume) / Creek (Taru) boots</td>
+<td>STR+3–4 + DEX or VIT</td>
+<td>BCNM60 <em>Brothers D'Aurphe</em> (race-locked, see race table)</td>
+</tr>
+<tr>
+<td>67</td>
+<td>Rutter Sabatons</td>
+<td>STR+3 ATT+5 (Haste −2%)</td>
+<td>Bugbear Matman (Newton Movalpolos)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Ogre Ledelsens +1</td>
+<td><strong>ATT+12</strong> MND+5</td>
+<td>Leathercraft 85 (HQ)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Khimaira / Stout Gamashes</td>
+<td>ATT+5/6 ACC+5/6</td>
+<td>Leathercraft 93 (ToAU)</td>
+</tr>
+<tr>
+<td>72</td>
+<td><strong>Dusk Ledelsens / +1</strong></td>
+<td><strong>Haste +2/3%</strong> ATT+4/5</td>
+<td>Leathercraft 94</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Pln. Crackows</td>
+<td>DEX+4 ACC+3</td>
+<td>Assault (Periqia, 20,000 pts)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Justice Badge</td>
+<td>MND+3 (Reward)</td>
+<td>Quest: <em>Truth, Justice, and the Onion Way</em> (Windurst)</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Spike Necklace</strong></td>
+<td>STR+3 DEX+3</td>
+<td>Bonecraft 15 (HQ of Fang Necklace)</td>
+</tr>
+<tr>
+<td>33</td>
+<td><strong>Peacock Amulet / Charm</strong></td>
+<td><strong>ACC+10</strong></td>
+<td>Argus (Maze of Shakhrami) / BCNM40 <em>Under Observation</em></td>
+</tr>
+<tr>
+<td>50</td>
+<td>Storm Gorget</td>
+<td>ATT+6 DEX+2</td>
+<td>BCNM50 <em>Eye of the Tiger</em> / <em>Rapid Raptors</em></td>
+</tr>
+<tr>
+<td>55</td>
+<td>Ryl.Grd. Collar</td>
+<td>ATT+4 ACC+4</td>
+<td>Conquest</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Chivalrous Chain</td>
+<td>STR+3 ACC+5 Store TP+1</td>
+<td>Assault (Lebros, 8,000 pts)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Kubira Bead Necklace</td>
+<td>STR+4 DEX+4</td>
+<td>Kilusha, Nashmau (Einherjar, if live)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Justice Torque</td>
+<td>STR+5 (WS)</td>
+<td>Jailer of Justice (Sea)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18</td>
+<td>Brave Belt</td>
+<td>STR+2 VIT+2</td>
+<td>Leathercraft 41 (HQ of Barbarian's Belt)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Tilt Belt</td>
+<td>ACC+5</td>
+<td>BCNM40 <em>Under Observation</em></td>
+</tr>
+<tr>
+<td>41</td>
+<td>Quick Belt</td>
+<td><strong>Haste +2%</strong></td>
+<td>ENM <em>Test Your Mite</em> (Shrouded Maw)</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Swordbelt / +1</td>
+<td><strong>ATT+10/12</strong></td>
+<td>Leathercraft 71</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Life Belt</td>
+<td><strong>ACC+10</strong></td>
+<td>Fei'Yin treasure chest</td>
+</tr>
+<tr>
+<td>50</td>
+<td><strong>Swift Belt</strong></td>
+<td><strong>Haste +4%</strong> ACC+3</td>
+<td>Sacrarium NMs (Balor, Caithleann, Indich…)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Speed Belt / Velocious Belt</td>
+<td><strong>Haste +6%</strong></td>
+<td>KSNM99 <em>Early Bird</em> / King Arthro (rare)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Potent Belt</td>
+<td>STR+3 ACC+8</td>
+<td>Assault (Leujaoam, 10,000 pts)</td>
+</tr>
+<tr>
+<td>65</td>
+<td><strong>Sonic Belt / +1</strong></td>
+<td><strong>Haste +6%</strong></td>
+<td>Leathercraft 85 (Speed Belt + Ram Leather)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Warwolf Belt</td>
+<td>STR+5 DEX+5 VIT+5 (WS)</td>
+<td>KSNM30 <em>Royale Ramble</em> / <em>Today's Horoscope</em> / <em>Operation Desert Swarm</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td>Bone Earring +1 ×2</td>
+<td>ATT+2</td>
+<td>Bonecraft 12 (HQ)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Beetle Earring +1 ×2</td>
+<td>ATT+3</td>
+<td>Bonecraft 27 (HQ)</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Tortoise Earring +1</td>
+<td>ATT+4</td>
+<td>Bonecraft 55 (HQ)</td>
+</tr>
+<tr>
+<td>55</td>
+<td><strong>Spike Earring</strong></td>
+<td>ATT+5</td>
+<td>Bonecraft 61 (HQ of Fang Earring)</td>
+</tr>
+<tr>
+<td>58</td>
+<td>Assault Earring</td>
+<td>ATT+5 ACC+2</td>
+<td>BCNM60 <em>Dismemberment Brigade</em> / <em>Grimshell Shocktroopers</em></td>
+</tr>
+<tr>
+<td>63</td>
+<td>Merman's Earring</td>
+<td>ATT+6</td>
+<td>Bonecraft 83 (HQ of Coral Earring)</td>
+</tr>
+<tr>
+<td>72</td>
+<td><strong>Suppanomimi</strong></td>
+<td><strong>Dual Wield +5</strong></td>
+<td>Quest: <em>Divine Might</em> (Ark Angels)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Hollow Earring</td>
+<td>DEX+2 ACC+3</td>
+<td>Quest: <em>Apocalypse Nigh</em> (CoP finale)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Beastly Earring</td>
+<td>CHR+2 Axe skill+5</td>
+<td>Quest: <em>Divine Might</em></td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Brutal Earring</strong></td>
+<td><strong>Double Attack +5%</strong> Store TP+1</td>
+<td><strong>75 Ancient Beastcoins</strong> at Sagheera (Port Jeuno)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td>Courage / Balance Ring</td>
+<td>STR+2 / DEX+2</td>
+<td>Goldsmithing 35 (HQ)</td>
+</tr>
+<tr>
+<td>30</td>
+<td><strong>Rajas Ring</strong></td>
+<td>STR+2 DEX+2 <strong>Store TP+5</strong>, grows to +5/+5</td>
+<td>CoP mission 8-4 <em>Dawn</em> reward</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Venerer Ring</td>
+<td>ACC+3</td>
+<td>Quest: <em>Chasing Dreams</em></td>
+</tr>
+<tr>
+<td>35</td>
+<td>Jaeger Ring</td>
+<td>ACC+4</td>
+<td>Carmine Dobsonfly (Riverne A01 NM)</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Puissance Ring</td>
+<td>STR+3</td>
+<td>Goldsmithing 55 (HQ)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Sniper's Ring +1 / Woodsman Ring</td>
+<td>ACC+7 / ACC+5</td>
+<td>Leathercraft 90 / ENM <em>Test Your Mite</em> or <em>Fire in the Sky</em></td>
+</tr>
+<tr>
+<td>42</td>
+<td>Assailant's Ring</td>
+<td>ATT+5</td>
+<td>Padfoot (Lufaise NM)</td>
+</tr>
+<tr>
+<td>49</td>
+<td>Kshama Ring No.8</td>
+<td>STR+3 ATT+3</td>
+<td>ENM <em>Beloved of the Atlantes</em> (Monarch Linn)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Ulthalam's Ring</td>
+<td>ATT+4 ACC+4, latent STR/DEX+4</td>
+<td>ToAU mission <em>Imperial Coronation</em> reward</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Victory Ring</td>
+<td>STR+4</td>
+<td>Goldsmithing 75 (HQ)</td>
+</tr>
+<tr>
+<td>57</td>
+<td><strong>Toreador's Ring</strong></td>
+<td><strong>ACC+7</strong> HP+10</td>
+<td>ENM <em>Pulling the Plug</em> (Spire of Vahzl) → Venessa (Ru'Lude)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Triumph / Harmonius / Flame Ring</td>
+<td><strong>STR+5</strong></td>
+<td>Goldsmithing 95–102</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Mars's Ring</strong></td>
+<td><strong>ATT+8 ACC+8</strong></td>
+<td>Sin of Insolence (Absolute Virtue) → Meret (Tav. Safehold)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>47</td>
+<td>Jaguar Mantle</td>
+<td>ATT+3</td>
+<td>Quest: <em>For the Birds</em></td>
+</tr>
+<tr>
+<td>60</td>
+<td>Behemoth Mantle +1</td>
+<td>ATT+10 HP+30</td>
+<td>Leathercraft 70 (HQ)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Bushido Cape</td>
+<td>Store TP+1</td>
+<td>Assault (Periqia, 10,000 pts)</td>
+</tr>
+<tr>
+<td>61</td>
+<td><strong>Amemet Mantle +1</strong></td>
+<td>STR+2 <strong>ATT+15</strong></td>
+<td>Leathercraft 60 (HQ)</td>
+</tr>
+<tr>
+<td>69</td>
+<td>Psilos Mantle</td>
+<td>ATT+12</td>
+<td>ENM <em>Holy Cow</em> (Bearclaw Pinnacle)</td>
+</tr>
+<tr>
+<td>71</td>
+<td><strong>Forager's Mantle</strong></td>
+<td>STR+3 <strong>ATT+15</strong></td>
+<td>ENM <em>Sheep in Antlion's Clothing</em></td>
+</tr>
+<tr>
+<td>73</td>
+<td>Commander's Cape</td>
+<td>STR+3 DEX+3</td>
+<td>ENM <em>Bionic Bug</em> (Mine Shaft #2716)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Cerberus Mantle +1</td>
+<td>STR+4 ATT+15 (Enmity+4)</td>
+<td>Leathercraft 95 (ToAU, HQ)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Ammo</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td>Tiny Tathlum</td>
+<td>ATT+1</td>
+<td>Quest: <em>Inside the Belly</em></td>
+</tr>
+<tr>
+<td>30</td>
+<td>RSE Sachet (your race)</td>
+<td>Elvaan STR+2 · Hume STR+1 INT+1 · Mithra DEX+1 AGI+1</td>
+<td>Aroma Fly from the ??? in Gusgen / Shakhrami / Ordelle's</td>
+</tr>
+<tr>
+<td>58</td>
+<td><strong>Tiphia Sting</strong></td>
+<td>ATT+2 ACC+2</td>
+<td>Demonic Tiphia (Crawlers' Nest NM)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — ammo slot conflict.</strong> Call Beast needs the <strong>jug in your ammo slot</strong>. Put the jug in your Call Beast macro, then swap back to Tiphia Sting.</p>
+</aside>
+<h3>Charm items (CHR / Charm+)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Slot</th>
+<th>Item</th>
+<th>Bonus</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td>Head</td>
+<td>Entrancing Ribbon</td>
+<td>CHR+2</td>
+<td>Sharp-Eared Ropipi (E. Sarutabaruta NM, 100%)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Head</td>
+<td>Noble's Ribbon</td>
+<td>CHR+3</td>
+<td>Clothcraft 52 (HQ of Scarlet Ribbon)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Rings</td>
+<td>Hope Ring ×2</td>
+<td>CHR+2 each</td>
+<td>Goldsmithing 35 (HQ of Opal Ring)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Neck</td>
+<td>Bird Whistle</td>
+<td>CHR+3</td>
+<td>Vuu Puqu the Beguiler (Giddeus NM)</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Main</td>
+<td><strong>Monster Signa</strong></td>
+<td><strong>CHR+8</strong></td>
+<td>Hoo Mjuu the Torrent (Giddeus NM, rare)</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Neck</td>
+<td>Beast Whistle</td>
+<td>CHR+2</td>
+<td>Quest: <em>Save My Son</em></td>
+</tr>
+<tr>
+<td>27</td>
+<td>Neck</td>
+<td>Flower Necklace</td>
+<td>CHR+3</td>
+<td>Quest: <em>A Candlelight Vigil</em></td>
+</tr>
+<tr>
+<td>36</td>
+<td>Rings</td>
+<td>Loyalty Ring ×2</td>
+<td>CHR+3 each</td>
+<td>Goldsmithing 55 (HQ of Pearl Ring)</td>
+</tr>
+<tr>
+<td>39</td>
+<td>Main</td>
+<td>De Saintre's Axe</td>
+<td>Charm+1</td>
+<td>BCNM40 <em>Under Observation</em> / <em>Royal Jelly</em></td>
+</tr>
+<tr>
+<td>40</td>
+<td>Main</td>
+<td><strong>Chanter's Staff</strong></td>
+<td><strong>CHR+6 MND+6</strong></td>
+<td>ENM <em>Beloved of the Atlantes</em> (Monarch Linn)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Waist</td>
+<td><strong>Corsette (+1)</strong></td>
+<td>CHR+5 (+6)</td>
+<td>Leathercraft 48</td>
+</tr>
+<tr>
+<td>41</td>
+<td>Head</td>
+<td>Rain Hat</td>
+<td>CHR+2 MND+2</td>
+<td>Noble Mold (Zi'Tah NM)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Legs</td>
+<td>Dst. Codpiece</td>
+<td>CHR+3</td>
+<td>Swashstox Beadblinker (Newton Movalpolos)</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Main</td>
+<td><strong>Light / Apollo's Staff</strong></td>
+<td>Charm Chance +10 / +15</td>
+<td>Woodworking 75</td>
+</tr>
+<tr>
+<td>52</td>
+<td>Ear</td>
+<td>Melody Earring +1</td>
+<td>CHR+2</td>
+<td>Goldsmithing 57 (HQ)</td>
+</tr>
+<tr>
+<td>52–60</td>
+<td>AF</td>
+<td>Beast Gaiters → Gloves → Helm → Jackcoat → Trousers</td>
+<td>Charm+2 to +6</td>
+<td>Chapter 8</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Rings</td>
+<td>Allure Ring ×2</td>
+<td>CHR+4 each</td>
+<td>Goldsmithing 75 (HQ of Moon Ring)</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Main</td>
+<td>Kabrakan's Axe</td>
+<td>CHR+3 MND+3 ACC+4</td>
+<td>BCNM60 <em>Dismemberment Brigade</em></td>
+</tr>
+<tr>
+<td>62</td>
+<td>Legs</td>
+<td>Luna Subligar</td>
+<td>CHR+3</td>
+<td>Unut (Boyahda Tree NM)</td>
+</tr>
+<tr>
+<td>69</td>
+<td>Main</td>
+<td>Lohar</td>
+<td>CHR+5</td>
+<td>Tyrannic Tunnok (Ifrit's Cauldron NM, 100%)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Healing items (MND / Reward)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Slot</th>
+<th>Item</th>
+<th>Bonus</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Neck</td>
+<td>Justice Badge</td>
+<td>MND+3</td>
+<td>Quest: <em>Truth, Justice, and the Onion Way</em></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Rings</td>
+<td>Saintly Ring +1</td>
+<td>MND+3</td>
+<td>Bonecraft 81 (HQ)</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Neck</td>
+<td>Holy Phial</td>
+<td>MND+3</td>
+<td>GeDha Evileye (Beadeaux NM)</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Rings</td>
+<td>Solace Ring ×2</td>
+<td>MND+3 each</td>
+<td>Goldsmithing 55 (HQ of Turquoise Ring)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Main</td>
+<td>Chanter's Staff</td>
+<td>MND+6</td>
+<td>ENM <em>Beloved of the Atlantes</em></td>
+</tr>
+<tr>
+<td>48</td>
+<td>Neck</td>
+<td>Promise Badge</td>
+<td>MND+5</td>
+<td>Quest: <em>The Promise</em> (Windurst)</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Legs</td>
+<td>Magic Cuisses</td>
+<td>MND+3</td>
+<td>King Arthro (Jugner Forest NM, 100%)</td>
+</tr>
+<tr>
+<td>52</td>
+<td>Feet</td>
+<td>Beast Gaiters</td>
+<td>Reward +10%</td>
+<td>AF2</td>
+</tr>
+<tr>
+<td>53</td>
+<td>Main</td>
+<td>Pride Staff</td>
+<td>MND+7</td>
+<td>Skull of Pride (Eldieme NM)</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Rings</td>
+<td>Serenity Ring ×2</td>
+<td>MND+4 each</td>
+<td>Goldsmithing 75 (HQ of Aquamarine Ring)</td>
+</tr>
+<tr>
+<td>58</td>
+<td>Body</td>
+<td>Beast Jackcoat</td>
+<td>Reward cures Para/Poison/Blind</td>
+<td>AF coffer (Beadeaux)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Hands</td>
+<td>Ogre Gloves</td>
+<td>Reward +10%</td>
+<td>Leathercraft 89</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Head</td>
+<td>Bison / Khimaira Warbonnet</td>
+<td>Reward −10 sec</td>
+<td>Leathercraft 95</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — gear you'll see in other guides that won't help you here:</strong></p>
+<ul>
+<li><strong>Pallas's Shield, Beast Bazubands, Shepherd's Chain, Selemnus Belt, Fidelity Mantle</strong> — they exist in the item table but have <strong>no drop, recipe, quest or shop</strong> in Phoenix's code.</li>
+<li><strong>Monster +1 (Mst.) set, Bonebiter, Splinter</strong> — Magian upgrades (2010+).</li>
+<li><strong>Headlong Belt, Virtuoso Belt, Astrolabe, Zilant Ring, Veela Ring, Volunteer's Nails</strong> — their sources are tagged <strong>WotG</strong>.</li>
+<li><strong>Ancient Torque, Oily Trousers, Zahak's Mail</strong> — WotG-zone drops.</li>
+<li><strong>Finesse Gloves, Accura Cape, Smilodon Mantle, Peiste gear</strong> — WotG recipes.</li>
+<li><strong>Nocturnus set, Ark weapons</strong> — holiday/event-only.</li>
+<li><strong>Stealth Earring</strong> — on Phoenix it's Ninjutsu +5. <strong>It has no Dual Wield.</strong> Use Suppanomimi instead.</li>
+<li><strong>Trimmer's Mantle</strong> — only a latent Slow resist. It has no Charm bonus.</li>
+<li><strong>Velocious Belt is rare</strong> (King Arthro). <strong>Speed Belt</strong> from the KSNM99 is the more reliable route to 6% Haste.</li>
+</ul>
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li><strong>Charm:</strong> a staff for success, Charm+ for duration.</li>
+<li><strong>Healing:</strong> Warbonnet + MND + Reward+ (Monster Gaiters, Ogre Gloves +1, Zoraal Ja's Axe).</li>
+<li><strong>Combat (WS):</strong> STR + Attack. Alkyoneus's, Warwolf, Hecatomb, Rutter go in here and nowhere else.</li>
+<li><strong>TP spine:</strong> Spike Necklace → Peacock Amulet → Swift Belt → Haubergeon → Tungi → 23% gear haste at 75.</li>
+<li>If another guide lists an item and this chapter doesn't, check <em>Not on Phoenix</em>.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">LEGENDARY QUESTS (ARTIFACT ARMOR)</h2></header>
+<h3>AF1 — Wings of Gold (Lv40) → <strong>Barbaroi Axe</strong></h3>
+<ol>
+<li>Talk to <strong>Brutus</strong> (Upper Jeuno) as a level 40+ BST main.</li>
+<li>Open a <strong>Treasure Chest</strong> in <strong>Middle or Upper Delkfutt's Tower</strong> with a Delkfutt Chest Key (or Thief's Tools) to get the <strong>Guiding Bell</strong> key item.</li>
+<li>Return to Brutus.</li>
+</ol>
+<h3>AF2 — Scattered into Shadow (Lv50) → <strong>Beast Gaiters</strong></h3>
+<ol>
+<li>Talk to <strong>Brutus</strong> at 50+. You receive three <strong>Aquaflora</strong> key items.</li>
+<li>In <strong>Fei'Yin</strong>, examine the <strong>Underground Pool</strong> spots. One spawns <strong>Dabotz's Ghost</strong>. Kill it.</li>
+<li>Finish the pool steps (each Aquaflora is used at a pool).</li>
+<li>In <strong>Castle Oztroja</strong>, open a <strong>Treasure Chest</strong> (Oztroja key) to get the <strong>Beast Collar</strong>.</li>
+<li>Trade the <strong>Beast Collar</strong> to <strong>Tebhi</strong> in Castle Oztroja.</li>
+<li>Return to Brutus.</li>
+</ol>
+<h3>AF3 — A New Dawn (Lv50, after AF2) → <strong>Beast Trousers</strong></h3>
+<ol>
+<li>Check the <strong>Merchant's House door</strong> in Lower Jeuno as a level 50+ BST.</li>
+<li>Talk to <strong>Osker</strong> (Upper Jeuno) and trade him <strong>1 Mahogany Lumber</strong> to get the <strong>Tamer's Whistle</strong> key item.</li>
+<li>In <strong>The Eldieme Necropolis</strong>, examine the <strong>Sarcophagus</strong>. It pops <strong>Sturm, Taifun and Trombe</strong>. Kill all three.</li>
+<li>Examine the Sarcophagus again for <strong>Beast Trousers</strong>.</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING</strong> — The code buffs the AF3 trio hard: <strong>250% base damage</strong>, high Store TP, and sleep immunity. Bring a party. Don't solo this at 50.</p>
+</aside>
+<h3>AF Hands — Borghertz's Wild Hands → <strong>Beast Gloves</strong></h3>
+<ol>
+<li>Talk to <strong>Guslam</strong> (Upper Jeuno). On your first Borghertz quest you'll also need to talk to <strong>Deadly Minnow</strong> (Upper Jeuno) and <strong>Yin Pocanakhu</strong> (Lower Jeuno).</li>
+<li>Get the <strong>Old Gauntlets</strong> key item from a <strong>Treasure Coffer</strong> in <strong>Crawlers' Nest</strong>.</li>
+<li>Meet <strong>Borghertz</strong> at the <strong>???</strong> in <strong>Port Jeuno</strong>.</li>
+<li>In <strong>Castle Zvahl Baileys</strong>, examine the <strong>Torch</strong>. It pops <strong>Dark Spark</strong>. Kill it, then check the torch again for <strong>Shadow Flames</strong>.</li>
+<li>Return to Borghertz.</li>
+</ol>
+<h3>AF Head &amp; Body — Treasure Coffers</h3>
+<p>While you're on your Borghertz quest (or after it), on BST main:
+- <strong>Beast Jackcoat</strong> → Treasure Coffer in <strong>Beadeaux</strong>
+- <strong>Beast Helm</strong> → Treasure Coffer in <strong>Garlaige Citadel</strong></p>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — Farm coffer keys with <strong>/THF</strong> for Treasure Hunter, or hire a THF to pick locks.</p>
+</aside>
+<h3>AF +1</h3>
+<p><strong>Sagheera</strong> (Port Jeuno) upgrades AF to +1 with Limbus materials. For example, Beast Helm +1 = Beast Helm + Limbus parts + ancient beastcoins.</p>
+
+<header class="band" id="chapter-9"><span class="num">CHAPTER 9</span><h2 class="ch">MOST WANTED (NM HUNTING GUIDE)</h2></header>
+<p><em>Phoenix uses a </em><em>claim lottery</em><em>: everyone who acts on the pop gets an entry and the server picks a winner at random. Ping no longer matters.</em></p>
+<p>Every NM below drops something from Chapter 7. Levels and drop rates come straight from Phoenix's mob data. <strong>Spawn:</strong> <em>Pop</em> means a ???, a pop item or a script triggers it; <em>PH</em> means it replaces a placeholder mob on a timer.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>NM</th>
+<th>Zone</th>
+<th>Spawn</th>
+<th>BST-relevant drop (rate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10–11</td>
+<td>Sharp-Eared Ropipi</td>
+<td>East Sarutabaruta</td>
+<td>PH</td>
+<td>Entrancing Ribbon (always)</td>
+</tr>
+<tr>
+<td>16–17</td>
+<td>Hoo Mjuu the Torrent</td>
+<td>Giddeus</td>
+<td>PH</td>
+<td><strong>Monster Signa</strong> (rare)</td>
+</tr>
+<tr>
+<td>21–22</td>
+<td>Vuu Puqu the Beguiler</td>
+<td>Giddeus</td>
+<td>PH</td>
+<td>Bird Whistle (always, from a drop group)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>GeDha Evileye</td>
+<td>Beadeaux</td>
+<td>PH</td>
+<td>Holy Phial (common)</td>
+</tr>
+<tr>
+<td>31–32</td>
+<td>Tigerbane Bakdak</td>
+<td>Davoi</td>
+<td>PH</td>
+<td>Warrior's Axe or Tigerhunter (always, one of them)</td>
+</tr>
+<tr>
+<td>32</td>
+<td>Falcatus Aranei</td>
+<td>Korroloka Tunnel</td>
+<td>PH</td>
+<td>Webcutter (common)</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Ogygos</td>
+<td>Middle Delkfutt's Tower</td>
+<td>PH</td>
+<td>Ogygos's Bracelets (uncommon)</td>
+</tr>
+<tr>
+<td>35–36</td>
+<td>Trickster Kinetix</td>
+<td>Qufim Island</td>
+<td>PH</td>
+<td>Tabar (common)</td>
+</tr>
+<tr>
+<td>36–37</td>
+<td>Argus</td>
+<td>Maze of Shakhrami</td>
+<td>Pop</td>
+<td><strong>Peacock Amulet</strong> (very common)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Enkelados</td>
+<td>Upper Delkfutt's Tower</td>
+<td>PH</td>
+<td>Enkelados's Bracelets (uncommon)</td>
+</tr>
+<tr>
+<td>44–46</td>
+<td>Carmine Dobsonfly</td>
+<td>Riverne – Site #A01</td>
+<td>24h</td>
+<td>Jaeger Ring (common), Voyager Sallet (uncommon)</td>
+</tr>
+<tr>
+<td>47–48</td>
+<td>GaBhu Unvanquished</td>
+<td>Beadeaux</td>
+<td>PH</td>
+<td>Valkyrie's Mask (always, from a drop group)</td>
+</tr>
+<tr>
+<td>49–50</td>
+<td>Noble Mold</td>
+<td>Sanctuary of Zi'Tah</td>
+<td>Pop</td>
+<td>Rain Hat (very common)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>King Arthro</td>
+<td>Jugner Forest</td>
+<td>Pop</td>
+<td>Magic Cuisses (always), <strong>Velocious Belt</strong> (rare)</td>
+</tr>
+<tr>
+<td>55–56</td>
+<td>Steelfleece Baldarich</td>
+<td>Konschtat Highlands</td>
+<td>PH</td>
+<td><strong>Viking Shield</strong> (common)</td>
+</tr>
+<tr>
+<td>55–56</td>
+<td>Bloodtear Baldurf</td>
+<td>La Theine Plateau</td>
+<td>PH</td>
+<td><strong>Viking Shield</strong> (common)</td>
+</tr>
+<tr>
+<td>57–58</td>
+<td>Balor · Caithleann · Indich · Lobais · Luaith</td>
+<td>Sacrarium</td>
+<td>Pop</td>
+<td><strong>Swift Belt</strong> (very common, each)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Demonic Tiphia</td>
+<td>Crawlers' Nest</td>
+<td>PH</td>
+<td>Tiphia Sting (common)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Skull of Pride</td>
+<td>Eldieme Necropolis</td>
+<td>Pop</td>
+<td>Pride Staff (uncommon)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Skull of Wrath</td>
+<td>Eldieme Necropolis</td>
+<td>Pop</td>
+<td>Wrath Tabar (uncommon)</td>
+</tr>
+<tr>
+<td>60–62</td>
+<td>Tribunus VII-I</td>
+<td>Quicksand Caves</td>
+<td>Pop</td>
+<td><strong>Tungi</strong> (common)</td>
+</tr>
+<tr>
+<td>66</td>
+<td>Hellion</td>
+<td>Labyrinth of Onzozo</td>
+<td>PH</td>
+<td>A L'Outrance (always)</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Count Bifrons</td>
+<td>Castle Zvahl Keep</td>
+<td>PH</td>
+<td>Goshisho's Scythe (uncommon)</td>
+</tr>
+<tr>
+<td>69–71</td>
+<td>Aquarius</td>
+<td>The Boyahda Tree</td>
+<td>PH</td>
+<td>Fransisca (always, from a drop group)</td>
+</tr>
+<tr>
+<td>69–71</td>
+<td>Unut</td>
+<td>The Boyahda Tree</td>
+<td>PH</td>
+<td>Luna Subligar (uncommon)</td>
+</tr>
+<tr>
+<td>70–72</td>
+<td>Bloodthirster Madkix</td>
+<td>Kuftal Tunnel</td>
+<td>PH</td>
+<td>Acha Darmas (common)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Pallas</td>
+<td>Upper Delkfutt's Tower</td>
+<td>Pop</td>
+<td>Pallas's Bracelets (rare)</td>
+</tr>
+<tr>
+<td>74–76</td>
+<td>Ose</td>
+<td>Labyrinth of Onzozo</td>
+<td>PH</td>
+<td><strong>Assault Jerkin</strong> (common)</td>
+</tr>
+<tr>
+<td>74–76</td>
+<td>Tyrannic Tunnok</td>
+<td>Ifrit's Cauldron</td>
+<td>PH</td>
+<td>Lohar (always)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Alkyoneus</td>
+<td>Upper Delkfutt's Tower</td>
+<td>Pop</td>
+<td><strong>Alkyoneus's Bracelets</strong> (rare)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Zoraal Ja's Pkuucha</td>
+<td>Wajaom Woodlands</td>
+<td>PH</td>
+<td>Zoraal Ja's Axe (common)</td>
+</tr>
+<tr>
+<td>78</td>
+<td>Bugbear Matman</td>
+<td>Newton Movalpolos</td>
+<td>Pop</td>
+<td>Rutter Sabatons (common)</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Swashstox Beadblinker</td>
+<td>Newton Movalpolos</td>
+<td>PH</td>
+<td>Dst. Codpiece (common)</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Hydra</td>
+<td>Wajaom Woodlands</td>
+<td>48h</td>
+<td>Sirius Axe (common)</td>
+</tr>
+<tr>
+<td>80–82</td>
+<td>Despot</td>
+<td>Ru'Aun Gardens</td>
+<td>PH</td>
+<td>Scarecrow Scythe (uncommon)</td>
+</tr>
+<tr>
+<td>82</td>
+<td>Woodnix Shrillwhistle</td>
+<td>Dynamis – Buburimu</td>
+<td>Pop</td>
+<td><strong>Monster Jackcoat</strong> (uncommon)</td>
+</tr>
+<tr>
+<td>82</td>
+<td>Marquis Andras</td>
+<td>Dynamis – Xarcabard</td>
+<td>Pop</td>
+<td><strong>Monster Gloves</strong> (common)</td>
+</tr>
+<tr>
+<td>83</td>
+<td>Brass Borer</td>
+<td>Mount Zhayolm</td>
+<td>Pop</td>
+<td>Lion Tamer (common)</td>
+</tr>
+<tr>
+<td>84–85</td>
+<td>Hakutaku</td>
+<td>Den of Rancor</td>
+<td>Pop</td>
+<td><strong>Optical Hat</strong> (always)</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Overlord Bakgodek</td>
+<td>Monastic Cavern</td>
+<td>Pop</td>
+<td>Juggernaut (very common)</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Jailer of Temperance</td>
+<td>Grand Palace of Hu'Xzoi</td>
+<td>Pop</td>
+<td><strong>Temperance Axe</strong> (always), Temp. Torque (uncommon)</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Jailer of Justice</td>
+<td>Al'Taieu</td>
+<td>Pop</td>
+<td>Justice Torque (uncommon)</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Jailer of Faith</td>
+<td>Garden of Ru'Hmet</td>
+<td>Pop</td>
+<td>Faith Torque (uncommon)</td>
+</tr>
+<tr>
+<td>88–90</td>
+<td>Byakko</td>
+<td>Ru'Aun Gardens</td>
+<td>Pop</td>
+<td><strong>Byakko's Haidate</strong> (common)</td>
+</tr>
+<tr>
+<td>92</td>
+<td>Kirin</td>
+<td>Shrine of Ru'Avitau</td>
+<td>Pop</td>
+<td>Kirin's Osode (common)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Dynamis relic armor.</strong> <strong>Monster Helm</strong> and <strong>Monster Trousers</strong> drop from the Vanguard beastmen in <strong>Dynamis – San d'Oria</strong>, and <strong>Monster Gaiters</strong> from <strong>Dynamis – Beaucedine</strong>. These are regular Dynamis mobs, not NMs. Entry is 1,000,000 gil, once per 71 hours.</p>
+</aside>
+<!-- -->
+
+<aside class="box chal">
+<p><strong>TAMER'S CHALLENGE</strong> — Solo <strong>Tyrannic Tunnok</strong> at 75 using only jug pets and your own axe. No charms, no help.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING</strong> — Placeholder-based NMs camp <em>other people's</em> XP mobs. Under the lottery system, campers can't out-ping you, but they can still out-wait you.</p>
+</aside>
+
+<header class="band" id="chapter-10"><span class="num">CHAPTER 10</span><h2 class="ch">THE ENDGAME TAMER</h2></header>
+<h3>Merits at 75 (ToAU-era)</h3>
+<ul>
+<li><strong>Feral Howl</strong> and <strong>Killer Instinct</strong> (job ability merits)</li>
+<li><strong>Beast Affinity</strong> (jug pets come in at higher levels) and <strong>Beast Healer</strong> (pet regen) — trait merits</li>
+</ul>
+<aside class="box code">
+<p><strong>FROM THE CODE</strong> — Phoenix's era module applies the merit recast reduction to Feral Howl and <strong>removes the extra accuracy</strong> later patches added.</p>
+</aside>
+<h3>Where BST fits</h3>
+<ul>
+<li><strong>Dynamis</strong> — Monster (relic) armor drops (Helm from San d'Oria, Jackcoat from Buburimu, Gloves from Xarcabard). Entry costs <strong>1,000,000 gil</strong>, once per 71 hours.</li>
+<li><strong>Limbus</strong> — AF+1 materials. <strong>30,000 gil</strong>, once per 71 hours.</li>
+<li><strong>Salvage / Assault / Nyzul</strong> (ToAU) — Nyzul Isle gives the <strong>Double Axe</strong>.</li>
+<li><strong>Relic axe — Guttler</strong> (Ogre Killer line) and <strong>Mythic — Aymur</strong>. Both are huge, long-term goals.</li>
+<li><strong>Divine Might</strong> (the Ark Angel fight) for the <strong>Beastly Earring</strong> (Axe+5 on Phoenix).</li>
+</ul>
+<aside class="box tip">
+<p><strong>PRO TIP</strong> — Charmable mobs are rare in endgame. Your value there is the Killer Instinct merit, and being a solid axe DD.</p>
+</aside>
+
+<header class="band" id="chapter-11"><span class="num">CHAPTER 11</span><h2 class="ch">GIL LIKE A BEAST</h2></header>
+<aside class="box gil">
+<p><strong>MONEY MAKERS</strong></p>
+<ul>
+<li><strong>Antican Pauldrons:</strong> Eastern Altepa Anticans (35–39), with /THF.</li>
+<li><strong>Giant Bird Feathers/Plumes:</strong> Misareaux Diatryma.</li>
+<li><strong>Beastmen's Seals:</strong> Phoenix has a 5-minute account-wide cooldown after one drops. Kill efficiently, don't chain-farm.</li>
+<li><strong>Pet food &amp; broths:</strong> cook what you burn, sell the rest.</li>
+</ul>
+</aside>
+
+<header class="band" id="appendix-a"><span class="num">APPENDIX A</span><h2 class="ch">MACRO CHEAT SHEET</h2></header>
+<pre><code>/equip main &quot;Light Staff&quot;
+/equipset &lt;charm set&gt;
+/ja &quot;Charm&quot; &lt;t&gt;
+/wait 2
+/equipset &lt;TP set&gt;
+</code></pre>
+<pre><code>/equipset &lt;reward set&gt;
+/ja &quot;Reward&quot; &lt;me&gt;
+/wait 2
+/equipset &lt;TP set&gt;
+</code></pre>
+<pre><code>/pet &quot;Fight&quot; &lt;t&gt;
+</code></pre>
+<pre><code>/pet &quot;Heel&quot; &lt;me&gt;
+</code></pre>
+<pre><code>/pet &quot;Sic&quot; &lt;me&gt;    (pet needs 100% TP)
+</code></pre>
+<aside class="box warn">
+<p><strong>Rule 6 reminder</strong> — Gear swaps you trigger with a keypress are fine. Automation that reacts to the <strong>monster's</strong> state isn't.</p>
+</aside>
+<header class="band" id="appendix-b"><span class="num">APPENDIX B</span><h2 class="ch">LEVEL-BY-LEVEL CHECKLIST</h2></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Do this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Unlock done? Grab Noble's Ribbon + Hope Rings at 14</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Camp Sharp-Eared Ropipi for Entrancing Ribbon</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Vuu Puqu for Bird Whistle</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Try for Monster Signa (Hoo Mjuu, Giddeus)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>/NIN Dual Wield online. Spike Necklace.</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Buy Carrot/Herbal Broth. Call Beast online.</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Sic online. Make a Sic macro.</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Peacock Amulet soon (Argus).</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Leave online. Learn the Leave/re-charm loop.</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Corsette. <strong>AF1 Wings of Gold.</strong> Sneak/Invis via /WHM.</td>
+</tr>
+<tr>
+<td>50</td>
+<td><strong>Swift Belt. AF2 Scattered into Shadow.</strong></td>
+</tr>
+<tr>
+<td>51</td>
+<td><strong>Light Staff.</strong></td>
+</tr>
+<tr>
+<td>50–60</td>
+<td><strong>AF3 A New Dawn</strong>, Borghertz, coffers.</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Tungi. Wrath Tabar alt.</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Optical Hat (Hakutaku), Kriegsbeil (KSNM99), Ogre Gloves for Reward.</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Brutal Earring (75 ABC), Walahra Turban, merits, Dynamis, Maneater, Byakko's Haidate</td>
+</tr>
+</tbody>
+</table></div>
+<header class="band" id="appendix-c"><span class="num">APPENDIX C</span><h2 class="ch">GLOSSARY</h2></header>
+<ul>
+<li><strong>DC/EM/T</strong> — Decent Challenge / Even Match / Tough (/check results)</li>
+<li><strong>Jug</strong> — ammo-slot item that summons a familiar via Call Beast</li>
+<li><strong>PH</strong> — placeholder mob that can spawn an NM</li>
+<li><strong>Reward</strong> — pet heal using biscuits</li>
+<li><strong>Sic</strong> — make the pet use a TP move (era command)</li>
+</ul>
+
+<h2>SOURCES</h2>
+<ul>
+<li><strong>Phoenix server code</strong> — github.com/phoenixffxi/Phoenix (commit <code>aa7e18a</code>, 2026-10-29). Files used: <code>sql/abilities.sql</code>, <code>sql/traits.sql</code>, <code>sql/item_equipment.sql</code>, <code>sql/item_mods.sql</code>, <code>sql/pet_list.sql</code>, <code>sql/synth_recipes.sql</code>, <code>data/zones/*/mobs.yaml</code>, <code>data/weapon_skills.yaml</code>, <code>sql/mob_skill_lists.sql</code> + <code>sql/pet_skills.sql</code> (Sic moves), <code>scripts/battlefields/*</code> (BCNM/KSNM/ENM loot), <code>scripts/globals/assault/data.lua</code> (Assault shops), <code>scripts/zones/*/npcs/*</code> (Sagheera, Gajaad, Meret, Venessa), <code>scripts/globals/job_utils/beastmaster.lua</code>, <code>scripts/quests/jeuno/*</code> (BST quests), and the <code>modules/era</code> + <code>modules/phoenix</code> overlays.</li>
+<li><strong>HorizonXI Wiki — Beastmaster Leveling Guide</strong> (another 75-era server). Used for camps, cross-checked against Phoenix mob levels; Horizon-custom mobs removed.</li>
+<li><strong>HorizonXI Wiki — BST gear guide.</strong> Gear reasoning only. Stats were replaced with Phoenix's.</li>
+<li><strong>FFXIclopedia — How-To Guide: Beastmaster.</strong> Charm-tier strategy.</li>
+<li><strong>Phoenix FAQ / project overview doc</strong> — claim lottery, Dynamis/Limbus costs, seal cooldown, Rule 6.</li>
+</ul>
+<h3>Known gaps / verify in-game</h3>
+<ul>
+<li>Snarl availability (WotG-tagged)</li>
+<li>Sources for the advanced ("named") jugs</li>
+<li>Exact coffer key and chest positions for AF</li>
+<li>Phoenix's <code>RESTRICT_CONTENT</code> setting (it decides whether WotG-tagged items/abilities are live)</li>
+<li>Whether Einherjar (Kubira Bead Necklace) and Mythic weapon content (Aymur) are open on Phoenix yet</li>
+<li>Homunculus Sic behavior (no era skill list)</li>
+</ul>
+</main></body></html>

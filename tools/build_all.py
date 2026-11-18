@@ -46,6 +46,7 @@ BUILD_STEPS = [
     'regional',
     'vendor_tool',
     'guides',
+    'job_guides',
     'homepage',
     'about',
     'search_index',

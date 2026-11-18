@@ -1,0 +1,3506 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ninja Shadow Arts Compendium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#161a26;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+.cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}
+.cover:after{content:"NIN";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}
+.cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}
+.cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}
+.cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}
+h1.mast{display:none}
+main>h2:first-of-type{display:none}
+h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+p,li{max-width:72ch}
+em{color:var(--muted)}
+.band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}
+.band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}
+.band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}
+.band+p em{font-size:17px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}
+.toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}
+.toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.toc a:hover,.toc a:focus{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}
+td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}
+tr:nth-child(even) td{background:#f6f8fa}
+code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}
+pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}
+pre code{background:none;color:inherit;padding:0}
+.box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}
+.box p{margin:4px 0}.box ul{margin:6px 0;padding-left:20px}
+.box>p:first-child strong:first-child,.box>ul:first-child{}
+.box strong:first-child{color:var(--c);letter-spacing:.06em}
+.tip{--c:var(--tip)}.warn{--c:var(--warn)}.gil{--c:var(--gil)}.code{--c:var(--code);background:#f5f2fc}.chal{--c:var(--chal)}.check{--c:var(--check)}
+.recap{--c:var(--ink);background:var(--ink);color:#fff}.recap strong:first-child{color:var(--gold)!important}
+.legend{--c:var(--gold);background:#fffaf0}.legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.legend li strong{color:var(--ink)!important}
+.st{color:var(--accent)}.st.off{color:var(--rule)}
+.q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}
+.ok{color:#15803d;font-weight:800;font-size:1.15em}
+.edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}
+.edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}
+.fx{font-size:1.35em;line-height:1;white-space:nowrap}
+.curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.curechart svg{width:100%;height:auto;display:block}
+.curechart .bn{fill:#0f766e}.curechart .bo{fill:#d9a521}
+.curechart .cl{font:600 13px var(--body);fill:var(--ink)}
+.curechart .cv{font:600 12px var(--mono);fill:var(--ink)}
+.curechart .ct{font:11px var(--mono);fill:var(--muted)}
+.curechart .gl{stroke:var(--rule);stroke-width:1}
+.curechart .lg{font:600 12px var(--body);fill:var(--ink)}
+.curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}
+details summary{cursor:pointer;font-weight:600}
+.foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.foodchain svg{width:100%;height:auto;display:block}
+.foodchain .fp{font-size:14px}
+.foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}
+.foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}
+.foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}
+.foodchain .fa{stroke:#d9381e;stroke-width:3}
+.foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}
+.foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.set-tp{--s:#b3202f}.set-ws{--s:#b45309}.set-eva{--s:#1d4ed8}.set-nin{--s:#5b3fa6}
+.set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}
+.sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}
+.sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}
+.setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}
+.seticon{font-size:26px;line-height:1}
+.settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.set .tw{border-color:var(--s)}.set th{background:var(--s)}
+.set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}
+.fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.fstep b{font-size:22px;line-height:1}.fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}
+.fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}
+.fstep small{font-size:12px;opacity:.9}
+.fstep:hover,.fstep:focus-visible{filter:brightness(1.1)}
+@media (max-width:700px){.flow{grid-template-columns:1fr 1fr;gap:6px}.fstep,.fstep:first-child{clip-path:none}}
+@media (max-width:520px){.band,.cover{margin-left:-16px;margin-right:-16px}main{padding:0 16px 60px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>Ninja</h1><p>The shadow arts compendium: every ninjutsu and tool and where to get them, Utsusemi rules straight from the server code, a shadow report for every classic camp, four gear sets, AF, Blade: Ku and merits.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">NINJA</h1>
+<h2>The Shadow Arts Compendium — Phoenix Edition</h2>
+<p><em>The mob swings. The mob hits a paper doll. You were never there.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE NINJA</a><a href="#chapter-2">CHAPTER 2 · BECOMING A NINJA</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE SCROLL CASE (EVERY NINJUTSU, EVERY TOOL)</a><a href="#chapter-5">CHAPTER 5 · SHADOWS, DECODED</a><a href="#chapter-6">CHAPTER 6 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · LEGENDARY QUESTS (ARTIFACT ARMOR)</a><a href="#chapter-9">CHAPTER 9 · MERITS AT 75 (ToAU RULES)</a><a href="#chapter-10">CHAPTER 10 · THE ENDGAME NINJA</a><a href="#appendix-a">APPENDIX A · MACRO CHEAT SHEET</a><a href="#appendix-b">APPENDIX B · LEVEL-BY-LEVEL CHECKLIST</a><a href="#appendix-c">APPENDIX C · SOURCES</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most Ninja guides on the web describe the game after 2008: Yonin and Innin, Migawari, Utsusemi: San, Futae, Monomi and level 99 gear with Ninja Tool Expertise on every slot. <strong>None of that exists on Phoenix.</strong> This guide uses Phoenix's own server code (github.com/phoenixffxi/Phoenix) with the era-revert modules applied. Spell levels, tool costs, scroll prices, shadow rules, gear stats and drops all come from that code. Quest walkthroughs were checked against BG Wiki and other quest sites, because the server code can't tell you where to stand or what an NPC says.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves shadows, tools or gil</li>
+<li><strong>WARNING</strong> — a common way to die or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>SHINOBI'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — two things this guide can't settle from the code.</strong></p>
+<ul>
+<li>Phoenix's code makes elemental ninjutsu stronger the higher your Ninjutsu skill is, but only when Ninja is your main job. I couldn't confirm that this rule existed in 2007. Chapter 5 shows the numbers with and without it.</li>
+<li>The code gives a main-job Ninja <strong>4 shadows</strong> from Utsusemi: Ni (3 if Ninja is your subjob). I couldn't find a source dating the 4-shadow rule, so treat it as "how Phoenix works", not "how 2007 worked". Count your shadows in-game: the icon on your buff bar changes with each one.</li>
+</ul>
+</aside>
+
+<h2>NINJA AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Evasion tank, damage dealer, puller, enfeebler on the side</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span> — wanted as a tank from 37 (Utsusemi: Ni), as damage everywhere</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — shadows make even-match mobs safe; tool costs add up</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — tools cost money every fight. Plan for it</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span> — easy to swing, hard to tank (shadow timing is a skill)</td>
+</tr>
+<tr>
+<td><strong>Main weapons</strong></td>
+<td>Katana (A), Throwing (A), Dagger (C+), Sword (C)</td>
+</tr>
+<tr>
+<td><strong>Key stats</strong></td>
+<td>DEX, AGI, STR, Accuracy, Haste. Evasion and Enmity+ for tanking</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Low until 40. Tools are the real cost: 124 gil per Shihei, every cast</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE NINJA</h2></header>
+<p><em>Every other tank absorbs the hit. You make it miss.</em></p>
+<p>On Phoenix a NIN does four things, in this order of importance:</p>
+<ol>
+<li><strong>Keep shadows up.</strong> Utsusemi makes copies of you that soak hits. Shadows are your armor, your enmity tool and your safety net.</li>
+<li><strong>Hit hard with two katanas.</strong> Dual Wield is built into the job from level 10.</li>
+<li><strong>Hold hate</strong> when you're the tank: Provoke from /WAR, elemental ninjutsu, enfeebling ninjutsu.</li>
+<li><strong>Debuff and pull.</strong> Slow (Hojo), Blind (Kurayami), Paralyze (Jubaku) and Invisible (Tonko) cost a tool each and no MP.</li>
+</ol>
+<h3>Job abilities on Phoenix (era-reverted)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>What it does on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Mijin Gakure</strong> (2-hour)</td>
+<td>2:00:00</td>
+<td>You blow yourself up. Damage is <strong>80% of your current HP</strong> (after the target's magic resistance and damage reduction). You die. You <strong>don't lose EXP</strong>, but you come back with normal Weakness and normal Raise HP.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Sange</strong> (merit)</td>
+<td>15:00</td>
+<td>For 60 seconds, your next throwing attack (shuriken) fires <strong>1 shot plus 1 per shadow you have</strong>, and uses up all your shadows. Each merit rank after the first cuts the recast by 2½ minutes.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — what Phoenix took away.</strong> <code>abilities.sql</code> tags <strong>Yonin</strong> and <strong>Innin</strong> as Wings of the Goddess content, so the server doesn't give them out. <strong>Futae, Issekigan and Mikage</strong> are tagged as later expansions. The era module also restores the old Sange: shuriken shots equal to your shadows (<code>modules/era/lua/globals/job_utils/ninja.lua</code>), on a 15-minute recast (<code>job_adjustments.sql</code>). Mijin Gakure's no-Weakness death came in July 2009, so the era module puts Weakness back.</p>
+</aside>
+<h3>Job traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Value on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Stealth</td>
+<td>In the trait table, but the code's own comment says it <strong>does nothing observable</strong>.</td>
+</tr>
+<tr>
+<td>10 / 25 / 45 / 65</td>
+<td>Dual Wield I–IV</td>
+<td>Weapon delay −10% / −15% / −25% / −30% when you hold two weapons</td>
+</tr>
+<tr>
+<td>10 / 30 / 50 / 70</td>
+<td>Resist Bind I–IV</td>
+<td>+10 / +15 / +20 / +25</td>
+</tr>
+<tr>
+<td>15 / 30 / 45 / 60 / 75</td>
+<td>Subtle Blow I–V</td>
+<td>+5 / +10 / +15 / +20 / +25 (mobs gain less TP from your hits)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Ninja Tool Expertise</td>
+<td>Merit-only. Each merit rank gives a 5% chance not to use up a tool.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>What's NOT on Phoenix</h3>
+<aside class="box warn">
+<p><strong>WARNING — skip these sections of any modern guide.</strong> Phoenix runs pre-Wings of the Goddess, and the server switches off content by expansion tag.</p>
+<ul>
+<li><strong>Yonin / Innin</strong> — tagged WotG. No enmity stance, no nuke stance.</li>
+<li><strong>Monomi: Ichi</strong> — tagged WotG. <strong>Ninja can't make itself Sneak on Phoenix.</strong> Carry Silent Oil.</li>
+<li><strong>Utsusemi: San</strong> — no level. Your best shadows are Ni.</li>
+<li><strong>Migawari, Gekka, Yain, Kakka, Myoshu, Yurin, Aisha</strong> — post-75 ninjutsu.</li>
+<li><strong>Futae, Issekigan, Mikage, Daken, Tactical Parry, Max HP Boost</strong> — later expansions.</li>
+<li><strong>Hojo: San, Jubaku: Ni/San, Dokumori: Ni/San, Kurayami: San</strong> — no level on Phoenix.</li>
+<li><strong>/DNC and /SCH</strong> subjobs — those jobs don't exist yet.</li>
+<li><strong>Toolbags from Numa</strong> in Port Bastok — the era module removed them from his stock. You can still make your own (Chapter 4).</li>
+</ul>
+</aside>
+<h3>Base stats at 75 by race (NIN75 / WAR37, no gear, no merits)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>HP</th>
+<th>STR</th>
+<th>DEX</th>
+<th>VIT</th>
+<th>AGI</th>
+<th>INT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>1145</td>
+<td>70</td>
+<td>70</td>
+<td>66</td>
+<td>70</td>
+<td>61</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>1236</td>
+<td>75</td>
+<td>67</td>
+<td>69</td>
+<td>64</td>
+<td>55</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>949</td>
+<td>64</td>
+<td>70</td>
+<td>63</td>
+<td>73</td>
+<td>68</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>1145</td>
+<td>67</td>
+<td>77</td>
+<td>63</td>
+<td>75</td>
+<td>61</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>1357</td>
+<td>73</td>
+<td>70</td>
+<td>73</td>
+<td>67</td>
+<td>58</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — every race works.</strong> Mithra has the best DEX and AGI (accuracy, crits, evasion). Galka has 400 more HP than Tarutaru, which matters when a move goes straight through your shadows. Tarutaru gets the most INT for nukes. Elvaan has the most STR. The gaps are a few points each, and gear closes them.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Shadows first, damage second.</li>
+<li>On Phoenix your only job abilities are Mijin Gakure and (at 75, by merit) Sange. No Yonin, no Innin.</li>
+<li>No Monomi means no self-Sneak. Silent Oil is part of your kit.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A NINJA</h2></header>
+<p><em>Ninja is an advanced job. You need any job at level 30, a trip to Korroloka Tunnel, and a boat ride's worth of patience.</em></p>
+<h3>The unlock quest — Ayame and Kaede (Port Bastok)</h3>
+<p><strong>Requirements:</strong> any job at level 30+ (Phoenix's code uses the default <code>ADVANCED_JOB_LEVEL = 30</code>).</p>
+<ol>
+<li><strong>Kaede</strong> — Port Bastok (J-5), the northernmost house. Talk to her for a cutscene.</li>
+<li><strong>Kagetora</strong> — Port Bastok (F-6), inside the door to Warehouse 2.</li>
+<li><strong>Ensetsu</strong> — back in Kaede's house, Port Bastok (I-5). The quest appears in your log after this scene.</li>
+<li><strong>Korroloka Tunnel</strong>, map 5, (K-8). The quickest way in is from Western Altepa Desert. Examine the <strong>???</strong> to spawn <strong>3 Korroloka Leeches</strong>. They link with nearby Thread Leeches, so clear the area first.</li>
+<li>When the leeches' bodies have despawned, examine the ??? again for the key item <strong>Strangely Shaped Coral</strong>.</li>
+<li><strong>Ensetsu</strong> (Port Bastok) again.</li>
+<li><strong>Ryoma</strong> — Norg (H-8). He gives you the <strong>Sealed Dagger</strong>.</li>
+<li><strong>Ensetsu</strong> one last time. Ninja unlocked. You also get the title <em>Shadow Walker</em>.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP — doing it with friends.</strong> One player spawns the leeches. After they despawn, the others should examine the ??? for their coral <strong>before</strong> the player who spawned them. If that player dies, don't raise them until the leeches are dead, or the leeches respawn.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE.</strong> <code>scripts/quests/bastok/Ayame_and_Kaede.lua</code> spawns three <code>Korroloka_Leech</code> NMs at <code>qm2</code>. The coral only drops once all three are dead and gone, and the quest can only be advanced with the NMs not spawned.</p>
+</aside>
+<h3>Join the Tenshodo before you need tools</h3>
+<p>Every ninja tool and every Ichi scroll is sold in one shop: <strong>Amalasanda</strong>, in the Tenshodo back room of Lower Jeuno (Neptune's Spire). She won't talk to you without a <strong>Tenshodo Member's Card</strong>.</p>
+<p><strong>Tenshodo Membership</strong> (needs Jeuno fame 3):
+1. <strong>Ghebi Damomohe</strong> at the Neptune's Spire counter, Lower Jeuno. Pick the third, blank dialogue option.
+2. <strong>Jabbar</strong> — Port Bastok, Warehouse 2. He gives you the Tenshodo application form.
+3. Back to <strong>Ghebi Damomohe</strong>: you get a Tenshodo Invite and the Member's Card. (A Tenshodo Invite bought on the Auction House works too, but you still need fame 3.)</p>
+<aside class="box warn">
+<p><strong>WARNING — fame first.</strong> If your Jeuno fame isn't 3 yet, do a few easy Jeuno quests before you level NIN past 12. Without the card you can't buy Shihei, and without Shihei Utsusemi does nothing.</p>
+</aside>
+<h3>Your first shopping list (levels 1–20)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Utsusemi: Ichi</strong> scroll (Lv12)</td>
+<td>Amalasanda, Tenshodo, Lower Jeuno</td>
+<td>13,133</td>
+</tr>
+<tr>
+<td><strong>Shihei</strong> (Utsusemi tool)</td>
+<td>Amalasanda</td>
+<td>124 each</td>
+</tr>
+<tr>
+<td><strong>Tonko: Ichi</strong> scroll (Lv9) + <strong>Shinobi-tabi</strong></td>
+<td>Amalasanda</td>
+<td>2,849 + 124 each</td>
+</tr>
+<tr>
+<td>One elemental Ichi scroll (Lv15)</td>
+<td>Amalasanda</td>
+<td>2,331</td>
+</tr>
+<tr>
+<td><strong>Kunai</strong> or <strong>Kunai +1</strong> ×2</td>
+<td>Auction House (Smithing 30)</td>
+<td>cheap</td>
+</tr>
+<tr>
+<td><strong>Shuriken</strong> (ammo)</td>
+<td>Akamafula, Tenshodo, Lower Jeuno</td>
+<td>50 each</td>
+</tr>
+<tr>
+<td><strong>Silent Oil</strong> ×12</td>
+<td>Auction House / alchemists</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Levels 1–12: before shadows</h3>
+<p>NIN starts at level 1 with no Dual Wield and no shadows. Treat 1–10 like a weak Warrior: one weapon, easy mobs, and level your Katana skill.</p>
+<ul>
+<li><strong>Level 10:</strong> Dual Wield I and Resist Bind I. Put a second katana in your off-hand.</li>
+<li><strong>Level 12:</strong> <strong>Utsusemi: Ichi</strong>. From now on, cast it before every pull and recast it whenever your shadows drop to 1.</li>
+<li><strong>Subjob:</strong> /WAR as soon as you have it (Chapter 3).</li>
+</ul>
+<aside class="box check">
+<p><strong>CHECKPOINT — level 12</strong></p>
+<ul>
+<li>Tenshodo Member's Card.</li>
+<li>Utsusemi: Ichi learned, 1–2 stacks of Shihei in your bag.</li>
+<li>Two katanas, a subjob, and the habit of casting Utsusemi before you pull.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>Your subjob decides whether you're a tank, a damage dealer or a puller.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>Best for</th>
+<th>What you get by NIN 75 (sub 37)</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WAR</strong></td>
+<td>Tanking and damage</td>
+<td>Provoke (VE 1800, 30 s recast), Berserk, Defender, Warcry; Double Attack, Attack Bonus, Defense Bonus</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> The default. Provoke is what makes you a tank, and Double Attack is free damage.</td>
+</tr>
+<tr>
+<td><strong>THF</strong></td>
+<td>Evasion, solo, farming</td>
+<td>Steal, Sneak Attack, Flee, Trick Attack, Mug; Evasion Bonus, Treasure Hunter, Gilfinder</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> More evasion and Treasure Hunter, but no Provoke.</td>
+</tr>
+<tr>
+<td><strong>RNG</strong></td>
+<td>Pulling</td>
+<td>Sharpshot, Scavenge, Camouflage, Barrage; Accuracy Bonus, Rapid Shot</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> Accuracy Bonus is nice. Barrage doesn't fire shuriken in Phoenix's code.</td>
+</tr>
+<tr>
+<td><strong>DRK</strong></td>
+<td>Damage</td>
+<td>Arcane Circle, Last Resort, Weapon Bash, Souleater; Attack Bonus</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> Big hits, but Souleater drains HP you need when a move goes through your shadows.</td>
+</tr>
+<tr>
+<td><strong>SAM</strong></td>
+<td>—</td>
+<td>Warding Circle, Third Eye, Hasso, Meditate, Seigan; Store TP, Zanshin</td>
+<td><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> Hasso and Seigan need a two-handed weapon, and Third Eye doesn't stack with shadows.</td>
+</tr>
+<tr>
+<td><strong>WHM / RDM</strong></td>
+<td>Solo self-care</td>
+<td>Cures, Blink, Sneak, Invisible</td>
+<td><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> Sneak is the one thing Ninja lacks, but with no MP from your main job your MP pool is tiny.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Third Eye and Utsusemi.</strong> <code>enhancing_ninjutsu.lua</code> deletes Third Eye whenever Utsusemi lands, so /SAM's Third Eye and your shadows never stack. The same file also lets a non-Ninja main job cast Ni, but with one shadow fewer (3 instead of 4).</p>
+</aside>
+<h3>When you're the sub: /NIN on other jobs</h3>
+<p>/NIN is one of the best subjobs in the game for any melee job.
+- <strong>Utsusemi: Ichi</strong> at sub level 12 (main 24). <strong>Ni</strong> only at sub level 37, which means main level <strong>74</strong>.
+- <strong>Dual Wield I</strong> at sub 10 (main 20), <strong>Dual Wield II</strong> at sub 25 (main 50). That's as high as a subjob gets, 15% delay reduction.
+- Subjob Ni gives <strong>3</strong> shadows in Phoenix's code, not 4.</p>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>NIN/WAR for everything until you have a reason to change.</li>
+<li>/THF if you're soloing or farming.</li>
+<li>Third Eye and Utsusemi don't stack.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE SCROLL CASE (EVERY NINJUTSU, EVERY TOOL)</h2></header>
+<p><em>Ninjutsu costs no MP. It costs a tool, every single cast. Budget for tools the way a mage budgets for MP.</em></p>
+<h3>Every ninjutsu you can learn on Phoenix</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Spell</th>
+<th>Tool</th>
+<th>Cast</th>
+<th>Recast</th>
+<th>Effect</th>
+<th>Where to get the scroll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td><strong>Tonko: Ichi</strong></td>
+<td>Shinobi-tabi</td>
+<td>4s</td>
+<td>30s</td>
+<td>Invisible, 3 min</td>
+<td>Tenshodo, Lower Jeuno 2,849</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Utsusemi: Ichi</strong></td>
+<td>Shihei</td>
+<td>4s</td>
+<td>30s</td>
+<td>3 shadows</td>
+<td>Tenshodo, Lower Jeuno 13,133</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Doton: Ichi</strong></td>
+<td>Makibishi</td>
+<td>4s</td>
+<td>30s</td>
+<td>Earth damage</td>
+<td>Tenshodo, Lower Jeuno 2,331</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Huton: Ichi</strong></td>
+<td>Kawahori-ogi</td>
+<td>4s</td>
+<td>30s</td>
+<td>Wind damage</td>
+<td>Tenshodo, Lower Jeuno 2,331</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Hyoton: Ichi</strong></td>
+<td>Tsurara</td>
+<td>4s</td>
+<td>30s</td>
+<td>Ice damage</td>
+<td>Tenshodo, Lower Jeuno 2,331</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Katon: Ichi</strong></td>
+<td>Uchitake</td>
+<td>4s</td>
+<td>30s</td>
+<td>Fire damage</td>
+<td>Tenshodo, Lower Jeuno 2,331</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Raiton: Ichi</strong></td>
+<td>Hiraishin</td>
+<td>4s</td>
+<td>30s</td>
+<td>Thunder damage</td>
+<td>Tenshodo, Lower Jeuno 2,331</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Suiton: Ichi</strong></td>
+<td>Mizu-deppo</td>
+<td>4s</td>
+<td>30s</td>
+<td>Water damage</td>
+<td>Tenshodo, Lower Jeuno 2,331</td>
+</tr>
+<tr>
+<td>19</td>
+<td><strong>Kurayami: Ichi</strong></td>
+<td>Sairui-ran</td>
+<td>4s</td>
+<td>30s</td>
+<td>Blind −20 acc, 3 min</td>
+<td>Tenshodo, Lower Jeuno 2,849</td>
+</tr>
+<tr>
+<td>23</td>
+<td><strong>Hojo: Ichi</strong></td>
+<td>Kaginawa</td>
+<td>4s</td>
+<td>30s</td>
+<td>Slow 14.6%, 3 min</td>
+<td>Tenshodo, Lower Jeuno 2,849</td>
+</tr>
+<tr>
+<td>27</td>
+<td><strong>Dokumori: Ichi</strong></td>
+<td>Kodoku</td>
+<td>4s</td>
+<td>30s</td>
+<td>Poison 2 HP/tick, 1 min</td>
+<td>Tenshodo, Lower Jeuno 2,849</td>
+</tr>
+<tr>
+<td>30</td>
+<td><strong>Jubaku: Ichi</strong></td>
+<td>Jusatsu</td>
+<td>4s</td>
+<td>30s</td>
+<td>Paralyze 20%, 3 min</td>
+<td>Tenshodo, Lower Jeuno 2,849</td>
+</tr>
+<tr>
+<td>34</td>
+<td><strong>Tonko: Ni</strong></td>
+<td>Shinobi-tabi</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Invisible, 5 min</td>
+<td>drop: Yagudo Assassin (Castle Oztroja, rare), Tonberries (Uggalepih / Den of Rancor / Yhoator), Sozu Sarberry NM</td>
+</tr>
+<tr>
+<td>37</td>
+<td><strong>Utsusemi: Ni</strong></td>
+<td>Shihei</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>4 shadows (3 if NIN is your subjob)</td>
+<td><strong>BCNM loot only</strong> (Horlais Peak, Waughroon Shrine, Ghelsba, Balga's Dais, Qu'Bia Arena battlefields)</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Doton: Ni</strong></td>
+<td>Makibishi</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Earth damage</td>
+<td>drop: Yagudo Conquistador (Castle Oztroja / Zvahl), very rare</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Huton: Ni</strong></td>
+<td>Kawahori-ogi</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Wind damage</td>
+<td>drop: Yagudo Conquistador (Castle Oztroja / Zvahl), very rare</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Hyoton: Ni</strong></td>
+<td>Tsurara</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Ice damage</td>
+<td>drop: Yagudo Conquistador (Castle Oztroja / Zvahl), very rare</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Katon: Ni</strong></td>
+<td>Uchitake</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Fire damage</td>
+<td>drop: Yagudo Conquistador (Castle Oztroja / Zvahl), very rare</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Raiton: Ni</strong></td>
+<td>Hiraishin</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Thunder damage</td>
+<td>drop: Yagudo Conquistador (Castle Oztroja / Zvahl), very rare</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Suiton: Ni</strong></td>
+<td>Mizu-deppo</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Water damage</td>
+<td>drop: Yagudo Conquistador (Castle Oztroja / Zvahl), very rare</td>
+</tr>
+<tr>
+<td>44</td>
+<td><strong>Kurayami: Ni</strong></td>
+<td>Sairui-ran</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Blind −30 acc, 5 min</td>
+<td>drop: Tonberries (Uggalepih, Den of Rancor), Yagudo Assassin, Sozu Sarberry NM</td>
+</tr>
+<tr>
+<td>48</td>
+<td><strong>Hojo: Ni</strong></td>
+<td>Kaginawa</td>
+<td>1.5s</td>
+<td>45s</td>
+<td>Slow 19.5%, 5 min</td>
+<td>drop: Tonberries (Uggalepih, Den of Rancor), Yagudo Assassin, Sozu Sarberry NM (uncommon)</td>
+</tr>
+<tr>
+<td>75<span class="st">★</span></td>
+<td><strong>Doton: San</strong></td>
+<td>Makibishi</td>
+<td>2.5s</td>
+<td>60s</td>
+<td>Earth damage</td>
+<td><strong>Merit spell</strong> — unlock with a Group 2 merit, then buy the scroll in Norg (Tenshodo, 125,212)</td>
+</tr>
+<tr>
+<td>75<span class="st">★</span></td>
+<td><strong>Huton: San</strong></td>
+<td>Kawahori-ogi</td>
+<td>2.5s</td>
+<td>60s</td>
+<td>Wind damage</td>
+<td><strong>Merit spell</strong> — unlock with a Group 2 merit, then buy the scroll in Norg (Tenshodo, 125,212)</td>
+</tr>
+<tr>
+<td>75<span class="st">★</span></td>
+<td><strong>Hyoton: San</strong></td>
+<td>Tsurara</td>
+<td>2.5s</td>
+<td>60s</td>
+<td>Ice damage</td>
+<td><strong>Merit spell</strong> — unlock with a Group 2 merit, then buy the scroll in Norg (Tenshodo, 125,212)</td>
+</tr>
+<tr>
+<td>75<span class="st">★</span></td>
+<td><strong>Katon: San</strong></td>
+<td>Uchitake</td>
+<td>2.5s</td>
+<td>60s</td>
+<td>Fire damage</td>
+<td><strong>Merit spell</strong> — unlock with a Group 2 merit, then buy the scroll in Norg (Tenshodo, 125,212)</td>
+</tr>
+<tr>
+<td>75<span class="st">★</span></td>
+<td><strong>Raiton: San</strong></td>
+<td>Hiraishin</td>
+<td>2.5s</td>
+<td>60s</td>
+<td>Thunder damage</td>
+<td><strong>Merit spell</strong> — unlock with a Group 2 merit, then buy the scroll in Norg (Tenshodo, 125,212)</td>
+</tr>
+<tr>
+<td>75<span class="st">★</span></td>
+<td><strong>Suiton: San</strong></td>
+<td>Mizu-deppo</td>
+<td>2.5s</td>
+<td>60s</td>
+<td>Water damage</td>
+<td><strong>Merit spell</strong> — unlock with a Group 2 merit, then buy the scroll in Norg (Tenshodo, 125,212)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — reading the table.</strong> Levels, cast and recast times come from Phoenix's <code>spell_list</code> with the era updates applied. Phoenix's database keeps each spell's tool in the column normal spells use for MP cost, and that's where the Tool column comes from. Shop prices come from the NPC scripts. Drop sources come from each zone's <code>mobs.yaml</code>. Debuff strengths come from <code>enfeebling_spell.lua</code>: ninjutsu debuffs have a <strong>fixed</strong> strength per tier, so INT and gear don't make Hojo slow harder. They only help it land.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — Utsusemi: Ni is not sold anywhere.</strong> Phoenix's code only gives the scroll as battlefield loot: Horlais Peak (<em>Tails of Woe</em>, <em>Under Observation</em>, <em>Carapace Combatants</em>, <em>Dropping like Flies</em>), Waughroon Shrine (<em>Royal Jelly</em>, <em>Worms Turn</em>, <em>Grove Guardians</em>, <em>Birds of a Feather</em>), Ghelsba (<em>Petrifying Pair</em>), Balga's Dais and Qu'Bia Arena fights. Buy it on the Auction House or start farming orbs around level 30. Ni at 37 is the moment NIN becomes a real tank.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — the Ni elementals are a gamble.</strong> Every Ni nuke scroll comes from one source in the code: <strong>Yagudo Conquistadors</strong> in Castle Oztroja and Castle Zvahl, at "very rare". Pick <strong>one</strong> element (Suiton or Doton are common choices) and buy it on the Auction House rather than farming all six.</p>
+</aside>
+<h3>Enfeebling ninjutsu at a glance</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Spell</th>
+<th>Effect</th>
+<th>Strength</th>
+<th>Lasts</th>
+<th>Enmity (CE / VE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kurayami: Ichi</strong> (19) / <strong>Ni</strong> (44)</td>
+<td>Blind</td>
+<td>−20 / −30 accuracy</td>
+<td>3 / 5 min</td>
+<td>80 / 240</td>
+</tr>
+<tr>
+<td><strong>Hojo: Ichi</strong> (23) / <strong>Ni</strong> (48)</td>
+<td>Slow</td>
+<td>14.6% / 19.5%</td>
+<td>3 / 5 min</td>
+<td>80 / 240</td>
+</tr>
+<tr>
+<td><strong>Jubaku: Ichi</strong> (30)</td>
+<td>Paralyze</td>
+<td>20%</td>
+<td>3 min</td>
+<td>80 / 240</td>
+</tr>
+<tr>
+<td><strong>Dokumori: Ichi</strong> (27)</td>
+<td>Poison</td>
+<td>2 HP per tick</td>
+<td>1 min</td>
+<td>80 / 240</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Hojo when there's no mage.</strong> Hojo: Ni's 19.5% Slow is a little weaker than a Red Mage's Slow, but it costs you a tool instead of their MP. When there's no RDM, Hojo and Kurayami are the cheapest damage reduction in the party, and the 240 VE helps you hold hate.</p>
+</aside>
+<h3>Tonko: invisible, but never sneaky</h3>
+<ul>
+<li><strong>Tonko: Ichi</strong> gives Invisible for 3 minutes; <strong>Tonko: Ni</strong> for 5 minutes (Phoenix's era duration).</li>
+<li>There's <strong>no Monomi</strong> on Phoenix, so a Ninja can't Sneak themselves. Carry <strong>Silent Oil</strong> for anything that tracks by sound.</li>
+</ul>
+<h3>Your tools: where they come from</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Used by</th>
+<th>Buy (Amalasanda, Tenshodo, Lower Jeuno)</th>
+<th>Make it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shihei</strong></td>
+<td>Utsusemi</td>
+<td>124</td>
+<td>Woodworking 29: Black Ink + 2 Bast Parchment → 33 (66 HQ)</td>
+</tr>
+<tr>
+<td><strong>Shinobi-tabi</strong></td>
+<td>Tonko</td>
+<td>124</td>
+<td>Clothcraft 34: Grass Thread + 2 Cotton Cloth + Saruta Cotton → 33</td>
+</tr>
+<tr>
+<td><strong>Kaginawa</strong></td>
+<td>Hojo</td>
+<td>124</td>
+<td>Smithing 15 / Clothcraft 29: Bronze Ingot + Grass Thread + Manticore Hair → 33</td>
+</tr>
+<tr>
+<td><strong>Sairui-ran</strong></td>
+<td>Kurayami</td>
+<td>124</td>
+<td>Alchemy 28 / Cooking 11: Kazham Peppers + Bomb Ash + Bast Parchment + Bird Egg → 33</td>
+</tr>
+<tr>
+<td><strong>Jusatsu</strong></td>
+<td>Jubaku</td>
+<td>124</td>
+<td>Alchemy 37: Black Ink + Beastman Blood + Bast Parchment → 33</td>
+</tr>
+<tr>
+<td><strong>Kodoku</strong></td>
+<td>Dokumori</td>
+<td>124</td>
+<td>Alchemy 19: Elshimo Frog (or Caedarva Frog) + Lugworm + Shell Bug → 33</td>
+</tr>
+<tr>
+<td><strong>Uchitake</strong></td>
+<td>Katon</td>
+<td>40</td>
+<td>Woodworking 26: Bamboo Stick + Grass Cloth + Toad Oil → 33</td>
+</tr>
+<tr>
+<td><strong>Tsurara</strong></td>
+<td>Hyoton</td>
+<td>40</td>
+<td>Alchemy 6: Rock Salt + 2 Distilled Water → 10</td>
+</tr>
+<tr>
+<td><strong>Kawahori-ogi</strong></td>
+<td>Huton</td>
+<td>40</td>
+<td>Woodworking 39: Bamboo Stick + Animal Glue + Bast Parchment → 33</td>
+</tr>
+<tr>
+<td><strong>Makibishi</strong></td>
+<td>Doton</td>
+<td>40</td>
+<td>Smithing 23: Iron Scales → 33</td>
+</tr>
+<tr>
+<td><strong>Hiraishin</strong></td>
+<td>Raiton</td>
+<td>40</td>
+<td>Goldsmithing 31: Copper Ingot + Silver Ingot → 33</td>
+</tr>
+<tr>
+<td><strong>Mizu-deppo</strong></td>
+<td>Suiton</td>
+<td>40</td>
+<td>Woodworking 34 / Smithing 7: Bronze Sheet + Chestnut Lumber + Distilled Water → 33</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box gil">
+<p><strong>MONEY MAKER — Shihei.</strong> At 124 gil each, a busy tank burns through a stack (12,276 gil) every couple of hours. Woodworking 29 turns one Black Ink and two Bast Parchments into 33 Shihei (66 on a high-quality synth). If you're leveling crafts alongside NIN, this is the one to get. Every Ninja on the server, and every /NIN, is a customer.</p>
+</aside>
+<h3>Toolbags: carry 99 tools in one slot</h3>
+<p><strong>Ominous Cloud</strong> (Port Bastok, Southern San d'Oria and Windurst Woods) makes toolbags. Trade him <strong>a full stack of 99 tools plus one Wijnruit</strong> for each bag. Wijnruit costs 120 gil from Areebah (Upper Jeuno) or Dabih Jajalioh (Ru'Lude Gardens). The guild shops of Maymunah and Wahraga also stock it.</p>
+<ul>
+<li>Each toolbag opens into 99 tools when you use it. That saves inventory space, which matters when you carry six kinds of tools.</li>
+<li><strong>No shuriken pouches.</strong> The base NPC script can make them, but Phoenix's era module only lets Ominous Cloud accept ninjutsu tools.</li>
+</ul>
+<aside class="box code">
+<p><strong>FROM THE CODE.</strong> <code>modules/era/lua/zones/ominous_cloud_toolbags.lua</code> limits Ominous Cloud to the original ninja tools. Bring it anything newer and he turns you away. The same era module set (<code>port_bastok/npcs/numa.lua</code>) removes ready-made toolbags from Numa's shop.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Every Ichi scroll and every tool: Amalasanda, Tenshodo back room, Lower Jeuno. You need the Member's Card.</li>
+<li>Utsusemi: Ni comes from battlefield loot only. Elemental Ni scrolls come from Yagudo Conquistadors only.</li>
+<li>San nukes need a merit, then a 125,212-gil scroll in Norg.</li>
+<li>Turn stacks into toolbags with one Wijnruit each.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">SHADOWS, DECODED</h2></header>
+<p><em>Here's everything Phoenix's code does with Utsusemi, so you can stop guessing.</em></p>
+<h3>The rules of shadows on Phoenix</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>What the code does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>How many</strong></td>
+<td>Ichi: <strong>3</strong>. Ni: <strong>4</strong> when NIN is your main job, <strong>3</strong> when it's your subjob.</td>
+</tr>
+<tr>
+<td><strong>How long</strong></td>
+<td>15 minutes, or until they're all gone.</td>
+</tr>
+<tr>
+<td><strong>What they block</strong></td>
+<td>Each normal melee hit or single-target physical move eats one shadow and does nothing. Most single-target magical TP moves also eat one. Utsusemi shadows <strong>always</strong> block. Blink only blocks 80% of the time.</td>
+</tr>
+<tr>
+<td><strong>Ichi over Ichi</strong></td>
+<td>Works any time. Ichi resets you to 3 shadows.</td>
+</tr>
+<tr>
+<td><strong>Ni over anything</strong></td>
+<td>Works any time. Resets you to 4.</td>
+</tr>
+<tr>
+<td><strong>Ichi over Ni</strong></td>
+<td><strong>Fails</strong> ("no effect") as long as even one Ni shadow is left.</td>
+</tr>
+<tr>
+<td><strong>Enmity</strong></td>
+<td>Casting Utsusemi: 1 CE / 300 VE. <strong>Every shadow a mob hits takes 25 CE off your hate with that mob.</strong></td>
+</tr>
+<tr>
+<td><strong>Third Eye / Blink</strong></td>
+<td>Utsusemi removes Third Eye. If you somehow have Blink too, Utsusemi shadows are used first.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the overwrite rule.</strong> In <code>enhancing_ninjutsu.lua</code> each cast stores a "tier": Ichi is 1, Ni is 2. A new cast only lands if the shadows you have now are the same tier or lower. That's why Ichi can't overwrite Ni shadows, and why Ichi over Ichi always works. The shadow count itself (3 or 4) is stored separately, and Phoenix's override adds <code>UTSUSEMI_BONUS</code> gear on top of it. No era gear has that stat.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — shadows cost you hate.</strong> <code>battleutils.cpp</code> and <code>mobskills.lua</code> both take <strong>25 CE per absorbed shadow</strong> off your enmity with that mob, citing the July 2005 update notes. A tank that only blocks with shadows slowly loses hate. Keep Provoking and keep casting.</p>
+</aside>
+<h3>The tank's shadow cycle</h3>
+<ol>
+<li><strong>Before the pull:</strong> Ni (4 shadows).</li>
+<li><strong>Shadows down to 1–2:</strong> recast <strong>Ni</strong> if it's ready (45 s recast). It overwrites everything.</li>
+<li><strong>Ni on cooldown and shadows at 0:</strong> cast <strong>Ichi</strong> (30 s recast). It lands because there are no Ni shadows left.</li>
+<li><strong>Ni on cooldown but Ni shadows still up:</strong> wait. Ichi will fail. Use the time to Provoke, nuke or debuff.</li>
+<li>Repeat. With good timing you're almost never at zero.</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING — the 1-shadow trap.</strong> With 1 Ni shadow left and Ni on cooldown, you can't refresh. Every tank on Phoenix eats this sooner or later. Two ways to avoid it: recast Ni <em>early</em> (at 2 shadows), or time Ichi so its 4-second cast <strong>finishes</strong> after the last Ni shadow is gone. The overwrite check happens when the cast finishes, so if that last shadow is still up at that moment, Ichi does nothing and you've wasted the cast.</p>
+</aside>
+<h3>What goes straight through</h3>
+<p>Shadows only stop hits that target <strong>you</strong> with a physical or single-target attack. In Phoenix's code these <strong>ignore</strong> shadows:
+- <strong>Breath attacks</strong> (default for every breath move).
+- <strong>Status-only moves</strong> — sleeps, gazes, slows, poisons with no damage.
+- <strong>Moves explicitly marked "ignore shadows"</strong> — most AoE magic like Fireball, Sandspin and Bomb Toss.</p>
+<p>And these <strong>wipe every shadow at once</strong>: moves marked "wipe shadows" (Tremors, Acid Mist, Wind Shear, Ill Wind, Stormwind and others). Chapter 6 has the list for every camp.</p>
+<p><strong>Multi-hit moves:</strong> a 3-hit move with 3+ shadows up is absorbed entirely and takes 3 shadows. With fewer shadows than hits, each hit takes one and the rest land.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — a modern bonus you get anyway.</strong> <code>combat_utils.lua</code> gives any NIN main or sub a <strong>50% chance per shadow</strong> to keep it when an AoE <em>physical</em> move would take it. This mechanic comes from a much later update (Yagyu Darkblade era), but Phoenix's code doesn't switch it off. Enjoy it, but don't plan around it.</p>
+</aside>
+<h3>Dual Wield and haste: how fast you swing</h3>
+<p>In Phoenix's code your round of two swings takes <strong>(main delay + off-hand delay) × (1 − Dual Wield %) × (1 − haste)</strong>. Divide by 2 for "one swing every…".</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Weapons</th>
+<th>No DW</th>
+<th>DW I (10)</th>
+<th>DW II (25)</th>
+<th>DW III (45)</th>
+<th>DW IV (65)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Two 227-delay katanas (most katanas)</td>
+<td>227</td>
+<td>204</td>
+<td>192</td>
+<td>170</td>
+<td>158</td>
+</tr>
+<tr>
+<td>Two 190-delay katanas (Hibari, Hien, Kageboshi, Hayabusa; their +1 versions are 185)</td>
+<td>190</td>
+<td>171</td>
+<td>161</td>
+<td>142</td>
+<td>133</td>
+</tr>
+<tr>
+<td>Same, with Haste spell (14.6%) + 15% gear haste</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>100</td>
+<td>93</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Delay per swing, in 1/60 s ticks, rounded down the way the code does it. Lower is faster.</em></p>
+<figure class="curechart"><svg viewBox="0 0 760 300" role="img" aria-label="Delay per swing by Dual Wield tier"><line class="gl" x1="60" x2="750" y1="250" y2="250"/><text class="ct" x="52" y="254" text-anchor="end">0</text><line class="gl" x1="60" x2="750" y1="195" y2="195"/><text class="ct" x="52" y="199" text-anchor="end">60</text><line class="gl" x1="60" x2="750" y1="140" y2="140"/><text class="ct" x="52" y="144" text-anchor="end">120</text><line class="gl" x1="60" x2="750" y1="85" y2="85"/><text class="ct" x="52" y="89" text-anchor="end">180</text><line class="gl" x1="60" x2="750" y1="30" y2="30"/><text class="ct" x="52" y="34" text-anchor="end">240</text><rect class="bo" x="80" y="42" width="46" height="208"/><text class="cv" x="103.0" y="36" text-anchor="middle">227</text><rect class="bn" x="132" y="76" width="46" height="174"/><text class="cv" x="155.0" y="70" text-anchor="middle">190</text><text class="cl" x="129" y="270" text-anchor="middle">No DW</text><rect class="bo" x="226" y="63" width="46" height="187"/><text class="cv" x="249.0" y="57" text-anchor="middle">204</text><rect class="bn" x="278" y="93" width="46" height="157"/><text class="cv" x="301.0" y="87" text-anchor="middle">171</text><text class="cl" x="275" y="270" text-anchor="middle">DW I · 10</text><rect class="bo" x="372" y="74" width="46" height="176"/><text class="cv" x="395.0" y="68" text-anchor="middle">192</text><rect class="bn" x="424" y="102" width="46" height="148"/><text class="cv" x="447.0" y="96" text-anchor="middle">161</text><text class="cl" x="421" y="270" text-anchor="middle">DW II · 25</text><rect class="bo" x="518" y="94" width="46" height="156"/><text class="cv" x="541.0" y="88" text-anchor="middle">170</text><rect class="bn" x="570" y="120" width="46" height="130"/><text class="cv" x="593.0" y="114" text-anchor="middle">142</text><text class="cl" x="567" y="270" text-anchor="middle">DW III · 45</text><rect class="bo" x="664" y="105" width="46" height="145"/><text class="cv" x="687.0" y="99" text-anchor="middle">158</text><rect class="bn" x="716" y="128" width="46" height="122"/><text class="cv" x="739.0" y="122" text-anchor="middle">133</text><text class="cl" x="713" y="270" text-anchor="middle">DW IV · 65</text><rect class="bo" x="460" y="8" width="14" height="14"/><text class="lg" x="480" y="20">227-delay pair</text><rect class="bn" x="600" y="8" width="14" height="14"/><text class="lg" x="620" y="20">190-delay pair</text></svg><figcaption>Delay per swing (1/60 s) with two matching katanas, no haste, from the formula in <code>battle_entity.cpp</code>. Lower is faster.</figcaption></figure>
+
+<ul>
+<li><strong>Gear haste caps at 25%</strong>, magic haste at 43.75%, ability haste at 25% (<code>battle_entity.cpp</code>).</li>
+<li><strong>Dual Wield also lowers the TP you get per hit.</strong> You swing more often for less TP each time. That's the trade.</li>
+<li>Ninja Chainmail (58) and Koga Hakama (71) each add <strong>+5 Dual Wield</strong>. Suppanomimi (72) adds another +5.</li>
+</ul>
+<aside class="box tip">
+<p><strong>PRO TIP — fast off-hand, slow main hand?</strong> Delay is averaged across both hands, so the swing speed is the same whichever hand holds which. Put the <strong>higher-damage</strong> katana in the main hand: weapon skills use main-hand damage.</p>
+</aside>
+<h3>Elemental ninjutsu damage</h3>
+<p>Phoenix's code works out a nuke's damage in this order:</p>
+<ol>
+<li><strong>Base:</strong> Ichi 16, Ni 69, San 134.</li>
+<li><strong>Plus your INT minus the mob's INT (dINT):</strong> ×1 for Ichi and Ni, ×2 for San, up to 25 / 113 / 118 points of dINT. Past that, each point counts half, and nothing counts past three times that number. If dINT is negative, it subtracts 1 for 1.</li>
+<li><strong>× your Ninjutsu skill bonus (main-job NIN only):</strong> <code>1 + (skill − floor) ÷ 200</code>, using floors of <strong>50 / 125 / 275</strong> and caps of <strong>250 / 350 / 500</strong> for Ichi / Ni / San.</li>
+<li><strong>× Magic Attack Bonus vs. the mob's Magic Defense</strong>, then resistance, weather and day.</li>
+</ol>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Ninjutsu skill</th>
+<th>dINT</th>
+<th>Ichi</th>
+<th>Ni</th>
+<th>San</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>269</td>
+<td>+0</td>
+<td>32</td>
+<td>119</td>
+<td>134</td>
+</tr>
+<tr>
+<td>269</td>
+<td>+20</td>
+<td>72</td>
+<td>153</td>
+<td>174</td>
+</tr>
+<tr>
+<td>269</td>
+<td>+40</td>
+<td>97</td>
+<td>187</td>
+<td>214</td>
+</tr>
+<tr>
+<td>299</td>
+<td>+0</td>
+<td>32</td>
+<td>129</td>
+<td>150</td>
+</tr>
+<tr>
+<td>299</td>
+<td>+20</td>
+<td>72</td>
+<td>166</td>
+<td>195</td>
+</tr>
+<tr>
+<td>299</td>
+<td>+40</td>
+<td>97</td>
+<td>204</td>
+<td>240</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Before MAB, resistance and weather. 269 is the A-rank skill cap at 75 with no gear. 299 is 269 plus +30 Ninjutsu skill from gear (Ninja Hatsuburi +5, Ninjutsu Torque +7, Ninjutsu Earring +3, Koga Kyahan +10, Astute Cape +5).</em></p>
+<aside class="box code">
+<p><strong>FROM THE CODE — why San barely beats Ni.</strong> San's skill floor is <strong>275</strong>, and the A-rank cap at 75 is 269. So with no Ninjutsu gear, San gets <strong>no</strong> skill bonus at all, while Ni gets ×1.72. San's merit ranks 2–3 add +5 Magic Attack and +5 Magic Accuracy each (<code>damage_ninjutsu.lua</code>), and Ninjutsu skill gear is what really makes San pull ahead. This skill multiplier is in Phoenix's code (<code>calculateNinSkillBonus</code>), but I couldn't confirm it matches 2007 behavior. Measure your own Katon: Ni if you want to know.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — nukes are for hate, not damage.</strong> A 150-damage Ni nuke every 45 seconds won't top the parse. Its job is to put enmity on you between Provokes. Cast the element the mob is weak to, and always cast <em>something</em> when Provoke is down.</p>
+</aside>
+<h3>Weapon skills (era values)</h3>
+<p>Phoenix's era module (<code>modules/era/lua/actions/weaponskills/katana.lua</code>, dated "one day before WotG release") sets these:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Katana skill</th>
+<th>Hits</th>
+<th>fTP (100 / 200 / 300% TP)</th>
+<th>Stats</th>
+<th>Skillchain</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Blade: Rin</strong></td>
+<td>10</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 20% / DEX 20%</td>
+<td>Transfixion</td>
+<td>Crit chance rises with TP</td>
+</tr>
+<tr>
+<td><strong>Blade: Retsu</strong></td>
+<td>30</td>
+<td>2</td>
+<td>1.0</td>
+<td>STR 20% / DEX 20%</td>
+<td>Scission</td>
+<td>Adds Paralyze</td>
+</tr>
+<tr>
+<td><strong>Blade: Teki</strong></td>
+<td>70</td>
+<td>1</td>
+<td>0.5 / 0.75 / 1.0</td>
+<td>STR 20% / INT 20%</td>
+<td>Reverberation</td>
+<td>Water hybrid (part magic)</td>
+</tr>
+<tr>
+<td><strong>Blade: To</strong></td>
+<td>100</td>
+<td>1</td>
+<td>0.5 / 0.75 / 1.0</td>
+<td>STR 30% / INT 30%</td>
+<td>Induration, Detonation</td>
+<td>Ice hybrid</td>
+</tr>
+<tr>
+<td><strong>Blade: Chi</strong></td>
+<td>150</td>
+<td>2</td>
+<td>0.5 / 0.75 / 1.0</td>
+<td>STR 30% / INT 30%</td>
+<td>Transfixion, Impaction</td>
+<td>Earth hybrid</td>
+</tr>
+<tr>
+<td><strong>Blade: Ei</strong></td>
+<td>175</td>
+<td>—</td>
+<td>1.0 / 1.5 / 2.0</td>
+<td>STR 30% / INT 30%</td>
+<td>Compression</td>
+<td>Dark magic damage</td>
+</tr>
+<tr>
+<td><strong>Blade: Jin</strong></td>
+<td>200 (NIN main)</td>
+<td>3</td>
+<td>1.0</td>
+<td>STR 30% / DEX 30%</td>
+<td>Detonation, Impaction</td>
+<td>Crit chance 10 / 20 / 40%</td>
+</tr>
+<tr>
+<td><strong>Blade: Ten</strong></td>
+<td>225 (NIN main)</td>
+<td>1</td>
+<td>2.5 / 2.75 / 3.0</td>
+<td>STR 30% / DEX 30%</td>
+<td>Gravitation</td>
+<td>Big single hit</td>
+</tr>
+<tr>
+<td><strong>Blade: Ku</strong></td>
+<td>250 (quest)</td>
+<td>5</td>
+<td>1.0</td>
+<td>STR 10% / DEX 10%</td>
+<td>Gravitation, Transfixion</td>
+<td>Accuracy +0 / +30 / +50 with TP</td>
+</tr>
+<tr>
+<td><strong>Blade: Metsu</strong></td>
+<td>Kikoku only</td>
+<td>1</td>
+<td>3.0</td>
+<td>DEX 60%</td>
+<td>Darkness, Fragmentation</td>
+<td>Relic. Adds Paralyze</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Katana is A rank in the era data, so your cap is <strong>269 at 75</strong> (skill merits add more). Blade: Ku (250) is reachable at 72. <strong>Blade: Yu needs 290 and Blade: Shun 357</strong>, so neither is usable at 75.</li>
+</ul>
+<aside class="box tip">
+<p><strong>PRO TIP — Jin vs. Ten vs. Ku on Phoenix.</strong> In era values, Blade: Ku's five hits only get <strong>10%</strong> STR and DEX each, while Jin and Ten get 30%. Ku's strength is its five chances to hit and its accuracy bonus at high TP. Against mobs you hit easily, <strong>Blade: Jin</strong> (crits) and <strong>Blade: Ten</strong> (one big hit, Gravitation) are strong choices. Bring Ku for high-evasion targets or for skillchains that need Gravitation/Transfixion. Test it yourself: the numbers depend on your gear.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Ni = 4 shadows (main NIN). Ichi = 3. Ichi can't overwrite Ni.</li>
+<li>Each absorbed shadow costs you 25 CE. Keep generating hate.</li>
+<li>Breaths, status moves and most AoE magic go straight through. Some moves wipe every shadow.</li>
+<li>DW IV + two 190-delay katanas + Haste = about 93 delay per swing.</li>
+<li>Nukes are a hate tool. Blade: Jin/Ten/Ku are your WS endgame.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>Your shadows don't care how hard the mob hits. They care how it hits. Learn which moves go through them, and you'll know when to put up shadows and when to back off.</em></p>
+<h2>THE SHADOW REPORT</h2>
+<p>Below are the classic party camps from the project's leveling-camps guide. For each mob I read its TP-move list from Phoenix's code, opened the script behind each move, and sorted the moves by what they do to your shadows:</p>
+<ul>
+<li><strong>Eats 1 shadow</strong> — single-target physical or magical move. One shadow, no damage.</li>
+<li><strong>Eats several</strong> — multi-hit move. If you have at least that many shadows, the whole move is absorbed. If you have fewer, each hit takes one and the rest land.</li>
+<li><strong>Goes straight through</strong> — breaths, status-only moves and moves marked "ignore shadows". Your shadows do nothing; your HP and resists take it.</li>
+<li><strong>Wipes all shadows</strong> — moves marked "wipe shadows". Recast before the next swing.</li>
+</ul>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Mob</th>
+<th>Eats 1 shadow</th>
+<th>Eats several</th>
+<th>Goes straight through</th>
+<th>Wipes all shadows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Hill Lizard</td>
+<td>Blockhead, Brain Crush, Tail Blow</td>
+<td>—</td>
+<td>Baleful Gaze, Fireball (AoE), Infrasonics (AoE), Plague Breath (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Damselfly</td>
+<td>—</td>
+<td>—</td>
+<td>Cursed Sphere (AoE), Venom (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Brutal Sheep</td>
+<td>Lamb Chop, Sheep Charge</td>
+<td>—</td>
+<td>Sheep Song (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Snipper</td>
+<td>Big Scissors</td>
+<td>—</td>
+<td>Bubble Curtain, Bubble Shower (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Beach Pugil</td>
+<td>Screwdriver</td>
+<td>—</td>
+<td>Aqua Ball (AoE), Intimidate (AoE), Splash Breath (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Thread Leech</td>
+<td>Drainkiss, Suction</td>
+<td>—</td>
+<td>Brain Drain, MP Drainkiss, Sand Breath (AoE), TP Drainkiss</td>
+<td><strong>Acid Mist (AoE)</strong></td>
+</tr>
+<tr>
+<td>13‑16</td>
+<td>Buburimu Peninsula</td>
+<td>Carnivorous Crawler</td>
+<td>—</td>
+<td>—</td>
+<td>Poison Breath (AoE), Sticky Thread (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>14‑21</td>
+<td>Korroloka / Qufim worms</td>
+<td>Land Worm</td>
+<td>Full-Force Blow</td>
+<td>—</td>
+<td>Gastric Bomb, MP Absorption, Sandspin (AoE), Sound Vacuum</td>
+<td><strong>Tremors (AoE)</strong></td>
+</tr>
+<tr>
+<td>18‑21</td>
+<td>Sauromugue Champaign</td>
+<td>Diving Beetle</td>
+<td>Power Attack, Rhino Attack</td>
+<td>—</td>
+<td>Hi-Freq Field (AoE), Spoil</td>
+<td>—</td>
+</tr>
+<tr>
+<td>19‑24</td>
+<td>Qufim Island</td>
+<td>Land Worm</td>
+<td>Full-Force Blow</td>
+<td>—</td>
+<td>Gastric Bomb, MP Absorption, Sandspin (AoE), Sound Vacuum</td>
+<td><strong>Tremors (AoE)</strong></td>
+</tr>
+<tr>
+<td>19‑24</td>
+<td>Qufim Island</td>
+<td>Clipper</td>
+<td>Big Scissors</td>
+<td>—</td>
+<td>Bubble Curtain, Bubble Shower (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>19‑24</td>
+<td>Qufim Island</td>
+<td>Greater Pugil</td>
+<td>Screwdriver</td>
+<td>—</td>
+<td>Aqua Ball (AoE), Intimidate (AoE), Splash Breath (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>20‑25</td>
+<td>Yhoator Jungle</td>
+<td>Yhoator Mandragora</td>
+<td>Head Butt, Leaf Dagger, Wild Oats</td>
+<td>—</td>
+<td>Dream Flower (AoE), Scream (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>24‑27</td>
+<td>Yuhtunga Jungle</td>
+<td>Yuhtunga Mandragora</td>
+<td>Head Butt, Leaf Dagger, Wild Oats</td>
+<td>—</td>
+<td>Dream Flower (AoE), Scream (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>24‑27</td>
+<td>Yuhtunga Jungle</td>
+<td>Goblin Smithy</td>
+<td>—</td>
+<td>Goblin Rush (up to 3)</td>
+<td>Bomb Toss (AoE), Bomb Toss Suicide (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27‑30</td>
+<td>Bibiki Bay</td>
+<td>Catoblepas</td>
+<td>Stomping</td>
+<td>—</td>
+<td>Cold Stare (AoE), Sonic Wave (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27‑30</td>
+<td>Bibiki Bay</td>
+<td>Eft</td>
+<td>—</td>
+<td>Cyclotail (AoE) (up to 3), Nimble Snap (up to 3)</td>
+<td>Geist Wall (AoE), Numbing Noise (AoE), Toxic Spit</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27‑30</td>
+<td>Bibiki Bay</td>
+<td>Raven</td>
+<td>Blind Side Barrage, Broadside Barrage, Helldive</td>
+<td>Damnation Dive (AoE) (up to 3)</td>
+<td>Wing Cutter (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>30‑35</td>
+<td>Eastern Altepa</td>
+<td>Sand Beetle</td>
+<td>Power Attack, Rhino Attack</td>
+<td>—</td>
+<td>Hi-Freq Field (AoE), Spoil</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33‑36</td>
+<td>Garlaige Citadel</td>
+<td>Fortalice Bats</td>
+<td>—</td>
+<td>Jet Stream (up to 3)</td>
+<td>Sonic Boom (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33‑36</td>
+<td>Garlaige Citadel</td>
+<td>Citadel Bats</td>
+<td>—</td>
+<td>Jet Stream (up to 3)</td>
+<td>Sonic Boom (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33‑36</td>
+<td>Garlaige Citadel</td>
+<td>Warden Beetle</td>
+<td>Power Attack, Rhino Attack</td>
+<td>—</td>
+<td>Hi-Freq Field (AoE), Spoil</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33‑37</td>
+<td>Eldieme Necropolis</td>
+<td>Gazer</td>
+<td>—</td>
+<td>—</td>
+<td>Death Ray, Hex Eye (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>34‑44</td>
+<td>Attohwa Chasm</td>
+<td>Ogrefly</td>
+<td>Somersault</td>
+<td>—</td>
+<td>Cursed Sphere (AoE), Venom (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>34‑44</td>
+<td>Attohwa Chasm</td>
+<td>Master Coeurl</td>
+<td>—</td>
+<td>—</td>
+<td>Blaster, Chaotic Eye</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Worker Crawler</td>
+<td>—</td>
+<td>—</td>
+<td>Poison Breath (AoE), Sticky Thread (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Nest Beetle</td>
+<td>Power Attack, Rhino Attack</td>
+<td>—</td>
+<td>Hi-Freq Field (AoE), Spoil</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Rumble Crawler</td>
+<td>—</td>
+<td>—</td>
+<td>Poison Breath (AoE), Sticky Thread (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Soldier Crawler</td>
+<td>—</td>
+<td>—</td>
+<td>Poison Breath (AoE), Sticky Thread (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>38‑41</td>
+<td>Gustav Tunnel</td>
+<td>Hawker</td>
+<td>—</td>
+<td>—</td>
+<td>Cursed Sphere (AoE), Venom (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48‑51</td>
+<td>Quicksand Caves</td>
+<td>Helm Beetle</td>
+<td>Power Attack, Rhino Attack</td>
+<td>—</td>
+<td>Hi-Freq Field (AoE), Spoil</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48‑51</td>
+<td>Quicksand Caves</td>
+<td>Antican Hastatus</td>
+<td>Shoulder Slam, Spikeball</td>
+<td>—</td>
+<td>Jamming Wave (AoE), Magnetite Cloud (AoE), Sand Trap (AoE), Sandstorm (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48‑51</td>
+<td>Quicksand Caves</td>
+<td>Antican Princeps</td>
+<td>Shoulder Slam, Spikeball</td>
+<td>—</td>
+<td>Jamming Wave (AoE), Magnetite Cloud (AoE), Sand Trap (AoE), Sandstorm (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>52‑55</td>
+<td>Kuftal Tunnel</td>
+<td>Robber Crab</td>
+<td>Big Scissors</td>
+<td>—</td>
+<td>Bubble Curtain, Bubble Shower (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54‑58</td>
+<td>Wajaom Woodlands</td>
+<td>Lesser Colibri</td>
+<td>—</td>
+<td>Pecking Flurry (up to 4)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54‑60</td>
+<td>Bhaflau Thickets</td>
+<td>Aht Urhgan Attercop</td>
+<td>Sickle Slash</td>
+<td>—</td>
+<td>Acid Spray (AoE), Spider Web (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54‑60</td>
+<td>Bhaflau Thickets</td>
+<td>Lesser Colibri</td>
+<td>—</td>
+<td>Pecking Flurry (up to 4)</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>55‑60</td>
+<td>Caedarva Mire</td>
+<td>Marsh Murre</td>
+<td>Helldive</td>
+<td>—</td>
+<td>Wing Cutter (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>60‑65</td>
+<td>Kuftal Tunnel</td>
+<td>Sand Lizard</td>
+<td>Blockhead, Brain Crush, Tail Blow</td>
+<td>—</td>
+<td>Baleful Gaze, Fireball (AoE), Infrasonics (AoE), Plague Breath (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>60‑65</td>
+<td>Kuftal Tunnel</td>
+<td>Kuftal Digger</td>
+<td>Full-Force Blow</td>
+<td>—</td>
+<td>Gastric Bomb, MP Absorption, Sandspin (AoE), Sound Vacuum</td>
+<td><strong>Tremors (AoE)</strong></td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Carpophagous Puk</td>
+<td>—</td>
+<td>—</td>
+<td>Crosswind (AoE), Obfuscate (AoE)</td>
+<td><strong>Wind Shear (AoE)</strong></td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Puk</td>
+<td>—</td>
+<td>—</td>
+<td>Crosswind (AoE), Obfuscate (AoE)</td>
+<td><strong>Ill Wind (AoE), Wind Shear (AoE)</strong></td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Hunting Raptor</td>
+<td>Ripper Fang, Scythe Tail</td>
+<td>Chomp Rush (up to 3)</td>
+<td>Foul Breath (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Ziz</td>
+<td>Hammer Beak, Poison Pick</td>
+<td>—</td>
+<td>Baleful Gaze, Sound Blast (AoE), Sound Vacuum (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>67‑75</td>
+<td>Caedarva Mire</td>
+<td>Heraldic Imp</td>
+<td>—</td>
+<td>Frenetic Rip (up to 3)</td>
+<td>Abrasive Tantara (AoE), Deafening Tantara (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>67‑75</td>
+<td>Caedarva Mire</td>
+<td>Spongilla Fly</td>
+<td>—</td>
+<td>—</td>
+<td>Cursed Sphere (AoE), Venom (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>70‑75</td>
+<td>Mount Zhayolm</td>
+<td>Ebony Pudding</td>
+<td>—</td>
+<td>Amorphic Spikes (up to 5)</td>
+<td>Boiling Point (AoE), Synergism (AoE)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>70‑75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Warrior</td>
+<td>Potent Lunge, Rock Smash</td>
+<td>—</td>
+<td>Enervation (AoE), Overthrow</td>
+<td>—</td>
+</tr>
+<tr>
+<td>70‑75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Paladin</td>
+<td>Potent Lunge, Rock Smash</td>
+<td>—</td>
+<td>Enervation (AoE), Overthrow</td>
+<td>—</td>
+</tr>
+<tr>
+<td>72‑75</td>
+<td>Lufaise Meadows</td>
+<td>Abraxas</td>
+<td>Blind Vortex, Dread Dive</td>
+<td>Giga Scream (up to 3)</td>
+<td>—</td>
+<td><strong>Stormwind (AoE)</strong></td>
+</tr>
+<tr>
+<td>72‑75</td>
+<td>Lufaise Meadows</td>
+<td>Tavnazian Ram</td>
+<td>Ram Charge</td>
+<td>—</td>
+<td>Great Bleat (AoE), Petribreath (AoE), Rumble (AoE)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — how this table was built.</strong> Each mob's <code>skill_list_id</code> (in <code>data/zones/&lt;zone&gt;/mobs.yaml</code>) points to its TP moves in <code>mob_skill_lists.sql</code>. Each move's script (<code>scripts/actions/mobskills/&lt;move&gt;.lua</code>) sets a <code>shadowBehavior</code>: <code>IGNORE_SHADOWS</code>, <code>WIPE_SHADOWS</code> or a number of shadows. Moves that don't set one use the default for their type: physical and magical moves take 1, breaths ignore shadows, and status-only moves never check shadows at all. "(AoE)" comes from <code>mob_skills.sql</code>.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — what the report tells you.</strong></p>
+<ul>
+<li><strong>Most camp mobs can't hurt you through shadows with their melee.</strong> What hurts you are breaths and AoE status moves. Keep HP up for those and let shadows handle the rest.</li>
+<li><strong>Wipers to watch:</strong> Thread Leech <em>Acid Mist</em> (10–20), worm <em>Tremors</em> (14–24, Kuftal 60–65), Puk <em>Wind Shear</em> / <em>Ill Wind</em> (Mamook 63–68), Abraxas <em>Stormwind</em> (Lufaise 72–75). When you see one of these, recast immediately.</li>
+<li><strong>Multi-hitters:</strong> Lesser Colibri <em>Pecking Flurry</em> (up to 4), Ebony Pudding <em>Amorphic Spikes</em> (up to 5), Raptor <em>Chomp Rush</em>, Imp <em>Frenetic Rip</em>, Bat <em>Jet Stream</em> (3 each). Keep at least 3–4 shadows up against these mobs, or part of the move lands.</li>
+<li><strong>Crawlers' Nest (35–48) is shadow heaven.</strong> Crawlers only have Poison Breath and Sticky Thread, which go through your shadows but don't damage much. Their melee is exactly what shadows are for.</li>
+</ul>
+</aside>
+<h3>Bracket by bracket</h3>
+<p><strong>Level 1–12 — learn the weapon</strong>
+- One katana, then two at 10. Solo easy prey and let Katana skill catch up.
+- Buy Utsusemi: Ichi (13,133) and Tonko: Ichi before 12. Tonko gets you past aggressive mobs on the way to camps.
+- <strong>Gear:</strong> Kunai +1 ×2 [1] (cheap Smithing 30 HQ). Anything with DEX or Accuracy.</p>
+<p><strong>Level 12–20 — Valkurm Dunes, Korroloka worms</strong>
+- Ichi from 12. Cast before the pull, recast at 1 shadow.
+- At 15, Elemental Ichi nukes. Use them for hate when you're the tank, and for magic bursts if someone is skillchaining.
+- Valkurm Thread Leeches can wipe your shadows with Acid Mist. Hill Lizards' Baleful Gaze goes through them.
+- <strong>Gear:</strong> Shinobi-gatana +1 ×2 [13], Power Gi [13] (quest), Spike Necklace [21].</p>
+<p><strong>Level 20–30 — Qufim, Yuhtunga, Yhoator, Bibiki Bay</strong>
+- Kurayami (19) and Hojo (23) arrive. Slow the mob if the party has no RDM.
+- At 25 you get Dual Wield II. <strong>Hibari +1 ×2</strong> [24] (185 delay) are the best cheap pair for a long time.
+- <strong>Empress Hairpin</strong> [24] (DEX+3, AGI+3, Evasion+10) is the most famous low-level NIN item. It drops from the Valkurm Emperor NM.
+- Get your Utsusemi: Ni scroll (37) on the Auction House now, or start entering BCNMs with a static.
+- <strong>Gear:</strong> Fukuro [28] (quest Faded Promises), Dodge Earring [29].</p>
+<p><strong>Level 30–40 — Garlaige, Eldieme, Crawlers' Nest, Altepa</strong>
+- <strong>Ni at 37 changes the job.</strong> 4 shadows, 1.5-second cast. From 37 on you can tank anything in the leveling guide.
+- Jubaku (30), Dokumori (27) and Tonko: Ni (34) round out your toolkit.
+- <strong>Rajas Ring</strong> [30] is a CoP Chapter 8 reward. If you're doing CoP, plan to take it.
+- AF1 at 40: <strong>Anju / Zushio</strong> (Chapter 8). Peacock Charm/Amulet [33] for Accuracy+10.
+- <strong>Gear:</strong> Ochimusha Kote / Ochiudo's Kote [34] (Attack+20), Sniper's Ring +1 [40], Tilt Belt [40], Sarutobi/Fuma Kyahan [39] (Haste+3%).</p>
+<p><strong>Level 40–50 — Crawlers' Nest, Gustav, Quicksand Caves</strong>
+- Elemental Ni nukes at 40 if you got lucky with a scroll. Kurayami: Ni (44), Dual Wield III (45), Hojo: Ni (48).
+- Quicksand Antican moves (Sandstorm, Sand Trap, Jamming Wave) all go through shadows. Bring Echo Drops and an Antidote set.
+- <strong>Gear:</strong> Hien +1 [47] (185 delay), Voyager Sallet [41], Life Belt [48], Bat Cape [46].</p>
+<p><strong>Level 50–60 — Kuftal, Wajaom, Bhaflau, Caedarva</strong>
+- AF2 (Ninja Hakama, 52), AF coffers (Kyahan 54, Hatsuburi 56), AF3 (Ninja Chainmail 58).
+- Lesser Colibri's Pecking Flurry takes up to 4 shadows. Recast Ni early against them.
+- <strong>Gear:</strong> Swift Belt [50], Speed/Velocious Belt [55], Buboso [50], Scorpion Harness +1 [57], Haubergeon +1 [59], Toreador's Ring [57].</p>
+<p><strong>Level 60–70 — Kuftal, Mamook</strong>
+- Dual Wield IV at 65. Puks in Mamook wipe your shadows with Wind Shear and Ill Wind.
+- <strong>Gear:</strong> Amemet Mantle +1 [61], Coral/Merman's Earrings [63], Sonic Belt +1 [65], Ninjutsu Torque [65] if you're nuking.</p>
+<p><strong>Level 70–75 — Caedarva Mire, Lufaise, Mount Zhayolm, Bhaflau</strong>
+- Fudo [70], Optical Hat [70], Dusk Gloves +1 [72], Hayabusa +1 [71]. Start Bugi Soden (Blade: Ku) at 72 once your Katana skill hits 250.
+- Abraxas Stormwind wipes all shadows. Ebony Puddings' Amorphic Spikes takes up to 5. Keep Ni on cooldown cycle tight.</p>
+<aside class="box warn">
+<p><strong>WARNING — tools add up.</strong> Casting Ni on every recast (45 seconds) uses 80 Shihei an hour by itself. With Ichi in between, a 99-stack lasts about an hour of hard pulling. At 124 gil each, that's about 12,000 gil an hour. Budget for it, make toolbags, or craft your own (Chapter 4).</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT — level 37</strong></p>
+<ul>
+<li>Utsusemi: Ni scroll (battlefield loot or Auction House).</li>
+<li>Two katanas you can afford to keep, ideally a matching 190-delay pair.</li>
+<li>Two stacks of Shihei (or toolbags) and a stack of Shinobi-tabi.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>Every item here was checked against Phoenix's item tables: level, stats, and where it drops or how it's made. If a piece from another guide is missing, check "Not on Phoenix" at the end of the chapter.</em></p>
+<h3>How this chapter is laid out</h3>
+<ul>
+<li><strong>The four sets</strong>, in the order a fight goes: <strong>TP → Weapon Skill → Evasion → Ninjutsu</strong>. Each is a slot-by-slot upgrade path from 1 to 75.</li>
+<li><strong>AF and Relic</strong> at a glance.</li>
+<li><strong>The Item Directory</strong> — every item named in the sets, with stats and exactly where it comes from.</li>
+<li><strong>Not on Phoenix</strong> — gear other guides recommend that you can't get here.</li>
+</ul>
+<p>A number in brackets is the level you can wear it. Swap sets with <code>/equipset</code> macros (Appendix A).</p>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-tp" class="fstep set-tp"><b>⚔</b><span>SET 1</span><em>TP</em><small>Auto-attacking</small></a><a role="listitem" href="#set-ws" class="fstep set-ws"><b>✸</b><span>SET 2</span><em>Weapon Skill</em><small>The weapon skill</small></a><a role="listitem" href="#set-eva" class="fstep set-eva"><b>◌</b><span>SET 3</span><em>Evasion</em><small>Tanking</small></a><a role="listitem" href="#set-nin" class="fstep set-nin"><b>✴</b><span>SET 4</span><em>Ninjutsu</em><small>Casting ninjutsu</small></a></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>When</th>
+<th>Stats that matter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 · TP</strong></td>
+<td>Auto-attacking</td>
+<td>Haste → Accuracy → DEX / STR → Store TP, Double Attack, Dual Wield</td>
+</tr>
+<tr>
+<td><strong>2 · Weapon Skill</strong></td>
+<td>The instant you use a WS</td>
+<td>STR and DEX (Jin, Ten, Ku), Attack, Accuracy. INT for Teki / To / Chi / Ei</td>
+</tr>
+<tr>
+<td><strong>3 · Evasion</strong></td>
+<td>Tanking</td>
+<td>Evasion, AGI, HP, Enmity+, Haste (shorter Utsusemi recast)</td>
+</tr>
+<tr>
+<td><strong>4 · Ninjutsu</strong></td>
+<td>Nukes and debuffs</td>
+<td>Ninjutsu skill, INT, Magic Attack Bonus, Magic Accuracy</td>
+</tr>
+</tbody>
+</table></div>
+
+<section class="set set-tp" id="set-tp"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">⚔</span><h2>TP</h2><span class="settag">Auto-attacking</span></header>
+<p><em>Haste first: it shortens every swing and every recast. Then Accuracy, because a miss is zero damage. Then raw stats.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main</strong></td>
+<td>Kunai +1 [1] → Shinobi-gatana +1 [13] → <strong>Hibari +1</strong> [24]</td>
+<td>Kodachi +1 [32] → Anju [40] → <strong>Hien +1</strong> [47]</td>
+<td><strong>Buboso</strong> [50] → Shinogi [52] → Hototogisu [55]</td>
+<td><strong>Fudo</strong> [70] / Shusui [72] / Hayabusa +1 [71]</td>
+<td><strong>Kikoku</strong> (Relic) or Fudo</td>
+</tr>
+<tr>
+<td><strong>Sub</strong></td>
+<td>Same as main</td>
+<td>Zushio [40] → <strong>Hien +1</strong> [47]</td>
+<td>Hien +1 / Kageboshi [50]</td>
+<td><strong>Hayabusa +1</strong> [71] / Unji [72]</td>
+<td>Fudo / Shusui / Hayabusa +1</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td><strong>Empress Hairpin</strong> [24]</td>
+<td>Empress Hairpin → <strong>Voyager Sallet</strong> [41]</td>
+<td>Voyager Sallet</td>
+<td><strong>Optical Hat</strong> [70] / Hissho Hachimaki [71]</td>
+<td><strong>Walahra Turban</strong> [75]</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td>Spike Necklace [21]</td>
+<td><strong>Peacock Charm</strong> [33]</td>
+<td>Peacock Charm / Chivalrous Chain [60]</td>
+<td>Chivalrous Chain</td>
+<td>Chivalrous Chain / Peacock Charm</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>Coral Earring</strong> ×2 [63]</td>
+<td><strong>Suppanomimi</strong> [72] + Hollow Earring [72]</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Power Gi [13]</td>
+<td>Jujitsu Gi [40] → Brigandine +1 [45]</td>
+<td><strong>Scorpion Harness +1</strong> [57] → <strong>Haubergeon +1</strong> [59]</td>
+<td>Haubergeon +1 / Assault Jerkin [67]</td>
+<td><strong>Hachiryu Haramaki</strong> [75] or Haubergeon +1</td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>—</td>
+<td><strong>Ochimusha Kote</strong> [34]</td>
+<td>Ochimusha Kote</td>
+<td><strong>Dusk Gloves +1</strong> [72]</td>
+<td>Dusk Gloves +1 / Hachiryu Kote [75]</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>—</td>
+<td><strong>Rajas Ring</strong> [30] + Sniper's Ring +1 [40]</td>
+<td>Rajas + <strong>Toreador's Ring</strong> [57]</td>
+<td>Rajas + Toreador's</td>
+<td>Rajas + Toreador's</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Amemet Mantle +1</strong> [61]</td>
+<td>Amemet Mantle +1 → Forager's Mantle [71]</td>
+<td>Forager's Mantle</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>—</td>
+<td>Tilt Belt [40] → <strong>Life Belt</strong> [48]</td>
+<td><strong>Swift Belt</strong> [50] → <strong>Speed / Velocious Belt</strong> [55]</td>
+<td><strong>Sonic Belt +1</strong> [65]</td>
+<td>Velocious / Sonic Belt +1, Ninurta's Sash [75]</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>—</td>
+<td>—</td>
+<td>Ryl.Kgt. Breeches [55]</td>
+<td><strong>Enkidu's Subligar</strong> [72]</td>
+<td><strong>Byakko's Haidate</strong> [75]</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>—</td>
+<td><strong>Sarutobi / Fuma Kyahan</strong> [39]</td>
+<td>Sarutobi / Fuma Kyahan</td>
+<td><strong>Fuma Sune-ate</strong> / Dusk Ledelsens +1 [72]</td>
+<td>Fuma Sune-ate / Dusk Ledelsens +1</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — count your haste.</strong> Swift Belt (4%), Speed/Velocious Belt (6%), Sonic Belt +1 (6%), Fuma Kyahan (3%), Dusk Gloves +1 (4%), Walahra Turban (5%), Byakko's Haidate (5%). Gear haste caps at <strong>25%</strong> in Phoenix's code, so a full late set can hit the cap. Past that, put Accuracy and STR in the slot instead.</p>
+</aside>
+</section><section class="set set-ws" id="set-ws"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">✸</span><h2>WEAPON SKILL</h2><span class="settag">The weapon skill</span></header>
+<p><em>Blade: Jin, Ten and Ku use STR and DEX. Blade: Teki, To, Chi and Ei use STR and INT. Stack Attack after that.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Head</strong></td>
+<td>Voyager Sallet [41]</td>
+<td>Voyager Sallet</td>
+<td>Hissho Hachimaki [71]</td>
+<td>Hissho Hachimaki</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td>Spike Necklace</td>
+<td>Spike Necklace</td>
+<td>Chivalrous Chain</td>
+<td>Chivalrous Chain</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>—</td>
+<td>—</td>
+<td>Coral / Merman's Earring ×2 [63]</td>
+<td>Coral / Merman's Earring</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Brigandine +1 [45]</td>
+<td><strong>Haubergeon +1</strong> [59] / <strong>Byrnie +1</strong> [60]</td>
+<td>Haubergeon +1 / Byrnie +1</td>
+<td>Haubergeon +1 / Hachiryu Haramaki</td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td><strong>Ochimusha Kote</strong> [34]</td>
+<td>Ochimusha / <strong>Pallas's Bracelets</strong> [60]</td>
+<td>Pallas's Bracelets</td>
+<td>Pallas's / Hachiryu Kote</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>Rajas Ring</td>
+<td><strong>Victory Ring</strong> ×2 [54]</td>
+<td>Victory / Rajas</td>
+<td>Victory / Rajas</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>—</td>
+<td>Amemet Mantle +1 [61]</td>
+<td>Forager's Mantle [71]</td>
+<td>Forager's Mantle</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>Swordbelt +1 [43]</td>
+<td><strong>Warwolf Belt</strong> [71] or Potent Belt [60]</td>
+<td>Warwolf Belt</td>
+<td>Warwolf Belt</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>—</td>
+<td>Ryl.Kgt. Breeches</td>
+<td>Enkidu's Subligar</td>
+<td><strong>Hachiryu Haidate</strong> [75]</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>Fuma Kyahan</td>
+<td>Fuma Kyahan</td>
+<td>Dusk Ledelsens +1</td>
+<td>Dusk Ledelsens +1</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — don't WS in your Evasion set.</strong> If you're tanking, a quick swap to Set 2 for one WS and back is fine. Staying in it while the mob swings isn't. Set your WS macro to swap back after a short wait (Appendix A).</p>
+</aside>
+</section><section class="set set-eva" id="set-eva"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">◌</span><h2>EVASION</h2><span class="settag">Tanking</span></header>
+<p><em>The fewer hits that land, the fewer shadows you lose and the less you recast. Evasion, AGI and HP, then Enmity+ to keep the mob on you.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Head</strong></td>
+<td><strong>Empress Hairpin</strong> [24]</td>
+<td>Empress Hairpin</td>
+<td>Empress Hairpin</td>
+<td><strong>Optical Hat</strong> [70]</td>
+<td>Optical Hat</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td>—</td>
+<td><strong>Spirit Torque</strong> [38]</td>
+<td>Spirit Torque</td>
+<td><strong>Evasion Torque</strong> [65] / <strong>Ritter Gorget</strong> [70]</td>
+<td>Ritter Gorget</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>Dodge Earring [29]</td>
+<td>Dodge / Gold Earring +1 [45]</td>
+<td><strong>Elusive Earring</strong> [60]</td>
+<td>Elusive + <strong>Ethereal Earring</strong> [72]</td>
+<td>Elusive + Ethereal</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Scorpion Harness +1</strong> [57]</td>
+<td>Scorpion Harness +1</td>
+<td>Scorpion Harness +1</td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Storm Manopolas</strong> [50]</td>
+<td><strong>Rasetsu Tekko +1</strong> [72]</td>
+<td>Rasetsu Tekko +1</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>—</td>
+<td>—</td>
+<td>Wivre Ring +1 [61]</td>
+<td>Wivre Ring +1 ×2</td>
+<td>Wivre Ring +1</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>—</td>
+<td><strong>Bat Cape</strong> [46]</td>
+<td>Bat Cape</td>
+<td><strong>Toreador's Cape</strong> [72]</td>
+<td>Toreador's Cape</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>—</td>
+<td><strong>Survival Belt</strong> [38]</td>
+<td>Survival Belt</td>
+<td><strong>Scouter's Rope</strong> [73]</td>
+<td>Scouter's Rope</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Ninja Hakama</strong> [52] (night)</td>
+<td>Koga Hakama [71] (night)</td>
+<td>Koga Hakama</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>—</td>
+<td>—</td>
+<td><strong>Arhat's Sune-ate +1</strong> [63]</td>
+<td>Arhat's Sune-ate +1 / Dance Shoes +1 [72]</td>
+<td>Same</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — night is Ninja time.</strong> Ninja Hakama and Koga Hakama give +10 Evasion at night. Ninja Kyahan gives faster movement at night. Koga Tekko and Koga Kyahan get STR/DEX/Haste at night. If the fight is at night, these win their slots.</p>
+</aside>
+</section><section class="set set-nin" id="set-nin"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">✴</span><h2>NINJUTSU</h2><span class="settag">Casting ninjutsu</span></header>
+<p><em>Ninjutsu skill helps every debuff land and, on Phoenix, makes your nukes hit harder (Chapter 5). INT and Magic Attack Bonus come after it.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Head</strong></td>
+<td><strong>Ninja Hatsuburi</strong> [56] → Koga Hatsuburi [73]</td>
+<td>Ninjutsu skill +5 → Ninjutsu damage bonus</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td><strong>Ninjutsu Torque</strong> [65]</td>
+<td>Ninjutsu skill +7</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td><strong>Ninjutsu Earring</strong> [35] + <strong>Moldavite Earring</strong> [47] (→ Novio [75])</td>
+<td>Skill +3, Magic Attack +5 (+7)</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td><strong>Genius Ring</strong> ×2 [54]</td>
+<td>INT +4 each</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td><strong>Astute Cape</strong> [73]</td>
+<td>Ninjutsu skill +5</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td><strong>Koga Kyahan</strong> [72]</td>
+<td>Ninjutsu skill +10</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — this set is optional while leveling.</strong> Ninjutsu skill gear costs slots you'd rather spend on evasion. Swap to it only for Hojo/Kurayami on a mob that keeps resisting, and for nukes when the party wants damage.</p>
+</aside>
+</section><h2>AF &amp; RELIC AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Highlights</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Anju / Zushio</strong></td>
+<td>40</td>
+<td>Katana pair, DEX+2 / STR+2</td>
+<td>AF1: <em>20 in Pirate Years</em></td>
+</tr>
+<tr>
+<td><strong>Ninja Hakama</strong></td>
+<td>52</td>
+<td>R.Acc+10, night: Evasion+10</td>
+<td>AF2: <em>I'll Take the Big Box</em></td>
+</tr>
+<tr>
+<td><strong>Ninja Kyahan</strong></td>
+<td>54</td>
+<td>AGI+4, night: Movement +24%</td>
+<td>Sea Serpent Grotto coffer</td>
+</tr>
+<tr>
+<td><strong>Ninja Hatsuburi</strong></td>
+<td>56</td>
+<td>Ninjutsu skill +5</td>
+<td>The Boyahda Tree coffer</td>
+</tr>
+<tr>
+<td><strong>Ninja Chainmail</strong></td>
+<td>58</td>
+<td>Dual Wield +5, VIT+3</td>
+<td>AF3: <em>True Will</em></td>
+</tr>
+<tr>
+<td><strong>Ninja Tekko</strong></td>
+<td>60</td>
+<td>R.Atk+20, Throwing skill +5</td>
+<td><em>Borghertz's Lurking Hands</em></td>
+</tr>
+<tr>
+<td><strong>Koga</strong> set (Relic)</td>
+<td>70–75</td>
+<td>Haste, DW, ninjutsu, night bonuses</td>
+<td>Dynamis (see the Item Directory)</td>
+</tr>
+<tr>
+<td><strong>Kikoku</strong></td>
+<td>75</td>
+<td>DMG 42 / Delay 210, Attack+20, Blade: Metsu</td>
+<td>Relic weapon (Dynamis)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Stats from <code>item_mods</code> and <code>item_latents</code>; "night" means the latent is active at night. Sources from each zone's <code>mobs.yaml</code>, battlefield loot scripts, NPC scripts and <code>synth_recipes</code>.</em></p>
+<h3>Katanas</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kunai +1</strong></td>
+<td>1</td>
+<td>Main/Sub</td>
+<td>DMG 5 / Delay 185</td>
+<td>Smithing 30 HQ (Steel Ingot + Lizard Skin)</td>
+</tr>
+<tr>
+<td><strong>Shinobi-gatana +1</strong></td>
+<td>13</td>
+<td>Main/Sub</td>
+<td>DMG 12 / Delay 222</td>
+<td>Smithing 43 HQ (multi-craft)</td>
+</tr>
+<tr>
+<td><strong>Hibari +1</strong></td>
+<td>24</td>
+<td>Main/Sub</td>
+<td>DMG 14 / Delay 185</td>
+<td>Smithing 46 HQ (Tama-Hagane + Lizard Skin)</td>
+</tr>
+<tr>
+<td><strong>Fukuro</strong></td>
+<td>28</td>
+<td>Main/Sub</td>
+<td>DMG 15 / Delay 190, STR+1, AGI+1</td>
+<td>Quest <em>Faded Promises</em> (Bastok)</td>
+</tr>
+<tr>
+<td><strong>Kodachi +1</strong></td>
+<td>32</td>
+<td>Main/Sub</td>
+<td>DMG 20 / Delay 222</td>
+<td>Smithing 53 HQ (multi-craft)</td>
+</tr>
+<tr>
+<td><strong>Anju</strong></td>
+<td>40</td>
+<td>Main/Sub</td>
+<td>DMG 21 / Delay 216, STR-1, DEX+2</td>
+<td>AF1 <em>20 in Pirate Years</em></td>
+</tr>
+<tr>
+<td><strong>Zushio</strong></td>
+<td>40</td>
+<td>Main/Sub</td>
+<td>DMG 23 / Delay 238, STR+2, DEX-1</td>
+<td>AF1 <em>20 in Pirate Years</em></td>
+</tr>
+<tr>
+<td><strong>Hien +1</strong></td>
+<td>47</td>
+<td>Main/Sub</td>
+<td>DMG 22 / Delay 185</td>
+<td>Smithing 70 HQ (Darksteel Ingot + Lizard Skin)</td>
+</tr>
+<tr>
+<td><strong>Buboso</strong></td>
+<td>50</td>
+<td>Main/Sub</td>
+<td>DMG 25 / Delay 190, STR+2, DEX+2, AGI+2</td>
+<td>ENM loot, Monarch Linn (CoP)</td>
+</tr>
+<tr>
+<td><strong>Kageboshi</strong></td>
+<td>50</td>
+<td>Main/Sub</td>
+<td>DMG 24 / Delay 190</td>
+<td>BCNM50 <em>3, 2, 1...</em> (Waughroon Shrine)</td>
+</tr>
+<tr>
+<td><strong>Shinogi</strong></td>
+<td>52</td>
+<td>Main/Sub</td>
+<td>DMG 28 / Delay 227, DEX+3</td>
+<td>Nightmare Vase, Ro'Maeve (rare)</td>
+</tr>
+<tr>
+<td><strong>Hototogisu</strong></td>
+<td>55</td>
+<td>Main/Sub</td>
+<td>DMG 24 / Delay 185, Acc+3</td>
+<td>Beryl-footed Molberry NM, Temple of Uggalepih (rare)</td>
+</tr>
+<tr>
+<td><strong>Fudo</strong></td>
+<td>70</td>
+<td>Main/Sub</td>
+<td>DMG 39 / Delay 227, Crit rate +3% (this weapon)</td>
+<td>Tonberry Decapitator, Den of Rancor (rare)</td>
+</tr>
+<tr>
+<td><strong>Hayabusa +1</strong></td>
+<td>71</td>
+<td>Main/Sub</td>
+<td>DMG 29 / Delay 185, Subtle Blow+2</td>
+<td>Smithing 88 / Goldsmithing 55 HQ</td>
+</tr>
+<tr>
+<td><strong>Shusui</strong></td>
+<td>72</td>
+<td>Main/Sub</td>
+<td>DMG 37 / Delay 227, HP-20, DEX+3, Acc+5, Subtle Blow+2</td>
+<td>Tinnin NM, Wajaom Woodlands (one of a group)</td>
+</tr>
+<tr>
+<td><strong>Unji</strong></td>
+<td>72</td>
+<td>Main/Sub</td>
+<td>DMG 32 / Delay 201, STR+2, DEX+4, AGI-1, Subtle Blow+1</td>
+<td>KSNM, Chamber of Oracles (<em>Cactuar Suave</em>, <em>Eye of the Storm</em>)</td>
+</tr>
+<tr>
+<td><strong>Oninohocho</strong></td>
+<td>73</td>
+<td>Main/Sub</td>
+<td>DMG 30 / Delay 227, HP+20, Enmity+2, Eva+4</td>
+<td>Nuhn NM, Arrapago Reef</td>
+</tr>
+<tr>
+<td><strong>Kikoku</strong></td>
+<td>75</td>
+<td>Main/Sub</td>
+<td>DMG 42 / Delay 210, Atk+20</td>
+<td>Relic weapon (Dynamis)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Empress Hairpin</strong></td>
+<td>24</td>
+<td>Head</td>
+<td>HP-15, DEX+3, AGI+3, Eva+10</td>
+<td>Valkurm Emperor NM, Valkurm Dunes</td>
+</tr>
+<tr>
+<td><strong>Emperor Hairpin</strong></td>
+<td>24</td>
+<td>Head</td>
+<td>HP-15, DEX+3, AGI+3, Eva+10</td>
+<td>BCNM30 <em>Dropping like Flies</em> (Horlais Peak)</td>
+</tr>
+<tr>
+<td><strong>Voyager Sallet</strong></td>
+<td>41</td>
+<td>Head</td>
+<td>STR+3, DEX+4</td>
+<td>Carmine Dobsonfly NM, Riverne Site #A01 (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Optical Hat</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>Acc+10, R.Acc+10, Eva+10</td>
+<td>Hakutaku NM, Den of Rancor (always)</td>
+</tr>
+<tr>
+<td><strong>Hissho Hachimaki</strong></td>
+<td>71</td>
+<td>Head</td>
+<td>Atk+8, Acc+8</td>
+<td>Wulgaru NM, Alzadaal Undersea Ruins</td>
+</tr>
+<tr>
+<td><strong>Walahra Turban</strong></td>
+<td>75</td>
+<td>Head</td>
+<td>HP+30, MP+30, Haste +5%</td>
+<td>Donate 1,000 Imperial Bronze Pieces to Gajaad, Al Zahbi</td>
+</tr>
+<tr>
+<td><strong>Ninja Hatsuburi</strong></td>
+<td>56</td>
+<td>Head</td>
+<td>HP+10, CHR+5, Ninjutsu skill+5</td>
+<td>Coffer, The Boyahda Tree (AF)</td>
+</tr>
+<tr>
+<td><strong>Koga Hatsuburi</strong></td>
+<td>73</td>
+<td>Head</td>
+<td>HP+20, Ninjutsu damage+5, night: Parry skill+10</td>
+<td>Dynamis-Windurst</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spike Necklace</strong></td>
+<td>21</td>
+<td>Neck</td>
+<td>STR+3, DEX+3, MND-6</td>
+<td>Bonecraft 15 HQ (Fang Necklace)</td>
+</tr>
+<tr>
+<td><strong>Peacock Charm</strong></td>
+<td>33</td>
+<td>Neck</td>
+<td>Acc+10, R.Acc+10</td>
+<td>BCNM40 <em>Under Observation</em> (Horlais Peak)</td>
+</tr>
+<tr>
+<td><strong>Peacock Amulet</strong></td>
+<td>33</td>
+<td>Neck</td>
+<td>Acc+10, R.Acc+10</td>
+<td>Argus NM, Maze of Shakhrami</td>
+</tr>
+<tr>
+<td><strong>Spirit Torque</strong></td>
+<td>38</td>
+<td>Neck</td>
+<td>MP+10, Eva+5</td>
+<td>BCNM40 <em>Worms Turn</em> (Waughroon Shrine)</td>
+</tr>
+<tr>
+<td><strong>Chivalrous Chain</strong></td>
+<td>60</td>
+<td>Neck</td>
+<td>STR+3, Acc+5, Store TP+1</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Evasion Torque</strong></td>
+<td>65</td>
+<td>Neck</td>
+<td>HP+7, Evasion skill+7</td>
+<td>BCNM60 (Chamber of Oracles / Sacrificial Chamber)</td>
+</tr>
+<tr>
+<td><strong>Ninjutsu Torque</strong></td>
+<td>65</td>
+<td>Neck</td>
+<td>Ninjutsu skill+7</td>
+<td>BCNM60 <em>Legion XI Comitatensis</em> (Chamber of Oracles)</td>
+</tr>
+<tr>
+<td><strong>Ritter Gorget</strong></td>
+<td>70</td>
+<td>Neck</td>
+<td>HP+25, Enmity+3, Eva+5</td>
+<td>Einherjar: 15,000 Therion Ichor at Kilusha, Nashmau</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dodge Earring</strong></td>
+<td>29</td>
+<td>Ear</td>
+<td>Eva+3</td>
+<td>Ooze, Beadeaux (very rare)</td>
+</tr>
+<tr>
+<td><strong>Gold Earring +1</strong></td>
+<td>45</td>
+<td>Ear</td>
+<td>Atk-4, Eva+4</td>
+<td>Goldsmithing 57 HQ</td>
+</tr>
+<tr>
+<td><strong>Elusive Earring</strong></td>
+<td>60</td>
+<td>Ear</td>
+<td>Eva+5</td>
+<td>BCNM60 <em>Celery</em> (Qu'Bia Arena)</td>
+</tr>
+<tr>
+<td><strong>Coral Earring</strong></td>
+<td>63</td>
+<td>Ear</td>
+<td>Atk+5, Eva-5, Magic dmg taken -1%</td>
+<td>Bonecraft 83</td>
+</tr>
+<tr>
+<td><strong>Merman's Earring</strong></td>
+<td>63</td>
+<td>Ear</td>
+<td>Atk+6, Eva-4, Magic dmg taken -2%</td>
+<td>Bonecraft 83 HQ</td>
+</tr>
+<tr>
+<td><strong>Hollow Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>DEX+2, Acc+3, R.Acc+3</td>
+<td>CoP quest <em>Apocalypse Nigh</em> (pick one)</td>
+</tr>
+<tr>
+<td><strong>Ethereal Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>HP+15, Atk+5, Eva+5</td>
+<td>CoP quest <em>Apocalypse Nigh</em> (pick one)</td>
+</tr>
+<tr>
+<td><strong>Suppanomimi</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>AGI+2, Dual Wield+5</td>
+<td>Quest <em>Divine Might</em></td>
+</tr>
+<tr>
+<td><strong>Ninjutsu Earring</strong></td>
+<td>35</td>
+<td>Ear</td>
+<td>Ninjutsu skill+3</td>
+<td>ENM vision traded to Venessa, Ru'Lude Gardens</td>
+</tr>
+<tr>
+<td><strong>Moldavite Earring</strong></td>
+<td>47</td>
+<td>Ear</td>
+<td>Magic Atk Bonus+5</td>
+<td>Mysticmaker Profblix NM, Labyrinth of Onzozo</td>
+</tr>
+<tr>
+<td><strong>Novio Earring</strong></td>
+<td>75</td>
+<td>Ear</td>
+<td>Magic Atk Bonus+7</td>
+<td>Aura of Adulation (Jailer of Love) traded to Meret, Tavnazian Safehold</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Power Gi</strong></td>
+<td>13</td>
+<td>Body</td>
+<td>STR+1</td>
+<td>Quest <em>Overnight Delivery</em> (Windurst)</td>
+</tr>
+<tr>
+<td><strong>Jujitsu Gi</strong></td>
+<td>40</td>
+<td>Body</td>
+<td>Acc+4</td>
+<td>Poisonhand Gnadgad NM, Davoi</td>
+</tr>
+<tr>
+<td><strong>Brigandine +1</strong></td>
+<td>45</td>
+<td>Body</td>
+<td>HP+15, STR+1, DEX+3, VIT+3, AGI+1, INT+1, MND+1, CHR+1</td>
+<td>Goldsmithing 50 / Clothcraft 48 / Leathercraft 57 HQ</td>
+</tr>
+<tr>
+<td><strong>Scorpion Harness +1</strong></td>
+<td>57</td>
+<td>Body</td>
+<td>HP+20, Acc+12, Eva+12</td>
+<td>Leathercraft 33 / Bonecraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Haubergeon +1</strong></td>
+<td>59</td>
+<td>Body</td>
+<td>STR+6, DEX+6, AGI-5, Atk+12, Acc+12, Eva-20</td>
+<td>Smithing 69 / Clothcraft 38 HQ</td>
+</tr>
+<tr>
+<td><strong>Byrnie +1</strong></td>
+<td>60</td>
+<td>Body</td>
+<td>HP+30, STR+5, DEX-3, VIT+5, AGI-3, INT-3, MND-3, CHR-3, Atk+25</td>
+<td>Smithing 34 / Leathercraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Ninja Chainmail</strong></td>
+<td>58</td>
+<td>Body</td>
+<td>HP+15, VIT+3, Dual Wield+5</td>
+<td>AF3 <em>True Will</em></td>
+</tr>
+<tr>
+<td><strong>Assault Jerkin</strong></td>
+<td>67</td>
+<td>Body</td>
+<td>Atk+18, Acc+3</td>
+<td>Ose NM, Labyrinth of Onzozo</td>
+</tr>
+<tr>
+<td><strong>Hachiryu Haramaki</strong></td>
+<td>75</td>
+<td>Body</td>
+<td>Atk+20, Acc+20, Crit rate+5</td>
+<td>Pandemonium Warden, Aydeewa Subterrane</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ochimusha Kote</strong></td>
+<td>34</td>
+<td>Hands</td>
+<td>Atk+20, Eva-5</td>
+<td>Mee Deggi the Punisher NM, Castle Oztroja</td>
+</tr>
+<tr>
+<td><strong>Ochiudo's Kote</strong></td>
+<td>34</td>
+<td>Hands</td>
+<td>Atk+20, Eva-5</td>
+<td>BCNM60 <em>Divine Punishers</em> (Balga's Dais)</td>
+</tr>
+<tr>
+<td><strong>Storm Manopolas</strong></td>
+<td>50</td>
+<td>Hands</td>
+<td>Enmity+3, Eva+6</td>
+<td>Assault (unappraised gloves)</td>
+</tr>
+<tr>
+<td><strong>Pallas's Bracelets</strong></td>
+<td>60</td>
+<td>Hands</td>
+<td>HP+35, STR+9, DEX-5, AGI-5</td>
+<td>Pallas NM, Upper Delkfutt's Tower (rare)</td>
+</tr>
+<tr>
+<td><strong>Dusk Gloves +1</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>HP+22, Atk+6, Haste +4%</td>
+<td>Leathercraft 99 HQ</td>
+</tr>
+<tr>
+<td><strong>Rasetsu Tekko +1</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>Atk+3, Eva+11, Counter+1</td>
+<td>Smithing 45 / Clothcraft 95 / Leathercraft 43 HQ</td>
+</tr>
+<tr>
+<td><strong>Ninja Tekko</strong></td>
+<td>60</td>
+<td>Hands</td>
+<td>HP+13, DEX+3, R.Atk+20, Throwing skill+5</td>
+<td><em>Borghertz's Lurking Hands</em> (AF)</td>
+</tr>
+<tr>
+<td><strong>Hachiryu Kote</strong></td>
+<td>75</td>
+<td>Hands</td>
+<td>DEX+10, Acc+5</td>
+<td>Tyger NM, Caedarva Mire (one of a group)</td>
+</tr>
+<tr>
+<td><strong>Koga Tekko</strong></td>
+<td>75</td>
+<td>Hands</td>
+<td>Tool kept chance+20, night: STR+12, night: Haste +4%</td>
+<td>Dynamis-Xarcabard</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rajas Ring</strong></td>
+<td>30</td>
+<td>Ring</td>
+<td>STR+2, DEX+2, Store TP+5, Subtle Blow+5</td>
+<td>CoP mission 8-4 <em>Dawn</em> (pick one)</td>
+</tr>
+<tr>
+<td><strong>Sniper's Ring +1</strong></td>
+<td>40</td>
+<td>Ring</td>
+<td>Acc+7, R.Acc+7</td>
+<td>Leathercraft 90 HQ</td>
+</tr>
+<tr>
+<td><strong>Toreador's Ring</strong></td>
+<td>57</td>
+<td>Ring</td>
+<td>HP+10, Acc+7</td>
+<td>ENM vision (<em>Pulling the Plug</em>) traded to Venessa, Ru'Lude Gardens</td>
+</tr>
+<tr>
+<td><strong>Victory Ring</strong></td>
+<td>54</td>
+<td>Ring</td>
+<td>STR+4</td>
+<td>Goldsmithing 75 HQ (Sun Ring)</td>
+</tr>
+<tr>
+<td><strong>Genius Ring</strong></td>
+<td>54</td>
+<td>Ring</td>
+<td>INT+4</td>
+<td>Goldsmithing 75 HQ (Zircon Ring)</td>
+</tr>
+<tr>
+<td><strong>Wivre Ring +1</strong></td>
+<td>61</td>
+<td>Ring</td>
+<td>HP+17, Eva+3</td>
+<td>Goldsmithing 31 / Bonecraft 92 HQ</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bat Cape</strong></td>
+<td>46</td>
+<td>Back</td>
+<td>Eva+5</td>
+<td>Old Two-Wings NM, Garlaige Citadel</td>
+</tr>
+<tr>
+<td><strong>Amemet Mantle +1</strong></td>
+<td>61</td>
+<td>Back</td>
+<td>STR+2, Atk+15, R.Atk+15</td>
+<td>Leathercraft 60 HQ</td>
+</tr>
+<tr>
+<td><strong>Forager's Mantle</strong></td>
+<td>71</td>
+<td>Back</td>
+<td>STR+3, Atk+15</td>
+<td>ENM <em>Sheep in Antlion's Clothing</em> (Boneyard Gully)</td>
+</tr>
+<tr>
+<td><strong>Toreador's Cape</strong></td>
+<td>72</td>
+<td>Back</td>
+<td>Enmity+4, Eva+9</td>
+<td>Geush Urvan NM, Uleguerand Range</td>
+</tr>
+<tr>
+<td><strong>Astute Cape</strong></td>
+<td>73</td>
+<td>Back</td>
+<td>MP+25, Ninjutsu skill+5</td>
+<td>Vice of Aspersion (Ix'aern DRG) traded to Meret, Tavnazian Safehold</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tilt Belt</strong></td>
+<td>40</td>
+<td>Waist</td>
+<td>Acc+5, Eva-5</td>
+<td>BCNM40 <em>Under Observation</em> (Horlais Peak)</td>
+</tr>
+<tr>
+<td><strong>Survival Belt</strong></td>
+<td>38</td>
+<td>Waist</td>
+<td>HP+17, Eva+5</td>
+<td>BCNM40 <em>Steamed Sprouts</em> (Balga's Dais)</td>
+</tr>
+<tr>
+<td><strong>Swordbelt +1</strong></td>
+<td>43</td>
+<td>Waist</td>
+<td>Atk+12</td>
+<td>Leathercraft 71 HQ</td>
+</tr>
+<tr>
+<td><strong>Life Belt</strong></td>
+<td>48</td>
+<td>Waist</td>
+<td>Acc+10</td>
+<td>Treasure chest, Fei'Yin</td>
+</tr>
+<tr>
+<td><strong>Swift Belt</strong></td>
+<td>50</td>
+<td>Waist</td>
+<td>Atk-5, Acc+3, Haste +4%</td>
+<td>Balor / Caithleann NMs, Sacrarium</td>
+</tr>
+<tr>
+<td><strong>Speed Belt</strong></td>
+<td>55</td>
+<td>Waist</td>
+<td>Haste +6%</td>
+<td>KSNM99 <em>Early Bird Catches the Wyrm</em> (Balga's Dais)</td>
+</tr>
+<tr>
+<td><strong>Velocious Belt</strong></td>
+<td>55</td>
+<td>Waist</td>
+<td>Haste +6%</td>
+<td>King Arthro NM, Jugner Forest (rare)</td>
+</tr>
+<tr>
+<td><strong>Potent Belt</strong></td>
+<td>60</td>
+<td>Waist</td>
+<td>STR+3, Acc+8</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Sonic Belt +1</strong></td>
+<td>65</td>
+<td>Waist</td>
+<td>Haste +6%</td>
+<td>Leathercraft 85 HQ (from a Speed Belt)</td>
+</tr>
+<tr>
+<td><strong>Warwolf Belt</strong></td>
+<td>71</td>
+<td>Waist</td>
+<td>STR+5, DEX+5, VIT+5, Enmity+3</td>
+<td>BCNM / KSNM loot (several fights)</td>
+</tr>
+<tr>
+<td><strong>Scouter's Rope</strong></td>
+<td>73</td>
+<td>Waist</td>
+<td>HP-40, AGI+4, Eva+10</td>
+<td>ENM <em>Brothers</em> (Bearclaw Pinnacle)</td>
+</tr>
+<tr>
+<td><strong>Ninurta's Sash</strong></td>
+<td>75</td>
+<td>Waist</td>
+<td>Atk+6, Spell interruption −6%, Subtle Blow+6, Haste +6%</td>
+<td>Sin of Indignation (Absolute Virtue) traded to Meret</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ryl.Kgt. Breeches</strong></td>
+<td>55</td>
+<td>Legs</td>
+<td>STR+2, DEX+2, Atk+3</td>
+<td>Conquest points (San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Ninja Hakama</strong></td>
+<td>52</td>
+<td>Legs</td>
+<td>HP+15, R.Acc+10, night: Eva+10</td>
+<td>AF2 <em>I'll Take the Big Box</em></td>
+</tr>
+<tr>
+<td><strong>Koga Hakama</strong></td>
+<td>71</td>
+<td>Legs</td>
+<td>HP+40, Dual Wield+5, night: Eva+10</td>
+<td>Dynamis-San d'Oria</td>
+</tr>
+<tr>
+<td><strong>Enkidu's Subligar</strong></td>
+<td>72</td>
+<td>Legs</td>
+<td>STR+4, DEX+4, Store TP+5, Subtle Blow+5</td>
+<td>Dea NM, Bhaflau Thickets</td>
+</tr>
+<tr>
+<td><strong>Byakko's Haidate</strong></td>
+<td>75</td>
+<td>Legs</td>
+<td>DEX+15, Haste +5%</td>
+<td>Byakko, Ru'Aun Gardens</td>
+</tr>
+<tr>
+<td><strong>Hachiryu Haidate</strong></td>
+<td>75</td>
+<td>Legs</td>
+<td>STR+10, Atk+5</td>
+<td>Sarameya NM, Mount Zhayolm</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sarutobi Kyahan</strong></td>
+<td>39</td>
+<td>Feet</td>
+<td>Haste +3%</td>
+<td>Quu Domi the Gallant NM, Castle Oztroja</td>
+</tr>
+<tr>
+<td><strong>Fuma Kyahan</strong></td>
+<td>39</td>
+<td>Feet</td>
+<td>Haste +3%</td>
+<td>BCNM60 <em>Divine Punishers</em> (Balga's Dais)</td>
+</tr>
+<tr>
+<td><strong>Ninja Kyahan</strong></td>
+<td>54</td>
+<td>Feet</td>
+<td>HP+12, AGI+4, night: Movement +24%</td>
+<td>Coffer, Sea Serpent Grotto (AF)</td>
+</tr>
+<tr>
+<td><strong>Arhat's Sune-ate +1</strong></td>
+<td>63</td>
+<td>Feet</td>
+<td>Enmity+2, Eva+5</td>
+<td>Smithing 46 / Clothcraft 82 HQ</td>
+</tr>
+<tr>
+<td><strong>Fuma Sune-ate</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>HP+12, AGI+3, Haste +3%</td>
+<td>KSNM30 <em>Copycat</em> (Waughroon Shrine)</td>
+</tr>
+<tr>
+<td><strong>Dusk Ledelsens +1</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>HP+27, Atk+5, Haste +3%</td>
+<td>Leathercraft 94 HQ</td>
+</tr>
+<tr>
+<td><strong>Dance Shoes +1</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>VIT-3, CHR+4, Eva+7</td>
+<td>Clothcraft 98 HQ</td>
+</tr>
+<tr>
+<td><strong>Koga Kyahan</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>VIT+7, Ninjutsu skill+10, night: DEX+7</td>
+<td>Dynamis-Buburimu</td>
+</tr>
+</tbody>
+</table></div>
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — gear and items from other guides that you can't get here.</strong></p>
+<ul>
+<li><strong>Brutal Earring</strong> — the item exists in Phoenix's database, but no drop, shop, quest or battlefield gives it out.</li>
+<li><strong>Cuchulain's Belt / Cuchulain's Mantle</strong>, <strong>Sniper's Collar</strong> — same: in the item table, no source in the code.</li>
+<li><strong>Iga, Hachiya and Mochizuki gear</strong>, <strong>Nagi</strong> (Mythic) and every Ninja Tool Expertise piece from later eras — not in Phoenix's era content.</li>
+<li><strong>Sasuke Katana</strong> — Nyzul Isle loot. Phoenix's code ships with Nyzul <strong>off</strong> by default (<code>NYZUL_ENABLED = false</code>). The live setting isn't public, so treat it as unavailable unless you see Nyzul running.</li>
+<li><strong>Yagentoshiro / Osoraku</strong> — only listed in a gear-set bonus file. No source.</li>
+<li><strong>Ready-made toolbags</strong> (Numa) and <strong>shuriken pouches</strong> — removed by the era module (Chapter 4).</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>TP set: Haste to the 25% cap, then Accuracy, then STR/DEX.</li>
+<li>Evasion set: Empress Hairpin → Optical Hat, Scorpion Harness +1, Toreador's Cape, Scouter's Rope.</li>
+<li>The fast katana line (Hibari → Hien → Hayabusa, 185–190 delay) is the cheapest quick pair at every stage.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">LEGENDARY QUESTS (ARTIFACT ARMOR)</h2></header>
+<p><em>Five quests, three coffers and a boat ride at midnight. All of them start with Ryoma in Norg (H-8).</em></p>
+<p>Phoenix's code uses the default AF settings: AF1 at <strong>40</strong>, AF2 and AF3 at <strong>50</strong>. Ryoma checks your main job is Ninja for AF1 and AF2.</p>
+<h3>AF1 — 20 in Pirate Years (Anju + Zushio, Lv40)</h3>
+<ol>
+<li><strong>Ryoma</strong> — Norg (H-8), as a level 40+ Ninja.</li>
+<li><strong>Kagetora</strong> — Port Bastok, Warehouse 2 (F-6).</li>
+<li><strong>Ensetsu</strong> — Port Bastok (I-5). From here on you can be any job.</li>
+<li><strong>Eastern Altepa Desert (H-6)</strong> — clear the beetles, then examine the <strong>???</strong>. <strong>Two Tsuchigumo</strong> (spiders) spawn. They can't be slept.</li>
+<li>When <strong>both</strong> spider bodies have disappeared, examine the ??? again for the key item <strong>Trick Box</strong>.</li>
+<li><strong>Ryoma</strong> — keep <strong>2 inventory slots free</strong>. You get <strong>Anju</strong> and <strong>Zushio</strong>.</li>
+</ol>
+<aside class="box code">
+<p><strong>FROM THE CODE.</strong> <code>Eastern_Altepa_Desert/npcs/qm2.lua</code> spawns both Tsuchigumo and only gives the Trick Box once two have died. <code>Norg/npcs/Ryoma.lua</code> refuses the reward if you have fewer than two free slots.</p>
+</aside>
+<h3>AF2 — I'll Take the Big Box (Ninja Hakama, Lv50)</h3>
+<ol>
+<li><strong>Ryoma</strong> — as a level 50+ Ninja. If you just finished AF1, zone out and back in first.</li>
+<li><strong>Ensetsu</strong> — Port Bastok (I-5). He sends you to Mitsunari's grandson.</li>
+<li><strong>Leodarion</strong> — Rabao (F-8), on the west side of the lake near the windmill. He asks for an <strong>Oak Pole</strong>.</li>
+<li>Get an <strong>Oak Pole</strong>. On Phoenix it's sold by <strong>Coumuna in Upper Jeuno for 37,440 gil</strong>, and some woodworking guild shops stock them. (Retail guides send you to a Records of Eminence vendor; that doesn't apply here.)</li>
+<li>Trade the Oak Pole to Leodarion. Come back <strong>the next Vana'diel day</strong> for the key item <strong>Seance Staff</strong>.</li>
+<li><strong>Mhaura → Selbina ferry, at night.</strong> With the Seance Staff, <strong>Enagakure</strong> spawns on deck between <strong>20:00 and 4:00</strong> Vana'diel time. Kill it.</li>
+<li>Stay aboard until you dock in Selbina. The cutscene gives you <strong>Ninja Hakama</strong>. Keep one inventory slot free.</li>
+</ol>
+<aside class="box code">
+<p><strong>FROM THE CODE.</strong> <code>Ship_bound_for_Selbina/Zone.lua</code> spawns Enagakure only from 20:00 to 4:00, and only for a player holding the Seance Staff at the right quest step. Board a ferry that will be at sea in that window.</p>
+</aside>
+<h3>AF3 — True Will (Ninja Chainmail, Lv50+)</h3>
+<ol>
+<li><strong>Ryoma</strong> — after you finish AF2.</li>
+<li><strong>Yhoator Jungle (I-7)</strong>, northwest of Bloodlet Spring. Examine the <strong>???</strong> to spawn <strong>Kappa Akuso</strong> (MNK), <strong>Kappa Biwa</strong> (BRD) and <strong>Kappa Bonze</strong> (WHM). You only need to kill <strong>one</strong>. Many players pull one, zone into Den of Rancor and let the others despawn.</li>
+<li>When the Kappa are gone, examine the ??? again for the key item <strong>Old Trick Box</strong>.</li>
+<li><strong>Ryoma</strong> — cutscene.</li>
+<li><strong>Leodarion</strong> — Rabao. He sends you to Kuftal Tunnel.</li>
+<li><strong>Kuftal Tunnel</strong> — open a <strong>Treasure Coffer</strong> with a <strong>Kuftal Coffer Key</strong> (drops from Kuftal Tunnel mobs: Robber Crabs, Cave Worms, Recluse Spiders, Haunts and others). You get the key item <strong>Large Trick Box</strong>.</li>
+<li><strong>Leodarion</strong> — <strong>Ninja Chainmail</strong> and the title <em>Paragon of Ninja Excellence</em>.</li>
+</ol>
+<h3>Hands — Borghertz's Lurking Hands (Ninja Tekko, Lv60)</h3>
+<p>Start this with <strong>Guslam</strong> at Durable Shields, Upper Jeuno (H-8), as a <strong>level 50+ Ninja who has started AF2</strong>. You can't have another Borghertz quest active.</p>
+<ol>
+<li>Open a Treasure Coffer in <strong>Ifrit's Cauldron</strong> with a <strong>Cauldron Coffer Key</strong> (Dire Bats, Volcano Wasps, Old Opo-opos and others drop them) for the key item <strong>Old Gauntlets</strong>.</li>
+<li>If this is your <strong>first</strong> Borghertz quest, there's a longer chain: Guslam → Deadly Minnow (Upper Jeuno) → Yin Pocanakhu (Lower Jeuno) → the ??? in Port Jeuno (Borghertz) → <strong>Castle Zvahl Baileys</strong>, examine the Torch and kill <strong>Dark Spark</strong> for <strong>Shadow Flames</strong> → back to Port Jeuno's ???.</li>
+<li><strong>Guslam</strong> for your <strong>Ninja Tekko</strong>.</li>
+</ol>
+<h3>Head and feet — the coffers</h3>
+<p>Once Borghertz's Lurking Hands is started, two more coffers hold Ninja AF. <strong>You must be Ninja main</strong> when you open them.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Zone</th>
+<th>Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ninja Kyahan</strong> (54)</td>
+<td>Sea Serpent Grotto</td>
+<td>Grotto Coffer Key (Sahagin, Rock Crabs, Razorjaw Pugils and others)</td>
+</tr>
+<tr>
+<td><strong>Ninja Hatsuburi</strong> (56)</td>
+<td>The Boyahda Tree</td>
+<td>Boyahda Coffer Key (Bark Spiders, Death Caps, Moss Eaters and others)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Weapon skill — Bugi Soden (Blade: Ku)</h3>
+<p><strong>Requirements:</strong> Ninja level 71+ (to equip the Kodachi of Trials), <strong>base Katana skill 250</strong> (in practice level 72, where the A-rank cap is 254), no other weapon-skill quest active.</p>
+<ol>
+<li><strong>Ryoma</strong> gives you the <strong>Kodachi of Trials</strong> and the key item Weapon Training Guide.</li>
+<li>Use weapon skills with the Kodachi equipped until it has <strong>300 weapon skill points</strong>. When its elemental bonuses disappear from your equipment menu, it's done. The item description doesn't change.</li>
+<li>Trade the Kodachi to <strong>Ryoma</strong> for the key item <strong>Map to the Annals of Truth</strong>.</li>
+<li><strong>Labyrinth of Onzozo</strong>, lower right of <strong>(I-5)</strong>: examine the <strong>???</strong> to spawn <strong>Megapod Megalops</strong>. Kill it, examine the ??? again for <strong>Annals of Truth</strong>.</li>
+<li><strong>Ryoma</strong> — Blade: Ku learned.</li>
+</ol>
+<aside class="box code">
+<p><strong>FROM THE CODE — how many weapon skills?</strong> Phoenix's default settings give <strong>5 points per weapon skill</strong>, plus 2 / 4 / 6 more for closing a level 1 / 2 / 3 skillchain (<code>settings/default/map.lua</code>). That's 60 weapon skills at most. The code also requires the target to be at least Easy Prey. The live server's values aren't in the public repo, and other wikis list 1 point per weapon skill. If the latent is taking much longer than 60 weapon skills, the server is using lower values.</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT — level 60</strong></p>
+<ul>
+<li>Anju/Zushio (or better), Ninja Hakama, Kyahan, Hatsuburi, Chainmail, Tekko.</li>
+<li>The coffer pieces only drop for a <strong>Ninja main</strong>. Don't open them on another job.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-9"><span class="num">CHAPTER 9</span><h2 class="ch">MERITS AT 75 (ToAU RULES)</h2></header>
+<p><em>Phoenix's era module (<code>modules/era/data/merits.yaml</code>) puts the merit menus back the way they were in Treasures of Aht Urhgan.</em></p>
+<h3>Group 1 (up to 10 upgrades total, 5 per category)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>Per rank</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Subtle Blow Effect</strong></td>
+<td>+1 Subtle Blow</td>
+<td>Small. Mobs get a little less TP from your hits.</td>
+</tr>
+<tr>
+<td><strong>Katon / Hyoton / Huton / Doton / Raiton / Suiton Effect</strong></td>
+<td>+2 Magic Attack Bonus for that element</td>
+<td>Pick the one or two elements you nuke with.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Group 2 (up to 6 upgrades total, 3 per ability, costs 3/4/5 points)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>Rank 1</th>
+<th>Ranks 2–3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Katon … Suiton: San</strong></td>
+<td>Lets you learn that San spell (scroll: Norg, 125,212)</td>
+<td>+5 Magic Attack and +5 Magic Accuracy per rank, for that San only</td>
+</tr>
+<tr>
+<td><strong>Sange</strong></td>
+<td>Unlocks Sange (15-min recast)</td>
+<td>−2½ minutes recast per rank (down to 10 min)</td>
+</tr>
+<tr>
+<td><strong>Ninja Tool Expertise</strong></td>
+<td>Unlocks the trait: 5% chance to keep a tool</td>
+<td>+5% per rank (15% at rank 3)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE.</strong> The era module removes the later Yonin, Innin, Ninja Magic Accuracy and Ninja Magic Bonus merits and puts the six San spells back. The San bonus (merit value − 5) comes from <code>modules/phoenix/lua/actions/spells/ninjutsu/damage_ninjutsu.lua</code>. The tool-saving roll is in <code>battleutils.cpp</code>: Ninja Tool Expertise merits <strong>plus</strong> any "keep tool" gear (Koga Tekko +20%) go into one percentage roll.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — two common builds.</strong></p>
+<ul>
+<li><strong>The tank:</strong> Ninja Tool Expertise ×3 (15% of tools saved) + one San (for hate) + Sange ×2. Uses all 6.</li>
+<li><strong>The damage dealer:</strong> Sange ×3 (10-minute recast) + one San ×3 for your main element.</li>
+</ul>
+<p>These are suggestions, not code. Pick what matches how you play.</p>
+</aside>
+<h3>Other merits worth taking</h3>
+<ul>
+<li><strong>Combat skills:</strong> Katana first (it raises your WS damage and accuracy), then Evasion if you tank, Throwing if you use Sange.</li>
+<li><strong>Magic skills:</strong> Ninjutsu, if you want debuffs to land and San to pull ahead of Ni (Chapter 5).</li>
+<li><strong>Attributes:</strong> DEX or AGI.</li>
+<li><strong>HP:</strong> helps with everything that goes through your shadows.</li>
+</ul>
+
+<header class="band" id="chapter-10"><span class="num">CHAPTER 10</span><h2 class="ch">THE ENDGAME NINJA</h2></header>
+<p><em>At 75, Ninja has three jobs: tank what a Paladin shouldn't, deal damage, and pull.</em></p>
+<h3>Where Ninja shines on Phoenix</h3>
+<ul>
+<li><strong>Evasion tank</strong> for mobs whose damage is mostly melee: shadows block what they do best. Check the mob's TP moves first. Breath and AoE heavy mobs go through shadows and belong to a Paladin.</li>
+<li><strong>Pulling</strong> with Tonko and shuriken. No Sneak of your own, so carry Silent Oil.</li>
+<li><strong>Damage</strong> with Kikoku, Fudo or Hayabusa and Blade: Jin / Ten / Ku.</li>
+<li><strong>Dynamis</strong> — the whole Koga set and Kikoku come from here.</li>
+<li><strong>Sky gods and ToAU NMs</strong> — Byakko's Haidate, Hachiryu pieces, Optical Hat, Shusui.</li>
+</ul>
+<h3>The rules of endgame tanking</h3>
+<ol>
+<li><strong>Check the move list before you volunteer to tank.</strong> Chapter 6 shows how; the same logic applies to any NM.</li>
+<li><strong>Enmity first.</strong> Provoke on cooldown, a nuke or Hojo between Provokes, and Enmity+ gear in your evasion set (Ritter Gorget, Toreador's Cape, Storm Manopolas). Remember: every absorbed shadow costs 25 CE.</li>
+<li><strong>Recast Ni at 2 shadows</strong>, not 0.</li>
+<li><strong>Bring tools for twice as long as you expect.</strong></li>
+</ol>
+<h3>Mijin Gakure: your last word</h3>
+<ul>
+<li>Deals <strong>80% of your current HP</strong> as damage (resistable), then you die. At 75 with 1,100 HP, that's up to about 880 before resistance.</li>
+<li>You <strong>don't lose EXP</strong>, but you come back with <strong>Weakness</strong> and normal Raise HP on Phoenix.</li>
+<li>Use it to finish a mob that's about to wipe the party, while your HP is still high. At low HP it does almost nothing.</li>
+</ul>
+<aside class="box chal">
+<p><strong>SHINOBI'S CHALLENGE</strong></p>
+<ul>
+<li>Tank Crawlers' Nest from 37 to 48 without casting a single cure on yourself.</li>
+<li>Get the full Ninja AF set and Blade: Ku before 75.</li>
+<li>Collect Fudo, Hayabusa +1 and Shusui, and test which pair you like best.</li>
+</ul>
+</aside>
+
+<header class="band" id="appendix-a"><span class="num">APPENDIX A</span><h2 class="ch">MACRO CHEAT SHEET</h2></header>
+<pre><code>// Utsusemi: Ni (and Ichi as fallback)
+/ma &quot;Utsusemi: Ni&quot; &lt;me&gt;
+
+/ma &quot;Utsusemi: Ichi&quot; &lt;me&gt;
+
+// Enmity: Provoke + nuke
+/ja &quot;Provoke&quot; &lt;t&gt;
+/wait 1
+/ma &quot;Suiton: Ni&quot; &lt;t&gt;
+
+// Slow and Blind
+/ma &quot;Hojo: Ni&quot; &lt;t&gt;
+/ma &quot;Kurayami: Ni&quot; &lt;t&gt;
+
+// Weapon skill with a gear swap and back
+/equipset 2
+/ws &quot;Blade: Jin&quot; &lt;t&gt;
+/wait 2
+/equipset 1
+
+// Invisible before a pull (no Sneak: use Silent Oil)
+/ma &quot;Tonko: Ni&quot; &lt;me&gt;
+/item &quot;Silent Oil&quot; &lt;me&gt;
+</code></pre>
+<aside class="box tip">
+<p><strong>PRO TIP — check your tools.</strong> <code>/item</code> macros for "Toolbag (Shihei)" let you open a bag in one click when you run out mid-fight.</p>
+</aside>
+
+<header class="band" id="appendix-b"><span class="num">APPENDIX B</span><h2 class="ch">LEVEL-BY-LEVEL CHECKLIST</h2></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Get it</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>Tonko: Ichi</td>
+<td>Tenshodo, 2,849</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Dual Wield I</td>
+<td>Second katana</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Utsusemi: Ichi</strong></td>
+<td>Tenshodo, 13,133. Needs Member's Card</td>
+</tr>
+<tr>
+<td>15</td>
+<td>One elemental Ichi</td>
+<td>Tenshodo, 2,331</td>
+</tr>
+<tr>
+<td>19 / 23</td>
+<td>Kurayami / Hojo: Ichi</td>
+<td>Tenshodo, 2,849 each</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Hibari +1 ×2, Empress Hairpin</td>
+<td>Smithing 46 HQ; Valkurm Emperor NM</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Dual Wield II</td>
+<td></td>
+</tr>
+<tr>
+<td>27 / 30</td>
+<td>Dokumori / Jubaku: Ichi</td>
+<td>Tenshodo</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Rajas Ring (CoP)</td>
+<td>If you're doing CoP</td>
+</tr>
+<tr>
+<td>33</td>
+<td>Peacock Charm / Amulet</td>
+<td>BCNM40 or Argus NM</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Tonko: Ni</td>
+<td>Tonberry / Yagudo Assassin drop</td>
+</tr>
+<tr>
+<td>37</td>
+<td><strong>Utsusemi: Ni</strong></td>
+<td>Battlefield loot or Auction House</td>
+</tr>
+<tr>
+<td>39</td>
+<td>Sarutobi / Fuma Kyahan</td>
+<td>Haste +3%</td>
+</tr>
+<tr>
+<td>40</td>
+<td>AF1 Anju / Zushio</td>
+<td><em>20 in Pirate Years</em></td>
+</tr>
+<tr>
+<td>44 / 48</td>
+<td>Kurayami / Hojo: Ni</td>
+<td>Tonberry drops</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Dual Wield III</td>
+<td></td>
+</tr>
+<tr>
+<td>47</td>
+<td>Hien +1 ×2</td>
+<td>Smithing 70 HQ</td>
+</tr>
+<tr>
+<td>50</td>
+<td>AF2 + Borghertz</td>
+<td>Ninja Hakama, then Tekko, Kyahan, Hatsuburi</td>
+</tr>
+<tr>
+<td>50–55</td>
+<td>Swift / Speed / Velocious Belt</td>
+<td>Haste</td>
+</tr>
+<tr>
+<td>57–59</td>
+<td>Scorpion Harness +1, Haubergeon +1</td>
+<td></td>
+</tr>
+<tr>
+<td>65</td>
+<td>Dual Wield IV</td>
+<td></td>
+</tr>
+<tr>
+<td>70–72</td>
+<td>Fudo, Optical Hat, Dusk Gloves +1, Hayabusa +1</td>
+<td></td>
+</tr>
+<tr>
+<td>72</td>
+<td><strong>Bugi Soden</strong></td>
+<td>Blade: Ku</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Merits, Kikoku, Koga</td>
+<td>Chapter 9</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="appendix-c"><span class="num">APPENDIX C</span><h2 class="ch">SOURCES</h2></header>
+<ul>
+<li><strong>Phoenix server code:</strong> github.com/phoenixffxi/Phoenix (commit 6d5a84d, 2026-11-12), with the modules loaded by <code>modules/init.txt</code> (era data, era SQL for RoV/Abyssea/SoA/WotG, Phoenix overrides).</li>
+<li>Spells: <code>sql/spell_list.sql</code> + <code>modules/era/sql/*/spell_adjustments.sql</code>, <code>scripts/globals/spells/enhancing_ninjutsu.lua</code>, <code>damage_spell.lua</code>, <code>enfeebling_spell.lua</code>, Phoenix's <code>damage_ninjutsu.lua</code> and <code>enhancing_ninjutsu.lua</code>.</li>
+<li>Abilities, traits, merits: <code>sql/abilities.sql</code>, <code>sql/traits.sql</code>, <code>data/merits.yaml</code>, <code>modules/era/data/merits.yaml</code>, <code>modules/era/sql/*/job_adjustments.sql</code>, <code>modules/era/lua/globals/job_utils/ninja.lua</code>.</li>
+<li>Shadows and delay: <code>scripts/globals/mobskills.lua</code>, <code>scripts/utils/combat_utils.lua</code>, <code>src/map/utils/battleutils.cpp</code>, <code>src/map/entities/battle_entity.cpp</code>.</li>
+<li>Weapon skills: <code>data/weapon_skills.yaml</code>, <code>modules/era/data/weapon_skills.yaml</code>, <code>modules/era/lua/actions/weaponskills/katana.lua</code>.</li>
+<li>Items, drops, vendors: <code>sql/item_*.sql</code>, <code>data/zones/*/mobs.yaml</code>, battlefield loot scripts, NPC scripts, <code>sql/synth_recipes.sql</code>.</li>
+<li>Quests: <code>scripts/quests/bastok/Ayame_and_Kaede.lua</code>, <code>scripts/quests/outlands/Ill_Take_the_Big_Box.lua</code>, <code>scripts/quests/outlands/Bugi_Soden.lua</code>, <code>scripts/quests/jeuno/Borghertzs_Lurking_Hands.lua</code>, <code>scripts/zones/Norg/npcs/Ryoma.lua</code>, <code>scripts/zones/Rabao/npcs/Leodarion.lua</code>.</li>
+<li><strong>Quest walkthroughs checked against:</strong> <a href="https://www.bg-wiki.com/ffxi/Ayame_and_Kaede">BG Wiki — Ayame and Kaede</a>, <a href="https://www.bg-wiki.com/bg/20_in_Pirate_Years">BG Wiki — 20 in Pirate Years</a>, <a href="https://www.bg-wiki.com/ffxi/I%27ll_Take_the_Big_Box">BG Wiki — I'll Take the Big Box</a>, <a href="https://www.bg-wiki.com/ffxi/True_Will">BG Wiki — True Will</a>, <a href="https://www.bg-wiki.com/bg/Borghertz%27s_Lurking_Hands">BG Wiki — Borghertz's Lurking Hands</a>, <a href="https://www.bg-wiki.com/ffxi/Tenshodo_Membership">BG Wiki — Tenshodo Membership</a>, <a href="https://horizonffxi.wiki/Bugi_Soden">HorizonXI Wiki — Bugi Soden</a>, <a href="https://ffxi.allakhazam.com/wiki/FFXI_Quest:20_in_Pirate_Years_-_NIN_AF1">Allakhazam — 20 in Pirate Years</a>.</li>
+<li><strong>Camps:</strong> the project's leveling-camps guide.</li>
+</ul>
+</main></body></html>
