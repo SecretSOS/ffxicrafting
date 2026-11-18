@@ -1,7 +1,7 @@
 /* nav.js — site chrome: SVG icons, top-bar, guild-bar, sidebar, footer, clock.
    Loaded synchronously in <head>. Call initChrome() after placeholder elements exist. */
 
-(function(){try{var t=localStorage.getItem('phoenix-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
+(function(){try{var t=localStorage.getItem('phoenix-theme');if(t==='harvest'){t='dark';localStorage.setItem('phoenix-theme',t)}if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();
 
 var _SVG='<svg style="display:none" aria-hidden="true">'
 +' <symbol id="i-wood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17l7-7 3 3-7 7z"/><path d="M11 10l3-3 3 3-3 3z"/><path d="M14 7l2-3 4 4-3 2"/></symbol>'
@@ -148,11 +148,9 @@ function initChrome(){
  var isFC=p==='/guides/fishing-cooking';
  var isF101=p==='/guides/fishing-101';
  var isFLvl=p==='/guides/fishing-leveling';
- var isGuide=isFC||isF101||isFLvl;
+ var isJob=p.indexOf('/guides/jobs')===0;
+ var isGuide=isFC||isF101||isFLvl||isJob;
  var isCrafts=/^\/crafts/.test(p);
- var isRegional=p==='/regional-merchants';
- var isHarvest=p==='/harvest-festival';
- var isHoliday=isHarvest;
 
  // === TOP BAR ===
  var tb=document.getElementById('topBar');
@@ -175,9 +173,11 @@ function initChrome(){
   guides+='<a href="/guides/fishing-cooking"'+acl(isFC)+'>Fishing + Cooking</a>';
   guides+='<a href="/guides/fishing-101"'+acl(isF101)+'>Fishing 101</a>';
   guides+='<a href="/guides/fishing-leveling"'+acl(isFLvl)+'>Fishing Leveling 1-85</a>';
+  guides+='<span class="nav-dd-sep"></span>';
+  guides+='<a href="/guides/jobs/beastmaster"'+acl(p==='/guides/jobs/beastmaster')+'>Beastmaster</a>';
+  guides+='<a href="/guides/jobs/white-mage"'+acl(p==='/guides/jobs/white-mage')+'>White Mage</a>';
+  guides+='<a href="/guides/jobs/ninja"'+acl(p==='/guides/jobs/ninja')+'>Ninja</a>';
   guides+='</div></div>';
-
-  var holidays='<a href="/harvest-festival" class="nav-link'+ac(isHarvest)+'">Harvest Festival</a>';
 
   var craftsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isCrafts)+'">Crafts <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
   craftsDD+='<a href="/crafts"'+acl(p==='/crafts')+'>All Crafts</a>';
@@ -198,8 +198,7 @@ function initChrome(){
    '<div class="nav-links">'+toolsDD+gdd+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
-   '<a href="/regional-merchants" class="nav-link'+ac(isRegional)+'">Regional</a>'+
-   guides+holidays+
+   guides+
    '</div>';
  }
 
@@ -253,8 +252,7 @@ function initChrome(){
     ['/bcnm/profit','BCNM Profit Ranker','bcnm'],
     ['/fishing','Fishing Codex','fish'],
     ['/vendors','Vendor Directory','shop'],
-    ['/gathering/gardening','Gardening Lookup','garden'],
-    ['/regional-merchants','Regional Merchants','regional']
+    ['/gathering/gardening','Gardening Lookup','garden']
    ];
    var sh='<div class="sb-search"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>';
    sh+='<div class="sb-section"><div class="sb-heading" style="font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Tools</div>';
@@ -308,8 +306,8 @@ function initChrome(){
   var themeBtn=document.getElementById('themeBtn');
   var themeMode=document.getElementById('themeMode');
   if(themeBtn){
-   var _tNames={dark:'Dark',light:'Light',harvest:'Harvest'};
-   var _tOrder=['dark','light','harvest'];
+   var _tNames={dark:'Dark',light:'Light',xmas:'Christmas'};
+   var _tOrder=['dark','light','xmas'];
    var _curTheme=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
    if(themeMode) themeMode.textContent=_tNames[_curTheme]||'Dark';
    themeBtn.addEventListener('click',function(){

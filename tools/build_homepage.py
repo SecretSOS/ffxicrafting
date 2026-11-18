@@ -120,9 +120,9 @@ BODY = '''\
     <h3>BCNMs</h3>
     <p>61 orb fights &mdash; loot tables, crate rolls, seal costs.</p>
    </a>
-   <a class="data-card" href="/guides/fishing-cooking">
-    <h3>Guides</h3>
-    <p>Skill-up routes, gil-making strats, server-specific notes.</p>
+   <a class="data-card" href="/guides/jobs/beastmaster">
+    <h3>Job Guides</h3>
+    <p>Beastmaster, White Mage, Ninja &mdash; leveling, gear, and strategies.</p>
    </a>
   </div>
   <div class="source-note">

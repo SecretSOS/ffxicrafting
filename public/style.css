@@ -35,17 +35,19 @@
  --fire:#c2432a;--ice:#1f7fae;--wind:#2d8a54;--earth:#8a6a2a;--lightning:#6b45b0;--water:#1c69b8;--light:#9a8536;--dark:#6a4a96;
  --wood:#6b4f2c;--smith:#5b6474;--gold:#a1791d;--cloth:#9c5d87;--leather:#8a5526;--bone:#8d8265;--alchemy:#2f7f63;--cook:#b05c34;--fish:#1c7fa8}
 
-/* --- Harvest theme (Autumn Hearth — warm brown + purple undertone) --- */
-:root[data-theme="harvest"]{
- --bg:#1a1316;--surface:#231a20;--surface-2:#2c2228;--border:#44343e;--frame:#584a52;
- --ink:#f2ebe0;--ink-soft:#d8cbb8;--ink-faint:#9a8a74;--link:#c89868;
- --accent:#d87030;--accent-soft:#2e1c0e;--gain:#6abb7a;--loss:#d04838;--best:#6abb7a;
- --fire:#e05a3a;--ice:#7ab0d0;--wind:#6aae80;--earth:#c49a50;--lightning:#b88ae0;--water:#5a90c8;--light:#e0d0a0;--dark:#9878b8;
- --wood:#8a6a38;--smith:#8a8e98;--gold:#d4a040;--cloth:#c080a0;--leather:#a87030;--bone:#d0c4a8;--alchemy:#68b090;--cook:#d08058;--fish:#4890a8;
- --panel-top:#2c2228;--panel-bot:#231a20;--rule:#44343e;--gil:#d87030;--sidebar-bg:#231a20}
-:root[data-theme="harvest"] .top-bar .logo::before{content:'\1F383';margin-right:6px;font-size:.9em}
-:root[data-theme="harvest"] .top-bar{border-bottom-color:#3a2218}
-:root[data-theme="harvest"] .cg-bar{border-bottom-color:#301c12}
+/* --- Christmas theme (Starlight Celebration — deep green + red + gold) --- */
+:root[data-theme="xmas"]{
+ --bg:#0d1a12;--surface:#142018;--surface-2:#1c2a20;--border:#2e4a38;--frame:#3a5a44;
+ --ink:#e8f0e8;--ink-soft:#c0d4c0;--ink-faint:#7a9a7a;--link:#6abe82;
+ --accent:#c0392b;--accent-soft:#2a0e0e;--gain:#6abb7a;--loss:#d04838;--best:#6abb7a;
+ --fire:#d44;--ice:#7ab0d0;--wind:#6aae80;--earth:#c49a50;--lightning:#b88ae0;--water:#5a90c8;--light:#e0d0a0;--dark:#9878b8;
+ --wood:#6a8a38;--smith:#8a8e98;--gold:#d4a040;--cloth:#c080a0;--leather:#a87030;--bone:#d0c4a8;--alchemy:#68b090;--cook:#d08058;--fish:#4890a8;
+ --panel-top:#1c2a20;--panel-bot:#142018;--rule:#2e4a38;--gil:#d4a040;--sidebar-bg:#142018}
+:root[data-theme="xmas"] .top-bar .logo::before{content:'\1F384';margin-right:6px;font-size:.9em}
+:root[data-theme="xmas"] .top-bar{border-bottom-color:#1a3020;background:linear-gradient(180deg,#1a2e1e,#142018)}
+:root[data-theme="xmas"] .cg-bar{border-bottom-color:#162a1a}
+:root[data-theme="xmas"] .sb-donate-btn{background:#c0392b;color:#fff}
+:root[data-theme="xmas"] .sb-donate-btn:hover{background:#a33025}
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:inherit}
@@ -437,6 +439,7 @@ li{margin-bottom:.4em}
 .nav-dd-menu a:hover{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--ink)}
 .nav-dd-menu a.active{color:var(--accent)}
 .nav-dd-all{font-weight:700;border-bottom:1px solid var(--border)!important;margin-bottom:2px}
+.nav-dd-sep{display:block;height:1px;background:var(--border);margin:4px 14px}
 
 /* --- Sidebar layout grid --- */
 .site-layout{display:grid;grid-template-columns:210px 1fr;gap:28px;max-width:1600px;width:92%;margin:0 auto;padding:0 16px;align-items:start}

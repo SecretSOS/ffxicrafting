@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-18",
+    "title": "Job Guides & Christmas theme",
+    "desc": "Added Job Guides section (Beastmaster, White Mage, Ninja) to navigation. New Christmas theme in the theme toggle. Removed Harvest Festival until next year.",
+    "tags": ["site", "guides"]
+  },
+  {
     "date": "2026-11-17",
     "title": "CDN optimization: versioned assets & caching",
     "desc": "Versioned JS/CSS with content hashes for immutable caching. Bundled 7 scripts into 1 bundle + 3 inlined, cutting per-page requests roughly in half. Added cache headers for static assets, sprites, and data files.",

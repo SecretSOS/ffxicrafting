@@ -1,0 +1,4224 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>White Mage Healer's Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#20263a;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+.cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}
+.cover:after{content:"WHM";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}
+.cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}
+.cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}
+.cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}
+h1.mast{display:none}
+main>h2:first-of-type{display:none}
+h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+p,li{max-width:72ch}
+em{color:var(--muted)}
+.band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}
+.band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}
+.band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}
+.band+p em{font-size:17px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}
+.toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}
+.toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.toc a:hover,.toc a:focus{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}
+td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}
+tr:nth-child(even) td{background:#f6f8fa}
+code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}
+pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}
+pre code{background:none;color:inherit;padding:0}
+.box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}
+.box p{margin:4px 0}.box ul{margin:6px 0;padding-left:20px}
+.box>p:first-child strong:first-child,.box>ul:first-child{}
+.box strong:first-child{color:var(--c);letter-spacing:.06em}
+.tip{--c:var(--tip)}.warn{--c:var(--warn)}.gil{--c:var(--gil)}.code{--c:var(--code);background:#f5f2fc}.chal{--c:var(--chal)}.check{--c:var(--check)}
+.recap{--c:var(--ink);background:var(--ink);color:#fff}.recap strong:first-child{color:var(--gold)!important}
+.legend{--c:var(--gold);background:#fffaf0}.legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.legend li strong{color:var(--ink)!important}
+.st{color:var(--accent)}.st.off{color:var(--rule)}
+.q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}
+.ok{color:#15803d;font-weight:800;font-size:1.15em}
+.edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}
+.edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}
+.fx{font-size:1.35em;line-height:1;white-space:nowrap}
+.curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.curechart svg{width:100%;height:auto;display:block}
+.curechart .bn{fill:#0f766e}.curechart .bo{fill:#d9a521}
+.curechart .cl{font:600 13px var(--body);fill:var(--ink)}
+.curechart .cv{font:600 12px var(--mono);fill:var(--ink)}
+.curechart .ct{font:11px var(--mono);fill:var(--muted)}
+.curechart .gl{stroke:var(--rule);stroke-width:1}
+.curechart .lg{font:600 12px var(--body);fill:var(--ink)}
+.curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}
+details summary{cursor:pointer;font-weight:600}
+.foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.foodchain svg{width:100%;height:auto;display:block}
+.foodchain .fp{font-size:14px}
+.foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}
+.foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}
+.foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}
+.foodchain .fa{stroke:#d9381e;stroke-width:3}
+.foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}
+.foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.set-buff{--s:#6d28d9}.set-cure{--s:#0f766e}.set-idle{--s:#1d4ed8}.set-rest{--s:#475569}
+.set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}
+.sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}
+.sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}
+.setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}
+.seticon{font-size:26px;line-height:1}
+.settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.set .tw{border-color:var(--s)}.set th{background:var(--s)}
+.set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}
+.fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.fstep b{font-size:22px;line-height:1}.fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}
+.fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}
+.fstep small{font-size:12px;opacity:.9}
+.fstep:hover,.fstep:focus-visible{filter:brightness(1.1)}
+@media (max-width:700px){.flow{grid-template-columns:1fr 1fr;gap:6px}.fstep,.fstep:first-child{clip-path:none}}
+@media (max-width:520px){.band,.cover{margin-left:-16px;margin-right:-16px}main{padding:0 16px 60px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>White Mage</h1><p>The complete healer's codex: every spell and where to buy it, cure and buff math straight from the server code, a status-ailment atlas for every classic camp, four gear sets, AF and merits.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">WHITE MAGE</h1>
+<h2>The Complete Healer's Codex — Phoenix Edition</h2>
+<p><em>Everyone wants a White Mage. Nobody wants to be the reason the White Mage died.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE WHITE MAGE</a><a href="#chapter-2">CHAPTER 2 · BECOMING A WHITE MAGE</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE GRIMOIRE (EVERY SPELL, EVERY SCROLL)</a><a href="#chapter-5">CHAPTER 5 · HEALING, DECODED</a><a href="#chapter-6">CHAPTER 6 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · LEGENDARY QUESTS (ARTIFACT ARMOR)</a><a href="#chapter-9">CHAPTER 9 · MERITS AT 75 (ToAU RULES)</a><a href="#chapter-10">CHAPTER 10 · THE ENDGAME HEALER</a><a href="#chapter-11">CHAPTER 11 · MOST WANTED (WHM GEAR FROM NMs)</a><a href="#appendix-a">APPENDIX A · MACRO CHEAT SHEET</a><a href="#appendix-b">APPENDIX B · LEVEL-BY-LEVEL CHECKLIST</a><a href="#appendix-c">APPENDIX C · SOURCES</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most White Mage guides on the web were written for the game after 2008: Afflatus Solace, Esuna, Cura, Sacrifice, level 99 and gear with Cure Potency on every slot. <strong>None of that exists on Phoenix.</strong> This guide uses Phoenix's own server code (github.com/phoenixffxi/Phoenix) with the era-revert modules applied. Every spell level, MP cost, scroll price, gear stat and drop in here came out of that code. Quest walkthroughs were checked against BG Wiki and FFXIclopedia, because the server code can't tell you what an NPC says or where to stand.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves you MP, time or a party</li>
+<li><strong>WARNING</strong> — a common way to wipe or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>HEALER'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — one thing this guide can't settle from the code.</strong> Phoenix's code ships with <strong>two</strong> single-target cure formulas: the modern one (2012 onward) and the era one. Which one the live server uses is a setting that isn't in the public repository. Chapter 5 gives both and a 30-second in-game test that tells you which one you're on.</p>
+</aside>
+
+<h2>WHM AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Main healer, raiser, status-fixer, buffer, teleport taxi</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> — invited everywhere, 12 to 75</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — slow but safe; undead are your friend</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — Teleports and Raises sell; you don't farm well</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — easy to start, hard to master (MP and hate)</td>
+</tr>
+<tr>
+<td><strong>Main weapons</strong></td>
+<td>Club (B+), Staff (C+) — mostly for stats, not swinging</td>
+</tr>
+<tr>
+<td><strong>Key stats</strong></td>
+<td>MND (cure and buff power), MP, Enmity−</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Low until 50. Spikes at 68–72 (Noble's, Blessed, Errant/Mahatma)</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE WHITE MAGE</h2></header>
+<p><em>You won't top the damage meter or get many thank-yous. But the party only gets to keep pulling for as long as you can.</em></p>
+<p>On Phoenix a WHM does four jobs, in this order of importance:</p>
+<ol>
+<li><strong>Keep the tank alive</strong> with single-target cures sized to the damage, without pulling hate off them.</li>
+<li><strong>Fix status ailments</strong> before they spread: Poisona, Paralyna, Silena, Stona, Erase.</li>
+<li><strong>Raise the dead</strong> and keep yourself Reraised at endgame.</li>
+<li><strong>Buff</strong> — Protectra, Shellra, Haste, Regen, Bar-spells — and <strong>move people</strong> with Teleports.</li>
+</ol>
+<h3>Job abilities on Phoenix (era-reverted)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>What it does on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Benediction</strong> (2-hour)</td>
+<td>2:00:00</td>
+<td>Heals everyone nearby to full (target's max HP × your level ÷ their level) and strips most debuffs. 33% chance to remove Doom.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Divine Seal</strong></td>
+<td>10:00</td>
+<td>Your next Cure or Curaga within 60 seconds heals <strong>×2</strong>. Any spell you finish casting uses it up, so cast the cure next. Merits cut the recast 20 seconds per rank.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Martyr</strong> (merit)</td>
+<td>20:00</td>
+<td>You lose 25% of your current HP; the target gets <strong>twice that</strong> back. Range is only <strong>6 yalms</strong> (era). Each extra merit cuts 2.5 minutes.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Devotion</strong> (merit)</td>
+<td>20:00</td>
+<td>You lose 25% of your current HP; the target gets the same amount back as <strong>MP</strong>. Each extra merit cuts 2.5 minutes.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the era overrides.</strong> Phoenix's era module sets the 2-hour back to 2 hours (<code>revert_two_hours.sql</code>), Martyr and Devotion back to a 20-minute recast and Martyr's range back to 6 yalms (<code>job_adjustments.sql</code>). It also removes the modern merit bonuses: on Phoenix, extra Martyr/Devotion merits only shorten the recast (<code>white_mage.lua</code>).</p>
+</aside>
+<h3>Job traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Value on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 / 30 / 50 / 70</td>
+<td>Magic Defense Bonus I–IV</td>
+<td>+10 / +12 / +14 / +16</td>
+</tr>
+<tr>
+<td>20 / 35 / 50 / 65</td>
+<td>Clear Mind I–IV</td>
+<td>+3 / +6 / +9 / +12 MP per resting tick. At 50+ your resting ticks also grow twice as fast.</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Auto Regen</td>
+<td>+1 HP every 3 seconds</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Divine Veil</td>
+<td>Listed in the trait table, but <strong>no code uses it</strong>. Don't count on −na spells spreading to the party.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — resting MP.</strong> Each resting tick gives <code>12 + (tick − 2) × (1 + Clear Mind bonus) + MP-while-healing gear</code>. That's why Clear Mind and "Healing MP" gear (Pilgrim's Wand, Qiqirn Sash, Dark Staff) are worth more than raw MP while leveling (<code>effects/healing.lua</code>).</p>
+</aside>
+<h3>What's NOT on Phoenix</h3>
+<aside class="box warn">
+<p><strong>WARNING — skip these sections of any modern guide.</strong> Phoenix runs pre-Wings of the Goddess, and the server switches off content by expansion tag.</p>
+<ul>
+<li><strong>Afflatus Solace / Afflatus Misery</strong> — tagged WotG. Not on Phoenix.</li>
+<li><strong>Esuna, Sacrifice, Cura, Repose, Auspice</strong> and the <strong>Recall</strong> spells — tagged WotG.</li>
+<li><strong>Cure VI, Curaga V, Regen IV, Protect V / Shell V (single), Holy II, Arise, Boost-stat spells, Divine Caress, Sacrosanctity, Asylum</strong> — post-75 content.</li>
+<li><strong>Animus Solace / Animus Misery</strong> merits — removed by the era module. Your group-2 merits are Martyr, Devotion, Protectra V and Shellra V.</li>
+<li><strong>/SCH and /DNC</strong> subjobs — those jobs don't exist yet.</li>
+</ul>
+</aside>
+<h3>Base stats at 75 by race (WHM75 / BLM37, no gear)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>HP</th>
+<th>MP</th>
+<th>MND</th>
+<th>VIT</th>
+<th>Cure V (modern / era formula)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>992</td>
+<td>652</td>
+<td>69</td>
+<td>61</td>
+<td>650 / 626</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>1083</td>
+<td>576</td>
+<td>74</td>
+<td>64</td>
+<td>651 / 635</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>796</td>
+<td>835</td>
+<td>66</td>
+<td>58</td>
+<td>649 / 620</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>992</td>
+<td>652</td>
+<td>66</td>
+<td>58</td>
+<td>649 / 620</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>1204</td>
+<td>453</td>
+<td>69</td>
+<td>68</td>
+<td>650 / 630</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — race matters less than you'd think.</strong> At 75 the gap between the best and worst race is about 3 HP on a Cure V (15 under the era formula). Tarutaru get 380 more MP than Galka, and that matters far more. Elvaan have the highest MND and the second-highest HP, so they're the sturdiest healers, but have the second-lowest MP pool. Plan on MP gear (Chapter 7 lists each race's MP pieces).</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Your job is the tank's HP bar, then status, then raises, then buffs.</li>
+<li>Divine Seal doubles the next Cure/Curaga. That's your emergency button every 10 minutes.</li>
+<li>No Afflatus, no Esuna, no Cura. If a guide mentions them, it isn't about Phoenix.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A WHITE MAGE</h2></header>
+<p><em>WHM is a starting job. You can pick it at character creation, or change to it at any Moogle.</em></p>
+<h3>Your first shopping list (levels 1–20)</h3>
+<p>You start with <strong>Cure</strong>. Buy the rest from the white-magic scroll vendors in the three nations: Regine (Port San d'Oria), Kususu (Port Windurst), Sororo (Bastok Markets). For the -ra Bar-spells, go to Hasim or Susu in Lower Jeuno.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Buy at</th>
+<th>Spells</th>
+<th>Total gil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lv 1–9</td>
+<td>Cure (have it), Dia 91, Banish 156, Poisona 200, Protect 244, Paralyna 360</td>
+<td>~1,050</td>
+</tr>
+<tr>
+<td>Lv 11–17</td>
+<td><strong>Cure II</strong> 650, Slow 930, Blindna 1,100, <strong>Curaga</strong> 1,515, <strong>Shell</strong> 1,760</td>
+<td>~6,000</td>
+</tr>
+<tr>
+<td>Lv 18–21</td>
+<td>Blink 2,330, Silena 2,330, <strong>Cure III</strong> 3,624 (Selbina/Windurst Waters), <strong>Regen</strong> 4,320 (Mhaura)</td>
+<td>~12,600</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — conquest-locked scrolls.</strong> The nation vendors use conquest standings. Some scrolls only show up when that nation is ranked 1st or 2nd that week, and a few (Slow, Diaga, Stoneskin) only for <strong>that nation's citizens while it's 1st</strong>. In the spell table in Chapter 4, ² means "nation 1st or 2nd" and ¹ means "your nation 1st". If a scroll is missing, check another nation's vendor or come back after the weekly tally.</p>
+</aside>
+<h3>Levels 1–11: solo first</h3>
+<p>There's no real party camp before 11 (see the project's leveling-camps guide). Solo on easy and decent-challenge mobs outside your starting city with a club, Dia and Banish. Cure yourself between fights and rest a lot.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — undead are WHM food.</strong> Cure spells <strong>damage</strong> undead instead of healing them (<code>cure.lua</code> calls the damage path on undead). Banish and Holy are Light-element. If your party is short a damage dealer around undead (Bones, Ghouls, Skeletons), your nukes actually matter there.</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT — level 11</strong></p>
+<ul>
+<li>Cure II, Protect, Poisona, Paralyna, Dia, Banish learned.</li>
+<li>Signet up before every outing (bonus XP, faster resting).</li>
+<li>About 1,000 gil left over for Shell and Curaga at 16–17.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>At 75 your subjob is level 37. Here's what each one gives you at that point. Everything comes from Phoenix's trait and spell tables.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>What you get at sub 37</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/BLM</strong></td>
+<td><strong>Conserve MP</strong> (sub 20), Elemental Seal (15), Warp (17), Escape (29), Drain (12), Aspir (25), Sleep/Sleepga/Bind, the biggest MP sub</td>
+<td><strong>Default for parties and most endgame.</strong> Conserve MP gives each cast a chance to cost less. Warp and Escape get you home.</td>
+</tr>
+<tr>
+<td><strong>/RDM</strong></td>
+<td><strong>Fast Cast 15%</strong> (35), Dispel (32), Phalanx (33), Gravity, Sleep, MDB</td>
+<td>Long fights where cast speed and Dispel matter. Cheaper MP sub than BLM.</td>
+</tr>
+<tr>
+<td><strong>/NIN</strong></td>
+<td><strong>Utsusemi: Ni</strong> at sub 37 (Ichi at 12), Dual Wield 25</td>
+<td>Duo and solo work, Besieged, any time you're the one getting hit. Very low MP.</td>
+</tr>
+<tr>
+<td><strong>/SMN</strong></td>
+<td>Auto Refresh (25), Max MP Boost, avatars at low level</td>
+<td>Phoenix's code gives SMN subjob Auto Refresh at 25 with no expansion tag. I couldn't confirm that's era-accurate. Check for the Refresh icon before you rely on it.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — /BLM by default.</strong> The BLM MP pool plus Conserve MP's chance to save MP keep you casting longer than anything else on this list. Switch to /RDM when cast speed matters more than MP: Fast Cast 15% gets cures out faster, and Dispel can strip a mob's buffs. Use /NIN when you'll be taking hits yourself.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — subjob level cap.</strong> Your subjob is half your main level (rounded down). Utsusemi: Ni needs <strong>WHM74</strong>, Dispel needs <strong>WHM64</strong>, Escape needs <strong>WHM58</strong>.</p>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE GRIMOIRE (EVERY SPELL, EVERY SCROLL)</h2></header>
+<p><em>All 80-odd White Mage spells you can learn on Phoenix by 75, with level, MP, cast time, recast and where the scroll comes from. Prices are base vendor prices; your fame shifts them a little.</em></p>
+<p><strong>How to read the "Where" column:</strong> a city name means a vendor sells it there. ² = only when that nation ranks 1st or 2nd in conquest. ¹ = only for citizens of that nation, only while it ranks 1st. "Loot" means the scroll is in a battlefield's prize pool (BCNM30 = Sky Orb, BCNM40 = Star Orb, BCNM50 = Comet Orb, BCNM60 = Moon Orb, KSNM30 = Clotho/Lachesis/Atropos Orb). "Drop" lists the two lowest-level mobs that drop it.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Spell</th>
+<th>School</th>
+<th>MP</th>
+<th>Cast</th>
+<th>Recast</th>
+<th>Where to get the scroll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Cure</strong></td>
+<td>Healing</td>
+<td>8</td>
+<td>2s</td>
+<td>5s</td>
+<td>Port San d'Oria 67; Port Windurst 67; Bastok Markets 68</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Dia</strong></td>
+<td>Enfeebling</td>
+<td>7</td>
+<td>1s</td>
+<td>5s</td>
+<td>Bastok Markets 91; Port San d'Oria 92; Port Windurst 92</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Paralyze</strong></td>
+<td>Enfeebling</td>
+<td>6</td>
+<td>3s</td>
+<td>10s</td>
+<td>drop: Goblin Leecher (Inner Horutoto Ruins) rare; Goblin Leecher (Dangruf Wadi) rare</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Banish</strong></td>
+<td>Divine</td>
+<td>15</td>
+<td>2s</td>
+<td>15s</td>
+<td>Bastok Markets 156 ²; Port San d'Oria 156 ²; Port Windurst 156 ²</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Barstonra</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>0.5s</td>
+<td>10s</td>
+<td>Lower Jeuno 156</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Poisona</strong></td>
+<td>Healing</td>
+<td>8</td>
+<td>1s</td>
+<td>5s</td>
+<td>Bastok Markets 200; Port San d'Oria 200; Port Windurst 200</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Barsleepra</strong></td>
+<td>Enhancing</td>
+<td>14</td>
+<td>5s</td>
+<td>10s</td>
+<td>Lower Jeuno 244</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Protect</strong></td>
+<td>Enhancing</td>
+<td>9</td>
+<td>1s</td>
+<td>5s</td>
+<td>Bastok Markets 244; Port San d'Oria 244; Port Windurst 244</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Protectra</strong></td>
+<td>Enhancing</td>
+<td>9</td>
+<td>3s</td>
+<td>15s</td>
+<td>drop: Goblin Leecher (Inner Horutoto Ruins) rare; Goblin Leecher (Dangruf Wadi) rare</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Barwatera</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>0.5s</td>
+<td>10s</td>
+<td>Lower Jeuno 360</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Paralyna</strong></td>
+<td>Healing</td>
+<td>12</td>
+<td>1s</td>
+<td>5s</td>
+<td>Bastok Markets 360; Port San d'Oria 360; Port Windurst 360</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Barpoisonra</strong></td>
+<td>Enhancing</td>
+<td>18</td>
+<td>5s</td>
+<td>10s</td>
+<td>Lower Jeuno 400</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Cure II</strong></td>
+<td>Healing</td>
+<td>24</td>
+<td>2.25s</td>
+<td>5.5s</td>
+<td>Bastok Markets 650 ²; Port San d'Oria 650 ²; Port Windurst 650 ²</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Barparalyzra</strong></td>
+<td>Enhancing</td>
+<td>22</td>
+<td>5s</td>
+<td>10s</td>
+<td>no vendor, drop or loot source in Phoenix's code</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Baraera</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>0.5s</td>
+<td>10s</td>
+<td>Lower Jeuno 930</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Slow</strong></td>
+<td>Enfeebling</td>
+<td>15</td>
+<td>2s</td>
+<td>20s</td>
+<td>Bastok Markets 921 ¹; Port San d'Oria 930 ¹; Port Windurst 930 ¹</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Blindna</strong></td>
+<td>Healing</td>
+<td>16</td>
+<td>3s</td>
+<td>10s</td>
+<td>Bastok Markets 1,100; Port San d'Oria 1,100; Port Windurst 1,100</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Banishga</strong></td>
+<td>Divine</td>
+<td>41</td>
+<td>2.75s</td>
+<td>15s</td>
+<td>Bastok Markets 1,295 ²; Port San d'Oria 1,295 ²; Port Windurst 1,295 ²</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Deodorize</strong></td>
+<td>Enhancing</td>
+<td>10</td>
+<td>2s</td>
+<td>8s</td>
+<td>Mhaura 1,295; Selbina 1,295</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Silence</strong></td>
+<td>Enfeebling</td>
+<td>16</td>
+<td>3s</td>
+<td>10s</td>
+<td>drop: Goblin Leecher (Inner Horutoto Ruins) rare; Goblin Leecher (Dangruf Wadi) rare</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>Curaga</strong></td>
+<td>Healing</td>
+<td>60</td>
+<td>4.5s</td>
+<td>10s</td>
+<td>Bastok Markets 1,515; Port San d'Oria 1,515; Port Windurst 1,515</td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>Barfira</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>0.5s</td>
+<td>10s</td>
+<td>Lower Jeuno 1,760</td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>Shell</strong></td>
+<td>Enhancing</td>
+<td>18</td>
+<td>1s</td>
+<td>5s</td>
+<td>Bastok Markets 1,760; Port San d'Oria 1,760; Port Windurst 1,760</td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>Shellra</strong></td>
+<td>Enhancing</td>
+<td>18</td>
+<td>3s</td>
+<td>15s</td>
+<td>Lower Jeuno 1,760</td>
+</tr>
+<tr>
+<td>18</td>
+<td><strong>Barblindra</strong></td>
+<td>Enhancing</td>
+<td>26</td>
+<td>5s</td>
+<td>10s</td>
+<td>Lower Jeuno 2,030</td>
+</tr>
+<tr>
+<td>18</td>
+<td><strong>Diaga</strong></td>
+<td>Enfeebling</td>
+<td>12</td>
+<td>1.5s</td>
+<td>6s</td>
+<td>Bastok Markets 1,295 ¹; Port San d'Oria 1,295 ¹; Port Windurst 1,295 ¹</td>
+</tr>
+<tr>
+<td>19</td>
+<td><strong>Blink</strong></td>
+<td>Enhancing</td>
+<td>20</td>
+<td>6s</td>
+<td>10s</td>
+<td>Bastok Markets 2,330 ²; Port San d'Oria 2,330 ²; Port Windurst 2,330 ²</td>
+</tr>
+<tr>
+<td>19</td>
+<td><strong>Silena</strong></td>
+<td>Healing</td>
+<td>24</td>
+<td>1s</td>
+<td>5s</td>
+<td>Lower Jeuno 2,330; Al Zahbi 2,330</td>
+</tr>
+<tr>
+<td>20</td>
+<td><strong>Sneak</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>3s</td>
+<td>10s</td>
+<td>Mhaura 2,500; Selbina 2,500</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Barblizzara</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>0.5s</td>
+<td>10s</td>
+<td>Lower Jeuno 3,624</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Cure III</strong></td>
+<td>Healing</td>
+<td>46</td>
+<td>2.5s</td>
+<td>6s</td>
+<td>Windurst Waters 3,624; Selbina 3,624</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Regen</strong></td>
+<td>Enhancing</td>
+<td>15</td>
+<td>4s</td>
+<td>12s</td>
+<td>Mhaura 4,320</td>
+</tr>
+<tr>
+<td>23</td>
+<td><strong>Barsilencera</strong></td>
+<td>Enhancing</td>
+<td>30</td>
+<td>5s</td>
+<td>10s</td>
+<td>Lower Jeuno 4,608</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Barthundra</strong></td>
+<td>Enhancing</td>
+<td>12</td>
+<td>0.5s</td>
+<td>10s</td>
+<td>Lower Jeuno 5,754</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Invisible</strong></td>
+<td>Enhancing</td>
+<td>15</td>
+<td>3s</td>
+<td>10s</td>
+<td>Mhaura 5,754; Selbina 5,754</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Raise</strong></td>
+<td>Healing</td>
+<td>150</td>
+<td>15s</td>
+<td>60s</td>
+<td>Windurst Waters 5,754 ²; Selbina 5,754</td>
+</tr>
+<tr>
+<td>27</td>
+<td><strong>Protect II</strong></td>
+<td>Enhancing</td>
+<td>28</td>
+<td>1.25s</td>
+<td>5.25s</td>
+<td>Windurst Waters 7,074 ²; Selbina 7,074</td>
+</tr>
+<tr>
+<td>27</td>
+<td><strong>Protectra II</strong></td>
+<td>Enhancing</td>
+<td>28</td>
+<td>3.75s</td>
+<td>16s</td>
+<td>Lower Jeuno 7,074</td>
+</tr>
+<tr>
+<td>28</td>
+<td><strong>Stoneskin</strong></td>
+<td>Enhancing</td>
+<td>29</td>
+<td>7s</td>
+<td>30s</td>
+<td>Bastok Markets 7,732 ¹; Port San d'Oria 7,806 ¹; Port Windurst 7,806 ¹</td>
+</tr>
+<tr>
+<td>29</td>
+<td><strong>Cursna</strong></td>
+<td>Healing</td>
+<td>30</td>
+<td>3s</td>
+<td>10s</td>
+<td>Lower Jeuno 8,586; Al Zahbi 8,586</td>
+</tr>
+<tr>
+<td>30</td>
+<td><strong>Banish II</strong></td>
+<td>Divine</td>
+<td>57</td>
+<td>3.75s</td>
+<td>30s</td>
+<td>Windurst Waters 9,000 ²; Selbina 9,000</td>
+</tr>
+<tr>
+<td>31</td>
+<td><strong>Curaga II</strong></td>
+<td>Healing</td>
+<td>120</td>
+<td>4.75s</td>
+<td>10.25s</td>
+<td>Lower Jeuno 11,200; Al Zahbi 11,200; Selbina 11,200</td>
+</tr>
+<tr>
+<td>32</td>
+<td><strong>Erase</strong></td>
+<td>Enhancing</td>
+<td>18</td>
+<td>2.5s</td>
+<td>15s</td>
+<td><strong>BCNM30 / BCNM40 / BCNM60 / ToAU BCNM loot</strong></td>
+</tr>
+<tr>
+<td>33</td>
+<td><strong>Reraise</strong></td>
+<td>Healing</td>
+<td>150</td>
+<td>8s</td>
+<td>60s</td>
+<td>drop: Garnet Quadav (Beadeaux) rare; Topaz Quadav (Castle Zvahl Keep) uncommon</td>
+</tr>
+<tr>
+<td>34</td>
+<td><strong>Viruna</strong></td>
+<td>Healing</td>
+<td>48</td>
+<td>1s</td>
+<td>5s</td>
+<td>Lower Jeuno 13,300; Al Zahbi 13,300</td>
+</tr>
+<tr>
+<td>36</td>
+<td><strong>Dia II</strong></td>
+<td>Enfeebling</td>
+<td>30</td>
+<td>1.5s</td>
+<td>6s</td>
+<td>Windurst Waters 11,200 ²; Selbina 11,200</td>
+</tr>
+<tr>
+<td>36</td>
+<td><strong>Teleport-dem</strong></td>
+<td>Enhancing</td>
+<td>75</td>
+<td>20s</td>
+<td>10s</td>
+<td>Lower Jeuno 32,176</td>
+</tr>
+<tr>
+<td>36</td>
+<td><strong>Teleport-holla</strong></td>
+<td>Enhancing</td>
+<td>75</td>
+<td>20s</td>
+<td>10s</td>
+<td>Lower Jeuno 32,176</td>
+</tr>
+<tr>
+<td>36</td>
+<td><strong>Teleport-mea</strong></td>
+<td>Enhancing</td>
+<td>75</td>
+<td>20s</td>
+<td>10s</td>
+<td>Lower Jeuno 32,176</td>
+</tr>
+<tr>
+<td>37</td>
+<td><strong>Shell II</strong></td>
+<td>Enhancing</td>
+<td>37</td>
+<td>1.25s</td>
+<td>5.25s</td>
+<td>Windurst Waters 17,600 ²; Selbina 17,600</td>
+</tr>
+<tr>
+<td>37</td>
+<td><strong>Shellra II</strong></td>
+<td>Enhancing</td>
+<td>37</td>
+<td>3.75s</td>
+<td>16s</td>
+<td>Lower Jeuno 14,080</td>
+</tr>
+<tr>
+<td>38</td>
+<td><strong>Teleport-altep</strong></td>
+<td>Enhancing</td>
+<td>100</td>
+<td>20s</td>
+<td>10s</td>
+<td>Lower Jeuno 34,656</td>
+</tr>
+<tr>
+<td>38</td>
+<td><strong>Teleport-yhoat</strong></td>
+<td>Enhancing</td>
+<td>100</td>
+<td>20s</td>
+<td>10s</td>
+<td>Lower Jeuno 34,656</td>
+</tr>
+<tr>
+<td>39</td>
+<td><strong>Barvira</strong></td>
+<td>Enhancing</td>
+<td>50</td>
+<td>5s</td>
+<td>10s</td>
+<td>Lower Jeuno 9,600</td>
+</tr>
+<tr>
+<td>39</td>
+<td><strong>Stona</strong></td>
+<td>Healing</td>
+<td>40</td>
+<td>1s</td>
+<td>5s</td>
+<td>Lower Jeuno 19,200; Al Zahbi 19,200</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Banishga II</strong></td>
+<td>Divine</td>
+<td>120</td>
+<td>4.5s</td>
+<td>30s</td>
+<td>Lower Jeuno 20,000; Al Zahbi 20,000</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Haste</strong></td>
+<td>Enhancing</td>
+<td>40</td>
+<td>3s</td>
+<td>20s</td>
+<td>Windurst Waters 20,000 ¹; Selbina 20,000</td>
+</tr>
+<tr>
+<td>41</td>
+<td><strong>Cure IV</strong></td>
+<td>Healing</td>
+<td>88</td>
+<td>2.5s</td>
+<td>8s</td>
+<td>Lower Jeuno 23,400; Al Zahbi 23,400</td>
+</tr>
+<tr>
+<td>42</td>
+<td><strong>Teleport-vahzl</strong></td>
+<td>Enhancing</td>
+<td>100</td>
+<td>20s</td>
+<td>10s</td>
+<td>Lower Jeuno 34,656</td>
+</tr>
+<tr>
+<td>43</td>
+<td><strong>Barpetra</strong></td>
+<td>Enhancing</td>
+<td>40</td>
+<td>5s</td>
+<td>10s</td>
+<td>Lower Jeuno 15,120</td>
+</tr>
+<tr>
+<td>44</td>
+<td><strong>Regen II</strong></td>
+<td>Enhancing</td>
+<td>36</td>
+<td>4.5s</td>
+<td>16s</td>
+<td>Mhaura 7,830</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Flash</strong></td>
+<td>Divine</td>
+<td>25</td>
+<td>0.5s</td>
+<td>45s</td>
+<td>Al Zahbi 27,000; Rabao 35,000</td>
+</tr>
+<tr>
+<td>47</td>
+<td><strong>Protect III</strong></td>
+<td>Enhancing</td>
+<td>46</td>
+<td>1.5s</td>
+<td>5.5s</td>
+<td>Lower Jeuno 32,000; Al Zahbi 32,000</td>
+</tr>
+<tr>
+<td>47</td>
+<td><strong>Protectra III</strong></td>
+<td>Enhancing</td>
+<td>46</td>
+<td>4.5s</td>
+<td>17s</td>
+<td>Lower Jeuno 19,200</td>
+</tr>
+<tr>
+<td>50</td>
+<td><strong>Holy</strong></td>
+<td>Divine</td>
+<td>100</td>
+<td>0.75s</td>
+<td>60s</td>
+<td>Lower Jeuno 35,000; Al Zahbi 35,000; Selbina 35,000</td>
+</tr>
+<tr>
+<td>51</td>
+<td><strong>Curaga III</strong></td>
+<td>Healing</td>
+<td>180</td>
+<td>5s</td>
+<td>10.5s</td>
+<td>Lower Jeuno 19,932; Al Zahbi 19,932</td>
+</tr>
+<tr>
+<td>56</td>
+<td><strong>Raise II</strong></td>
+<td>Healing</td>
+<td>200</td>
+<td>20s</td>
+<td>60s</td>
+<td><strong>BCNM50 / BCNM60 loot</strong>; drop: Coral Sahagin (Sea Serpent Grotto) rare; Yagudo High Priest (Castle Oztroja) rare</td>
+</tr>
+<tr>
+<td>57</td>
+<td><strong>Shell III</strong></td>
+<td>Enhancing</td>
+<td>56</td>
+<td>1.5s</td>
+<td>5.5s</td>
+<td>Lower Jeuno 26,244</td>
+</tr>
+<tr>
+<td>57</td>
+<td><strong>Shellra III</strong></td>
+<td>Enhancing</td>
+<td>56</td>
+<td>4.5s</td>
+<td>17s</td>
+<td>Lower Jeuno 26,244</td>
+</tr>
+<tr>
+<td>60</td>
+<td><strong>Reraise II</strong></td>
+<td>Healing</td>
+<td>175</td>
+<td>8s</td>
+<td>60s</td>
+<td><strong>BCNM60 loot</strong>; drop: Hellish Weapon (Fei'Yin) rare</td>
+</tr>
+<tr>
+<td>61</td>
+<td><strong>Cure V</strong></td>
+<td>Healing</td>
+<td>135</td>
+<td>2.5s</td>
+<td>10s</td>
+<td><strong>KSNM30 loot</strong>; drop: Goblin Alchemist (Pso'Xja) very rare; Lagoon Sahagin (Sea Serpent Grotto) rare</td>
+</tr>
+<tr>
+<td>63</td>
+<td><strong>Protect IV</strong></td>
+<td>Enhancing</td>
+<td>65</td>
+<td>1.75s</td>
+<td>5.75s</td>
+<td>Rabao 85,000; Al Zahbi 91,116; Windurst Waters 100,000</td>
+</tr>
+<tr>
+<td>63</td>
+<td><strong>Protectra IV</strong></td>
+<td>Enhancing</td>
+<td>65</td>
+<td>5.25s</td>
+<td>18s</td>
+<td>Rabao 81,000; Al Zahbi 85,500; Windurst Waters 95,000</td>
+</tr>
+<tr>
+<td>65</td>
+<td><strong>Banish III</strong></td>
+<td>Divine</td>
+<td>96</td>
+<td>5.5s</td>
+<td>45s</td>
+<td>Tavnazian Safehold 66,000; Rabao 86,000</td>
+</tr>
+<tr>
+<td>66</td>
+<td><strong>Regen III</strong></td>
+<td>Enhancing</td>
+<td>64</td>
+<td>5s</td>
+<td>20s</td>
+<td><strong>BCNM50 loot</strong>; drop: Goblin Alchemist (Pso'Xja) rare; Lagoon Sahagin (Sea Serpent Grotto) rare</td>
+</tr>
+<tr>
+<td>68</td>
+<td><strong>Shell IV</strong></td>
+<td>Enhancing</td>
+<td>75</td>
+<td>1.75s</td>
+<td>5.75s</td>
+<td><strong>KSNM30 loot</strong>; drop: Magic Jug (Garlaige Citadel) rare; Ruby Quadav (Qulun Dome) common</td>
+</tr>
+<tr>
+<td>68</td>
+<td><strong>Shellra IV</strong></td>
+<td>Enhancing</td>
+<td>75</td>
+<td>5.25s</td>
+<td>18s</td>
+<td>drop: Goblin Alchemist (Pso'Xja) rare; Lagoon Sahagin (Sea Serpent Grotto) rare</td>
+</tr>
+<tr>
+<td>70</td>
+<td><strong>Raise III</strong></td>
+<td>Healing</td>
+<td>250</td>
+<td>20s</td>
+<td>60s</td>
+<td><strong>KSNM30 / ENM loot</strong>; drop: Za'Dha Adamantking (Qulun Dome) always; Kirin (Shrine of Ru'Avitau) uncommon</td>
+</tr>
+<tr>
+<td>71</td>
+<td><strong>Curaga IV</strong></td>
+<td>Healing</td>
+<td>260</td>
+<td>5.25s</td>
+<td>10.75s</td>
+<td>drop: Goblin Alchemist (Pso'Xja) very rare; Lagoon Sahagin (Sea Serpent Grotto) very rare</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Protectra V</strong></td>
+<td>Enhancing</td>
+<td>84</td>
+<td>7s</td>
+<td>19s</td>
+<td><strong>Merit spell</strong> — learned by spending merit points, no scroll</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Reraise III</strong></td>
+<td>Healing</td>
+<td>200</td>
+<td>8s</td>
+<td>60s</td>
+<td>Al Zahbi 99,375; Ru'Lude Gardens 500,000; Rabao 600,000</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Shellra V</strong></td>
+<td>Enhancing</td>
+<td>93</td>
+<td>6s</td>
+<td>19s</td>
+<td><strong>Merit spell</strong> — learned by spending merit points, no scroll</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — scrolls you can't buy.</strong> On Phoenix these have <strong>no vendor</strong>: Paralyze, Protectra, Silence (Goblin Leecher drops), Erase (BCNM loot), Reraise (Quadav/Yagudo drops), Raise II, Reraise II, Cure V, Regen III, Shell IV, Shellra IV, Raise III, Curaga IV. Start farming or saving for them before you hit the level, or watch the Auction House.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — Barparalyzra.</strong> I found no vendor, drop or loot entry for this scroll anywhere in Phoenix's code. If you find it in game, trust the game, and let me know where so the guide can be fixed.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — Teleports need the <em>target's</em> key item.</strong> The server checks whether <strong>each person being teleported</strong> has that crag's gate crystal key item, not the caster (<code>enhancing_teleport.lua</code>). Anyone without the crystal stays behind. Each crystal comes from touching the Telepoint at its crag: Holla (La Theine Plateau), Dem (Konschtat Highlands), Mea (Tahrongi Canyon), Yhoat (Yhoator Jungle), Altep (Eastern Altepa Desert), Vahzl (Xarcabard).</p>
+</aside>
+<!-- -->
+
+<aside class="box gil">
+<p><strong>MONEY MAKER — Teleport taxi.</strong> Teleports are 75–100 MP for you and save everyone else a long walk or an Airship ticket. On a 75-era server that's a service people pay for. The six crag Teleports (36–42) cost about 200,000 gil all together, so price your rides with that in mind.</p>
+</aside>
+<h3>Raise and Reraise, by tier</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Spell</th>
+<th>HP on return</th>
+<th>XP lost that comes back</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raise / Reraise</td>
+<td>10%</td>
+<td>50%</td>
+<td>5 minutes of Weakness after</td>
+</tr>
+<tr>
+<td>Raise II / Reraise II</td>
+<td>25%</td>
+<td>75% (50% if the dead player is level 50 or below)</td>
+<td></td>
+</tr>
+<tr>
+<td>Raise III / Reraise III</td>
+<td>50%</td>
+<td>90% (50% at level 50 or below)</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Reraise lasts an hour.</strong> Every Reraise tier sets a 3,600-second (60-minute) effect. Higher tiers overwrite lower ones (<code>reraise_ii.lua</code>). Recast on every endgame entry.</p>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">HEALING, DECODED</h2></header>
+<p><em>How much your spells heal, how much hate they cause, and which gear actually changes the numbers. All of it is read from Phoenix's code.</em></p>
+<h3>The two cure formulas</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Single-target Cures</th>
+<th>Curagas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Modern formula</strong> (2012+, the code's default)</td>
+<td>Power = ⌊MND ÷ 2⌋ + ⌊VIT ÷ 4⌋ + Healing skill</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Era formula</strong> (if Phoenix turned it on)</td>
+<td>Power = 3 × MND + VIT + 3 × ⌊Healing skill ÷ 5⌋</td>
+<td><strong>Always this one</strong>, whatever the setting</td>
+</tr>
+</tbody>
+</table></div>
+<p>Power goes into a table of breakpoints for each spell, and the result is never lower than the spell's floor. After that, the game multiplies by <strong>Cure Potency</strong> (capped at 50%), then by the <strong>day/weather</strong> bonus, then by <strong>×2 for Divine Seal</strong> (<code>globals/magic.lua</code>).</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — what each formula rewards.</strong> Under the modern formula, one point of Healing skill is worth two points of MND, and at 75 the breakpoints divide power down so much that MND gear barely moves single cures. Under the era formula, one point of MND is worth five points of skill. Curagas always use the era formula, so <strong>MND always matters for Curagas</strong>.</p>
+</aside>
+<figure class="curechart"><svg viewBox="0 0 900 366" role="img" aria-label="Cure sizes at level 75 for an Elvaan White Mage with no gear, modern versus era formula"><line x1="120.0" y1="38" x2="120.0" y2="342" class="gl"/><text x="120.0" y="358" text-anchor="middle" class="ct">0</text><line x1="221.4" y1="38" x2="221.4" y2="342" class="gl"/><text x="221.4" y="358" text-anchor="middle" class="ct">100</text><line x1="322.9" y1="38" x2="322.9" y2="342" class="gl"/><text x="322.9" y="358" text-anchor="middle" class="ct">200</text><line x1="424.3" y1="38" x2="424.3" y2="342" class="gl"/><text x="424.3" y="358" text-anchor="middle" class="ct">300</text><line x1="525.7" y1="38" x2="525.7" y2="342" class="gl"/><text x="525.7" y="358" text-anchor="middle" class="ct">400</text><line x1="627.1" y1="38" x2="627.1" y2="342" class="gl"/><text x="627.1" y="358" text-anchor="middle" class="ct">500</text><line x1="728.6" y1="38" x2="728.6" y2="342" class="gl"/><text x="728.6" y="358" text-anchor="middle" class="ct">600</text><line x1="830.0" y1="38" x2="830.0" y2="342" class="gl"/><text x="830.0" y="358" text-anchor="middle" class="ct">700</text><rect x="120" y="10" width="14" height="14" class="bn"/><text x="140" y="22" class="lg">Modern formula (code default)</text><rect x="380" y="10" width="14" height="14" class="bo"/><text x="400" y="22" class="lg">Era formula (Curagas always use this)</text><text x="108" y="68" text-anchor="end" class="cl">Cure II</text><rect x="120" y="46" width="123.7" height="16" class="bn"/><text x="249.7" y="58" class="cv">122</text><rect x="120" y="65" width="94.3" height="16" class="bo"/><text x="220.3" y="77" class="cv">93</text><text x="108" y="119" text-anchor="end" class="cl">Cure III</text><rect x="120" y="97" width="268.8" height="16" class="bn"/><text x="394.8" y="109" class="cv">265</text><rect x="120" y="116" width="196.8" height="16" class="bo"/><text x="322.8" y="128" class="cv">194</text><text x="108" y="170" text-anchor="end" class="cl">Cure IV</text><rect x="120" y="148" width="476.7" height="16" class="bn"/><text x="602.7" y="160" class="cv">470</text><rect x="120" y="167" width="392.5" height="16" class="bo"/><text x="518.5" y="179" class="cv">387</text><text x="108" y="221" text-anchor="end" class="cl">Cure V</text><rect x="120" y="199" width="660.3" height="16" class="bn"/><text x="786.3" y="211" class="cv">651</text><rect x="120" y="218" width="644.1" height="16" class="bo"/><text x="770.1" y="230" class="cv">635</text><text x="108" y="262" text-anchor="end" class="cl">Curaga II</text><rect x="120" y="250" width="196.8" height="16" class="bo"/><text x="322.8" y="262" class="cv">194</text><text x="108" y="294" text-anchor="end" class="cl">Curaga III</text><rect x="120" y="282" width="392.5" height="16" class="bo"/><text x="518.5" y="294" class="cv">387</text><text x="108" y="326" text-anchor="end" class="cl">Curaga IV</text><rect x="120" y="314" width="644.1" height="16" class="bo"/><text x="770.1" y="326" class="cv">635</text></svg><figcaption>HP healed at 75, Elvaan WHM/BLM, no gear, no Cure Potency. Each Cure shows both formulas; each Curaga has one value because it always uses the era formula. Computed from Phoenix's cure scripts.</figcaption></figure>
+
+<h3>Your cures, level by level — Elvaan WHM/BLM, no gear</h3>
+<p>Each cell is <strong>modern / era</strong> for single-target cures. Curaga columns are the same either way.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>MND / VIT / Skill</th>
+<th>Cure II</th>
+<th>Cure III</th>
+<th>Cure IV</th>
+<th>Cure V</th>
+<th>Curaga II</th>
+<th>Curaga III</th>
+<th>Curaga IV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>21</td>
+<td>30 / 24 / 66</td>
+<td>93 / 85</td>
+<td>137 / 146</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>30</td>
+<td>39 / 30 / 93</td>
+<td>98 / 90</td>
+<td>152 / 165</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>41</td>
+<td>51 / 40 / 126</td>
+<td>104 / 91</td>
+<td>186 / 182</td>
+<td>361 / 342</td>
+<td>—</td>
+<td>182</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>51</td>
+<td>61 / 48 / 158</td>
+<td>110 / 92</td>
+<td>220 / 190</td>
+<td>400 / 356</td>
+<td>—</td>
+<td>190</td>
+<td>356</td>
+<td>—</td>
+</tr>
+<tr>
+<td>61</td>
+<td>69 / 54 / 207</td>
+<td>115 / 93</td>
+<td>241 / 192</td>
+<td>427 / 371</td>
+<td>616 / 602</td>
+<td>192</td>
+<td>371</td>
+<td>—</td>
+</tr>
+<tr>
+<td>71</td>
+<td>73 / 62 / 256</td>
+<td>120 / 93</td>
+<td>261 / 194</td>
+<td>454 / 383</td>
+<td>642 / 627</td>
+<td>194</td>
+<td>383</td>
+<td>627</td>
+</tr>
+<tr>
+<td>75</td>
+<td>74 / 64 / 276</td>
+<td>122 / 93</td>
+<td>265 / 194</td>
+<td>470 / 387</td>
+<td>651 / 635</td>
+<td>194</td>
+<td>387</td>
+<td>635</td>
+</tr>
+</tbody>
+</table></div>
+<details>
+<summary><strong>Same table for Hume and Tarutaru</strong></summary>
+<p><strong>Hume</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>MND / VIT / Skill</th>
+<th>Cure II</th>
+<th>Cure III</th>
+<th>Cure IV</th>
+<th>Cure V</th>
+<th>Curaga II</th>
+<th>Curaga III</th>
+<th>Curaga IV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>21</td>
+<td>27 / 22 / 66</td>
+<td>92 / 83</td>
+<td>136 / 141</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>30</td>
+<td>35 / 28 / 93</td>
+<td>98 / 90</td>
+<td>151 / 161</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>41</td>
+<td>46 / 37 / 126</td>
+<td>104 / 91</td>
+<td>183 / 177</td>
+<td>358 / 337</td>
+<td>—</td>
+<td>177</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>51</td>
+<td>55 / 44 / 158</td>
+<td>109 / 91</td>
+<td>216 / 190</td>
+<td>396 / 350</td>
+<td>—</td>
+<td>190</td>
+<td>350</td>
+<td>—</td>
+</tr>
+<tr>
+<td>61</td>
+<td>62 / 50 / 207</td>
+<td>115 / 92</td>
+<td>240 / 191</td>
+<td>425 / 364</td>
+<td>614 / 589</td>
+<td>191</td>
+<td>364</td>
+<td>—</td>
+</tr>
+<tr>
+<td>71</td>
+<td>68 / 59 / 256</td>
+<td>120 / 93</td>
+<td>260 / 193</td>
+<td>452 / 379</td>
+<td>641 / 618</td>
+<td>193</td>
+<td>379</td>
+<td>618</td>
+</tr>
+<tr>
+<td>75</td>
+<td>69 / 61 / 276</td>
+<td>122 / 93</td>
+<td>265 / 194</td>
+<td>467 / 383</td>
+<td>650 / 626</td>
+<td>194</td>
+<td>383</td>
+<td>626</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tarutaru</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>MND / VIT / Skill</th>
+<th>Cure II</th>
+<th>Cure III</th>
+<th>Cure IV</th>
+<th>Cure V</th>
+<th>Curaga II</th>
+<th>Curaga III</th>
+<th>Curaga IV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>21</td>
+<td>26 / 21 / 66</td>
+<td>92 / 82</td>
+<td>136 / 139</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>30</td>
+<td>33 / 26 / 93</td>
+<td>98 / 90</td>
+<td>150 / 159</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>41</td>
+<td>44 / 35 / 126</td>
+<td>104 / 91</td>
+<td>181 / 175</td>
+<td>356 / 335</td>
+<td>—</td>
+<td>175</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>51</td>
+<td>53 / 42 / 158</td>
+<td>109 / 91</td>
+<td>214 / 188</td>
+<td>394 / 348</td>
+<td>—</td>
+<td>188</td>
+<td>348</td>
+<td>—</td>
+</tr>
+<tr>
+<td>61</td>
+<td>59 / 47 / 207</td>
+<td>114 / 92</td>
+<td>238 / 191</td>
+<td>423 / 361</td>
+<td>612 / 583</td>
+<td>191</td>
+<td>361</td>
+<td>—</td>
+</tr>
+<tr>
+<td>71</td>
+<td>65 / 56 / 256</td>
+<td>120 / 93</td>
+<td>260 / 193</td>
+<td>451 / 376</td>
+<td>640 / 612</td>
+<td>193</td>
+<td>376</td>
+<td>612</td>
+</tr>
+<tr>
+<td>75</td>
+<td>66 / 58 / 276</td>
+<td>122 / 93</td>
+<td>264 / 193</td>
+<td>466 / 380</td>
+<td>649 / 620</td>
+<td>193</td>
+<td>380</td>
+<td>620</td>
+</tr>
+</tbody>
+</table></div>
+</details>
+<aside class="box chal">
+<p><strong>HEALER'S CHALLENGE — find out which formula Phoenix uses (30 seconds).</strong> At 60 or higher, take off any staff, body or ring with Cure Potency. Pick a day that isn't Lightsday or Darksday, with no weather. Cast <strong>Cure III</strong> on someone missing 300+ HP and read the number.</p>
+<ul>
+<li><strong>240–270</strong> → the modern formula (about 241 at 61, 265 at 75).</li>
+<li><strong>190–200</strong> → the era formula (about 192 at 61, 194 at 75).</li>
+<li>Below 60 the two formulas give numbers too close together to tell apart.</li>
+</ul>
+</aside>
+<h3>MND gear vs. Cure Potency (level 75 Elvaan)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Extra MND from gear</th>
+<th>Cure IV</th>
+<th>Cure V</th>
+<th>Curaga III</th>
+<th>Curaga IV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+0</td>
+<td>470 / 387</td>
+<td>651 / 635</td>
+<td>387</td>
+<td>635</td>
+</tr>
+<tr>
+<td>+20</td>
+<td>477 / 393</td>
+<td>655 / 665</td>
+<td>393</td>
+<td>665</td>
+</tr>
+<tr>
+<td>+40</td>
+<td>484 / 398</td>
+<td>659 / 691</td>
+<td>398</td>
+<td>691</td>
+</tr>
+<tr>
+<td>+60</td>
+<td>491 / 403</td>
+<td>663 / 702</td>
+<td>403</td>
+<td>702</td>
+</tr>
+</tbody>
+</table></div>
+<p>Read the <strong>Cure V</strong> column. Under the modern formula, +60 MND (a whole set) adds <strong>12 HP</strong>. Under the era formula it adds <strong>67</strong>. A single +10% Cure Potency item (Light Staff) adds <strong>65</strong> either way.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — gear priority for single cures.</strong> Under <strong>either</strong> formula: Cure Potency first, then Enmity−, then MND. For <strong>Curagas</strong>, MND is worth stacking, since they always use the era formula.</p>
+</aside>
+<h3>Cure Potency on Phoenix (cap 50%)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Potency</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Light Staff</strong> / Apollo's Staff</td>
+<td>51</td>
+<td>Main</td>
+<td>+10% (both)</td>
+<td>Woodworking 75 (Apollo's is the HQ)</td>
+</tr>
+<tr>
+<td><strong>Healing Staff</strong> / Dryad Staff</td>
+<td>55</td>
+<td>Main</td>
+<td>+10%, MP+50</td>
+<td>KSNM99 <em>Horns of War</em> / Roc (Sauromugue Champaign)</td>
+</tr>
+<tr>
+<td>Asklepios</td>
+<td>62</td>
+<td>Main (club)</td>
+<td>+5%</td>
+<td>Carmine-tailed Janberry (Den of Rancor, 100%)</td>
+</tr>
+<tr>
+<td>Templar Mace</td>
+<td>71</td>
+<td>Main (club)</td>
+<td>+10%, MND+5</td>
+<td>Lamia No.19 (Arrapago Reef)</td>
+</tr>
+<tr>
+<td><strong>Noble's Tunic</strong> / Aristocrat's Coat</td>
+<td>68</td>
+<td>Body</td>
+<td>+10% / +12%, Refresh</td>
+<td>Clothcraft 87 (Aristocrat's is the HQ)</td>
+</tr>
+<tr>
+<td><strong>Medicine Ring</strong></td>
+<td>50</td>
+<td>Ring</td>
+<td>+10% <strong>while your HP ≤ 75% and TP &lt; 100</strong></td>
+<td>BCNM50 <em>Hostile Herbivores</em> / <em>Treasure and Tribulations</em></td>
+</tr>
+<tr>
+<td>Dia Wand</td>
+<td>40</td>
+<td>Main (club)</td>
+<td>+1%</td>
+<td>Quest <em>Empty Memories</em> (Jeuno)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Realistic max at 75: Staff 10 + Aristocrat's 12 + Medicine Ring 10 = <strong>32%</strong>.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — Light day and weather.</strong> Cures are Light-element. On Lightsday, or in Light weather (Aurora), each cure has a <strong>33% chance</strong> to get +10% for the day and +10% / +25% for single / double weather. Darksday and Dark weather are a penalty on the same 33% roll. The <strong>Korin Obi</strong> [71] (waist, from Yurim in Tavnazian Safehold) makes the Light bonus apply every time, without the penalty (<code>damage_spell.lua</code>, <code>calculateDayAndWeather</code>).</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — the Medicine Ring trick.</strong> The ring only works while your HP is at or under 75% and you have under 100 TP. Many era WHMs equipped the ring with an HP-down item in the same cure set to stay under 75%. Phoenix's code applies the same condition (latent type 2).</p>
+</aside>
+<h3>Cure enmity — what pulls hate onto you</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE — cure hate.</strong> Every HP you restore adds hate with <strong>every monster that's fighting the person you healed</strong>. That's 40 Cumulative + 240 Volatile per HP, divided by a number that grows with the <strong>healed player's level</strong>: 20 at level 10, 40 at 50, 55 at 75. (<code>enmity_container.cpp</code>, <code>battleutils.cpp</code>.)</p>
+<ul>
+<li>It counts <strong>only the HP actually restored</strong>. A Cure IV on someone missing 50 HP costs a Cure IV's MP but only causes 50 HP of hate.</li>
+<li>At 75, a 470-HP Cure IV on the tank adds about <strong>340 CE + 2,050 VE</strong> to you.</li>
+<li><strong>Enmity−</strong> gear lowers all of it, capped at −50% (<code>CalculateEnmityBonus</code>).</li>
+</ul>
+</aside>
+<p>So the classic rule holds on Phoenix: <strong>size the Cure to the damage.</strong> Cure III (46 MP) for chip damage, Cure IV for a weapon skill, Cure V when the tank is in trouble. Overcuring doesn't cause extra hate, but it wastes MP.</p>
+<h3>Enmity of your other spells</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Spell group</th>
+<th>Cumulative / Volatile</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Poisona, Paralyna, Blindna, Silena, Cursna, Viruna, Stona</td>
+<td>1 / 300</td>
+<td>Flat, whatever level</td>
+</tr>
+<tr>
+<td><strong>Erase</strong></td>
+<td>1 / 480</td>
+<td>The hate spike of the −na family</td>
+</tr>
+<tr>
+<td>Haste, Regen, Stoneskin, Blink</td>
+<td>1 / 300</td>
+<td></td>
+</tr>
+<tr>
+<td>Protect / Shell (single)</td>
+<td>1 / 80</td>
+<td></td>
+</tr>
+<tr>
+<td>Protectra / Shellra</td>
+<td>1 / 100</td>
+<td></td>
+</tr>
+<tr>
+<td>Bar-spells</td>
+<td>1 / 80</td>
+<td></td>
+</tr>
+<tr>
+<td>Paralyze, Slow, Silence</td>
+<td>1 / 320</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Flash</strong></td>
+<td>180 / 1,280</td>
+<td>Hate tool. Don't spam it unless you mean to tank</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>From the era enmity table the server loads (<code>era_spell_enmity.sql</code>).</em></p>
+<h3>Buff numbers</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Buff</th>
+<th>Effect on Phoenix</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protect / II / III / IV</td>
+<td>+10 / +25 / +40 / +55 DEF</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>Protectra V (merit)</td>
+<td>+60 DEF, +2 per extra merit rank</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>Shell / II / III / IV</td>
+<td>−9.4% / −14.1% / −18.8% / −21.9% magic damage taken</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>Shellra V (merit)</td>
+<td>−24.2%, −0.78% per extra merit rank</td>
+<td>30 min</td>
+</tr>
+<tr>
+<td>Regen / II / III</td>
+<td>5 / 12 / 20 HP every 3 s (+1 per Regen-effect merit)</td>
+<td>75 / 60 / 60 s</td>
+</tr>
+<tr>
+<td>Haste</td>
+<td>15% (150/1024)</td>
+<td>3 min</td>
+</tr>
+<tr>
+<td>Blink</td>
+<td>2 shadows</td>
+<td>5 min</td>
+</tr>
+<tr>
+<td>Stoneskin</td>
+<td>Absorbs damage; see below (cap 350)</td>
+<td>5 min</td>
+</tr>
+<tr>
+<td>Bar-element (-ra)</td>
+<td>+40 + ⌊Enhancing skill ÷ 5⌋ magic defense vs. that element</td>
+<td>150 s + 0.8 s per skill above 180</td>
+</tr>
+<tr>
+<td>Bar-status (-ra)</td>
+<td>Resistance to that status</td>
+<td>8 min</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Phoenix's own buff changes.</strong> Phoenix's module puts Protect and Shell back at their era values and switches Bar-element duration back to the old skill-based formula. It also sets Sneak/Invisible/Deodorize back to a random 30–300 seconds (<code>modules/phoenix/.../enhancing_spell.lua</code>). If you've played retail recently, your Sneak will wear sooner than you expect. Recast early.</p>
+</aside>
+<p><strong>Stoneskin:</strong> <em>x</em> = Enhancing skill ÷ 3 + MND. Under 80, absorbs <em>x</em>. From 80–130, 2<em>x</em> − 60. Over 130, 3<em>x</em> − 190. Capped at 350.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Level, MND</th>
+<th>Stoneskin absorbs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>30, MND 39</td>
+<td>67</td>
+</tr>
+<tr>
+<td>50, MND 60 / 80</td>
+<td>154 / 194</td>
+</tr>
+<tr>
+<td>75, MND 74 / 94 / 114</td>
+<td>262 / 322 / <strong>350 (cap)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Single cures: Cure Potency &gt; Enmity− &gt; MND. Curagas: MND counts.</li>
+<li>Cure hate depends on HP actually healed and the healed player's level. Size the cure to the damage.</li>
+<li>Erase is the hate spike of your status spells (480 VE). Flash is a tank's tool.</li>
+<li>Test which cure formula Phoenix runs. Chapter 7's gear advice holds either way.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>You don't pick the camp. The party leader does. What you control is showing up with the right spells macroed for whatever that camp throws at you.</em></p>
+<h2>THE HEALER'S AILMENT ATLAS</h2>
+<p>Below are the classic party camps from the project's leveling-camps guide. For each mob I read its TP-move list and the scripts behind those moves from Phoenix's code, and pulled out every move that leaves a status ailment. The last column is what to have macroed before the first pull.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Mob</th>
+<th>What it can do to you (TP move)</th>
+<th>Have ready</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Hill Lizard</td>
+<td><strong>Petrify</strong> (Baleful Gaze); <strong>Poison</strong> (Plague Breath (AoE)); <strong>Silence</strong> (Brain Crush); <strong>Stun</strong> (Tail Blow)</td>
+<td>Stona, Poisona, Silena</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Damselfly</td>
+<td><strong>Poison</strong> (Venom (AoE))</td>
+<td>Poisona</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Brutal Sheep</td>
+<td><strong>Sleep</strong> (Sheep Song (AoE))</td>
+<td>Cure/Curaga wakes</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Snipper</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Beach Pugil</td>
+<td><strong>Slow</strong> (Intimidate (AoE))</td>
+<td>Erase</td>
+</tr>
+<tr>
+<td>10‑20</td>
+<td>Valkurm Dunes</td>
+<td>Thread Leech</td>
+<td><strong>Blind</strong> (Sand Breath (AoE)); <strong>Stun</strong> (Suction)</td>
+<td>Blindna</td>
+</tr>
+<tr>
+<td>13‑16</td>
+<td>Buburimu Peninsula</td>
+<td>Carnivorous Crawler</td>
+<td><strong>Poison</strong> (Poison Breath (AoE)); <strong>Slow</strong> (Sticky Thread (AoE))</td>
+<td>Poisona, Erase</td>
+</tr>
+<tr>
+<td>14‑21</td>
+<td>Korroloka / Qufim worms</td>
+<td>Land Worm</td>
+<td><strong>Silence</strong> (Sound Vacuum)</td>
+<td>Silena</td>
+</tr>
+<tr>
+<td>19‑24</td>
+<td>Qufim Island</td>
+<td>Land Worm</td>
+<td><strong>Silence</strong> (Sound Vacuum)</td>
+<td>Silena</td>
+</tr>
+<tr>
+<td>19‑24</td>
+<td>Qufim Island</td>
+<td>Clipper</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>19‑24</td>
+<td>Qufim Island</td>
+<td>Greater Pugil</td>
+<td><strong>Slow</strong> (Intimidate (AoE))</td>
+<td>Erase</td>
+</tr>
+<tr>
+<td>18‑21</td>
+<td>Sauromugue Champaign</td>
+<td>Diving Beetle</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>24‑27</td>
+<td>Yuhtunga Jungle</td>
+<td>Yuhtunga Mandragora</td>
+<td><strong>Poison</strong> (Leaf Dagger); <strong>Sleep</strong> (Dream Flower (AoE))</td>
+<td>Poisona, Cure/Curaga wakes</td>
+</tr>
+<tr>
+<td>24‑27</td>
+<td>Yuhtunga Jungle</td>
+<td>Goblin Smithy</td>
+<td>no status moves</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27‑30</td>
+<td>Bibiki Bay</td>
+<td>Catoblepas</td>
+<td><strong>Silence</strong> (Cold Stare (AoE))</td>
+<td>Silena</td>
+</tr>
+<tr>
+<td>27‑30</td>
+<td>Bibiki Bay</td>
+<td>Eft</td>
+<td><strong>Dispel</strong> (Geist Wall (AoE)); <strong>Poison</strong> (Toxic Spit); <strong>Stun</strong> (Numbing Noise (AoE))</td>
+<td>re-buff, Poisona</td>
+</tr>
+<tr>
+<td>27‑30</td>
+<td>Bibiki Bay</td>
+<td>Raven</td>
+<td><strong>Stun</strong> (Damnation Dive (AoE))</td>
+<td>—</td>
+</tr>
+<tr>
+<td>30‑35</td>
+<td>Eastern Altepa</td>
+<td>Sand Beetle</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>33‑36</td>
+<td>Garlaige Citadel</td>
+<td>Fortalice Bats</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>33‑36</td>
+<td>Garlaige Citadel</td>
+<td>Citadel Bats</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>33‑36</td>
+<td>Garlaige Citadel</td>
+<td>Warden Beetle</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>33‑37</td>
+<td>Eldieme Necropolis</td>
+<td>Gazer</td>
+<td><strong>Paralyze</strong> (Hex Eye (AoE))</td>
+<td>Paralyna</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Worker Crawler</td>
+<td><strong>Poison</strong> (Poison Breath (AoE)); <strong>Slow</strong> (Sticky Thread (AoE))</td>
+<td>Poisona, Erase</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Nest Beetle</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Rumble Crawler</td>
+<td><strong>Poison</strong> (Poison Breath (AoE)); <strong>Slow</strong> (Sticky Thread (AoE))</td>
+<td>Poisona, Erase</td>
+</tr>
+<tr>
+<td>35‑48</td>
+<td>Crawlers' Nest</td>
+<td>Soldier Crawler</td>
+<td><strong>Poison</strong> (Poison Breath (AoE)); <strong>Slow</strong> (Sticky Thread (AoE))</td>
+<td>Poisona, Erase</td>
+</tr>
+<tr>
+<td>34‑44</td>
+<td>Attohwa Chasm</td>
+<td>Ogrefly</td>
+<td><strong>Poison</strong> (Venom (AoE))</td>
+<td>Poisona</td>
+</tr>
+<tr>
+<td>34‑44</td>
+<td>Attohwa Chasm</td>
+<td>Master Coeurl</td>
+<td><strong>Paralyze</strong> (Blaster); <strong>Silence</strong> (Chaotic Eye)</td>
+<td>Paralyna, Silena</td>
+</tr>
+<tr>
+<td>38‑41</td>
+<td>Gustav Tunnel</td>
+<td>Hawker</td>
+<td><strong>Poison</strong> (Venom (AoE))</td>
+<td>Poisona</td>
+</tr>
+<tr>
+<td>48‑51</td>
+<td>Quicksand Caves</td>
+<td>Helm Beetle</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>48‑51</td>
+<td>Quicksand Caves</td>
+<td>Antican Hastatus</td>
+<td><strong>Blind</strong> (Sandstorm (AoE)); <strong>Petrify</strong> (Sand Trap (AoE)); <strong>Poison</strong> (Spikeball); <strong>Silence</strong> (Jamming Wave (AoE)); <strong>Weight</strong> (Magnetite Cloud (AoE))</td>
+<td>Blindna, Stona, Poisona, Silena, Erase</td>
+</tr>
+<tr>
+<td>48‑51</td>
+<td>Quicksand Caves</td>
+<td>Antican Princeps</td>
+<td><strong>Blind</strong> (Sandstorm (AoE)); <strong>Petrify</strong> (Sand Trap (AoE)); <strong>Poison</strong> (Spikeball); <strong>Silence</strong> (Jamming Wave (AoE)); <strong>Weight</strong> (Magnetite Cloud (AoE))</td>
+<td>Blindna, Stona, Poisona, Silena, Erase</td>
+</tr>
+<tr>
+<td>52‑55</td>
+<td>Kuftal Tunnel</td>
+<td>Robber Crab</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>54‑58</td>
+<td>Wajaom Woodlands</td>
+<td>Lesser Colibri</td>
+<td>no status moves</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54‑60</td>
+<td>Bhaflau Thickets</td>
+<td>Aht Urhgan Attercop</td>
+<td><strong>Poison</strong> (Acid Spray (AoE)); <strong>Slow</strong> (Spider Web (AoE))</td>
+<td>Poisona, Erase</td>
+</tr>
+<tr>
+<td>54‑60</td>
+<td>Bhaflau Thickets</td>
+<td>Lesser Colibri</td>
+<td>no status moves</td>
+<td>—</td>
+</tr>
+<tr>
+<td>55‑60</td>
+<td>Caedarva Mire</td>
+<td>Marsh Murre</td>
+<td>no status moves</td>
+<td>—</td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Carpophagous Puk</td>
+<td><strong>Flash</strong> (Obfuscate (AoE))</td>
+<td>Erase</td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Puk</td>
+<td><strong>Dispel</strong> (Ill Wind (AoE)); <strong>Flash</strong> (Obfuscate (AoE))</td>
+<td>re-buff, Erase</td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Hunting Raptor</td>
+<td><strong>Disease</strong> (Foul Breath (AoE)); <strong>Slow</strong> (Chomp Rush); <strong>Stun</strong> (Scythe Tail)</td>
+<td>Viruna, Erase</td>
+</tr>
+<tr>
+<td>63‑68</td>
+<td>Mamook</td>
+<td>Ziz</td>
+<td><strong>Petrify</strong> (Baleful Gaze); <strong>Poison</strong> (Poison Pick); <strong>Silence</strong> (Sound Vacuum (AoE))</td>
+<td>Stona, Poisona, Silena</td>
+</tr>
+<tr>
+<td>67‑75</td>
+<td>Caedarva Mire</td>
+<td>Heraldic Imp</td>
+<td><strong>Amnesia</strong> (Abrasive Tantara (AoE)); <strong>Silence</strong> (Deafening Tantara (AoE))</td>
+<td>wait it out, Silena</td>
+</tr>
+<tr>
+<td>67‑75</td>
+<td>Caedarva Mire</td>
+<td>Spongilla Fly</td>
+<td><strong>Poison</strong> (Venom (AoE))</td>
+<td>Poisona</td>
+</tr>
+<tr>
+<td>72‑75</td>
+<td>Lufaise Meadows</td>
+<td>Abraxas</td>
+<td><strong>Blind</strong> (Blind Vortex); <strong>Stun</strong> (Dread Dive)</td>
+<td>Blindna</td>
+</tr>
+<tr>
+<td>72‑75</td>
+<td>Lufaise Meadows</td>
+<td>Tavnazian Ram</td>
+<td><strong>Max HP Down</strong> (Great Bleat (AoE)); <strong>Petrify</strong> (Petribreath (AoE))</td>
+<td>Erase, Stona</td>
+</tr>
+<tr>
+<td>70‑75</td>
+<td>Mount Zhayolm</td>
+<td>Ebony Pudding</td>
+<td>stat-downs only</td>
+<td>Erase (stat-downs)</td>
+</tr>
+<tr>
+<td>70‑75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Warrior</td>
+<td><strong>Petrify</strong> (Rock Smash)</td>
+<td>Stona</td>
+</tr>
+<tr>
+<td>70‑75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Paladin</td>
+<td><strong>Petrify</strong> (Rock Smash)</td>
+<td>Stona</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — how this table was built.</strong> Each mob's <code>skill_list_id</code> (in <code>data/zones/&lt;zone&gt;/mobs.yaml</code>) points to its TP moves (<code>mob_skill_lists.sql</code>). Each move's script (<code>scripts/actions/mobskills/&lt;move&gt;.lua</code>) names the status effect it applies. "(AoE)" means the move is flagged as area-of-effect in <code>mob_skills.sql</code>, so expect it to hit the whole melee line. "Stat-downs only" means the mob's moves lower STR/EVA/DEF and similar. Those are all removable with Erase in Phoenix's status table, but usually aren't worth the 480 VE.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — what the atlas tells you.</strong></p>
+<ul>
+<li><strong>Poisona is your workhorse from 10 to 75.</strong> Damselflies, Crawlers, Hawkers, Ogreflies, Spongilla Flies and Attercops all poison the whole melee line.</li>
+<li><strong>Silence shows up early</strong> (Hill Lizards, Land Worms, Catoblepas). Silena can't fix <em>you</em>, since you can't cast while silenced. Carry <strong>Echo Drops</strong>.</li>
+<li><strong>Petrify is the killer at 48+</strong> (Antican Sand Trap, Ziz, Tavnazian Rams, Hilltrolls). Stona is a 39 spell from Lower Jeuno or Al Zahbi; have it before you go to Quicksand Caves.</li>
+<li><strong>Max HP Down from Tavnazian Rams</strong> is erasable in Phoenix's code. Erase it so your cures aren't capped at a lower max HP.</li>
+<li><strong>Sleep (Brutal Sheep, Mandragoras)</strong>: any cure or Curaga wakes the target. Curaga wakes the whole line at once.</li>
+</ul>
+</aside>
+<h3>Bracket by bracket</h3>
+<p><strong>Level 10–20 — Valkurm Dunes (Hill Lizards → Damselflies → beach pugils/leeches)</strong>
+- You're the only healer. Cure II (11) is your main spell; Curaga (16) for Damselfly Venom on the whole line.
+- Lizards can Baleful Gaze (Petrify). You won't have Stona yet. It wears off. Keep the tank alive while it does.
+- <strong>Gear:</strong> Justice Badge [7], Saintly Ring +1 ×2 [10], Zealot's Mitts [11] if you can get them, Pilgrim's Wand [10] for resting.</p>
+<p><strong>Level 20–30 — Qufim Island, Sauromugue, Yuhtunga, Bibiki Bay</strong>
+- Cure III (21) and Regen (21) arrive. Regen on the tank is MP-cheap healing for long fights.
+- Learn <strong>Raise</strong> at 25 (Windurst Waters / Selbina, 5,754 gil). Parties expect it.
+- Bibiki Catoblepas AoE-Silence the party. Bring Echo Drops for yourself, and Silena (19) for everyone else.
+- <strong>Gear:</strong> Holy Phial [26], Devotee's Mitts +1 [27] (MND+6, a big early upgrade), Seer's set [29] for MP.</p>
+<p><strong>Level 30–40 — Garlaige, Eldieme, Crawlers' Nest, Attohwa Chasm</strong>
+- Curaga II (31). Gazers in Eldieme AoE-Paralyze: Paralyna (9) gets a real workout.
+- Crawlers' Nest from 35 to 48 means Poisona and Erase (Sticky Thread Slow) every fight.
+- Teleports at 36/38 start paying for themselves. Stona at 39.
+- <strong>Gear:</strong> Solace Ring ×2 [36], Bishop's Robe +1 [35], White Cape +1 [32], Mrc.Cpt. Belt [30] (+1 to every stat).</p>
+<p><strong>Level 40–50 — Crawlers' Nest, Gustav Tunnel, Altepa, Quicksand Caves</strong>
+- <strong>Cure IV at 41</strong> (23,400 gil, Lower Jeuno / Al Zahbi). Haste at 40 (Windurst Waters ¹ / Selbina). Regen II at 44.
+- Quicksand Caves Anticans (48+) can Blind, Petrify, Poison, Silence and Weight in one fight. Macro all five.
+- AF starts at 40 (Chapter 8). The Blessed Hammer [41] is a decent MND+2 / MP+10 club, and the quest unlocks the rest of the chain.
+- <strong>Gear:</strong> Promise Badge [48] (MND+5), Rose Wand [48], Raven set [50] (the HQ Crow set: Enmity −33 for all five pieces), Medicine Ring [50].</p>
+<p><strong>Level 50–60 — Kuftal, Wajaom, Bhaflau, Caedarva (outer)</strong>
+- <strong>Light Staff at 51</strong> (+10% cure potency). This is the biggest single upgrade in the game for you.
+- Curaga III at 51. Holy at 50 for undead camps.
+- Wajaom/Bhaflau need <strong>Sanction</strong>, not Signet.
+- <strong>Gear:</strong> Serenity Ring +1 ×2 [54], Healer's Cap [54], Healer's Pantaloons [56], Healer's Bliaut [58], Cure Clogs [59] (−15% cure cast time).</p>
+<p><strong>Level 60–70 — Mamook and the 60s camps in the leveling guide</strong>
+- <strong>Cure V at 61</strong> (KSNM30 loot, Lagoon Sahagin in Sea Serpent Grotto, Goblin Alchemists in Pso'Xja). Start hunting the scroll at 55.
+- Regen III at 66 is drop-only too.
+- Hunting Raptors (Mamook) cause <strong>Disease</strong> (Foul Breath). Have Viruna.
+- <strong>Gear:</strong> Noble's Tunic [68] (+10% potency, Refresh). That makes your cure set and your idle set the same body.</p>
+<p><strong>Level 70–75 — Caedarva Mire, Lufaise Meadows, Bhaflau, Mount Zhayolm</strong>
+- Heraldic Imps AoE-Silence the party. Tavnazian Rams AoE-Petrify and Max-HP-Down.
+- Raise III at 70 (Za'Dha Adamantking 100%, Kirin, KSNM30/ENM loot). Curaga IV at 71.
+- <strong>Gear:</strong> Blessed set [70] (WHM-only, MND + Enmity−), Errant/Mahatma [72], Communion/Celestial rings [72].</p>
+<aside class="box warn">
+<p><strong>WARNING — the 48–51 gap.</strong> Quicksand Caves is the first camp where status ailments pile up faster than you can fix them, and where Stona matters. If the party has no Red Mage, ask for <strong>Echo Drops and Remedies</strong> to be shared, and cast Barpetra (43) and Barsilencera (23) before pulls.</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT — level 61</strong></p>
+<ul>
+<li>Cure V scroll in hand (it's not sold anywhere).</li>
+<li>Light or Apollo's Staff, Healer's AF, Cure Clogs.</li>
+<li>Raise II (56) — loot or Yagudo High Priests / Coral Sahagin.</li>
+<li>About 100,000 gil saved for Protect IV / Protectra IV at 63 (Rabao is cheapest at 85,000 / 81,000).</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>Every item here was checked against Phoenix's item tables: level, stats, and where it drops or how it's made. If a piece from another guide is missing, check "Not on Phoenix" at the end of the chapter.</em></p>
+<h3>How this chapter is laid out</h3>
+<ul>
+<li><strong>The four sets</strong>, in the order a fight goes: <strong>Buff → Cure → Idle → Rest</strong>. Each is a slot-by-slot upgrade path from 1 to 75.</li>
+<li><strong>Race picks, AF and Relic.</strong></li>
+<li><strong>The Item Directory</strong> — every item named in the sets, with stats and exactly where it comes from.</li>
+<li><strong>Not on Phoenix</strong> — gear other guides recommend that you can't get here.</li>
+</ul>
+<p>A number in brackets is the level you can wear it. Swap sets with <code>/equipset</code> macros (Appendix A).</p>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-buff" class="fstep set-buff"><b>✦</b><span>SET 1</span><em>Buff</em><small>Before the pull</small></a><a role="listitem" href="#set-cure" class="fstep set-cure"><b>✚</b><span>SET 2</span><em>Cure</em><small>Every cure you cast</small></a><a role="listitem" href="#set-idle" class="fstep set-idle"><b>◐</b><span>SET 3</span><em>Idle</em><small>Between casts</small></a><a role="listitem" href="#set-rest" class="fstep set-rest"><b>☾</b><span>SET 4</span><em>Rest</em><small>After the fight</small></a></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>When</th>
+<th>Stats that matter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 · Buff &amp; Debuff</strong></td>
+<td>Pre-pull buffs, Stoneskin, Paralyze/Slow, Banish/Holy</td>
+<td>MND, then Enhancing / Enfeebling / Divine skill</td>
+</tr>
+<tr>
+<td><strong>2 · Cure</strong></td>
+<td>Every cure you cast</td>
+<td>Cure Potency → Enmity− → MND → cure cast time</td>
+</tr>
+<tr>
+<td><strong>3 · Idle</strong></td>
+<td>Standing in the back between cures</td>
+<td>Refresh, damage taken −, MP, MDB</td>
+</tr>
+<tr>
+<td><strong>4 · Rest</strong></td>
+<td><code>/heal</code> between fights</td>
+<td>MP while resting (hMP)</td>
+</tr>
+</tbody>
+</table></div>
+
+<section class="set set-buff" id="set-buff"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">✦</span><h2>BUFF &amp; DEBUFF</h2><span class="settag">Before the pull</span></header>
+<p><em>Stoneskin, Bar-spells, Paralyze, Slow, Banish and Holy all scale off MND, plus their own magic skill. Stack MND, then skill.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main</strong></td>
+<td>Willow Wand +1 [9] → <strong>Yew Wand</strong> [18] (MND+3)</td>
+<td><strong>Chanter's Staff</strong> [40] (MND+6)</td>
+<td><strong>Pride Staff</strong> [53] (MND+7)</td>
+<td>Mythic Wand [65] (MND+8) / Skirnir's Wand [68]</td>
+<td><strong>Mistilteinn</strong> [70] (MND+10) or <strong>Alkalurops</strong> [73] (MND+10, M.Acc+20)</td>
+</tr>
+<tr>
+<td><strong>Sub</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Numinous Shield [69] (MND+2)</td>
+<td><strong>Muse Tariqah</strong> [74] (MND+7) with a club</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td>Traveler's Hat [6] → Garrison Sallet [19]</td>
+<td><strong>Rain Hat</strong> [41] (MND+2)</td>
+<td><strong>Healer's Cap</strong> [54] (MND+4)</td>
+<td><strong>Mahatma Hat</strong> [72] (MND+4)</td>
+<td>Mahatma Hat / Zenith Crown +1 [73]</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td><strong>Justice Badge</strong> [7] (MND+3) → Holy Phial [26]</td>
+<td><strong>Promise Badge</strong> [48] (MND+5)</td>
+<td><strong>Ajari Necklace</strong> [58] (MND+6)</td>
+<td>Ajari / Divine Torque [65] for Holy</td>
+<td><strong>Faith Torque</strong> [73] (MND+5)</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>—</td>
+<td>Geist Earring [38] (MND+1)</td>
+<td>Harvest Earring [49] (MND+1)</td>
+<td><strong>Celestial Earring</strong> ×2 [67] (MND+3)</td>
+<td>Celestial ×2</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Priest's Robe [19] / Baron's Saio [20]</td>
+<td><strong>Bishop's Robe +1</strong> [35] (MND+3)</td>
+<td>White Cloak +1 [50] (MND+3); Healer's Bliaut [58] for Paralyze/Slow</td>
+<td><strong>Mahatma Hpl.</strong> [72] (MND+11)</td>
+<td>Mahatma Hpl.</td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>Zealot's Mitts [11] → <strong>Devotee's Mitts +1</strong> [27] (MND+6)</td>
+<td>Devotee's Mitts +1</td>
+<td>Devotee's Mitts +1</td>
+<td><strong>Blessed Mitts +1</strong> [70] (MND+8)</td>
+<td>Blessed Mitts +1; Cleric's Mitts for enfeebles</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td><strong>Saintly Ring +1</strong> ×2 [10] (MND+3)</td>
+<td><strong>Solace Ring +1</strong> ×2 [36]</td>
+<td><strong>Serenity Ring +1</strong> ×2 [54] (MND+4)</td>
+<td><strong>Communion Ring +1</strong> ×2 [72] (MND+5)</td>
+<td>Communion +1 / Aqua Ring [74]</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>Mist Silk Cape [10] → <strong>White Cape +1</strong> [32] (MND+3)</td>
+<td>White Cape +1 / Red Cape +1 [43]</td>
+<td>Red Cape +1</td>
+<td><strong>Aslan Cape</strong> [70] (MND+5) / Prism Cape [71]</td>
+<td>Altruistic Cape [73] for Divine/Enfeebling</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>Friar's Rope [14] (MND+1)</td>
+<td>Mrc.Cpt. Belt [30]</td>
+<td>Twinthread Obi +1 [52] → <strong>Penitent's Rope</strong> [60] (MND+5)</td>
+<td><strong>Cleric's Belt</strong> [70] (MND+6)</td>
+<td>Cleric's Belt</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>Custom Slacks/Pants [31] if Hume</td>
+<td>Magic Slacks [40] (MND+2)</td>
+<td>Healer's Pantaloons [56] (Divine+15) for Holy/Banish</td>
+<td><strong>Mahatma Slops</strong> [72] (MND+8) / Jet Seraweels [72]</td>
+<td>Mahatma Slops</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>Garrison Boots [18] → Seer's Pumps +1 [29]</td>
+<td>Mannequin Pumps [35] (MND+2)</td>
+<td>Seer's / Mannequin</td>
+<td><strong>Mahatma Pigaches</strong> [72] (MND+6)</td>
+<td>Mahatma Pigaches; Cleric's Duckbills (Enhancing+10) for Bar-spells</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — what each spell reads.</strong> Stoneskin = Enhancing skill ÷ 3 + MND (Chapter 5). Bar-element power and duration use Enhancing skill only, so MND does nothing for them. Wear <strong>Cleric's Duckbills</strong> (Enhancing +10) and the <strong>Enhancing Torque</strong> for Bar-spells. <strong>Cleric's Pantaloons</strong> add +20 to Bar-element potency.</p>
+</aside>
+
+</section><section class="set set-cure" id="set-cure"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">✚</span><h2>CURE</h2><span class="settag">Every cure you cast</span></header>
+<p><em>Potency first, then Enmity−, then MND. Under the modern formula MND barely moves single cures (Chapter 5), but Enmity− keeps you alive.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Lv 1–29</th>
+<th>Lv 30–49</th>
+<th>Lv 50–64</th>
+<th>Lv 65–74</th>
+<th>Lv 75</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main</strong></td>
+<td>Yew Wand [18] (MND+3)</td>
+<td>Chanter's Staff [40] / Rose Wand [48]</td>
+<td><strong>Light Staff</strong> [51] (+10%) → <strong>Healing / Dryad Staff</strong> [55] (+10%, MP+50)</td>
+<td>Apollo's Staff, or <strong>Templar Mace</strong> [71] (+10%, MND+5) + shield</td>
+<td>Apollo's / Healing Staff</td>
+</tr>
+<tr>
+<td><strong>Sub</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Muse Tariqah [74] / Legion Scutum [71] (Enmity−2) with the mace</td>
+<td>same</td>
+</tr>
+<tr>
+<td><strong>Head</strong></td>
+<td>Garrison Sallet [19]</td>
+<td>Rain Hat [41]</td>
+<td><strong>Raven Beret</strong> [50] (Enmity−8)</td>
+<td><strong>Hydra Beret</strong> [70] (−8) or Mahatma Hat [72] (−6, MND+4)</td>
+<td>Mahatma Hat / Hydra Beret</td>
+</tr>
+<tr>
+<td><strong>Neck</strong></td>
+<td>Justice Badge [7] → Holy Phial [26]</td>
+<td>Promise Badge [48]</td>
+<td>Promise Badge / Benign Necklace [50] (−2)</td>
+<td>Promise Badge</td>
+<td>Faith Torque [73]</td>
+</tr>
+<tr>
+<td><strong>Ears</strong></td>
+<td>—</td>
+<td>Geist [38]</td>
+<td>Harvest [49]</td>
+<td>Celestial ×2 [67]</td>
+<td><strong>Novia Earring</strong> [75] (−7) + Celestial</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Priest's Robe [19]</td>
+<td>Bishop's Robe +1 [35]</td>
+<td><strong>Raven Jupon</strong> [50] (−9) → Healer's Bliaut [58] (−4)</td>
+<td><strong>Aristocrat's Coat</strong> [68] (+12%) / Noble's Tunic (+10%)</td>
+<td><strong>Aristocrat's Coat</strong></td>
+</tr>
+<tr>
+<td><strong>Hands</strong></td>
+<td>Zealot's → Devotee's Mitts +1 [27]</td>
+<td>Devotee's Mitts +1</td>
+<td>Raven Bracers [50] (−5) → <strong>Healer's Mitts</strong> [60] (−4, Healing+15)</td>
+<td>Healer's Mitts or <strong>Blessed Mitts +1</strong> [70] (MND+8, −4)</td>
+<td><strong>Hlr. Mitts +1</strong> [74] (MND+7, Healing+15, −4)</td>
+</tr>
+<tr>
+<td><strong>Rings</strong></td>
+<td>Saintly Ring +1 ×2 [10]</td>
+<td>Solace ×2, or <strong>Tamas Ring</strong> [30] (MND+2, −3)</td>
+<td><strong>Medicine Ring</strong> [50] (+10% latent) + Serenity +1</td>
+<td>Medicine + Communion +1</td>
+<td>Medicine + Communion +1</td>
+</tr>
+<tr>
+<td><strong>Back</strong></td>
+<td>White Cape +1 [32]</td>
+<td>Red Cape +1 [43]</td>
+<td><strong>Amity Cape</strong> [51] (−3)</td>
+<td><strong>Peace Cape +1</strong> [66] (−5) → <strong>Mahatma Cape</strong> [73] (−6)</td>
+<td>Mahatma Cape</td>
+</tr>
+<tr>
+<td><strong>Waist</strong></td>
+<td>Friar's Rope [14]</td>
+<td>Mrc.Cpt. Belt [30]</td>
+<td><strong>Penitent's Rope</strong> [60] (MND+5, −3)</td>
+<td>Penitent's Rope</td>
+<td>Penitent's Rope</td>
+</tr>
+<tr>
+<td><strong>Legs</strong></td>
+<td>Custom Slacks [31] (Hume)</td>
+<td>Magic Slacks [40]</td>
+<td><strong>Raven Hose</strong> [50] (−6)</td>
+<td><strong>Bls. Trousers +1</strong> [70] (MND+7, −6)</td>
+<td>Bls. Trousers +1</td>
+</tr>
+<tr>
+<td><strong>Feet</strong></td>
+<td>Seer's Pumps +1 [29]</td>
+<td>Mannequin Pumps [35]</td>
+<td><strong>Cure Clogs</strong> [59] (−15% cure cast time)</td>
+<td>Cure Clogs</td>
+<td>Cure Clogs, or Blessed Pumps +1 [70] (−5)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — the Raven set at 50 is a WHM secret.</strong> Raven Beret/Jupon/Bracers/Hose/Gaiters are Clothcraft HQs that any mage can wear. All five together are <strong>Enmity −33</strong> at level 50. Nothing else at that level comes close, and that's what lets you cure a tank through a weapon skill without the mob turning on you.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — cap checks.</strong> Cure Potency caps at <strong>50%</strong> and Enmity− at <strong>−50%</strong> in Phoenix's code. You won't hit either in the 75 era, so you don't need to worry about wasting stats.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — Cure Clogs.</strong> −15% cure cast time on one slot. That's a Cure IV in about 2.1 seconds instead of 2.5. They drop from <strong>Bonnacon</strong> in Uleguerand Range. Merits add up to another −20% (Chapter 9).</p>
+</aside>
+
+</section><section class="set set-idle" id="set-idle"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">◐</span><h2>IDLE</h2><span class="settag">Between casts</span></header>
+<p><em>What you wear between casts. You're in the back row, so the threats are AoE, magic and anything that wanders over. Refresh first, then damage taken.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Main</strong></td>
+<td><strong>Earth Staff</strong> / <strong>Terra's Staff</strong> [51]</td>
+<td><strong>−20% physical damage taken</strong>, VIT+4/+5</td>
+</tr>
+<tr>
+<td><strong>Body</strong></td>
+<td>Vermillion / Royal Cloak [59] → <strong>Noble's Tunic / Aristocrat's Coat</strong> [68] → Cleric's Bliaut [74] or Dalmatica [73]</td>
+<td><strong>Refresh +1</strong>. The cloaks also take up the head slot.</td>
+</tr>
+<tr>
+<td><strong>Ring</strong></td>
+<td>Balrahn's Ring [50]</td>
+<td>Refresh +1 and +4 INT/MND/CHR, <strong>only inside Assaults</strong></td>
+</tr>
+<tr>
+<td><strong>Everything else</strong></td>
+<td>Your MP pieces (race gear, Hairpins, Mana/Aura earrings)</td>
+<td>A bigger MP bar between Refresh ticks</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Noble's Tunic does two jobs.</strong> Cure Potency +10% and Refresh +1 on the same body means you never swap bodies between cures and idling from 68 on. That's one less macro line and one less chance to be caught in the wrong set.</p>
+</aside>
+
+</section><section class="set set-rest" id="set-rest"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">☾</span><h2>REST (hMP)</h2><span class="settag">After the fight</span></header>
+<p><em>Phoenix's resting formula adds "MP while healing" on top of every tick (Chapter 1). A few points of hMP add up over a long rest.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>hMP</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td><strong>Pilgrim's Wand</strong></td>
+<td>+2</td>
+<td>Nunyenunc (W. Sarutabaruta NM, always drops)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Mohbwa Sash +1</td>
+<td>+2</td>
+<td>Clothcraft 39 (HQ)</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Seer's Tunic +1</td>
+<td>+1</td>
+<td>Clothcraft 26 (HQ)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Wizard's Mantle</td>
+<td>+1 while your sub is BLM</td>
+<td>BCNM30 <em>Dropping Like Flies</em></td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>Qiqirn Sash +1</strong></td>
+<td>+3</td>
+<td>Clothcraft 59 (HQ)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Beak Necklace +1</td>
+<td>+2</td>
+<td>Bonecraft 60 (HQ)</td>
+</tr>
+<tr>
+<td>51</td>
+<td><strong>Dark Staff</strong> / Pluto's Staff</td>
+<td><strong>+10</strong></td>
+<td>Woodworking 75</td>
+</tr>
+<tr>
+<td>65</td>
+<td>Relaxing Earring</td>
+<td>+2</td>
+<td>Yurim (Tavnazian Safehold)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Cleric's Belt</td>
+<td>+3</td>
+<td>Dynamis-Qufim</td>
+</tr>
+<tr>
+<td>72</td>
+<td><strong>Mahatma Hpl.</strong></td>
+<td>+6</td>
+<td>Clothcraft 96 (HQ)</td>
+</tr>
+</tbody>
+</table></div>
+
+</section><h2>RACE PICKS (MP AND MND)</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>Waist Lv50 (BCNM50 <em>Hostile Herbivores</em>)</th>
+<th>Waist Lv70 (KSNM30 <em>Come Into My Parlor</em>)</th>
+<th>Hands Lv62 (BCNM60 <em>Demolition Squad</em>)</th>
+<th>Feet Lv62 (BCNM60 <em>Brothers D'Aurphe</em>)</th>
+<th>Ear Lv55 (ENM <em>Automaton Assault</em>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>Ocean Stone: MP+30 MND+2</td>
+<td>Ocean Rope: MP+45 INT+4</td>
+<td>Marine Gloves: MP+35 INT/MND+4</td>
+<td>—</td>
+<td>Quantz's: MP+10 INT/MND+1</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>Forest Stone: MP+40 INT+3</td>
+<td><strong>Forest Rope: MP+60</strong> INT+4</td>
+<td><strong>Wood Gauntlets: MP+55</strong> INT/DEX+4</td>
+<td>Wood Ledelsens: MP+30 INT+3</td>
+<td>Desamilion's: MP+15 INT+2</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>Steppe Stone: MP+20 <strong>MND+3</strong></td>
+<td>Steppe Rope: MP+30 <strong>MND+4</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>Jungle Stone: MP+30 <strong>MND+3</strong></td>
+<td>Jungle Rope: MP+45 INT+4</td>
+<td>—</td>
+<td>River Gaiters: MP+35 INT/MND+4</td>
+<td>Ryakho's: MND+2 HP+10</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>Desert Stone: MP+40</td>
+<td>Desert Rope: MP+60</td>
+<td>Dune Bracers: MP+65 MND+2</td>
+<td>Dune Sandals: MP+45</td>
+<td>Zedoma's: MP+30</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Elvaan WHM.</strong> Your race-locked kit is all MP, which fixes the Elvaan's weak spot: the second-smallest MP pool. Forest Rope (+60) and Wood Gauntlets (+55) are +115 MP in your <strong>idle and rest</strong> sets. Keep Penitent's Rope and Blessed Mitts in the <strong>cure</strong> set.</p>
+</aside>
+
+<h2>AF &amp; RELIC AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats on Phoenix</th>
+<th>+1 (Sagheera, Port Jeuno)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Healer's Cap</td>
+<td>54</td>
+<td>MND+4, MP+13, Enmity−1</td>
+<td>MND+7, MP+28, hMP+1 — 30 Ancient Beastcoins</td>
+</tr>
+<tr>
+<td>Healer's Bliaut</td>
+<td>58</td>
+<td>MP+15, Enmity−4, Enfeebling+10</td>
+<td>MP+35, hMP+5, Enfeebling+12 — 40 ABC</td>
+</tr>
+<tr>
+<td>Healer's Mitts</td>
+<td>60</td>
+<td>MP+10, Enmity−4, <strong>Healing+15</strong></td>
+<td>MND+7, MP+15, Healing+15 — 20 ABC</td>
+</tr>
+<tr>
+<td>Healer's Pantaloons</td>
+<td>56</td>
+<td>MP+15, Enmity−1, <strong>Divine+15</strong></td>
+<td>MP+30, Enmity−2, Divine+15 — 25 ABC</td>
+</tr>
+<tr>
+<td>Healer's Duckbills</td>
+<td>52</td>
+<td>MP+10, Spell interruption −20%</td>
+<td>MP+15, INT+5, hMP+1, interruption −25% — 20 ABC</td>
+</tr>
+<tr>
+<td>Cleric's Cap</td>
+<td>72</td>
+<td>MP+25, VIT+4, Enmity−4</td>
+<td>Dynamis-San d'Oria</td>
+</tr>
+<tr>
+<td>Cleric's Bliaut</td>
+<td>74</td>
+<td>MP+24, Enmity−2, Refresh+1, <strong>Regen potency +12%</strong></td>
+<td>Dynamis-Beaucedine</td>
+</tr>
+<tr>
+<td>Cleric's Mitts</td>
+<td>75</td>
+<td>MP+20, Enmity−3, Enfeebling+15</td>
+<td>Dynamis-Xarcabard</td>
+</tr>
+<tr>
+<td>Cleric's Pantaloons</td>
+<td>73</td>
+<td>MP+17, Enmity−2, Healing+15, <strong>Bar-spell +20</strong></td>
+<td>Dynamis-Qufim</td>
+</tr>
+<tr>
+<td>Cleric's Duckbills</td>
+<td>71</td>
+<td>MP+18, MND+5, Enmity−1, Enhancing+10</td>
+<td>Dynamis-San d'Oria</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each AF +1 trade at Sagheera is the AF piece + Benedict Silk + Benedict Yarn + one piece-specific material (Ether Cotton, Holy Leather, Ether Leather, Rainbow Velvet or Ether Holly) + the Ancient Beastcoins above.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — what +15 Healing skill is worth.</strong> Healer's Mitts and Cleric's Pantaloons give +15 Healing skill each. Under the <strong>modern</strong> formula that's about <strong>+10 HP on Cure IV</strong> and +6 on Cure V at 75, more than +8 MND gives. Under the <strong>era</strong> formula it's under 1 HP. So the <strong>Healer's Mitts +1</strong> (MND+7, Healing+15, Enmity−4) are the best cure hands on Phoenix under the modern formula and tied for best under the era one, if you can get the Beastcoins.</p>
+</aside>
+
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Every item named in the four sets, with Phoenix stats and sources, sorted by slot and level.</em></p>
+<h3>Main — staves</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>40</td>
+<td>Chanter's Staff</td>
+<td>MND +6, INT −6, CHR +6</td>
+<td>ENM <em>Beloved of the Atlantes</em>; ENM <em>Bugard in the Clouds</em></td>
+</tr>
+<tr>
+<td>51</td>
+<td>Apollo's Staff</td>
+<td>MND +2, Cure Potency +10%, INT +2, VIT +2, CHR +2</td>
+<td>Woodworking 75 (HQ)</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Dark Staff</td>
+<td>MND +1, MP while resting +10, INT +1, VIT +1, CHR +1</td>
+<td>Woodworking 75</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Earth Staff</td>
+<td>VIT +4, Phys. dmg taken −20%</td>
+<td>Woodworking 75</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Light Staff</td>
+<td>MND +1, Cure Potency +10%, INT +1, VIT +1, CHR +1</td>
+<td>Woodworking 75</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Pluto's Staff</td>
+<td>MND +2, MP while resting +10, INT +2, VIT +2, CHR +2</td>
+<td>Woodworking 75 (HQ)</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Terra's Staff</td>
+<td>VIT +5, Phys. dmg taken −20%</td>
+<td>Woodworking 75 (HQ)</td>
+</tr>
+<tr>
+<td>53</td>
+<td>Pride Staff</td>
+<td>MND +7, INT −1, VIT −1, CHR −1</td>
+<td>Skull of Pride (Eldieme Necropolis, uncommon)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Dryad Staff</td>
+<td>MP +50, Cure Potency +10%</td>
+<td>Roc (Sauromugue Champaign, common)</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Healing Staff</td>
+<td>MP +50, Cure Potency +10%</td>
+<td>KSNM99 <em>Horns of War</em></td>
+</tr>
+<tr>
+<td>73</td>
+<td>Alkalurops</td>
+<td>MND +10, INT +10, CHR +10, HP −10, M.Acc +20</td>
+<td>Tinnin (Wajaom Woodlands, common, one item from a group)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Main — clubs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td>Willow Wand +1</td>
+<td>MND +3, INT +3</td>
+<td>Woodworking 14 (HQ)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Pilgrim's Wand</td>
+<td>MP while resting +2</td>
+<td>Nunyenunc (West Sarutabaruta, always)</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Yew Wand</td>
+<td>MND +3, INT +3</td>
+<td>Woodworking 23</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Rose Wand</td>
+<td>MND +5, INT +5</td>
+<td>Woodworking 47</td>
+</tr>
+<tr>
+<td>62</td>
+<td>Asklepios</td>
+<td>Cure Potency +5%, Convert HP→MP +30</td>
+<td>Carmine-tailed Janberry (Den of Rancor, always)</td>
+</tr>
+<tr>
+<td>65</td>
+<td>Mythic Wand</td>
+<td>MND +8, INT +8</td>
+<td>Woodworking 84</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Skirnir's Wand</td>
+<td>MND +7, Divine skill +3, INT +7, CHR +7</td>
+<td>Bistre-hearted Malberry (Den of Rancor, uncommon)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Mistilteinn</td>
+<td>MND +10, INT +10, latent Refresh +1</td>
+<td>Za'Dha Adamantking (Qulun Dome, rare)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Templar Mace</td>
+<td>MND +5, Cure Potency +10%</td>
+<td>Lamia No.19 (Arrapago Reef, uncommon)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Sub — shields</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>69</td>
+<td>Numinous Shield</td>
+<td>MND +2, MP +10</td>
+<td>Woodworking 84</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Legion Scutum</td>
+<td>MP +20, Enmity −2, MP while resting +5</td>
+<td>Mahjlaef the Paintorn (Caedarva Mire, always, one item from a group)</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Muse Tariqah</td>
+<td>MND +7, Spell interruption −10%, CHR +7</td>
+<td>Verdelet (Caedarva Mire, common)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td>Traveler's Hat</td>
+<td>MND +1</td>
+<td>Quest <em>The Wisdom of Elders</em></td>
+</tr>
+<tr>
+<td>19</td>
+<td>Garrison Sallet</td>
+<td>MND +1, CHR +1</td>
+<td>Garrison</td>
+</tr>
+<tr>
+<td>41</td>
+<td>Rain Hat</td>
+<td>MND +2, MP +20, CHR +2</td>
+<td>Noble Mold (Sanctuary of Zi'Tah, very common)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Raven Beret</td>
+<td>Enmity −8</td>
+<td>Clothcraft 66 / Leathercraft 20 (HQ)</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Healer's Cap</td>
+<td>MND +4, MP +13, Enmity −1</td>
+<td>Garlaige Citadel coffer, during <em>Borghertz's Healing Hands</em></td>
+</tr>
+<tr>
+<td>70</td>
+<td>Hydra Beret</td>
+<td>Enmity −8, MP while resting +2</td>
+<td>Dynamis-Tavnazia (relic drop)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Mahatma Hat</td>
+<td>MND +4, Enmity −6, INT +4, VIT −3, CHR +4</td>
+<td>Goldsmithing 21 / Clothcraft 92 / Leathercraft 34 (HQ)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Zenith Crown +1</td>
+<td>MND +4, INT +4, Convert HP→MP +55, Silence resist +2</td>
+<td>Sky abjuration</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Justice Badge</td>
+<td>MND +3</td>
+<td>Quest <em>Truth, Justice, and the Onion Way</em></td>
+</tr>
+<tr>
+<td>26</td>
+<td>Holy Phial</td>
+<td>MND +3, MP +9</td>
+<td>GeDha Evileye (Beadeaux, common)</td>
+</tr>
+<tr>
+<td>48</td>
+<td>Promise Badge</td>
+<td>MND +5, HP +10</td>
+<td>Quest <em>The Promise</em></td>
+</tr>
+<tr>
+<td>50</td>
+<td>Beak Necklace +1</td>
+<td>MP +22, MP while resting +2</td>
+<td>Bonecraft 60 (HQ)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Benign Necklace</td>
+<td>Enmity −2</td>
+<td>BCNM50 <em>Rapid Raptors</em>; BCNM50 <em>Eye of the Tiger</em>; BCNM50 <em>Awful Autopsy</em></td>
+</tr>
+<tr>
+<td>58</td>
+<td>Ajari Necklace</td>
+<td>MND +6</td>
+<td>BCNM60 <em>Up in Arms</em></td>
+</tr>
+<tr>
+<td>65</td>
+<td>Divine Torque</td>
+<td>Divine skill +7</td>
+<td>BCNM60 <em>Legion XI Comitatensis</em>; BCNM60 <em>Amphibian Assault</em></td>
+</tr>
+<tr>
+<td>65</td>
+<td>Enhancing Torque</td>
+<td>Enhancing skill +7</td>
+<td>BCNM60 <em>Legion XI Comitatensis</em>; BCNM60 <em>Amphibian Assault</em></td>
+</tr>
+<tr>
+<td>73</td>
+<td>Faith Torque</td>
+<td>MND +5</td>
+<td>Jailer of Faith (Garden of Ru'Hmet, uncommon)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>38</td>
+<td>Geist Earring</td>
+<td>MND +1, MP +5</td>
+<td>ENM <em>Test Your Mite</em></td>
+</tr>
+<tr>
+<td>49</td>
+<td>Harvest Earring</td>
+<td>MND +1</td>
+<td>Colorful Leshy (Lufaise Meadows, very common)</td>
+</tr>
+<tr>
+<td>65</td>
+<td>Relaxing Earring</td>
+<td>MP while resting +2</td>
+<td>Yurim (Tav. Safehold)</td>
+</tr>
+<tr>
+<td>67</td>
+<td>Celestial Earring</td>
+<td>MND +3, MP +22</td>
+<td>Goldsmithing 90 (HQ)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Novia Earring</td>
+<td>Enmity −7</td>
+<td>Sea trade (Meret)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19</td>
+<td>Priest's Robe</td>
+<td>MND +1</td>
+<td>Ashmaker Gotblut (Yughott Grotto, always, one item from a group)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Baron's Saio</td>
+<td>MND +1, INT +1</td>
+<td>Clothcraft 25 / Leathercraft 9 (HQ)</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Seer's Tunic +1</td>
+<td>MP +9, MP while resting +1</td>
+<td>Clothcraft 26 / Leathercraft 20 (HQ)</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Bishop's Robe +1</td>
+<td>MND +3, MP +4</td>
+<td>Clothcraft 90 (HQ)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Raven Jupon</td>
+<td>Enmity −9</td>
+<td>Goldsmithing 13 / Clothcraft 68 / Leathercraft 20 (HQ)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>White Cloak +1</td>
+<td>MND +3</td>
+<td>Clothcraft 63 (HQ)</td>
+</tr>
+<tr>
+<td>58</td>
+<td>Healer's Bliaut</td>
+<td>MP +15, Enmity −4, Enfeebling skill +10</td>
+<td>Quest <em>Pieuje's Decision</em></td>
+</tr>
+<tr>
+<td>59</td>
+<td>Royal Cloak</td>
+<td>MP +20, MP% +1, Refresh +1</td>
+<td>Clothcraft 70 (HQ)</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Vermillion Cloak</td>
+<td>MP +10, MP% +1, Refresh +1</td>
+<td>Clothcraft 70</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Aristocrat's Coat</td>
+<td>MP +18, Cure Potency +12%, Refresh +1</td>
+<td>Clothcraft 87 (HQ)</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Noble's Tunic</td>
+<td>MP +17, Cure Potency +10%, Refresh +1</td>
+<td>Clothcraft 87</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Mahatma Hpl.</td>
+<td>MND +11, Enmity −4, MP while resting +6, INT +11, VIT −8, CHR +11</td>
+<td>Goldsmithing 43 / Clothcraft 96 / Leathercraft 30 (HQ)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Dalmatica</td>
+<td>Refresh +1, Convert HP→MP +50, MDB +5</td>
+<td>Sky abjuration</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Cleric's Bliaut</td>
+<td>MP +24, Enmity −2, Refresh +1, Regen potency +12%</td>
+<td>Dynamis-Beaucedine (relic drop)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td>Zealot's Mitts</td>
+<td>MND +3, MP +5, INT −2</td>
+<td>Hoo Mjuu the Torrent (Giddeus, common)</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Devotee's Mitts +1</td>
+<td>MND +6, MP +9, INT −3</td>
+<td>Clothcraft 84 (HQ)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Raven Bracers</td>
+<td>Enmity −5</td>
+<td>Clothcraft 62 / Leathercraft 20 (HQ)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Healer's Mitts</td>
+<td>MP +10, Enmity −4, Healing skill +15</td>
+<td>Quest <em>Borghertz's Healing Hands</em></td>
+</tr>
+<tr>
+<td>70</td>
+<td>Blessed Mitts +1</td>
+<td>MND +8, MP +18, Enmity −4, Haste +6%</td>
+<td>Clothcraft 96 (HQ)</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Hlr. Mitts +1</td>
+<td>MND +7, MP +15, Enmity −4, Healing skill +15</td>
+<td>Sagheera upgrade (Port Jeuno): Healer's Mitts + materials + 20 Ancient Beastcoins</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Cleric's Mitts</td>
+<td>MP +20, Enmity −3, Enfeebling skill +15</td>
+<td>Dynamis-Xarcabard (relic drop)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Saintly Ring +1</td>
+<td>MND +3</td>
+<td>Bonecraft 81 (HQ)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Tamas Ring</td>
+<td>MND +2, MP +15, Enmity −3, INT +2 (grows with level)</td>
+<td>CoP mission 8-4 <em>Dawn</em> reward (choice of rings)</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Solace Ring +1</td>
+<td>MND +3</td>
+<td>Goldsmithing 60 (HQ)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Balrahn's Ring</td>
+<td>M.Acc +4; inside Assaults only: Refresh +1, INT/MND/CHR +4</td>
+<td>ToAU mission <em>Imperial Coronation</em></td>
+</tr>
+<tr>
+<td>50</td>
+<td>Medicine Ring</td>
+<td>latent Cure Potency +10%</td>
+<td>BCNM50 <em>Treasure and Tribulations</em>; BCNM50 <em>Hostile Herbivores</em></td>
+</tr>
+<tr>
+<td>54</td>
+<td>Serenity Ring +1</td>
+<td>MND +4</td>
+<td>Goldsmithing 80 (HQ)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Communion Ring +1</td>
+<td>MND +5</td>
+<td>Goldsmithing 99 (HQ)</td>
+</tr>
+<tr>
+<td>74</td>
+<td>Aqua Ring</td>
+<td>MND +5</td>
+<td>Goldsmithing 102</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Mist Silk Cape</td>
+<td>MND +1</td>
+<td>Spiny Spipi (East Sarutabaruta, common)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Wizard's Mantle</td>
+<td>latent MP while resting +1</td>
+<td>BCNM30 <em>Dropping Like Flies</em></td>
+</tr>
+<tr>
+<td>32</td>
+<td>White Cape +1</td>
+<td>MND +3</td>
+<td>Clothcraft 64 (HQ)</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Red Cape +1</td>
+<td>MND +3, INT +3</td>
+<td>Clothcraft 59 (HQ)</td>
+</tr>
+<tr>
+<td>51</td>
+<td>Amity Cape</td>
+<td>Enmity −3</td>
+<td>Capricious Cassie (Fei'Yin, very common)</td>
+</tr>
+<tr>
+<td>66</td>
+<td>Peace Cape +1</td>
+<td>Enmity −5</td>
+<td>Clothcraft 87 (HQ)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Aslan Cape</td>
+<td>MND +5, MP +20, CHR −5, HP −20</td>
+<td>Einherjar (Kilusha, Nashmau)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Prism Cape</td>
+<td>MND +4, MP +10, INT +4, CHR +4, HP +10</td>
+<td>Clothcraft 94 (HQ)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Altruistic Cape</td>
+<td>MP +25, Healing skill +5, Divine skill +5, Enfeebling skill +5</td>
+<td>Sea trade (Meret)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Mahatma Cape</td>
+<td>MP +32, Enmity −6</td>
+<td>Clothcraft 100 (HQ)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td>Friar's Rope</td>
+<td>MND +1, MP +5</td>
+<td>Quest <em>Undying Flames</em> (Pagisalis, N. San d'Oria)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Mohbwa Sash +1</td>
+<td>MP +12, MP while resting +2</td>
+<td>Clothcraft 39 (HQ)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Mrc.Cpt. Belt</td>
+<td>MND +1, INT +1, VIT +1, CHR +1</td>
+<td>Conquest (Signet)</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Qiqirn Sash +1</td>
+<td>MP +14, MP while resting +3</td>
+<td>Clothcraft 59 (HQ)</td>
+</tr>
+<tr>
+<td>52</td>
+<td>Twinthread Obi +1</td>
+<td>MND +3, Spell interruption −8%</td>
+<td>Clothcraft 58 (HQ)</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Penitent's Rope</td>
+<td>MND +5, Enmity −3, INT +5, HP −20</td>
+<td>BCNM60 <em>Wild Wild Whiskers</em></td>
+</tr>
+<tr>
+<td>70</td>
+<td>Cleric's Belt</td>
+<td>MND +6, MP +40, MP while resting +3</td>
+<td>Dynamis-Qufim (relic drop)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Korin Obi</td>
+<td>Light day/weather bonus applies to every cure</td>
+<td>Yurim (Tav. Safehold)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>31</td>
+<td>Custom Slacks / Pants (Hume)</td>
+<td>MND +3, MP +32, CHR +1</td>
+<td>Quest <em>The Goblin Tailor</em></td>
+</tr>
+<tr>
+<td>40</td>
+<td>Magic Slacks</td>
+<td>MND +2, INT +2</td>
+<td>Intulo (Bibiki Bay, uncommon)</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Raven Hose</td>
+<td>Enmity −6</td>
+<td>Clothcraft 46 / Leathercraft 63 (HQ)</td>
+</tr>
+<tr>
+<td>56</td>
+<td>Healer's Pantaloons</td>
+<td>MP +15, Enmity −1, Divine skill +15, VIT +3</td>
+<td>Crawlers' Nest coffer, during <em>Borghertz's Healing Hands</em></td>
+</tr>
+<tr>
+<td>70</td>
+<td>Bls. Trousers +1</td>
+<td>MND +7, MP +30, Enmity −6, Haste +4%</td>
+<td>Clothcraft 97 (HQ)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Jet Seraweels</td>
+<td>MND +7, MP +15, Enmity −4, INT +7</td>
+<td>Jaded Jody (Wajaom Woodlands, uncommon)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Mahatma Slops</td>
+<td>MND +8, Enmity −4, INT +8, VIT −6, CHR +8</td>
+<td>Clothcraft 94 / Leathercraft 26 (HQ)</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Cleric's Pantaloons</td>
+<td>MP +17, Enmity −2, Healing skill +15, Bar-spell potency +20</td>
+<td>Dynamis-Qufim (relic drop)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Item</th>
+<th>Key stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18</td>
+<td>Garrison Boots</td>
+<td>MND +1, INT +1</td>
+<td>Garrison</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Seer's Pumps +1</td>
+<td>MND +2, MP +5</td>
+<td>Clothcraft 20 / Leathercraft 25 (HQ)</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Mannequin Pumps</td>
+<td>MND +2, MP +12, INT +1</td>
+<td>Quest <em>Behind the Smile</em></td>
+</tr>
+<tr>
+<td>50</td>
+<td>Raven Gaiters</td>
+<td>Enmity −5</td>
+<td>Clothcraft 49 / Leathercraft 56 (HQ)</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Cure Clogs</td>
+<td>Cure cast time −15%</td>
+<td>Bonnacon (Uleguerand Range, uncommon)</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Blessed Pumps +1</td>
+<td>MND +4, MP +20, Enmity −5, Haste +3%</td>
+<td>Clothcraft 55 / Leathercraft 99 (HQ)</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Cleric's Duckbills</td>
+<td>MND +5, MP +18, Enmity −1, Enhancing skill +10</td>
+<td>Dynamis-San d'Oria (relic drop)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Mahatma Pigaches</td>
+<td>MND +6, MP +25, Enmity −3, HP −25</td>
+<td>Clothcraft 52 / Leathercraft 91 (HQ)</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — gear you'll see in other guides that won't help you here:</strong></p>
+<ul>
+<li><strong>Orison, Theophany, Piety, Ebers, Kaykaus, Vanya</strong> — post-75 sets.</li>
+<li><strong>Iridal Staff, Chatoyant Staff</strong> — in the item table, but <strong>no drop, recipe or shop</strong> anywhere in Phoenix's code.</li>
+<li><strong>Cleric's Cap +1 and other relic +1/+2</strong> — Magian or Abyssea upgrades.</li>
+<li><strong>Paying extra for Apollo's Staff for cures</strong> — on Phoenix both Light and Apollo's Staff give <strong>+10%</strong> Cure Potency. Apollo's only adds +2 to all stats.</li>
+<li><strong>Anything from Campaign</strong> (Ariesian Grip, Mrc.Mjr. Charm, Fourth Mace) — WotG content.</li>
+<li><strong>Refresh Earring</strong> — only works inside a Garrison.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li><strong>Buff set:</strong> MND + skill. Mahatma/Blessed pieces at 70–72.</li>
+<li><strong>Cure set:</strong> Light/Healing Staff → Aristocrat's Coat → Medicine Ring for potency; Raven at 50, then Blessed/Mahatma/Healer's +1 for Enmity−; Cure Clogs.</li>
+<li><strong>Idle:</strong> Terra's Staff + a Refresh body. <strong>Rest:</strong> Dark Staff + hMP pieces.</li>
+<li>If another guide lists an item and this chapter doesn't, check <em>Not on Phoenix</em>.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">LEGENDARY QUESTS (ARTIFACT ARMOR)</h2></header>
+<p><em>Quest steps below were read from Phoenix's quest scripts, then checked against BG Wiki and FFXIclopedia walkthroughs. NPC positions are the <code>!pos</code> lines from the scripts.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Quest</th>
+<th>Lv</th>
+<th>Reward</th>
+<th>Start</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AF1</td>
+<td><strong>Messenger from Beyond</strong></td>
+<td>40</td>
+<td>Blessed Hammer (club, MND+2 MP+10)</td>
+<td>Narcheral, Northern San d'Oria cathedral (upstairs, M-6)</td>
+</tr>
+<tr>
+<td>AF2</td>
+<td><strong>Prelude of Black and White</strong></td>
+<td>50</td>
+<td>Healer's Duckbills</td>
+<td>Door to the Prince Regent's Room, Chateau d'Oraguille (H-8)</td>
+</tr>
+<tr>
+<td>AF3</td>
+<td><strong>Pieuje's Decision</strong></td>
+<td>50</td>
+<td>Healer's Bliaut + title <em>Paragon of White Mage Excellence</em></td>
+<td>Same door, after AF2</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Borghertz's Healing Hands</strong></td>
+<td>50</td>
+<td>Healer's Mitts</td>
+<td>Guslam, Upper Jeuno (Durable Shields)</td>
+</tr>
+<tr>
+<td>Head</td>
+<td>Garlaige Citadel coffer</td>
+<td>—</td>
+<td>Healer's Cap</td>
+<td>Needs Borghertz started or done</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Crawlers' Nest coffer</td>
+<td>—</td>
+<td>Healer's Pantaloons</td>
+<td>Needs Borghertz started or done</td>
+</tr>
+</tbody>
+</table></div>
+<h3>AF1 — Messenger from Beyond</h3>
+<ol>
+<li>Talk to <strong>Narcheral</strong> upstairs in the cathedral, Northern San d'Oria, as a level 40+ WHM.</li>
+<li>Go to <strong>Valkurm Dunes</strong>, Secret Beach (B-8). The <strong>???</strong> at <code>-716, -10, 66</code> only appears between <strong>18:00 and 05:00</strong> Vana'diel time (the zone script hides it during the day).</li>
+<li>Click it to spawn <strong>Marchelute</strong> (lv41 NM). It always drops the <strong>Tavnazia Pass</strong>.</li>
+<li>Trade the Pass to Narcheral → <strong>Blessed Hammer</strong>. After you start the quest, the other steps can be done on any job.</li>
+</ol>
+<h3>AF2 — Prelude of Black and White</h3>
+<ol>
+<li>As a level 50+ WHM, click the door marked <strong>Prince Regent's Rm</strong> in Chateau d'Oraguille (H-8).</li>
+<li>Collect:</li>
+<li><strong>Canteen of Yagudo Holy Water</strong> — common drop from <strong>Yagudo Abbots</strong> in Castle Oztroja (55–59) or Castle Zvahl Keep (50–52).</li>
+<li><strong>Moccasins</strong> — Leathercraft 59 (Clothcraft 8 sub), or the AH. <strong>Moccasins +1 are not accepted.</strong></li>
+<li>Trade both to <strong>Narcheral</strong> → <strong>Healer's Duckbills</strong>.</li>
+</ol>
+<h3>AF3 — Pieuje's Decision</h3>
+<ol>
+<li>Click the same Prince Regent's door again as a 50+ WHM.</li>
+<li>Kill <strong>Dark Stalkers</strong> in the Eldieme Necropolis (57–59) until a <strong>Tavnazia Bell</strong> drops (rare).</li>
+<li>Enter <strong>Fei'Yin from Beaucedine Glacier</strong>. A cutscene plays (the script checks that your previous zone was Beaucedine).</li>
+<li>Trade the Bell to the <strong>???</strong> at (G-8) on map 1 (<code>-55, -16, 69</code>). It spawns <strong>Altedour I Tavnazia</strong> (lv65). He always drops the <strong>Tavnazian Mask</strong>.</li>
+<li>Trade the Mask to <strong>Narcheral</strong> → <strong>Healer's Bliaut</strong>.</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING — Altedour I Tavnazia</strong> is one of the strongest AF NMs in the game. Bring a full party at 60+, not a duo.</p>
+</aside>
+<h3>Hands — Borghertz's Healing Hands</h3>
+<ol>
+<li>On WHM 50+ with AF2 done, talk to <strong>Guslam</strong> (Upper Jeuno, Durable Shields). You can't have another Borghertz quest active.</li>
+<li>Open the <strong>Treasure Coffer in Beadeaux</strong> with a <strong>Beadeaux Coffer Key</strong> (Quadav and Mimic drops) or Thief's tools → key item <strong>Old Gauntlets</strong>.</li>
+<li>Back to Guslam. <strong>First Borghertz quest only:</strong> talk to <strong>Deadly Minnow</strong> (same shop), pay <strong>Yin Pocanakhu</strong> 1,000 gil (Lower Jeuno, J-8), and click the <strong>???</strong> on the crates by the Port Jeuno AH (H-8). On later Borghertz quests you skip straight to the ???.</li>
+<li>Castle Zvahl Baileys (F-8, map 1): click the <strong>Torch</strong> to spawn <strong>Dark Spark</strong>, kill it, click the torch again → <strong>Shadow Flames</strong>.</li>
+<li>Port Jeuno ??? again → <strong>Healer's Mitts</strong>.</li>
+</ol>
+<h3>Head and legs — the coffers</h3>
+<p>While Borghertz's Healing Hands is <strong>active or finished</strong>, and with <strong>WHM as your main job</strong>:
+- <strong>Garlaige Citadel</strong> Treasure Coffer → <strong>Healer's Cap</strong> (Garlaige Coffer Key from the citadel's mobs, or Thief's tools).
+- <strong>Crawlers' Nest</strong> Treasure Coffer → <strong>Healer's Pantaloons</strong> (Nest Coffer Key from Crawlers, Helm Beetles or Mimics).</p>
+<p>You get each piece once. The script sets a flag per job when the coffer gives it.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — full AF</strong></p>
+<ul>
+<li>AF1–3 done at 50–60, coffers at 60+ with a Thief friend if you can find one.</li>
+<li>Upgrade path: AF +1 at <strong>Sagheera</strong> (Port Jeuno) for 20–40 Ancient Beastcoins each (Chapter 7).</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-9"><span class="num">CHAPTER 9</span><h2 class="ch">MERITS AT 75 (ToAU RULES)</h2></header>
+<p><em>Phoenix replaces the merit tables with the ToAU-era version. Here's what that gives a WHM.</em></p>
+<h3>Group 1 (up to 10 upgrades total, 5 per category)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>Per rank</th>
+<th>At 5 ranks</th>
+<th>Worth it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cure cast time</strong></td>
+<td>−4%</td>
+<td>−20%</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> — stacks with Cure Clogs</td>
+</tr>
+<tr>
+<td><strong>Divine Seal recast</strong></td>
+<td>−20 s</td>
+<td>10:00 → 8:20</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span></td>
+</tr>
+<tr>
+<td>Regen effect</td>
+<td>+1 HP per tick</td>
+<td>Regen III 20 → 25/tick</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span></td>
+</tr>
+<tr>
+<td>Bar-spell effect</td>
+<td>+2</td>
+<td>+10 element resist</td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span></td>
+</tr>
+<tr>
+<td>Banish effect</td>
+<td>+2</td>
+<td></td>
+<td><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The usual build:</strong> 5 Cure cast time + 5 Divine Seal or Regen.</p>
+<h3>Group 2 (up to 6 upgrades total, 3 per ability, costs 3/4/5 points)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>Rank 1</th>
+<th>Each extra rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Martyr</strong></td>
+<td>Learn the ability (20 min recast)</td>
+<td>−2.5 min recast</td>
+</tr>
+<tr>
+<td><strong>Devotion</strong></td>
+<td>Learn the ability (20 min recast)</td>
+<td>−2.5 min recast</td>
+</tr>
+<tr>
+<td><strong>Protectra V</strong></td>
+<td>Learn the spell (+60 DEF)</td>
+<td>+2 DEF</td>
+</tr>
+<tr>
+<td><strong>Shellra V</strong></td>
+<td>Learn the spell (−24.2% magic damage)</td>
+<td>about −0.8%</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — splitting 6 upgrades.</strong> One common split: Protectra V and Shellra V at rank 1 each (the spells are the point), Devotion at 3, and the last upgrade on Martyr. Devotion turns your HP into a BLM's or RDM's MP during long fights.</p>
+</aside>
+<h3>Other merits worth taking</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Merit</th>
+<th>Cap on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HP/MP</td>
+<td>Max MP +10 per rank</td>
+<td>8 ranks (+80)</td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>MND +1 per rank</td>
+<td>5 upgrades <strong>across all attributes</strong></td>
+</tr>
+<tr>
+<td>Magic skills</td>
+<td>Healing / Enhancing / Divine +2 per rank</td>
+<td>16 upgrades across all magic skills</td>
+</tr>
+<tr>
+<td>Others</td>
+<td>Enmity Decrease −1 per rank</td>
+<td>4 ranks</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE.</strong> Phoenix's era merit table (<code>modules/era/data/merits.yaml</code>) caps HP/MP at 8 ranks, Attributes at 5 upgrades total, Others at 4 per merit, and group 2 at 3 per ability. It also sets Martyr and Devotion merits to recast-only, and removes Animus Solace and Animus Misery.</p>
+</aside>
+
+<header class="band" id="chapter-10"><span class="num">CHAPTER 10</span><h2 class="ch">THE ENDGAME HEALER</h2></header>
+<p><em>Endgame on Phoenix is Dynamis, Limbus, Sky, Sea, HNMs, Assault, Besieged, Salvage and Nyzul Isle. The WHM's job is the same in all of them: keep the tank up, keep yourself alive to raise, and keep Reraise on.</em></p>
+<h3>The rules of endgame healing</h3>
+<ol>
+<li><strong>Reraise on entry, every time.</strong> It lasts an hour (Chapter 4). A dead WHM with Reraise is back in 30 seconds. A dead WHM without it is a wipe.</li>
+<li><strong>Stay out of AoE range and in cure range.</strong> Cures reach 20 yalms (<code>spell_range</code> 200 in the spell table). Many AoE TP moves cover about 10 yalms around the mob (Geist Wall's script says 10). Stand between the two.</li>
+<li><strong>Hate is your biggest danger.</strong> Cure enmity piles up on every mob fighting the person you heal (Chapter 5). In multi-mob fights (Dynamis pulls, Besieged) that adds up fast. Wear full Enmity− and let the tank Provoke.</li>
+<li><strong>Divine Seal + Curaga III/IV</strong> is your party-wide panic button. <strong>Benediction</strong> is the bigger one, every 2 hours.</li>
+<li><strong>Devotion</strong> your BLMs between waves. <strong>Martyr</strong> only works within 6 yalms, so it's a melee-range trick for emergencies, not routine.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP — Raise III</strong> brings people back with 50% HP and 90% of lost XP (Chapter 4). It's 250 MP, so in a long fight, Raise II plus a Cure IV is usually the better MP trade.</p>
+</aside>
+<!-- -->
+
+<aside class="box gil">
+<p><strong>MONEY MAKER — what a WHM sells.</strong> Teleports (Chapter 4), Raises outside events, and party spots: on a 75-era server a WHM can get into almost any XP or merit party. Crafting gear for other mages (Raven/Crow sets, Noble's Tunic, Errant/Mahatma) pairs well with WHM if you level Clothcraft.</p>
+</aside>
+
+<header class="band" id="chapter-11"><span class="num">CHAPTER 11</span><h2 class="ch">MOST WANTED (WHM GEAR FROM NMs)</h2></header>
+<p><em>NM drops worth a WHM's time, from Phoenix's mob data. "Always" means a 100% drop; other rates use the server's own scale (common, uncommon, rare, very rare). See the project's NM-Dex series for full write-ups on some of these.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Gear Lv</th>
+<th>Item</th>
+<th>NM</th>
+<th>Zone</th>
+<th>NM Lv</th>
+<th>Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td><strong>Pilgrim's Wand</strong> (hMP+2)</td>
+<td>Nunyenunc</td>
+<td>W. Sarutabaruta</td>
+<td>12</td>
+<td>Always</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Mist Silk Cape (MND+1)</td>
+<td>Spiny Spipi</td>
+<td>E. Sarutabaruta</td>
+<td>9–10</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Zealot's Mitts</strong> (MND+3)</td>
+<td>Hoo Mjuu the Torrent</td>
+<td>Giddeus</td>
+<td>16–17</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>13 / 19</td>
+<td>Hermit's Wand / Priest's Robe</td>
+<td>Ashmaker Gotblut</td>
+<td>Yughott Grotto</td>
+<td>17–18</td>
+<td>Always (85% wand / 15% robe)</td>
+</tr>
+<tr>
+<td>26</td>
+<td><strong>Holy Phial</strong> (MND+3)</td>
+<td>GeDha Evileye</td>
+<td>Beadeaux</td>
+<td>30</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Carect Ring (MP+20 MND+1)</td>
+<td>Stubborn Dredvodd</td>
+<td>Phanauet Channel</td>
+<td>33</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Mycophile Cuffs (MND+2, Enmity−2)</td>
+<td>Mycophile</td>
+<td>Carpenters' Landing</td>
+<td>35</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Holy Ampulla (WHM ammo, MP+5 MND+1)</td>
+<td>Wuur the Sandcomber</td>
+<td>Sea Serpent Grotto</td>
+<td>42–44</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Magic Slacks (MND+2)</td>
+<td>Intulo</td>
+<td>Bibiki Bay</td>
+<td>46–47</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>41</td>
+<td><strong>Rain Hat</strong> (MP+20 MND+2)</td>
+<td>Noble Mold</td>
+<td>Sanctuary of Zi'Tah</td>
+<td>49–50</td>
+<td>Very common</td>
+</tr>
+<tr>
+<td>51</td>
+<td><strong>Amity Cape</strong> (Enmity−3)</td>
+<td>Capricious Cassie</td>
+<td>Fei'Yin</td>
+<td>70</td>
+<td>Very common</td>
+</tr>
+<tr>
+<td>52 / 56</td>
+<td>Healing Mace / Zoredonite Ring</td>
+<td>Zoredonite</td>
+<td>Manaclipper</td>
+<td>61–62</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>53</td>
+<td><strong>Pride Staff</strong> (MND+7)</td>
+<td>Skull of Pride</td>
+<td>Eldieme Necropolis</td>
+<td>60</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>55</td>
+<td><strong>Dryad Staff</strong> (+10% cure, MP+50)</td>
+<td>Roc</td>
+<td>Sauromugue Champaign</td>
+<td>55</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>59</td>
+<td><strong>Cure Clogs</strong> (−15% cure cast)</td>
+<td>Bonnacon</td>
+<td>Uleguerand Range</td>
+<td>69</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>62</td>
+<td>Asklepios (+5% cure)</td>
+<td>Carmine-tailed Janberry</td>
+<td>Den of Rancor</td>
+<td>66–67</td>
+<td>Always</td>
+</tr>
+<tr>
+<td>64</td>
+<td>Curse Wand (MND/INT/CHR+5)</td>
+<td>Dirtyhanded Gochakzuk</td>
+<td>Davoi</td>
+<td>71</td>
+<td>Always</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Skirnir's Wand (MND+7, Divine+3)</td>
+<td>Bistre-hearted Malberry</td>
+<td>Den of Rancor</td>
+<td>71–73</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Mistilteinn (MND+10)</td>
+<td>Za'Dha Adamantking</td>
+<td>Qulun Dome</td>
+<td>85</td>
+<td>Rare</td>
+</tr>
+<tr>
+<td>71</td>
+<td><strong>Templar Mace</strong> (+10% cure, MND+5)</td>
+<td>Lamia No.19</td>
+<td>Arrapago Reef</td>
+<td>78</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Legion Scutum (Enmity−2, MP+20)</td>
+<td>Mahjlaef the Paintorn</td>
+<td>Caedarva Mire</td>
+<td>83–85</td>
+<td>Always (one item from a group)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Jet Seraweels (MND+7, Enmity−4)</td>
+<td>Jaded Jody</td>
+<td>Wajaom Woodlands</td>
+<td>80</td>
+<td>Uncommon</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Alkalurops (MND+10, M.Acc+20)</td>
+<td>Tinnin</td>
+<td>Wajaom Woodlands</td>
+<td>88–89</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>74</td>
+<td><strong>Muse Tariqah</strong> (MND+7)</td>
+<td>Verdelet</td>
+<td>Caedarva Mire</td>
+<td>85–86</td>
+<td>Common</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Rostrum Pumps (Fast Cast +3)</td>
+<td>Alastor Antlion</td>
+<td>Attohwa Chasm</td>
+<td>83</td>
+<td>Always</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="appendix-a"><span class="num">APPENDIX A</span><h2 class="ch">MACRO CHEAT SHEET</h2></header>
+<p><em>Swap with <code>/equipset</code>, then cast. Set numbers below match the four sets in Chapter 7: 1 = Buff, 2 = Cure, 3 = Idle, 4 = Rest.</em></p>
+<pre><code>Cure IV (party member)
+/equipset 2
+/ma &quot;Cure IV&quot; &lt;stpt&gt;
+/wait 3
+/equipset 3
+
+Panic Curaga
+/ja &quot;Divine Seal&quot; &lt;me&gt;
+/wait 1
+/equipset 2
+/ma &quot;Curaga III&quot; &lt;stpt&gt;
+
+Stoneskin
+/equipset 1
+/ma &quot;Stoneskin&quot; &lt;me&gt;
+/wait 8
+/equipset 3
+
+Rest
+/equipset 4
+/heal on
+
+Status: Poisona (change for each -na)
+/ma &quot;Poisona&quot; &lt;stpt&gt;
+
+Raise
+/ma &quot;Raise II&quot; &lt;stpc&gt;
+</code></pre>
+<aside class="box tip">
+<p><strong>PRO TIP — <code>&lt;stpt&gt;</code> vs <code>&lt;stpc&gt;</code>.</strong> <code>&lt;stpt&gt;</code> picks from party members only, which is safer for cures in a crowded camp. <code>&lt;stpc&gt;</code> can pick anyone, so it's what you need for Raise on a dead player who isn't in your party.</p>
+</aside>
+
+<header class="band" id="appendix-b"><span class="num">APPENDIX B</span><h2 class="ch">LEVEL-BY-LEVEL CHECKLIST</h2></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Do this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cure. Buy Dia, Banish, Poisona, Protect as you level.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Cure II. First XP party (Valkurm).</td>
+</tr>
+<tr>
+<td>16–17</td>
+<td>Curaga, Shell.</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Cure III, Regen.</strong> Qufim/Sauromugue.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Raise.</strong></td>
+</tr>
+<tr>
+<td>28–29</td>
+<td>Stoneskin (¹ conquest-locked), Cursna.</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Curaga II.</td>
+</tr>
+<tr>
+<td>36–42</td>
+<td>Teleports (get your own crystals first). Stona 39.</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Haste. AF1 <em>Messenger from Beyond</em>.</td>
+</tr>
+<tr>
+<td>41</td>
+<td><strong>Cure IV.</strong></td>
+</tr>
+<tr>
+<td>48–50</td>
+<td>Promise Badge, Raven set, Medicine Ring, Holy.</td>
+</tr>
+<tr>
+<td>51</td>
+<td><strong>Light Staff</strong>, Curaga III. AF2 and AF3.</td>
+</tr>
+<tr>
+<td>55</td>
+<td>Healing/Dryad Staff. Start hunting the Cure V scroll.</td>
+</tr>
+<tr>
+<td>56</td>
+<td>Raise II.</td>
+</tr>
+<tr>
+<td>59–60</td>
+<td>Cure Clogs, Penitent's Rope, Healer's Mitts, Reraise II.</td>
+</tr>
+<tr>
+<td>61</td>
+<td><strong>Cure V.</strong></td>
+</tr>
+<tr>
+<td>63</td>
+<td>Protect IV / Protectra IV (Rabao is cheapest).</td>
+</tr>
+<tr>
+<td>66–68</td>
+<td>Regen III, Shell IV, <strong>Noble's Tunic</strong>.</td>
+</tr>
+<tr>
+<td>70–72</td>
+<td>Blessed set, Raise III, Curaga IV, Errant/Mahatma.</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Merits (Chapter 9), Reraise III, Protectra V/Shellra V.</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="appendix-c"><span class="num">APPENDIX C</span><h2 class="ch">SOURCES</h2></header>
+<ul>
+<li><strong>Phoenix server code</strong> — github.com/phoenixffxi/Phoenix (commit aa7e18a, 2026-10-29), with <code>modules/era</code> and <code>modules/phoenix</code> overlays: spell list and scroll vendors, item tables, cure/enhancing/enmity formulas, traits, abilities, merits, mob skill lists and drop tables.</li>
+<li><a href="https://www.bg-wiki.com/ffxi/Messenger_from_Beyond">BG Wiki — Messenger from Beyond</a></li>
+<li><a href="https://www.bg-wiki.com/ffxi/Pieuje%27s_Decision">BG Wiki — Pieuje's Decision</a></li>
+<li><a href="https://www.bg-wiki.com/ffxi/Borghertz%27s_Healing_Hands">BG Wiki — Borghertz's Healing Hands</a></li>
+<li><a href="https://ffxiclopedia.fandom.com/wiki/Prelude_of_Black_and_White">FFXIclopedia — Prelude of Black and White</a></li>
+<li><a href="https://jp.ffxiah.com/forum/topic/30430/questions-about-healing-skill-update-whm">FFXIAH — cure formula changes (2012)</a></li>
+<li>Project docs: <code>phoenix-leveling-camps-guide.md</code>, <code>phoenix-overview.md</code>, <code>phoenix-ffxi-expansion-history.md</code>.</li>
+</ul>
+</main></body></html>
