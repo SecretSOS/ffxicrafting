@@ -5,8 +5,8 @@
     "icon-sprite.js": "window._iconPos={};\n(function(){\n  var x=new XMLHttpRequest();\n  x.open('GET','/icon-positions.json',true);\n  x.onload=function(){if(x.status===200)try{window._iconPos=JSON.parse(x.responseText)}catch(e){}};\n  x.send();\n})();\nfunction iconSpan(id,sz){\n  sz=sz||20;\n  var p=window._iconPos[id];\n  if(!p)return '';\n  var s='--ic:'+p[1]+';--ir:'+p[2]+';--isz:'+sz+'px';\n  if(p[0])s+=';--is:'+p[0];\n  return '<span class=\"icon\" style=\"'+s+'\"></span> ';\n}"
   },
   "versioned": {
-    "site.js": "site.a8eb7cba.js",
+    "site.js": "site.f189c77d.js",
     "table-tools.js": "table-tools.34610db5.js",
-    "style.css": "style.dc66ebe7.css"
+    "style.css": "style.0ccbad75.css"
   }
 }
