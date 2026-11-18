@@ -7,7 +7,7 @@
 <meta name="description" content="Found wrong data or a bug? Let us know so we can fix it.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.712c1d1c.css">
 <style>
 .fb-form{max-width:560px}
 .fb-field{margin-bottom:16px}
@@ -25,7 +25,7 @@
 .fb-msg.err{display:block;background:color-mix(in srgb,var(--loss) 15%,transparent);color:var(--loss);border:1px solid color-mix(in srgb,var(--loss) 30%,transparent)}
 .fb-count{float:right;font-size:.72rem;color:var(--ink-faint)}
 </style>
-<script src="/nav.js"></script>
+<script src="/site.17dc2702.js"></script>
 </head>
 <body>
 <nav class="top-bar" id="topBar"></nav>
@@ -80,9 +80,21 @@
 <footer id="siteFooter"></footer>
 </main>
 </div>
-<script src="/search.js"></script>
-<script src="/icon-sprite.js"></script>
-<script src="/item-popup.js"></script>
+<script>window._iconPos={};
+(function(){
+  var x=new XMLHttpRequest();
+  x.open('GET','/icon-positions.json',true);
+  x.onload=function(){if(x.status===200)try{window._iconPos=JSON.parse(x.responseText)}catch(e){}};
+  x.send();
+})();
+function iconSpan(id,sz){
+  sz=sz||20;
+  var p=window._iconPos[id];
+  if(!p)return '';
+  var s='--ic:'+p[1]+';--ir:'+p[2]+';--isz:'+sz+'px';
+  if(p[0])s+=';--is:'+p[0];
+  return '<span class="icon" style="'+s+'"></span> ';
+}</script>
 <script>
 (function(){
  var form=document.getElementById('fbForm'),

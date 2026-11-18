@@ -109,6 +109,19 @@ def main():
                 sys.exit(1)
         print()
 
+    if not args.only:
+        print('=== Bundling assets ===')
+        if args.dry_run:
+            print(f'  [~] bundle_assets.py')
+        else:
+            ba = subprocess.run([sys.executable, os.path.join(TOOLS, 'bundle_assets.py')],
+                                cwd=ROOT, capture_output=True, text=True)
+            if ba.returncode != 0:
+                print(f'ASSET BUNDLE FAILED — aborting\n  {ba.stderr.strip()[:500]}')
+                sys.exit(1)
+            print(ba.stdout.strip())
+        print()
+
     steps = args.only if args.only else BUILD_STEPS
     print(f'=== Running {len(steps)} build steps ===')
     for name in steps:
@@ -117,6 +130,15 @@ def main():
         print(f'  [{icon}] build_{name}.py  {msg}')
         if status == 'FAIL':
             failed.append(name)
+
+    if not args.dry_run and not args.only:
+        print('\n=== Patching asset references ===')
+        from bundle_assets import patch_html
+        patched = patch_html()
+        if patched:
+            print(f'  Patched {len(patched)} files: {", ".join(patched[:10])}')
+        else:
+            print('  No unversioned references found')
 
     if not args.no_validate and not args.dry_run and not args.only:
         print('\n=== Validation ===')

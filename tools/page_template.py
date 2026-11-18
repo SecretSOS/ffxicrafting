@@ -3,6 +3,16 @@
 import os, json
 from html import escape
 
+_ASSET_MANIFEST = None
+
+def _get_manifest():
+    global _ASSET_MANIFEST
+    if _ASSET_MANIFEST is None:
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib', 'asset_manifest.json')
+        with open(p) as f:
+            _ASSET_MANIFEST = json.load(f)
+    return _ASSET_MANIFEST
+
 _ICON_POS = None
 _SPRITE_COLS = 64
 
@@ -57,9 +67,9 @@ def html_head(title, description='', og_url='', extra_css=''):
 <meta name="theme-color" content="#0c1728">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">{style}
-<script src="/nav.js"></script>
-<script src="/powertools.js"></script>
+<link rel="stylesheet" href="/{_get_manifest()['versioned']['style.css']}">{style}
+<script src="/{_get_manifest()['versioned']['site.js']}"></script>
+<script>{_get_manifest()['inline']['powertools.js']}</script>
 </head>
 <body>
 '''
@@ -86,13 +96,11 @@ def breadcrumbs(crumbs):
 
 
 def page_scripts():
-    return '''\
-<script src="/ah-prices.js"></script>
-<script src="/search.js"></script>
-<script src="/icon-sprite.js"></script>
-<script src="/item-popup.js"></script>
-<script src="/table-tools.js" defer></script>
-<script defer src="/_vercel/insights/script.js"></script>
+    m = _get_manifest()
+    return f'''\
+<script>{m['inline']['ah-prices.js']}</script>
+<script>{m['inline']['icon-sprite.js']}</script>
+<script src="/{m['versioned']['table-tools.js']}" defer></script>
 '''
 
 

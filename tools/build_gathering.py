@@ -546,7 +546,7 @@ def build_gardening():
         body += '</tbody></table>\n'
         body += '</div></details></section>\n'
 
-    gd_scripts = '\n<script src="/icon-sprite.js"></script>\n<script src="/gardening-data.js"></script>\n<script src="/gardening-tool.js"></script>\n'
+    gd_scripts = '\n<script src="/gardening-data.js"></script>\n<script src="/gardening-tool.js"></script>\n'
     out = page('Gardening', 'Gardening seed and crystal combinations with exact drop weights.', 'gardening', body,
                extra_css_append=TOOL_CSS, extra_scripts=gd_scripts)
     fp = os.path.join(OUT, 'gardening.html')

@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-11-17",
+    "title": "CDN optimization: versioned assets & caching",
+    "desc": "Versioned JS/CSS with content hashes for immutable caching. Bundled 7 scripts into 1 bundle + 3 inlined, cutting per-page requests roughly in half. Added cache headers for static assets, sprites, and data files.",
+    "tags": ["site", "performance"]
+  },
+  {
+    "date": "2026-11-10",
+    "title": "Guides marked under revision",
+    "desc": "All fishing guides (Fishing 101, Fishing Leveling, Fishing + Cooking) now show an 'Under Revision' banner while we review them for accuracy.",
+    "tags": ["guides"]
+  },
+  {
     "date": "2026-11-08",
     "title": "Fishing Codex: skill-up advisor overhaul",
     "desc": "Skill-up advisor now uses current server formulas (break/snap/lose/land), shows lose% column, in-city toggle, condition badges, and correct skill-up percentages. Fixed moon phase labels for 78 fish.",

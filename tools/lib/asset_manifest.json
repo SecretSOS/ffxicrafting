@@ -1,0 +1,12 @@
+{
+  "inline": {
+    "powertools.js": "(function(){\nvar u=new URL(location.href);\nif(u.searchParams.get('sos')==='1')try{localStorage.setItem('phoenix-pt','1')}catch(e){}\nelse if(u.searchParams.get('sos')==='0')try{localStorage.removeItem('phoenix-pt')}catch(e){}\ntry{window.PT=localStorage.getItem('phoenix-pt')==='1'}catch(e){window.PT=false}\n})();",
+    "ah-prices.js": "(function(){\n\"use strict\";\nvar CACHE_KEY='phoenix-ah-v1',MAX_AGE=86400;\nwindow.AH=null;\nfunction load(){\n try{\n  var c=JSON.parse(localStorage.getItem(CACHE_KEY));\n  if(c&&c.prices&&(Date.now()/1000-c.fetched)<MAX_AGE){window.AH=c.prices;show(c);return;}\n }catch(e){}\n var x=new XMLHttpRequest();\n x.open('GET','/data/ah-prices.json');\n x.onload=function(){\n  if(x.status===200){\n   try{\n    var d=JSON.parse(x.responseText);\n    window.AH=d.prices;\n    try{localStorage.setItem(CACHE_KEY,x.responseText);}catch(e){}\n    show(d);\n   }catch(e){}\n  }\n };\n x.send();\n}\nfunction show(d){\n if(!window.PT)return;\n var el=document.getElementById('ahStatus');\n if(!el)return;\n var ago=Math.floor((Date.now()/1000-d.fetched)/60);\n var t=ago<60?ago+'m ago':Math.floor(ago/60)+'h ago';\n el.innerHTML='<span class=\"ah-dot\"></span>AH: '+d.count+' items ('+t+')';\n el.title='Prices from PSXI.gg for PhoenixXI';\n el.style.display='';\n}\nload();\n})();",
+    "icon-sprite.js": "window._iconPos={};\n(function(){\n  var x=new XMLHttpRequest();\n  x.open('GET','/icon-positions.json',true);\n  x.onload=function(){if(x.status===200)try{window._iconPos=JSON.parse(x.responseText)}catch(e){}};\n  x.send();\n})();\nfunction iconSpan(id,sz){\n  sz=sz||20;\n  var p=window._iconPos[id];\n  if(!p)return '';\n  var s='--ic:'+p[1]+';--ir:'+p[2]+';--isz:'+sz+'px';\n  if(p[0])s+=';--is:'+p[0];\n  return '<span class=\"icon\" style=\"'+s+'\"></span> ';\n}"
+  },
+  "versioned": {
+    "site.js": "site.17dc2702.js",
+    "table-tools.js": "table-tools.34610db5.js",
+    "style.css": "style.712c1d1c.css"
+  }
+}
