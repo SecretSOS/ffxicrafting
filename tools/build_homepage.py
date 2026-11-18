@@ -91,7 +91,7 @@ BODY = '''\
     <p style="margin:0 0 .3em">Send Errors &amp; Ideas to <strong style="color:#e63946">SECRETSOS</strong> on Discord</p>
     <p style="margin:.6em 0 0;font-size:.9em;color:var(--ink-faint)">More servers are on the roadmap, but Phoenix XI is home &mdash; so it gets built first.</p>
     <p style="margin:.8em 0 0;font-size:.85em;color:var(--ink-soft)">Due to this site&rsquo;s popularity it now costs real money to host. Any donations are welcome and appreciated.</p>
-    <p style="margin:.5em 0 0"><a href="https://paypal.me/Ursa9" class="sb-donate-btn" target="_blank" rel="noopener">Donate via PayPal</a></p>
+    <p style="margin:.5em 0 0"><a href="https://buymeacoffee.com/ffxicrafting" class="sb-donate-btn" target="_blank" rel="noopener">Buy Me a Coffee</a></p>
    </div>
   </div>
  </div>

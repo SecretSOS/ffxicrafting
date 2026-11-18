@@ -272,7 +272,7 @@ function initChrome(){
    sh+='<div class="sb-chars-label">In-Game Characters</div>';
    sh+='<div class="sb-chars"><span>Secrets</span> · <span>Secret</span></div>';
    sh+='<div class="sb-donate"><p>Due to this site\'s popularity it now costs money to host. Any donations are welcome and appreciated.</p>';
-   sh+='<a href="https://paypal.me/Ursa9" class="sb-donate-btn" target="_blank" rel="noopener">Donate via PayPal</a></div>';
+   sh+='<a href="https://buymeacoffee.com/ffxicrafting" class="sb-donate-btn" target="_blank" rel="noopener">Buy Me a Coffee</a></div>';
    sh+='</div>';
    sh+='<div style="display:flex;flex-direction:column;gap:1px;padding:6px 4px;border-top:1px solid var(--border)">';
    sh+='<a href="/feedback" style="font-size:.8rem"><span class="sb-tool"><svg aria-hidden="true"><use href="#i-flag"/></svg>Report a Bug</span></a>';
