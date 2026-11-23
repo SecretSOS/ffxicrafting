@@ -1,0 +1,3166 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monk Iron Fist Compendium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#161a26;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+.cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}
+.cover:after{content:"MNK";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}
+.cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}
+.cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}
+.cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}
+h1.mast{display:none}
+main>h2:first-of-type{display:none}
+h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+p,li{max-width:72ch}
+em{color:var(--muted)}
+.band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}
+.band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}
+.band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}
+.band+p em{font-size:17px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}
+.toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}
+.toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.toc a:hover,.toc a:focus{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}
+td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}
+tr:nth-child(even) td{background:#f6f8fa}
+code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}
+pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}
+pre code{background:none;color:inherit;padding:0}
+.box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}
+.box p{margin:4px 0}.box ul{margin:6px 0;padding-left:20px}
+.box>p:first-child strong:first-child,.box>ul:first-child{}
+.box strong:first-child{color:var(--c);letter-spacing:.06em}
+.tip{--c:var(--tip)}.warn{--c:var(--warn)}.gil{--c:var(--gil)}.code{--c:var(--code);background:#f5f2fc}.chal{--c:var(--chal)}.check{--c:var(--check)}
+.recap{--c:var(--ink);background:var(--ink);color:#fff}.recap strong:first-child{color:var(--gold)!important}
+.legend{--c:var(--gold);background:#fffaf0}.legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.legend li strong{color:var(--ink)!important}
+.st{color:var(--accent)}.st.off{color:var(--rule)}
+.q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}
+.ok{color:#15803d;font-weight:800;font-size:1.15em}
+.edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}
+.edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}
+.fx{font-size:1.35em;line-height:1;white-space:nowrap}
+.curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.curechart svg{width:100%;height:auto;display:block}
+.curechart .bn{fill:#0f766e}.curechart .bo{fill:#d9a521}.curechart .bs{fill:#b3202f}.curechart .bp{fill:#1d5fb8}.curechart .bb{fill:#d9a521}
+.curechart .cl{font:600 13px var(--body);fill:var(--ink)}
+.curechart .cv{font:600 12px var(--mono);fill:var(--ink)}
+.curechart .ct{font:11px var(--mono);fill:var(--muted)}
+.curechart .gl{stroke:var(--rule);stroke-width:1}
+.curechart .lg{font:600 12px var(--body);fill:var(--ink)}
+.curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}
+details summary{cursor:pointer;font-weight:600}
+.foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.foodchain svg{width:100%;height:auto;display:block}
+.foodchain .fp{font-size:14px}
+.foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}
+.foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}
+.foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}
+.foodchain .fa{stroke:#d9381e;stroke-width:3}
+.foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}
+.foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.set-tp{--s:#b3202f}.set-ws{--s:#b45309}.set-eva{--s:#1d4ed8}.set-nin{--s:#5b3fa6}
+.set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}
+.sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}
+.sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}
+.setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}
+.seticon{font-size:26px;line-height:1}
+.settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.set .tw{border-color:var(--s)}.set th{background:var(--s)}
+.set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}
+.fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.fstep b{font-size:22px;line-height:1}.fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}
+.fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}
+.fstep small{font-size:12px;opacity:.9}
+.fstep:hover,.fstep:focus-visible{filter:brightness(1.1)}
+@media (max-width:700px){.flow{grid-template-columns:1fr 1fr;gap:6px}.fstep,.fstep:first-child{clip-path:none}}
+@media (max-width:520px){.band,.cover{margin-left:-16px;margin-right:-16px}main{padding:0 16px 60px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>Monk</h1><p>The iron fist compendium: era Focus, Dodge and Chakra straight from the server code, Martial Arts and Hundred Fists speed, every hand-to-hand weapon skill, the belt quests, a damage-type report for every classic camp, four gear sets, AF, Asuran Fists and merits.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">MONK</h1>
+<h2>The Iron Fist Compendium — Phoenix Edition</h2>
+<p><em>No sword. No shield. No problem.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE MONK</a><a href="#chapter-2">CHAPTER 2 · BECOMING A MONK</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE ARSENAL (SKILLS AND WEAPON SKILLS)</a><a href="#chapter-5">CHAPTER 5 · MONK MATH (SPEED, KICKS, COUNTERS AND HATE)</a><a href="#chapter-6">CHAPTER 6 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · LEGENDARY QUESTS (BELTS, ARTIFACT ARMOR AND ASURAN FISTS)</a><a href="#chapter-9">CHAPTER 9 · MERITS AT 75 (ToAU RULES)</a><a href="#chapter-10">CHAPTER 10 · THE ENDGAME MONK</a><a href="#appendix-a">APPENDIX A · MACRO CHEAT SHEET</a><a href="#appendix-b">APPENDIX B · LEVEL-BY-LEVEL CHECKLIST</a><a href="#appendix-c">APPENDIX C · SOURCES</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most Monk guides on the web describe the game after 2008: Footwork, Impetus, Perfect Counter, Ascetic's Fury, Victory Smite and level-99 gear. <strong>None of that is on Phoenix.</strong> This guide uses Phoenix's own server code (github.com/phoenixffxi/Phoenix) with its era-revert modules applied. Ability values, weapon skill numbers, skill caps, gear stats and drops all come from that code. Quest walkthroughs were checked against BG Wiki and HorizonXI Wiki, because the server code can't tell you where to stand or what an NPC says.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves time, TP or gil</li>
+<li><strong>WARNING</strong> — a common way to die or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>GRANDMASTER'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — three things this guide can't settle from the code.</strong></p>
+<ul>
+<li><strong>Counterstance's defense penalty</strong> depends on a server setting. With the default, Counterstance halves your defense; with the "old" setting, defense becomes 1 + VIT ÷ 2. Phoenix's live value isn't public.</li>
+<li><strong>Hand-to-hand damage types</strong> (Chapter 5) come from the server's mob data files, which give hand-to-hand its own column. Most families leave that column blank, so in Phoenix's data you hit flans and skeletons for normal damage. If the live server behaves differently, the data was changed.</li>
+<li><strong>Live server settings</strong> such as weapon-skill points per kill aren't public. The numbers here are the code defaults.</li>
+</ul>
+</aside>
+
+<h2>MONK AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Damage dealer. Emergency tank. The best TP feeder for skillchains</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> — top damage at every level, wanted everywhere</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — Chakra and Counter let you solo Even Match mobs into the 30s</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span> — cheap weapons, cheap gear until 60</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — simple rotation. Hate control is the hard part</td>
+</tr>
+<tr>
+<td><strong>Main weapon</strong></td>
+<td>Hand-to-Hand (A+). Staff (B) and Club (C+) on the side</td>
+</tr>
+<tr>
+<td><strong>Key stats</strong></td>
+<td>STR, DEX, Accuracy, Attack, Haste, VIT (for Chakra and weapon skills)</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Low. The best haste belt is a quest, and most 75 gear is crafted</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE MONK</h2></header>
+<p><em>Two fists, two hits per round, and a kick when nobody's looking.</em></p>
+<p>On Phoenix a MNK does four things, in this order of importance:</p>
+<ol>
+<li><strong>Punch fast.</strong> Martial Arts cuts your attack delay every 15 levels. You swing twice per round with one "weapon".</li>
+<li><strong>Build TP for the party.</strong> Fast hits mean fast TP and more weapon skills per fight than anyone else.</li>
+<li><strong>Take a hit and heal yourself.</strong> Max HP Boost, Counter and Chakra make you the sturdiest damage dealer.</li>
+<li><strong>Hold hate in an emergency.</strong> Not a tank, but a Monk with Counterstance can stand under a mob for a while.</li>
+</ol>
+<h3>Job abilities on Phoenix (era-reverted)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>What it does on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Hundred Fists</strong> (2-hour)</td>
+<td>2:00:00</td>
+<td>For 45 seconds, your attack delay drops to a quarter.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Boost</strong></td>
+<td>0:15</td>
+<td>Attack +12% until your next attack round. Stacks if you use it again before swinging.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Dodge</strong></td>
+<td>5:00</td>
+<td><strong>Evasion +20 for 2 minutes.</strong></td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Focus</strong></td>
+<td>5:00</td>
+<td><strong>Accuracy +20 for 2 minutes.</strong></td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Chakra</strong></td>
+<td>5:00</td>
+<td>Heals <strong>VIT × 2</strong> HP, cures Poison and Blind.</td>
+</tr>
+<tr>
+<td>41</td>
+<td><strong>Chi Blast</strong></td>
+<td>3:00</td>
+<td>MND-based damage, ignores shadows, uses up Boost (more damage per Boost stack).</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Counterstance</strong></td>
+<td>5:00</td>
+<td><strong>Counter +45% for 5 minutes</strong>, but your defense drops (see warning above).</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Mantra</strong> (merit)</td>
+<td>10:00</td>
+<td>Max HP +4% per merit rank for the party, 3 minutes.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Formless Strikes</strong> (merit)</td>
+<td>10:00</td>
+<td>3 minutes of melee that counts as non-physical damage: it skips damage-type resistances and physical damage reduction, at 60–70% power.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the era Focus, Dodge and Chakra.</strong> Phoenix's era module (<code>modules/era/lua/globals/job_utils/monk.lua</code>) reverts Focus to a flat <strong>Accuracy +20</strong> and Dodge to a flat <strong>Evasion +20</strong>, both for <strong>120 seconds</strong> (modern versions last 30 seconds and add crit or evasion bonuses). Chakra heals exactly <strong>VIT × 2</strong>, multiplied by any Chakra gear (Temple Cyclas +50%, Melee Gloves +30%). At 75 with about 75 VIT, that's 150 HP, or 225 in Temple Cyclas.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — Boost.</strong> Each use adds 12.5% attack (stored as a whole number, so +12%), lasts up to 3 minutes, and <strong>is used up at the end of your next attack round</strong> (<code>battle_entity.cpp</code>). Temple Gloves add +5.5% per use. Boost twice before a weapon skill if you have the TP sitting there.</p>
+</aside>
+<h3>Job traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Value on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 / 16 / 31 / 46 / 61 / 75</td>
+<td><strong>Martial Arts</strong></td>
+<td>Delay −80 / −100 / −120 / −140 / −160 / −180 (in 1/60 s)</td>
+</tr>
+<tr>
+<td>5 / 25 / 40 / 65</td>
+<td>Subtle Blow</td>
+<td>+5 / +10 / +15 / +20</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Counter</strong></td>
+<td>10% chance to counter-attack when a mob swings at you</td>
+</tr>
+<tr>
+<td>15 / 35 / 55 / 70</td>
+<td>Max HP Boost</td>
+<td>+30 / +60 / +120 / +180 HP</td>
+</tr>
+<tr>
+<td>51 / 71</td>
+<td><strong>Kick Attacks</strong></td>
+<td>10% / 12% chance of a bonus kick each round</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Invigorate (merit)</td>
+<td>Chakra also gives Regen</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Penance (merit)</td>
+<td>Chi Blast also gives the mob Inhibit TP</td>
+</tr>
+</tbody>
+</table></div>
+<h3>What's NOT on Phoenix</h3>
+<aside class="box warn">
+<p><strong>WARNING — skip these sections of any modern guide.</strong> Phoenix runs pre-Wings of the Goddess.</p>
+<ul>
+<li><strong>Footwork, Impetus, Perfect Counter, Inner Strength</strong> — later expansions. The era module even has a commented-out Footwork, but nothing turns it on.</li>
+<li><strong>Ascetic's Fury, Victory Smite, Shijin Spiral</strong> — merit and later weapon skills. The weapon-skill merit category has 0 upgrades.</li>
+<li><strong>Tactical Guard, Tactical Parry</strong> — later traits.</li>
+<li><strong>ZNM gear</strong> (Enkidu's set, Hachiryu, Shuhansadyu Baghnakhs) — Phoenix hides the ZNM pop NPCs and spawn points.</li>
+<li><strong>Einherjar gear</strong> (Iota Ring) — the Einherjar NPC is hidden.</li>
+<li><strong>Hasso from /SAM</strong> — hand-to-hand isn't a two-handed weapon in Phoenix's code, so Hasso and Seigan won't activate.</li>
+</ul>
+</aside>
+<h3>Base stats at 75 by race (MNK75 / WAR37, no gear, no merits)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>HP</th>
+<th>STR</th>
+<th>DEX</th>
+<th>VIT</th>
+<th>AGI</th>
+<th>INT</th>
+<th>MND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>1357</td>
+<td>70</td>
+<td>70</td>
+<td>70</td>
+<td>59</td>
+<td>52</td>
+<td>61</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>1448</td>
+<td>75</td>
+<td>67</td>
+<td>73</td>
+<td>53</td>
+<td>46</td>
+<td>66</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>1161</td>
+<td>64</td>
+<td>70</td>
+<td>67</td>
+<td>62</td>
+<td>59</td>
+<td>58</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>1357</td>
+<td>67</td>
+<td>77</td>
+<td>67</td>
+<td>64</td>
+<td>52</td>
+<td>58</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>1569</td>
+<td>73</td>
+<td>70</td>
+<td>77</td>
+<td>56</td>
+<td>49</td>
+<td>61</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Galka Monks are a classic for a reason.</strong> The most HP and VIT means the biggest Chakra and the most survivable counter-tank. Mithra get the best DEX for accuracy and crits, Elvaan the most STR and MND (Chi Blast). Every race works; the gaps are a few points that gear covers.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Focus and Dodge are 2-minute buffs on Phoenix. Use them every time they're up.</li>
+<li>Chakra heals VIT × 2. VIT gear is healing gear.</li>
+<li>No Footwork, no Impetus, no Hasso.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A MONK</h2></header>
+<p><em>Before you can punch dragons, you have to punch a ghost in a mine.</em></p>
+<p>Monk is a starting job. You can pick it at character creation or change to it at your Mog House.</p>
+<h3>Martial Arts: why your fists are fast</h3>
+<p>Every hand-to-hand weapon has a delay that already includes the 480 base. Martial Arts subtracts a flat amount from it, and you swing twice per round.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Your level</th>
+<th>Martial Arts</th>
+<th>Kaiser Knuckles (566) per round</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>−80</td>
+<td>486</td>
+</tr>
+<tr>
+<td>16</td>
+<td>−100</td>
+<td>466</td>
+</tr>
+<tr>
+<td>31</td>
+<td>−120</td>
+<td>446</td>
+</tr>
+<tr>
+<td>46</td>
+<td>−140</td>
+<td>426</td>
+</tr>
+<tr>
+<td>61</td>
+<td>−160</td>
+<td>406</td>
+</tr>
+<tr>
+<td>75</td>
+<td>−180</td>
+<td><strong>386</strong></td>
+</tr>
+<tr>
+<td>75 + Hundred Fists</td>
+<td>—</td>
+<td><strong>about 97</strong></td>
+</tr>
+</tbody>
+</table></div>
+<figure class="curechart"><svg viewBox="0 0 760 300" role="img" aria-label="Attack round delay by Martial Arts tier"><line class="gl" x1="60" x2="750" y1="250" y2="250"/><text class="ct" x="52" y="254" text-anchor="end">0</text><line class="gl" x1="60" x2="750" y1="195" y2="195"/><text class="ct" x="52" y="199" text-anchor="end">150</text><line class="gl" x1="60" x2="750" y1="140" y2="140"/><text class="ct" x="52" y="144" text-anchor="end">300</text><line class="gl" x1="60" x2="750" y1="85" y2="85"/><text class="ct" x="52" y="89" text-anchor="end">450</text><line class="gl" x1="60" x2="750" y1="30" y2="30"/><text class="ct" x="52" y="34" text-anchor="end">600</text><rect class="bo" x="80" y="72" width="70" height="178"/><text class="cv" x="115.0" y="66" text-anchor="middle">486</text><text class="cl" x="115.0" y="270" text-anchor="middle">Lv1</text><rect class="bo" x="180" y="79" width="70" height="171"/><text class="cv" x="215.0" y="73" text-anchor="middle">466</text><text class="cl" x="215.0" y="270" text-anchor="middle">Lv16</text><rect class="bo" x="280" y="86" width="70" height="164"/><text class="cv" x="315.0" y="80" text-anchor="middle">446</text><text class="cl" x="315.0" y="270" text-anchor="middle">Lv31</text><rect class="bo" x="380" y="94" width="70" height="156"/><text class="cv" x="415.0" y="88" text-anchor="middle">426</text><text class="cl" x="415.0" y="270" text-anchor="middle">Lv46</text><rect class="bo" x="480" y="101" width="70" height="149"/><text class="cv" x="515.0" y="95" text-anchor="middle">406</text><text class="cl" x="515.0" y="270" text-anchor="middle">Lv61</text><rect class="bo" x="580" y="108" width="70" height="142"/><text class="cv" x="615.0" y="102" text-anchor="middle">386</text><text class="cl" x="615.0" y="270" text-anchor="middle">Lv75</text><rect class="bn" x="680" y="214" width="70" height="36"/><text class="cv" x="715.0" y="208" text-anchor="middle">~97</text><text class="cl" x="715.0" y="270" text-anchor="middle">100 Fists</text></svg><figcaption>Delay per attack round (1/60 s) with Kaiser Knuckles (566), no haste, from the delay code in <code>battle_entity.cpp</code>. Lower is faster; each round is two punches.</figcaption></figure>
+
+<aside class="box code">
+<p><strong>FROM THE CODE — Hundred Fists.</strong> <code>battle_entity.cpp</code> takes your weapon delay minus Martial Arts, sets a floor of 1.6 seconds, then multiplies by 0.25. Haste doesn't stack on top of it. 45 seconds of that is roughly 28 attack rounds instead of 7.</p>
+</aside>
+<h3>Your first shopping list (levels 1–20)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Item</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Cesti +1</strong> → <strong>Tropical Punches +1</strong> (Lv10, Acc+12)</td>
+<td>Delay 480, the lowest base delay in the game. Leathercraft 81 HQ, cheap on the AH</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Purple Belt</strong> (Lv18, Haste +4%, STR+3)</td>
+<td>Quest <em>Silence of the Rams</em>, Port Bastok. Needs Norg fame 2</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Bounding Boots</strong> (Lv7)</td>
+<td>DEX+3, AGI+3</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>Spike Necklace (Lv21)</td>
+<td>STR+3, DEX+3</td>
+</tr>
+<tr>
+<td>Body/Hands/Legs/Feet (27–33)</td>
+<td>Your race's RSE set</td>
+<td>Race Specific Equipment from <em>The Goblin Tailor</em>: plan it around level 25 (Chapter 6 and the <a href="/guides/jobs/rse">RSE guide</a>)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — low-delay weapons are a Monk trick.</strong> Tropical Punches have 1 damage but a 480 delay. With Martial Arts you swing far faster than with Brass Knuckles (576). Faster swings mean faster TP. Swap to a high-damage weapon once your level-based base damage is doing most of the work.</p>
+</aside>
+<h3>Levels 1–15: before Counter and Dodge</h3>
+<p>You're one of the best soloers in the game at this level. Boost before every pull, fight Easy Prey to Decent Challenge, and rest. Counter at 10 does free damage when mobs hit you.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — level 18</strong></p>
+<ul>
+<li>Purple Belt quest done (if you have the Norg fame).</li>
+<li>Subjob quest done (Chapter 3).</li>
+<li>Tropical Punches +1 or a cheap upgrade in hand.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>Pick the sub that covers your weakness: hate, accuracy, or burst.</em></p>
+<p>Unlock subjobs at level 18 with <em>The Old Lady</em> (starts in Mhaura) or <em>Elder Memories</em> (starts in Selbina).</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>You get at 37</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/WAR</strong></td>
+<td>Double Attack 10%, Berserk (+25% attack), Warcry, Provoke, Attack Bonus</td>
+<td><strong>The default.</strong> More hits, more attack, Provoke to pull</td>
+</tr>
+<tr>
+<td><strong>/NIN</strong></td>
+<td>Utsusemi: Ichi and Ni, Subtle Blow</td>
+<td>You keep pulling hate, or you're the backup tank. No Dual Wield benefit for hand-to-hand</td>
+</tr>
+<tr>
+<td><strong>/THF</strong></td>
+<td>Sneak Attack, Trick Attack, Treasure Hunter, Steal, Evasion Bonus</td>
+<td>Opening weapon skill burst, farming</td>
+</tr>
+<tr>
+<td><strong>/SAM</strong></td>
+<td>Store TP +15, Meditate (~600 TP), Third Eye, Zanshin</td>
+<td>More TP for skillchain-heavy parties. <strong>No Hasso</strong> with fists</td>
+</tr>
+<tr>
+<td><strong>/DRK</strong></td>
+<td>Last Resort (+25% attack, <strong>30 s</strong> on Phoenix), Souleater</td>
+<td>Burst damage. Last Resort is short on Phoenix</td>
+</tr>
+<tr>
+<td><strong>/WHM</strong></td>
+<td>Cure, Protect, Dia</td>
+<td>Soloing 18–30</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — /WAR's Double Attack works with fists.</strong> Each of your two fist "hits" can double-attack, and Kick Attacks roll on top. That's why MNK/WAR is the standard.</p>
+</aside>
+<h3>When you're the sub: /MNK on other jobs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub level</th>
+<th>They get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 / 16 / 31</td>
+<td>Martial Arts (only with no weapon or hand-to-hand)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Boost, Subtle Blow</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Counter 10%</strong></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Dodge, <strong>Max HP Boost +30</strong></td>
+</tr>
+<tr>
+<td>25</td>
+<td>Focus, Subtle Blow +10</td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Chakra</strong>, Max HP Boost +60</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>/WAR is the default from 18 to 75.</li>
+<li>/NIN when hate is the problem, /THF for burst and drops.</li>
+<li>Fists aren't two-handed on Phoenix: no Hasso from /SAM.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE ARSENAL (SKILLS AND WEAPON SKILLS)</h2></header>
+<p><em>One weapon type that matters, and the best skill grade in the game for it.</em></p>
+<h3>Your combat skills at 75 (era caps)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Grade</th>
+<th>Cap at 75</th>
+<th>Reaches 200 at</th>
+<th>Reaches 250 at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hand-to-Hand</strong></td>
+<td>A+</td>
+<td><strong>276</strong></td>
+<td>Lv60</td>
+<td>Lv70</td>
+</tr>
+<tr>
+<td><strong>Guard</strong></td>
+<td>A</td>
+<td>269</td>
+<td>Lv60</td>
+<td>Lv72</td>
+</tr>
+<tr>
+<td>Evasion</td>
+<td>B+</td>
+<td>256</td>
+<td>Lv62</td>
+<td>Lv74</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>B</td>
+<td>250</td>
+<td>Lv62</td>
+<td>Lv75</td>
+</tr>
+<tr>
+<td>Club</td>
+<td>C+</td>
+<td>230</td>
+<td>Lv64</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Throwing, Parry</td>
+<td>E</td>
+<td>200</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Guard.</strong> Guard is the Monk's version of parry: a chance to block a hit with your fists, raised by Guard skill. Temple Hose (+10) and Melee Gaiters (+12) add to it.</p>
+</aside>
+<h3>Hand-to-hand weapon skills (era values)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Skill</th>
+<th>Hits</th>
+<th>fTP at 100 / 200 / 300%</th>
+<th>Stat mods</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Combo</td>
+<td>10</td>
+<td>3</td>
+<td>1.0 / 1.5 / 2.0</td>
+<td>STR 20%, DEX 20%</td>
+<td>Your WS to 40</td>
+</tr>
+<tr>
+<td>Shoulder Tackle</td>
+<td>40</td>
+<td>2</td>
+<td>1.0</td>
+<td>VIT 30%</td>
+<td>Stun</td>
+</tr>
+<tr>
+<td>One Inch Punch</td>
+<td>75</td>
+<td>2</td>
+<td>1.0</td>
+<td>VIT 40%</td>
+<td></td>
+</tr>
+<tr>
+<td>Backhand Blow</td>
+<td>100</td>
+<td>2</td>
+<td>1.0</td>
+<td>STR 30%, DEX 30%</td>
+<td>Crit 30 / 63 / 96% with TP</td>
+</tr>
+<tr>
+<td><strong>Raging Fists</strong></td>
+<td>125</td>
+<td>5</td>
+<td>1.0 / 1.5 / 2.0</td>
+<td>STR 20%, DEX 20%</td>
+<td>The workhorse from 41 to 60</td>
+</tr>
+<tr>
+<td>Spinning Attack</td>
+<td>150</td>
+<td>2</td>
+<td>1.0</td>
+<td>STR 35%</td>
+<td>Hits everything around you. Careful in parties</td>
+</tr>
+<tr>
+<td><strong>Howling Fist</strong></td>
+<td>200</td>
+<td>2</td>
+<td><strong>2.5 / 2.75 / 3.0</strong></td>
+<td>STR 20%, <strong>VIT 50%</strong></td>
+<td>Attack ×1.5. <strong>Main-job MNK only</strong></td>
+</tr>
+<tr>
+<td><strong>Dragon Kick</strong></td>
+<td>225</td>
+<td>2</td>
+<td><strong>2.0 / 2.75 / 3.5</strong></td>
+<td>STR 50%, VIT 50%</td>
+<td><strong>Main MNK only.</strong> Your best WS until Asuran</td>
+</tr>
+<tr>
+<td><strong>Asuran Fists</strong></td>
+<td>250</td>
+<td>8</td>
+<td>1.0 each</td>
+<td>STR 10%, VIT 10%</td>
+<td>Accuracy +0 / +30 / +50 with TP. Quest <em>The Walls of Your Mind</em></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — VIT is a damage stat for you.</strong> Howling Fist and Dragon Kick both put 50% on VIT. VIT gear also feeds Chakra. Galka and VIT rings pull double duty.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — Dragon Kick vs Asuran Fists.</strong> Dragon Kick is two big hits with STR and VIT at 50%. Asuran Fists is eight small hits with tiny stat mods but extra accuracy. Against high-evasion mobs Asuran lands more; against soft mobs with your Attack high, Dragon Kick often hits harder. Try both on the same mob and watch the numbers.</p>
+</aside>
+<h3>Other weapons you can bring</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Weapon</th>
+<th>Best WS for Monk</th>
+<th>Skill</th>
+<th>Unlock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Staff</td>
+<td>Full Swing (fTP 1.0 / 3.0 / 5.0, STR 50%)</td>
+<td>200</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td><strong>Retribution</strong> (fTP 2.0 / 2.5 / 3.0, STR 30% MND 50%)</td>
+<td>230</td>
+<td>Quest <em>Blood and Glory</em> (Shantotto, Windurst Walls)</td>
+</tr>
+<tr>
+<td>Club</td>
+<td>True Strike, Skullbreaker</td>
+<td>175 / 150</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Club</td>
+<td>Black Halo</td>
+<td>230</td>
+<td>Quest <em>Orastery Woes</em> (your Club cap only reaches 230 at 75)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Skillchains you can build (from Phoenix's skillchain table)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Opener → Closer</th>
+<th>Skillchain</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asuran Fists → Dragon Kick</td>
+<td><strong>Fragmentation</strong></td>
+<td>Two Monks, or one Monk under Hundred Fists</td>
+</tr>
+<tr>
+<td>Spinning Attack → Howling Fist / Raging Fists</td>
+<td><strong>Fusion</strong></td>
+<td>Good at 60–70</td>
+</tr>
+<tr>
+<td>Dragon Kick → Decimation / Tachi: Kasha / Mistral Axe</td>
+<td><strong>Light</strong></td>
+<td>With a WAR or SAM partner</td>
+</tr>
+<tr>
+<td>Asuran Fists → Steel Cyclone / Spiral Hell / Tachi: Gekko</td>
+<td><strong>Darkness</strong></td>
+<td>You open, WAR/DRK/SAM close</td>
+</tr>
+<tr>
+<td>Steel Cyclone / Tachi: Gekko / Spiral Hell → Asuran Fists</td>
+<td><strong>Darkness</strong></td>
+<td>You close</td>
+</tr>
+<tr>
+<td>Evisceration / Blade: Ku / Impulse Drive → Dragon Kick</td>
+<td><strong>Fragmentation</strong></td>
+<td>THF, NIN or DRG opens for you</td>
+</tr>
+<tr>
+<td>Decimation / Tachi: Kasha / Mistral Axe → Dragon Kick</td>
+<td><strong>Light</strong></td>
+<td>You close a level 3</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — weapon skill points.</strong> The Knuckles of Trials need <strong>300 points</strong>. Phoenix's defaults give 5 per weapon skill on a mob that gives experience, plus 2 / 4 / 6 when your WS closes a level 1 / 2 / 3 skillchain. Monks get more weapon skills per fight than anyone, so this goes fast.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Raging Fists from 41, Howling Fist at 60, Dragon Kick at 65, Asuran Fists at 70+.</li>
+<li>VIT is a damage stat (Howling Fist, Dragon Kick) and a healing stat (Chakra).</li>
+<li>Asuran Fists needs 250 skill, which your cap allows from level 70.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">MONK MATH (SPEED, KICKS, COUNTERS AND HATE)</h2></header>
+<p><em>A Monk who knows the numbers spends less time on the floor.</em></p>
+<h3>Your buffs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Buff</th>
+<th>Effect</th>
+<th>Lasts</th>
+<th>Recast</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boost</td>
+<td>Attack +12% per use, gone after your next round</td>
+<td>until you swing</td>
+<td>0:15</td>
+</tr>
+<tr>
+<td>Focus</td>
+<td>Accuracy +20</td>
+<td>2:00</td>
+<td>5:00</td>
+</tr>
+<tr>
+<td>Dodge</td>
+<td>Evasion +20</td>
+<td>2:00</td>
+<td>5:00</td>
+</tr>
+<tr>
+<td>Counterstance</td>
+<td>Counter +45%, defense down</td>
+<td>5:00</td>
+<td>5:00</td>
+</tr>
+<tr>
+<td>/WAR Berserk</td>
+<td>Attack +25%, Defense −25%</td>
+<td>3:00</td>
+<td>5:00</td>
+</tr>
+</tbody>
+</table></div>
+<p>Focus and Dodge last 2 minutes on a 5-minute timer, so they're up 40% of the time. Save Focus for the weapon skill window on high-evasion mobs.</p>
+<h3>Haste: where your belt comes in</h3>
+<p>Gear haste caps at <strong>25%</strong> in Phoenix's delay code (<code>battle_entity.cpp</code>), separate from magic haste and job-ability haste. Monk has the best haste belts in the game:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Belt</th>
+<th>Lv</th>
+<th>Haste</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purple Belt</td>
+<td>18</td>
+<td><strong>+4%</strong></td>
+<td><em>Silence of the Rams</em></td>
+</tr>
+<tr>
+<td>Brown Belt</td>
+<td>40</td>
+<td><strong>+8%</strong></td>
+<td><em>Fistful of Fury</em></td>
+</tr>
+<tr>
+<td>Black Belt</td>
+<td>70</td>
+<td><strong>+12%</strong> (and STR+7, physical damage taken −5%)</td>
+<td><em>Beat Around the Bushin</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Black Belt alone is half the gear cap. The belt quests are in Chapter 8.</p>
+<h3>Counter and Kick Attacks</h3>
+<ul>
+<li><strong>Counter</strong> (10% at 10, +45% with Counterstance) hits back when a mob swings at you. A counter doesn't need TP or your attack round, so it's free damage.</li>
+<li><strong>Kick Attacks</strong> (10% at 51, 12% at 71) add a kick to your attack round. Melee Hose adds +5%, merits +1% each.</li>
+</ul>
+<aside class="box warn">
+<p><strong>WARNING — Counterstance and defense.</strong> By default, Counterstance <strong>halves your defense</strong> (<code>battle_entity.cpp</code>). A server setting can switch it to "defense = 1 + VIT ÷ 2" instead, which is even worse with good armor. Use it when you're meant to be hit (solo, NM kiting the tank can't hold), not in a normal party.</p>
+</aside>
+<h3>Damage types: hand-to-hand is its own type here</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE — no fallback to blunt.</strong> When you punch, Phoenix multiplies damage only by the mob's <strong>hand-to-hand</strong> resistance (<code>battleutils.cpp</code>), never its blunt resistance. Most families in <code>data/ecosystems.yaml</code> list values for slashing, piercing and blunt but leave hand-to-hand blank. So in Phoenix's data, <strong>flans, puddings and most skeletons take normal damage from your fists</strong>, even though they resist or like blunt.</p>
+</aside>
+<p><strong>Families with a hand-to-hand value (from the server data):</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Hand-to-hand</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leech, hecteyes</td>
+<td>×0.75</td>
+<td>Still fine to punch</td>
+</tr>
+<tr>
+<td>Ghost (one species)</td>
+<td>×0.5</td>
+<td>Formless Strikes, or let the mages work</td>
+</tr>
+<tr>
+<td>Slime (slime, clot, scum)</td>
+<td>×0.25</td>
+<td>Formless Strikes</td>
+</tr>
+<tr>
+<td>Elementals (all eight)</td>
+<td>×0.25</td>
+<td>Don't punch. Formless Strikes at 75</td>
+</tr>
+<tr>
+<td>Skeleton ("skeleton" species), corse</td>
+<td>×1.125</td>
+<td>Punch away</td>
+</tr>
+<tr>
+<td>Qutrub</td>
+<td>×2.0</td>
+<td>Free damage</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="curechart"><svg viewBox="0 0 760 330" role="img" aria-label="Hand-to-hand versus blunt damage multiplier by mob family"><line class="gl" x1="50" x2="750" y1="270" y2="270"/><text class="ct" x="42" y="274" text-anchor="end">×0</text><line class="gl" x1="50" x2="750" y1="210" y2="210"/><text class="ct" x="42" y="214" text-anchor="end">×0.5</text><line class="gl" x1="50" x2="750" y1="150" y2="150"/><text class="ct" x="42" y="154" text-anchor="end">×1</text><line class="gl" x1="50" x2="750" y1="90" y2="90"/><text class="ct" x="42" y="94" text-anchor="end">×1.5</text><line class="gl" x1="50" x2="750" y1="30" y2="30"/><text class="ct" x="42" y="34" text-anchor="end">×2</text><line x1="50" x2="750" y1="150" y2="150" stroke="#1d2333" stroke-width="1.5" stroke-dasharray="4 3"/><rect class="bs" x="64" y="180" width="30" height="90"><title>Leech / hecteyes: ×0.75</title></rect><rect class="bb" x="96" y="180" width="30" height="90"><title>Leech / hecteyes: ×0.75</title></rect><text class="cl" x="95" y="288" text-anchor="middle">Leech</text><rect class="bs" x="150" y="210" width="30" height="60"><title>Ghost: ×0.5</title></rect><rect class="bb" x="182" y="210" width="30" height="60"><title>Ghost: ×0.5</title></rect><text class="cl" x="181" y="288" text-anchor="middle">Ghost</text><rect class="bs" x="236" y="240" width="30" height="30"><title>Slime: ×0.25</title></rect><rect class="bb" x="268" y="240" width="30" height="30"><title>Slime: ×0.25</title></rect><text class="cl" x="267" y="288" text-anchor="middle">Slime</text><rect class="bs" x="322" y="240" width="30" height="30"><title>Elemental: ×0.25</title></rect><rect class="bb" x="354" y="240" width="30" height="30"><title>Elemental: ×0.25</title></rect><text class="cl" x="353" y="288" text-anchor="middle">Elemental</text><rect class="bs" x="408" y="135" width="30" height="135"><title>Skeleton: ×1.125</title></rect><rect class="bb" x="440" y="120" width="30" height="150"><title>Skeleton: ×1.25</title></rect><text class="cl" x="439" y="288" text-anchor="middle">Skeleton</text><rect class="bs" x="494" y="135" width="30" height="135"><title>Corse: ×1.125</title></rect><rect class="bb" x="526" y="135" width="30" height="135"><title>Corse: ×1.125</title></rect><text class="cl" x="525" y="288" text-anchor="middle">Corse</text><rect class="bs" x="580" y="150" width="30" height="120"><title>Flan: ×1</title></rect><rect class="bb" x="612" y="195" width="30" height="75"><title>Flan: ×0.625</title></rect><text class="cl" x="611" y="288" text-anchor="middle">Flan</text><rect class="bs" x="666" y="30" width="30" height="240"><title>Qutrub: ×2</title></rect><rect class="bb" x="698" y="30" width="30" height="240"><title>Qutrub: ×2</title></rect><text class="cl" x="697" y="288" text-anchor="middle">Qutrub</text><rect class="bs" x="500" y="8" width="14" height="14"/><text class="lg" x="520" y="20">Hand-to-hand</text><rect class="bb" x="640" y="8" width="14" height="14"/><text class="lg" x="660" y="20">Blunt</text></svg><figcaption>Damage multiplier for your fists versus blunt weapons, from the species values in Phoenix's <code>data/ecosystems.yaml</code>. Skeleton and corse use the base species; flans have no hand-to-hand value, so fists hit them normally.</figcaption></figure>
+
+<aside class="box tip">
+<p><strong>PRO TIP — Formless Strikes is your answer to bad matchups.</strong> It turns your melee into non-physical damage, so a slime's 75% resistance doesn't apply. You lose 30–40% raw damage but skip the 75% cut.</p>
+</aside>
+<h3>Holding hate (and not)</h3>
+<ul>
+<li>Monks pull hate because they deal the most damage. Subtle Blow (+20 at 65, plus gear) slows the mob's TP, not your hate.</li>
+<li><strong>Melee Crown</strong> has Enmity −3. <strong>Arhat's</strong> gear and <strong>Black Belt</strong> reduce physical damage when you do take hate.</li>
+<li>/NIN gives you shadows when you can't stop pulling hate.</li>
+</ul>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Black Belt is the single biggest Monk upgrade: +12% haste.</li>
+<li>Counterstance halves your defense by default. Use it on purpose.</li>
+<li>In Phoenix's data your fists ignore blunt resistances; only a few families resist hand-to-hand.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>Same camps as everyone. You just kill faster.</em></p>
+<h2>THE DAMAGE REPORT</h2>
+<p>For every classic camp in the project's leveling-camps guide, this table shows how the main mobs take hand-to-hand and blunt damage, read from Phoenix's mob data. "—" means normal damage. Almost every camp is neutral for your fists.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Mob</th>
+<th>Family</th>
+<th>Hand-to-hand</th>
+<th>Blunt (Staff, Club)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Hill Lizard</td>
+<td>lizard</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Damselfly</td>
+<td>fly</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Brutal Sheep</td>
+<td>sheep</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Snipper</td>
+<td>crab</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Beach Pugil</td>
+<td>pugil</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Thread Leech</td>
+<td>leech</td>
+<td>0.75×</td>
+<td>0.75×</td>
+</tr>
+<tr>
+<td>13-16</td>
+<td>Buburimu Peninsula</td>
+<td>Carnivorous Crawler</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>14-21</td>
+<td>Korroloka / Qufim worms</td>
+<td>Land Worm</td>
+<td>worm</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>18-21</td>
+<td>Sauromugue Champaign</td>
+<td>Diving Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Land Worm</td>
+<td>worm</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Clipper</td>
+<td>crab</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Greater Pugil</td>
+<td>pugil</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>20-25</td>
+<td>Yhoator Jungle</td>
+<td>Yhoator Mandragora</td>
+<td>mandragora</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Yuhtunga Mandragora</td>
+<td>mandragora</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Goblin Smithy</td>
+<td>goblin</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Catoblepas</td>
+<td>dhalmel</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Eft</td>
+<td>eft</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Raven</td>
+<td>bird</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>30-35</td>
+<td>Eastern Altepa</td>
+<td>Sand Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Fortalice Bats</td>
+<td>flock bat</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Citadel Bats</td>
+<td>flock bat</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Warden Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33-37</td>
+<td>Eldieme Necropolis</td>
+<td>Gazer</td>
+<td>hecteyes</td>
+<td>0.75×</td>
+<td>0.75×</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Ogrefly</td>
+<td>fly</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Master Coeurl</td>
+<td>coeurl</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Worker Crawler CN</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Nest Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Rumble Crawler</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Soldier Crawler</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>38-41</td>
+<td>Gustav Tunnel</td>
+<td>Hawker</td>
+<td>fly</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Helm Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Hastatus</td>
+<td>antica</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Princeps</td>
+<td>antica</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>52-55</td>
+<td>Kuftal Tunnel</td>
+<td>Robber Crab</td>
+<td>crab</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54-58</td>
+<td>Wajaom Woodlands</td>
+<td>Lesser Colibri</td>
+<td>colibri</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Aht Urhgan Attercop</td>
+<td>spider</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Lesser Colibri</td>
+<td>colibri</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>55-60</td>
+<td>Caedarva Mire</td>
+<td>Marsh Murre</td>
+<td>bird</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Sand Lizard</td>
+<td>lizard</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Kuftal Digger</td>
+<td>worm</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Sea Puk M</td>
+<td>puk</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Carpophagous Puk</td>
+<td>puk</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Hunting Raptor</td>
+<td>raptor</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Ziz</td>
+<td>cockatrice</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Heraldic Imp CM</td>
+<td>imp</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Spongilla Fly</td>
+<td>fly</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Ebony Pudding</td>
+<td>flan</td>
+<td>—</td>
+<td>0.625×</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Warrior</td>
+<td>troll</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Paladin</td>
+<td>troll</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Abraxas</td>
+<td>greater bird</td>
+<td>—</td>
+<td>0.75×</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Tavnazian Ram</td>
+<td>ram</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — reading the report.</strong> Only the Thread Leeches in Valkurm and the Gazers in Eldieme take less from your fists (×0.75), and that's still fine. Ebony Puddings and Abraxas resist blunt, but in Phoenix's data they take normal hand-to-hand damage.</p>
+</aside>
+<h3>Bracket by bracket</h3>
+<p><strong>Levels 1–10 — home nation.</strong> Cesti +1 and Boost before every pull. Combo is your weapon skill. Monk solos better than most jobs here.</p>
+<p><strong>Levels 10–20 — Valkurm Dunes, Buburimu Peninsula, Korroloka.</strong> <strong>Tropical Punches +1</strong> at 10 (Accuracy +12, delay 480). Counter at 10, Dodge and Max HP Boost at 15. Parties will hand you the pull because you can take a hit. <strong>Purple Belt</strong> at 18 if you have Norg fame 2 (Chapter 8).</p>
+<p><strong>Levels 18–20 — subjob.</strong> Do <em>The Old Lady</em> or <em>Elder Memories</em>, then level WAR to 10 at least. /WAR gives Double Attack at sub 25 (your level 50), but Provoke and Berserk help right away.</p>
+<p><strong>Levels 20–30 — Qufim, Yhoator and Yuhtunga jungles, Bibiki Bay.</strong> Focus at 25. <strong>Lynx Baghnakhs</strong> (Lv24, San d'Oria quest <em>The General's Secret</em>, delay 510) or <strong>Republic Knuckles</strong>.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — Race Specific Equipment (RSE) at level 25.</strong> Every race has its own four-piece set (Lv27–33) from <em>The Goblin Tailor</em> (Guttrix, Lower Jeuno). You can only get it during your race's 7 h 41 m "week", in one of three dungeons, with that dungeon's chest key — so <strong>farm the key before your week starts</strong>. For Monks: Hume gloves (STR+3 DEX+3), the whole Tarutaru Wonder set (STR and HP), Mithra gaiters (STR+3) and Mithra gauntlets (VIT+4, more Chakra).
+Full walkthrough: <a href="/guides/jobs/rse">Race Specific Equipment guide</a>. Live race and dungeon schedule: <a href="https://phoenix-xi.com/world-info?tab=calendar">Phoenix RSE calendar</a>.</p>
+</aside>
+<p><strong>Levels 30–40 — Garlaige Citadel, Eastern Altepa, Eldieme Necropolis, Castle Oztroja.</strong> Raging Fists at skill 125 (about level 41). Chakra at 35. Castle Oztroja has two Yagudo NMs with Monk prizes. <strong>Mee Deggi the Punisher</strong> always drops one item from a group: usually <strong>Impact Knuckles</strong> (Lv32), about 1 time in 10 the <strong>Ochimusha Kote</strong> (Lv34, Attack +20). <strong>Quu Domi the Gallant</strong> drops <strong>Sarutobi Kyahan</strong> (Lv39, Haste +3%) about 1 time in 10. <strong>Peacock Amulet</strong> at 33. <strong>Brown Belt</strong> at 40 (Haste +8%).</p>
+<aside class="box chal">
+<p><strong>GRANDMASTER'S CHALLENGE — the Oztroja run.</strong> Ochimusha Kote at 34 are a Monk's best hands until the high 60s. Get a group of 35s and farm the Yagudo NM pops in Castle Oztroja for both the Kote and the Kyahan.</p>
+</aside>
+<p><strong>Levels 40–50 — Crawlers' Nest, Attohwa Chasm, Gustav Tunnel.</strong> AF1 at 40 (Beat Cesti). <strong>Jujitsu Gi</strong> (Poisonhand Gnadgad, Davoi) or <strong>Fomor Tunic</strong> (Eba, Phomiuna Aqueducts) for the body. Patas +1 (Lv48, Smithing 51 HQ) is the big-damage weapon. Get Crawlers' Nest coffer keys for <em>Borghertz's Striking Hands</em>.</p>
+<p><strong>Levels 50–60 — Quicksand Caves, Kuftal Tunnel, Wajaom Woodlands, Bhaflau Thickets.</strong> AF2 and AF3. <strong>Cross-Counters</strong> (BCNM) or <strong>Retaliators</strong> (Western Shadow, Fei'Yin) add Counter +5. <strong>Scorpion Harness +1</strong> at 57 (Accuracy +12). Kick Attacks at 51. Howling Fist at 60.</p>
+<p><strong>Levels 60–70 — Kuftal Tunnel, Mamook, Caedarva Mire.</strong> Dragon Kick at 65 (skill 225). <strong>Tabin Jupon +1</strong> and <strong>Tabin Bracers +1</strong>, <strong>Amemet Mantle +1</strong> or <strong>Behemoth Mantle +1</strong>. <strong>Feral Fangs</strong> (Lv66) or <strong>Dragon Claws +1</strong> (Lv68). <strong>Avengers</strong> (Bomb Queen) if your linkshell farms Ifrit's Cauldron.</p>
+<p><strong>Levels 70–75 — Mount Zhayolm, Caedarva Mire, Lufaise Meadows.</strong> <strong>Black Belt</strong> the moment you can (Chapter 8). Hand-to-Hand 250 at 70 for the Asuran Fists quest. <strong>Kaiser Knuckles</strong> at 75. Rasetsu Tekko +1 and Sune-ate +1 are the counter-tank pieces.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — level 75</strong></p>
+<ul>
+<li>Hand-to-Hand at 276 (cap).</li>
+<li>Black Belt or Brown Belt on.</li>
+<li>Asuran Fists quest started (Chapter 8).</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>Haste to the cap, then accuracy, then attack. VIT and STR for the weapon skill.</em></p>
+<h3>How this chapter is laid out</h3>
+<p>The four sets below are for level 75. Each slot lists a <strong>realistic pick</strong> (crafted, quest, or a common NM drop) and a <strong>best pick</strong> (harder content). Every stat and source was read from Phoenix's item and drop data. The item directory at the end lists everything worth wearing from level 7 to 75.</p>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-tp" class="fstep set-tp"><b>✊</b><span>SET 1</span><em>TP</em><small>Punching</small></a><a role="listitem" href="#set-ws" class="fstep set-ws"><b>✸</b><span>SET 2</span><em>Weapon Skill</em><small>The weapon skill</small></a><a role="listitem" href="#set-eva" class="fstep set-eva"><b>◈</b><span>SET 3</span><em>Counter-Tank</em><small>Holding hate</small></a><a role="listitem" href="#set-nin" class="fstep set-nin"><b>✚</b><span>SET 4</span><em>Chakra</em><small>Pressing Chakra</small></a></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>When you're wearing it</th>
+<th>Priorities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TP</strong></td>
+<td>Punching</td>
+<td>Haste (25% gear cap), Accuracy, Attack</td>
+</tr>
+<tr>
+<td><strong>Weapon skill</strong></td>
+<td>The instant you weapon skill (macro swap)</td>
+<td>STR and VIT (Dragon Kick, Howling Fist), Attack</td>
+</tr>
+<tr>
+<td><strong>Counter-tank</strong></td>
+<td>You're holding hate on purpose</td>
+<td>Physical damage taken −, Evasion, Counter, HP</td>
+</tr>
+<tr>
+<td><strong>Chakra</strong></td>
+<td>The moment you press Chakra</td>
+<td>VIT and Chakra potency</td>
+</tr>
+</tbody>
+</table></div>
+<section class="set set-tp" id="set-tp"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">✊</span><h2>TP</h2><span class="settag">Punching</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Kaiser Knuckles</strong> (D20/566, Acc+3)</td>
+<td>Spharai (relic, Attack +20, Counter +5)</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Optical Hat</strong> (Acc+10)</td>
+<td><strong>Walahra Turban</strong> (Haste +5%)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td><strong>Peacock Amulet</strong> (Acc+10)</td>
+<td>Chivalrous Chain (STR+3, Acc+5, Store TP+1)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Assault Earring, Spike Earring</td>
+<td><strong>Brutal Earring</strong> (Double Attack +5%) + Hollow Earring</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Scorpion Harness +1</strong> (Acc+12, Eva+12)</td>
+<td>Kirin's Osode (every stat +10) or Shura Togi +1 (Att+22, Acc+11)</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Ochimusha Kote</strong> (Attack +20)</td>
+<td>Ochimusha Kote. Nothing on Phoenix beats Attack +20 in this slot for TP</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Rajas Ring</strong> + Sniper's Ring +1</td>
+<td>Rajas Ring + Sniper's Ring +1</td>
+</tr>
+<tr>
+<td>Back</td>
+<td><strong>Amemet Mantle +1</strong> (STR+2, Att+15)</td>
+<td>Forager's Mantle (STR+3, Att+15)</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Black Belt</strong> (Haste +12%, STR+7)</td>
+<td>Black Belt</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Temple Hose (Counter +1) or Prince's Slops (Acc+4)</td>
+<td><strong>Byakko's Haidate</strong> (DEX+15, Haste +5%)</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Sarutobi Kyahan</strong> (Haste +3%)</td>
+<td>Sarutobi Kyahan</td>
+</tr>
+</tbody>
+</table></div>
+<p>Haste in the best column: Walahra 5 + Black Belt 12 + Byakko 5 + Sarutobi 3 = <strong>25%, exactly the gear cap</strong>.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — once you're capped, swap haste for accuracy.</strong> If you have Black Belt, Walahra Turban and Byakko's Haidate, you're at 25% without the Kyahan. Any feet with Accuracy or DEX are then free damage.</p>
+</aside>
+</section><section class="set set-ws" id="set-ws"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">✸</span><h2>WEAPON SKILL</h2><span class="settag">The weapon skill</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td><strong>Voyager Sallet</strong> (STR+3 DEX+4)</td>
+<td><strong>Maat's Cap</strong> (all stats +7) / Shura Zunari Kabuto +1 (STR+6, Acc+6)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>Spike Necklace (STR+3 DEX+3)</td>
+<td>Orochi Nodowa +1 (Att+7)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Harmonius Earring (STR+2) + Merman's Earring (Att+6)</td>
+<td>Brutal Earring + Merman's Earring</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Scorpion Harness +1</td>
+<td><strong>Kirin's Osode</strong> (STR+10, VIT+10)</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Pallas's Bracelets</strong> (STR+9)</td>
+<td>Alkyoneus's Bracelets (STR+11)</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Triumph Ring +1</strong> ×2</td>
+<td>Triumph Ring +1 ×2</td>
+</tr>
+<tr>
+<td>Back</td>
+<td><strong>Cerberus Mantle +1</strong> (STR+4, Att+15)</td>
+<td>Cerberus Mantle +1</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Black Belt</strong> (STR+7)</td>
+<td>Black Belt</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Temple Hose</td>
+<td><strong>Shura Haidate +1</strong> (STR+6, Acc+8)</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Rasetsu Sune-ate +1 (Att+6)</td>
+<td>Rasetsu Sune-ate +1</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — Cerberus Mantle has Enmity +4.</strong> It's a weapon-skill swap only. Don't fight in it.</p>
+</aside>
+</section><section class="set set-eva" id="set-eva"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">◈</span><h2>COUNTER-TANK</h2><span class="settag">Holding hate</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Hades Sainti +1</strong> or Cross-Counters</td>
+<td>Eva+9 Enmity+9 Subtle Blow+9, or Counter+5</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Arhat's Jinpachi +1</strong></td>
+<td>Physical damage taken −6%</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Arhat's Gi +1</strong></td>
+<td>Physical damage taken −9%</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>Rasetsu Tekko +1</td>
+<td>Evasion +11, Counter +1</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Black Belt</strong></td>
+<td>Physical damage taken −5%</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Temple Hose</td>
+<td>Counter +1, Guard +10</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Rasetsu Sune-ate +1</td>
+<td>Evasion +6, Counter +1</td>
+</tr>
+<tr>
+<td>Ring</td>
+<td>Jelly Ring</td>
+<td>Physical damage taken −5% (magic +5%)</td>
+</tr>
+<tr>
+<td>Ear</td>
+<td>Ethereal Earring</td>
+<td>HP+15, Evasion +5</td>
+</tr>
+</tbody>
+</table></div>
+<p>Arhat's +1 head and body, Black Belt and Jelly Ring add up to <strong>−25% physical damage taken</strong>.</p>
+</section><section class="set set-nin" id="set-nin"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">✚</span><h2>CHAKRA</h2><span class="settag">Pressing Chakra</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Body</td>
+<td><strong>Temple Cyclas</strong></td>
+<td>Chakra +50%, VIT+3</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Melee Gloves</strong></td>
+<td>Chakra +30%</td>
+</tr>
+<tr>
+<td>Back</td>
+<td>Melee Cape</td>
+<td>VIT+5</td>
+</tr>
+<tr>
+<td>Head / legs / feet</td>
+<td>Your highest VIT pieces</td>
+<td>Every point of VIT is 2 more HP before multipliers</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — how the Chakra multipliers add up.</strong> The era Chakra heals <code>VIT × 2 × (1 + Chakra mods ÷ 100)</code>. Temple Cyclas (+50) and Melee Gloves (+30) add together to ×1.8. With 80 VIT that's 288 HP from one button.</p>
+</aside>
+</section><h2>AF &amp; RELIC AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Artifact (Temple)</th>
+<th>Relic (Melee)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td>Temple Crown — MND+5, Focus effect +10</td>
+<td>Melee Crown — STR+5, HP +5%, Enmity −3, Subtle Blow +6</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Temple Cyclas — VIT+3, Acc+5, Chakra +50%</td>
+<td>Melee Cyclas — VIT+5, HP +5%, Regen</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>Temple Gloves — STR+4, Boost effect +5.5%</td>
+<td>Melee Gloves — Att+16, HP +3%, Chakra +30%</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Temple Hose — Counter +1, Guard +10</td>
+<td>Melee Hose — AGI+4, Kick Attacks +5%, Subtle Blow +5</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Temple Gaiters — DEX+3, Dodge effect +10</td>
+<td>Melee Gaiters — DEX+4, Guard +12, Counterstance effect +10</td>
+</tr>
+<tr>
+<td>Weapon</td>
+<td>Beat Cesti (AF1)</td>
+<td>Spharai (relic)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Stats from <code>item_mods</code> and <code>item_latents</code>. Sources from each zone's <code>mobs.yaml</code>, battlefield loot scripts, NPC and quest scripts, and <code>synth_recipes</code>.</em></p>
+<h3>Hand-to-Hand</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cesti +1</strong></td>
+<td>1</td>
+<td>Main</td>
+<td>DMG 2 / Delay 523, Acc+4</td>
+<td>Leathercraft 3 HQ</td>
+</tr>
+<tr>
+<td><strong>Tropical Punches +1</strong></td>
+<td>10</td>
+<td>Main</td>
+<td>DMG 2 / Delay 480, Acc+12</td>
+<td>Leathercraft 81 HQ (Fruit Punches + Sheep Leather)</td>
+</tr>
+<tr>
+<td><strong>Brass Knuckles +1</strong></td>
+<td>9</td>
+<td>Main</td>
+<td>DMG 5 / Delay 571, Acc+3</td>
+<td>Goldsmithing 14 HQ</td>
+</tr>
+<tr>
+<td><strong>Kingdom Cesti</strong></td>
+<td>15</td>
+<td>Main</td>
+<td>DMG 4 / Delay 513, Atk+3, Acc+3</td>
+<td>Leathercraft 8 HQ</td>
+</tr>
+<tr>
+<td><strong>Republic Knuckles</strong></td>
+<td>15</td>
+<td>Main</td>
+<td>DMG 6 / Delay 556, HP+3, MP+3, Atk+3, Acc+2</td>
+<td>Goldsmithing 19 HQ</td>
+</tr>
+<tr>
+<td><strong>Metal Knuckles +1</strong></td>
+<td>20</td>
+<td>Main</td>
+<td>DMG 7 / Delay 571, Acc+3</td>
+<td>Smithing 21 HQ</td>
+</tr>
+<tr>
+<td><strong>Sonic Knuckles</strong></td>
+<td>22</td>
+<td>Main</td>
+<td>DMG 6 / Delay 566, Acc+2</td>
+<td>Daggerclaw Dracos NM, Meriphataud Mountains</td>
+</tr>
+<tr>
+<td><strong>Lynx Baghnakhs</strong></td>
+<td>24</td>
+<td>Main</td>
+<td>DMG 6 / Delay 510</td>
+<td>Quest <em>The General's Secret</em> (San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Impact Knuckles</strong></td>
+<td>32</td>
+<td>Main</td>
+<td>DMG 8 / Delay 566, STR+1, Acc+3</td>
+<td>Mee Deggi the Punisher NM, Castle Oztroja</td>
+</tr>
+<tr>
+<td><strong>Mythril Knuckles +1</strong></td>
+<td>38</td>
+<td>Main</td>
+<td>DMG 10 / Delay 571, Acc+3</td>
+<td>Smithing 44 HQ</td>
+</tr>
+<tr>
+<td><strong>Beat Cesti</strong></td>
+<td>42</td>
+<td>Main</td>
+<td>DMG 4 / Delay 528, DEX+2, VIT+2, Acc+3</td>
+<td>AF1 <em>Ghosts of the Past</em></td>
+</tr>
+<tr>
+<td><strong>Patas +1</strong></td>
+<td>48</td>
+<td>Main</td>
+<td>DMG 15 / Delay 566</td>
+<td>Smithing 51 HQ</td>
+</tr>
+<tr>
+<td><strong>Cross-Counters</strong></td>
+<td>50</td>
+<td>Main</td>
+<td>DMG 19 / Delay 576, Acc+3, Eva-10, Counter+5</td>
+<td>BCNM <em>Brothers D'Aurphe</em>, Qu'Bia Arena</td>
+</tr>
+<tr>
+<td><strong>Retaliators</strong></td>
+<td>50</td>
+<td>Main</td>
+<td>DMG 19 / Delay 576, Acc+3, Eva-10, Counter+5</td>
+<td>Western Shadow NM, Fei'Yin (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Tactician Magician's Hooks +2</strong></td>
+<td>52</td>
+<td>Main</td>
+<td>DMG 16 / Delay 551, Atk+10</td>
+<td>Bonecraft 73 HQ</td>
+</tr>
+<tr>
+<td><strong>Darksteel Knuckles +1</strong></td>
+<td>54</td>
+<td>Main</td>
+<td>DMG 13 / Delay 566, Acc+3</td>
+<td>Smithing 60 HQ</td>
+</tr>
+<tr>
+<td><strong>Spartan Cesti</strong></td>
+<td>58</td>
+<td>Main</td>
+<td>DMG 20 / Delay 593, Acc+2</td>
+<td>BCNM loot (Balga's Dais, Throne Room)</td>
+</tr>
+<tr>
+<td><strong>Shiva's Claws</strong></td>
+<td>65</td>
+<td>Main</td>
+<td>DMG 11 / Delay 540, INT+3, Acc+8</td>
+<td>Quest <em>Trial by Ice</em> (Gulmama, Northern San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Feral Fangs</strong></td>
+<td>66</td>
+<td>Main</td>
+<td>DMG 19 / Delay 576</td>
+<td>Bonecraft 79 HQ (Tigerfangs)</td>
+</tr>
+<tr>
+<td><strong>Vishnu's Cesti</strong></td>
+<td>67</td>
+<td>Main</td>
+<td>DMG 7 / Delay 480, STR+2, DEX+2, AGI-1, Acc+4</td>
+<td>Leathercraft 50 HQ</td>
+</tr>
+<tr>
+<td><strong>Dragon Claws +1</strong></td>
+<td>68</td>
+<td>Main</td>
+<td>DMG 14 / Delay 541</td>
+<td>Bonecraft 90 HQ</td>
+</tr>
+<tr>
+<td><strong>Avengers</strong></td>
+<td>69</td>
+<td>Main</td>
+<td>DMG 18 / Delay 576, Atk+10</td>
+<td>Bomb Queen NM, Ifrit's Cauldron</td>
+</tr>
+<tr>
+<td><strong>Hades Sainti +1</strong></td>
+<td>70</td>
+<td>Main</td>
+<td>DMG 19 / Delay 529, Acc+9, Enmity+9, Eva+9, Subtle Blow+9</td>
+<td>Bonecraft 101 HQ</td>
+</tr>
+<tr>
+<td><strong>Diamond Knuckles +1</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 18 / Delay 566, VIT+3, Acc+3</td>
+<td>Goldsmithing 79 / Smithing 51 HQ</td>
+</tr>
+<tr>
+<td><strong>Knuckles of Trials</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 16 / Delay 576, HP+20</td>
+<td>Quest <em>The Walls of Your Mind</em></td>
+</tr>
+<tr>
+<td><strong>Meteor Cesti</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 8 / Delay 516, STR+3, VIT+4, Subtle Blow+1</td>
+<td>KSNM loot</td>
+</tr>
+<tr>
+<td><strong>Indra Katars</strong></td>
+<td>73</td>
+<td>Main</td>
+<td>DMG 19 / Delay 564, Triple Attack+1</td>
+<td>Steam Cleaner NM, Ve'Lugannon Palace (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Manoples +1</strong></td>
+<td>74</td>
+<td>Main</td>
+<td>DMG 21 / Delay 586, VIT+3</td>
+<td>Smithing 98 HQ</td>
+</tr>
+<tr>
+<td><strong>Kaiser Knuckles</strong></td>
+<td>75</td>
+<td>Main</td>
+<td>DMG 20 / Delay 566, CHR+3, Acc+3</td>
+<td>Smithing 91 / Goldsmithing 42 HQ (Koenig Knuckles)</td>
+</tr>
+<tr>
+<td><strong>Spharai</strong></td>
+<td>75</td>
+<td>Main</td>
+<td>DMG 23 / Delay 566, Atk+20, Counter+5</td>
+<td>Relic weapon (Dynamis)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Empress Hairpin</strong></td>
+<td>24</td>
+<td>Head</td>
+<td>HP-15, DEX+3, AGI+3, Eva+10</td>
+<td>Valkurm Emperor NM, Valkurm Dunes</td>
+</tr>
+<tr>
+<td><strong>Voyager Sallet</strong></td>
+<td>41</td>
+<td>Head</td>
+<td>STR+3, DEX+4</td>
+<td>Carmine Dobsonfly NM, Riverne Site #A01 (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Temple Crown</strong></td>
+<td>56</td>
+<td>Head</td>
+<td>HP+16, MND+5, Focus effect+10</td>
+<td>Coffer, Garlaige Citadel (AF)</td>
+</tr>
+<tr>
+<td><strong>Arhat's Jinpachi +1</strong></td>
+<td>63</td>
+<td>Head</td>
+<td>Enmity+2, Phys. dmg taken -6%</td>
+<td>Clothcraft 81 / Smithing 48 HQ</td>
+</tr>
+<tr>
+<td><strong>Optical Hat</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>Acc+10, R.Acc+10, Eva+10</td>
+<td>Hakutaku NM, Den of Rancor</td>
+</tr>
+<tr>
+<td><strong>Maat's Cap</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>STR+7, DEX+7, VIT+7, AGI+7, INT+7, MND+7, CHR+7</td>
+<td>Quest <em>Beyond the Sun</em> (all limit breaks done)</td>
+</tr>
+<tr>
+<td><strong>Palani Qalansuwa</strong></td>
+<td>72</td>
+<td>Head</td>
+<td>HP+25, Atk+5, Acc+7, R.Acc+7</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Shura Zunari Kabuto +1</strong></td>
+<td>73</td>
+<td>Head</td>
+<td>HP-30, STR+6, Acc+6</td>
+<td>Dryadic Abjuration (Kirin)</td>
+</tr>
+<tr>
+<td><strong>Walahra Turban</strong></td>
+<td>75</td>
+<td>Head</td>
+<td>HP+30, MP+30, Haste +5%</td>
+<td>1,000 Imperial Bronze Pieces to Gajaad, Al Zahbi</td>
+</tr>
+<tr>
+<td><strong>Melee Crown</strong></td>
+<td>75</td>
+<td>Head</td>
+<td>HP%+5, STR+5, Enmity-3, Subtle Blow+6</td>
+<td>Relic armor (Dynamis - Xarcabard)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spike Necklace</strong></td>
+<td>21</td>
+<td>Neck</td>
+<td>STR+3, DEX+3, MND-6</td>
+<td>Bonecraft 15 HQ (Fang Necklace)</td>
+</tr>
+<tr>
+<td><strong>Peacock Amulet</strong></td>
+<td>33</td>
+<td>Neck</td>
+<td>Acc+10, R.Acc+10</td>
+<td>Argus NM, Maze of Shakhrami</td>
+</tr>
+<tr>
+<td><strong>Spectacles</strong></td>
+<td>59</td>
+<td>Neck</td>
+<td>Acc+7, R.Acc+7</td>
+<td>BCNM loot</td>
+</tr>
+<tr>
+<td><strong>Chivalrous Chain</strong></td>
+<td>60</td>
+<td>Neck</td>
+<td>STR+3, Acc+5, Store TP+1</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Wivre Gorget +1</strong></td>
+<td>70</td>
+<td>Neck</td>
+<td>Acc+6, R.Acc+6</td>
+<td>Bonecraft 86 HQ</td>
+</tr>
+<tr>
+<td><strong>Orochi Nodowa +1</strong></td>
+<td>75</td>
+<td>Neck</td>
+<td>Atk+7</td>
+<td>Bonecraft 98 HQ</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tortoise Earring +1</strong></td>
+<td>45</td>
+<td>Ear</td>
+<td>Atk+4, Eva-2</td>
+<td>Bonecraft 55 HQ</td>
+</tr>
+<tr>
+<td><strong>Spike Earring</strong></td>
+<td>55</td>
+<td>Ear</td>
+<td>Atk+5, Eva-5</td>
+<td>Bonecraft 61 HQ (Fang Earring)</td>
+</tr>
+<tr>
+<td><strong>Assault Earring</strong></td>
+<td>58</td>
+<td>Ear</td>
+<td>Atk+5, Acc+2, Eva-2</td>
+<td>BCNM loot</td>
+</tr>
+<tr>
+<td><strong>Merman's Earring</strong></td>
+<td>63</td>
+<td>Ear</td>
+<td>Atk+6, Eva-4, Magic dmg taken -2%</td>
+<td>Bonecraft 83 HQ (Coral Earring)</td>
+</tr>
+<tr>
+<td><strong>Harmonius Earring</strong></td>
+<td>67</td>
+<td>Ear</td>
+<td>HP+25, STR+2</td>
+<td>Goldsmithing 90 HQ (Crimson Earring)</td>
+</tr>
+<tr>
+<td><strong>Hollow Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>DEX+2, Acc+3, R.Acc+3</td>
+<td>Quest <em>Apocalypse Nigh</em> (end of CoP)</td>
+</tr>
+<tr>
+<td><strong>Ethereal Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>HP+15, Atk+5, Eva+5</td>
+<td>Quest <em>Apocalypse Nigh</em> (end of CoP)</td>
+</tr>
+<tr>
+<td><strong>Brutal Earring</strong></td>
+<td>75</td>
+<td>Ear</td>
+<td>Store TP+1, Double Attack+5</td>
+<td>75 Ancient Beastcoins to Sagheera, Port Jeuno (Limbus)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jujitsu Gi</strong></td>
+<td>40</td>
+<td>Body</td>
+<td>Acc+4</td>
+<td>Poisonhand Gnadgad NM, Davoi (one of a group)</td>
+</tr>
+<tr>
+<td><strong>Fomor Tunic</strong></td>
+<td>40</td>
+<td>Body</td>
+<td>HP-25, STR+3, DEX+3, VIT-6</td>
+<td>Eba NM, Phomiuna Aqueducts</td>
+</tr>
+<tr>
+<td><strong>Scorpion Harness +1</strong></td>
+<td>57</td>
+<td>Body</td>
+<td>HP+20, Acc+12, Eva+12</td>
+<td>Bonecraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Temple Cyclas</strong></td>
+<td>58</td>
+<td>Body</td>
+<td>HP+20, VIT+3, Acc+5, Chakra potency+50</td>
+<td>Coffer, Beadeaux (AF)</td>
+</tr>
+<tr>
+<td><strong>Arhat's Gi +1</strong></td>
+<td>64</td>
+<td>Body</td>
+<td>Enmity+4, Phys. dmg taken -9%</td>
+<td>Clothcraft 89 / Smithing 29 HQ</td>
+</tr>
+<tr>
+<td><strong>Tabin Jupon +1</strong></td>
+<td>65</td>
+<td>Body</td>
+<td>STR+2, DEX+2, Acc+7</td>
+<td>Clothcraft 81 HQ</td>
+</tr>
+<tr>
+<td><strong>Arakan Samue</strong></td>
+<td>67</td>
+<td>Body</td>
+<td>AGI+4, Atk+5, Eva+10, Subtle Blow+3</td>
+<td>ToAU battlefield <em>Happy Caster</em>, Navukgo Execution Chamber</td>
+</tr>
+<tr>
+<td><strong>Shura Togi +1</strong></td>
+<td>73</td>
+<td>Body</td>
+<td>HP-55, Atk+22, Acc+11</td>
+<td>Dryadic Abjuration (Kirin)</td>
+</tr>
+<tr>
+<td><strong>Kirin's Osode</strong></td>
+<td>75</td>
+<td>Body</td>
+<td>MP+30, STR+10, DEX+10, VIT+10, AGI+10, INT+10, MND+10, CHR+10</td>
+<td>Kirin, The Shrine of Ru'Avitau</td>
+</tr>
+<tr>
+<td><strong>Melee Cyclas</strong></td>
+<td>74</td>
+<td>Body</td>
+<td>HP%+5, VIT+5, HP recovered while healing+6</td>
+<td>Relic armor (Dynamis - Beaucedine)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Battle Gloves</strong></td>
+<td>14</td>
+<td>Hands</td>
+<td>Acc+3, Eva+3</td>
+<td>Treasure chest/coffer loot</td>
+</tr>
+<tr>
+<td><strong>Ochimusha Kote</strong></td>
+<td>34</td>
+<td>Hands</td>
+<td>Atk+20, Eva-5</td>
+<td>Mee Deggi the Punisher NM, Castle Oztroja</td>
+</tr>
+<tr>
+<td><strong>Horomusha Kote</strong></td>
+<td>34</td>
+<td>Hands</td>
+<td>Atk+15</td>
+<td>Boroka NM, Riverne Site #B01</td>
+</tr>
+<tr>
+<td><strong>Enkelados's Bracelets</strong></td>
+<td>50</td>
+<td>Hands</td>
+<td>HP+25, STR+7, DEX-4, AGI-4</td>
+<td>Enkelados NM, Upper Delkfutt's Tower</td>
+</tr>
+<tr>
+<td><strong>Temple Gloves</strong></td>
+<td>54</td>
+<td>Hands</td>
+<td>HP+14, STR+4, Boost effect+55</td>
+<td>Quest <em>Borghertz's Striking Hands</em></td>
+</tr>
+<tr>
+<td><strong>Pallas's Bracelets</strong></td>
+<td>60</td>
+<td>Hands</td>
+<td>HP+35, STR+9, DEX-5, AGI-5</td>
+<td>Pallas NM, Upper Delkfutt's Tower (rare)</td>
+</tr>
+<tr>
+<td><strong>Tabin Bracers +1</strong></td>
+<td>65</td>
+<td>Hands</td>
+<td>Atk+3, Acc+3, Eva+3</td>
+<td>Clothcraft 75 HQ</td>
+</tr>
+<tr>
+<td><strong>Alkyoneus's Bracelets</strong></td>
+<td>70</td>
+<td>Hands</td>
+<td>HP+40, STR+11, DEX-6, AGI-6</td>
+<td>Alkyoneus NM, Upper Delkfutt's Tower (rare)</td>
+</tr>
+<tr>
+<td><strong>Rasetsu Tekko +1</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>Atk+3, Eva+11, Counter+1</td>
+<td>Clothcraft 95 HQ</td>
+</tr>
+<tr>
+<td><strong>Melee Gloves</strong></td>
+<td>73</td>
+<td>Hands</td>
+<td>HP%+3, Atk+16, Subtle Blow+4, Chakra potency+30</td>
+<td>Relic armor (Dynamis - Qufim)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rajas Ring</strong></td>
+<td>30</td>
+<td>Ring</td>
+<td>STR+2, DEX+2, Store TP+5, Subtle Blow+5</td>
+<td>CoP mission 8-4 <em>Dawn</em></td>
+</tr>
+<tr>
+<td><strong>Puissance Ring +1</strong></td>
+<td>36</td>
+<td>Ring</td>
+<td>STR+3</td>
+<td>Goldsmithing 60 HQ</td>
+</tr>
+<tr>
+<td><strong>Sniper's Ring +1</strong></td>
+<td>40</td>
+<td>Ring</td>
+<td>Acc+7, R.Acc+7</td>
+<td>Leathercraft 90 HQ</td>
+</tr>
+<tr>
+<td><strong>Ulthalam's Ring</strong></td>
+<td>50</td>
+<td>Ring</td>
+<td>Atk+4, Acc+4</td>
+<td>ToAU mission <em>Imperial Coronation</em></td>
+</tr>
+<tr>
+<td><strong>Triumph Ring +1</strong></td>
+<td>72</td>
+<td>Ring</td>
+<td>STR+5</td>
+<td>Goldsmithing 99 HQ</td>
+</tr>
+<tr>
+<td><strong>Jelly Ring</strong></td>
+<td>63</td>
+<td>Ring</td>
+<td>Phys. dmg taken -5%, Magic dmg taken +5%</td>
+<td>Sewer Syrup NM, Bostaunieux Oubliette</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Behemoth Mantle +1</strong></td>
+<td>60</td>
+<td>Back</td>
+<td>HP+30, Atk+10</td>
+<td>Leathercraft 70 HQ</td>
+</tr>
+<tr>
+<td><strong>Amemet Mantle +1</strong></td>
+<td>61</td>
+<td>Back</td>
+<td>STR+2, Atk+15, R.Atk+15</td>
+<td>Leathercraft 60 HQ</td>
+</tr>
+<tr>
+<td><strong>Psilos Mantle</strong></td>
+<td>69</td>
+<td>Back</td>
+<td>Atk+12, R.Atk+12, Acc+1, R.Acc+1</td>
+<td>KSNM <em>Holy Cow</em>, Bearclaw Pinnacle</td>
+</tr>
+<tr>
+<td><strong>Forager's Mantle</strong></td>
+<td>71</td>
+<td>Back</td>
+<td>STR+3, Atk+15</td>
+<td>ENM <em>Sheep in Antlion's Clothing</em>, Boneyard Gully</td>
+</tr>
+<tr>
+<td><strong>Cerberus Mantle +1</strong></td>
+<td>75</td>
+<td>Back</td>
+<td>STR+4, Atk+15, Enmity+4</td>
+<td>Leathercraft 95 HQ</td>
+</tr>
+<tr>
+<td><strong>Melee Cape</strong></td>
+<td>70</td>
+<td>Back</td>
+<td>VIT+5, MND+5, HP recovered while healing+5</td>
+<td>Dynamis - Qufim (rare)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Purple Belt</strong></td>
+<td>18</td>
+<td>Waist</td>
+<td>STR+3, Haste +4%</td>
+<td>Quest <em>Silence of the Rams</em> (Port Bastok)</td>
+</tr>
+<tr>
+<td><strong>Brown Belt</strong></td>
+<td>40</td>
+<td>Waist</td>
+<td>STR+5, Haste +8%</td>
+<td>Quest <em>Fistful of Fury</em> (Lower Jeuno)</td>
+</tr>
+<tr>
+<td><strong>Life Belt</strong></td>
+<td>48</td>
+<td>Waist</td>
+<td>Acc+10</td>
+<td>Treasure chest/coffer loot</td>
+</tr>
+<tr>
+<td><strong>Swift Belt</strong></td>
+<td>50</td>
+<td>Waist</td>
+<td>Atk-5, Acc+3, Haste +4%</td>
+<td>Fomor NMs, Sacrarium</td>
+</tr>
+<tr>
+<td><strong>Potent Belt</strong></td>
+<td>60</td>
+<td>Waist</td>
+<td>STR+3, Acc+8</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Black Belt</strong></td>
+<td>70</td>
+<td>Waist</td>
+<td>STR+7, Phys. dmg taken -5%, Subtle Blow+5, Haste +12%</td>
+<td>Quest <em>Beat Around the Bushin</em> (Lower Jeuno)</td>
+</tr>
+<tr>
+<td><strong>Warwolf Belt</strong></td>
+<td>71</td>
+<td>Waist</td>
+<td>STR+5, DEX+5, VIT+5, Enmity+3</td>
+<td>KSNM loot</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Republic Subligar</strong></td>
+<td>25</td>
+<td>Legs</td>
+<td>VIT+1, Atk+5, R.Atk+5</td>
+<td>Goldsmithing 21 HQ</td>
+</tr>
+<tr>
+<td><strong>Master's Sitabaki +1</strong></td>
+<td>53</td>
+<td>Legs</td>
+<td>DEX+2, VIT+2, AGI+2</td>
+<td>Clothcraft 83 HQ</td>
+</tr>
+<tr>
+<td><strong>Temple Hose</strong></td>
+<td>60</td>
+<td>Legs</td>
+<td>HP+18, Guard skill+10, Counter+1</td>
+<td>AF3 <em>True Strength</em></td>
+</tr>
+<tr>
+<td><strong>Prince's Slops</strong></td>
+<td>71</td>
+<td>Legs</td>
+<td>HP+30, MP+30, MND+3, Acc+4</td>
+<td>Clothcraft 74 HQ</td>
+</tr>
+<tr>
+<td><strong>Shura Haidate +1</strong></td>
+<td>73</td>
+<td>Legs</td>
+<td>HP-40, STR+6, Acc+8</td>
+<td>Dryadic Abjuration (Kirin)</td>
+</tr>
+<tr>
+<td><strong>Melee Hose</strong></td>
+<td>72</td>
+<td>Legs</td>
+<td>HP%+6, AGI+4, Subtle Blow+5, Kick Attack rate+5</td>
+<td>Relic armor (Dynamis - San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Byakko's Haidate</strong></td>
+<td>75</td>
+<td>Legs</td>
+<td>DEX+15, Haste +5%</td>
+<td>Byakko, Ru'Aun Gardens (Sky)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bounding Boots</strong></td>
+<td>7</td>
+<td>Feet</td>
+<td>DEX+3, AGI+3</td>
+<td>Leaping Lizzy NM, South Gustaberg</td>
+</tr>
+<tr>
+<td><strong>Sarutobi Kyahan</strong></td>
+<td>39</td>
+<td>Feet</td>
+<td>Haste +3%</td>
+<td>Quu Domi the Gallant NM, Castle Oztroja</td>
+</tr>
+<tr>
+<td><strong>Temple Gaiters</strong></td>
+<td>52</td>
+<td>Feet</td>
+<td>HP+12, DEX+3, Dodge effect+10</td>
+<td>AF2 <em>The First Meeting</em></td>
+</tr>
+<tr>
+<td><strong>Tabin Boots +1</strong></td>
+<td>59</td>
+<td>Feet</td>
+<td>Acc+3, Eva+3</td>
+<td>Leathercraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Rasetsu Sune-ate +1</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>Atk+6, Eva+6, Counter+1</td>
+<td>Clothcraft 92 HQ</td>
+</tr>
+<tr>
+<td><strong>Palani Crackows</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>DEX+4, Acc+3, R.Acc+3</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Melee Gaiters</strong></td>
+<td>71</td>
+<td>Feet</td>
+<td>HP%+4, DEX+4, Guard skill+12, Counterstance effect+10</td>
+<td>Relic armor (Dynamis - San d'Oria)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — these show up in "best MNK gear" lists, but you can't get them here.</strong></p>
+<ul>
+<li><strong>Zeni Notorious Monster drops</strong> — Enkidu's Cap/Harness/Mittens/Subligar/Leggings, Hissho Hachimaki, Hachiryu pieces, Nobushi Kyahan, Blood Ring. Phoenix hides the ZNM pop NPCs and every ZNM spawn point (<code>modules/phoenix/lua/zones/npc_visibility.lua</code>), which also blocks Pandemonium Warden and the <strong>Shuhansadyu Baghnakhs</strong>.</li>
+<li><strong>Einherjar rewards</strong> — Iota Ring, Kubira Beads. The Einherjar NPC is hidden.</li>
+<li><strong>Footwork-era kick gear</strong> — the bonuses exist on later items, but Footwork itself isn't on Phoenix.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box chal">
+<p><strong>GRANDMASTER'S CHALLENGE — Absolute Virtue.</strong> Mars's Ring (Att+8, Acc+8) and Ninurta's Sash (Haste +6%, Att+6, Subtle Blow+6) come from Meret in Tavnazian Safehold, for items Absolute Virtue drops. You'd still wear Black Belt over the sash, but Mars's Ring is best-in-slot.</p>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">LEGENDARY QUESTS (BELTS, ARTIFACT ARMOR AND ASURAN FISTS)</h2></header>
+<p><em>Bastok's Monks train with Oggbi. The belts come from someone stranger.</em></p>
+<p>Steps were read from Phoenix's quest scripts and checked against BG Wiki and HorizonXI Wiki.</p>
+<h3>The belt quests (any job can do them; only Monks can wear the belts)</h3>
+<p>All three need <strong>Norg fame</strong>, which you build with Norg quests and by trading to Norg's NPCs.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Belt</th>
+<th>Quest</th>
+<th>Starts with</th>
+<th>Fame</th>
+<th>You bring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Purple Belt</strong> (Lv18, Haste +4%)</td>
+<td><em>Silence of the Rams</em></td>
+<td>Paujean, Port Bastok</td>
+<td>Norg 2</td>
+<td><strong>Lumbering Horn</strong> + <strong>Rampaging Horn</strong></td>
+</tr>
+<tr>
+<td><strong>Brown Belt</strong> (Lv40, Haste +8%)</td>
+<td><em>Fistful of Fury</em></td>
+<td>Vola, Lower Jeuno</td>
+<td>Norg 3, <em>Silence of the Rams</em> done</td>
+<td><strong>Nue Fang</strong> + <strong>Morbolger Vine</strong> + <strong>Dodo Skin</strong></td>
+</tr>
+<tr>
+<td><strong>Black Belt</strong> (Lv70, Haste +12%)</td>
+<td><em>Beat Around the Bushin</em></td>
+<td>Vola, then the Neptune's Spire door, Lower Jeuno</td>
+<td>Norg 6, <em>Fistful of Fury</em> done</td>
+<td><strong>Wyrm Beard</strong>, <strong>Behemoth Tongue</strong>, <strong>Adamantoise Egg</strong>, your <strong>Brown Belt</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Where the items drop (from Phoenix's mob data):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Drops from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lumbering Horn</td>
+<td>Lumbering Lambert or Bloodtear Baldurf, La Theine Plateau</td>
+</tr>
+<tr>
+<td>Rampaging Horn</td>
+<td>Rampaging Ram or Steelfleece Baldarich, Konschtat Highlands</td>
+</tr>
+<tr>
+<td>Nue Fang</td>
+<td>Nue, Beaucedine Glacier</td>
+</tr>
+<tr>
+<td>Morbolger Vine</td>
+<td>Morbolger, Ordelle's Caves</td>
+</tr>
+<tr>
+<td>Dodo Skin</td>
+<td>Deadly Dodo, Sauromugue Champaign</td>
+</tr>
+<tr>
+<td><strong>Wyrm Beard</strong></td>
+<td><strong>Nidhogg</strong>, Dragon's Aery</td>
+</tr>
+<tr>
+<td><strong>Behemoth Tongue</strong></td>
+<td><strong>King Behemoth</strong>, Behemoth's Dominion</td>
+</tr>
+<tr>
+<td><strong>Adamantoise Egg</strong></td>
+<td><strong>Aspidochelone</strong>, Valley of Sorrows</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Beat Around the Bushin, step by step:</strong></p>
+<ol>
+<li>Talk to <strong>Vola</strong> (Lower Jeuno) with Norg fame 6. Then check the <strong>Neptune's Spire</strong> door in Lower Jeuno to start the quest.</li>
+<li>Trade the door a <strong>Wyrm Beard</strong>.</li>
+<li>Talk to <strong>Degenhard</strong> in Bastok Markets.</li>
+<li>Trade the door a <strong>Behemoth Tongue</strong>.</li>
+<li>Talk to <strong>Maat</strong> in Ru'Lude Gardens.</li>
+<li>Trade the door an <strong>Adamantoise Egg</strong>.</li>
+<li>Trade the door your <strong>Brown Belt</strong>. You get the <strong>Black Belt</strong> (the Brown Belt is used up).</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING — Black Belt needs all three HNM kings.</strong> Nidhogg, King Behemoth and Aspidochelone. On Phoenix that's linkshell content. Ask your linkshell early; these drops usually go by points or lottery.</p>
+</aside>
+<!-- -->
+
+<aside class="box gil">
+<p><strong>MONEY MAKER — the Brown Belt ingredients sell.</strong> Nue Fang, Morbolger Vine and Dodo Skin are all NM drops that other Monks need. Camp one when you're in the area.</p>
+</aside>
+<h3>AF1 — Ghosts of the Past (Beat Cesti, Lv40)</h3>
+<ol>
+<li>Talk to <strong>Oggbi</strong> in Port Bastok.</li>
+<li>Go to <strong>Gusgen Mines</strong> and trade a <strong>Pickaxe</strong> to the <strong>???</strong> dig spot. A <strong>Wandering Ghost</strong> spawns.</li>
+<li>Kill it for the <strong>Miner's Pendant</strong>. Trade it to Oggbi for the <strong>Beat Cesti</strong>.</li>
+</ol>
+<h3>AF2 — The First Meeting (Temple Gaiters, Lv50)</h3>
+<ol>
+<li>Finish <em>Ghosts of the Past</em>. Talk to Oggbi.</li>
+<li>Enter <strong>Fei'Yin</strong> from <strong>Qu'Bia Arena</strong> (zone out of the arena into Fei'Yin) for the key item <strong>Letter from Dalzakk</strong>.</li>
+<li>In <strong>Davoi</strong>, check the <strong>Hide Flap</strong> to spawn <strong>Bilopdop</strong> and <strong>Deloknok</strong>. Kill both, then check the flap for the <strong>San d'Orian Martial Arts Scroll</strong>.</li>
+<li>Return to Oggbi with both key items for the <strong>Temple Gaiters</strong>.</li>
+</ol>
+<h3>AF3 — True Strength (Temple Hose, Lv50+)</h3>
+<ol>
+<li>Finish <em>The First Meeting</em>. Talk to <strong>Ayame</strong> in the Metalworks.</li>
+<li>Get a <strong>Bottle of Yagudo Drink</strong>: Cooking 60 (Yagudo Cherry + 3 Buburimu Grapes, dark crystal) or the AH.</li>
+<li>In <strong>Castle Oztroja</strong>, trade it to the <strong>???</strong> to spawn <strong>Huu Xalmo the Savage</strong>. Kill it for the <strong>Xalmo Feather</strong>.</li>
+<li>Trade the feather to Ayame for the <strong>Temple Hose</strong> and the title <em>Paragon of Monk Excellence</em>.</li>
+</ol>
+<h3>Hands — Borghertz's Striking Hands (Temple Gloves, Lv50)</h3>
+<p>Same steps as every Borghertz quest:</p>
+<ol>
+<li>Talk to <strong>Guslam</strong> in Upper Jeuno, then <strong>Deadly Minnow</strong> next to him.</li>
+<li>Get the key item <strong>Old Gauntlets</strong> from a coffer in <strong>Crawlers' Nest</strong> (keys from Crawler Hunters, Helm Beetles, Knight Crawlers).</li>
+<li>Show Guslam, then talk to <strong>Yin Pocanakhu</strong> in Lower Jeuno.</li>
+<li>Check the <strong>???</strong> in Port Jeuno. Borghertz asks for <strong>Shadow Flames</strong>.</li>
+<li>In <strong>Castle Zvahl Baileys</strong>, check the <strong>Torch</strong> to spawn <strong>Dark Spark</strong>. Kill it, then check the Torch for <strong>Shadow Flames</strong>.</li>
+<li>Back to the Port Jeuno ??? for the <strong>Temple Gloves</strong>.</li>
+</ol>
+<h3>Head and body — the coffers</h3>
+<p>Once <em>Borghertz's Striking Hands</em> is started (or done):</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Coffer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Temple Cyclas</strong></td>
+<td>Beadeaux</td>
+</tr>
+<tr>
+<td><strong>Temple Crown</strong></td>
+<td>Garlaige Citadel</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Weapon skill — The Walls of Your Mind (Asuran Fists)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Starts with</td>
+<td><strong>Oggbi</strong>, Port Bastok</td>
+</tr>
+<tr>
+<td>Hand-to-Hand skill</td>
+<td><strong>250</strong> (your cap allows it from level 70)</td>
+</tr>
+<tr>
+<td>Level</td>
+<td>71 (to equip the Knuckles of Trials)</td>
+</tr>
+<tr>
+<td>Weapon skill points</td>
+<td><strong>300</strong> on the Knuckles of Trials</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>Talk to Oggbi for the <strong>Knuckles of Trials</strong> and the key item <strong>Weapon Training Guide</strong>.</li>
+<li>Weapon skill with the Knuckles until they have 300 points.</li>
+<li>Trade the knuckles to Oggbi for the <strong>Map to the Annals of Truth</strong>.</li>
+<li>In <strong>Bostaunieux Oubliette</strong>, check the <strong>???</strong> to spawn <strong>Bodach</strong>. Kill it for <strong>Annals of Truth</strong>.</li>
+<li>Return to Oggbi. You learn <strong>Asuran Fists</strong>.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP — the Knuckles of Trials are slow.</strong> D16 / delay 576. Use Raging Fists or Howling Fist on every TP and ask a partner to open skillchains for you; a level-2 close is 9 points instead of 5.</p>
+</aside>
+
+<header class="band" id="chapter-9"><span class="num">CHAPTER 9</span><h2 class="ch">MERITS AT 75 (ToAU RULES)</h2></header>
+<h3>Group 1 (up to 10 upgrades total, 5 per category)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>Per rank</th>
+<th>Take it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kick Attack rate</strong></td>
+<td>+1%</td>
+<td><strong>Yes.</strong> Extra hits every round</td>
+</tr>
+<tr>
+<td><strong>Counter rate</strong></td>
+<td>+1%</td>
+<td>Yes if you tank or solo; fine otherwise</td>
+</tr>
+<tr>
+<td>Focus recast</td>
+<td>−10 s</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Chakra recast</td>
+<td>−10 s</td>
+<td>Situational</td>
+</tr>
+<tr>
+<td>Dodge recast</td>
+<td>−10 s</td>
+<td>Skip</td>
+</tr>
+</tbody>
+</table></div>
+<p>Usual pick: <strong>Kick Attacks 5, Counter 5</strong> or <strong>Kick Attacks 5, Focus 5</strong>.</p>
+<h3>Group 2 (up to 6 upgrades total, 3 per ability, costs 3/4/5 merit points)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>First rank</th>
+<th>Each extra rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Formless Strikes</strong></td>
+<td>Unlocks it: 60% damage that skips resistances</td>
+<td>+5% damage</td>
+</tr>
+<tr>
+<td><strong>Mantra</strong></td>
+<td>Unlocks it: party Max HP +4%</td>
+<td>+4%</td>
+</tr>
+<tr>
+<td>Invigorate</td>
+<td>Chakra also gives Regen (10 HP per tick) for 24 s</td>
+<td>+24 s</td>
+</tr>
+<tr>
+<td>Penance</td>
+<td>Chi Blast also gives Inhibit TP 25% for 20 s</td>
+<td>+20 s</td>
+</tr>
+</tbody>
+</table></div>
+<p>Usual pick: <strong>Formless Strikes 3 + Mantra 3</strong> for endgame, or Invigorate if you solo a lot.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — Formless Strikes.</strong> <code>battleutils.cpp</code> starts at 55% and adds 5% per merit, so 1 rank is 60% and 3 ranks are 70%. The damage is treated as non-physical, so physical damage reduction and damage-type resistances don't apply.</p>
+</aside>
+<h3>Other merits worth taking</h3>
+<ul>
+<li><strong>STR, DEX or VIT</strong> (attributes) — VIT feeds Chakra and two of your weapon skills.</li>
+<li><strong>Hand-to-Hand skill</strong> — skill over cap is accuracy.</li>
+<li><strong>HP</strong> — more for Chakra to refill and more cushion for counter-tanking.</li>
+</ul>
+
+<header class="band" id="chapter-10"><span class="num">CHAPTER 10</span><h2 class="ch">THE ENDGAME MONK</h2></header>
+<h3>Where Monk shines on Phoenix</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Why they want you</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HNMs</strong> (Nidhogg, King Behemoth, Aspidochelone)</td>
+<td>Damage, and you need them for Black Belt</td>
+<td>Wyrm Beard, Behemoth Tongue, Adamantoise Egg</td>
+</tr>
+<tr>
+<td><strong>Kirin</strong></td>
+<td>Long fight, steady damage</td>
+<td>Kirin's Osode, Dryadic Abjuration (Shura set)</td>
+</tr>
+<tr>
+<td><strong>Dynamis</strong></td>
+<td>Speed, Hundred Fists on the boss</td>
+<td>Melee relic armor, Spharai</td>
+</tr>
+<tr>
+<td><strong>Sky</strong></td>
+<td>Damage on the gods</td>
+<td>Byakko's Haidate (Haste +5%, DEX+15)</td>
+</tr>
+<tr>
+<td><strong>Limbus</strong></td>
+<td>Speed</td>
+<td>Ancient Beastcoins → Brutal Earring</td>
+</tr>
+<tr>
+<td><strong>Assault</strong></td>
+<td>Every job welcome</td>
+<td>Palani gear, Chivalrous Chain, Potent Belt</td>
+</tr>
+</tbody>
+</table></div>
+<h3>The rules of endgame damage</h3>
+<ol>
+<li><strong>Hundred Fists on the boss.</strong> 45 seconds of four-times-faster punching wins fights.</li>
+<li><strong>Feed skillchains.</strong> You'll have TP first. Open for the slow two-handers.</li>
+<li><strong>Don't sit on hate.</strong> If the mob turns, step back and let the tank Provoke; you're not geared to hold it.</li>
+<li><strong>Formless Strikes on resistant mobs.</strong> Elementals, slimes and ghosts stop being a problem.</li>
+</ol>
+
+<header class="band" id="appendix-a"><span class="num">APPENDIX A</span><h2 class="ch">MACRO CHEAT SHEET</h2></header>
+<pre><code>Macro 1 — Boost x1
+/ja &quot;Boost&quot; &lt;me&gt;
+
+Macro 2 — Focus + Berserk (/WAR)
+/ja &quot;Focus&quot; &lt;me&gt;
+/wait 1
+/ja &quot;Berserk&quot; &lt;me&gt;
+
+Macro 3 — Dragon Kick with WS set
+/equip head &quot;Maat's Cap&quot;
+/equip hands &quot;Pallas's Bracelets&quot;
+/equip back &quot;Cerberus Mantle +1&quot;
+/ws &quot;Dragon Kick&quot; &lt;t&gt;
+/wait 2
+/equip head &quot;Optical Hat&quot;
+/equip hands &quot;Ochimusha Kote&quot;
+/equip back &quot;Amemet Mantle +1&quot;
+
+Macro 4 — Chakra in Chakra gear
+/equip body &quot;Temple Cyclas&quot;
+/equip hands &quot;Melee Gloves&quot;
+/ja &quot;Chakra&quot; &lt;me&gt;
+/wait 2
+/equip body &quot;Scorpion Harness +1&quot;
+/equip hands &quot;Ochimusha Kote&quot;
+
+Macro 5 — Counterstance (on purpose)
+/ja &quot;Counterstance&quot; &lt;me&gt;
+/p Counterstance up — I'll hold it for a bit
+
+Macro 6 — Hundred Fists
+/ja &quot;Hundred Fists&quot; &lt;me&gt;
+/p <span class="st">★</span> Hundred Fists <span class="st">★</span>
+</code></pre>
+
+<header class="band" id="appendix-b"><span class="num">APPENDIX B</span><h2 class="ch">LEVEL-BY-LEVEL CHECKLIST</h2></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Do this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cesti +1, Combo</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Boost</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Bounding Boots</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Counter</strong>, Tropical Punches +1</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Dodge</strong>, Max HP Boost</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Subjob quest, Purple Belt (Norg fame 2)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Spike Necklace</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Lynx Baghnakhs</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Focus.</strong> Check your race's RSE set and the <a href="https://phoenix-xi.com/world-info?tab=calendar">RSE calendar</a></td>
+</tr>
+<tr>
+<td>27–33</td>
+<td>Your race's RSE pieces (if worth it for MNK)</td>
+</tr>
+<tr>
+<td>33</td>
+<td>Peacock Amulet</td>
+</tr>
+<tr>
+<td>34</td>
+<td>Ochimusha Kote (Mee Deggi, Castle Oztroja)</td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Chakra</strong></td>
+</tr>
+<tr>
+<td>39</td>
+<td>Sarutobi Kyahan (Quu Domi, Castle Oztroja)</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>AF1</strong> Beat Cesti, <strong>Brown Belt</strong></td>
+</tr>
+<tr>
+<td>41</td>
+<td>Chi Blast, Raging Fists (skill 125)</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Counterstance</strong></td>
+</tr>
+<tr>
+<td>48</td>
+<td>Patas +1</td>
+</tr>
+<tr>
+<td>50</td>
+<td><strong>AF2, AF3</strong>, Cross-Counters or Retaliators. Start <em>Borghertz's Striking Hands</em></td>
+</tr>
+<tr>
+<td>51</td>
+<td>Kick Attacks</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Temple Gloves</td>
+</tr>
+<tr>
+<td>57</td>
+<td>Scorpion Harness +1</td>
+</tr>
+<tr>
+<td>60</td>
+<td><strong>Howling Fist</strong> (skill 200)</td>
+</tr>
+<tr>
+<td>65</td>
+<td><strong>Dragon Kick</strong> (skill 225), Tabin Jupon +1</td>
+</tr>
+<tr>
+<td>70</td>
+<td><strong>Black Belt</strong>, Hand-to-Hand 250</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Asuran Fists quest, Kick Attacks 12%</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Kaiser Knuckles. Merits: Kick Attacks, Counter or Focus, Formless Strikes, Mantra</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="appendix-c"><span class="num">APPENDIX C</span><h2 class="ch">SOURCES</h2></header>
+<ul>
+<li>Phoenix server code, github.com/phoenixffxi/Phoenix (commit 014069e4ed): <code>modules/era/lua/globals/job_utils/monk.lua</code>, <code>scripts/globals/job_utils/monk.lua</code>, <code>scripts/effects/boost.lua</code>, <code>src/map/entities/battle_entity.cpp</code> (attack delay, Hundred Fists, Boost, Counterstance), <code>src/map/utils/battleutils.cpp</code> (damage types, Formless Strikes, skillchains), <code>modules/era/lua/actions/weaponskills/hand_to_hand.lua</code>, <code>data/skills.yaml</code> (era override), <code>data/ecosystems.yaml</code>, zone <code>mobs.yaml</code> files, <code>sql/item_mods.sql</code>, <code>scripts/quests/bastok/MNK_AF*.lua</code>, <code>scripts/quests/bastok/The_Walls_of_Your_Mind.lua</code>, <code>scripts/quests/bastok/Silence_of_the_Rams.lua</code>, <code>scripts/zones/Lower_Jeuno/npcs/Vola.lua</code> and <code>_6tc.lua</code> (belt quests), <code>scripts/quests/jeuno/helpers.lua</code> (Borghertz), <code>modules/phoenix/lua/zones/npc_visibility.lua</code>.</li>
+<li>BG Wiki — quest walkthroughs (Ghosts of the Past, The First Meeting, True Strength, The Walls of Your Mind) and weapon-skill-point values.</li>
+<li>HorizonXI Wiki — 75-era quest walkthroughs, cross-check for AF and belt steps.</li>
+<li>The project's leveling-camps guide for the camp list.</li>
+</ul>
+</main></body></html>

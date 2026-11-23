@@ -1,0 +1,2533 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thief Light Fingers Compendium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#161a26;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+.cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}
+.cover:after{content:"THF";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}
+.cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}
+.cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}
+.cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}
+h1.mast{display:none}
+main>h2:first-of-type{display:none}
+h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+p,li{max-width:72ch}
+em{color:var(--muted)}
+.band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}
+.band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}
+.band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}
+.band+p em{font-size:17px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}
+.toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}
+.toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.toc a:hover,.toc a:focus{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}
+td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}
+tr:nth-child(even) td{background:#f6f8fa}
+code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}
+pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}
+pre code{background:none;color:inherit;padding:0}
+.box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}
+.box p{margin:4px 0}.box ul{margin:6px 0;padding-left:20px}
+.box>p:first-child strong:first-child,.box>ul:first-child{}
+.box strong:first-child{color:var(--c);letter-spacing:.06em}
+.tip{--c:var(--tip)}.warn{--c:var(--warn)}.gil{--c:var(--gil)}.code{--c:var(--code);background:#f5f2fc}.chal{--c:var(--chal)}.check{--c:var(--check)}
+.recap{--c:var(--ink);background:var(--ink);color:#fff}.recap strong:first-child{color:var(--gold)!important}
+.legend{--c:var(--gold);background:#fffaf0}.legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.legend li strong{color:var(--ink)!important}
+.st{color:var(--accent)}.st.off{color:var(--rule)}
+.q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}
+.ok{color:#15803d;font-weight:800;font-size:1.15em}
+.edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}
+.edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}
+.fx{font-size:1.35em;line-height:1;white-space:nowrap}
+.curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.curechart svg{width:100%;height:auto;display:block}
+.curechart .bn{fill:#0f766e}.curechart .bo{fill:#d9a521}.curechart .bs{fill:#b3202f}.curechart .bp{fill:#1d5fb8}.curechart .bb{fill:#d9a521}
+.curechart .cl{font:600 13px var(--body);fill:var(--ink)}
+.curechart .cv{font:600 12px var(--mono);fill:var(--ink)}
+.curechart .ct{font:11px var(--mono);fill:var(--muted)}
+.curechart .gl{stroke:var(--rule);stroke-width:1}
+.curechart .lg{font:600 12px var(--body);fill:var(--ink)}
+.curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}
+details summary{cursor:pointer;font-weight:600}
+.foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.foodchain svg{width:100%;height:auto;display:block}
+.foodchain .fp{font-size:14px}
+.foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}
+.foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}
+.foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}
+.foodchain .fa{stroke:#d9381e;stroke-width:3}
+.foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}
+.foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.set-tp{--s:#b3202f}.set-ws{--s:#b45309}.set-eva{--s:#1d4ed8}.set-nin{--s:#5b3fa6}
+.set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}
+.sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}
+.sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}
+.setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}
+.seticon{font-size:26px;line-height:1}
+.settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.set .tw{border-color:var(--s)}.set th{background:var(--s)}
+.set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}
+.fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.fstep b{font-size:22px;line-height:1}.fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}
+.fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}
+.fstep small{font-size:12px;opacity:.9}
+.fstep:hover,.fstep:focus-visible{filter:brightness(1.1)}
+@media (max-width:700px){.flow{grid-template-columns:1fr 1fr;gap:6px}.fstep,.fstep:first-child{clip-path:none}}
+@media (max-width:520px){.band,.cover{margin-left:-16px;margin-right:-16px}main{padding:0 16px 60px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>Thief</h1><p>The light fingers compendium: Treasure Hunter, Steal and SATA straight from the server code, every dagger weapon skill, a steal-and-treasure report for every classic camp, four gear sets, AF, Borghertz, Evisceration and merits.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">THIEF</h1>
+<h2>The Light Fingers Compendium — Phoenix Edition</h2>
+<p><em>Everyone else kills the mob. You make it pay.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE THIEF</a><a href="#chapter-2">CHAPTER 2 · BECOMING A THIEF</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE ARSENAL (SKILLS AND WEAPON SKILLS)</a><a href="#chapter-5">CHAPTER 5 · THIEF MATH (TREASURE HUNTER, STEAL, MUG AND SATA)</a><a href="#chapter-6">CHAPTER 6 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · QUESTS, AF AND ENDGAME</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most Thief guides on the web describe the game after 2009: Bully, Despoil, Conspirator, Collaborator, Rudra's Storm, Treasure Hunter on half your gear and level-99 Dual Wield. <strong>None of that is on Phoenix.</strong> This guide uses Phoenix's own server code (github.com/phoenixffxi/Phoenix) with its era-revert modules applied. Ability values, Treasure Hunter math, weapon skill numbers, skill caps, gear stats and drops all come from that code. Quest walkthroughs were checked against BG Wiki, because the server code can't tell you where to stand or what an NPC says.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves time, TP or gil</li>
+<li><strong>WARNING</strong> — a common way to die or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>MASTER THIEF'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — three things this guide can't settle from the code.</strong></p>
+<ul>
+<li><strong>The Treasure Hunter drop table</strong> in Phoenix's code is the 2017 retail table (<code>scripts/combat/basic/treasure_hunter.lua</code>). Phoenix doesn't revert it. That's how the server works today, but it isn't the 2007 table.</li>
+<li><strong>Assassin's Charge</strong> lasts up to 60 seconds in the code and only ends early when you weapon skill. Test it before you plan around it.</li>
+<li><strong>Live server settings</strong> such as the drop-rate multiplier and whether Treasure Hunter procs are switched off aren't public. The numbers here are the code defaults (procs on, multiplier 1.0).</li>
+</ul>
+</aside>
+
+<h2>THIEF AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Treasure Hunter, damage dealer, puller, evasion tank in a pinch</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span> — a THF in the party means more drops, and Sneak Attack/Trick Attack burst</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — great evasion, no healing. Fine to 30 with a healing subjob</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> — Treasure Hunter, Steal and Mug all make money. THF pays for every other job</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — positioning (behind the mob, behind the tank) is the whole job</td>
+</tr>
+<tr>
+<td><strong>Main weapon</strong></td>
+<td>Dagger (A). Evasion (A+) and Parry (A)</td>
+</tr>
+<tr>
+<td><strong>Key stats</strong></td>
+<td>DEX (Sneak Attack, crits, accuracy), AGI (Trick Attack, evasion), Haste</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Low. The best Treasure Hunter dagger is an always-drop NM</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE THIEF</h2></header>
+<p><em>The tank holds it. The mages heal it. You rob it blind.</em></p>
+<p>On Phoenix a THF does four things, in this order of importance:</p>
+<ol>
+<li><strong>Raise the drop rate.</strong> Treasure Hunter makes every mob you touch drop more. Linkshells bring a Thief for that alone.</li>
+<li><strong>Burst with Sneak Attack and Trick Attack.</strong> A guaranteed critical hit with your DEX or AGI added, then a weapon skill on top.</li>
+<li><strong>Pull and get out.</strong> Flee, Hide, and the best evasion skill in the game.</li>
+<li><strong>Steal and Mug.</strong> Free items and gil from every mob.</li>
+</ol>
+<h3>Job abilities on Phoenix (era-reverted)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>What it does on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Perfect Dodge</strong> (2-hour)</td>
+<td>2:00:00</td>
+<td>Every melee attack misses you for 30 seconds.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Steal</strong></td>
+<td>5:00</td>
+<td>Steal an item. Chance = 50% + your level − the mob's level + 2% per Steal+ in gear.</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Sneak Attack</strong></td>
+<td>1:00</td>
+<td>Your next hit from <strong>behind</strong> (or while Hidden) can't miss, always crits, and adds your <strong>DEX</strong> to the damage.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Flee</strong></td>
+<td>5:00</td>
+<td>Run very fast for 30 seconds. Removes Weight.</td>
+</tr>
+<tr>
+<td>30</td>
+<td><strong>Trick Attack</strong></td>
+<td>1:00</td>
+<td>Your next hit with a <strong>party member between you and the mob</strong> adds your <strong>AGI</strong> to the damage and hands the hate to that party member.</td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Mug</strong></td>
+<td>15:00</td>
+<td>Steal gil. Chance = 90% + your level − the mob's level, up to the mob's gil purse.</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Hide</strong></td>
+<td>5:00</td>
+<td>Turn invisible for 30 seconds to 5 minutes (random). Sneak Attack works from any angle while you're hidden.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Assassin's Charge</strong> (merit)</td>
+<td>15:00</td>
+<td>Triple Attack +100% for up to 60 seconds; ends when you weapon skill.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Feint</strong> (merit)</td>
+<td>10:00</td>
+<td>Your next attack gives the mob a heavy Evasion Down for 60 seconds.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Sneak Attack and Trick Attack.</strong> Both only work with <strong>Thief as your main job</strong>, and only on the first hit of the round (<code>attack.cpp</code>).</p>
+<ul>
+<li><strong>Sneak Attack</strong> needs you behind the mob (or Hidden). It adds your full DEX to the base damage and sets crit rate to 100% (<code>battleutils.cpp</code>).</li>
+<li><strong>Trick Attack</strong> needs a party member between you and the mob. It adds your full AGI to the damage. At level 60 the <strong>Assassin</strong> trait makes Trick Attack hits auto-hit and auto-crit too.</li>
+<li>Use both together (SATA): one hit gets DEX + AGI, can't miss, crits, and sends the hate to the tank.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — the era Assassin's Charge and Feint.</strong> Phoenix's era module (<code>modules/era/lua/globals/job_utils/thief.lua</code>) removes the Quadruple Attack from Assassin's Charge (Triple Attack +100% only), and removes the Treasure Hunter boost from Feint. The only thing that ends Assassin's Charge early in the code is a weapon skill.</p>
+</aside>
+<h3>Job traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Value on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Gilfinder</td>
+<td>More gil from kills</td>
+</tr>
+<tr>
+<td>10 / 30 / 50 / 70</td>
+<td>Evasion Bonus I–IV</td>
+<td>Evasion +10 / +22 / +35 / +48</td>
+</tr>
+<tr>
+<td>15 / 45</td>
+<td><strong>Treasure Hunter I / II</strong></td>
+<td>TH1 / TH2 (Chapter 5)</td>
+</tr>
+<tr>
+<td>20 / 40 / 66 / 75</td>
+<td>Resist Gravity I–IV</td>
+<td>+10 / +15 / +20 / +25</td>
+</tr>
+<tr>
+<td>55</td>
+<td><strong>Triple Attack</strong></td>
+<td>5% chance to swing three times. Merits add +1% each</td>
+</tr>
+<tr>
+<td>60</td>
+<td><strong>Assassin</strong></td>
+<td>Trick Attack can't miss and always crits</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Aura Steal (merit)</td>
+<td>A failed Steal can take a buff instead</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Ambush (merit)</td>
+<td>Accuracy bonus when you attack from behind</td>
+</tr>
+</tbody>
+</table></div>
+<h3>What's NOT on Phoenix</h3>
+<aside class="box warn">
+<p><strong>WARNING — skip these sections of any modern guide.</strong> Phoenix runs pre-Wings of the Goddess.</p>
+<ul>
+<li><strong>Bully, Despoil, Conspirator, Collaborator, Accomplice, Larceny</strong> — later expansions.</li>
+<li><strong>Dual Wield trait on Thief</strong> — not in era. Dual Wield comes from <strong>/NIN</strong> (or /DNC, which doesn't exist yet).</li>
+<li><strong>Mandalic Stab, Rudra's Storm, Exenterator</strong> — merit and later weapon skills.</li>
+<li><strong>Treasure Hunter gear from later eras</strong> (Raider's, Plunderer's, Skulker's, Volte, Herculean) — not in the game here. On Phoenix you get <strong>TH from three places</strong>: your traits, the Thief's Knife and the Assassin's Armlets.</li>
+<li><strong>ZNM, Einherjar and Nyzul gear</strong> — Phoenix hides those NPCs.</li>
+<li><strong>Homam set</strong> — the only source in Phoenix's data is a Rhapsody-key shop from a much later era.</li>
+</ul>
+</aside>
+<h3>Base stats at 75 by race (THF75 / NIN37, no gear, no merits)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>HP</th>
+<th>STR</th>
+<th>DEX</th>
+<th>VIT</th>
+<th>AGI</th>
+<th>INT</th>
+<th>CHR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>1104</td>
+<td>65</td>
+<td>73</td>
+<td>65</td>
+<td>71</td>
+<td>66</td>
+<td>52</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>1195</td>
+<td>70</td>
+<td>70</td>
+<td>68</td>
+<td>65</td>
+<td>60</td>
+<td>52</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>908</td>
+<td>59</td>
+<td>73</td>
+<td>62</td>
+<td>74</td>
+<td>73</td>
+<td>52</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>1104</td>
+<td>62</td>
+<td><strong>80</strong></td>
+<td>62</td>
+<td><strong>76</strong></td>
+<td>66</td>
+<td>46</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>1316</td>
+<td>68</td>
+<td>73</td>
+<td>72</td>
+<td>68</td>
+<td>63</td>
+<td>46</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Mithra is the classic Thief for a reason.</strong> The most DEX and AGI means the biggest Sneak Attack and Trick Attack. Every race works: a Galka Thief gives up 7 DEX and 8 AGI but gets 200 more HP for evasion tanking.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Treasure Hunter is your job. Damage is your bonus.</li>
+<li>Sneak Attack from behind, Trick Attack behind the tank, both together for SATA.</li>
+<li>No Dual Wield trait on Phoenix — /NIN gives it.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A THIEF</h2></header>
+<p><em>No unlock, no paperwork. Just light fingers.</em></p>
+<p>Thief is a starting job. You can pick it at character creation or change to it at your Mog House. No unlock quest.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — Nanaa Mihgo is your quest giver.</strong> All three AF quests start with her in <strong>Windurst Woods (J-3)</strong>. If a cutscene won't trigger, talk to her again; she's tied to several quests.</p>
+</aside>
+<h3>Your first shopping list (levels 1–20)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Item</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Beestinger</strong> (Lv7, delay 150)</td>
+<td>Stinging Sophie NM, North Gustaberg. The fastest early dagger</td>
+</tr>
+<tr>
+<td>Main</td>
+<td>Bronze Knife +1 → Brass Dagger +1 → Dagger +1</td>
+<td>Crafted, cheap on the AH</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Bounding Boots</strong> (Lv7)</td>
+<td>DEX+3, AGI+3. Leaping Lizzy NM in South Gustaberg</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td><strong>Rabbit Charm</strong> (Lv7)</td>
+<td>DEX+1, AGI+1, Steal+1. Jaggedy-Eared Jack NM, West Ronfaure (very rare)</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Key Ring Belt</strong> (Lv20)</td>
+<td>DEX+1, Steal+1</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Empress Hairpin</strong> (Lv24)</td>
+<td>DEX+3 AGI+3 Evasion+10 — the classic</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box gil">
+<p><strong>MONEY MAKER — Steal on everything.</strong> From level 5, press Steal on every mob. Rock Salt, Lizard Eggs and Sheep Wool all sell to NPCs or crafters, and Steal costs you nothing.</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT — level 18</strong></p>
+<ul>
+<li>Subjob quest done (Chapter 3).</li>
+<li>Steal macro on every pull.</li>
+<li>Bounding Boots and a fast dagger.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>Thief has no Dual Wield of its own here. Your subjob decides if you get it.</em></p>
+<p>Unlock subjobs at level 18 with <em>The Old Lady</em> (starts in Mhaura) or <em>Elder Memories</em> (starts in Selbina).</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>You get at 37</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/NIN</strong></td>
+<td><strong>Dual Wield II</strong> (−15% delay), Utsusemi: Ichi and Ni, Subtle Blow</td>
+<td><strong>The default from 20</strong> (Dual Wield I is a sub-level-10 trait). Two daggers, and shadows when Sneak Attack pulls hate</td>
+</tr>
+<tr>
+<td><strong>/WAR</strong></td>
+<td>Double Attack 10%, Berserk, Provoke, Warcry</td>
+<td>18–25 before /NIN is useful, and Provoke for pulling</td>
+</tr>
+<tr>
+<td><strong>/RNG</strong></td>
+<td>Sharpshot, Scavenge, Barrage (30), Accuracy Bonus +22</td>
+<td>Pulling with a bow, and Accuracy Bonus</td>
+</tr>
+<tr>
+<td><strong>/WHM</strong></td>
+<td>Cure, Protect, Dia</td>
+<td>Soloing 18–30</td>
+</tr>
+<tr>
+<td><strong>/MNK</strong></td>
+<td>Counter, Max HP Boost</td>
+<td>Early HP</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — /NIN Dual Wield starts at your level 20.</strong> Dual Wield I is a level-10 Ninja trait, so you need /NIN at sub level 10 (your level 20). Dual Wield II comes at sub 25 (your level 50).</p>
+</aside>
+<h3>When you're the sub: /THF on other jobs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub level</th>
+<th>They get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Steal, Gilfinder</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Evasion Bonus +10</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Sneak Attack, <strong>Treasure Hunter I</strong></td>
+</tr>
+<tr>
+<td>25</td>
+<td>Flee</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Trick Attack, Evasion Bonus +22</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Mug</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — /THF TH is capped.</strong> A non-Thief main can only start a mob at TH up to <strong>4</strong>, and <strong>only a Thief main can raise it further with hits</strong> (<code>enmity_container.cpp</code>, <code>battleutils.cpp</code>). /THF on a WAR is TH1 plus gear, and it never grows.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>/WAR until 20, /NIN from 20 (Dual Wield I), Dual Wield II at 50.</li>
+<li>Only a main-job Thief makes Treasure Hunter climb.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE ARSENAL (SKILLS AND WEAPON SKILLS)</h2></header>
+<p><em>One weapon. The best evasion in the game. Make the first hit count.</em></p>
+<h3>Your combat skills at 75 (era caps)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Grade</th>
+<th>Cap at 75</th>
+<th>Reaches 200 at</th>
+<th>Reaches 230 at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dagger</strong></td>
+<td>A</td>
+<td><strong>269</strong></td>
+<td>Lv60</td>
+<td>Lv67</td>
+</tr>
+<tr>
+<td><strong>Evasion</strong></td>
+<td><strong>A+</strong></td>
+<td><strong>276</strong></td>
+<td>Lv60</td>
+<td>Lv66</td>
+</tr>
+<tr>
+<td><strong>Parry</strong></td>
+<td>A</td>
+<td>269</td>
+<td>Lv60</td>
+<td>Lv67</td>
+</tr>
+<tr>
+<td>Marksmanship</td>
+<td>C+</td>
+<td>230</td>
+<td>Lv64</td>
+<td>Lv75</td>
+</tr>
+<tr>
+<td>Archery</td>
+<td>C−</td>
+<td>220</td>
+<td>Lv65</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Sword, Throwing</td>
+<td>D</td>
+<td>210</td>
+<td>Lv70</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Hand-to-Hand, Club</td>
+<td>E</td>
+<td>200</td>
+<td>Lv75</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Shield</td>
+<td>F</td>
+<td>189</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Dagger weapon skills (era values)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Skill</th>
+<th>Hits</th>
+<th>fTP at 100 / 200 / 300%</th>
+<th>Stat mods</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wasp Sting</td>
+<td>10</td>
+<td>1</td>
+<td>1.0</td>
+<td>—</td>
+<td>Poison</td>
+</tr>
+<tr>
+<td><strong>Gust Slash</strong></td>
+<td>40</td>
+<td>magic</td>
+<td>1.0 / 2.0 / 2.5</td>
+<td>DEX 20%, INT 20%</td>
+<td>Wind damage; your workhorse to 50</td>
+</tr>
+<tr>
+<td>Shadowstitch</td>
+<td>70</td>
+<td>1</td>
+<td>1.0</td>
+<td>CHR 30%</td>
+<td>Bind</td>
+</tr>
+<tr>
+<td>Viper Bite</td>
+<td>100</td>
+<td>1</td>
+<td>1.0</td>
+<td>—</td>
+<td>Attack ×2.0, Poison</td>
+</tr>
+<tr>
+<td><strong>Cyclone</strong></td>
+<td>125</td>
+<td>magic</td>
+<td>1.0 / 2.375 / 2.875</td>
+<td>DEX 30%, INT 25%</td>
+<td>Hits everything around the target. Party-safe only on single pulls</td>
+</tr>
+<tr>
+<td><strong>Dancing Edge</strong></td>
+<td>200</td>
+<td>5</td>
+<td>1.1875 each</td>
+<td>DEX 30%, CHR 40%</td>
+<td>Accuracy +0 / +30 / +50 with TP. <strong>Main-job THF only</strong></td>
+</tr>
+<tr>
+<td><strong>Shark Bite</strong></td>
+<td>225</td>
+<td>2</td>
+<td>2.0 / 2.5 / 3.0</td>
+<td><strong>DEX 50%</strong></td>
+<td><strong>Main THF only.</strong> Your best WS until Evisceration</td>
+</tr>
+<tr>
+<td><strong>Evisceration</strong></td>
+<td>230</td>
+<td>5</td>
+<td>1.0 each</td>
+<td>DEX 30%</td>
+<td>Crit 10 / 24 / 48% with TP. Quest <em>Cloak and Dagger</em>. Main job only</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — weapon skill right after SATA.</strong> A Sneak Attack or Trick Attack only boosts the first melee hit, not a weapon skill. The classic play is SATA a normal hit, then weapon skill on the very next opening with full Shark Bite or Evisceration while the mob's hate is on the tank.</p>
+</aside>
+<h3>Skillchains you can build (from Phoenix's skillchain table)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Opener → Closer</th>
+<th>Skillchain</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evisceration → Shark Bite</td>
+<td><strong>Fragmentation</strong></td>
+<td>Two Thieves, or one Thief with fast TP</td>
+</tr>
+<tr>
+<td>Evisceration → Dancing Edge / Viper Bite</td>
+<td><strong>Distortion</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Steel Cyclone / Full Break → Evisceration</td>
+<td><strong>Darkness</strong></td>
+<td>WAR opens, you close a level 3</td>
+</tr>
+<tr>
+<td>Evisceration → Steel Cyclone / Spiral Hell / Tachi: Gekko</td>
+<td><strong>Darkness</strong></td>
+<td>You open</td>
+</tr>
+<tr>
+<td>Decimation / Mistral Axe / Tachi: Kasha → Shark Bite</td>
+<td><strong>Light</strong></td>
+<td>Level 3 with WAR, BST or SAM</td>
+</tr>
+<tr>
+<td>Shark Bite → Decimation / Tachi: Kasha</td>
+<td><strong>Light</strong></td>
+<td>You open</td>
+</tr>
+<tr>
+<td>Blade: Ku / Impulse Drive / Asuran Fists → Shark Bite</td>
+<td><strong>Fragmentation</strong></td>
+<td>NIN, DRG or MNK opens</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Gust Slash to 50, Dancing Edge at 60, Shark Bite at 66, Evisceration at 67+.</li>
+<li>DEX is your weapon skill stat.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">THIEF MATH (TREASURE HUNTER, STEAL, MUG AND SATA)</h2></header>
+<p><em>Every number in this chapter is the reason a linkshell invites you.</em></p>
+<h3>Treasure Hunter: how it actually works on Phoenix</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE — the three rules.</strong>
+1. <strong>Starting level.</strong> The first time you act on a mob (hit it, Steal, debuff it), the mob's TH level becomes your TH from traits and gear, up to TH8 if Thief is your main job, TH4 if it isn't (<code>enmity_container.cpp</code>).
+2. <strong>Procs.</strong> Every first hit of a round from a <strong>main-job Thief</strong> has a chance to raise the mob's TH by 1, up to <strong>TH12</strong> (<code>battleutils.cpp</code>). The chance is 4% when the mob is at your TH level and halves for each level above it. <strong>Sneak Attack and Trick Attack each make that hit 10× more likely to proc</strong> (both together: 20×).
+3. <strong>Drops.</strong> When the mob dies, each drop's rate is replaced by the value in the TH table for its rarity and the mob's TH level (<code>scripts/combat/basic/treasure_hunter.lua</code>).</p>
+</aside>
+<p><strong>What TH does to drop rates (from Phoenix's table):</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Mob's TH</th>
+<th>Very common</th>
+<th>Common</th>
+<th>Uncommon</th>
+<th>Rare</th>
+<th>Very rare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>24%</td>
+<td>15%</td>
+<td>10%</td>
+<td>5%</td>
+<td>1%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>48%</td>
+<td>30%</td>
+<td>12%</td>
+<td>6%</td>
+<td>1.5%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>56%</td>
+<td>40%</td>
+<td>15%</td>
+<td>7%</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>60%</td>
+<td>42.5%</td>
+<td>16.5%</td>
+<td>7.5%</td>
+<td>2.25%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>64%</td>
+<td>45%</td>
+<td>18%</td>
+<td>8%</td>
+<td>2.5%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>68%</td>
+<td>50%</td>
+<td>20%</td>
+<td>9%</td>
+<td>3.5%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>70.5%</td>
+<td>55%</td>
+<td>22.5%</td>
+<td>10.5%</td>
+<td>4.75%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>73.5%</td>
+<td>60%</td>
+<td>26.5%</td>
+<td>12.5%</td>
+<td>6.5%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>76%</td>
+<td>65%</td>
+<td>29.5%</td>
+<td>15.5%</td>
+<td>8.25%</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="curechart"><svg viewBox="0 0 760 330" role="img" aria-label="Rare and very rare drop rates by Treasure Hunter level"><line class="gl" x1="50" x2="750" y1="270" y2="270"/><text class="ct" x="42" y="274" text-anchor="end">0%</text><line class="gl" x1="50" x2="750" y1="210" y2="210"/><text class="ct" x="42" y="214" text-anchor="end">4%</text><line class="gl" x1="50" x2="750" y1="150" y2="150"/><text class="ct" x="42" y="154" text-anchor="end">8%</text><line class="gl" x1="50" x2="750" y1="90" y2="90"/><text class="ct" x="42" y="94" text-anchor="end">12%</text><line class="gl" x1="50" x2="750" y1="30" y2="30"/><text class="ct" x="42" y="34" text-anchor="end">16%</text><rect class="bs" x="64" y="195" width="30" height="75"><title>TH0: 5%</title></rect><rect class="bb" x="96" y="255" width="30" height="15"><title>TH0: 1%</title></rect><text class="cl" x="95" y="288" text-anchor="middle">TH0</text><rect class="bs" x="142" y="180" width="30" height="90"><title>TH1: 6%</title></rect><rect class="bb" x="174" y="248" width="30" height="22"><title>TH1: 1.5%</title></rect><text class="cl" x="173" y="288" text-anchor="middle">TH1</text><rect class="bs" x="220" y="165" width="30" height="105"><title>TH2: 7%</title></rect><rect class="bb" x="252" y="240" width="30" height="30"><title>TH2: 2%</title></rect><text class="cl" x="251" y="288" text-anchor="middle">TH2</text><rect class="bs" x="298" y="158" width="30" height="112"><title>TH3: 7.5%</title></rect><rect class="bb" x="330" y="236" width="30" height="34"><title>TH3: 2.25%</title></rect><text class="cl" x="329" y="288" text-anchor="middle">TH3</text><rect class="bs" x="376" y="150" width="30" height="120"><title>TH4: 8%</title></rect><rect class="bb" x="408" y="232" width="30" height="38"><title>TH4: 2.5%</title></rect><text class="cl" x="407" y="288" text-anchor="middle">TH4</text><rect class="bs" x="454" y="135" width="30" height="135"><title>TH6: 9%</title></rect><rect class="bb" x="486" y="218" width="30" height="52"><title>TH6: 3.5%</title></rect><text class="cl" x="485" y="288" text-anchor="middle">TH6</text><rect class="bs" x="532" y="112" width="30" height="158"><title>TH8: 10.5%</title></rect><rect class="bb" x="564" y="199" width="30" height="71"><title>TH8: 4.75%</title></rect><text class="cl" x="563" y="288" text-anchor="middle">TH8</text><rect class="bs" x="610" y="82" width="30" height="188"><title>TH10: 12.5%</title></rect><rect class="bb" x="642" y="172" width="30" height="98"><title>TH10: 6.5%</title></rect><text class="cl" x="641" y="288" text-anchor="middle">TH10</text><rect class="bs" x="688" y="38" width="30" height="232"><title>TH12: 15.5%</title></rect><rect class="bb" x="720" y="146" width="30" height="124"><title>TH12: 8.25%</title></rect><text class="cl" x="719" y="288" text-anchor="middle">TH12</text><rect class="bs" x="500" y="8" width="14" height="14"/><text class="lg" x="520" y="20">Rare</text><rect class="bb" x="610" y="8" width="14" height="14"/><text class="lg" x="630" y="20">Very rare</text></svg><figcaption>Drop rate for rare and very rare items by the mob's Treasure Hunter level, from Phoenix's <code>scripts/combat/basic/treasure_hunter.lua</code>. TH4 is where you start a mob at 75; everything right of it comes from procs.</figcaption></figure>
+
+<p>TH1 doubles common drops. Going from TH4 to TH12 roughly doubles rare and very rare drops again.</p>
+<p><strong>Where your TH comes from on Phoenix:</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>TH</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Treasure Hunter I (Lv15)</td>
+<td>+1</td>
+<td>Trait</td>
+</tr>
+<tr>
+<td>Treasure Hunter II (Lv45)</td>
+<td>+1</td>
+<td>Trait</td>
+</tr>
+<tr>
+<td><strong>Thief's Knife</strong> (Lv70 dagger)</td>
+<td>+1</td>
+<td><strong>Always</strong> drops from <strong>Sozu Rogberry</strong>, Temple of Uggalepih</td>
+</tr>
+<tr>
+<td><strong>Assassin's Armlets</strong> (Lv75 hands)</td>
+<td>+1</td>
+<td>Relic armor, Dynamis – Xarcabard</td>
+</tr>
+</tbody>
+</table></div>
+<p>That's <strong>TH4</strong> to start a mob at 75. Everything above that comes from procs.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — SATA builds TH.</strong> A hit with both Sneak Attack and Trick Attack is 20× more likely to proc TH. On a notorious monster, open with SATA every minute (both recasts are 1:00) and use <code>/th</code> (Phoenix's command) to check the mob's TH level.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — Phoenix's <code>/th</code> command.</strong> Phoenix adds a player command, <code>/th</code>, that prints the TH level of the mob you're targeting (<code>modules/phoenix/lua/commands/th.lua</code>). Use it to see your procs.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — TH only counts while you're on the hate list.</strong> You have to act on the mob (a hit, Steal, a debuff). A Thief who sits back and never touches the NM adds nothing.</p>
+</aside>
+<h3>Steal and Mug</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Formula</th>
+<th>At 75 vs a Lv75 mob</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Steal</strong></td>
+<td>50% + your level − mob level + 2% per Steal+</td>
+<td>50% bare; 60% with Assassin's Culottes (Steal+5)</td>
+</tr>
+<tr>
+<td><strong>Mug</strong></td>
+<td>90% + your level − mob level</td>
+<td>90%, up to the mob's gil purse</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Steal+ gear on Phoenix:</strong> Rabbit Charm (1), Key Ring Belt (1), Rogue's Bonnet (1), Rogue's Armlets (1), Rogue's Culottes (1), Rogue's Poulaines (2), Rogue's Ring (3, only while your HP is under 75% and TP under 100%), Thief's Kote (3), Assassin's Culottes (5), Buccaneer's Knife (2).</p>
+<aside class="box warn">
+<p><strong>WARNING — you can't steal a Rare item you already own.</strong> The code refuses it (<code>thief.lua</code>). Bank or drop the first one.</p>
+</aside>
+<h3>SATA: the numbers</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Sneak Attack</th>
+<th>Trick Attack</th>
+<th>SATA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Needs</td>
+<td>You behind the mob (or Hidden)</td>
+<td>A party member between you and the mob</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Bonus damage</td>
+<td>+ your DEX</td>
+<td>+ your AGI</td>
+<td>+ DEX + AGI</td>
+</tr>
+<tr>
+<td>Auto-hit, auto-crit</td>
+<td>Yes</td>
+<td>Yes at 60+ (Assassin)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Hate</td>
+<td>Yours</td>
+<td><strong>Goes to the party member</strong></td>
+<td>Goes to the party member</td>
+</tr>
+<tr>
+<td>TH proc chance</td>
+<td>×10</td>
+<td>×10</td>
+<td>×20</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — positioning for Trick Attack.</strong> Stand directly behind the tank, in line with the mob. The code checks for a party member in a narrow cone between you and your target. If the tank moves, step with them.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>TH4 to start a mob (traits + Thief's Knife + Assassin's Armlets), procs to TH12.</li>
+<li>SATA is damage, hate control and TH all in one hit.</li>
+<li>Steal+5 Assassin's Culottes for farming.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>Same camps as everyone. You leave with more in your bag.</em></p>
+<h2>THE STEAL &amp; TREASURE REPORT</h2>
+<p>For every classic camp in the project's leveling-camps guide, this table shows what the main mobs carry for Steal, and which of their drops are uncommon or rarer (the drops your Treasure Hunter boosts most). Bold items are worth real gil or are dungeon keys. All of it is read from Phoenix's mob data.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Mob</th>
+<th>Steal</th>
+<th>Treasure Hunter targets (uncommon or rarer drops)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Hill Lizard</td>
+<td>Lizard Egg</td>
+<td>Lizard Skin</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Damselfly</td>
+<td>—</td>
+<td>Insect Wing, Damselfly Worm</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Brutal Sheep</td>
+<td>Sheep Wool</td>
+<td>Sheep Tooth</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Snipper</td>
+<td>Rock Salt</td>
+<td>Land Crab Meat, Crab Apron, Crab Shell</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Beach Pugil</td>
+<td>Fish Scales</td>
+<td>Shall Shell, Pugil Scales</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Thread Leech</td>
+<td>—</td>
+<td>Fiend Blood, <strong>Carbuncle's Ruby</strong></td>
+</tr>
+<tr>
+<td>13-16</td>
+<td>Buburimu Peninsula</td>
+<td>Carnivorous Crawler</td>
+<td>—</td>
+<td>Silk Thread</td>
+</tr>
+<tr>
+<td>18-21</td>
+<td>Sauromugue Champaign</td>
+<td>Diving Beetle</td>
+<td>—</td>
+<td>Beetle Jaw, Beetle Shell</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Clipper</td>
+<td>Rock Salt</td>
+<td>Land Crab Meat, Crab Shell</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Yuhtunga Mandragora</td>
+<td>—</td>
+<td>Two-Leaf and Three-Leaf Mandragora Buds</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Goblin Smithy</td>
+<td>Silver Beastcoin</td>
+<td>Goblin Helm, Goblin Mail</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Eft</td>
+<td>Lizard Egg</td>
+<td>Eft Skin, Lizard Egg, HQ Eft Skin</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Raven</td>
+<td>Bird Feather</td>
+<td>Bird Egg</td>
+</tr>
+<tr>
+<td>30-35</td>
+<td>Eastern Altepa</td>
+<td>Sand Beetle</td>
+<td>—</td>
+<td>Beetle Jaw, Beetle Shell</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Citadel Bats</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>33-37</td>
+<td>Eldieme Necropolis</td>
+<td>Gazer</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Ogrefly</td>
+<td>—</td>
+<td>Insect Wing, Attohwa Ginseng</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Master Coeurl</td>
+<td>Coeurl Whisker</td>
+<td>Coeurl Hide, Coeurl Meat</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Worker Crawler</td>
+<td>—</td>
+<td>Silk Thread</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Nest Beetle</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Rumble Crawler</td>
+<td>—</td>
+<td><strong>Nest Chest Key</strong>, Silk Thread</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Soldier Crawler</td>
+<td>—</td>
+<td>Silk Thread</td>
+</tr>
+<tr>
+<td>38-41</td>
+<td>Gustav Tunnel</td>
+<td>Hawker</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Helm Beetle</td>
+<td>—</td>
+<td>Beetle Jaw, <strong>Quicksand Coffer Key</strong>, Beetle Shell</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Hastatus</td>
+<td>Mythril Beastcoin</td>
+<td>Dhalmel Leather Missive, <strong>Quicksand Coffer Key</strong>, <strong>Antican Pauldron</strong>, Mythril Ore</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Princeps</td>
+<td>Mythril Beastcoin</td>
+<td>Dhalmel Leather Missive, <strong>Quicksand Coffer Key</strong>, <strong>Antican Pauldron</strong>, Mythril Ore</td>
+</tr>
+<tr>
+<td>52-55</td>
+<td>Kuftal Tunnel</td>
+<td>Robber Crab</td>
+<td>—</td>
+<td><strong>Kuftal Coffer Key</strong>, Crab Shell, HQ Crab Shell</td>
+</tr>
+<tr>
+<td>54-58</td>
+<td>Wajaom Woodlands</td>
+<td>Lesser Colibri</td>
+<td>Colibri Feather</td>
+<td>—</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Aht Urhgan Attercop</td>
+<td>Spider Web</td>
+<td>Frayed Arrow</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Lesser Colibri</td>
+<td>Colibri Feather</td>
+<td>—</td>
+</tr>
+<tr>
+<td>55-60</td>
+<td>Caedarva Mire</td>
+<td>Marsh Murre</td>
+<td>Bird Feather</td>
+<td>Bird Egg</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Sand Lizard</td>
+<td>Lizard Egg</td>
+<td><strong>Kuftal Coffer Key</strong>, Lizard Skin, Lizard Egg</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Kuftal Digger</td>
+<td>Pebble</td>
+<td>Tin Ore, Copper Ore, Platinum Ore</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Sea Puk M</td>
+<td>Puk Wing</td>
+<td>Puk Egg, Chimera Blood</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Hunting Raptor</td>
+<td>—</td>
+<td>Raptor Skin</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Ziz</td>
+<td>Giant Bird Feather</td>
+<td>Giant Bird Feather</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Heraldic Imp</td>
+<td>—</td>
+<td>Imp Horn</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Spongilla Fly</td>
+<td>—</td>
+<td>Insect Wing</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Ebony Pudding</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Warrior</td>
+<td>—</td>
+<td>Troll Vambrace</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Paladin</td>
+<td>—</td>
+<td>Januwiyah -1, Troll Vambrace</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Abraxas</td>
+<td>Giant Bird Feather</td>
+<td>Giant Bird Plume</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Tavnazian Ram</td>
+<td>Sheep Wool</td>
+<td>Lanolin Cube, Ram Horn</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — reading the report.</strong> Steal on every mob that has something in the Steal column; it costs nothing. The bold drops are the ones to tag with Treasure Hunter when you're farming between parties: Antican Pauldrons and Mythril Beastcoins in Quicksand Caves, coffer keys in Quicksand Caves and Kuftal Tunnel, and the Carbuncle's Ruby from Valkurm's Thread Leeches.</p>
+</aside>
+<h3>Bracket by bracket</h3>
+<p><strong>Levels 1–10 — home nation.</strong> Bronze Knife +1 and Steal on everything. <strong>Beestinger</strong> (Stinging Sophie, North Gustaberg) at 7 is the best early dagger; <strong>Bounding Boots</strong> the same level.</p>
+<p><strong>Levels 10–20 — Valkurm Dunes, Buburimu Peninsula, Korroloka.</strong> Sneak Attack at 15: open every fight from behind. Treasure Hunter I at 15 means the party's leech drops (and Carbuncle's Rubies) go up. Gust Slash at skill 40 (about level 13).</p>
+<p><strong>Levels 18–20 — subjob.</strong> Do <em>The Old Lady</em> or <em>Elder Memories</em>. Level WAR to 10 first, then NIN to 10 for Dual Wield.</p>
+<p><strong>Levels 20–30 — Qufim, Yhoator and Yuhtunga jungles, Bibiki Bay.</strong> /NIN Dual Wield from 20. <strong>Republic Dagger</strong> or <strong>Federation Knife</strong> (nation crafts, Lv25), <strong>Empress Hairpin</strong> (Lv24, Valkurm Emperor). Flee at 25: you're the puller now.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — Race Specific Equipment (RSE) at level 25.</strong> Every race has its own four-piece set (Lv27–33) from <em>The Goblin Tailor</em> (Guttrix, Lower Jeuno). You can only get it during your race's 7 h 41 m "week", in one of three dungeons, with that dungeon's chest key — so <strong>farm the key before your week starts</strong>. For Thieves: Hume gloves (STR+3 DEX+3) and boots (AGI+3), Elvaan chausses (DEX+2 AGI+2) and ledelsens (AGI+3), Galka sandals (AGI+3), and the Tarutaru Wonder set for HP. And as a <strong>main-job Thief you can open the chest with Thief's Tools instead of a key</strong> (75% success).
+Full walkthrough: <a href="/guides/jobs/rse">Race Specific Equipment guide</a>. Live race and dungeon schedule: <a href="https://phoenix-xi.com/world-info?tab=calendar">Phoenix RSE calendar</a>.</p>
+</aside>
+<p><strong>Levels 30–40 — Garlaige Citadel, Eastern Altepa, Eldieme Necropolis.</strong> Trick Attack at 30. Learn to stand behind the tank. Mug at 35. Cyclone at skill 125 (about level 41). <strong>Peacock Amulet</strong> (Lv33).</p>
+<p><strong>Levels 40–50 — Crawlers' Nest, Attohwa Chasm, Gustav Tunnel.</strong> AF1 at 40 for the <strong>Marauder's Knife</strong> (DEX+2 AGI+2). Hide at 45, Treasure Hunter II at 45. <strong>Bone Knife +1</strong> (Lv46), <strong>Hornetneedle</strong> (Lv48, delay 150, Death from Above, Temple of Uggalepih). Rumble Crawlers drop Nest Chest Keys: sell them, or use them for coffers.</p>
+<p><strong>Levels 50–60 — Quicksand Caves, Kuftal Tunnel, ToAU jungles.</strong> AF2 and AF3. <strong>Corsair's Knife</strong> (Lv50, Att+10) from Marquis Allocen in Castle Zvahl Baileys (a level 76 NM; you'll need help). <strong>Kidney Dagger</strong> (Lv56, Crit +5%, Mischievous Micholas in Yuhtunga, rare). Triple Attack at 55. Quicksand Caves Anticans have Mythril Beastcoins to steal and Antican Pauldrons to drop.</p>
+<aside class="box gil">
+<p><strong>MONEY MAKER — Quicksand Caves.</strong> Antican Hastatus and Princeps: steal a Mythril Beastcoin, then kill for a chance at an Antican Pauldron or a Quicksand Coffer Key. Treasure Hunter on every one.</p>
+</aside>
+<p><strong>Levels 60–70 — Kuftal Tunnel, Mamook, Caedarva Mire.</strong> Assassin at 60 (Trick Attack can't miss). Dancing Edge at 60, Shark Bite at 66. <strong>Scorpion Harness +1</strong> (Acc+12 Eva+12). <strong>Harpe</strong> (Lv68, D35, Citipati in Attohwa Chasm, rare).</p>
+<p><strong>Levels 70–75 — Mount Zhayolm, Caedarva Mire, Lufaise Meadows.</strong> <strong>Thief's Knife</strong> at 70 — kill <strong>Sozu Rogberry</strong> in the Temple of Uggalepih; it always drops. <strong>Dusk Gloves +1</strong>, <strong>Dusk Ledelsens +1</strong>, <strong>Dragon Harness +1</strong> (DEX+7 AGI+7). Evisceration quest at Dagger 230.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — level 75</strong></p>
+<ul>
+<li>Dagger at 269, Evasion at 276 (cap).</li>
+<li>Thief's Knife in your sub hand on every NM: TH3 before you touch the Armlets.</li>
+<li>Evisceration quest started (Chapter 8).</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>DEX and AGI make SATA hit hard. Haste and accuracy make everything else work.</em></p>
+<h3>How this chapter is laid out</h3>
+<p>The four sets below are for level 75. Each slot lists a <strong>realistic pick</strong> (crafted, quest, or a common NM drop) and a <strong>best pick</strong> (harder content). Every stat and source was read from Phoenix's item and drop data. The item directory at the end lists everything worth wearing from level 7 to 75.</p>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-tp" class="fstep set-tp"><b>⚔</b><span>SET 1</span><em>TP</em><small>Swinging two daggers</small></a><a role="listitem" href="#set-ws" class="fstep set-ws"><b>✸</b><span>SET 2</span><em>SATA / WS</em><small>SATA and weapon skill</small></a><a role="listitem" href="#set-eva" class="fstep set-eva"><b>◈</b><span>SET 3</span><em>Evasion</em><small>Pulling</small></a><a role="listitem" href="#set-nin" class="fstep set-nin"><b>✚</b><span>SET 4</span><em>Treasure Hunter</em><small>Tagging the mob</small></a></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>When you're wearing it</th>
+<th>Priorities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TP</strong></td>
+<td>Swinging two daggers</td>
+<td>Haste, Accuracy, DEX</td>
+</tr>
+<tr>
+<td><strong>SATA / weapon skill</strong></td>
+<td>The hit you Sneak/Trick Attack, and your weapon skill</td>
+<td>DEX, AGI, Attack</td>
+</tr>
+<tr>
+<td><strong>Evasion</strong></td>
+<td>Pulling, or holding hate for a few seconds</td>
+<td>Evasion, AGI, HP</td>
+</tr>
+<tr>
+<td><strong>Treasure Hunter</strong></td>
+<td>The first hit on anything worth farming</td>
+<td>TH, then swap back</td>
+</tr>
+</tbody>
+</table></div>
+<section class="set set-tp" id="set-tp"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">⚔</span><h2>TP</h2><span class="settag">Swinging two daggers</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Kidney Dagger</strong> (Crit +5%) or Corsair's Knife (Att+10)</td>
+<td>Mandau (relic)</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td><strong>Thief's Knife</strong> (TH+1)</td>
+<td>Thief's Knife, or Blau Dolch (latent Att+16 Acc+5)</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Optical Hat</strong> (Acc+10)</td>
+<td><strong>Walahra Turban</strong> (Haste +5%)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td><strong>Peacock Amulet</strong> (Acc+10)</td>
+<td>Love Torque (DEX+5, Dagger skill +7)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Pixie Earring (DEX+3) + Hollow Earring (DEX+2 Acc+3)</td>
+<td><strong>Brutal Earring</strong> (Double Attack +5%) + Hollow Earring</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Scorpion Harness +1</strong> (Acc+12 Eva+12)</td>
+<td><strong>Dragon Harness +1</strong> (DEX+7 AGI+7 Att+12)</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Dusk Gloves +1</strong> (Haste +4%)</td>
+<td>Dusk Gloves +1</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Rajas Ring</strong> + Sniper's Ring +1</td>
+<td>Rajas Ring + Adroit Ring +1 (DEX+5)</td>
+</tr>
+<tr>
+<td>Back</td>
+<td><strong>Amemet Mantle +1</strong> (Att+15)</td>
+<td>Amemet Mantle +1</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Sonic Belt +1</strong> (Haste +6%)</td>
+<td>Sonic Belt +1</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Tabin Hose +1 (DEX+2 AGI+2)</td>
+<td>Dragon Subligar +1 (DEX+5)</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Dusk Ledelsens +1</strong> (Haste +3%)</td>
+<td>Dusk Ledelsens +1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Gear haste (best column): Walahra 5 + Dusk Gloves 4 + Sonic Belt 6 + Dusk Ledelsens 3 = <strong>18%</strong>. There's no Thief-wearable haste legs on Phoenix; Byakko's Haidate can't be worn by Thief.</p>
+</section><section class="set set-ws" id="set-ws"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">✸</span><h2>SATA / WEAPON SKILL</h2><span class="settag">SATA and weapon skill</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td><strong>Assassin's Bonnet</strong> (DEX+5) or Voyager Sallet (DEX+4)</td>
+<td><strong>Maat's Cap</strong> (all stats +7)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>Spike Necklace (DEX+3)</td>
+<td><strong>Love Torque</strong> (DEX+5)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Pixie Earring (DEX+3) + Drone Earring (AGI+3)</td>
+<td>Pixie + Drone</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Dragon Harness +1</strong> (DEX+7 AGI+7)</td>
+<td>Dragon Harness +1</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Rogue's Armlets +1</strong> (DEX+3, Trick Attack AGI +15%)</td>
+<td>Rogue's Armlets +1</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Adroit Ring +1</strong> ×2 (DEX+5 each)</td>
+<td>Adroit Ring +1 ×2</td>
+</tr>
+<tr>
+<td>Back</td>
+<td><strong>Assassin's Cape</strong> (DEX+4 AGI+4)</td>
+<td>Assassin's Cape</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Warwolf Belt</strong> (DEX+5) or Scouter's Rope (AGI+4)</td>
+<td>Warwolf Belt</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td><strong>Dragon Subligar +1</strong> (DEX+5)</td>
+<td>Dragon Subligar +1</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Dragon Leggings +1</strong> (DEX+4 AGI+4)</td>
+<td>Dragon Leggings +1</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — Assassin's Cape and the Dragon pieces carry Enmity+.</strong> Fine in a swap for one hit; don't fight in them, or you'll pull hate between SATAs.</p>
+</aside>
+</section><section class="set set-eva" id="set-eva"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">◈</span><h2>EVASION</h2><span class="settag">Pulling</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td><strong>Empress Hairpin</strong> or Optical Hat</td>
+<td>Evasion +10</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Scorpion Harness +1</td>
+<td>Evasion +12</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>War Gloves +1</td>
+<td>Evasion +6, Acc+6</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Ethereal Earring + Novia Earring</td>
+<td>Evasion +5 / +7</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Scouter's Rope</strong></td>
+<td>Evasion +10, AGI+4 (HP−40)</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>War Brais +1</td>
+<td>AGI+5</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Dance Shoes +1</td>
+<td>Evasion +7</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Evasion A+.</strong> Your Evasion skill caps at 276, the highest in the game, and the Evasion Bonus trait adds +48 at 70. Evasion gear stacks on top. You're still not a tank: one mob's special attack ignores all of it.</p>
+</aside>
+</section><section class="set set-nin" id="set-nin"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">✚</span><h2>TREASURE HUNTER</h2><span class="settag">Tagging the mob</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>TH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub (or Main)</td>
+<td><strong>Thief's Knife</strong></td>
+<td>+1</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Assassin's Armlets</strong></td>
+<td>+1</td>
+</tr>
+</tbody>
+</table></div>
+<p>With your two traits that's <strong>TH4</strong> on the first hit. Swap the Armlets back to Dusk Gloves +1 after the mob is tagged: the mob keeps its TH level, and only your procs raise it from there.</p>
+</section><h2>AF &amp; RELIC AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Artifact (Rogue's)</th>
+<th>Relic (Assassin's)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td>Rogue's Bonnet — INT+5, Parry+10, Steal+1</td>
+<td>Assassin's Bonnet — DEX+5, Mug effect+1</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Rogue's Vest — STR+3, Hide duration +100%</td>
+<td>Assassin's Vest — AGI+4, Crit +1%</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>Rogue's Armlets — DEX+3, Steal+1</td>
+<td>Assassin's Armlets — CHR+5, <strong>Treasure Hunter +1</strong></td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Rogue's Culottes — AGI+4, Steal+1</td>
+<td>Assassin's Culottes — <strong>Steal+5</strong>, Gilfinder+1</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Rogue's Poulaines — DEX+3, Flee duration, Steal+2</td>
+<td>Assassin's Poulaines +1 — CHR+6, Triple Attack +1%</td>
+</tr>
+<tr>
+<td>Weapon</td>
+<td>Marauder's Knife (AF1)</td>
+<td>Mandau (relic)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Stats from <code>item_mods</code> and <code>item_latents</code>. Sources from each zone's <code>mobs.yaml</code>, battlefield loot scripts, NPC and quest scripts, and <code>synth_recipes</code>.</em></p>
+<h3>Daggers</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bronze Knife +1</strong></td>
+<td>1</td>
+<td>Main/Sub</td>
+<td>DMG 5 / Delay 189</td>
+<td>Smithing 5 HQ</td>
+</tr>
+<tr>
+<td><strong>Beestinger</strong></td>
+<td>7</td>
+<td>Main/Sub</td>
+<td>DMG 4 / Delay 150, DEX+1, AGI+1</td>
+<td>Stinging Sophie NM, North Gustaberg</td>
+</tr>
+<tr>
+<td><strong>Brass Dagger +1</strong></td>
+<td>9</td>
+<td>Main/Sub</td>
+<td>DMG 6 / Delay 178</td>
+<td>Goldsmithing 13 HQ</td>
+</tr>
+<tr>
+<td><strong>Dagger +1</strong></td>
+<td>12</td>
+<td>Main/Sub</td>
+<td>DMG 8 / Delay 178</td>
+<td>Smithing 15 HQ</td>
+</tr>
+<tr>
+<td><strong>Republic Dagger</strong></td>
+<td>25</td>
+<td>Main/Sub</td>
+<td>DMG 12 / Delay 168, Acc+2, Eva+3</td>
+<td>Smithing 35 HQ (Bastokan Dagger)</td>
+</tr>
+<tr>
+<td><strong>Federation Knife</strong></td>
+<td>25</td>
+<td>Main/Sub</td>
+<td>DMG 13 / Delay 180, Atk+5, Acc+2</td>
+<td>Smithing 26 HQ (Windurstian Knife)</td>
+</tr>
+<tr>
+<td><strong>Marauder's Knife</strong></td>
+<td>40</td>
+<td>Main/Sub</td>
+<td>DMG 15 / Delay 195, DEX+2, AGI+2</td>
+<td>AF1 <em>The Tenshodo Showdown</em></td>
+</tr>
+<tr>
+<td><strong>Calveley's Dagger</strong></td>
+<td>42</td>
+<td>Main/Sub</td>
+<td>DMG 14 / Delay 183, DEX+3</td>
+<td>BCNM loot</td>
+</tr>
+<tr>
+<td><strong>Bone Knife +1</strong></td>
+<td>46</td>
+<td>Main/Sub</td>
+<td>DMG 18 / Delay 190, Atk+5, Acc+5</td>
+<td>Bonecraft 41 HQ</td>
+</tr>
+<tr>
+<td><strong>Hornetneedle</strong></td>
+<td>48</td>
+<td>Main/Sub</td>
+<td>DMG 16 / Delay 150, DEX+1, AGI+1</td>
+<td>Death from Above NM, Temple of Uggalepih (always)</td>
+</tr>
+<tr>
+<td><strong>Corsair's Knife</strong></td>
+<td>50</td>
+<td>Main/Sub</td>
+<td>DMG 21 / Delay 206, Atk+10</td>
+<td>Marquis Allocen NM, Castle Zvahl Baileys</td>
+</tr>
+<tr>
+<td><strong>Kidney Dagger</strong></td>
+<td>56</td>
+<td>Main/Sub</td>
+<td>DMG 18 / Delay 183, Crit rate+5</td>
+<td>Mischievous Micholas NM, Yuhtunga Jungle (rare)</td>
+</tr>
+<tr>
+<td><strong>Harpe</strong></td>
+<td>68</td>
+<td>Main/Sub</td>
+<td>DMG 35 / Delay 210</td>
+<td>Citipati NM, Attohwa Chasm (rare)</td>
+</tr>
+<tr>
+<td><strong>Thief's Knife</strong></td>
+<td>70</td>
+<td>Main/Sub</td>
+<td>DMG 28 / Delay 194, Treasure Hunter+1</td>
+<td>Sozu Rogberry NM, Temple of Uggalepih (always)</td>
+</tr>
+<tr>
+<td><strong>Behemoth Knife +1</strong></td>
+<td>70</td>
+<td>Main/Sub</td>
+<td>DMG 32 / Delay 201, HP+30, Atk+10</td>
+<td>Bonecraft 84 HQ</td>
+</tr>
+<tr>
+<td><strong>Misericorde +1</strong></td>
+<td>71</td>
+<td>Main/Sub</td>
+<td>DMG 28 / Delay 178, MP+11, DEX+3, VIT+3, MND+3</td>
+<td>Smithing 92 HQ</td>
+</tr>
+<tr>
+<td><strong>Stylet</strong></td>
+<td>71</td>
+<td>Main/Sub</td>
+<td>DMG 31 / Delay 195, DEX+4, AGI+2, Enmity+1</td>
+<td>KSNM <em>Early Bird Catches the Wyrm</em> and others</td>
+</tr>
+<tr>
+<td><strong>Dagger of Trials</strong></td>
+<td>71</td>
+<td>Main/Sub</td>
+<td>DMG 27 / Delay 200, HP+20</td>
+<td>Quest <em>Cloak and Dagger</em></td>
+</tr>
+<tr>
+<td><strong>Blau Dolch</strong></td>
+<td>72</td>
+<td>Main/Sub</td>
+<td>DMG 26 / Delay 178</td>
+<td>ENM <em>Shell We Dance?</em>, Boneyard Gully</td>
+</tr>
+<tr>
+<td><strong>Khimaira Jambiya</strong></td>
+<td>72</td>
+<td>Main/Sub</td>
+<td>DMG 33 / Delay 201, HP+15, Eva+4</td>
+<td>Bonecraft 99 / Goldsmithing 40 / Smithing 39</td>
+</tr>
+<tr>
+<td><strong>Mandau</strong></td>
+<td>75</td>
+<td>Main/Sub</td>
+<td>DMG 39 / Delay 176, Atk+20</td>
+<td>Relic weapon (Dynamis)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Empress Hairpin</strong></td>
+<td>24</td>
+<td>Head</td>
+<td>HP-15, DEX+3, AGI+3, Eva+10</td>
+<td>Valkurm Emperor NM, Valkurm Dunes</td>
+</tr>
+<tr>
+<td><strong>Voyager Sallet</strong></td>
+<td>41</td>
+<td>Head</td>
+<td>STR+3, DEX+4</td>
+<td>Carmine Dobsonfly NM, Riverne Site #A01 (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Rogue's Bonnet</strong></td>
+<td>54</td>
+<td>Head</td>
+<td>HP+13, INT+5, Parry skill+10, Steal+1</td>
+<td>AF2 <em>As Thick as Thieves</em></td>
+</tr>
+<tr>
+<td><strong>Silk Headband +1</strong></td>
+<td>54</td>
+<td>Head</td>
+<td>Eva+7</td>
+<td>Clothcraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Optical Hat</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>Acc+10, R.Acc+10, Eva+10</td>
+<td>Hakutaku NM, Den of Rancor</td>
+</tr>
+<tr>
+<td><strong>Maat's Cap</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>STR+7, DEX+7, VIT+7, AGI+7, INT+7, MND+7, CHR+7</td>
+<td>Quest <em>Beyond the Sun</em></td>
+</tr>
+<tr>
+<td><strong>Assassin's Bonnet</strong></td>
+<td>71</td>
+<td>Head</td>
+<td>HP+16, DEX+5, Enmity+2, Mug effect+1</td>
+<td>Relic armor (Dynamis - San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Walahra Turban</strong></td>
+<td>75</td>
+<td>Head</td>
+<td>HP+30, MP+30, Haste +5%</td>
+<td>1,000 Imperial Bronze Pieces to Gajaad, Al Zahbi</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rabbit Charm</strong></td>
+<td>7</td>
+<td>Neck</td>
+<td>DEX+1, AGI+1, Steal+1</td>
+<td>Jaggedy-Eared Jack NM, West Ronfaure (very rare)</td>
+</tr>
+<tr>
+<td><strong>Spike Necklace</strong></td>
+<td>21</td>
+<td>Neck</td>
+<td>STR+3, DEX+3, MND-6</td>
+<td>Bonecraft 15 HQ (Fang Necklace)</td>
+</tr>
+<tr>
+<td><strong>Peacock Amulet</strong></td>
+<td>33</td>
+<td>Neck</td>
+<td>Acc+10, R.Acc+10</td>
+<td>Argus NM, Maze of Shakhrami</td>
+</tr>
+<tr>
+<td><strong>Wivre Gorget +1</strong></td>
+<td>70</td>
+<td>Neck</td>
+<td>Acc+6, R.Acc+6</td>
+<td>Bonecraft 86 HQ</td>
+</tr>
+<tr>
+<td><strong>Love Torque</strong></td>
+<td>73</td>
+<td>Neck</td>
+<td>DEX+5, Dagger skill+7</td>
+<td>Jailer of Love, Al'Taieu</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Drone Earring</strong></td>
+<td>35</td>
+<td>Ear</td>
+<td>AGI+3</td>
+<td>Goldsmithing 11 / Clothcraft 44 HQ (Wing Earring)</td>
+</tr>
+<tr>
+<td><strong>Pixie Earring</strong></td>
+<td>70</td>
+<td>Ear</td>
+<td>DEX+3</td>
+<td>King Behemoth, Behemoth's Dominion</td>
+</tr>
+<tr>
+<td><strong>Hollow Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>DEX+2, Acc+3, R.Acc+3</td>
+<td>Quest <em>Apocalypse Nigh</em> (end of CoP)</td>
+</tr>
+<tr>
+<td><strong>Ethereal Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>HP+15, Atk+5, Eva+5</td>
+<td>Quest <em>Apocalypse Nigh</em> (end of CoP)</td>
+</tr>
+<tr>
+<td><strong>Brutal Earring</strong></td>
+<td>75</td>
+<td>Ear</td>
+<td>Store TP+1, Double Attack+5</td>
+<td>75 Ancient Beastcoins to Sagheera, Port Jeuno (Limbus)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fomor Tunic</strong></td>
+<td>40</td>
+<td>Body</td>
+<td>HP-25, STR+3, DEX+3, VIT-6</td>
+<td>Eba NM, Phomiuna Aqueducts</td>
+</tr>
+<tr>
+<td><strong>Brigandine +1</strong></td>
+<td>45</td>
+<td>Body</td>
+<td>HP+15, STR+1, DEX+3, VIT+3, AGI+1, INT+1, MND+1, CHR+1</td>
+<td>Leathercraft 57 / Goldsmithing 50 HQ</td>
+</tr>
+<tr>
+<td><strong>Scorpion Harness +1</strong></td>
+<td>57</td>
+<td>Body</td>
+<td>HP+20, Acc+12, Eva+12</td>
+<td>Bonecraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Rogue's Vest</strong></td>
+<td>58</td>
+<td>Body</td>
+<td>HP+20, STR+3, Hide duration+100</td>
+<td>Coffer, Castle Zvahl Baileys (AF)</td>
+</tr>
+<tr>
+<td><strong>Tabin Jupon +1</strong></td>
+<td>65</td>
+<td>Body</td>
+<td>STR+2, DEX+2, Acc+7</td>
+<td>Clothcraft 81 HQ</td>
+</tr>
+<tr>
+<td><strong>Dragon Harness +1</strong></td>
+<td>73</td>
+<td>Body</td>
+<td>DEX+7, AGI+7, Atk+12, Subtle Blow+12</td>
+<td>Bonecraft 100 / Leathercraft 58 HQ</td>
+</tr>
+<tr>
+<td><strong>Assassin's Vest</strong></td>
+<td>72</td>
+<td>Body</td>
+<td>HP+22, AGI+4, Enmity+3, Crit rate+1</td>
+<td>Relic armor (Dynamis - Buburimu)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Battle Gloves</strong></td>
+<td>14</td>
+<td>Hands</td>
+<td>Acc+3, Eva+3</td>
+<td>Treasure chest/coffer loot</td>
+</tr>
+<tr>
+<td><strong>Rogue's Armlets</strong></td>
+<td>52</td>
+<td>Hands</td>
+<td>HP+10, DEX+3, Steal+1</td>
+<td>Quest <em>Borghertz's Sneaky Hands</em></td>
+</tr>
+<tr>
+<td><strong>Thief's Kote</strong></td>
+<td>70</td>
+<td>Hands</td>
+<td>Steal+3</td>
+<td>Tonberry Tracker, Den of Rancor (rare)</td>
+</tr>
+<tr>
+<td><strong>War Gloves +1</strong></td>
+<td>70</td>
+<td>Hands</td>
+<td>HP+15, VIT-3, Acc+6, Eva+6</td>
+<td>Clothcraft 81 HQ</td>
+</tr>
+<tr>
+<td><strong>Dusk Gloves +1</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>HP+22, Atk+6, Haste +4%</td>
+<td>Leathercraft 99 HQ</td>
+</tr>
+<tr>
+<td><strong>Assassin's Armlets</strong></td>
+<td>75</td>
+<td>Hands</td>
+<td>HP+7, CHR+5, Enmity+3, Treasure Hunter+1</td>
+<td>Relic armor (Dynamis - Xarcabard)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rajas Ring</strong></td>
+<td>30</td>
+<td>Ring</td>
+<td>STR+2, DEX+2, Store TP+5, Subtle Blow+5</td>
+<td>CoP mission 8-4 <em>Dawn</em></td>
+</tr>
+<tr>
+<td><strong>Sniper's Ring +1</strong></td>
+<td>40</td>
+<td>Ring</td>
+<td>Acc+7, R.Acc+7</td>
+<td>Leathercraft 90 HQ</td>
+</tr>
+<tr>
+<td><strong>Kshama Ring No.2</strong></td>
+<td>49</td>
+<td>Ring</td>
+<td>DEX+3, Acc+2</td>
+<td>ENM, Monarch Linn</td>
+</tr>
+<tr>
+<td><strong>Grace Ring +1</strong></td>
+<td>54</td>
+<td>Ring</td>
+<td>DEX+4</td>
+<td>Goldsmithing 80 HQ</td>
+</tr>
+<tr>
+<td><strong>Adroit Ring +1</strong></td>
+<td>72</td>
+<td>Ring</td>
+<td>DEX+5</td>
+<td>Goldsmithing 99 HQ (Spinel Ring)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nomad's Mantle +1</strong></td>
+<td>24</td>
+<td>Back</td>
+<td>AGI+2, Eva+3</td>
+<td>Leathercraft 82 HQ</td>
+</tr>
+<tr>
+<td><strong>Bat Cape</strong></td>
+<td>46</td>
+<td>Back</td>
+<td>Eva+5</td>
+<td>Old Two-Wings NM, Garlaige Citadel</td>
+</tr>
+<tr>
+<td><strong>Amemet Mantle +1</strong></td>
+<td>61</td>
+<td>Back</td>
+<td>STR+2, Atk+15, R.Atk+15</td>
+<td>Leathercraft 60 HQ</td>
+</tr>
+<tr>
+<td><strong>Assassin's Cape</strong></td>
+<td>70</td>
+<td>Back</td>
+<td>DEX+4, AGI+4, Enmity+5</td>
+<td>Dynamis - Qufim (rare)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Key Ring Belt</strong></td>
+<td>20</td>
+<td>Waist</td>
+<td>DEX+1, Steal+1</td>
+<td>Thief-only Steal belt</td>
+</tr>
+<tr>
+<td><strong>Life Belt</strong></td>
+<td>48</td>
+<td>Waist</td>
+<td>Acc+10</td>
+<td>Treasure chest/coffer loot</td>
+</tr>
+<tr>
+<td><strong>Swift Belt</strong></td>
+<td>50</td>
+<td>Waist</td>
+<td>Atk-5, Acc+3, Haste +4%</td>
+<td>Fomor NMs, Sacrarium</td>
+</tr>
+<tr>
+<td><strong>Sonic Belt +1</strong></td>
+<td>65</td>
+<td>Waist</td>
+<td>Haste +6%</td>
+<td>Leathercraft 85 HQ</td>
+</tr>
+<tr>
+<td><strong>Warwolf Belt</strong></td>
+<td>71</td>
+<td>Waist</td>
+<td>STR+5, DEX+5, VIT+5, Enmity+3</td>
+<td>KSNM loot</td>
+</tr>
+<tr>
+<td><strong>Scouter's Rope</strong></td>
+<td>73</td>
+<td>Waist</td>
+<td>HP-40, AGI+4, Eva+10</td>
+<td>ENM <em>Brothers</em>, Bearclaw Pinnacle</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rogue's Culottes</strong></td>
+<td>56</td>
+<td>Legs</td>
+<td>HP+15, AGI+4, Steal+1</td>
+<td>Coffer, Castle Oztroja (AF)</td>
+</tr>
+<tr>
+<td><strong>Tabin Hose +1</strong></td>
+<td>61</td>
+<td>Legs</td>
+<td>DEX+2, VIT+2, AGI+2</td>
+<td>Leathercraft 76 HQ</td>
+</tr>
+<tr>
+<td><strong>War Brais +1</strong></td>
+<td>70</td>
+<td>Legs</td>
+<td>HP+27, AGI+5</td>
+<td>Clothcraft 83 HQ</td>
+</tr>
+<tr>
+<td><strong>Dragon Subligar +1</strong></td>
+<td>73</td>
+<td>Legs</td>
+<td>DEX+5, Enmity+3, Subtle Blow+6</td>
+<td>Bonecraft 92 / Leathercraft 53 HQ</td>
+</tr>
+<tr>
+<td><strong>Assassin's Culottes</strong></td>
+<td>74</td>
+<td>Legs</td>
+<td>HP+19, Enmity+4, Steal+5, Gilfinder+1</td>
+<td>Relic armor (Dynamis - Beaucedine)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bounding Boots</strong></td>
+<td>7</td>
+<td>Feet</td>
+<td>DEX+3, AGI+3</td>
+<td>Leaping Lizzy NM, South Gustaberg</td>
+</tr>
+<tr>
+<td><strong>Rogue's Poulaines</strong></td>
+<td>60</td>
+<td>Feet</td>
+<td>HP+12, DEX+3, Flee duration+15, Steal+2</td>
+<td>AF3 <em>Hitting the Marquisate</em></td>
+</tr>
+<tr>
+<td><strong>Tabin Boots +1</strong></td>
+<td>59</td>
+<td>Feet</td>
+<td>Acc+3, Eva+3</td>
+<td>Leathercraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Dance Shoes +1</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>VIT-3, CHR+4, Eva+7</td>
+<td>Clothcraft 98 HQ</td>
+</tr>
+<tr>
+<td><strong>Dusk Ledelsens +1</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>HP+27, Atk+5, Haste +3%</td>
+<td>Leathercraft 94 HQ</td>
+</tr>
+<tr>
+<td><strong>Dragon Leggings +1</strong></td>
+<td>73</td>
+<td>Feet</td>
+<td>DEX+4, AGI+4, Atk+3, Enmity+2</td>
+<td>Bonecraft 96 / Leathercraft 53 HQ</td>
+</tr>
+</tbody>
+</table></div>
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — these show up in "best THF gear" lists, but you can't get them here.</strong></p>
+<ul>
+<li><strong>Zeni Notorious Monster drops</strong> — Enkidu's Harness and the rest of the set, Skadi's pieces. Phoenix hides the ZNM pop NPCs and spawn points (<code>modules/phoenix/lua/zones/npc_visibility.lua</code>).</li>
+<li><strong>Einherjar rewards</strong> — the Einherjar NPC is hidden.</li>
+<li><strong>Homam set</strong> — Salvage gear. Phoenix has no Salvage; the only source in the code is a later (Rhapsodies) vendor.</li>
+<li><strong>White Rarab Cap +1</strong> (TH+1) — no drop or quest gives it on Phoenix.</li>
+<li><strong>Byakko's Haidate</strong> — real, but Thief can't wear them.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box chal">
+<p><strong>MASTER THIEF'S CHALLENGE — Sky.</strong> Thieves are the reason Sky linkshells get rich. Tag every Sky god and pop NM with TH4, SATA it every minute, and push it toward TH8: a "rare" 5% drop becomes 10.5% (Chapter 5's table).</p>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">QUESTS, AF AND ENDGAME</h2></header>
+<p><em>Rogue's armor is built for thieving, not fighting. Get it anyway — the Poulaines are the best Steal piece until relic.</em></p>
+<h3>AF1 · The Tenshodo Showdown (level 40) → Marauder's Knife</h3>
+<p>You need to be a <strong>Tenshodo member</strong> first: <em>Tenshodo Membership</em> from <strong>Ghebi Damomohe</strong> in Lower Jeuno (needs Jeuno fame 3).</p>
+<ol>
+<li>Talk to <strong>Nanaa Mihgo</strong> (Windurst Woods, J-3) as a level 40+ Thief. She gives you the <em>Letter from the Tenshodo</em>.</li>
+<li>Take it to <strong>Harnek</strong> in the Tenshodo (Lower Jeuno). He gives you the <em>Tenshodo Envelope</em>.</li>
+<li>Go to <strong>Elfriede</strong> at the Selbina inn. She wants a <strong>Bowl of Quadav Stew</strong>.</li>
+<li><strong>Steal</strong> the stew from Bronze, Silver, Zircon or Garnet Quadav in <strong>Beadeaux</strong>. Bring Sneak and Invisible; Beadeaux Quadav detect by sound.</li>
+<li>Trade the stew to Elfriede for the <em>Signed Envelope</em>, then return to Harnek.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP — the stew is a Steal-only item.</strong> Killing Quadav won't drop it. Wear any Steal+ you have.</p>
+</aside>
+<h3>AF2 · As Thick as Thieves (level 50) → Rogue's Bonnet</h3>
+<ol>
+<li><strong>Nanaa Mihgo</strong> gives you <em>Gang Whereabouts</em> and two forged envelopes.</li>
+<li><strong>Sauromugue Champaign:</strong> check the <strong>???</strong> at the tower to spawn <strong>Climbpix Highrise</strong>. Kill it for the <strong>Grapnel</strong>.</li>
+<li>Go to the tower at <strong>I/J-7</strong>, <strong>remove all your gear</strong> (weapons too), and trade the Grapnel to the ??? to climb. You get the first signed envelope.</li>
+<li><strong>Lower Jeuno:</strong> talk to <strong>Sniggnix</strong> to start the dice games. In <strong>Dangruf Wadi</strong>, three goblins want items:</li>
+<li><strong>Saltvix</strong> — Rock Salt</li>
+<li><strong>Grasswix</strong> — Gausebit Wildgrass</li>
+<li><strong>Eggblix</strong> — Lizard Egg</li>
+<li>In <strong>North Gustaberg</strong>, check the <strong>???</strong> to spawn <strong>Gambilox Wanderling</strong>. Kill it for the <strong>Regal Die</strong>.</li>
+<li>Trade the Regal Die to Sniggnix for the second signed envelope, then return to Nanaa.</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING — strip to climb.</strong> The climb fails if anything is equipped. Unequip everything, including your weapons and ammo, before trading the Grapnel.</p>
+</aside>
+<h3>AF3 · Hitting the Marquisate (level 50) → Rogue's Poulaines</h3>
+<ol>
+<li><strong>Nanaa Mihgo</strong> gives you the <em>Cat Burglar's Note</em>.</li>
+<li><strong>Yatniel</strong> (Lower Jeuno) wants <strong>4 Quake Grenades</strong> (Alchemy 58 or Smithing 29 sub, or the AH).</li>
+<li><strong>Hagain</strong> (Mhaura) gives you the <strong>Bomb Incense</strong>.</li>
+<li><strong>Garlaige Citadel:</strong> use the incense on <strong>8 ??? in order</strong>. The last one spawns <strong>Chandelier</strong>. <strong>Hide</strong>, then claim it; it drops <strong>Chandelier Coal</strong>.</li>
+<li>Trade the coal to Hagain, then talk to Nanaa.</li>
+<li>Go through <strong>Ordelle's Caves</strong> to the hidden <strong>La Theine Plateau</strong> valley (H-10) and trade a <strong>Pickaxe</strong> to the ???.</li>
+</ol>
+<p>Reward: <strong>Rogue's Poulaines</strong> (Steal+2, Flee duration+) and the title <em>Paragon of Thief Excellence</em>.</p>
+<h3>Borghertz's Sneaky Hands (level 50, after AF2) → Rogue's Armlets</h3>
+<ol>
+<li>Talk to <strong>Guslam</strong> in Upper Jeuno as a level 50+ Thief who has finished <em>As Thick as Thieves</em>.</li>
+<li>Open a <strong>Treasure Coffer</strong> in <strong>Monastic Cavern</strong> to get the <strong>Old Gauntlets</strong> key item.</li>
+<li>Report back to Guslam. On your <strong>first</strong> Borghertz quest you then talk to <strong>Deadly Minnow</strong> (Upper Jeuno) and pay <strong>Yin Pocanakhu</strong> (Lower Jeuno) <strong>1,000 gil</strong>; later Borghertz quests skip this step.</li>
+<li>Check the <strong>???</strong> in Port Jeuno to meet Borghertz; he asks for <em>Shadow Flames</em>.</li>
+<li>In <strong>Castle Zvahl Baileys</strong>, check the <strong>Torch</strong> to spawn <strong>Dark Spark</strong>. Kill it, check the Torch again for <em>Shadow Flames</em>.</li>
+<li>Return to the ??? in Port Jeuno.</li>
+</ol>
+<aside class="box code">
+<p><strong>FROM THE CODE — one Borghertz at a time.</strong> You can't start a second Borghertz quest while another is active (<code>scripts/quests/jeuno/helpers.lua</code>).</p>
+</aside>
+<h3>Coffers (only after you start Borghertz)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Zone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rogue's Culottes</td>
+<td><strong>Castle Oztroja</strong> coffer</td>
+</tr>
+<tr>
+<td>Rogue's Vest</td>
+<td><strong>Castle Zvahl Baileys</strong> coffer</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the coffers wait for Borghertz.</strong> The AF legs and body only come out of these coffers once <em>Borghertz's Sneaky Hands</em> is started or done, and only on THF main (<code>scripts/quests/jeuno/helpers.lua</code>).</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — tools on coffers.</strong> A main-job Thief can open coffers with <strong>Thief's Tools</strong> (65% success, 10% Mimic), <strong>Living Key</strong> (70%) or <strong>Skeleton Key</strong> (75%) instead of the zone key (<code>scripts/globals/treasure.lua</code>). Success drops 5% for every level the coffer is above you. Zone keys never fail.</p>
+</aside>
+<h3>Evisceration · Cloak and Dagger</h3>
+<ol>
+<li>Talk to <strong>Jakoh Wahcondalo</strong> in <strong>Kazham</strong> with <strong>Dagger skill 230+</strong>. You get the <em>Weapon Training Guide</em> and a <strong>Dagger of Trials</strong>.</li>
+<li>Earn <strong>300 weapon skill points</strong> with it equipped (5 per WS, +2/+4/+6 for skillchain levels 1/2/3).</li>
+<li>Trade the dagger back to Jakoh for the <em>Map to the Annals of Truth</em>.</li>
+<li>In <strong>Gustav Tunnel</strong>, check the <strong>???</strong> to spawn <strong>Baronial Bat</strong>. Kill it, then check the ??? again for the <em>Annals of Truth</em>.</li>
+<li>Return to Jakoh. Evisceration is yours.</li>
+</ol>
+<aside class="box code">
+<p><strong>FROM THE CODE — no merit weapon skills.</strong> Phoenix's weapon skill merit category has no upgrades, so Evisceration is your top WS for good.</p>
+</aside>
+<h3>Merits at 75</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group 1</td>
+<td><strong>Triple Attack rate</strong> (+1% per rank)</td>
+<td>More damage everywhere</td>
+</tr>
+<tr>
+<td>Group 1</td>
+<td>SA/TA recast (−2 s per rank)</td>
+<td>More SATAs, more TH procs</td>
+</tr>
+<tr>
+<td>Group 2</td>
+<td><strong>Assassin's Charge</strong></td>
+<td>Next hit is a guaranteed Triple Attack for 60 s; ends on WS</td>
+</tr>
+<tr>
+<td>Group 2</td>
+<td>Aura Steal</td>
+<td>Steals a buff when an item steal fails</td>
+</tr>
+<tr>
+<td>Group 2</td>
+<td>Ambush</td>
+<td>+3 accuracy per rank from behind</td>
+</tr>
+<tr>
+<td>Group 2</td>
+<td>Feint</td>
+<td>Evasion down on the mob (era version: no TH)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — era Feint.</strong> On Phoenix, Feint lowers the target's evasion. It does <strong>not</strong> add Treasure Hunter (that was a later change).</p>
+</aside>
+<h3>Endgame where Thieves matter</h3>
+<ul>
+<li><strong>Dynamis</strong> — relic farming and Assassin's armor. Every Dynamis linkshell wants a TH Thief on the statues and NMs.</li>
+<li><strong>Sky / Sea</strong> — tag gods and NMs with TH4+.</li>
+<li><strong>Limbus</strong> — Ancient Beastcoins for the Brutal Earring.</li>
+<li><strong>HNMs</strong> — King Behemoth (Pixie Earring), Jailer of Love (Love Torque).</li>
+</ul>
+<h2>MACROS</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SATA</strong></td>
+<td><code>/ja "Sneak Attack" &lt;me&gt;</code> · <code>/ja "Trick Attack" &lt;me&gt;</code> · <code>/equip</code> SATA set · <code>/wait 1</code></td>
+</tr>
+<tr>
+<td><strong>TH tag</strong></td>
+<td><code>/equip hands "Assassin's Armlets"</code> · <code>/attack &lt;t&gt;</code> · <code>/wait 3</code> · <code>/equip hands "Dusk Gloves +1"</code></td>
+</tr>
+<tr>
+<td><strong>Steal</strong></td>
+<td><code>/equip legs "Assassin's Culottes"</code> · <code>/ja "Steal" &lt;t&gt;</code> · <code>/wait 2</code> · <code>/equip</code> TP legs</td>
+</tr>
+<tr>
+<td><strong>Flee pull</strong></td>
+<td><code>/ja "Flee" &lt;me&gt;</code> · <code>/ra &lt;t&gt;</code> · <code>/p Pulling &lt;t&gt; &gt;&gt;</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>FINAL CHECKLIST</h2>
+<ul>
+<li>[ ] Sub NIN by 20 for Dual Wield.</li>
+<li>[ ] RSE at 25 (your race's set; open with Thief's Tools).</li>
+<li>[ ] AF1 Marauder's Knife at 40.</li>
+<li>[ ] AF2 + AF3 at 50; Rogue's Armlets after.</li>
+<li>[ ] Thief's Knife at 70 (Sozu Rogberry).</li>
+<li>[ ] Evisceration at Dagger 230.</li>
+<li>[ ] Assassin's Armlets: TH4.</li>
+</ul>
+<h2>SOURCES</h2>
+<ul>
+<li>Phoenix server code: <code>scripts/actions/abilities/</code> (Steal, Mug, Sneak Attack, Trick Attack), <code>scripts/combat/basic/treasure_hunter.lua</code>, <code>src/map/utils/battleutils.cpp</code>, <code>src/map/enmity_container.cpp</code>, <code>scripts/quests/</code>, zone <code>mobs.yaml</code>, <code>item_mods</code>, <code>synth_recipes</code>.</li>
+<li>BG Wiki and FFXIclopedia for quest walkthroughs (cross-checked against the quest scripts).</li>
+<li><a href="/guides/jobs/rse">Race Specific Equipment guide</a> · <a href="https://phoenix-xi.com/world-info?tab=calendar">Phoenix RSE calendar</a></li>
+</ul>
+</main></body></html>

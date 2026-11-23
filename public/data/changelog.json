@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-11-23",
+    "title": "All base job guides added",
+    "desc": "Added job guides for Warrior, Monk, White Mage, Black Mage, Red Mage, and Thief. Jobs dropdown now separates base jobs from advanced jobs. Race Gear (RSE) guide also added.",
+    "tags": ["guides"]
+  },
+  {
+    "date": "2026-11-23",
     "title": "Site trim: removed Shopping List & BCNM Profit Ranker",
     "desc": "Removed the Shopping List and BCNM Profit Ranker pages to focus the site on its core tools. The main BCNM loot table remains. Sidebar reorganized into Market Tools and Gathering Tools sections.",
     "tags": ["site"]

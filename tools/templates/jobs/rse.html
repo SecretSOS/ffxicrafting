@@ -1,0 +1,529 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Race Specific Equipment — The Goblin Tailor's Lookbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#161a26;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}
+main{max-width:960px;margin:0 auto;padding:0 20px 80px}
+.cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}
+.cover:after{content:"RSE";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}
+.cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}
+.cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}
+.cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}
+h1.mast{display:none}
+main>h2:first-of-type{display:none}
+h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}
+h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}
+p,li{max-width:72ch}
+em{color:var(--muted)}
+.band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}
+.band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}
+.band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}
+.band+p em{font-size:17px}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}
+.toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}
+.toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}
+.toc a:hover,.toc a:focus{color:var(--accent)}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}
+td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}
+tr:nth-child(even) td{background:#f6f8fa}
+code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}
+pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}
+pre code{background:none;color:inherit;padding:0}
+.box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}
+.box p{margin:4px 0}.box ul{margin:6px 0;padding-left:20px}
+.box>p:first-child strong:first-child,.box>ul:first-child{}
+.box strong:first-child{color:var(--c);letter-spacing:.06em}
+.tip{--c:var(--tip)}.warn{--c:var(--warn)}.gil{--c:var(--gil)}.code{--c:var(--code);background:#f5f2fc}.chal{--c:var(--chal)}.check{--c:var(--check)}
+.recap{--c:var(--ink);background:var(--ink);color:#fff}.recap strong:first-child{color:var(--gold)!important}
+.legend{--c:var(--gold);background:#fffaf0}.legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.legend li strong{color:var(--ink)!important}
+.st{color:var(--accent)}.st.off{color:var(--rule)}
+.q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}
+.ok{color:#15803d;font-weight:800;font-size:1.15em}
+.edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}
+.edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}
+.fx{font-size:1.35em;line-height:1;white-space:nowrap}
+.curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.curechart svg{width:100%;height:auto;display:block}
+.curechart .bn{fill:#0f766e}.curechart .bo{fill:#d9a521}.curechart .bs{fill:#b3202f}.curechart .bp{fill:#1d5fb8}.curechart .bb{fill:#d9a521}
+.curechart .cl{font:600 13px var(--body);fill:var(--ink)}
+.curechart .cv{font:600 12px var(--mono);fill:var(--ink)}
+.curechart .ct{font:11px var(--mono);fill:var(--muted)}
+.curechart .gl{stroke:var(--rule);stroke-width:1}
+.curechart .lg{font:600 12px var(--body);fill:var(--ink)}
+.curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}
+details summary{cursor:pointer;font-weight:600}
+.foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}
+.foodchain svg{width:100%;height:auto;display:block}
+.foodchain .fp{font-size:14px}
+.foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}
+.foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}
+.foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}
+.foodchain .fa{stroke:#d9381e;stroke-width:3}
+.foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}
+.foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.set-tp{--s:#b3202f}.set-ws{--s:#b45309}.set-eva{--s:#1d4ed8}.set-nin{--s:#5b3fa6}
+.set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}
+.sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}
+.sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}
+.setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}
+.seticon{font-size:26px;line-height:1}
+.settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.set .tw{border-color:var(--s)}.set th{background:var(--s)}
+.set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}
+.fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.fstep b{font-size:22px;line-height:1}.fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}
+.fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}
+.fstep small{font-size:12px;opacity:.9}
+.fstep:hover,.fstep:focus-visible{filter:brightness(1.1)}
+@media (max-width:700px){.flow{grid-template-columns:1fr 1fr;gap:6px}.fstep,.fstep:first-child{clip-path:none}}
+@media (max-width:520px){.band,.cover{margin-left:-16px;margin-right:-16px}main{padding:0 16px 60px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide · Sub-guide</div><h1>Race Gear</h1><p>The Goblin Tailor's lookbook: how RSE works, the weekly race and dungeon rotation straight from the server code, where the chest keys drop, every race's four pieces, and which jobs want them.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">RACE SPECIFIC EQUIPMENT</h1>
+<h2>The Goblin Tailor's Lookbook — Phoenix Edition</h2>
+<p><em>A Goblin in Jeuno has a sewing kit, a weekly schedule, and exactly one outfit in your size.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · HOW RSE WORKS</a><a href="#chapter-2">CHAPTER 2 · THE THREE DUNGEONS AND THEIR KEYS</a><a href="#chapter-3">CHAPTER 3 · THE LOOKBOOK (EVERY RACE'S SET)</a><a href="#chapter-4">CHAPTER 4 · WHICH JOBS WANT WHICH PIECES</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p><strong>RSE</strong> (Race Specific Equipment) is a four-piece set — body, hands, legs, feet — that only your race can wear. Every race gets a different set with different stats. They're level 27–33 pieces that <strong>every job</strong> can wear, and some of them stay useful well past 40.</p>
+<p>This guide is built from Phoenix's own server code: the quest script, the code that picks whose week it is, and the treasure-chest script. The live schedule is on Phoenix's site:</p>
+<aside class="box tip">
+<p><strong>🔗 PHOENIX RSE CALENDAR — check this first:</strong> <a href="https://phoenix-xi.com/world-info?tab=calendar">https://phoenix-xi.com/world-info?tab=calendar</a>
+It shows which race and which dungeon are up now and next. Everything below explains how to use it.</p>
+</aside>
+<p>Look for these boxes:</p>
+<aside class="box tip">
+<ul>
+<li><strong>PRO TIP</strong> — saves you a wasted trip</li>
+<li><strong>WARNING</strong> — a common way to miss your week</li>
+<li><strong>FROM THE CODE</strong> — read straight from Phoenix's scripts</li>
+<li><strong>CHECKPOINT</strong> — what to have before your week starts</li>
+</ul>
+</aside>
+
+<h2>RSE AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Quest</strong></td>
+<td><em>The Goblin Tailor</em> (Jeuno log)</td>
+</tr>
+<tr>
+<td><strong>NPC</strong></td>
+<td><strong>Guttrix</strong>, a Goblin in <strong>Lower Jeuno</strong></td>
+</tr>
+<tr>
+<td><strong>To start</strong></td>
+<td>Level 10+ and <strong>Jeuno fame 3</strong></td>
+</tr>
+<tr>
+<td><strong>Pieces</strong></td>
+<td>Body (Lv33), Hands (Lv27), Legs (Lv31), Feet (Lv29) — any job can wear them, only your race</td>
+</tr>
+<tr>
+<td><strong>One piece costs</strong></td>
+<td>One <strong>Magical Pattern</strong> key item, from a treasure chest in the right dungeon <strong>during your race's week</strong></td>
+</tr>
+<tr>
+<td><strong>When</strong></td>
+<td>Your race's week comes every ~61½ hours and lasts <strong>7 hours 41 minutes</strong></td>
+</tr>
+<tr>
+<td><strong>Where</strong></td>
+<td>Ordelle's Caves, Gusgen Mines or Maze of Shakhrami — rotates</td>
+</tr>
+<tr>
+<td><strong>You need</strong></td>
+<td>That dungeon's <strong>chest key</strong> (or Thief's Tools on a main-job Thief)</td>
+</tr>
+<tr>
+<td><strong>When to think about it</strong></td>
+<td><strong>Around level 25.</strong> The pieces are Lv27–33</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">HOW RSE WORKS</h2></header>
+<p><em>Four pieces. One per trip. And the Goblin only sews for one race at a time.</em></p>
+<h3>The quest, step by step</h3>
+<ol>
+<li><strong>Talk to Guttrix</strong> in Lower Jeuno (level 10+, Jeuno fame 3). He tells you whose week it is and where. That starts <em>The Goblin Tailor</em>.</li>
+<li><strong>Wait for your race's week</strong> (check the calendar). The week lasts 7 hours 41 minutes real time.</li>
+<li><strong>Go to that week's dungeon</strong> with its <strong>chest key</strong> and find the <strong>Treasure Chest</strong>.</li>
+<li><strong>Trade the key to the chest.</strong> Instead of normal loot you get the key item <strong>Magical Pattern</strong>.</li>
+<li><strong>Bring it to Guttrix</strong> and pick one piece: body, hands, legs or feet.</li>
+<li><strong>Repeat</strong> for each piece you want. You can only hold one Magical Pattern at a time, so it's one chest per piece.</li>
+</ol>
+<aside class="box code">
+<p><strong>FROM THE CODE — the exact checks.</strong> <code>The_Goblin_Tailor.lua</code> only gives the pattern when <strong>all three</strong> are true: the chest is in that week's dungeon, the week's race matches <strong>your character's race and gender exactly</strong>, and you don't already hold a pattern. The chest opens with the dungeon's key or (main-job Thief only) Thief's Tools, Living Key or Skeleton Key. It skips the chest's "illusion" check, so a recently opened chest still works once it reappears.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — male and female are separate weeks.</strong> Hume ♂ and Hume ♀ have different weeks, and so do Elvaan ♂/♀ and Tarutaru ♂/♀. A female Tarutaru can't use the male Tarutaru week, even though the gear is the same Wonder set. Galka and Mithra have one week each.</p>
+</aside>
+<h3>The rotation</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE — how the week is picked.</strong> <code>src/common/vana_time.h</code> counts Vana'diel weeks (8 game days = <strong>7 h 40 m 48 s</strong> real time). The race is <code>week mod 8</code>, the dungeon is <code>week mod 3</code>.</p>
+</aside>
+<p>The races go in this order, one per Vana'diel week, then repeat:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Race</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Hume ♂</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Hume ♀</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Elvaan ♂</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Elvaan ♀</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Tarutaru ♂</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Tarutaru ♀</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Mithra</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Galka</td>
+</tr>
+</tbody>
+</table></div>
+<p>The dungeons go <strong>Ordelle's Caves → Gusgen Mines → Maze of Shakhrami</strong>, one per week, then repeat.</p>
+<p>What that means for you:</p>
+<ul>
+<li><strong>Your race comes up every 8 weeks:</strong> about <strong>61 hours 27 minutes</strong> (2½ real days).</li>
+<li><strong>Your dungeon shifts each time.</strong> Because 8 weeks is 2 steps around a 3-dungeon cycle, your race's dungeon goes <strong>Ordelle's → Shakhrami → Gusgen → Ordelle's…</strong></li>
+<li><strong>The full pattern repeats every 24 weeks</strong>, about 7 days 16 hours.</li>
+</ul>
+<aside class="box tip">
+<p><strong>PRO TIP — trust the calendar, not your math.</strong> The rotation is fixed, but the server's clock and any offset it uses decide where it starts. Phoenix's calendar shows the real current week: <a href="https://phoenix-xi.com/world-info?tab=calendar">https://phoenix-xi.com/world-info?tab=calendar</a></p>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">THE THREE DUNGEONS AND THEIR KEYS</h2></header>
+<p><em>The key is the hard part. Farm it before your week starts.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Dungeon</th>
+<th>Entrance</th>
+<th>Chest key</th>
+<th>Key drops from (Phoenix data)</th>
+<th>Chest spawn points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ordelle's Caves</strong></td>
+<td>La Theine Plateau</td>
+<td><strong>Ordelle Chest Key</strong></td>
+<td>Goblin Furrier, Pathfinder, Shaman and Smithy (Lv31–34), Stroper (31–34), Stroper Chyme (33–35), Napalm (31–33), Air and Water Elementals (33–36), Goliath Beetle (very rare)</td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Gusgen Mines</strong></td>
+<td>Konschtat Highlands</td>
+<td><strong>Gusgen Chest Key</strong></td>
+<td>Greater Pugil (25–31), Sadfly (27–30), Mauthe Doog (28–31), Myconid (30–32), Wight (29–34), Banshee (31–34), Rancid Ooze (31–34), Gallinipper (32–35), Ghast (33–36), Earth and Thunder Elementals; Amphisbaena, Spunkie, Wendigo, Feu Follet (very rare)</td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Maze of Shakhrami</strong></td>
+<td>Tahrongi Canyon</td>
+<td><strong>Shakhrami Chest Key</strong></td>
+<td>Goblin Furrier, Pathfinder, Shaman and Smithy (31–34), Labyrinth Scorpion (30–33), Caterchipillar (29–31), Protozoan (29–31), Wight (32–35), Air and Earth Elementals (33–36); Abyss Worm (very rare)</td>
+<td>16</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — keys are Rare/Ex.</strong> You can carry <strong>one</strong> of each dungeon's key and you can't buy them on the AH. That's why you farm your key before the week starts.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — farm your key the day before.</strong> Look at the calendar, see which dungeon your race gets next, and farm that one key ahead of time. Then you spend your 7 h 41 m window walking chest to chest, not killing Goblins hoping for a drop. If you want more than one piece, farm a key for each trip: after you turn in a pattern, go straight back for the next key while the week is still on.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — bring a friend in their 30s or higher.</strong> The key mobs are level 25–36. At level 25 you'll want a party, or a higher-level friend to kill and let you lot the key.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — Thieves skip the key farm.</strong> A <strong>main-job Thief</strong> can use <strong>Thief's Tools</strong>, a Living Key or a Skeleton Key instead of a dungeon key. They work 75% of the time, fail 10% and trigger a trap (Weakness) 15%. Keys never fail.</p>
+</aside>
+<h3>Finding the chest</h3>
+<p>The chest has 12–16 possible spots per dungeon and <strong>moves after someone opens it</strong>, reappearing about <strong>3 minutes</strong> later somewhere else. If the spot you remember is empty, someone beat you to it; check the next spot on your route.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — before your week</strong></p>
+<ul>
+<li>Jeuno fame 3 and <em>The Goblin Tailor</em> started with Guttrix.</li>
+<li>The calendar checked: you know the start time and the dungeon.</li>
+<li>That dungeon's chest key in your bag (or Thief's Tools on a THF).</li>
+<li>A route through the dungeon's chest spots.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">THE LOOKBOOK (EVERY RACE'S SET)</h2></header>
+<p><em>Stats from Phoenix's item data. Defense not shown.</em></p>
+<h3>Hume — the Custom set</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom Tunic (♂) / Custom Vest (♀)</td>
+<td>33</td>
+<td>HP+32, VIT+3, INT−1, CHR+1</td>
+</tr>
+<tr>
+<td>Custom M Gloves / Custom F Gloves</td>
+<td>27</td>
+<td>HP+12, MP+4, <strong>STR+3, DEX+3</strong>, VIT−1, AGI−1</td>
+</tr>
+<tr>
+<td>Custom Slacks (♂) / Custom Pants (♀)</td>
+<td>31</td>
+<td>MP+32, STR−1, <strong>MND+3</strong>, CHR+1</td>
+</tr>
+<tr>
+<td>Custom M Boots / Custom F Boots</td>
+<td>29</td>
+<td>HP+4, MP+12, DEX−1, <strong>AGI+3, INT+3</strong>, MND−1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Elvaan — the Magna set</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Magna Jerkin (♂) / Magna Bodice (♀)</td>
+<td>33</td>
+<td>HP+24, MP+4, DEX+1, INT+1</td>
+</tr>
+<tr>
+<td>Magna Gauntlets (♂) / Magna Gloves (♀)</td>
+<td>27</td>
+<td><strong>MP+24</strong>, DEX+2, INT+1</td>
+</tr>
+<tr>
+<td>Magna M Chausses / Magna F Chausses</td>
+<td>31</td>
+<td>HP+12, MP+12, <strong>DEX+2, AGI+2</strong></td>
+</tr>
+<tr>
+<td>Magna M Ledelsens / Magna F Ledelsens</td>
+<td>29</td>
+<td>MP+20, <strong>AGI+3</strong>, INT+2</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Tarutaru — the Wonder set (same set for ♂ and ♀)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wonder Kaftan</td>
+<td>33</td>
+<td>HP+36, STR+1, VIT+2, MND+1</td>
+</tr>
+<tr>
+<td>Wonder Mitts</td>
+<td>27</td>
+<td>HP+12, <strong>STR+3</strong></td>
+</tr>
+<tr>
+<td>Wonder Braccae</td>
+<td>31</td>
+<td>HP+21, STR+1, VIT+2, MND+2</td>
+</tr>
+<tr>
+<td>Wonder Clomps</td>
+<td>29</td>
+<td>HP+20, STR+2</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Mithra — the Savage set</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Savage Separates</td>
+<td>33</td>
+<td>HP+32, STR+1, CHR+1</td>
+</tr>
+<tr>
+<td>Savage Gauntlets</td>
+<td>27</td>
+<td>MP+16, <strong>VIT+4, MND+2</strong></td>
+</tr>
+<tr>
+<td>Savage Loincloth</td>
+<td>31</td>
+<td>MP+32, VIT+1, MND+1</td>
+</tr>
+<tr>
+<td>Savage Gaiters</td>
+<td>29</td>
+<td>HP+16, <strong>STR+3</strong>, CHR+2</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Galka — the Elder's set</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Lv</th>
+<th>Stats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elder's Surcoat</td>
+<td>33</td>
+<td><strong>MP+32</strong>, INT+1, CHR+1</td>
+</tr>
+<tr>
+<td>Elder's Bracers</td>
+<td>27</td>
+<td><strong>MP+32</strong>, INT+2</td>
+</tr>
+<tr>
+<td>Elder's Braguette</td>
+<td>31</td>
+<td>MP+20, AGI+2, INT+1, CHR+2</td>
+</tr>
+<tr>
+<td>Elder's Sandals</td>
+<td>29</td>
+<td>MP+12, AGI+3, INT+2</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — the sets lean opposite to the race.</strong> Tarutaru get the melee set (STR and HP), Galka get the mage set (MP and INT). That's on purpose: RSE patches the race's weak side.</p>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">WHICH JOBS WANT WHICH PIECES</h2></header>
+<p><em>Not every piece is worth a trip. These are.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>Melee (WAR, MNK, THF, DRK, SAM, NIN, DRG, BST)</th>
+<th>Mage (WHM, BLM, RDM, SMN, BRD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hume</strong></td>
+<td><strong>Gloves</strong> (STR+3 DEX+3) to the mid-40s. Boots (AGI+3) for NIN/THF</td>
+<td><strong>Slacks/Pants</strong> (MND+3, MP+32) for WHM/RDM. Boots (INT+3) for BLM</td>
+</tr>
+<tr>
+<td><strong>Elvaan</strong></td>
+<td>Chausses (DEX+2 AGI+2) for THF/NIN</td>
+<td><strong>Gauntlets</strong> (MP+24) and Ledelsens (MP+20)</td>
+</tr>
+<tr>
+<td><strong>Tarutaru</strong></td>
+<td><strong>The whole set.</strong> STR and HP where Taru are weakest</td>
+<td>Kaftan/Braccae for HP (survival), not stats</td>
+</tr>
+<tr>
+<td><strong>Mithra</strong></td>
+<td><strong>Gaiters</strong> (STR+3, CHR+2 for BST)</td>
+<td><strong>Gauntlets</strong> (MND+2, VIT+4) and Loincloth (MP+32)</td>
+</tr>
+<tr>
+<td><strong>Galka</strong></td>
+<td>Little; Sandals (AGI+3) for evasion</td>
+<td><strong>Surcoat and Bracers</strong> (MP+32 each) — huge for a Galka mage</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Beastmasters, look for CHR.</strong> Custom Tunic/Vest (CHR+1), Savage Gaiters (CHR+2) and Elder's Braguette (CHR+2) help Charm.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — RSE is also a fashion set.</strong> The pieces look the same as other race-specific outfits and many players keep one for lockstyle later. If you're not sure you need it, a 7-hour window every 2½ days means you can come back anytime.</p>
+</aside>
+
+<h1 class="mast">APPENDIX — SOURCES</h1>
+<ul>
+<li>Phoenix server code, github.com/phoenixffxi/Phoenix (commit 014069e4ed): <code>scripts/quests/jeuno/The_Goblin_Tailor.lua</code> (quest, NPC, rewards), <code>src/common/vana_time.h</code> (race and dungeon rotation), <code>scripts/globals/treasure.lua</code> (chest keys, spawn points, Thief's Tools odds, respawn), zone <code>mobs.yaml</code> files (key drops), <code>sql/item_mods.sql</code> (stats), <code>scripts/enum/race.lua</code> (race order).</li>
+<li>Phoenix RSE calendar: <a href="https://phoenix-xi.com/world-info?tab=calendar">https://phoenix-xi.com/world-info?tab=calendar</a></li>
+</ul>
+</main></body></html>

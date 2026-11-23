@@ -25,6 +25,15 @@ GUIDES = [
      'Complete WHM guide: healing math, 1-75 leveling, gear, spells, AF.'),
     ('ninja.html', 'Ninja Shadow Arts Compendium',
      'Complete NIN guide: ninjutsu, tanking, 1-75 leveling, gear, tools, AF.'),
+    ('warrior.html', 'Warrior Iron Will Compendium',
+     'Complete WAR guide: era Berserk and Warcry, weapon skills, 1-75 leveling, gear, AF.'),
+    ('monk.html', 'Monk Iron Fist Compendium',
+     'Complete MNK guide: Martial Arts, belt quests, 1-75 leveling, gear, AF.'),
+    ('thief.html', 'Thief Light Fingers Compendium', 'Complete THF guide: Treasure Hunter, Steal, SATA, 1-75 leveling, gear, AF.'),
+    ('red-mage.html', 'Red Mage Crimson Duelist Compendium', 'Complete RDM guide: Refresh, Haste, enfeebling formulas, 1-75 leveling, gear, AF.'),
+    ('black-mage.html', 'Black Mage Elemental Fury Compendium', 'Complete BLM guide: nuke formula, Magic Burst, Ancient Magic, 1-75 leveling, gear, AF.'),
+    ('rse.html', 'Race Specific Equipment (RSE)',
+     'RSE guide: The Goblin Tailor, the weekly race and dungeon rotation, chest keys, every race set.'),
 ]
 
 
@@ -98,7 +107,9 @@ def build():
             ('Guides', None),
             (title, None),
         ])
-        html += f'<div class="guide-content">\n{body}\n</div>\n'
+        # Keep the template's <main> wrapper: the guide CSS hangs its padding,
+        # max-width and "hide the duplicate title" rules off `main`.
+        html += f'<div class="guide-content">\n<main>\n{body}\n</main>\n</div>\n'
         html += layout_close()
         html += page_end()
         out = os.path.join(OUT_DIR, filename)

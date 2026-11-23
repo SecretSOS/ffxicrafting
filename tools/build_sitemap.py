@@ -18,6 +18,12 @@ sm += f'<url><loc>{SITE}/desynth</loc></url>\n'
 sm += f'<url><loc>{SITE}/guides/fishing-101</loc></url>\n'
 sm += f'<url><loc>{SITE}/guides/fishing-cooking</loc></url>\n'
 sm += f'<url><loc>{SITE}/guild-points</loc></url>\n'
+
+jobs_dir = os.path.join(ROOT, 'public', 'guides', 'jobs')
+if os.path.isdir(jobs_dir):
+    for jf in sorted(os.listdir(jobs_dir)):
+        if jf.endswith('.html'):
+            sm += f'<url><loc>{SITE}/guides/jobs/{jf[:-5]}</loc></url>\n'
 sm += f'<url><loc>{SITE}/nm/</loc></url>\n'
 
 crafts_dir = os.path.join(ROOT, 'public', 'crafts')

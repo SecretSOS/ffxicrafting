@@ -1,0 +1,2352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Black Mage Elemental Fury Compendium</title>
+<meta name="description" content="Complete BLM guide: nuke formula, Magic Burst, Ancient Magic, 1-75 leveling, gear, AF.">
+<meta property="og:title" content="Black Mage Elemental Fury Compendium">
+<meta property="og:description" content="Complete BLM guide: nuke formula, Magic Burst, Ancient Magic, 1-75 leveling, gear, AF.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/guides/jobs/black-mage">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.0ccbad75.css">
+<style>
+.guide-content{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#161a26;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}.guide-content *{box-sizing:border-box}.guide-content{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}.guide-content main{max-width:960px;margin:0 auto;padding:0 20px 80px}.guide-content .cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}.guide-content .cover:after{content:"BLM";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}.guide-content .cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}.guide-content .cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}.guide-content .cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}.guide-content .cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}.guide-content h1.mast{display:none}.guide-content main>h2:first-of-type{display:none}.guide-content h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}.guide-content h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}.guide-content p,.guide-content li{max-width:72ch}.guide-content em{color:var(--muted)}.guide-content .band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}.guide-content .band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}.guide-content .band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}.guide-content .band+p em{font-size:17px}.guide-content .toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}.guide-content .toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}.guide-content .toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}.guide-content .toc a:hover,.guide-content .toc a:focus{color:var(--accent)}.guide-content a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.guide-content .tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}.guide-content table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}.guide-content th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}.guide-content td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}.guide-content tr:nth-child(even) td{background:#f6f8fa}.guide-content code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}.guide-content pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}.guide-content pre code{background:none;color:inherit;padding:0}.guide-content .box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}.guide-content .box p{margin:4px 0}.guide-content .box ul{margin:6px 0;padding-left:20px}.guide-content .box>p:first-child strong:first-child,.guide-content .box>ul:first-child{}.guide-content .box strong:first-child{color:var(--c);letter-spacing:.06em}.guide-content .tip{--c:var(--tip)}.guide-content .warn{--c:var(--warn)}.guide-content .gil{--c:var(--gil)}.guide-content .code{--c:var(--code);background:#f5f2fc}.guide-content .chal{--c:var(--chal)}.guide-content .check{--c:var(--check)}.guide-content .recap{--c:var(--ink);background:var(--ink);color:#fff}.guide-content .recap strong:first-child{color:var(--gold)!important}.guide-content .legend{--c:var(--gold);background:#fffaf0}.guide-content .legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.guide-content .legend li strong{color:var(--ink)!important}.guide-content .st{color:var(--accent)}.guide-content .st.off{color:var(--rule)}.guide-content .q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}.guide-content .ok{color:#15803d;font-weight:800;font-size:1.15em}.guide-content .edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}.guide-content .edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}.guide-content .fx{font-size:1.35em;line-height:1;white-space:nowrap}.guide-content .curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}.guide-content .curechart svg{width:100%;height:auto;display:block}.guide-content .curechart .bn{fill:#0f766e}.guide-content .curechart .bo{fill:#d9a521}.guide-content .curechart .bs{fill:#b3202f}.guide-content .curechart .bp{fill:#1d5fb8}.guide-content .curechart .bb{fill:#d9a521}.guide-content .curechart .cl{font:600 13px var(--body);fill:var(--ink)}.guide-content .curechart .cv{font:600 12px var(--mono);fill:var(--ink)}.guide-content .curechart .ct{font:11px var(--mono);fill:var(--muted)}.guide-content .curechart .gl{stroke:var(--rule);stroke-width:1}.guide-content .curechart .lg{font:600 12px var(--body);fill:var(--ink)}.guide-content .curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}.guide-content details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}.guide-content details summary{cursor:pointer;font-weight:600}.guide-content .foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}.guide-content .foodchain svg{width:100%;height:auto;display:block}.guide-content .foodchain .fp{font-size:14px}.guide-content .foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}.guide-content .foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}.guide-content .foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}.guide-content .foodchain .fa{stroke:#d9381e;stroke-width:3}.guide-content .foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}.guide-content .foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}.guide-content .set-tp{--s:#b3202f}.guide-content .set-ws{--s:#b45309}.guide-content .set-eva{--s:#1d4ed8}.guide-content .set-nin{--s:#5b3fa6}.guide-content .set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}.guide-content .sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}.guide-content .sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}.guide-content .setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}.guide-content .seticon{font-size:26px;line-height:1}.guide-content .settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}.guide-content .set .tw{border-color:var(--s)}.guide-content .set th{background:var(--s)}.guide-content .set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}.guide-content .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}.guide-content .fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}.guide-content .fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}.guide-content .fstep b{font-size:22px;line-height:1}.guide-content .fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}.guide-content .fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}.guide-content .fstep small{font-size:12px;opacity:.9}.guide-content .fstep:hover,.guide-content .fstep:focus-visible{filter:brightness(1.1)}
+
+@media (max-width:700px){
+.guide-content .flow{grid-template-columns:1fr 1fr;gap:6px}.guide-content .fstep,.guide-content .fstep:first-child{clip-path:none}}
+
+@media (max-width:520px){
+.guide-content .band,.guide-content .cover{margin-left:-16px;margin-right:-16px}.guide-content main{padding:0 16px 60px}}
+
+@media (prefers-reduced-motion:reduce){
+.guide-content *{transition:none!important}}
+.guide-content{max-width:960px;margin:0 auto}
+</style>
+<script src="/site.f189c77d.js"></script>
+<script>(function(){
+var u=new URL(location.href);
+if(u.searchParams.get('sos')==='1')try{localStorage.setItem('phoenix-pt','1')}catch(e){}
+else if(u.searchParams.get('sos')==='0')try{localStorage.removeItem('phoenix-pt')}catch(e){}
+try{window.PT=localStorage.getItem('phoenix-pt')==='1'}catch(e){window.PT=false}
+})();</script>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Guides<span class="sep">&rsaquo;</span>Black Mage Elemental Fury Compendium</nav>
+<div class="guide-content">
+<main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>Black Mage</h1><p>The elemental fury compendium: the nuke formula, Magic Burst, Elemental Seal, Manafont and Conserve MP straight from the server code, every spell by level, a nuke-and-sleep report for every classic camp, four gear sets, AF, Borghertz, Retribution and Ancient Magic II merits.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">BLACK MAGE</h1>
+<h2>The Elemental Fury Compendium — Phoenix Edition</h2>
+<p><em>The tank holds the mob. You decide when it dies.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE BLACK MAGE</a><a href="#chapter-2">CHAPTER 2 · BECOMING A BLACK MAGE</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE ARSENAL (SKILLS AND WEAPON SKILLS)</a><a href="#chapter-5">CHAPTER 5 · BLACK MAGE MATH</a><a href="#chapter-6">CHAPTER 6 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · QUESTS, AF AND ENDGAME</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most Black Mage guides on the web describe the game after 2009: Elemental Celerity, Magic Burst Bonus traits, -ja spells, Manawell, Cascade, Subtle Sorcery, Death, Scholar subjob and 99-era Ancient Magic. <strong>None of that is on Phoenix.</strong> This guide uses Phoenix's own server code (github.com/phoenixffxi/Phoenix) with its era-revert modules applied. Spell levels, the damage formula, trait values, skill caps, gear stats and drops all come from that code. Quest walkthroughs were checked against BG Wiki, because the server code can't tell you where to stand or what an NPC says.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves time, MP or gil</li>
+<li><strong>WARNING</strong> — a common way to die or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>ARCHMAGE'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — three things this guide can't settle from the code.</strong></p>
+<ul>
+<li><strong>Nuke damage</strong> uses LandSandBoat's modern player formula (base damage plus INT-difference brackets), because Phoenix's <code>USE_OLD_MAGIC_DAMAGE</code> setting is off by default. Phoenix does revert spell MP costs and casting times, and restores the old Magic Burst multiplier. Numbers in Chapter 5 are from that formula.</li>
+<li><strong>Ancient Magic II</strong> was reworked by Phoenix so rank 1 only unlocks each spell. Extra ranks add magic accuracy and Magic Burst damage.</li>
+<li><strong>Live server settings</strong> such as resting MP and enmity caps aren't public. The numbers here are the code defaults.</li>
+</ul>
+</aside>
+
+<h2>BLACK MAGE AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Nuker, Magic Bursts, sleeper, emergency Stun</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span> — big damage, but it needs MP, so it needs a Red Mage</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — two nukes and you're out of MP. Fine on easy prey</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span> — burst farming (Sleepga + -ga nukes) and AoE camps</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — managing hate and MP is the whole job</td>
+</tr>
+<tr>
+<td><strong>Main weapon</strong></td>
+<td>Staff (B−). <strong>Elemental Magic A+</strong>, <strong>Dark Magic A</strong></td>
+</tr>
+<tr>
+<td><strong>Key stats</strong></td>
+<td>INT, MP, Magic Attack Bonus</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Medium to high. HQ elemental staves and the Igqira/Genie set</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE BLACK MAGE</h2></header>
+<p><em>Pointy hat, big numbers, short life expectancy.</em></p>
+<p>On Phoenix a BLM does four things, in this order of importance:</p>
+<ol>
+<li><strong>Nuke.</strong> Tier III and IV elemental magic, and Ancient Magic at 50+.</li>
+<li><strong>Magic Burst.</strong> Nuke into a skillchain for <strong>×1.30</strong> or more.</li>
+<li><strong>Sleep.</strong> Sleep and Sleepga control links and adds.</li>
+<li><strong>Stun.</strong> Stun at 45 cancels a mob's TP move or spell.</li>
+</ol>
+<h3>Job abilities</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>What it does (Phoenix code)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Manafont</strong></td>
+<td>2 hours</td>
+<td>Spells cost <strong>no MP</strong> for <strong>60 seconds</strong></td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Elemental Seal</strong></td>
+<td>10:00</td>
+<td>Your next elemental or enfeebling spell gets <strong>+256 magic accuracy</strong> (lasts 60 s)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Elemental Seal is accuracy, not damage.</strong> It adds 256 magic accuracy (<code>scripts/combat/basic/magic_hit_rate.lua</code>), so the next spell almost can't be resisted. It doesn't work on Dark or Divine magic. Use it on Sleepga when an add has to stay down, or on a big Ancient Magic nuke.</p>
+</aside>
+<h3>Job traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Value at that level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 / 30 / 50 / 70</td>
+<td><strong>Magic Attack Bonus</strong></td>
+<td><strong>+20 / +24 / +28 / +32</strong></td>
+</tr>
+<tr>
+<td>15 / 30 / 45 / 60 / 75</td>
+<td><strong>Clear Mind</strong></td>
+<td>+3 / +6 / +9 / +12 / +15 MP per tick while resting</td>
+</tr>
+<tr>
+<td>20</td>
+<td><strong>Conserve MP</strong></td>
+<td>25% chance a spell costs only 50–100% of its MP</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — what Conserve MP really saves.</strong> When it triggers (25% of casts), the spell costs a random 8/16 to 16/16 of its MP (<code>src/map/ai/states/magic_state.cpp</code>). That's about 9% of your MP saved on average, not 25%.</p>
+</aside>
+<h3>Your spell list by level</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Elemental</th>
+<th>Enfeebling &amp; Dark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–10</td>
+<td>Stone (1), Water (5), Aero (9), Blaze Spikes (10)</td>
+<td>Poison (3), Blind (4), Bind (7), Bio (10)</td>
+</tr>
+<tr>
+<td>11–20</td>
+<td>Drain (12), Fire (13), Stonega (15), Shock (16), Blizzard (17), Rasp (18), Waterga (19), Choke (20), Ice Spikes (20)</td>
+<td><strong>Warp (17)</strong>, <strong>Sleep (20)</strong></td>
+</tr>
+<tr>
+<td>21–30</td>
+<td>Thunder (21), Frost (22), Aeroga (23), Burn (24), Stone II (26), Drown (27), Firaga (28), Water II (30), Shock Spikes (30)</td>
+<td>Poisonga (24), <strong>Aspir (25)</strong>, Tractor (25), Escape (29)</td>
+</tr>
+<tr>
+<td>31–40</td>
+<td>Blizzaga (32), Aero II (34), Thundaga (36), Fire II (38), Stonega II (40)</td>
+<td><strong>Sleepga (31)</strong>, Bio II (35), Warp II (40)</td>
+</tr>
+<tr>
+<td>41–50</td>
+<td>Blizzard II (42), Waterga II (44), Thunder II (46), Aeroga II (48), <strong>Freeze (50)</strong></td>
+<td>Sleep II (41), Poison II (43), <strong>Stun (45)</strong></td>
+</tr>
+<tr>
+<td>51–60</td>
+<td>Stone III (51), <strong>Tornado (52)</strong>, Firaga II (53), <strong>Quake (54)</strong>, Water III (55), <strong>Burst (56)</strong>, Blizzaga II (57), <strong>Flood (58)</strong>, Aero III (59), <strong>Flare (60)</strong></td>
+<td>Sleepga II (56)</td>
+</tr>
+<tr>
+<td>61–70</td>
+<td>Thundaga II (61), Fire III (62), Stonega III (63), Blizzard III (64), Waterga III (65), Thunder III (66), Aeroga III (67), Stone IV (68), Firaga III (69), Water IV (70)</td>
+<td>Poisonga II (64)</td>
+</tr>
+<tr>
+<td>71–75</td>
+<td>Blizzaga III (71), Aero IV (72), Fire IV (73), Thundaga III (73), Blizzard IV (74), Thunder IV (75). Merit: <strong>Flare II, Freeze II, Tornado II, Quake II, Burst II, Flood II</strong> (75)</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box gil">
+<p><strong>MONEY MAKER — where the big scrolls come from.</strong> Phoenix's data: <strong>Susu</strong> in Lower Jeuno sells Stone IV, Fire IV, Thunder IV, Blizzaga III and Burst. Freeze drops from Spartoi Sorcerers (King Ranperre's Tomb); Flare from Dread Demons and Marquis Amon (Castle Zvahl Baileys) and Hakutaku (Den of Rancor); Tornado from Yagudo Prelates (Castle Oztroja); Quake from Orcish Hexspinners (Monastic Cavern) and Centurio X-I (Quicksand Caves); Flood from Sapphire Quadav (Beadeaux, Qulun Dome). Several BCNMs drop them too. Expect to buy most from the Auction House.</p>
+</aside>
+<h3>Not on Phoenix</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>You'll read about it online</th>
+<th>Status on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elemental Celerity, Magic Burst Bonus traits</td>
+<td>Abyssea era. <strong>Not available</strong></td>
+</tr>
+<tr>
+<td>Manawell, Cascade, Subtle Sorcery, Enmity Douse, Mana Wall</td>
+<td>Later expansions. <strong>Not available</strong></td>
+</tr>
+<tr>
+<td>-ja spells, Death, Comet, Meteor</td>
+<td>Later. <strong>Not available</strong></td>
+</tr>
+<tr>
+<td>Scholar subjob</td>
+<td>Wings of the Goddess. <strong>Not available</strong></td>
+</tr>
+<tr>
+<td>Merit "Ancient Magic Attack Bonus", "Elemental Magic Accuracy", "Aspir Absorption"</td>
+<td>The merits exist in the code but have <strong>0 upgrades</strong> on Phoenix</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Race stats at 75 (BLM 75 / RDM 37, no gear)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>HP</th>
+<th>MP</th>
+<th>STR</th>
+<th>DEX</th>
+<th>VIT</th>
+<th>AGI</th>
+<th>INT</th>
+<th>MND</th>
+<th>CHR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>968</td>
+<td>675</td>
+<td>57</td>
+<td>66</td>
+<td>56</td>
+<td>65</td>
+<td>72</td>
+<td>62</td>
+<td>63</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>1059</td>
+<td>599</td>
+<td>62</td>
+<td>63</td>
+<td>59</td>
+<td>59</td>
+<td>66</td>
+<td>67</td>
+<td>63</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>772</td>
+<td><strong>858</strong></td>
+<td>51</td>
+<td>66</td>
+<td>53</td>
+<td>68</td>
+<td><strong>79</strong></td>
+<td>59</td>
+<td>63</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>968</td>
+<td>675</td>
+<td>54</td>
+<td>73</td>
+<td>53</td>
+<td>70</td>
+<td>72</td>
+<td>59</td>
+<td>57</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>1180</td>
+<td>476</td>
+<td>60</td>
+<td>66</td>
+<td>63</td>
+<td>62</td>
+<td>69</td>
+<td>62</td>
+<td>57</td>
+</tr>
+</tbody>
+</table></div>
+<p>Tarutaru is the classic BLM: the most MP and INT by a wide margin. A Galka BLM has 45% less MP than a Taru, so MP gear matters more.</p>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>MAB +32 at 70 is built in.</li>
+<li>Elemental Seal = +256 magic accuracy on one spell.</li>
+<li>Conserve MP saves about 9% on average.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A BLACK MAGE</h2></header>
+<p><em>No quest needed. Pick it at character creation.</em></p>
+<p><strong>Black Mage is a starting job.</strong> Choose it when you make your character, or change to it at any Mog House.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Where</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spell scrolls: Stone, Water, Aero, Poison, Blind, Bind</td>
+<td>Magic shops in Windurst, San d'Oria and Bastok, or the Auction House</td>
+<td>Your first ten levels</td>
+</tr>
+<tr>
+<td>A staff or club</td>
+<td>Weapon shops</td>
+<td>You'll melee until your MP pool can carry a fight</td>
+</tr>
+<tr>
+<td>Cheap cloth armor</td>
+<td>Armor shops or the Auction House</td>
+<td>MP and INT matter more than defense</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Stone first, then the element the mob is weak to.</strong> Early on, Stone is the cheapest nuke. From 20, check Chapter 6's report: lizards and beetles take Blizzard, worms take Aero.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>BLM is unlocked from the start.</li>
+<li>Spells first, armor second.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>Finish The Old Lady (Selbina) or Elder Memories (Mhaura) to get a subjob at 18.</em></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Subjob</th>
+<th>When</th>
+<th>What you get</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Red Mage</strong></td>
+<td><strong>Party default</strong></td>
+<td>Fast Cast 10% (RDM 15 = your 30), 15% (RDM 35 = your 70). Phalanx (your 66), Stoneskin (your 68), Bind, Gravity, Dispel</td>
+<td>Faster casting. Most BLMs party as BLM/RDM</td>
+</tr>
+<tr>
+<td><strong>White Mage</strong></td>
+<td>Safety</td>
+<td>Cure, Protect, status removal, <strong>Erase (your 64)</strong>, <strong>Reraise (your 66)</strong></td>
+<td>Healing yourself, raising yourself</td>
+</tr>
+<tr>
+<td><strong>Summoner</strong></td>
+<td>MP</td>
+<td><strong>Auto Refresh</strong> (SMN 25 = your 50): +1 MP per tick. <strong>Max MP +20</strong> (SMN 30 = your 60)</td>
+<td>The most MP of any subjob. Good for long fights and burst parties</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — trait overlap.</strong> /RDM's Magic Attack Bonus (+20) and Clear Mind don't add to yours; you already have bigger ones. What /RDM adds is Fast Cast.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — /SMN needs SMN levelled to 30.</strong> Auto Refresh only needs SMN 25, but Max MP +20 needs 30. Plan the subjob leveling.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>/RDM for faster casting, /SMN for MP, /WHM for safety.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE ARSENAL (SKILLS AND WEAPON SKILLS)</h2></header>
+<p><em>You hold a staff for the stats. Hitting things with it is a bonus.</em></p>
+<h3>Your skills at 75 (era caps)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Grade</th>
+<th>Cap at 75</th>
+<th>Reaches 200 at</th>
+<th>Reaches 230 at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elemental Magic</strong></td>
+<td><strong>A+</strong></td>
+<td><strong>276</strong></td>
+<td>Lv60</td>
+<td>Lv66</td>
+</tr>
+<tr>
+<td><strong>Dark Magic</strong></td>
+<td>A</td>
+<td>269</td>
+<td>Lv60</td>
+<td>Lv67</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>B−</td>
+<td>240</td>
+<td>Lv62</td>
+<td>Lv73</td>
+</tr>
+<tr>
+<td>Club, Enfeebling Magic</td>
+<td>C+</td>
+<td>230</td>
+<td>Lv64</td>
+<td>Lv75</td>
+</tr>
+<tr>
+<td>Dagger, Throwing</td>
+<td>D</td>
+<td>210</td>
+<td>Lv70</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Scythe, Evasion, Enhancing</td>
+<td>E</td>
+<td>200</td>
+<td>Lv75</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — know which skill lands which spell.</strong> Elemental skill lands your nukes. <strong>Sleep, Sleepga and Bind are Enfeebling magic</strong> (only C+ for you), and <strong>Stun, Drain, Aspir and Bio are Dark magic</strong> (A). Skill them on easy prey whenever you're behind; Sleep is the one most likely to be undercapped.</p>
+</aside>
+<h3>Staff weapon skills (era values)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Skill</th>
+<th>Hits</th>
+<th>fTP at 100 / 200 / 300%</th>
+<th>Stat mods</th>
+<th>Skillchain</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Heavy Swing</td>
+<td>10</td>
+<td>1</td>
+<td>1.0 / 1.25 / 2.25</td>
+<td>STR 30%</td>
+<td>Impaction</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Rock Crusher</strong></td>
+<td>40</td>
+<td>magic</td>
+<td>1.0 / 2.0 / 2.5</td>
+<td>STR 20%, INT 20%</td>
+<td>Impaction</td>
+<td>Earth damage, uses your INT</td>
+</tr>
+<tr>
+<td>Starburst</td>
+<td>100</td>
+<td>magic</td>
+<td>1.0 / 2.0 / 2.5</td>
+<td>—</td>
+<td>Compression, Reverberation</td>
+<td>Light or dark damage</td>
+</tr>
+<tr>
+<td>Shell Crusher</td>
+<td>175</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 35%</td>
+<td>Detonation</td>
+<td>Defense down</td>
+</tr>
+<tr>
+<td>Full Swing</td>
+<td>200</td>
+<td>1</td>
+<td>1.0 / 3.0 / 5.0</td>
+<td>STR 50%</td>
+<td>Liquefaction, Impaction</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Spirit Taker</strong></td>
+<td>215</td>
+<td>1</td>
+<td>1.0 / 1.5 / 2.0</td>
+<td>INT 50%, MND 50%</td>
+<td>none</td>
+<td>Converts damage into <strong>MP</strong></td>
+</tr>
+<tr>
+<td><strong>Retribution</strong></td>
+<td>230</td>
+<td>1</td>
+<td>2.0 / 2.5 / 3.0</td>
+<td>STR 30%, MND 50%</td>
+<td>Gravitation, Reverberation</td>
+<td>Quest <em>Blood and Glory</em>. Main job only. Staff 230 = level 73</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Club weapon skills you can use</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Skill</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shining Strike</td>
+<td>10</td>
+<td>Light damage, STR/MND</td>
+</tr>
+<tr>
+<td>Brainshaker</td>
+<td>70</td>
+<td>Stun</td>
+</tr>
+<tr>
+<td>Skullbreaker</td>
+<td>150</td>
+<td>INT down on the target</td>
+</tr>
+<tr>
+<td>True Strike</td>
+<td>175</td>
+<td>One hit, STR 50%</td>
+</tr>
+<tr>
+<td><strong>Black Halo</strong></td>
+<td>230</td>
+<td>Two hits, MND 50%. Quest <em>Orastery Woes</em>. Club 230 = level 75</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Spirit Taker is an MP refill.</strong> Its damage comes back as MP. In a long fight, melee to 100% TP and Spirit Taker between nukes.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Elemental A+ and Dark A are your real weapons.</li>
+<li>Spirit Taker at Staff 215 refills MP.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">BLACK MAGE MATH</h2></header>
+<p><em>How a nuke turns into a number.</em></p>
+<h3>The nuke formula (Phoenix, player version)</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE — damage in six steps</strong> (<code>scripts/globals/spells/damage_spell.lua</code>).
+1. <strong>Base damage</strong> = the spell's base, plus a bonus for every point of INT you have over the mob (the bonus per point drops as the gap grows).
+2. <strong>× Magic Attack Bonus</strong>: (100 + your MAB) ÷ (100 + the mob's Magic Defense).
+3. <strong>× Elemental staff</strong>: +10% (NQ) or <strong>+15% (HQ)</strong> for the matching staff.
+4. <strong>× Day and weather</strong>: +10% on the matching day, +10% single weather, +25% double weather. These only apply on <strong>a third of casts</strong> unless you wear the <strong>matching elemental obi</strong>.
+5. <strong>× Magic Burst</strong>, if the nuke lands in a skillchain's window.
+6. <strong>× Resist</strong>: full, half, quarter or eighth damage.</p>
+</aside>
+<p><strong>Base damage by INT difference (before step 2):</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Spell</th>
+<th>MP</th>
+<th>dINT 0</th>
+<th>+25</th>
+<th>+50</th>
+<th>+75</th>
+<th>+100</th>
+<th>+150</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blizzard III</td>
+<td>120</td>
+<td>320</td>
+<td>390</td>
+<td>460</td>
+<td>525</td>
+<td>590</td>
+<td>680</td>
+</tr>
+<tr>
+<td>Blizzaga II</td>
+<td>175</td>
+<td>370</td>
+<td>440</td>
+<td>510</td>
+<td>575</td>
+<td>640</td>
+<td>730</td>
+</tr>
+<tr>
+<td><strong>Blizzard IV</strong></td>
+<td>164</td>
+<td>560</td>
+<td>657</td>
+<td>755</td>
+<td>845</td>
+<td>935</td>
+<td>1075</td>
+</tr>
+<tr>
+<td><strong>Freeze</strong></td>
+<td>307</td>
+<td>700</td>
+<td>750</td>
+<td>800</td>
+<td>850</td>
+<td>900</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Freeze II (merit)</td>
+<td>287</td>
+<td>800</td>
+<td>850</td>
+<td>900</td>
+<td>950</td>
+<td>1000</td>
+<td>1100</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="curechart"><svg viewBox="0 0 760 330" role="img" aria-label="Base nuke damage by INT difference"><line class="gl" x1="56" x2="750" y1="270" y2="270"/><text class="ct" x="48" y="274" text-anchor="end">0</text><line class="gl" x1="56" x2="750" y1="210" y2="210"/><text class="ct" x="48" y="214" text-anchor="end">300</text><line class="gl" x1="56" x2="750" y1="150" y2="150"/><text class="ct" x="48" y="154" text-anchor="end">600</text><line class="gl" x1="56" x2="750" y1="90" y2="90"/><text class="ct" x="48" y="94" text-anchor="end">900</text><line class="gl" x1="56" x2="750" y1="30" y2="30"/><text class="ct" x="48" y="34" text-anchor="end">1200</text><rect class="bs" x="70" y="206" width="26" height="64"><title>Blizzard III, dINT +0: 320</title></rect><rect class="bb" x="98" y="158" width="26" height="112"><title>Blizzard IV, dINT +0: 560</title></rect><rect class="bp" x="126" y="130" width="26" height="140"><title>Freeze, dINT +0: 700</title></rect><text class="cl" x="111.0" y="288" text-anchor="middle">+0</text><rect class="bs" x="182" y="192" width="26" height="78"><title>Blizzard III, dINT +25: 390</title></rect><rect class="bb" x="210" y="139" width="26" height="131"><title>Blizzard IV, dINT +25: 657</title></rect><rect class="bp" x="238" y="120" width="26" height="150"><title>Freeze, dINT +25: 750</title></rect><text class="cl" x="223.0" y="288" text-anchor="middle">+25</text><rect class="bs" x="294" y="178" width="26" height="92"><title>Blizzard III, dINT +50: 460</title></rect><rect class="bb" x="322" y="119" width="26" height="151"><title>Blizzard IV, dINT +50: 755</title></rect><rect class="bp" x="350" y="110" width="26" height="160"><title>Freeze, dINT +50: 800</title></rect><text class="cl" x="335.0" y="288" text-anchor="middle">+50</text><rect class="bs" x="406" y="165" width="26" height="105"><title>Blizzard III, dINT +75: 525</title></rect><rect class="bb" x="434" y="101" width="26" height="169"><title>Blizzard IV, dINT +75: 845</title></rect><rect class="bp" x="462" y="100" width="26" height="170"><title>Freeze, dINT +75: 850</title></rect><text class="cl" x="447.0" y="288" text-anchor="middle">+75</text><rect class="bs" x="518" y="152" width="26" height="118"><title>Blizzard III, dINT +100: 590</title></rect><rect class="bb" x="546" y="83" width="26" height="187"><title>Blizzard IV, dINT +100: 935</title></rect><rect class="bp" x="574" y="90" width="26" height="180"><title>Freeze, dINT +100: 900</title></rect><text class="cl" x="559.0" y="288" text-anchor="middle">+100</text><rect class="bs" x="630" y="134" width="26" height="136"><title>Blizzard III, dINT +150: 680</title></rect><rect class="bb" x="658" y="55" width="26" height="215"><title>Blizzard IV, dINT +150: 1075</title></rect><rect class="bp" x="686" y="70" width="26" height="200"><title>Freeze, dINT +150: 1000</title></rect><text class="cl" x="671.0" y="288" text-anchor="middle">+150</text><rect class="bs" x="380" y="8" width="14" height="14"/><text class="lg" x="400" y="20">Blizzard III</text><rect class="bb" x="500" y="8" width="14" height="14"/><text class="lg" x="520" y="20">Blizzard IV</text><rect class="bp" x="620" y="8" width="14" height="14"/><text class="lg" x="640" y="20">Freeze</text></svg><figcaption>Base damage before Magic Attack Bonus, staff, day/weather and burst, by your INT minus the mob's INT, from the player formula in <code>scripts/globals/spells/damage_spell.lua</code>. Blizzard IV costs 164 MP; Freeze costs 307.</figcaption></figure>
+
+<aside class="box tip">
+<p><strong>PRO TIP — tier IV beats Ancient Magic per MP.</strong> Blizzard IV does 80% of Freeze's base damage at even INT, and matches or beats it once you're about 75 INT over the mob, for about half the MP. Save Ancient Magic for Magic Bursts and kills that must happen now.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — INT below the mob's doesn't cost you on Phoenix's formula, but INT above it pays.</strong> In the player formula a negative INT gap adds no bonus but takes nothing away. Every point of INT gear above the mob's INT adds damage until the bracket rates fall off.</p>
+</aside>
+<h3>Magic Burst</h3>
+<aside class="box code">
+<p><strong>FROM THE CODE — Phoenix's Magic Burst.</strong> Phoenix restores the pre-2015 multiplier: <strong>×1.25 + 0.05 per skillchain step</strong>: <strong>×1.30</strong> on the first skillchain, +5% each time the chain continues, capped at ×1.50 (<code>modules/era/lua/combat/magic_burst.lua</code>). Your nuke must match one of the skillchain's elements and land before the window closes.</p>
+</aside>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Skillchain</th>
+<th>Burst with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Liquefaction / Fusion / Light</td>
+<td>Fire (Light also takes Thunder, Wind, Light)</td>
+</tr>
+<tr>
+<td>Induration / Distortion</td>
+<td>Blizzard</td>
+</tr>
+<tr>
+<td>Detonation / Fragmentation</td>
+<td>Aero (Fragmentation also takes Thunder)</td>
+</tr>
+<tr>
+<td>Scission / Gravitation</td>
+<td>Stone (Gravitation also takes Dark)</td>
+</tr>
+<tr>
+<td>Impaction</td>
+<td>Thunder</td>
+</tr>
+<tr>
+<td>Reverberation / Distortion</td>
+<td>Water</td>
+</tr>
+<tr>
+<td>Darkness</td>
+<td>Blizzard, Stone or Water</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Elemental staves (your best purchase)</h3>
+<p>Every staff adds <strong>+10 magic accuracy and +5% damage per point</strong> of its element bonus. NQ staves are +2 (<strong>+20 accuracy, +10% damage</strong>); HQ staves are +3 (<strong>+30 accuracy, +15% damage</strong>). Ice and Thunder are the ones you'll use most; Dark (Pluto's Staff) is for Sleep, Sleepga, Drain, Aspir and Stun.</p>
+<aside class="box gil">
+<p><strong>MONEY MAKER — Woodworking 75.</strong> Every NQ staff is Ebony Lumber + that element's bead; the HQ is the HQ result.</p>
+</aside>
+<h3>Hate, MP and survival</h3>
+<ul>
+<li><strong>Ancient Magic and tier IV pull hate.</strong> Let the tank build enmity first; nuke after the second weapon skill.</li>
+<li><strong>Resting:</strong> Clear Mind gives +15 MP per tick at 75 on top of the base.</li>
+<li><strong>Aspir</strong> at 25 drains MP from mobs with MP (Chapter 6's report says which camps have them). Pluto's Staff helps it land.</li>
+</ul>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Base damage × MAB ratio × staff × day/weather × burst × resist.</li>
+<li>Magic Burst ×1.30 on the first skillchain, up to ×1.50.</li>
+<li>Tier IV for MP efficiency; Ancient Magic for bursts.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>Every party has a BLM. Make it the one that never runs dry.</em></p>
+<h2>THE NUKE &amp; SLEEP REPORT</h2>
+<p>For every classic camp in the project's leveling-camps guide, this table shows which element hits the main mobs hardest, which to avoid, and whether Sleep, Bind and Stun land. "Aspir?" says whether the mob's job gives it MP to drain. All of it is read from Phoenix's mob data.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — how to read the report.</strong> Each element has a resistance rank for every mob family (<code>data/ecosystems.yaml</code>). <strong>✓</strong> means normal or weak, <strong>½</strong> means the mob resists that element (expect half-resists), <strong>✗</strong> means it resists heavily. Sleep is dark, Bind is ice, Stun is thunder. Crabs and beetles are Paladin-job mobs on Phoenix, so they have MP to Aspir.</p>
+</aside>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Mob</th>
+<th>Nuke with</th>
+<th>Avoid</th>
+<th>Sleep / Sleepga</th>
+<th>Bind</th>
+<th>Stun</th>
+<th>Aspir?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Hill Lizard</td>
+<td>Blizzard / Aero</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Damselfly</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Brutal Sheep</td>
+<td>Thunder / Water</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Snipper</td>
+<td>Blizzard / Thunder</td>
+<td>Water</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Beach Pugil</td>
+<td>Blizzard / Thunder</td>
+<td>Water</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Thread Leech</td>
+<td>Fire / Blizzard</td>
+<td>Water</td>
+<td>½</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>13-16</td>
+<td>Buburimu Peninsula</td>
+<td>Carnivorous Crawler</td>
+<td>Blizzard / Thunder</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>14-21</td>
+<td>Korroloka / Qufim worms</td>
+<td>Land Worm</td>
+<td>Aero</td>
+<td>Stone</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>18-21</td>
+<td>Sauromugue Champaign</td>
+<td>Diving Beetle</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Land Worm</td>
+<td>Aero</td>
+<td>Stone</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Clipper</td>
+<td>Blizzard / Thunder</td>
+<td>Water</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Greater Pugil</td>
+<td>Blizzard / Thunder</td>
+<td>Water</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>20-25</td>
+<td>Yhoator Jungle</td>
+<td>Yhoator Mandragora</td>
+<td>anything</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Yuhtunga Mandragora</td>
+<td>anything</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Goblin Smithy</td>
+<td>anything</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Catoblepas</td>
+<td>Aero / Thunder</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Eft</td>
+<td>Blizzard</td>
+<td>Aero / Stone / Water</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Raven</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>30-35</td>
+<td>Eastern Altepa</td>
+<td>Sand Beetle</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Fortalice Bats</td>
+<td>Aero</td>
+<td>—</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Citadel Bats</td>
+<td>Aero</td>
+<td>—</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Warden Beetle</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>33-37</td>
+<td>Eldieme Necropolis</td>
+<td>Gazer</td>
+<td>anything</td>
+<td>—</td>
+<td>½</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Ogrefly</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Master Coeurl</td>
+<td>Stone</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Nest Beetle</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Rumble Crawler</td>
+<td>Blizzard / Thunder</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Soldier Crawler</td>
+<td>Blizzard / Thunder</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>38-41</td>
+<td>Gustav Tunnel</td>
+<td>Hawker</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Helm Beetle</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Hastatus</td>
+<td>Aero</td>
+<td>Stone</td>
+<td>½</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Princeps</td>
+<td>Aero</td>
+<td>Stone</td>
+<td>½</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>52-55</td>
+<td>Kuftal Tunnel</td>
+<td>Robber Crab</td>
+<td>Blizzard / Thunder</td>
+<td>Water</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>54-58</td>
+<td>Wajaom Woodlands</td>
+<td>Lesser Colibri</td>
+<td>Blizzard</td>
+<td>Aero</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Aht Urhgan Attercop</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Lesser Colibri</td>
+<td>Blizzard</td>
+<td>Aero</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>55-60</td>
+<td>Caedarva Mire</td>
+<td>Marsh Murre</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Sand Lizard</td>
+<td>Blizzard / Aero</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Kuftal Digger</td>
+<td>Aero</td>
+<td>Stone</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Hunting Raptor</td>
+<td>Blizzard</td>
+<td>Aero</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Ziz</td>
+<td>Aero</td>
+<td>Stone / Thunder</td>
+<td>✓</td>
+<td>✓</td>
+<td>½</td>
+<td>No</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Spongilla Fly</td>
+<td>Blizzard</td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Ebony Pudding</td>
+<td>Fire / Thunder</td>
+<td>Water</td>
+<td>½</td>
+<td>½</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Warrior</td>
+<td>Water</td>
+<td>Fire</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Paladin</td>
+<td>Water</td>
+<td>Fire</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Abraxas</td>
+<td>Blizzard</td>
+<td>Aero</td>
+<td>½</td>
+<td>✓</td>
+<td>½</td>
+<td>No</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Tavnazian Ram</td>
+<td>Thunder / Water</td>
+<td>Blizzard</td>
+<td>✓</td>
+<td>½</td>
+<td>✓</td>
+<td>No</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — what the report tells you.</strong> Blizzard is the default nuke for most of the climb: lizards, beetles, crabs, flies and birds all take it. Worms and Antica want Aero; Hilltrolls want Water. Garlaige bats don't sleep, so Bind (ice) holds them instead.</p>
+</aside>
+<h3>Bracket by bracket</h3>
+<p><strong>Levels 1–10 — home nation.</strong> Melee with a staff, Stone the pull, rest a lot. Bind (7) on anything that runs at you.</p>
+<p><strong>Levels 10–20 — Valkurm Dunes, Buburimu Peninsula, Korroloka.</strong> MAB +20 at 10. Fire at 13, Blizzard at 17, Sleep at 20. In parties, you're nuking after the second weapon skill and sleeping links.</p>
+<p><strong>Levels 18–20 — subjob.</strong> Do <em>The Old Lady</em> or <em>Elder Memories</em>. Level RDM to 15 for Fast Cast.</p>
+<p><strong>Levels 20–30 — Qufim, Yhoator and Yuhtunga jungles, Bibiki Bay.</strong> Conserve MP at 20. Aspir at 25 — drain every mob that has MP between nukes. Escape at 29. Warp at 17 gets you home for free.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — Race Specific Equipment (RSE) at level 25.</strong> Every race has its own four-piece set (Lv27–33) from <em>The Goblin Tailor</em> (Guttrix, Lower Jeuno). You can only get it during your race's 7 h 41 m "week", in one of three dungeons, with that dungeon's chest key — so <strong>farm the key before your week starts</strong>. For Black Mages: Hume Boots (INT+3, AGI+3), Elvaan Gauntlets (MP+24) and Ledelsens (MP+20, INT+2), Mithra Loincloth (MP+32), Galka Surcoat and Bracers (MP+32 each). Tarutaru pieces add HP, which a Taru BLM needs for survival, not damage.
+Full walkthrough: <a href="/guides/jobs/rse">Race Specific Equipment guide</a>. Live race and dungeon schedule: <a href="https://phoenix-xi.com/world-info?tab=calendar">Phoenix RSE calendar</a>.</p>
+</aside>
+<p><strong>Levels 30–40 — Garlaige Citadel, Eastern Altepa, Eldieme Necropolis.</strong> MAB +24 at 30. <strong>Sleepga at 31</strong> — the start of burst parties and AoE farming. Blizzaga at 32. Warp II at 40.</p>
+<p><strong>Levels 40–50 — Crawlers' Nest, Attohwa Chasm, Gustav Tunnel.</strong> AF1 at 40 for the <strong>Casting Wand</strong> (MP+20). <strong>Stun at 45</strong>: watch the mob's TP and Stun the dangerous move. <strong>Moldavite Earring</strong> (MAB+5, Mysticmaker Profblix in Labyrinth of Onzozo) at 47. <strong>Freeze at 50</strong>, MAB +28.</p>
+<aside class="box warn">
+<p><strong>WARNING — Freeze pulls hate.</strong> A 300-MP Ancient Magic spell landing early takes the mob off the tank. Wait until the tank has a few weapon skills of hate, or burst it into a skillchain.</p>
+</aside>
+<p><strong>Levels 50–60 — Quicksand Caves, Kuftal Tunnel, ToAU jungles.</strong> AF2 and AF3. <strong>Elemental staves</strong> at 51. <strong>Shaman's Cloak</strong> (INT+4, MP+25, Centurio X-I in Quicksand Caves) at 56. Sleepga II at 56. Flare at 60.</p>
+<p><strong>Levels 60–70 — Kuftal Tunnel, Mamook, Caedarva Mire.</strong> Tier III nukes in your 60s. <strong>Black Cloak</strong> (Refresh+1, INT+4, Clothcraft 89; it blocks the head slot) at 68 for idling. MAB +32 at 70.</p>
+<p><strong>Levels 70–75 — Mount Zhayolm, Caedarva Mire, Lufaise Meadows.</strong> <strong>Errant / Mahatma</strong> pieces (big INT) at 72. <strong>Igqira Weskit</strong> (MAB+6, Elemental +5) at 73. Tier IV nukes from 73. Retribution quest at Staff 230 (level 73). Spend merits on Ancient Magic II.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — level 75</strong></p>
+<ul>
+<li>Elemental at 276, Dark at 269.</li>
+<li>HQ Ice, Thunder and Dark staves at minimum.</li>
+<li>Ancient Magic II unlocked (Chapter 8).</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>INT and Magic Attack Bonus for damage. Elemental skill for landing it.</em></p>
+<h3>How this chapter is laid out</h3>
+<p>The four sets below are for level 75. Each slot lists a <strong>realistic pick</strong> (crafted, quest, or a common NM drop) and a <strong>best pick</strong> (harder content). Every stat and source was read from Phoenix's item and drop data. The item directory at the end lists everything worth wearing from level 30 to 75.</p>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-tp" class="fstep set-tp"><b>✸</b><span>SET 1</span><em>Nuking</em><small>Every elemental nuke</small></a><a role="listitem" href="#set-ws" class="fstep set-ws"><b>⛓</b><span>SET 2</span><em>Dark & Enfeebling</em><small>Sleep, Stun, Aspir</small></a><a role="listitem" href="#set-eva" class="fstep set-eva"><b>✚</b><span>SET 3</span><em>Fast Cast</em><small>While casting</small></a><a role="listitem" href="#set-nin" class="fstep set-nin"><b>◈</b><span>SET 4</span><em>Idle / Refresh</em><small>Resting and idling</small></a></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>When you're wearing it</th>
+<th>Priorities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nuking</strong></td>
+<td>Every elemental nuke</td>
+<td>INT, Magic Attack Bonus, then Elemental skill</td>
+</tr>
+<tr>
+<td><strong>Dark &amp; Enfeebling</strong></td>
+<td>Sleep, Sleepga, Stun, Drain, Aspir, Bind</td>
+<td>Magic accuracy: Dark or Enfeebling skill, INT</td>
+</tr>
+<tr>
+<td><strong>Fast Cast</strong></td>
+<td>Casting (swap to nuking gear before the spell lands)</td>
+<td>Fast Cast, Conserve MP</td>
+</tr>
+<tr>
+<td><strong>Idle / Refresh</strong></td>
+<td>Resting and waiting</td>
+<td>Refresh, MP, damage taken down</td>
+</tr>
+</tbody>
+</table></div>
+<section class="set set-tp" id="set-tp"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">✸</span><h2>NUKING</h2><span class="settag">Every elemental nuke</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>HQ staff of the nuke's element</strong></td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Wizard's Petasos</strong> (INT+4, MP+25)</td>
+<td><strong>Demon Helm</strong> (INT+5, Bonecraft 91)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>Elemental Torque (Elemental +7)</td>
+<td><strong>Uggalepih Pendant</strong> (MAB+8 while MP is under 51%)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td><strong>Moldavite Earring</strong> (MAB+5) + Phantom Earring +1 (INT+2)</td>
+<td>Moldavite + <strong>Novio Earring</strong> (MAB+7)</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Shaman's Cloak (INT+4, Elemental +5)</td>
+<td><strong>Genie Weskit</strong> (MAB+7, Elemental +6)</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Mahatma Cuffs</strong> (INT+6)</td>
+<td><strong>Zenith Mitts</strong> (MAB+5)</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Omniscient Ring +1</strong> ×2 (INT+5)</td>
+<td><strong>Sorcerer's Ring</strong> (MAB+10, latent) + Omniscient Ring +1</td>
+</tr>
+<tr>
+<td>Back</td>
+<td><strong>Prism Cape</strong> (INT+4)</td>
+<td>Prism Cape</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td>Penitent's Rope (INT+5)</td>
+<td><strong>Sorcerer's Belt</strong> (INT+6)</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td><strong>Mahatma Slops</strong> (INT+8)</td>
+<td>Mahatma Slops, or Sorcerer's Tonban on its matching day</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Rostrum Pumps</strong> (INT+3, Fast Cast 3%)</td>
+<td>Rostrum Pumps, or <strong>Yigit Crackows</strong> (INT+3 MAB+2, Assault)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the two latents.</strong> <strong>Sorcerer's Ring</strong> adds MAB+10 only while your <strong>HP is under 76% and TP under 100%</strong>. <strong>Uggalepih Pendant</strong> adds MAB+8 only while your <strong>MP is under 51%</strong> (<code>item_latents</code>). Era BLMs often wore HP-minus gear to keep their HP under 76% so the ring stayed on. The TP condition means don't melee in it.</p>
+</aside>
+</section><section class="set set-ws" id="set-ws"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">⛓</span><h2>DARK &amp; ENFEEBLING</h2><span class="settag">Sleep, Stun, Aspir</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Pluto's Staff</strong> (Sleep, Stun, Drain, Aspir) / Aquilos's Staff (Bind)</td>
+<td>+30 magic accuracy for that element</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Genie Tiara</strong></td>
+<td>Enfeebling +11</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Wizard's Coat</strong></td>
+<td>Enfeebling +10</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Sorcerer's Gloves</strong></td>
+<td>Dark +10, Magic Burst damage +5%</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td><strong>Wizard's Tonban</strong> (Dark) / Genie Lappas (Enfeebling)</td>
+<td>Dark +15 / Enfeebling +11</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Genie Huaraches</td>
+<td>Dark +5, Conserve MP +5</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Abyssal Earring</td>
+<td>Dark +5, INT+2</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — Stun is Dark magic.</strong> Stun uses your Dark skill, not Elemental. Wear the Tonban and Sorcerer's Gloves for it, and Pluto's Staff.</p>
+</aside>
+</section><section class="set set-eva" id="set-eva"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">✚</span><h2>FAST CAST</h2><span class="settag">While casting</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feet</td>
+<td><strong>Rostrum Pumps</strong></td>
+<td>Fast Cast 3%</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td><strong>Loquacious Earring</strong></td>
+<td>Fast Cast 2%, MP+30 (75 Ancient Beastcoins, Sagheera in Port Jeuno)</td>
+</tr>
+<tr>
+<td>Subjob</td>
+<td><strong>/RDM</strong></td>
+<td>Fast Cast 15% (at 70)</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Sorcerer's Coat / Igqira Weskit</td>
+<td>Conserve MP +2 on the Weskit, Refresh on the Coat</td>
+</tr>
+</tbody>
+</table></div>
+<p>Fast Cast on Phoenix comes almost entirely from /RDM. Gear Fast Cast is rare in this era.</p>
+</section><section class="set set-nin" id="set-nin"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">◈</span><h2>IDLE / REFRESH</h2><span class="settag">Resting and idling</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Terra's Staff</strong></td>
+<td>−20% physical damage taken</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Demon's Cloak</strong> (blocks the head slot) or <strong>Sorcerer's Coat</strong></td>
+<td>Refresh+1</td>
+</tr>
+<tr>
+<td>Back</td>
+<td>Mahatma Cape</td>
+<td>MP+32</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Sorcerer's Earring (KSNM loot)</td>
+<td>−30% damage taken while HP is under 25% (and TP under 100%)</td>
+</tr>
+</tbody>
+</table></div>
+</section><h2>AF &amp; RELIC AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Artifact (Wizard's)</th>
+<th>Relic (Sorcerer's)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td>Wizard's Petasos — MP+25, INT+4, Enmity −4</td>
+<td>Sorcerer's Petasos — MP+23, <strong>Elemental +10</strong>, Enfeebling +5</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Wizard's Coat — MP+16, VIT+5, Enmity −3, <strong>Enfeebling +10</strong></td>
+<td>Sorcerer's Coat — MP+12, Elemental +5, <strong>Refresh+1</strong></td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>Wizard's Gloves — MP+12, CHR+3, <strong>Elemental +15</strong></td>
+<td>Sorcerer's Gloves — MP+24, <strong>Dark +10</strong>, Magic Burst +5%</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Wizard's Tonban — MP+14, Evasion +5, <strong>Dark +15</strong></td>
+<td>Sorcerer's Tonban — MP+13, INT+3, +5% elemental damage on the matching day</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Wizard's Sabots — MP+10, AGI+3, spell interruption −20%</td>
+<td>Sorcerer's Sabots — MP+18, INT+2, Conserve MP +5</td>
+</tr>
+<tr>
+<td>Weapon</td>
+<td>Casting Wand (AF1) — MP+20</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Stats from <code>item_mods</code> and <code>item_latents</code>. Sources from each zone's <code>mobs.yaml</code>, battlefield loot scripts, NPC and quest scripts, and <code>synth_recipes</code>.</em></p>
+<h3>Weapons</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Casting Wand</strong></td>
+<td>41</td>
+<td>Main/Sub</td>
+<td>DMG 12 / Delay 216, MP+20</td>
+<td>AF1 <em>The Three Magi</em></td>
+</tr>
+<tr>
+<td><strong>Aquilos's Staff</strong></td>
+<td>51</td>
+<td>Main</td>
+<td>DMG 35 / Delay 356, INT+5, Elemental+10</td>
+<td>Woodworking 75 HQ (Ice Staff)</td>
+</tr>
+<tr>
+<td><strong>Jupiter's Staff</strong></td>
+<td>51</td>
+<td>Main</td>
+<td>DMG 35 / Delay 356, DEX+5, Crit rate+15</td>
+<td>Woodworking 75 HQ (Thunder Staff)</td>
+</tr>
+<tr>
+<td><strong>Pluto's Staff</strong></td>
+<td>51</td>
+<td>Main</td>
+<td>DMG 35 / Delay 356, STR+2, DEX+2, VIT+2, AGI+2, INT+2, MND+2, CHR+2, MP recovered while healing+10</td>
+<td>Woodworking 75 HQ (Dark Staff)</td>
+</tr>
+<tr>
+<td><strong>Terra's Staff</strong></td>
+<td>51</td>
+<td>Main</td>
+<td>DMG 35 / Delay 356, VIT+5, Phys. dmg taken -20%</td>
+<td>Woodworking 75 HQ (Earth Staff)</td>
+</tr>
+<tr>
+<td><strong>Mythic Wand +1</strong></td>
+<td>65</td>
+<td>Main/Sub</td>
+<td>DMG 18 / Delay 210, INT+9, MND+9</td>
+<td>Woodworking 84 HQ</td>
+</tr>
+<tr>
+<td><strong>Astral Aspis</strong></td>
+<td>68</td>
+<td>Sub</td>
+<td>Converts HP to MP+25, AGI+3, INT+3</td>
+<td>Pelican NM, Kuftal Tunnel (always)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wizard's Petasos</strong></td>
+<td>60</td>
+<td>Head</td>
+<td>MP+25, INT+4, Enmity-4</td>
+<td>AF3 <em>The Root of the Problem</em></td>
+</tr>
+<tr>
+<td><strong>Genie Tiara</strong></td>
+<td>73</td>
+<td>Head</td>
+<td>Eva+11, Enfeebling+11</td>
+<td>Leathercraft 38 / Bonecraft 91 HQ (Igqira Tiara)</td>
+</tr>
+<tr>
+<td><strong>Demon Helm</strong></td>
+<td>73</td>
+<td>Head</td>
+<td>INT+5, MND-5, Parry skill+5</td>
+<td>Bonecraft 91</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Petasos</strong></td>
+<td>75</td>
+<td>Head</td>
+<td>MP+23, Enmity-2, Enfeebling+5, Elemental+10</td>
+<td>Relic armor (Dynamis - Xarcabard)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elemental Torque</strong></td>
+<td>65</td>
+<td>Neck</td>
+<td>Elemental+7</td>
+<td>BCNM loot</td>
+</tr>
+<tr>
+<td><strong>Uggalepih Pendant</strong></td>
+<td>70</td>
+<td>Neck</td>
+<td>MP+20; MAB+8 while MP is under 51% (latent)</td>
+<td>Golden-Tongued Culberry NM, Pso'Xja (trade an Odorous Knife to the ???)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Moldavite Earring</strong></td>
+<td>47</td>
+<td>Ear</td>
+<td>MAB+5</td>
+<td>Mysticmaker Profblix NM, Labyrinth of Onzozo</td>
+</tr>
+<tr>
+<td><strong>Phantom Earring +1</strong></td>
+<td>60</td>
+<td>Ear</td>
+<td>MP+10, INT+2</td>
+<td>Goldsmithing 78 HQ</td>
+</tr>
+<tr>
+<td><strong>Abyssal Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>INT+2, Dark+5</td>
+<td>Quest <em>Divine Might</em> (Ark Angels)</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Earring</strong></td>
+<td>70</td>
+<td>Ear</td>
+<td>Damage taken −30% while HP is under 25% and TP under 100% (latent)</td>
+<td>KSNM loot (Qu'Bia Arena)</td>
+</tr>
+<tr>
+<td><strong>Novio Earring</strong></td>
+<td>75</td>
+<td>Ear</td>
+<td>MAB+7</td>
+<td>Meret, Tavnazian Safehold</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shaman's Cloak</strong></td>
+<td>56</td>
+<td>Body</td>
+<td>MP+25, INT+4, Enfeebling+5, Elemental+5</td>
+<td>Centurio X-I NM, Quicksand Caves</td>
+</tr>
+<tr>
+<td><strong>Wizard's Coat</strong></td>
+<td>58</td>
+<td>Body</td>
+<td>MP+16, VIT+5, Enmity-3, Enfeebling+10</td>
+<td>Coffer, Monastic Cavern (AF, after Borghertz)</td>
+</tr>
+<tr>
+<td><strong>Demon's Cloak</strong></td>
+<td>68</td>
+<td>Body</td>
+<td>INT+5, Elemental+10, Refresh+1</td>
+<td>Clothcraft 89 HQ (Black Cloak)</td>
+</tr>
+<tr>
+<td><strong>Mahatma Houppelande</strong></td>
+<td>72</td>
+<td>Body</td>
+<td>STR-8, DEX-8, VIT-8, AGI-8, INT+11, MND+11, CHR+11, Enmity-4, MP recovered while healing+6</td>
+<td>Goldsmithing 43 / Clothcraft 96 / Leathercraft 30 HQ</td>
+</tr>
+<tr>
+<td><strong>Genie Weskit</strong></td>
+<td>73</td>
+<td>Body</td>
+<td>MAB+7, Elemental+6, Conserve MP+2</td>
+<td>Leathercraft 55 / Bonecraft 99 / Alchemy 44 HQ (Igqira Weskit)</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Coat</strong></td>
+<td>74</td>
+<td>Body</td>
+<td>MP+12, Enmity-2, Elemental+5, Refresh+1</td>
+<td>Relic armor (Dynamis - Beaucedine)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wizard's Gloves</strong></td>
+<td>54</td>
+<td>Hands</td>
+<td>MP+12, CHR+3, Enmity-1, Elemental+15</td>
+<td>Quest <em>Borghertz's Sorcerous Hands</em></td>
+</tr>
+<tr>
+<td><strong>Mahatma Cuffs</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>HP-25, MP+25, INT+6, Enmity-3</td>
+<td>Goldsmithing 24 / Clothcraft 98 / Leathercraft 26 HQ</td>
+</tr>
+<tr>
+<td><strong>Genie Gages</strong></td>
+<td>73</td>
+<td>Hands</td>
+<td>MP recovered while healing+1, Elemental+8</td>
+<td>Garharlor the Unruly NM, Mount Zhayolm</td>
+</tr>
+<tr>
+<td><strong>Yigit Gages</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>INT+5, MND+5, MAB+2, Eva+4</td>
+<td>20,000 Assault points (Mamool Ja Training Grounds shop)</td>
+</tr>
+<tr>
+<td><strong>Zenith Mitts</strong></td>
+<td>73</td>
+<td>Hands</td>
+<td>Converts HP to MP+50, MAB+5</td>
+<td>Aquarian Abjuration: Hands (Fafnir, Genbu) + Cursed Mitts</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Gloves</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>MP+24, Enmity-2, Dark+10, Magic Burst damage %+5</td>
+<td>Relic armor (Dynamis - Windurst)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tamas Ring</strong></td>
+<td>30</td>
+<td>Ring</td>
+<td>MP+15, INT+2, MND+2, Enmity-3</td>
+<td>CoP mission 8-4 <em>Dawn</em></td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Ring</strong></td>
+<td>50</td>
+<td>Ring</td>
+<td>MAB+10 while HP is under 76% and TP under 100% (latent)</td>
+<td>BCNM loot (Balga's Dais, Horlais Peak)</td>
+</tr>
+<tr>
+<td><strong>Omniscient Ring +1</strong></td>
+<td>72</td>
+<td>Ring</td>
+<td>INT+5</td>
+<td>Goldsmithing 99 HQ (Diamond Ring)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prism Cape</strong></td>
+<td>71</td>
+<td>Back</td>
+<td>HP+10, MP+10, INT+4, MND+4, CHR+4</td>
+<td>Clothcraft 94 HQ (Rainbow Cape)</td>
+</tr>
+<tr>
+<td><strong>Mahatma Cape</strong></td>
+<td>73</td>
+<td>Back</td>
+<td>MP+32, Enmity-6</td>
+<td>Clothcraft 100 HQ (Errant Cape)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Penitent's Rope</strong></td>
+<td>60</td>
+<td>Waist</td>
+<td>HP-20, INT+5, MND+5, Enmity-3</td>
+<td>BCNM loot (Balga's Dais)</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Belt</strong></td>
+<td>70</td>
+<td>Waist</td>
+<td>HP+20, INT+6, Spell interruption −8%</td>
+<td>Dynamis - Valkurm (rare)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wizard's Tonban</strong></td>
+<td>56</td>
+<td>Legs</td>
+<td>MP+14, Enmity-1, Eva+5, Dark+15</td>
+<td>Coffer, The Eldieme Necropolis (AF, after Borghertz)</td>
+</tr>
+<tr>
+<td><strong>Druid's Slops</strong></td>
+<td>64</td>
+<td>Legs</td>
+<td>Elemental+5</td>
+<td>Citipati NM, Attohwa Chasm (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Mahatma Slops</strong></td>
+<td>72</td>
+<td>Legs</td>
+<td>STR-6, DEX-6, VIT-6, AGI-6, INT+8, MND+8, CHR+8, Enmity-4</td>
+<td>Clothcraft 94 / Leathercraft 26 HQ</td>
+</tr>
+<tr>
+<td><strong>Genie Lappas</strong></td>
+<td>73</td>
+<td>Legs</td>
+<td>Eva+11, Enfeebling+11</td>
+<td>Leathercraft 46 / Bonecraft 97 HQ (Igqira Lappas)</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Tonban</strong></td>
+<td>73</td>
+<td>Legs</td>
+<td>MP+13, INT+3, Enmity-2, Day nuke bonus %+5</td>
+<td>Relic armor (Dynamis - Qufim)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wizard's Sabots</strong></td>
+<td>52</td>
+<td>Feet</td>
+<td>MP+10, AGI+3, Enmity-1, Spell interruption −20%</td>
+<td>AF2 <em>Recollections</em></td>
+</tr>
+<tr>
+<td><strong>Genie Huaraches</strong></td>
+<td>73</td>
+<td>Feet</td>
+<td>Enmity+3, Enhancing+9, Dark+5, Conserve MP+5</td>
+<td>Leathercraft 50 / Bonecraft 95 HQ (Igqira Huaraches)</td>
+</tr>
+<tr>
+<td><strong>Sorcerer's Sabots</strong></td>
+<td>71</td>
+<td>Feet</td>
+<td>MP+18, INT+2, Enmity-1, Conserve MP+5</td>
+<td>Relic armor (Dynamis - San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Rostrum Pumps</strong></td>
+<td>75</td>
+<td>Feet</td>
+<td>HP-30, MP+30, INT+3, MND+3, Fast Cast %+3</td>
+<td>Alastor Antlion NM, Attohwa Chasm (always)</td>
+</tr>
+<tr>
+<td><strong>Yigit Crackows</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>INT+3, MND+3, MAB+2, Eva+5</td>
+<td>20,000 Assault points (Lebros Cavern shop)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — these show up in "best BLM gear" lists, but you can't get them here.</strong></p>
+<ul>
+<li><strong>Zeni Notorious Monster drops</strong> — the <strong>Oracle's</strong> set (Sarameya, Tinnin) and other ZNM loot. Phoenix hides the ZNM pop NPCs and spawn points (<code>modules/phoenix/lua/zones/npc_visibility.lua</code>).</li>
+<li><strong>Einherjar and Nyzul Isle rewards</strong> — both NPCs are hidden.</li>
+<li><strong>Goliard pieces</strong> — in the database, but no drop, quest or shop on Phoenix gives them.</li>
+<li><strong>Nashira pieces</strong> — Salvage gear. Phoenix has no Salvage; the only source in the code is a later (Rhapsodies) vendor.</li>
+<li><strong>Snow Ring / Dark Ring</strong> — Goldsmithing 102 recipes; the era craft cap is 100.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box chal">
+<p><strong>ARCHMAGE'S CHALLENGE — the Zenith Mitts.</strong> Fafnir and Genbu drop the Aquarian Abjuration: Hands. Craft the Cursed Mitts, trade both to Alphollon C Meriard in Northern San d'Oria, and you have MAB+5 in the hands slot.</p>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">QUESTS, AF AND ENDGAME</h2></header>
+<p><em>The Wizard's set is a Windurst story. Bring a Tarutaru friend.</em></p>
+<h3>AF1 · The Three Magi (level 40) → Casting Wand</h3>
+<ol>
+<li>Talk to <strong>Chumimi</strong> in <strong>Heavens Tower</strong> (Windurst Walls) as a level 40+ Black Mage. Pick a side (Koru-Moru, Shantotto or Yoran-Oran); it only changes the title you get.</li>
+<li>Trade <strong>any elemental crystal</strong> to a <strong>Telepoint</strong> (the crystal formations in Xarcabard, La Theine, Konschtat, Tahrongi, Altepa and Yhoator) to get a <strong>Faded Crystal</strong>.</li>
+<li>In <strong>Xarcabard</strong>, trade the Faded Crystal to the <strong>???</strong> to spawn the <strong>Chaos Elemental</strong>. Kill it; it always drops the <strong>Glowstone</strong>.</li>
+<li>Trade the Glowstone to Chumimi.</li>
+</ol>
+<h3>AF2 · Recollections (level 50) → Wizard's Sabots</h3>
+<ol>
+<li>Zone out after AF1, then talk to <strong>Chumimi</strong> as a level 50+ Black Mage.</li>
+<li>Talk to <strong>Laityn</strong> in <strong>Ru'Lude Gardens</strong>.</li>
+<li>Trade a <strong>Bag of Seeds</strong> to Chumimi. Fire and Water Elementals in <strong>Crawlers' Nest</strong> drop it often.</li>
+<li>Get a <strong>Whine Cellar Key</strong> from a Demon Chancellor, Commander, General or Magistrate in <strong>Castle Zvahl Baileys</strong> (uncommon drop).</li>
+<li>Trade the key to the <strong>Ore Door</strong> in <strong>Castle Zvahl Keep</strong> for the <em>Foe Finder Mk I</em>.</li>
+<li>Return to Chumimi.</li>
+</ol>
+<h3>AF3 · The Root of the Problem (level 50) → Wizard's Petasos</h3>
+<ol>
+<li>Talk to <strong>Chumimi</strong> after AF2 (zone out first).</li>
+<li>Trade a <strong>Square of Silk Cloth</strong> to <strong>Koru-Moru</strong> in <strong>Windurst Walls</strong>.</li>
+<li>Talk to Chumimi for the <em>Sluice Surveyor Mk I</em>.</li>
+<li>In <strong>Toraimarai Canal</strong>, check two <strong>???</strong> markers, then the third to spawn <strong>Magic Sludge</strong>.</li>
+<li>Kill it and return to Chumimi. You get the <strong>Wizard's Petasos</strong> and the title <em>Paragon of Black Mage Excellence</em>.</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING — Magic Sludge is built to stop nukers.</strong> Phoenix gives it <strong>−75% magic damage taken</strong>, <strong>−85% physical damage taken</strong>, immunity to Sleep and Blind, and attacks at 150% strength (<code>scripts/zones/Toraimarai_Canal/mobs/Magic_Sludge.lua</code>). Bring a full party and plenty of MP.</p>
+</aside>
+<h3>Borghertz's Sorcerous Hands (level 50, after AF2) → Wizard's Gloves</h3>
+<ol>
+<li>Talk to <strong>Guslam</strong> in Upper Jeuno as a level 50+ Black Mage who has finished <em>Recollections</em>.</li>
+<li>Open a <strong>Treasure Coffer</strong> in <strong>Garlaige Citadel</strong> for the <strong>Old Gauntlets</strong>.</li>
+<li>Report to Guslam. On your first Borghertz quest you then talk to <strong>Deadly Minnow</strong> (Upper Jeuno) and pay <strong>Yin Pocanakhu</strong> (Lower Jeuno) <strong>1,000 gil</strong>; later Borghertz quests skip this.</li>
+<li>Check the <strong>???</strong> in Port Jeuno, then kill <strong>Dark Spark</strong> at the <strong>Torch</strong> in Castle Zvahl Baileys and check the Torch for <em>Shadow Flames</em>.</li>
+<li>Return to the ??? in Port Jeuno.</li>
+</ol>
+<h3>Coffers (only after you start Borghertz)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Zone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wizard's Coat</td>
+<td><strong>Monastic Cavern</strong> coffer</td>
+</tr>
+<tr>
+<td>Wizard's Tonban</td>
+<td><strong>The Eldieme Necropolis</strong> coffer</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the coffers wait for Borghertz.</strong> The AF body and legs only come out of these coffers once your Borghertz quest is started or done, and only on BLM main (<code>scripts/quests/jeuno/helpers.lua</code>).</p>
+</aside>
+<h3>Retribution · Blood and Glory</h3>
+<ol>
+<li>Talk to <strong>Shantotto</strong> in <strong>Windurst Walls</strong> with <strong>Staff skill 230+</strong> (level 73). You get the <em>Weapon Training Guide</em> and a <strong>Pole of Trials</strong>.</li>
+<li>Earn <strong>300 weapon skill points</strong> with it (5 per WS, +2/+4/+6 for skillchain levels 1/2/3).</li>
+<li>Trade the Pole back to Shantotto for the <em>Map to the Annals of Truth</em>.</li>
+<li>In <strong>Ifrit's Cauldron</strong>, check the <strong>???</strong> to spawn <strong>Cailleach Bheur</strong>. Kill it, then check the ??? for the <em>Annals of Truth</em>.</li>
+<li>Return to Shantotto.</li>
+</ol>
+<h3>Black Halo · Orastery Woes</h3>
+<p>Same pattern with a <strong>Club of Trials</strong> and <strong>Club skill 230</strong> (level 75): start with <strong>Kuroido-Moido</strong> in <strong>Port Windurst</strong>, and the NM is <strong>Eldhrimnir</strong> in <strong>Ro'Maeve</strong>.</p>
+<h3>Merits at 75</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Merit</th>
+<th>Per rank (Phoenix)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group 1</td>
+<td>Fire / Ice / Wind / Earth / Thunder / Water magic potency</td>
+<td><strong>+2 Magic Attack Bonus</strong> for that element</td>
+</tr>
+<tr>
+<td>Group 1</td>
+<td>Elemental Seal recast</td>
+<td>−20 s</td>
+</tr>
+<tr>
+<td>Group 2</td>
+<td><strong>Freeze II, Flare II, Burst II, Quake II, Tornado II, Flood II</strong></td>
+<td>Rank 1 unlocks; each extra rank <strong>+5 magic accuracy</strong> and <strong>+3% Magic Burst damage</strong></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — Phoenix's Ancient Magic II.</strong> Phoenix removes the post-2019 accuracy bonus from AM II and moves it into the merits: rank 1 only unlocks the spell, each extra rank adds +5 magic accuracy and +3% Magic Burst damage (<code>modules/phoenix/lua/globals/spells/damage_spell.lua</code>). One AM II at full ranks beats three at rank 1.</p>
+</aside>
+<!-- -->
+
+<aside class="box tip">
+<p><strong>PRO TIP — merit order.</strong> Group 1: Ice and Thunder potency first (your main nukes). Group 2: pick one AM II (Freeze II or Burst II) and take it as high as you can.</p>
+</aside>
+<h3>Endgame where Black Mages matter</h3>
+<ul>
+<li><strong>Dynamis</strong> — Sorcerer's relic armor; Sleepga on statue pulls.</li>
+<li><strong>Sky / Sea</strong> — Magic Bursts on gods, Stun on their big moves.</li>
+<li><strong>HNMs</strong> — Abjurations for the Zenith pieces; Stun on King Behemoth's Meteor and Fafnir's breath.</li>
+</ul>
+<h2>MACROS</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Blizzard IV</strong></td>
+<td><code>/equip main "Aquilos's Staff"</code> · <code>/ma "Blizzard IV" &lt;t&gt;</code></td>
+</tr>
+<tr>
+<td><strong>Sleepga</strong></td>
+<td><code>/equip main "Pluto's Staff"</code> · <code>/ma "Sleepga" &lt;t&gt;</code></td>
+</tr>
+<tr>
+<td><strong>Stun</strong></td>
+<td><code>/equip main "Pluto's Staff"</code> · <code>/ma "Stun" &lt;t&gt;</code> · <code>/p Stunning &lt;t&gt;!</code></td>
+</tr>
+<tr>
+<td><strong>Aspir</strong></td>
+<td><code>/equip main "Pluto's Staff"</code> · <code>/ma "Aspir" &lt;t&gt;</code></td>
+</tr>
+<tr>
+<td><strong>Seal + AM</strong></td>
+<td><code>/ja "Elemental Seal" &lt;me&gt;</code> · <code>/wait 1</code> · <code>/ma "Freeze" &lt;t&gt;</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>FINAL CHECKLIST</h2>
+<ul>
+<li>[ ] Sub RDM by 20 (Fast Cast at your 30), or SMN for MP.</li>
+<li>[ ] RSE at 25 (your race's caster pieces).</li>
+<li>[ ] AF1 Casting Wand at 40. Stun at 45.</li>
+<li>[ ] AF2 + AF3 at 50; Borghertz and both coffers after.</li>
+<li>[ ] HQ staves: Aquilos's, Jupiter's and Pluto's first.</li>
+<li>[ ] Igqira or Genie Weskit at 73.</li>
+<li>[ ] Retribution at Staff 230.</li>
+<li>[ ] One Ancient Magic II at full ranks.</li>
+</ul>
+<h2>SOURCES</h2>
+<ul>
+<li>Phoenix server code: <code>scripts/globals/job_utils/black_mage.lua</code>, <code>scripts/globals/spells/damage_spell.lua</code>, <code>modules/phoenix/lua/globals/spells/damage_spell.lua</code>, <code>modules/era/lua/combat/magic_burst.lua</code>, <code>scripts/combat/basic/magic_hit_rate.lua</code>, <code>src/map/ai/states/magic_state.cpp</code>, <code>scripts/zones/Heavens_Tower/npcs/Chumimi.lua</code>, <code>scripts/quests/</code>, zone <code>mobs.yaml</code>, <code>item_mods</code>, <code>item_latents</code>, <code>synth_recipes</code>, <code>data/ecosystems.yaml</code>.</li>
+<li>BG Wiki and FFXIclopedia for quest walkthroughs (cross-checked against the quest scripts).</li>
+<li><a href="/guides/jobs/rse">Race Specific Equipment guide</a> · <a href="https://phoenix-xi.com/world-info?tab=calendar">Phoenix RSE calendar</a></li>
+</ul>
+</main>
+</div>
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script>(function(){
+"use strict";
+var CACHE_KEY='phoenix-ah-v1',MAX_AGE=86400;
+window.AH=null;
+function load(){
+ try{
+  var c=JSON.parse(localStorage.getItem(CACHE_KEY));
+  if(c&&c.prices&&(Date.now()/1000-c.fetched)<MAX_AGE){window.AH=c.prices;show(c);return;}
+ }catch(e){}
+ var x=new XMLHttpRequest();
+ x.open('GET','/data/ah-prices.json');
+ x.onload=function(){
+  if(x.status===200){
+   try{
+    var d=JSON.parse(x.responseText);
+    window.AH=d.prices;
+    try{localStorage.setItem(CACHE_KEY,x.responseText);}catch(e){}
+    show(d);
+   }catch(e){}
+  }
+ };
+ x.send();
+}
+function show(d){
+ if(!window.PT)return;
+ var el=document.getElementById('ahStatus');
+ if(!el)return;
+ var ago=Math.floor((Date.now()/1000-d.fetched)/60);
+ var t=ago<60?ago+'m ago':Math.floor(ago/60)+'h ago';
+ el.innerHTML='<span class="ah-dot"></span>AH: '+d.count+' items ('+t+')';
+ el.title='Prices from PSXI.gg for PhoenixXI';
+ el.style.display='';
+}
+load();
+})();</script>
+<script>window._iconPos={};
+(function(){
+  var x=new XMLHttpRequest();
+  x.open('GET','/icon-positions.json',true);
+  x.onload=function(){if(x.status===200)try{window._iconPos=JSON.parse(x.responseText)}catch(e){}};
+  x.send();
+})();
+function iconSpan(id,sz){
+  sz=sz||20;
+  var p=window._iconPos[id];
+  if(!p)return '';
+  var s='--ic:'+p[1]+';--ir:'+p[2]+';--isz:'+sz+'px';
+  if(p[0])s+=';--is:'+p[0];
+  return '<span class="icon" style="'+s+'"></span> ';
+}</script>
+<script src="/table-tools.34610db5.js" defer></script>
+</body>
+</html>

@@ -188,9 +188,17 @@ function initChrome(){
   profDD+='</div></div>';
 
   var jobsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isJob)+'">Jobs <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
-  jobsDD+='<a href="/guides/jobs/beastmaster"'+acl(p==='/guides/jobs/beastmaster')+'>Beastmaster</a>';
+  jobsDD+='<a href="/guides/jobs/warrior"'+acl(p==='/guides/jobs/warrior')+'>Warrior</a>';
+  jobsDD+='<a href="/guides/jobs/monk"'+acl(p==='/guides/jobs/monk')+'>Monk</a>';
   jobsDD+='<a href="/guides/jobs/white-mage"'+acl(p==='/guides/jobs/white-mage')+'>White Mage</a>';
+  jobsDD+='<a href="/guides/jobs/black-mage"'+acl(p==='/guides/jobs/black-mage')+'>Black Mage</a>';
+  jobsDD+='<a href="/guides/jobs/red-mage"'+acl(p==='/guides/jobs/red-mage')+'>Red Mage</a>';
+  jobsDD+='<a href="/guides/jobs/thief"'+acl(p==='/guides/jobs/thief')+'>Thief</a>';
+  jobsDD+='<span class="nav-dd-sep"></span>';
+  jobsDD+='<a href="/guides/jobs/beastmaster"'+acl(p==='/guides/jobs/beastmaster')+'>Beastmaster</a>';
   jobsDD+='<a href="/guides/jobs/ninja"'+acl(p==='/guides/jobs/ninja')+'>Ninja</a>';
+  jobsDD+='<span class="nav-dd-sep"></span>';
+  jobsDD+='<a href="/guides/jobs/rse"'+acl(p==='/guides/jobs/rse')+'>Race Gear (RSE)</a>';
   jobsDD+='</div></div>';
 
   var isProfit=p==='/profit';

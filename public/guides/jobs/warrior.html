@@ -1,0 +1,3617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Warrior Iron Will Compendium</title>
+<meta name="description" content="Complete WAR guide: era Berserk and Warcry, weapon skills, 1-75 leveling, gear, AF.">
+<meta property="og:title" content="Warrior Iron Will Compendium">
+<meta property="og:description" content="Complete WAR guide: era Berserk and Warcry, weapon skills, 1-75 leveling, gear, AF.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ffxicrafting.com/guides/jobs/warrior">
+<meta name="theme-color" content="#0c1728">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.0ccbad75.css">
+<style>
+.guide-content{
+ /* layout: printed strategy-guide spreads — masthead, chapter bands, boxed callouts, dense tables */
+ --paper:#f6f3ec; --ink:#1d2333; --muted:#5b6275; --rule:#d8d2c4;
+ --accent:#b3202f; --gold:#d9a521; --band:#161a26;
+ --tip:#0f766e; --warn:#c2410c; --gil:#3f7d20; --code:#5b3fa6; --chal:#b45309; --check:#1d5fb8;
+ --display:"Anton","Impact","Arial Narrow",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+ color-scheme:light}.guide-content *{box-sizing:border-box}.guide-content{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--body)}.guide-content main{max-width:960px;margin:0 auto;padding:0 20px 80px}.guide-content .cover{background:var(--band);color:#fff;margin:0 -20px;padding:48px 28px 36px;border-bottom:8px solid var(--gold);position:relative;overflow:hidden}.guide-content .cover:after{content:"WAR";position:absolute;right:-10px;bottom:-40px;font:200px/1 var(--display);color:rgba(255,255,255,.06)}.guide-content .cover .kick{font:600 13px/1 var(--body);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}.guide-content .cover h1{font:clamp(48px,9vw,96px)/.95 var(--display);margin:12px 0 8px;letter-spacing:.01em;text-wrap:balance}.guide-content .cover p{margin:0;font-size:18px;color:#d6dbe6;max-width:60ch}.guide-content .cover .seal{display:inline-block;margin-top:18px;background:var(--accent);color:#fff;font:700 12px/1 var(--body);letter-spacing:.12em;padding:8px 12px;text-transform:uppercase}.guide-content h1.mast{display:none}.guide-content main>h2:first-of-type{display:none}.guide-content h2{font:28px/1.1 var(--display);letter-spacing:.02em;margin:40px 0 12px;text-transform:uppercase;text-wrap:balance}.guide-content h3{font:600 19px/1.3 var(--body);margin:28px 0 8px;padding-left:10px;border-left:5px solid var(--accent)}.guide-content p,.guide-content li{max-width:72ch}.guide-content em{color:var(--muted)}.guide-content .band{background:var(--band);color:#fff;margin:56px -20px 20px;padding:22px 28px 18px;border-left:14px solid var(--accent);display:flex;flex-direction:column;gap:4px}.guide-content .band .num{font:700 12px/1 var(--body);letter-spacing:.25em;color:var(--gold)}.guide-content .band h2.ch{margin:0;font-size:clamp(28px,5vw,44px);color:#fff}.guide-content .band+p em{font-size:17px}.guide-content .toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 18px;background:#fff;border:2px solid var(--ink);padding:18px 20px;margin:28px 0}.guide-content .toc b{grid-column:1/-1;font:20px var(--display);letter-spacing:.08em}.guide-content .toc a{color:var(--ink);text-decoration:none;font-size:14px;border-bottom:1px dotted var(--rule);padding:3px 0}.guide-content .toc a:hover,.guide-content .toc a:focus{color:var(--accent)}.guide-content a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.guide-content .tw{overflow-x:auto;margin:14px 0 18px;border:2px solid var(--ink);background:#fff}.guide-content table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}.guide-content th{background:var(--ink);color:#fff;text-align:left;font:600 12px/1.2 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 10px;white-space:nowrap}.guide-content td{padding:7px 10px;border-top:1px solid var(--rule);vertical-align:top}.guide-content tr:nth-child(even) td{background:#f6f8fa}.guide-content code{font:13px var(--mono);background:#e3e8ef;padding:1px 5px;border-radius:3px}.guide-content pre{background:var(--ink);color:#e9edf5;padding:14px 16px;overflow-x:auto;border-left:6px solid var(--gold)}.guide-content pre code{background:none;color:inherit;padding:0}.guide-content .box{margin:18px 0;padding:14px 18px 12px;background:#fff;border:2px solid var(--c);border-left-width:10px;position:relative}.guide-content .box p{margin:4px 0}.guide-content .box ul{margin:6px 0;padding-left:20px}.guide-content .box>p:first-child strong:first-child,.guide-content .box>ul:first-child{}.guide-content .box strong:first-child{color:var(--c);letter-spacing:.06em}.guide-content .tip{--c:var(--tip)}.guide-content .warn{--c:var(--warn)}.guide-content .gil{--c:var(--gil)}.guide-content .code{--c:var(--code);background:#f5f2fc}.guide-content .chal{--c:var(--chal)}.guide-content .check{--c:var(--check)}.guide-content .recap{--c:var(--ink);background:var(--ink);color:#fff}.guide-content .recap strong:first-child{color:var(--gold)!important}.guide-content .legend{--c:var(--gold);background:#fffaf0}.guide-content .legend ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 18px}.guide-content .legend li strong{color:var(--ink)!important}.guide-content .st{color:var(--accent)}.guide-content .st.off{color:var(--rule)}.guide-content .q{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;background:var(--warn);color:#fff;font-weight:700;border-radius:50%;font-size:12px}.guide-content .ok{color:#15803d;font-weight:800;font-size:1.15em}.guide-content .edge{display:inline-flex;align-items:center;justify-content:center;width:1.9em;height:1.9em;border-radius:50%;font-size:1.05em;line-height:1;vertical-align:middle;background:radial-gradient(circle,#fff 30%,#e7f6ec 100%);border:2px solid #22a35a;box-shadow:0 0 0 3px rgba(34,163,90,.15),0 0 10px rgba(34,163,90,.55)}.guide-content .edge2{background:radial-gradient(circle,#fff 25%,#fff3c4 100%);border:2px solid #d4a017;box-shadow:0 0 0 3px #fff,0 0 0 5px #d4a017,0 0 14px 3px rgba(240,180,20,.75)}.guide-content .fx{font-size:1.35em;line-height:1;white-space:nowrap}.guide-content .curechart{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}.guide-content .curechart svg{width:100%;height:auto;display:block}.guide-content .curechart .bn{fill:#0f766e}.guide-content .curechart .bo{fill:#d9a521}.guide-content .curechart .bs{fill:#b3202f}.guide-content .curechart .bp{fill:#1d5fb8}.guide-content .curechart .bb{fill:#d9a521}.guide-content .curechart .cl{font:600 13px var(--body);fill:var(--ink)}.guide-content .curechart .cv{font:600 12px var(--mono);fill:var(--ink)}.guide-content .curechart .ct{font:11px var(--mono);fill:var(--muted)}.guide-content .curechart .gl{stroke:var(--rule);stroke-width:1}.guide-content .curechart .lg{font:600 12px var(--body);fill:var(--ink)}.guide-content .curechart figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}.guide-content details{background:#fff;border:2px solid var(--ink);padding:10px 16px;margin:14px 0}.guide-content details summary{cursor:pointer;font-weight:600}.guide-content .foodchain{margin:18px 0;background:#fff;border:2px solid var(--ink);padding:14px 10px 8px}.guide-content .foodchain svg{width:100%;height:auto;display:block}.guide-content .foodchain .fp{font-size:14px}.guide-content .foodchain .fn{font:17px var(--display);fill:#fff;letter-spacing:.04em}.guide-content .foodchain .fs{font:600 11px var(--body);fill:#fff;opacity:.9}.guide-content .foodchain .ft{font:700 13px var(--body);letter-spacing:.2em;fill:var(--muted)}.guide-content .foodchain .fa{stroke:#d9381e;stroke-width:3}.guide-content .foodchain .fl{font:600 11px var(--body);fill:#d9381e;text-transform:uppercase;letter-spacing:.1em}.guide-content .foodchain figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}.guide-content .set-tp{--s:#b3202f}.guide-content .set-ws{--s:#b45309}.guide-content .set-eva{--s:#1d4ed8}.guide-content .set-nin{--s:#5b3fa6}.guide-content .set{margin:40px 0;border:3px solid var(--s);background:#fff;padding:0 18px 6px;position:relative}.guide-content .sethead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 -18px 14px;padding:14px 18px;background:var(--s);color:#fff}.guide-content .sethead h2{margin:0;color:#fff;font-size:clamp(24px,4vw,34px)}.guide-content .setnum{font:700 12px/1 var(--body);letter-spacing:.25em;background:#fff;color:var(--s);padding:5px 8px}.guide-content .seticon{font-size:26px;line-height:1}.guide-content .settag{margin-left:auto;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.9}.guide-content .set .tw{border-color:var(--s)}.guide-content .set th{background:var(--s)}.guide-content .set td:first-child{font-weight:600;white-space:nowrap;background:#f9fafb}.guide-content .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:18px 0 24px;counter-reset:f}.guide-content .fstep{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 26px 14px 16px;background:var(--s);color:#fff;text-decoration:none;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}.guide-content .fstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}.guide-content .fstep b{font-size:22px;line-height:1}.guide-content .fstep span{font:700 11px/1 var(--body);letter-spacing:.2em;opacity:.85}.guide-content .fstep em{font:22px/1.1 var(--display);font-style:normal;text-transform:uppercase;color:#fff!important}.guide-content .fstep small{font-size:12px;opacity:.9}.guide-content .fstep:hover,.guide-content .fstep:focus-visible{filter:brightness(1.1)}
+
+@media (max-width:700px){
+.guide-content .flow{grid-template-columns:1fr 1fr;gap:6px}.guide-content .fstep,.guide-content .fstep:first-child{clip-path:none}}
+
+@media (max-width:520px){
+.guide-content .band,.guide-content .cover{margin-left:-16px;margin-right:-16px}.guide-content main{padding:0 16px 60px}}
+
+@media (prefers-reduced-motion:reduce){
+.guide-content *{transition:none!important}}
+.guide-content{max-width:960px;margin:0 auto}
+</style>
+<script src="/site.f189c77d.js"></script>
+<script>(function(){
+var u=new URL(location.href);
+if(u.searchParams.get('sos')==='1')try{localStorage.setItem('phoenix-pt','1')}catch(e){}
+else if(u.searchParams.get('sos')==='0')try{localStorage.removeItem('phoenix-pt')}catch(e){}
+try{window.PT=localStorage.getItem('phoenix-pt')==='1'}catch(e){window.PT=false}
+})();</script>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<nav class="top-bar" id="topBar"></nav>
+<nav class="guild-bar" id="guildBar"></nav>
+<script>initChrome()</script>
+<div class="site-layout">
+<aside class="sidebar" id="sidebar"></aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<main class="main">
+<nav class="breadcrumbs"><a href="/">Home</a><span class="sep">&rsaquo;</span>Guides<span class="sep">&rsaquo;</span>Warrior Iron Will Compendium</nav>
+<div class="guide-content">
+<main>
+<section class="cover"><div class="kick">Phoenix Edition · Level 75 Era · Official-style Strategy Guide</div><h1>Warrior</h1><p>The iron will compendium: era Berserk and Warcry straight from the server code, every weapon skill and skillchain a Warrior can make, a damage-type report for every classic camp, four gear sets, AF, Steel Cyclone and merits.</p><span class="seal">Built from Phoenix's server code</span></section>
+<h1 class="mast">WARRIOR</h1>
+<h2>The Iron Will Compendium — Phoenix Edition</h2>
+<p><em>Every party has a plan. The Warrior is the plan.</em></p>
+
+<nav class="toc"><b>CONTENTS</b><a href="#chapter-1">CHAPTER 1 · MEET THE WARRIOR</a><a href="#chapter-2">CHAPTER 2 · BECOMING A WARRIOR</a><a href="#chapter-3">CHAPTER 3 · CHOOSE YOUR SIDEKICK (SUBJOBS)</a><a href="#chapter-4">CHAPTER 4 · THE ARSENAL (SKILLS AND WEAPON SKILLS)</a><a href="#chapter-5">CHAPTER 5 · WAR MATH (DAMAGE, DAMAGE TYPES AND HATE)</a><a href="#chapter-6">CHAPTER 6 · THE ROAD TO 75 (LEVELING WALKTHROUGH)</a><a href="#chapter-7">CHAPTER 7 · THE ARMORY (GEAR PROGRESSION)</a><a href="#chapter-8">CHAPTER 8 · LEGENDARY QUESTS (ARTIFACT ARMOR)</a><a href="#chapter-9">CHAPTER 9 · MERITS AT 75 (ToAU RULES)</a><a href="#chapter-10">CHAPTER 10 · THE ENDGAME WARRIOR</a><a href="#appendix-a">APPENDIX A · MACRO CHEAT SHEET</a><a href="#appendix-b">APPENDIX B · LEVEL-BY-LEVEL CHECKLIST</a><a href="#appendix-c">APPENDIX C · SOURCES</a></nav><h2>HOW TO USE THIS GUIDE</h2>
+<p>Most Warrior guides on the web describe the game after 2009: Retaliation, Restraint, Blood Rage, Ukko's Fury, King's Justice and level-99 gear. <strong>None of that is on Phoenix.</strong> This guide uses Phoenix's own server code (github.com/phoenixffxi/Phoenix) with its era-revert modules applied. Ability values, weapon skill numbers, skill caps, gear stats and drops all come from that code. Quest walkthroughs were checked against BG Wiki and HorizonXI Wiki, because the server code can't tell you where to stand or what an NPC says.</p>
+<p>Look for these boxes:</p>
+<aside class="box legend">
+<ul>
+<li><strong>PRO TIP</strong> — technique that saves time, TP or gil</li>
+<li><strong>WARNING</strong> — a common way to die or waste gil</li>
+<li><strong>MONEY MAKER</strong> — gil on the side</li>
+<li><strong>FROM THE CODE</strong> — mechanics read straight from Phoenix's scripts</li>
+<li><strong>WARLORD'S CHALLENGE</strong> — optional, harder goals</li>
+<li><strong>CHECKPOINT</strong> — what you should have before moving on</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — three things this guide can't settle from the code.</strong></p>
+<ul>
+<li><strong>Warrior's Charge.</strong> In the code it lasts 60 seconds and only ends early when you use a weapon skill. Old-era guides describe it as "your next attack round". Test it once before you build a plan around it (Chapter 9).</li>
+<li><strong>Damage-type numbers</strong> (Chapter 5) come from the server's mob data files. They match the classic weaknesses (birds and bats take more from piercing, skeletons from blunt), but nobody has checked every value against 2007.</li>
+<li><strong>Live server settings</strong> such as weapon-skill points per kill aren't public. The numbers here are the code defaults.</li>
+</ul>
+</aside>
+
+<h2>WARRIOR AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Role</strong></td>
+<td>Damage dealer first. Backup tank, puller and /WAR provider</td>
+</tr>
+<tr>
+<td><strong>Party rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st">★</span> — every party takes a Warrior at every level</td>
+</tr>
+<tr>
+<td><strong>Solo rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — no self-healing. Fine to about 20, then you need a partner or a subjob with Cure</td>
+</tr>
+<tr>
+<td><strong>Gil rating</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span> — cheap to level. The good 75 gear is expensive or hard to get</td>
+</tr>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td><span class="st">★</span><span class="st">★</span><span class="st off">☆</span><span class="st off">☆</span><span class="st off">☆</span> — easy to learn. Hard to master: weapon skill timing, skillchains, hate control</td>
+</tr>
+<tr>
+<td><strong>Main weapons</strong></td>
+<td>Great Axe (A+), Axe (A), Great Sword (B+), Scythe (B+), Sword (B)</td>
+</tr>
+<tr>
+<td><strong>Key stats</strong></td>
+<td>STR, Attack, Accuracy, Haste, Double Attack</td>
+</tr>
+<tr>
+<td><strong>Gear-up cost</strong></td>
+<td>Very low to 50. Haubergeon/Hauberk and a good Great Axe are the big buys</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="chapter-1"><span class="num">CHAPTER 1</span><h2 class="ch">MEET THE WARRIOR</h2></header>
+<p><em>Other jobs have tricks. You have a bigger axe.</em></p>
+<p>On Phoenix a WAR does four things, in this order of importance:</p>
+<ol>
+<li><strong>Deal damage.</strong> Two-handed weapons, Double Attack, Berserk and the best weapon skill list in the game.</li>
+<li><strong>Open and close skillchains.</strong> You'll have more weapon skills to choose from than anyone in the party.</li>
+<li><strong>Hold hate when it goes wrong.</strong> Provoke on a 30-second timer, Defender, and enough HP to survive a few hits.</li>
+<li><strong>Make everyone else stronger.</strong> Warcry raises the whole party's attack. /WAR is the most common subjob in the game.</li>
+</ol>
+<h3>Job abilities on Phoenix (era-reverted)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Ability</th>
+<th>Recast</th>
+<th>What it does on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Mighty Strikes</strong> (2-hour)</td>
+<td>2:00:00</td>
+<td>Every melee hit is a critical hit for 45 seconds.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Provoke</strong></td>
+<td>0:30</td>
+<td>Pulls the mob onto you. Adds a fixed 1,800 volatile enmity (the "fast fading" kind).</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Berserk</strong></td>
+<td>5:00</td>
+<td><strong>Attack +25%, Defense −25% for 3 minutes.</strong> Flat 25% at every level on Phoenix.</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Defender</strong></td>
+<td>3:00</td>
+<td><strong>Defense +25%, Attack −25% for 3 minutes.</strong> Cancels Berserk (they replace each other).</td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Warcry</strong></td>
+<td>5:00</td>
+<td>Attack up for you <strong>and every party member in range</strong> for 30 seconds. +8% at 75.</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Aggressor</strong></td>
+<td>5:00</td>
+<td><strong>Accuracy +25, Evasion −25 for 3 minutes.</strong></td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Warrior's Charge</strong> (merit)</td>
+<td>15:00</td>
+<td>Double Attack +100% for up to 60 seconds; ends when you weapon skill.</td>
+</tr>
+<tr>
+<td>75</td>
+<td><strong>Tomahawk</strong> (merit)</td>
+<td>3:00</td>
+<td>Throw an axe. Pulls the mob's damage-type modifiers 25% toward neutral (see Chapter 9).</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — the era Berserk.</strong> Modern Berserk scales with level and lasts longer. Phoenix's era module (<code>modules/era/lua/globals/job_utils/warrior.lua</code>) puts it back to a flat <strong>+25% attack / −25% defense for 180 seconds</strong> at every level, and does the same for Defender. Warcry's power is <code>floor(level ÷ 4 + 4.75) ÷ 256</code>. That's 8.98% at 75 and 5.08% at 35, and the server stores buff power as a whole number, so you get <strong>+8% at 75</strong> and <strong>+5% at 35</strong>.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — Warrior's Charge on Phoenix.</strong> The era module removes the Triple Attack part and sets Double Attack to 100%. The effect has a 60-second timer, and the only thing in the code that removes it early is using a weapon skill (<code>scripts/globals/weaponskills.lua</code>). So in the code it means "every swing double-attacks until you weapon skill or 60 seconds pass". If it ends after one swing in-game, the server has changed it.</p>
+</aside>
+<h3>Job traits</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Trait</th>
+<th>Value on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 / 35 / 55 / 70</td>
+<td>Resist Virus I–IV</td>
+<td>+10 / +15 / +20 / +25</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Defense Bonus</td>
+<td>Defense +10</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Double Attack</strong></td>
+<td><strong>10% chance</strong> to swing twice. Merits add +1% each, up to +5%</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Attack Bonus</td>
+<td>Attack +10 (and Ranged Attack +10)</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Savagery (merit)</td>
+<td>Warcry also gives you TP Bonus</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Aggressive Aim (merit)</td>
+<td>Aggressor also gives you Ranged Accuracy</td>
+</tr>
+</tbody>
+</table></div>
+<h3>What's NOT on Phoenix</h3>
+<aside class="box warn">
+<p><strong>WARNING — skip these sections of any modern guide.</strong> Phoenix runs pre-Wings of the Goddess, and the server switches off content by expansion tag.</p>
+<ul>
+<li><strong>Retaliation, Restraint, Blood Rage, Brazen Rush</strong> — later expansions.</li>
+<li><strong>Triple Attack on Warrior's Charge</strong> — removed by the era module.</li>
+<li><strong>King's Justice, Ukko's Fury, Upheaval, Fell Cleave, Cloudsplitter, Ruinator, Resolution</strong> — not on Phoenix. The weapon-skill merit category has 0 upgrades in the era merit table, so merit weapon skills can't be learned.</li>
+<li><strong>Fencer, Smite, Tactical Parry</strong> — later traits.</li>
+<li><strong>ZNM gear</strong> (Aurum Armet, Foolkiller, Hachiryu pieces, Blood Ring) — Phoenix hides the ZNM pop NPCs. See "Not on Phoenix" in Chapter 7.</li>
+<li><strong>Einherjar gear</strong> (Kubira Beads, Iota Ring, Ritter Gorget) — Phoenix hides the Einherjar NPC in Nashmau.</li>
+<li><strong>/DNC and /SCH</strong> subjobs — those jobs don't exist yet.</li>
+</ul>
+</aside>
+<h3>Base stats at 75 by race (WAR75 / NIN37, no gear, no merits)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Race</th>
+<th>HP</th>
+<th>STR</th>
+<th>DEX</th>
+<th>VIT</th>
+<th>AGI</th>
+<th>INT</th>
+<th>MND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hume</td>
+<td>1255</td>
+<td>72</td>
+<td>69</td>
+<td>65</td>
+<td>69</td>
+<td>57</td>
+<td>54</td>
+</tr>
+<tr>
+<td>Elvaan</td>
+<td>1346</td>
+<td>77</td>
+<td>66</td>
+<td>68</td>
+<td>63</td>
+<td>51</td>
+<td>59</td>
+</tr>
+<tr>
+<td>Tarutaru</td>
+<td>1059</td>
+<td>66</td>
+<td>69</td>
+<td>62</td>
+<td>72</td>
+<td>64</td>
+<td>51</td>
+</tr>
+<tr>
+<td>Mithra</td>
+<td>1255</td>
+<td>69</td>
+<td>76</td>
+<td>62</td>
+<td>74</td>
+<td>57</td>
+<td>51</td>
+</tr>
+<tr>
+<td>Galka</td>
+<td>1467</td>
+<td>75</td>
+<td>69</td>
+<td>72</td>
+<td>66</td>
+<td>54</td>
+<td>54</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — every race works.</strong> Elvaan has the most STR (weapon skill damage), Galka the most HP and VIT (backup tanking, VIT-based weapon skills like Steel Cyclone), Mithra the most DEX (accuracy and crits). A Tarutaru Warrior gives up about 400 HP and 11 STR to a Galka. That's real at endgame, and fixable with gear everywhere else.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Berserk is a flat +25% attack for 3 minutes on Phoenix.</li>
+<li>Warcry buffs the whole party. Time it with everyone's weapon skills.</li>
+<li>Merit weapon skills and anything post-ToAU don't exist here.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-2"><span class="num">CHAPTER 2</span><h2 class="ch">BECOMING A WARRIOR</h2></header>
+<p><em>No quest. No key item. Just pick up the axe.</em></p>
+<p>Warrior is a starting job. You can pick it at character creation, or change to it at your Mog House at any time.</p>
+<h3>Your first weapon: Axe or Great Axe?</h3>
+<p>Warrior's two best skills are <strong>Great Axe (A+)</strong> and <strong>Axe (A)</strong>. You will use both. Pick a lane for 1–30 and stick with it so one skill stays capped:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Great Axe (two-handed)</th>
+<th>Axe (one-handed, + shield or a second axe from /NIN)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1–20 weapon</strong></td>
+<td>Butterfly Axe (Lv5) → Greataxe (Lv12) → <strong>Neckchopper</strong> (Lv20)</td>
+<td>Bronze Axe → Brass Axe (Lv8) → <strong>Light Axe</strong> (Lv11, San d'Oria quest <em>The Pickpocket</em>)</td>
+</tr>
+<tr>
+<td><strong>Big early WS</strong></td>
+<td>Iron Tempest (skill 40)</td>
+<td>Raging Axe (skill 10)</td>
+</tr>
+<tr>
+<td><strong>Strength</strong></td>
+<td>Huge hits, huge weapon skills</td>
+<td>Faster swings, more TP, a shield or a second axe</td>
+</tr>
+<tr>
+<td><strong>Weakness</strong></td>
+<td>Slow (delay ~500)</td>
+<td>Lower damage per hit</td>
+</tr>
+<tr>
+<td><strong>Best with</strong></td>
+<td>/SAM from 30 (Hasso, Meditate)</td>
+<td>/NIN from 25 (Dual Wield, shadows)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — level both, use one.</strong> Swap to the other weapon for an hour every 10 levels or so. Getting a skill back up from 30 below cap is painfully slow; keeping it near cap costs almost nothing.</p>
+</aside>
+<h3>Your first shopping list (levels 1–20)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Item</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td>Brass Axe +1 / Greataxe +1</td>
+<td>Cheap, crafted, on the AH</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Bounding Boots</strong> (Lv7)</td>
+<td>DEX+3, AGI+3. Leaping Lizzy NM in South Gustaberg, or buy them</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>Spike Necklace (Lv21)</td>
+<td>STR+3, DEX+3. HQ of the Fang Necklace (Bonecraft 15), cheap on the AH</td>
+</tr>
+<tr>
+<td>Body/Legs/Hands/Feet</td>
+<td>Brass set +1 (Lv11)</td>
+<td>Crafted, cheap on the AH. Defense only, but that's what 1–20 needs</td>
+</tr>
+<tr>
+<td>Body/Hands/Legs/Feet (27–33)</td>
+<td>Your race's RSE set</td>
+<td>Race Specific Equipment from <em>The Goblin Tailor</em>: plan it around level 25 (Chapter 6 and the <a href="/guides/jobs/rse">RSE guide</a>)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Levels 1–15: before Berserk</h3>
+<p>You have Provoke and Double Attack isn't here yet. Fight even-match mobs, rest after every kill or two, and use your first weapon skill whenever you have TP. At 15, Berserk changes everything: put it in a macro and use it every time it's up.</p>
+<aside class="box gil">
+<p><strong>MONEY MAKER — sell what you kill.</strong> Hides, beetle shells and crawler silk sell to crafters. Warrior has the fastest early kills, so you farm faster than anyone.</p>
+</aside>
+<!-- -->
+
+<aside class="box check">
+<p><strong>CHECKPOINT — level 18</strong></p>
+<ul>
+<li>Subjob quest done (Chapter 3).</li>
+<li>Berserk macro set.</li>
+<li>Bounding or Leaping Boots on.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-3"><span class="num">CHAPTER 3</span><h2 class="ch">CHOOSE YOUR SIDEKICK (SUBJOBS)</h2></header>
+<p><em>The subjob is half your character. Choose it like a weapon.</em></p>
+<p>Unlock subjobs at level 18 with one of the two subjob quests: <em>The Old Lady</em> (starts in Mhaura) or <em>Elder Memories</em> (starts in Selbina). Both are in Phoenix's quest scripts; any nation can do either. On Phoenix these are your real options:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub</th>
+<th>You get at 37</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/NIN</strong></td>
+<td>Dual Wield II (−15% delay), Utsusemi: Ichi and Ni, Subtle Blow</td>
+<td><strong>Default from 37.</strong> Two axes, shadows when you pull hate, Rampage.</td>
+</tr>
+<tr>
+<td><strong>/SAM</strong></td>
+<td>Hasso (two-handed: STR+5, Acc+10, Haste +10%), Meditate (~600 TP over 15 s), Store TP +15, Zanshin</td>
+<td><strong>Great Axe damage.</strong> The strongest two-handed setup. No shadows.</td>
+</tr>
+<tr>
+<td><strong>/THF</strong></td>
+<td>Sneak Attack, Trick Attack, Steal, Mug, Treasure Hunter I, Evasion Bonus</td>
+<td>Big opening weapon skill, farming drops, Treasure Hunter on low-level NMs.</td>
+</tr>
+<tr>
+<td><strong>/DRK</strong></td>
+<td>Last Resort (Attack +25% for <strong>30 s</strong> on Phoenix), Souleater, Attack Bonus +22</td>
+<td>Burst damage. Souleater costs 10% of your current HP every hit for half that in bonus damage.</td>
+</tr>
+<tr>
+<td><strong>/MNK</strong></td>
+<td>Counter, Max HP Boost, Boost, Dodge, Focus, Chakra</td>
+<td>Early levels (10–30) for HP and Counter. Martial Arts only works with no weapon.</td>
+</tr>
+<tr>
+<td><strong>/PLD</strong></td>
+<td>Shield Bash, Sentinel, Cover, Defense Bonus, Undead Killer</td>
+<td>Backup tank in a small group.</td>
+</tr>
+<tr>
+<td><strong>/WHM, /RDM</strong></td>
+<td>Cure, Protect, Dia</td>
+<td>Soloing 1–25. Cure is the reason.</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — /SAM numbers.</strong> Hasso gives STR equal to your SAM level ÷ 7 (5 at sub 37), plus Accuracy +10 and 10% ability Haste, but <strong>only with a two-handed weapon</strong> (<code>TWOHAND_*</code> mods). The era module removes Hasso's Zanshin bonus. Meditate as a subjob gives 12 TP-percent every 3 seconds for 15 seconds — about <strong>600 TP</strong> — on a 3-minute recast.</p>
+</aside>
+<!-- -->
+
+<aside class="box warn">
+<p><strong>WARNING — /SAM and /NIN don't mix with the wrong weapon.</strong> Hasso and Seigan do nothing with a one-handed axe. Dual Wield does nothing with a Great Axe. Pick the sub that matches the weapon in your hand.</p>
+</aside>
+<h3>When you're the sub: /WAR on other jobs</h3>
+<p>Almost every melee job takes /WAR at some point. What you hand them, by level:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Sub level</th>
+<th>They get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Provoke</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Berserk</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Defender, <strong>Double Attack 10%</strong></td>
+</tr>
+<tr>
+<td>30</td>
+<td>Attack Bonus +10</td>
+</tr>
+<tr>
+<td>35</td>
+<td>Warcry</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>1–30: /MNK or /THF (or /WHM for soloing).</li>
+<li>30–37: /SAM with a Great Axe.</li>
+<li>37–75: /NIN for dual axes and shadows, or /SAM for the Great Axe. Both work. Pick by weapon.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-4"><span class="num">CHAPTER 4</span><h2 class="ch">THE ARSENAL (SKILLS AND WEAPON SKILLS)</h2></header>
+<p><em>Seven weapon types. Thirty-plus weapon skills. Pick the right one for the mob in front of you.</em></p>
+<h3>Your combat skills at 75 (era caps)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>Grade</th>
+<th>Cap at 75</th>
+<th>Reaches 200 at</th>
+<th>Reaches 240 at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Great Axe</strong></td>
+<td>A+</td>
+<td><strong>276</strong></td>
+<td>Lv60</td>
+<td>Lv68</td>
+</tr>
+<tr>
+<td><strong>Axe</strong></td>
+<td>A</td>
+<td><strong>269</strong></td>
+<td>Lv60</td>
+<td>Lv70</td>
+</tr>
+<tr>
+<td>Great Sword</td>
+<td>B+</td>
+<td>256</td>
+<td>Lv62</td>
+<td>Lv72</td>
+</tr>
+<tr>
+<td>Scythe</td>
+<td>B+</td>
+<td>256</td>
+<td>Lv62</td>
+<td>Lv72</td>
+</tr>
+<tr>
+<td>Sword</td>
+<td>B</td>
+<td>250</td>
+<td>Lv62</td>
+<td>Lv73</td>
+</tr>
+<tr>
+<td>Staff</td>
+<td>B</td>
+<td>250</td>
+<td>Lv62</td>
+<td>Lv73</td>
+</tr>
+<tr>
+<td>Dagger / Polearm / Club</td>
+<td>B−</td>
+<td>240</td>
+<td>Lv62</td>
+<td><strong>Lv75</strong></td>
+</tr>
+<tr>
+<td>Hand-to-Hand, Archery, Marksmanship, Throwing</td>
+<td>D</td>
+<td>210</td>
+<td>Lv70</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Shield</td>
+<td>C+</td>
+<td>230</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Evasion</td>
+<td>C</td>
+<td>225</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Parry</td>
+<td>C−</td>
+<td>220</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — where the caps come from.</strong> Phoenix's era override of <code>data/skills.yaml</code> sets the grades; the cap curve is the classic one (A+ gains 5 per level from 60 to 75, B− only 3). That's why Great Axe hits 240 at 68 but Polearm and Club only touch 240 at 75.</p>
+</aside>
+<h3>Great Axe weapon skills (era values)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Skill</th>
+<th>Hits</th>
+<th>fTP at 100 / 200 / 300%</th>
+<th>Stat mods</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shield Break</td>
+<td>10</td>
+<td>1</td>
+<td>1.0 / 1.0 / 1.0</td>
+<td>STR 20%, VIT 20%</td>
+<td>Evasion Down. Ice</td>
+</tr>
+<tr>
+<td><strong>Iron Tempest</strong></td>
+<td>40</td>
+<td>1</td>
+<td>1.0 / 1.0 / 1.0</td>
+<td>STR 30%</td>
+<td>Attack ×1.0 / 1.25 / 1.5 with TP. Your workhorse 20–45</td>
+</tr>
+<tr>
+<td><strong>Sturmwind</strong></td>
+<td>70</td>
+<td>2</td>
+<td>1.0 / 1.0 / 1.0</td>
+<td>STR 30%</td>
+<td>Two hits, attack ×1.0 / 1.25 / 1.5</td>
+</tr>
+<tr>
+<td>Armor Break</td>
+<td>100</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 20%, VIT 20%</td>
+<td><strong>Defense Down 25%</strong></td>
+</tr>
+<tr>
+<td>Keen Edge</td>
+<td>150</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 35%</td>
+<td>Crit rate 50 / 75 / 100% with TP</td>
+</tr>
+<tr>
+<td>Weapon Break</td>
+<td>175</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 32%, VIT 32%</td>
+<td>Attack Down</td>
+</tr>
+<tr>
+<td><strong>Raging Rush</strong></td>
+<td>200</td>
+<td>3</td>
+<td>1.0 / 1.0 / 1.0</td>
+<td>STR 35%</td>
+<td>Crit 15 / 30 / 50%. <strong>Main-job WAR only</strong></td>
+</tr>
+<tr>
+<td><strong>Full Break</strong></td>
+<td>225</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 50%, VIT 50%</td>
+<td>Lowers attack, defense, accuracy, evasion. <strong>Main WAR only</strong></td>
+</tr>
+<tr>
+<td><strong>Steel Cyclone</strong></td>
+<td>240</td>
+<td>1</td>
+<td><strong>1.5 / 1.75 / 3.0</strong></td>
+<td>STR 50%, VIT 50%</td>
+<td>Attack ×1.5. Quest <em>The Weight of Your Limits</em>. Main WAR, DRK</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Axe weapon skills (era values)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Skill</th>
+<th>Hits</th>
+<th>fTP at 100 / 200 / 300%</th>
+<th>Stat mods</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raging Axe</td>
+<td>10</td>
+<td>2</td>
+<td>1.0 / 1.5 / 2.0</td>
+<td>STR 30%</td>
+<td>Best early axe WS</td>
+</tr>
+<tr>
+<td>Smash Axe</td>
+<td>40</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 30%</td>
+<td>Stun</td>
+</tr>
+<tr>
+<td>Gale Axe</td>
+<td>70</td>
+<td>1</td>
+<td>1.0</td>
+<td>STR 30%</td>
+<td>Choke</td>
+</tr>
+<tr>
+<td>Avalanche Axe</td>
+<td>100</td>
+<td>1</td>
+<td>1.5 / 2.0 / 2.5</td>
+<td>STR 30%</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Spinning Axe</strong></td>
+<td>150</td>
+<td>1</td>
+<td>2.0 / 2.5 / 3.0</td>
+<td>STR 35%</td>
+<td>Big single hit for the level</td>
+</tr>
+<tr>
+<td><strong>Rampage</strong></td>
+<td>175</td>
+<td>5</td>
+<td>0.5 each</td>
+<td>STR 30%</td>
+<td>Crit 10 / 20 / 40%. Fun with /NIN, strong with crit gear</td>
+</tr>
+<tr>
+<td>Calamity</td>
+<td>200</td>
+<td>1</td>
+<td>1.0 / 1.5 / 4.0</td>
+<td>STR 32%, VIT 32%</td>
+<td>Main WAR/BST only. Save TP for this one</td>
+</tr>
+<tr>
+<td><strong>Mistral Axe</strong></td>
+<td>225</td>
+<td>1</td>
+<td>2.5 / 3.0 / 3.5</td>
+<td>STR 50%</td>
+<td>Main WAR/BST only. Ranged (hits from distance)</td>
+</tr>
+<tr>
+<td><strong>Decimation</strong></td>
+<td>240</td>
+<td>3</td>
+<td>1.25 each</td>
+<td>STR 50%</td>
+<td>Quest <em>Axe the Competition</em>. Main job only</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Other weapons you can bring</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Weapon</th>
+<th>Best WS for WAR</th>
+<th>Skill</th>
+<th>Unlock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Great Sword</td>
+<td>Crescent Moon (1 hit, fTP 1.0/1.75/2.5, STR 35%)</td>
+<td>175</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Great Sword</td>
+<td><strong>Ground Strike</strong> (fTP 1.5/1.75/3.0, STR+INT 50%, attack ×1.75)</td>
+<td>250</td>
+<td>Quest <em>Inheritance</em> (cap reached at 74)</td>
+</tr>
+<tr>
+<td>Sword</td>
+<td>Vorpal Blade (4 hits, crit)</td>
+<td>200</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Sword</td>
+<td><strong>Savage Blade</strong> (2 hits, fTP 1.0/1.75/3.5, STR 30% MND 50%)</td>
+<td>240</td>
+<td>Quest <em>Old Wounds</em> (Lv73+ for the skill)</td>
+</tr>
+<tr>
+<td>Scythe</td>
+<td>Vorpal Scythe → <strong>Spiral Hell</strong></td>
+<td>150 / 240</td>
+<td>Quest <em>Souls in Shadow</em></td>
+</tr>
+<tr>
+<td>Polearm</td>
+<td>Penta Thrust → <strong>Impulse Drive</strong></td>
+<td>150 / 240</td>
+<td>Quest <em>Methods Create Madness</em> (skill 240 only at 75)</td>
+</tr>
+<tr>
+<td>Club</td>
+<td>Skullbreaker, Judgment → <strong>Black Halo</strong></td>
+<td>150 / 200 / 230</td>
+<td>Quest <em>Orastery Woes</em></td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — the "skill 240 at level 75" trap.</strong> Polearm and Club are B− for Warrior, so the cap only reaches 240 at 75. You need 240 skill to start the Impulse Drive quest, which means sitting at 75 and skilling up. Ground Strike and Savage Blade are the same story at 74 and 73.</p>
+</aside>
+<h3>Skillchains you can build (from Phoenix's skillchain table)</h3>
+<p>Every combination below comes from the skillchain map in <code>src/map/utils/battleutils.cpp</code>. First WS on the left, second on the right.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Opener → Closer</th>
+<th>Skillchain</th>
+<th>Why it's useful</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raging Rush → Raging Rush</td>
+<td><strong>Fragmentation</strong></td>
+<td>Two Warriors with Great Axes. Classic</td>
+</tr>
+<tr>
+<td>Raging Rush → Decimation / Vorpal Thrust / Circle Blade</td>
+<td><strong>Fragmentation</strong></td>
+<td>WAR + axe or polearm partner</td>
+</tr>
+<tr>
+<td>Steel Cyclone → Impulse Drive</td>
+<td><strong>Darkness</strong></td>
+<td>Level 3 with a DRG or SAM partner</td>
+</tr>
+<tr>
+<td>Full Break → Impulse Drive</td>
+<td><strong>Darkness</strong></td>
+<td>Same, with the debuff on the opener</td>
+</tr>
+<tr>
+<td>Steel Cyclone → Mistral Axe / Decimation</td>
+<td><strong>Fusion</strong></td>
+<td>Two Warriors (one on axes)</td>
+</tr>
+<tr>
+<td>Steel Cyclone → Keen Edge / Penta Thrust / Black Halo</td>
+<td><strong>Gravitation</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Decimation / Mistral Axe → Savage Blade / Ground Strike / Black Halo</td>
+<td><strong>Light</strong></td>
+<td>Level 3 with a PLD, RDM or WHM partner</td>
+</tr>
+<tr>
+<td>Savage Blade / Black Halo / Ground Strike → Steel Cyclone</td>
+<td><strong>Distortion</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Impulse Drive → Steel Cyclone / Full Break / Spiral Hell</td>
+<td><strong>Darkness</strong></td>
+<td>DRG opens, you close</td>
+</tr>
+<tr>
+<td>Spinning Axe → Weapon Break / Judgment / True Strike</td>
+<td><strong>Fusion</strong></td>
+<td>Good at 50–60</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box code">
+<p><strong>FROM THE CODE — weapon skill points.</strong> Trial weapons need <strong>300 weapon skill points</strong>. Phoenix's default settings give 5 points per weapon skill on a mob that gives experience, plus 2 / 4 / 6 more when your WS closes a level 1 / 2 / 3 skillchain. That's 60 plain weapon skills, or about 27 if every one closes a level 3. BG Wiki lists the same 5/7/9/11.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Great Axe A+ and Axe A are your real skills. Keep both near cap.</li>
+<li>Raging Rush at 60 and Full Break at 65 are main-WAR only. Use them.</li>
+<li>Steel Cyclone at 71 is your quest weapon skill (Chapter 8).</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-5"><span class="num">CHAPTER 5</span><h2 class="ch">WAR MATH (DAMAGE, DAMAGE TYPES AND HATE)</h2></header>
+<p><em>A Warrior who reads the numbers out-damages one who doesn't, with the same gear.</em></p>
+<h3>Stacking your buffs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Buff</th>
+<th>Attack</th>
+<th>Defense</th>
+<th>Accuracy</th>
+<th>Lasts</th>
+<th>Recast</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Berserk</td>
+<td>+25%</td>
+<td>−25%</td>
+<td>—</td>
+<td>3:00</td>
+<td>5:00</td>
+</tr>
+<tr>
+<td>Warcry (at 75)</td>
+<td>+8%</td>
+<td>—</td>
+<td>—</td>
+<td>0:30</td>
+<td>5:00</td>
+</tr>
+<tr>
+<td>Aggressor</td>
+<td>—</td>
+<td>—</td>
+<td>+25 (Evasion −25)</td>
+<td>3:00</td>
+<td>5:00</td>
+</tr>
+<tr>
+<td>/SAM Hasso</td>
+<td>STR +5</td>
+<td>—</td>
+<td>+10</td>
+<td>5:00</td>
+<td>1:00</td>
+</tr>
+<tr>
+<td>/DRK Last Resort</td>
+<td>+25%</td>
+<td>−25%</td>
+<td>—</td>
+<td><strong>0:30</strong></td>
+<td>5:00</td>
+</tr>
+</tbody>
+</table></div>
+<p>Berserk and Aggressor are both 3 minutes on a 5-minute recast, so you have both up 60% of the time. Line them up with your weapon skills, not with the pull.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — Warcry is a party skill.</strong> It's 30 seconds of extra attack for everyone in range. Use it right before your skillchain partner's weapon skill, not right after your own.</p>
+</aside>
+<h3>Double Attack</h3>
+<p>Double Attack 10% at 25, +1% per merit (up to 15%), plus gear: Fighter's Calligae +1%, Pole Grip +2%, Brutal Earring +5%. A hit that double-attacks gives TP for both swings, so Double Attack is TP gain as well as damage.</p>
+<h3>Damage types: why your axe sometimes hits like a wet noodle</h3>
+<p>Every weapon does one damage type: <strong>slashing</strong> (Great Axe, Axe, Great Sword, Scythe, Sword), <strong>piercing</strong> (Polearm, Dagger, Archery), <strong>blunt</strong> (Club, Staff) or <strong>hand-to-hand</strong>. Some mob families take more or less damage from each type.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — how Phoenix does it.</strong> Each mob family has resistance values in <code>data/ecosystems.yaml</code>, in units of 1/10,000. A value of −5,000 means your damage is multiplied by 0.5. A value of +2,500 means ×1.25. Most families have no values at all and take normal damage from every type. That's why the table below is mostly "neutral".</p>
+</aside>
+<p><strong>Families that matter to a Warrior (values from the server data):</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Slashing</th>
+<th>Piercing</th>
+<th>Blunt</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bird, bat, bee, fly, colibri, mandragora</td>
+<td>normal</td>
+<td><strong>×1.25</strong></td>
+<td>normal</td>
+<td>Polearm hits 25% harder, if your skill keeps up</td>
+</tr>
+<tr>
+<td>Puk, imp, gnat, ladybug, wamoura</td>
+<td>normal</td>
+<td>×1.125</td>
+<td>normal</td>
+<td>Small bonus; not worth swapping</td>
+</tr>
+<tr>
+<td><strong>Skeleton</strong></td>
+<td>×0.875</td>
+<td><strong>×0.5</strong></td>
+<td><strong>×1.25</strong></td>
+<td>Club (Judgment, Black Halo). Never polearm</td>
+</tr>
+<tr>
+<td>Corse</td>
+<td>×0.875</td>
+<td>×0.5</td>
+<td>×1.125</td>
+<td>Club or axe</td>
+</tr>
+<tr>
+<td>Ghost</td>
+<td>×0.75</td>
+<td>×0.75</td>
+<td>×0.5</td>
+<td>Axe is least bad. Let mages kill them</td>
+</tr>
+<tr>
+<td>Leech, hecteyes</td>
+<td>normal</td>
+<td>normal</td>
+<td>×0.75</td>
+<td>Axe or Great Axe</td>
+</tr>
+<tr>
+<td>Flan, pudding</td>
+<td>×0.75</td>
+<td>×0.75</td>
+<td>×0.625</td>
+<td>Axe is least bad</td>
+</tr>
+<tr>
+<td>Slime</td>
+<td>×0.5</td>
+<td>×0.5</td>
+<td>×0.25</td>
+<td>Avoid. Magic kills these</td>
+</tr>
+<tr>
+<td>Elementals</td>
+<td>×0.25</td>
+<td>×0.25</td>
+<td>×0.25</td>
+<td>Don't melee</td>
+</tr>
+<tr>
+<td>Roc / greater bird (Abraxas)</td>
+<td>×0.75</td>
+<td><strong>×1.25</strong></td>
+<td>×0.75</td>
+<td>Polearm</td>
+</tr>
+<tr>
+<td>Magic pot</td>
+<td>normal</td>
+<td>normal</td>
+<td>×1.5</td>
+<td>Club</td>
+</tr>
+<tr>
+<td>Spheroid</td>
+<td>×1.25</td>
+<td>×1.25</td>
+<td>×1.25</td>
+<td>Everything works</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="curechart"><svg viewBox="0 0 760 330" role="img" aria-label="Damage multiplier by damage type for mob families"><line class="gl" x1="50" x2="750" y1="270" y2="270"/><text class="ct" x="42" y="274" text-anchor="end">×0</text><line class="gl" x1="50" x2="750" y1="190" y2="190"/><text class="ct" x="42" y="194" text-anchor="end">×0.5</text><line class="gl" x1="50" x2="750" y1="110" y2="110"/><text class="ct" x="42" y="114" text-anchor="end">×1</text><line class="gl" x1="50" x2="750" y1="30" y2="30"/><text class="ct" x="42" y="34" text-anchor="end">×1.5</text><line x1="50" x2="750" y1="110" y2="110" stroke="#1d2333" stroke-width="1.5" stroke-dasharray="4 3"/><rect class="bs" x="64" y="110" width="22" height="160"><title>Bird / bat / fly: ×1</title></rect><rect class="bp" x="88" y="70" width="22" height="200"><title>Bird / bat / fly: ×1.25</title></rect><rect class="bb" x="112" y="110" width="22" height="160"><title>Bird / bat / fly: ×1</title></rect><text class="cl" x="99.0" y="288" text-anchor="middle">Bird / bat / fly</text><rect class="bs" x="150" y="130" width="22" height="140"><title>Skeleton: ×0.875</title></rect><rect class="bp" x="174" y="190" width="22" height="80"><title>Skeleton: ×0.5</title></rect><rect class="bb" x="198" y="70" width="22" height="200"><title>Skeleton: ×1.25</title></rect><text class="cl" x="185.0" y="288" text-anchor="middle">Skeleton</text><rect class="bs" x="236" y="130" width="22" height="140"><title>Corse: ×0.875</title></rect><rect class="bp" x="260" y="190" width="22" height="80"><title>Corse: ×0.5</title></rect><rect class="bb" x="284" y="90" width="22" height="180"><title>Corse: ×1.125</title></rect><text class="cl" x="271.0" y="288" text-anchor="middle">Corse</text><rect class="bs" x="322" y="150" width="22" height="120"><title>Ghost: ×0.75</title></rect><rect class="bp" x="346" y="150" width="22" height="120"><title>Ghost: ×0.75</title></rect><rect class="bb" x="370" y="190" width="22" height="80"><title>Ghost: ×0.5</title></rect><text class="cl" x="357.0" y="288" text-anchor="middle">Ghost</text><rect class="bs" x="408" y="150" width="22" height="120"><title>Flan: ×0.75</title></rect><rect class="bp" x="432" y="150" width="22" height="120"><title>Flan: ×0.75</title></rect><rect class="bb" x="456" y="170" width="22" height="100"><title>Flan: ×0.625</title></rect><text class="cl" x="443.0" y="288" text-anchor="middle">Flan</text><rect class="bs" x="494" y="190" width="22" height="80"><title>Slime: ×0.5</title></rect><rect class="bp" x="518" y="190" width="22" height="80"><title>Slime: ×0.5</title></rect><rect class="bb" x="542" y="230" width="22" height="40"><title>Slime: ×0.25</title></rect><text class="cl" x="529.0" y="288" text-anchor="middle">Slime</text><rect class="bs" x="580" y="150" width="22" height="120"><title>Roc (Abraxas): ×0.75</title></rect><rect class="bp" x="604" y="70" width="22" height="200"><title>Roc (Abraxas): ×1.25</title></rect><rect class="bb" x="628" y="150" width="22" height="120"><title>Roc (Abraxas): ×0.75</title></rect><text class="cl" x="615.0" y="288" text-anchor="middle">Roc</text><rect class="bs" x="666" y="110" width="22" height="160"><title>Magic pot: ×1</title></rect><rect class="bp" x="690" y="110" width="22" height="160"><title>Magic pot: ×1</title></rect><rect class="bb" x="714" y="30" width="22" height="240"><title>Magic pot: ×1.5</title></rect><text class="cl" x="701.0" y="288" text-anchor="middle">Magic pot</text><rect class="bs" x="430" y="8" width="14" height="14"/><text class="lg" x="450" y="20">Slashing (axes)</text><rect class="bp" x="560" y="8" width="14" height="14"/><text class="lg" x="580" y="20">Piercing</text><rect class="bb" x="660" y="8" width="14" height="14"/><text class="lg" x="680" y="20">Blunt</text></svg><figcaption>Damage multiplier by damage type, from the family resistance values in Phoenix's <code>data/ecosystems.yaml</code>. The dashed line is normal damage; most leveling mobs sit on it for every type.</figcaption></figure>
+
+<aside class="box warn">
+<p><strong>WARNING — troll, lamia and Mamool Ja don't resist slashing here.</strong> You'll see "slashing −50%" on those families in modern guides. In Phoenix's data only one named species in each family has it (for example the "general" troll species). The Hilltroll Warriors and Paladins in Mount Zhayolm take normal slashing damage.</p>
+</aside>
+<!-- -->
+
+<aside class="box code">
+<p><strong>FROM THE CODE — Tomahawk.</strong> Your merit Tomahawk doesn't add a flat weakness. It removes 25% of whatever value the mob already has, toward zero (<code>scripts/effects/tomahawk.lua</code>). On a skeleton (piercing ×0.5) it helps a lot. On a neutral mob it does nothing. On a bird it actually <strong>reduces</strong> the piercing weakness. Use it on resistant targets only.</p>
+</aside>
+<h3>Holding hate (and letting go of it)</h3>
+<ul>
+<li><strong>Provoke</strong> adds 1,800 volatile enmity. Volatile enmity fades over time, so Provoke wins hate for a few seconds, not for the fight.</li>
+<li><strong>Fighter's gear has Enmity+.</strong> Fighter's Lorica +8, Mufflers +3, Cuisses +2, Calligae +1, Mask +1. Each point of Enmity in gear adds 1% to the enmity you generate (clamped at −50% to +100% on Phoenix).</li>
+<li><strong>Defender</strong> is for holding hate long enough for the real tank to Flash or Provoke back. It's not a tanking stance.</li>
+</ul>
+<aside class="box warn">
+<p><strong>WARNING — Berserk makes you squishy.</strong> −25% defense is a lot when you pull hate with a Raging Rush. If you're about to take hate, swap Berserk for Defender or let the tank get it back first.</p>
+</aside>
+<!-- -->
+
+<aside class="box recap">
+<p><strong>CHAPTER RECAP</strong></p>
+<ul>
+<li>Berserk + Aggressor + Warcry, timed with your weapon skill.</li>
+<li>Most leveling mobs are neutral. Birds, bats and flies take +25% from piercing; skeletons take +25% from blunt.</li>
+<li>Tomahawk only helps on mobs that resist your weapon.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-6"><span class="num">CHAPTER 6</span><h2 class="ch">THE ROAD TO 75 (LEVELING WALKTHROUGH)</h2></header>
+<p><em>The camps are the same for everyone. The Warrior's job is to know what to hit them with.</em></p>
+<h2>THE DAMAGE REPORT</h2>
+<p>For every classic camp in the project's leveling-camps guide, this table shows how the main mobs take each damage type, read from Phoenix's mob data. "—" means normal damage.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Camp</th>
+<th>Mob</th>
+<th>Family</th>
+<th>Slash (GA, Axe, GS, Scythe)</th>
+<th>Pierce (Polearm)</th>
+<th>Blunt (Club)</th>
+<th>Best type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Hill Lizard</td>
+<td>lizard</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Damselfly</td>
+<td>fly</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Brutal Sheep</td>
+<td>sheep</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Snipper</td>
+<td>crab</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Beach Pugil</td>
+<td>pugil</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>10-20</td>
+<td>Valkurm Dunes</td>
+<td>Thread Leech</td>
+<td>leech</td>
+<td>—</td>
+<td>—</td>
+<td>0.75×</td>
+<td>Slash / Pierce</td>
+</tr>
+<tr>
+<td>13-16</td>
+<td>Buburimu Peninsula</td>
+<td>Carnivorous Crawler</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>14-21</td>
+<td>Korroloka / Qufim worms</td>
+<td>Land Worm</td>
+<td>worm</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>18-21</td>
+<td>Sauromugue Champaign</td>
+<td>Diving Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Land Worm</td>
+<td>worm</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Clipper</td>
+<td>crab</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>19-24</td>
+<td>Qufim Island</td>
+<td>Greater Pugil</td>
+<td>pugil</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>20-25</td>
+<td>Yhoator Jungle</td>
+<td>Yhoator Mandragora</td>
+<td>mandragora</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Yuhtunga Mandragora</td>
+<td>mandragora</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>24-27</td>
+<td>Yuhtunga Jungle</td>
+<td>Goblin Smithy</td>
+<td>goblin</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Catoblepas</td>
+<td>dhalmel</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Eft</td>
+<td>eft</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>27-30</td>
+<td>Bibiki Bay</td>
+<td>Raven</td>
+<td>bird</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>30-35</td>
+<td>Eastern Altepa</td>
+<td>Sand Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Fortalice Bats</td>
+<td>flock bat</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Citadel Bats</td>
+<td>flock bat</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>33-36</td>
+<td>Garlaige Citadel</td>
+<td>Warden Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>33-37</td>
+<td>Eldieme Necropolis</td>
+<td>Gazer</td>
+<td>hecteyes</td>
+<td>—</td>
+<td>—</td>
+<td>0.75×</td>
+<td>Slash / Pierce</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Ogrefly</td>
+<td>fly</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>34-44</td>
+<td>Attohwa Chasm</td>
+<td>Master Coeurl</td>
+<td>coeurl</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Worker Crawler CN</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Nest Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Rumble Crawler</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>35-48</td>
+<td>Crawlers' Nest</td>
+<td>Soldier Crawler</td>
+<td>crawler</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>38-41</td>
+<td>Gustav Tunnel</td>
+<td>Hawker</td>
+<td>fly</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Helm Beetle</td>
+<td>beetle</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Hastatus</td>
+<td>antica</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>48-51</td>
+<td>Quicksand Caves</td>
+<td>Antican Princeps</td>
+<td>antica</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>52-55</td>
+<td>Kuftal Tunnel</td>
+<td>Robber Crab</td>
+<td>crab</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>54-58</td>
+<td>Wajaom Woodlands</td>
+<td>Lesser Colibri</td>
+<td>colibri</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Aht Urhgan Attercop</td>
+<td>spider</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>54-60</td>
+<td>Bhaflau Thickets</td>
+<td>Lesser Colibri</td>
+<td>colibri</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>55-60</td>
+<td>Caedarva Mire</td>
+<td>Marsh Murre</td>
+<td>bird</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Sand Lizard</td>
+<td>lizard</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>Kuftal Tunnel</td>
+<td>Kuftal Digger</td>
+<td>worm</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Sea Puk M</td>
+<td>puk</td>
+<td>—</td>
+<td>1.12×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Carpophagous Puk</td>
+<td>puk</td>
+<td>—</td>
+<td>1.12×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Hunting Raptor</td>
+<td>raptor</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>63-68</td>
+<td>Mamook</td>
+<td>Ziz</td>
+<td>cockatrice</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Heraldic Imp CM</td>
+<td>imp</td>
+<td>—</td>
+<td>1.12×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>67-75</td>
+<td>Caedarva Mire</td>
+<td>Spongilla Fly</td>
+<td>fly</td>
+<td>—</td>
+<td>1.25×</td>
+<td>—</td>
+<td>Pierce</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Ebony Pudding</td>
+<td>flan</td>
+<td>0.75×</td>
+<td>0.75×</td>
+<td>0.62×</td>
+<td>Slash / Pierce slash resisted</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Warrior</td>
+<td>troll</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>70-75</td>
+<td>Mount Zhayolm</td>
+<td>Hilltroll Paladin</td>
+<td>troll</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Abraxas</td>
+<td>greater bird</td>
+<td>0.75×</td>
+<td>1.25×</td>
+<td>0.75×</td>
+<td>Pierce slash resisted</td>
+</tr>
+<tr>
+<td>72-75</td>
+<td>Lufaise Meadows</td>
+<td>Tavnazian Ram</td>
+<td>ram</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>Any (neutral)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — reading the report.</strong> Almost every leveling camp is neutral to all three damage types, so your Great Axe or axes are always fine. The camps flagged "Pierce" are birds, bats, flies and mandragoras: a polearm does 25% more there, <strong>but only if your Polearm skill is near cap.</strong> A capped Great Axe beats a polearm 40 skill points behind. Swap only if you've been keeping Polearm up.</p>
+</aside>
+<h3>Bracket by bracket</h3>
+<p><strong>Levels 1–10 — home nation.</strong> Bronze/Brass Axe or Butterfly Axe. Kill everything that checks Easy Prey to Even Match outside your city, and weapon skill every time you reach 100% TP. No subjob yet, so fight and rest.</p>
+<p><strong>Levels 10–20 — Valkurm Dunes, Buburimu Peninsula, Korroloka.</strong> Parties start here. Your job: pull with Provoke if the puller is busy, weapon skill on the leader's call, and Provoke the mob off the mage who just over-cured. Iron Tempest at skill 40 (about level 13) or Raging Axe from skill 10. <strong>Neckchopper</strong> (Panzer Percival NM, Jugner Forest) at 20 is the first big Great Axe upgrade.</p>
+<aside class="box warn">
+<p><strong>WARNING — Thread Leeches in Valkurm.</strong> They take 25% less from blunt and drain HP. If your party has a club user, they're doing less there than they think.</p>
+</aside>
+<p><strong>Levels 18–20 — subjob.</strong> Do <em>The Old Lady</em> or <em>Elder Memories</em>, then level /MNK or /THF to 10 at least. /MNK gives Counter and HP early. /THF gives Sneak Attack at 15 and Treasure Hunter.</p>
+<p><strong>Levels 20–30 — Qufim, Yhoator and Yuhtunga jungles, Bibiki Bay.</strong> Berserk is up, Defender is here at 25, Double Attack at 25. <strong>Plantbane</strong> (Bi'Gho Headtaker, Beadeaux) and <strong>Centurion's Axe</strong> (conquest, Lv30) are your Great Axe steps; <strong>Tigerhunter</strong> (Lv26) and <strong>Warrior's Axe</strong> (Lv32) both drop from Tigerbane Bakdak in Davoi.</p>
+<aside class="box tip">
+<p><strong>PRO TIP — Race Specific Equipment (RSE) at level 25.</strong> Every race has its own four-piece set (Lv27–33) from <em>The Goblin Tailor</em> (Guttrix, Lower Jeuno). You can only get it during your race's 7 h 41 m "week", in one of three dungeons, with that dungeon's chest key — so <strong>farm the key before your week starts</strong>. For Warriors: Hume gloves (STR+3 DEX+3), the whole Tarutaru Wonder set (STR and HP) and Mithra gaiters (STR+3) are worth the trip.
+Full walkthrough: <a href="/guides/jobs/rse">Race Specific Equipment guide</a>. Live race and dungeon schedule: <a href="https://phoenix-xi.com/world-info?tab=calendar">Phoenix RSE calendar</a>.</p>
+</aside>
+<p><strong>Levels 30–37 — Garlaige Citadel, Eastern Altepa, Eldieme Necropolis.</strong> Switch to <strong>/SAM</strong> for Hasso if you use a Great Axe, or keep /THF and Great Axe until /NIN at 37. Rajas Ring (Lv30) is the reward for Chains of Promathia mission 8-4, so most players get it much later; once you have it, it stays on until 75. <strong>Peacock Amulet</strong> (Lv33, Argus in Maze of Shakhrami) is the best neck for 33–60. Garlaige bats take +25% piercing.</p>
+<p><strong>Levels 37–50 — Crawlers' Nest, Attohwa Chasm, Gustav Tunnel.</strong> /NIN with two axes or /SAM with a Great Axe. Do your AF1 at 40 (Chapter 8) for the <strong>Razor Axe</strong>. <strong>Huge Moth Axe</strong> (Mimas, Upper Delkfutt's Tower, rare) and <strong>Kheten +1</strong> are the Great Axe options, <strong>Combat Caster's Axe +2</strong> for axes. Pick up <strong>Swordbelt +1</strong> (Leathercraft 71 HQ, Attack +12) and <strong>Tortoise Earrings +1</strong>.</p>
+<aside class="box gil">
+<p><strong>MONEY MAKER — Crawlers' Nest.</strong> Crawler silk and the Nest Coffer Keys (needed for the Fighter's Mask, Chapter 8) both sell well. Kill Crawler Hunters, Helm Beetles and Knight Crawlers for keys.</p>
+</aside>
+<p><strong>Levels 50–60 — Quicksand Caves, Kuftal Tunnel, Wajaom Woodlands, Bhaflau Thickets, Caedarva Mire.</strong> AF2 and AF3 at 50 (Fighter's Calligae, Fighter's Lorica). The big buys: <strong>Haubergeon +1</strong> (Lv59) and <strong>Leucous Voulge +1</strong> (Lv50) or <strong>Executioner</strong> (Lv54). Wajaom colibri and Caedarva Marsh Murres take +25% piercing. Raging Rush needs Great Axe 200, which your cap allows at 60.</p>
+<p><strong>Levels 60–70 — Kuftal Tunnel, Mamook, Caedarva Mire.</strong> Full Break at 65 (skill 225). <strong>Byrnie +1</strong> (Attack +25) is the WS body. <strong>Behemoth Mantle +1</strong> or <strong>Amemet Mantle +1</strong> on your back, <strong>Swift Belt</strong> (Sacrarium Fomor NMs) on your waist. <strong>Pendragon Axe</strong> (Triarius X-XV, Quicksand Caves) at 67. Puks and imps in Mamook and Caedarva take +12.5% piercing; ignore it.</p>
+<p><strong>Levels 70–75 — Mount Zhayolm, Caedarva Mire, Lufaise Meadows.</strong> <strong>Hauberk +1</strong> (Lv69), <strong>Axe of Trials</strong> at 71 for Steel Cyclone, <strong>Bhuj +1</strong> or <strong>Gawain's Axe</strong> as your real 75 Great Axe. Ebony Puddings in Zhayolm take 25% less slashing; your party's blunt users do even worse (×0.625). Abraxas in Lufaise resist slashing 25% and take +25% piercing; this is the one camp where Tomahawk and a polearm both help.</p>
+<aside class="box check">
+<p><strong>CHECKPOINT — level 75</strong></p>
+<ul>
+<li>Great Axe at 276 and Axe at 269 (cap).</li>
+<li>Steel Cyclone quest started (Chapter 8).</li>
+<li>AF body and feet in your bag for tanking and Double Attack swaps.</li>
+</ul>
+</aside>
+
+<header class="band" id="chapter-7"><span class="num">CHAPTER 7</span><h2 class="ch">THE ARMORY (GEAR PROGRESSION)</h2></header>
+<p><em>Haste first, then accuracy, then STR and attack. In that order, every time.</em></p>
+<h3>How this chapter is laid out</h3>
+<p>The four sets below are for level 75. Each slot lists a <strong>realistic pick</strong> (crafted, quest, or a common NM drop) and a <strong>best pick</strong> (harder content). Every stat and source was read from Phoenix's item and drop data. The item directory at the end lists everything worth wearing from level 7 to 75.</p>
+<h2>THE FOUR SETS</h2><div class="flow" role="list"><a role="listitem" href="#set-tp" class="fstep set-tp"><b>⚔</b><span>SET 1</span><em>TP · Great Axe</em><small>Two-handed swing</small></a><a role="listitem" href="#set-nin" class="fstep set-nin"><b>⚒</b><span>SET 2</span><em>TP · Dual Axes</em><small>Two axes</small></a><a role="listitem" href="#set-ws" class="fstep set-ws"><b>✸</b><span>SET 3</span><em>Weapon Skill</em><small>The weapon skill</small></a><a role="listitem" href="#set-eva" class="fstep set-eva"><b>◈</b><span>SET 4</span><em>Tank</em><small>Holding hate</small></a></div>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Set</th>
+<th>When you're wearing it</th>
+<th>Priorities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TP (Great Axe /SAM)</strong></td>
+<td>Swinging with a two-handed axe</td>
+<td>Haste, Accuracy, Double Attack, STR</td>
+</tr>
+<tr>
+<td><strong>TP (dual axes /NIN)</strong></td>
+<td>Swinging with two axes</td>
+<td>Same, plus Evasion for a few slots if you hold hate</td>
+</tr>
+<tr>
+<td><strong>Weapon skill</strong></td>
+<td>The instant you weapon skill (macro swap)</td>
+<td>STR, Attack, VIT for Steel Cyclone/Full Break</td>
+</tr>
+<tr>
+<td><strong>Tank / Provoke</strong></td>
+<td>Holding hate for a few seconds</td>
+<td>Enmity, HP, Physical damage taken −</td>
+</tr>
+</tbody>
+</table></div>
+<section class="set set-tp" id="set-tp"><header class="sethead"><span class="setnum">SET 1</span><span class="seticon" aria-hidden="true">⚔</span><h2>TP (GREAT AXE /SAM)</h2><span class="settag">Two-handed swing</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Bhuj +1</strong> (D90/489, DEX+3 VIT+3) or Gawain's Axe</td>
+<td>Bravura (relic)</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td><strong>Pole Grip</strong> (Double Attack +2%)</td>
+<td>Pole Grip</td>
+</tr>
+<tr>
+<td>Head</td>
+<td><strong>Optical Hat</strong> (Acc+10)</td>
+<td><strong>Walahra Turban</strong> (Haste +5%)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td><strong>Peacock Amulet</strong> (Acc+10)</td>
+<td>Chivalrous Chain (STR+3, Acc+5, Store TP+1)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Assault Earring ×1, Spike Earring</td>
+<td><strong>Brutal Earring</strong> (Double Attack +5%) + Assault Earring</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Haubergeon +1</strong> → <strong>Hauberk +1</strong> (STR+6 DEX+6 Att+12 Acc+12)</td>
+<td>Armada Hauberk (STR+11 DEX+11 Att+16 Acc+16)</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Dusk Gloves +1</strong> (Haste +4%, Att+6)</td>
+<td>Dusk Gloves +1</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Rajas Ring</strong> + Sniper's Ring +1</td>
+<td>Rajas Ring + Sniper's Ring +1</td>
+</tr>
+<tr>
+<td>Back</td>
+<td><strong>Amemet Mantle +1</strong> (STR+2, Att+15)</td>
+<td>Forager's Mantle (STR+3, Att+15)</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Sonic Belt +1</strong> (Haste +6%)</td>
+<td>Sonic Belt +1 / Velocious Belt (same haste)</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Thick Breeches +1 (Att+6 Acc+2)</td>
+<td><strong>Byakko's Haidate</strong> (DEX+15, Haste +5%)</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Dusk Ledelsens +1</strong> (Haste +3%)</td>
+<td>Dusk Ledelsens +1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Haste in this set (best column): Walahra 5 + Dusk Gloves 4 + Sonic Belt 6 + Byakko 5 + Dusk Ledelsens 3 = <strong>23% gear haste</strong>, plus Hasso's 10% ability haste.</p>
+<aside class="box code">
+<p><strong>FROM THE CODE — Hasso's haste is separate.</strong> Hasso adds <code>TWOHAND_HASTE_ABILITY 1000</code> (10%), which goes in the ability-haste bucket, not the gear bucket. You don't lose it to the gear cap.</p>
+</aside>
+</section><section class="set set-nin" id="set-nin"><header class="sethead"><span class="setnum">SET 2</span><span class="seticon" aria-hidden="true">⚒</span><h2>TP (DUAL AXES /NIN)</h2><span class="settag">Two axes</span></header>
+<p>Same armor as Set 1, with these changes:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main</td>
+<td><strong>Tabarzin +1</strong> (D50/280)</td>
+<td>Juggernaut (Att+30, STR+3)</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td><strong>Tungi</strong> (D41/260) or Fransisca</td>
+<td>Tabarzin +1</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Fighter's Calligae (Double Attack +1%) if you're short on haste</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — why /NIN with axes?</strong> Dual Wield II cuts both axes' delay 15%, Utsusemi saves you when Raging Rush pulls hate, and Rampage (5 hits, crit chance) gets crazy with Mighty Strikes. The price: your weapon skills are axe skills, and Great Axe skill stops rising.</p>
+</aside>
+</section><section class="set set-ws" id="set-ws"><header class="sethead"><span class="setnum">SET 3</span><span class="seticon" aria-hidden="true">✸</span><h2>WEAPON SKILL</h2><span class="settag">The weapon skill</span></header>
+<p>Macro this set in for the WS and back out right after. Haste doesn't matter here, which is why the Hecatomb pieces with huge haste penalties shine.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Realistic</th>
+<th>Best on Phoenix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td><strong>Celata +1</strong> (Att+5 Acc+3) or Voyager Sallet</td>
+<td><strong>Maat's Cap</strong> (all stats +7) / Hecatomb Cap +1 (STR+12)</td>
+</tr>
+<tr>
+<td>Neck</td>
+<td>Spike Necklace (STR+3) / Orochi Nodowa +1 (Att+7)</td>
+<td>Fortitude Torque (VIT+5, Great Axe skill +7)</td>
+</tr>
+<tr>
+<td>Ears</td>
+<td>Harmonius Earring (STR+2) + Merman's Earring (Att+6)</td>
+<td>Brutal Earring + Merman's Earring</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Byrnie +1</strong> (STR+5 VIT+5 Att+25)</td>
+<td>Hecatomb Harness (STR+12, Acc+10)</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td><strong>Pallas's Bracelets</strong> (STR+9)</td>
+<td>Alkyoneus's Bracelets (STR+11)</td>
+</tr>
+<tr>
+<td>Rings</td>
+<td><strong>Triumph Ring +1</strong> ×2 (STR+5 each)</td>
+<td>Rajas + Triumph +1</td>
+</tr>
+<tr>
+<td>Back</td>
+<td>Amemet Mantle +1</td>
+<td>Forager's Mantle</td>
+</tr>
+<tr>
+<td>Waist</td>
+<td><strong>Warwolf Belt</strong> (STR/DEX/VIT +5)</td>
+<td>Warwolf Belt</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Conte Cosciales (STR+3 Att+7)</td>
+<td>Hecatomb Subligar +1 (DEX+9, Att+22)</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td><strong>Rutter Sabatons</strong> (STR+3 VIT+2 Att+5)</td>
+<td>Hecatomb Leggings +1 (STR+7)</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box tip">
+<p><strong>PRO TIP — VIT matters for Steel Cyclone and Full Break.</strong> Both have STR 50% <strong>and</strong> VIT 50%. Byrnie +1 and Warwolf Belt give both. For Raging Rush (STR 35%) and Decimation (STR 50%), lean on STR only.</p>
+</aside>
+</section><section class="set set-eva" id="set-eva"><header class="sethead"><span class="setnum">SET 4</span><span class="seticon" aria-hidden="true">◈</span><h2>TANK / PROVOKE</h2><span class="settag">Holding hate</span></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Pick</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td>Fighter's Mask</td>
+<td>Enmity +1, DEX+3</td>
+</tr>
+<tr>
+<td>Body</td>
+<td><strong>Fighter's Lorica</strong></td>
+<td><strong>Enmity +8</strong>, VIT+5, HP+20</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>Fighter's Mufflers</td>
+<td>Enmity +3, Shield skill +10</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Fighter's Cuisses</td>
+<td>Enmity +2, Acc+3, Eva+3</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Fighter's Calligae</td>
+<td>Enmity +1</td>
+</tr>
+<tr>
+<td>Ring</td>
+<td><strong>Jelly Ring</strong></td>
+<td>Physical damage taken −5% (magic +5%)</td>
+</tr>
+<tr>
+<td>Ear</td>
+<td>Colossus's Earring</td>
+<td>Physical damage taken −1%</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box warn">
+<p><strong>WARNING — Warrior isn't a main tank on Phoenix.</strong> No Sentinel, no Flash, no Cure. This set is for "Provoke, survive 15 seconds, hand it back". The full Darksteel +1 set (−13% physical damage taken across five pieces) works too, but you'll never swing in it.</p>
+</aside>
+</section><h2>AF &amp; RELIC AT A GLANCE</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Artifact (Fighter's)</th>
+<th>Relic (Warrior's)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Head</td>
+<td>Fighter's Mask — DEX+3, Enmity+1</td>
+<td>Warrior's Mask — DEX+5, Parry+5, Warcry duration +10</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Fighter's Lorica — VIT+5, HP+20, Enmity+8</td>
+<td>Warrior's Lorica — Att+10, Enmity+4</td>
+</tr>
+<tr>
+<td>Hands</td>
+<td>Fighter's Mufflers — STR+4, Enmity+3, Shield+10</td>
+<td>Warrior's Mufflers — VIT+5, Att+12</td>
+</tr>
+<tr>
+<td>Legs</td>
+<td>Fighter's Cuisses — Acc+3, Eva+3, Enmity+2</td>
+<td>Warrior's Cuisses — STR+5, Double Attack+1%</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>Fighter's Calligae — AGI+3, Double Attack+1%</td>
+<td>Warrior's Calligae — AGI+5</td>
+</tr>
+<tr>
+<td>Weapon</td>
+<td>Razor Axe (AF1)</td>
+<td>Bravura (relic Great Axe)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>THE ITEM DIRECTORY</h2>
+<p><em>Stats from <code>item_mods</code> and <code>item_latents</code>. Sources from each zone's <code>mobs.yaml</code>, battlefield loot scripts, NPC scripts and <code>synth_recipes</code>. Abjuration pieces come from trading the abjuration plus the right materials; the +1 versions need extra steps.</em></p>
+<h3>Great Axes</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Butterfly Axe +1</strong></td>
+<td>5</td>
+<td>Main</td>
+<td>DMG 20 / Delay 489</td>
+<td>Smithing 23 HQ</td>
+</tr>
+<tr>
+<td><strong>Greataxe +1</strong></td>
+<td>12</td>
+<td>Main</td>
+<td>DMG 31 / Delay 489</td>
+<td>Smithing 31 HQ</td>
+</tr>
+<tr>
+<td><strong>Neckchopper</strong></td>
+<td>20</td>
+<td>Main</td>
+<td>DMG 39 / Delay 489, Acc+5</td>
+<td>Panzer Percival NM, Jugner Forest</td>
+</tr>
+<tr>
+<td><strong>Plantbane</strong></td>
+<td>25</td>
+<td>Main</td>
+<td>DMG 43 / Delay 504</td>
+<td>Bi'Gho Headtaker NM, Beadeaux (one of a group)</td>
+</tr>
+<tr>
+<td><strong>Centurion's Axe</strong></td>
+<td>30</td>
+<td>Main</td>
+<td>DMG 48 / Delay 504</td>
+<td>Conquest reward (Bastok)</td>
+</tr>
+<tr>
+<td><strong>Heavy Axe +1</strong></td>
+<td>34</td>
+<td>Main</td>
+<td>DMG 53 / Delay 489</td>
+<td>Smithing 41 HQ</td>
+</tr>
+<tr>
+<td><strong>Huge Moth Axe</strong></td>
+<td>39</td>
+<td>Main</td>
+<td>DMG 59 / Delay 504, STR+2</td>
+<td>Mimas NM, Upper Delkfutt's Tower (rare)</td>
+</tr>
+<tr>
+<td><strong>Kheten +1</strong></td>
+<td>44</td>
+<td>Main</td>
+<td>DMG 64 / Delay 489</td>
+<td>Smithing 75 HQ</td>
+</tr>
+<tr>
+<td><strong>Eisentaenzer</strong></td>
+<td>46</td>
+<td>Main</td>
+<td>DMG 67 / Delay 482, DEX+2, CHR+2</td>
+<td>Goblinsavior Heronox NM, Gustav Tunnel</td>
+</tr>
+<tr>
+<td><strong>Gigant Axe</strong></td>
+<td>49</td>
+<td>Main</td>
+<td>DMG 75 / Delay 519, STR+4, INT-4</td>
+<td>Treasure chest/coffer loot</td>
+</tr>
+<tr>
+<td><strong>Leucous Voulge +1</strong></td>
+<td>50</td>
+<td>Main</td>
+<td>DMG 80 / Delay 489</td>
+<td>Alchemy 59 / Goldsmithing 48 HQ</td>
+</tr>
+<tr>
+<td><strong>Executioner</strong></td>
+<td>54</td>
+<td>Main</td>
+<td>DMG 77 / Delay 504, STR+5, VIT-5</td>
+<td>Northern Shadow NM, Fei'Yin (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Schwarz Axt</strong></td>
+<td>56</td>
+<td>Main</td>
+<td>DMG 80 / Delay 504, night: Acc+10</td>
+<td>Peg Powler NM, Labyrinth of Onzozo</td>
+</tr>
+<tr>
+<td><strong>Massive Darksteel Axe</strong></td>
+<td>59</td>
+<td>Main</td>
+<td>DMG 86 / Delay 514</td>
+<td>Smithing 88 HQ</td>
+</tr>
+<tr>
+<td><strong>Demon's Axe</strong></td>
+<td>62</td>
+<td>Main</td>
+<td>DMG 82 / Delay 504, STR+6, INT+6</td>
+<td>Baronet Romwe NM, Castle Zvahl Keep (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Colossal Axe +1</strong></td>
+<td>64</td>
+<td>Main</td>
+<td>DMG 84 / Delay 504, HP+12, STR+5, INT-5</td>
+<td>Smithing 88 HQ (Gigant Axe + Steel Ingot)</td>
+</tr>
+<tr>
+<td><strong>Pendragon Axe</strong></td>
+<td>67</td>
+<td>Main</td>
+<td>DMG 89 / Delay 504</td>
+<td>Triarius X-XV NM, Quicksand Caves</td>
+</tr>
+<tr>
+<td><strong>Berserker's Axe</strong></td>
+<td>69</td>
+<td>Main</td>
+<td>DMG 95 / Delay 504</td>
+<td>Antican Consul NM, Quicksand Caves (rare)</td>
+</tr>
+<tr>
+<td><strong>Axe of Trials</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 87 / Delay 504, HP+20</td>
+<td>Quest <em>The Weight of Your Limits</em></td>
+</tr>
+<tr>
+<td><strong>Bhuj +1</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 90 / Delay 489, HP+11, DEX+3, VIT+3</td>
+<td>Smithing 95 / Goldsmithing 44 HQ</td>
+</tr>
+<tr>
+<td><strong>Gawain's Axe</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 90 / Delay 504, STR+1, VIT+5, AGI-2</td>
+<td>KSNM <em>Horns of War</em> and others</td>
+</tr>
+<tr>
+<td><strong>Imperial Bhuj</strong></td>
+<td>71</td>
+<td>Main</td>
+<td>DMG 93 / Delay 504</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Toporok +1</strong></td>
+<td>73</td>
+<td>Main</td>
+<td>DMG 93 / Delay 489, HP+11, DEX+3, VIT+3</td>
+<td>Smithing 99 / Goldsmithing 51 HQ</td>
+</tr>
+<tr>
+<td><strong>Byakko's Axe</strong></td>
+<td>74</td>
+<td>Main</td>
+<td>DMG 94 / Delay 504, Atk+5</td>
+<td>Byakko, Ru'Aun Gardens (Sky)</td>
+</tr>
+<tr>
+<td><strong>Bravura</strong></td>
+<td>75</td>
+<td>Main</td>
+<td>DMG 99 / Delay 488, Acc+20</td>
+<td>Relic weapon (Dynamis)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Axes</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Light Axe</strong></td>
+<td>11</td>
+<td>Main/Sub</td>
+<td>DMG 14 / Delay 260</td>
+<td>Quest <em>The Pickpocket</em> (San d'Oria)</td>
+</tr>
+<tr>
+<td><strong>Bone Axe +1</strong></td>
+<td>13</td>
+<td>Main/Sub</td>
+<td>DMG 17 / Delay 268</td>
+<td>Bonecraft 20 HQ</td>
+</tr>
+<tr>
+<td><strong>Tigerhunter</strong></td>
+<td>26</td>
+<td>Main/Sub</td>
+<td>DMG 22 / Delay 276</td>
+<td>Tigerbane Bakdak NM, Davoi</td>
+</tr>
+<tr>
+<td><strong>Warrior's Axe</strong></td>
+<td>32</td>
+<td>Main/Sub</td>
+<td>DMG 25 / Delay 276, STR+1, DEX+1</td>
+<td>Tigerbane Bakdak NM, Davoi</td>
+</tr>
+<tr>
+<td><strong>Razor Axe</strong></td>
+<td>40</td>
+<td>Main/Sub</td>
+<td>DMG 31 / Delay 276, STR+2, DEX+2</td>
+<td>AF1 <em>The Doorman</em></td>
+</tr>
+<tr>
+<td><strong>Combat Caster's Axe +2</strong></td>
+<td>43</td>
+<td>Main/Sub</td>
+<td>DMG 35 / Delay 264, Atk+5</td>
+<td>Smithing 56 HQ</td>
+</tr>
+<tr>
+<td><strong>Viking Axe</strong></td>
+<td>48</td>
+<td>Main/Sub</td>
+<td>DMG 36 / Delay 276, Acc+10, Eva-10</td>
+<td>Girtab, Toraimarai Canal (rare)</td>
+</tr>
+<tr>
+<td><strong>Darksteel Axe +1</strong></td>
+<td>56</td>
+<td>Main/Sub</td>
+<td>DMG 43 / Delay 281</td>
+<td>Smithing 62 HQ</td>
+</tr>
+<tr>
+<td><strong>Tungi</strong></td>
+<td>60</td>
+<td>Main/Sub</td>
+<td>DMG 41 / Delay 260</td>
+<td>Tribunus VII-I NM, Quicksand Caves</td>
+</tr>
+<tr>
+<td><strong>Fransisca</strong></td>
+<td>63</td>
+<td>Main/Sub</td>
+<td>DMG 44 / Delay 288, R.Atk+7, R.Acc+7</td>
+<td>Aquarius NM, The Boyahda Tree</td>
+</tr>
+<tr>
+<td><strong>Acha Darmas</strong></td>
+<td>68</td>
+<td>Main/Sub</td>
+<td>DMG 46 / Delay 288, STR+2, DEX+1, VIT-3, AGI-2</td>
+<td>Bloodthirster Madkix NM, Kuftal Tunnel</td>
+</tr>
+<tr>
+<td><strong>Juggernaut</strong></td>
+<td>70</td>
+<td>Main/Sub</td>
+<td>DMG 46 / Delay 288, HP+18, STR+3, AGI-3, Atk+30</td>
+<td>Overlord Bakgodek, Monastic Cavern</td>
+</tr>
+<tr>
+<td><strong>Tabarzin +1</strong></td>
+<td>71</td>
+<td>Main/Sub</td>
+<td>DMG 50 / Delay 280, HP+11, DEX+3, VIT+3</td>
+<td>Smithing 99 / Goldsmithing 52 HQ</td>
+</tr>
+<tr>
+<td><strong>Pick of Trials</strong></td>
+<td>71</td>
+<td>Main/Sub</td>
+<td>DMG 46 / Delay 312, HP+20</td>
+<td>Quest <em>Axe the Competition</em></td>
+</tr>
+<tr>
+<td><strong>Woodville's Axe</strong></td>
+<td>72</td>
+<td>Main/Sub</td>
+<td>DMG 50 / Delay 288, STR+4, Spell interruption −5%</td>
+<td>KSNM, Chamber of Oracles</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Grips (two-handed weapons only)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pole Grip</strong></td>
+<td>60</td>
+<td>Sub</td>
+<td>DMG 1 / Delay 999, Double Attack+2</td>
+<td>KSNM loot (Balga's Dais, Chamber of Oracles, Horlais Peak, Qu'Bia Arena, Waughroon Shrine)</td>
+</tr>
+<tr>
+<td><strong>Axe Grip</strong></td>
+<td>65</td>
+<td>Sub</td>
+<td>DMG 1 / Delay 999, HP+20, STR+3</td>
+<td>Besieged reward</td>
+</tr>
+<tr>
+<td><strong>Sword Strap</strong></td>
+<td>55</td>
+<td>Sub</td>
+<td>DMG 1 / Delay 999</td>
+<td>KSNM loot</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Head</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Empress Hairpin</strong></td>
+<td>24</td>
+<td>Head</td>
+<td>HP-15, DEX+3, AGI+3, Eva+10</td>
+<td>Valkurm Emperor NM, Valkurm Dunes</td>
+</tr>
+<tr>
+<td><strong>Voyager Sallet</strong></td>
+<td>41</td>
+<td>Head</td>
+<td>STR+3, DEX+4</td>
+<td>Carmine Dobsonfly NM, Riverne Site #A01 (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Valkyrie's Mask</strong></td>
+<td>43</td>
+<td>Head</td>
+<td>MP+10, Atk+7</td>
+<td>Ga'Bhu Unvanquished NM, Beadeaux</td>
+</tr>
+<tr>
+<td><strong>Fighter's Mask</strong></td>
+<td>56</td>
+<td>Head</td>
+<td>HP+15, DEX+3, INT+1, Enmity+1</td>
+<td>Coffer, Crawlers' Nest (AF)</td>
+</tr>
+<tr>
+<td><strong>Abtal Turban</strong></td>
+<td>59</td>
+<td>Head</td>
+<td>HP+10, STR+4, AGI+4</td>
+<td>Goldsmithing 41 / Clothcraft 85 HQ</td>
+</tr>
+<tr>
+<td><strong>Patroclus's Helm</strong></td>
+<td>60</td>
+<td>Head</td>
+<td>STR+2, Enmity-5, Eva-5, Haste +2%</td>
+<td>Biast NM, Xarcabard</td>
+</tr>
+<tr>
+<td><strong>Celata +1</strong></td>
+<td>68</td>
+<td>Head</td>
+<td>Atk+5, Acc+3, Eva-2</td>
+<td>Smithing 87 HQ</td>
+</tr>
+<tr>
+<td><strong>Optical Hat</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>Acc+10, R.Acc+10, Eva+10</td>
+<td>Hakutaku NM, Den of Rancor</td>
+</tr>
+<tr>
+<td><strong>Maat's Cap</strong></td>
+<td>70</td>
+<td>Head</td>
+<td>STR+7, DEX+7, VIT+7, AGI+7, INT+7, MND+7, CHR+7</td>
+<td>Quest <em>Beyond the Sun</em> (all limit breaks done)</td>
+</tr>
+<tr>
+<td><strong>Hecatomb Cap +1</strong></td>
+<td>73</td>
+<td>Head</td>
+<td>HP+14, STR+12, DEX+6, Haste −11%</td>
+<td>Neptunal Abjuration (Kirin)</td>
+</tr>
+<tr>
+<td><strong>Warrior's Mask</strong></td>
+<td>73</td>
+<td>Head</td>
+<td>DEX+5, Enmity+1, Parry skill+5</td>
+<td>Relic armor (Dynamis - Windurst)</td>
+</tr>
+<tr>
+<td><strong>Walahra Turban</strong></td>
+<td>75</td>
+<td>Head</td>
+<td>HP+30, MP+30, Haste +5%</td>
+<td>1,000 Imperial Bronze Pieces to Gajaad, Al Zahbi</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Neck</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spike Necklace</strong></td>
+<td>21</td>
+<td>Neck</td>
+<td>STR+3, DEX+3, MND-6</td>
+<td>Bonecraft 15 HQ (Fang Necklace)</td>
+</tr>
+<tr>
+<td><strong>Peacock Amulet</strong></td>
+<td>33</td>
+<td>Neck</td>
+<td>Acc+10, R.Acc+10</td>
+<td>Argus NM, Maze of Shakhrami</td>
+</tr>
+<tr>
+<td><strong>Ryl.Grd. Collar</strong></td>
+<td>55</td>
+<td>Neck</td>
+<td>Atk+4, Acc+4</td>
+<td>Conquest reward</td>
+</tr>
+<tr>
+<td><strong>Chivalrous Chain</strong></td>
+<td>60</td>
+<td>Neck</td>
+<td>STR+3, Acc+5, Store TP+1</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Wivre Gorget +1</strong></td>
+<td>70</td>
+<td>Neck</td>
+<td>Acc+6, R.Acc+6</td>
+<td>Bonecraft 86 HQ</td>
+</tr>
+<tr>
+<td><strong>Fortitude Torque</strong></td>
+<td>73</td>
+<td>Neck</td>
+<td>VIT+5, Great Axe skill +7, Sword skill +7</td>
+<td>Jailer of Fortitude, The Garden of Ru'Hmet (uncommon)</td>
+</tr>
+<tr>
+<td><strong>Orochi Nodowa +1</strong></td>
+<td>75</td>
+<td>Neck</td>
+<td>Atk+7</td>
+<td>Bonecraft 98 HQ</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Earrings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tortoise Earring +1</strong></td>
+<td>45</td>
+<td>Ear</td>
+<td>Atk+4, Eva-2</td>
+<td>Bonecraft 55 HQ</td>
+</tr>
+<tr>
+<td><strong>Spike Earring</strong></td>
+<td>55</td>
+<td>Ear</td>
+<td>Atk+5, Eva-5</td>
+<td>Bonecraft 61 HQ (Fang Earring)</td>
+</tr>
+<tr>
+<td><strong>Assault Earring</strong></td>
+<td>58</td>
+<td>Ear</td>
+<td>Atk+5, Acc+2, Eva-2</td>
+<td>BCNM loot (Horlais Peak, Waughroon Shrine)</td>
+</tr>
+<tr>
+<td><strong>Merman's Earring</strong></td>
+<td>63</td>
+<td>Ear</td>
+<td>Atk+6, Eva-4, Magic dmg taken -2%</td>
+<td>Bonecraft 83 HQ (Coral Earring)</td>
+</tr>
+<tr>
+<td><strong>Harmonius Earring</strong></td>
+<td>67</td>
+<td>Ear</td>
+<td>HP+25, STR+2</td>
+<td>Goldsmithing 90 HQ (Crimson Earring)</td>
+</tr>
+<tr>
+<td><strong>Fowling Earring</strong></td>
+<td>70</td>
+<td>Ear</td>
+<td>STR+1, Acc+3</td>
+<td>Zoraal Ja's Pkuucha NM, Wajaom Woodlands</td>
+</tr>
+<tr>
+<td><strong>Ethereal Earring</strong></td>
+<td>72</td>
+<td>Ear</td>
+<td>HP+15, Atk+5, Eva+5</td>
+<td>Quest <em>Apocalypse Nigh</em> (end of CoP)</td>
+</tr>
+<tr>
+<td><strong>Brutal Earring</strong></td>
+<td>75</td>
+<td>Ear</td>
+<td>Store TP+1, Double Attack+5</td>
+<td>75 Ancient Beastcoins to Sagheera, Port Jeuno (Limbus)</td>
+</tr>
+<tr>
+<td><strong>Colossus's Earring</strong></td>
+<td>75</td>
+<td>Ear</td>
+<td>HP+10, MP+10, Phys. dmg taken -1%</td>
+<td>ToAU quest <em>Waking the Colossus</em> / <em>Divine Interference</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3>Body</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Brigandine +1</strong></td>
+<td>45</td>
+<td>Body</td>
+<td>HP+15, STR+1, DEX+3, VIT+3, AGI+1, INT+1, MND+1, CHR+1</td>
+<td>Leathercraft 57 / Goldsmithing 50 HQ</td>
+</tr>
+<tr>
+<td><strong>Scorpion Harness +1</strong></td>
+<td>57</td>
+<td>Body</td>
+<td>HP+20, Acc+12, Eva+12</td>
+<td>Bonecraft 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Haubergeon +1</strong></td>
+<td>59</td>
+<td>Body</td>
+<td>STR+6, DEX+6, AGI-5, Atk+12, Acc+12, Eva-20</td>
+<td>Smithing 69 HQ</td>
+</tr>
+<tr>
+<td><strong>Byrnie +1</strong></td>
+<td>60</td>
+<td>Body</td>
+<td>HP+30, STR+5, DEX-3, VIT+5, AGI-3, INT-3, MND-3, CHR-3, Atk+25</td>
+<td>Leathercraft 69 / Smithing 34 HQ</td>
+</tr>
+<tr>
+<td><strong>Fighter's Lorica</strong></td>
+<td>60</td>
+<td>Body</td>
+<td>HP+20, VIT+5, Enmity+8</td>
+<td>AF3 <em>The Talekeeper's Gift</em></td>
+</tr>
+<tr>
+<td><strong>Assault Jerkin</strong></td>
+<td>67</td>
+<td>Body</td>
+<td>Atk+18, Acc+3</td>
+<td>Ose NM, Labyrinth of Onzozo</td>
+</tr>
+<tr>
+<td><strong>Darksteel Harness +1</strong></td>
+<td>65</td>
+<td>Body</td>
+<td>Phys. dmg taken -4%</td>
+<td>Smithing 78 HQ</td>
+</tr>
+<tr>
+<td><strong>Hauberk +1</strong></td>
+<td>69</td>
+<td>Body</td>
+<td>STR+6, DEX+6, Atk+12, Acc+12, Eva-10</td>
+<td>Smithing 89 HQ (Haubergeon + materials)</td>
+</tr>
+<tr>
+<td><strong>Hecatomb Harness</strong></td>
+<td>73</td>
+<td>Body</td>
+<td>HP+16, STR+12, Acc+10, Haste −13%</td>
+<td>Neptunal Abjuration (Kirin)</td>
+</tr>
+<tr>
+<td><strong>Armada Hauberk</strong></td>
+<td>73</td>
+<td>Body</td>
+<td>STR+11, DEX+11, Atk+16, Acc+16, Eva-11</td>
+<td>Earthen Abjuration (Nidhogg)</td>
+</tr>
+<tr>
+<td><strong>Warrior's Lorica</strong></td>
+<td>75</td>
+<td>Body</td>
+<td>HP+10, Atk+10, Enmity+4</td>
+<td>Relic armor (Dynamis - Xarcabard)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Hands</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wonder Mitts</strong></td>
+<td>27</td>
+<td>Hands</td>
+<td>HP+12, STR+3</td>
+<td>Quest <em>The Goblin Tailor</em> (Jeuno)</td>
+</tr>
+<tr>
+<td><strong>Ogygos's Bracelets</strong></td>
+<td>40</td>
+<td>Hands</td>
+<td>HP+20, STR+5, DEX-3, AGI-3</td>
+<td>Ogygos NM, Middle Delkfutt's Tower</td>
+</tr>
+<tr>
+<td><strong>Enkelados's Bracelets</strong></td>
+<td>50</td>
+<td>Hands</td>
+<td>HP+25, STR+7, DEX-4, AGI-4</td>
+<td>Enkelados NM, Upper Delkfutt's Tower</td>
+</tr>
+<tr>
+<td><strong>Spiked Finger Gauntlets</strong></td>
+<td>50</td>
+<td>Hands</td>
+<td>VIT-2, Atk+12</td>
+<td>BCNM loot</td>
+</tr>
+<tr>
+<td><strong>Fighter's Mufflers</strong></td>
+<td>54</td>
+<td>Hands</td>
+<td>HP+13, STR+4, Enmity+3</td>
+<td>Quest <em>Borghertz's Warring Hands</em></td>
+</tr>
+<tr>
+<td><strong>Pallas's Bracelets</strong></td>
+<td>60</td>
+<td>Hands</td>
+<td>HP+35, STR+9, DEX-5, AGI-5</td>
+<td>Pallas NM, Upper Delkfutt's Tower (rare)</td>
+</tr>
+<tr>
+<td><strong>Tarasque Mitts +1</strong></td>
+<td>70</td>
+<td>Hands</td>
+<td>CHR-6, Atk+12</td>
+<td>Leathercraft 45 HQ</td>
+</tr>
+<tr>
+<td><strong>Alkyoneus's Bracelets</strong></td>
+<td>70</td>
+<td>Hands</td>
+<td>HP+40, STR+11, DEX-6, AGI-6</td>
+<td>Alkyoneus NM, Upper Delkfutt's Tower (rare)</td>
+</tr>
+<tr>
+<td><strong>Dusk Gloves +1</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>HP+22, Atk+6, Haste +4%</td>
+<td>Leathercraft 99 HQ</td>
+</tr>
+<tr>
+<td><strong>Warrior's Mufflers</strong></td>
+<td>72</td>
+<td>Hands</td>
+<td>HP+20, VIT+5, Atk+12, Enmity+2</td>
+<td>Relic armor (Dynamis - Buburimu)</td>
+</tr>
+<tr>
+<td><strong>Hecatomb Mittens +1</strong></td>
+<td>73</td>
+<td>Hands</td>
+<td>HP+10, STR+8, DEX+5, Haste −7%</td>
+<td>Neptunal Abjuration (Kirin)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Rings</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rajas Ring</strong></td>
+<td>30</td>
+<td>Ring</td>
+<td>STR+2, DEX+2, Store TP+5, Subtle Blow+5</td>
+<td>CoP mission 8-4 <em>Dawn</em></td>
+</tr>
+<tr>
+<td><strong>Puissance Ring +1</strong></td>
+<td>36</td>
+<td>Ring</td>
+<td>STR+3</td>
+<td>Goldsmithing 60 HQ (Garnet Ring)</td>
+</tr>
+<tr>
+<td><strong>Sniper's Ring +1</strong></td>
+<td>40</td>
+<td>Ring</td>
+<td>Acc+7, R.Acc+7</td>
+<td>Leathercraft 90 HQ</td>
+</tr>
+<tr>
+<td><strong>Kshama Ring No.8</strong></td>
+<td>49</td>
+<td>Ring</td>
+<td>STR+3, Atk+3</td>
+<td>ENM, Monarch Linn</td>
+</tr>
+<tr>
+<td><strong>Ulthalam's Ring</strong></td>
+<td>50</td>
+<td>Ring</td>
+<td>Atk+4, Acc+4</td>
+<td>ToAU mission <em>Imperial Coronation</em></td>
+</tr>
+<tr>
+<td><strong>Triumph Ring +1</strong></td>
+<td>72</td>
+<td>Ring</td>
+<td>STR+5</td>
+<td>Goldsmithing 99 HQ (Ruby Ring)</td>
+</tr>
+<tr>
+<td><strong>Jelly Ring</strong></td>
+<td>63</td>
+<td>Ring</td>
+<td>Phys. dmg taken -5%, Magic dmg taken +5%</td>
+<td>Sewer Syrup NM, Bostaunieux Oubliette</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Back</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Night Cape</strong></td>
+<td>21</td>
+<td>Back</td>
+<td>Eva+3</td>
+<td>Golden Bat NM, Valkurm Dunes</td>
+</tr>
+<tr>
+<td><strong>Behemoth Mantle +1</strong></td>
+<td>60</td>
+<td>Back</td>
+<td>HP+30, Atk+10</td>
+<td>Leathercraft 70 HQ</td>
+</tr>
+<tr>
+<td><strong>Amemet Mantle +1</strong></td>
+<td>61</td>
+<td>Back</td>
+<td>STR+2, Atk+15, R.Atk+15</td>
+<td>Leathercraft 60 HQ</td>
+</tr>
+<tr>
+<td><strong>Psilos Mantle</strong></td>
+<td>69</td>
+<td>Back</td>
+<td>Atk+12, R.Atk+12, Acc+1, R.Acc+1</td>
+<td>KSNM <em>Holy Cow</em>, Bearclaw Pinnacle</td>
+</tr>
+<tr>
+<td><strong>Forager's Mantle</strong></td>
+<td>71</td>
+<td>Back</td>
+<td>STR+3, Atk+15</td>
+<td>ENM <em>Sheep in Antlion's Clothing</em>, Boneyard Gully</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Waist</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Swordbelt +1</strong></td>
+<td>43</td>
+<td>Waist</td>
+<td>Atk+12</td>
+<td>Leathercraft 71 HQ</td>
+</tr>
+<tr>
+<td><strong>Life Belt</strong></td>
+<td>48</td>
+<td>Waist</td>
+<td>Acc+10</td>
+<td>Treasure chest/coffer loot</td>
+</tr>
+<tr>
+<td><strong>Swift Belt</strong></td>
+<td>50</td>
+<td>Waist</td>
+<td>Atk-5, Acc+3, Haste +4%</td>
+<td>Fomor NMs, Sacrarium (Balor, Caithleann, Indich, Lobais)</td>
+</tr>
+<tr>
+<td><strong>Velocious Belt</strong></td>
+<td>55</td>
+<td>Waist</td>
+<td>Haste +6%</td>
+<td>King Arthro NM, Jugner Forest (rare)</td>
+</tr>
+<tr>
+<td><strong>Potent Belt</strong></td>
+<td>60</td>
+<td>Waist</td>
+<td>STR+3, Acc+8</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Sonic Belt +1</strong></td>
+<td>65</td>
+<td>Waist</td>
+<td>Haste +6%</td>
+<td>Leathercraft 85 HQ</td>
+</tr>
+<tr>
+<td><strong>Warrior's Stone</strong></td>
+<td>70</td>
+<td>Waist</td>
+<td>STR+5, Acc+7</td>
+<td>Dynamis - Valkurm (rare)</td>
+</tr>
+<tr>
+<td><strong>Warwolf Belt</strong></td>
+<td>71</td>
+<td>Waist</td>
+<td>STR+5, DEX+5, VIT+5, Enmity+3</td>
+<td>KSNM loot</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Legs</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Republic Subligar</strong></td>
+<td>25</td>
+<td>Legs</td>
+<td>VIT+1, Atk+5, R.Atk+5</td>
+<td>Goldsmithing 21 HQ</td>
+</tr>
+<tr>
+<td><strong>Luisant Brayettes</strong></td>
+<td>45</td>
+<td>Legs</td>
+<td>STR+1, DEX+1, AGI-2, Atk+2, Acc+1</td>
+<td>Smithing 61 HQ</td>
+</tr>
+<tr>
+<td><strong>Fighter's Cuisses</strong></td>
+<td>58</td>
+<td>Legs</td>
+<td>HP+15, Acc+3, Enmity+2, Eva+3</td>
+<td>Coffer, Castle Zvahl Baileys (AF)</td>
+</tr>
+<tr>
+<td><strong>Thick Breeches +1</strong></td>
+<td>69</td>
+<td>Legs</td>
+<td>Atk+6, Acc+2, Eva-2</td>
+<td>Smithing 86 HQ</td>
+</tr>
+<tr>
+<td><strong>Conte Cosciales</strong></td>
+<td>70</td>
+<td>Legs</td>
+<td>STR+3, Atk+7, Enmity+2</td>
+<td>Leathercraft 90 / Clothcraft 54 HQ</td>
+</tr>
+<tr>
+<td><strong>Hecatomb Subligar +1</strong></td>
+<td>73</td>
+<td>Legs</td>
+<td>HP+17, DEX+9, Atk+22, Haste −14%</td>
+<td>Neptunal Abjuration (Kirin)</td>
+</tr>
+<tr>
+<td><strong>Byakko's Haidate</strong></td>
+<td>75</td>
+<td>Legs</td>
+<td>DEX+15, Haste +5%</td>
+<td>Byakko, Ru'Aun Gardens (Sky)</td>
+</tr>
+<tr>
+<td><strong>Warrior's Cuisses</strong></td>
+<td>74</td>
+<td>Legs</td>
+<td>STR+5, Enmity+3, Double Attack+1</td>
+<td>Relic armor (Dynamis - Beaucedine)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Feet</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Lv</th>
+<th>Slot</th>
+<th>Stats</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bounding Boots</strong></td>
+<td>7</td>
+<td>Feet</td>
+<td>DEX+3, AGI+3</td>
+<td>Leaping Lizzy NM, South Gustaberg</td>
+</tr>
+<tr>
+<td><strong>Wonder Clomps</strong></td>
+<td>29</td>
+<td>Feet</td>
+<td>HP+20, STR+2</td>
+<td>Quest <em>The Goblin Tailor</em> (Jeuno)</td>
+</tr>
+<tr>
+<td><strong>Gothic Sabatons</strong></td>
+<td>43</td>
+<td>Feet</td>
+<td>DEX+3, Enmity+2</td>
+<td>Treasure casket loot</td>
+</tr>
+<tr>
+<td><strong>Fighter's Calligae</strong></td>
+<td>52</td>
+<td>Feet</td>
+<td>HP+12, AGI+3, Enmity+1, Double Attack+1</td>
+<td>AF2 <em>The Talekeeper's Truth</em></td>
+</tr>
+<tr>
+<td><strong>Rutter Sabatons</strong></td>
+<td>67</td>
+<td>Feet</td>
+<td>STR+3, VIT+2, Atk+5, Haste −2%</td>
+<td>Bugbear Matman NM, Newton Movalpolos</td>
+</tr>
+<tr>
+<td><strong>Dusk Ledelsens +1</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>HP+27, Atk+5, Haste +3%</td>
+<td>Leathercraft 94 HQ</td>
+</tr>
+<tr>
+<td><strong>Amir Boots</strong></td>
+<td>72</td>
+<td>Feet</td>
+<td>Atk+5, Acc+6</td>
+<td>Assault reward</td>
+</tr>
+<tr>
+<td><strong>Hecatomb Leggings +1</strong></td>
+<td>73</td>
+<td>Feet</td>
+<td>HP+9, STR+7, DEX+4, Haste −6%</td>
+<td>Neptunal Abjuration (Kirin)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>NOT ON PHOENIX (DON'T FARM THESE)</h2>
+<aside class="box warn">
+<p><strong>WARNING — these show up in every "best WAR gear" list, but you can't get them here.</strong></p>
+<ul>
+<li><strong>Zeni Notorious Monster drops</strong> — Aurum Armet, Aurum Sabatons, Foolkiller, Hachiryu Haramaki/Kote/Haidate, Labrys, Blood Ring. Phoenix hides the ZNM pop NPCs (Sanraku, Ryo) and every ZNM spawn point (<code>modules/phoenix/lua/zones/npc_visibility.lua</code>). That also blocks Pandemonium Warden.</li>
+<li><strong>Einherjar rewards</strong> — Kubira Beads, Iota Ring, Ritter Gorget. The Einherjar NPC Kilusha in Nashmau is hidden.</li>
+<li><strong>Askar Korazin, Cuchulain's Mantle</strong> — no drop or reward source in Phoenix's data.</li>
+<li><strong>Nyzul Isle rewards</strong> — the Nyzul Isle NPC is hidden.</li>
+<li><strong>Merit weapon skills</strong> (King's Justice) — the merit category has 0 upgrades.</li>
+</ul>
+</aside>
+<!-- -->
+
+<aside class="box chal">
+<p><strong>WARLORD'S CHALLENGE — Absolute Virtue.</strong> Mars's Ring (Att+8, Acc+8) and Ninurta's Sash (Haste +6%, Att+6, Subtle Blow+6) are real on Phoenix: Meret in Tavnazian Safehold trades them for Sin of Insolence and Sin of Indignation, which drop from Absolute Virtue in Al'Taieu. If your linkshell gets there, these are best-in-slot.</p>
+</aside>
+
+<header class="band" id="chapter-8"><span class="num">CHAPTER 8</span><h2 class="ch">LEGENDARY QUESTS (ARTIFACT ARMOR)</h2></header>
+<p><em>Bastok built its army on Warriors. These quests are how it remembers them.</em></p>
+<p>All three AF quests start in <strong>Bastok Mines</strong> and need Warrior as your <strong>main job</strong>. Steps were read from Phoenix's quest scripts and checked against BG Wiki and HorizonXI Wiki.</p>
+<h3>AF1 — The Doorman (Razor Axe, Lv40)</h3>
+<ol>
+<li>Talk to <strong>Phara</strong> in Bastok Mines (J-9).</li>
+<li>Go to <strong>Davoi</strong>. Check the <strong>Hide Flap</strong> around (K-9/K-10). Two Orc NMs spawn: <strong>Gavotvut</strong> and <strong>Barakbok</strong>. Kill both, then check the flap again for the key item <strong>Sword Grip Material</strong>.</li>
+<li>Return to Phara. <strong>Wait one game day</strong> (zone out and back after midnight Vana'diel time), then talk to her again for <strong>Yasin's Sword</strong>.</li>
+<li>Take it to <strong>Naji</strong> in the Metalworks (J-8) for the <strong>Razor Axe</strong>.</li>
+</ol>
+<aside class="box warn">
+<p><strong>WARNING — the flap moves.</strong> After someone checks it, the Hide Flap moves to another spot and the NMs have a 5-minute repop per person. If it isn't where you expect, walk the nearby tunnels.</p>
+</aside>
+<h3>AF2 — The Talekeeper's Truth (Fighter's Calligae, Lv50)</h3>
+<ol>
+<li>Finish <em>The Doorman</em>. Phara sends you to <strong>Deidogg</strong> in Bastok Mines (H-6). Talk to him twice.</li>
+<li>Go to <strong>Palborough Mines</strong>, map 3 (take the elevator at I-8). Check the <strong>???</strong> at G-10 to spawn <strong>Ni'Ghu Nestfender</strong>, a Quadav Paladin with Invincible and Flash. Kill it for a <strong>Mottled Quadav Egg</strong> and trade it to Deidogg.</li>
+<li>Get a <strong>Parasite Skin</strong> from a <strong>Yagudo Parasite</strong> in <strong>Castle Oztroja</strong>: through the four-lever door at G-8 (the lever code is at the I-10 dead end), into the pool chamber. Trade it to Deidogg.</li>
+<li>Wait one game day and talk to Deidogg for the <strong>Fighter's Calligae</strong>.</li>
+</ol>
+<h3>AF3 — The Talekeeper's Gift (Fighter's Lorica, Lv50+)</h3>
+<ol>
+<li>After the Truth's waiting day and a zone, talk to Deidogg. He sends you to <strong>Detzo</strong> (Bastok Mines, I-6).</li>
+<li>Trade Detzo a <strong>Ginger Cookie</strong> (12 gil from Ness Rugetomal in Windurst Waters).</li>
+<li>Go to <strong>Behemoth's Dominion</strong> and check the <strong>???</strong> at K-9. Three Goblins spawn: <strong>Doglix Muttsnout</strong> (WHM), <strong>Moxnix Nightgoggle</strong> (RNG) and <strong>Picklix Longindex</strong> (THF). Kill all three.</li>
+<li>Zone into <strong>Qufim Island</strong>, then return to Detzo for the <strong>Fighter's Lorica</strong> and a title.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP — kill the WHM first.</strong> Doglix Muttsnout heals the other two. Sleep or bind the Ranger and Thief if you have a mage along.</p>
+</aside>
+<h3>Hands — Borghertz's Warring Hands (Fighter's Mufflers, Lv50)</h3>
+<p>Needs <em>The Talekeeper's Truth</em> finished.</p>
+<ol>
+<li>Talk to <strong>Guslam</strong> in Upper Jeuno, then <strong>Deadly Minnow</strong> standing next to him.</li>
+<li>Get the key item <strong>Old Gauntlets</strong> from a coffer in <strong>The Eldieme Necropolis</strong>. Coffer keys drop from the necropolis undead and Spriggans.</li>
+<li>Show Guslam, then talk to <strong>Yin Pocanakhu</strong> in Lower Jeuno.</li>
+<li>Check the <strong>???</strong> in Port Jeuno. Borghertz's ghost asks for <strong>Shadow Flames</strong>.</li>
+<li>In <strong>Castle Zvahl Baileys</strong>, check the <strong>Torch</strong> to spawn <strong>Dark Spark</strong>. Kill it and check the Torch again for <strong>Shadow Flames</strong>.</li>
+<li>Back to the Port Jeuno ??? for the <strong>Fighter's Mufflers</strong>.</li>
+</ol>
+<h3>Head and legs — the coffers</h3>
+<p>Once <em>Borghertz's Warring Hands</em> is started (or done), two coffers hold the rest of the set:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Coffer</th>
+<th>Key drops from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fighter's Cuisses</strong></td>
+<td>Castle Zvahl Baileys</td>
+<td>Demons and Ahriman in the Baileys</td>
+</tr>
+<tr>
+<td><strong>Fighter's Mask</strong></td>
+<td>Crawlers' Nest</td>
+<td>Crawler Hunters, Helm Beetles, Knight Crawlers</td>
+</tr>
+</tbody>
+</table></div>
+<aside class="box gil">
+<p><strong>MONEY MAKER — sell the extra keys.</strong> Every job's AF lives in the same coffers. Thief and Ninja players pay for Zvahl and Crawlers' Nest keys.</p>
+</aside>
+<h3>Weapon skill — The Weight of Your Limits (Steel Cyclone)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Starts with</td>
+<td><strong>Iron Eater</strong>, Metalworks (J-8)</td>
+</tr>
+<tr>
+<td>Great Axe skill</td>
+<td><strong>240</strong> (your cap allows it from level 68)</td>
+</tr>
+<tr>
+<td>Level</td>
+<td>71 (to equip the Axe of Trials)</td>
+</tr>
+<tr>
+<td>Weapon skill points</td>
+<td><strong>300</strong> on the Axe of Trials</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>Talk to Iron Eater for the <strong>Axe of Trials</strong> and the key item <strong>Weapon Training Guide</strong>.</li>
+<li>Weapon skill with the Axe of Trials until it has 300 points (Chapter 4: 5 per WS, more for skillchains). Only mobs that give experience count.</li>
+<li>Trade the axe to Iron Eater for the <strong>Map to the Annals of Truth</strong>.</li>
+<li>Go to <strong>The Sanctuary of Zi'Tah</strong> and check the <strong>???</strong> (F-6 on BG Wiki's map) to spawn <strong>Greenman</strong>. Kill it for <strong>Annals of Truth</strong>.</li>
+<li>Return to Iron Eater. You learn <strong>Steel Cyclone</strong>.</li>
+</ol>
+<aside class="box tip">
+<p><strong>PRO TIP — build the points in a skillchain party.</strong> A WS that closes a level-2 skillchain gives 9 points instead of 5, and a level 3 gives 11. With the Axe of Trials you'll be using Raging Rush and Full Break: a Dragoon's Impulse Drive into your Full Break makes <strong>Darkness</strong> (Chapter 4), and a second Warrior's Raging Rush into yours makes <strong>Fragmentation</strong>.</p>
+</aside>
+<h3>The other WAR weapon skill quests</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>WS</th>
+<th>Weapon</th>
+<th>Quest</th>
+<th>Starts with</th>
+<th>Skill needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decimation</strong></td>
+<td>Axe</td>
+<td><em>Axe the Competition</em></td>
+<td>Brutus, Upper Jeuno</td>
+<td>Axe 240</td>
+</tr>
+<tr>
+<td><strong>Ground Strike</strong></td>
+<td>Great Sword</td>
+<td><em>Inheritance</em></td>
+<td>Gumbah, Bastok Mines</td>
+<td>Great Sword <strong>250</strong></td>
+</tr>
+<tr>
+<td><strong>Spiral Hell</strong></td>
+<td>Scythe</td>
+<td><em>Souls in Shadow</em></td>
+<td>Novalmauge, Bostaunieux Oubliette</td>
+<td>Scythe 240</td>
+</tr>
+<tr>
+<td><strong>Savage Blade</strong></td>
+<td>Sword</td>
+<td><em>Old Wounds</em></td>
+<td>Curilla, Chateau d'Oraguille</td>
+<td>Sword 240</td>
+</tr>
+<tr>
+<td><strong>Impulse Drive</strong></td>
+<td>Polearm</td>
+<td><em>Methods Create Madness</em></td>
+<td>Balasiel, Southern San d'Oria</td>
+<td>Polearm 240</td>
+</tr>
+<tr>
+<td><strong>Black Halo</strong></td>
+<td>Club</td>
+<td><em>Orastery Woes</em></td>
+<td>Eldhrimnir, Port Windurst</td>
+<td>Club 230</td>
+</tr>
+</tbody>
+</table></div>
+<p>All six follow the same pattern: the skill requirement, a trial weapon, 300 WS points, a key-item hunt, a fight. Decimation is the one most Warriors do: it's your best axe weapon skill for /NIN.</p>
+
+<header class="band" id="chapter-9"><span class="num">CHAPTER 9</span><h2 class="ch">MERITS AT 75 (ToAU RULES)</h2></header>
+<h3>Group 1 (up to 10 upgrades total, 5 per category)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>Per rank</th>
+<th>Take it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Double Attack rate</strong></td>
+<td>+1%</td>
+<td><strong>Yes, all 5.</strong> It's on every swing</td>
+</tr>
+<tr>
+<td><strong>Berserk recast</strong></td>
+<td>−10 s</td>
+<td>Yes. More Berserk uptime</td>
+</tr>
+<tr>
+<td>Warcry recast</td>
+<td>−10 s</td>
+<td>Good for party play</td>
+</tr>
+<tr>
+<td>Aggressor recast</td>
+<td>−10 s</td>
+<td>Fine</td>
+</tr>
+<tr>
+<td>Defender recast</td>
+<td>−6 s</td>
+<td>Skip</td>
+</tr>
+</tbody>
+</table></div>
+<p>Usual pick: <strong>Double Attack 5, Berserk 5</strong>.</p>
+<h3>Group 2 (up to 6 upgrades total, 3 per ability, costs 3/4/5 merit points)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Merit</th>
+<th>First rank</th>
+<th>Each extra rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Warrior's Charge</strong></td>
+<td>Unlocks the ability (15:00 recast)</td>
+<td>−2:30 recast</td>
+</tr>
+<tr>
+<td><strong>Tomahawk</strong></td>
+<td>Unlocks the ability</td>
+<td>+15 s duration</td>
+</tr>
+<tr>
+<td><strong>Savagery</strong></td>
+<td>Warcry gives +100 TP Bonus</td>
+<td>+100 TP Bonus</td>
+</tr>
+<tr>
+<td>Aggressive Aim</td>
+<td>Aggressor gives +4 Ranged Accuracy</td>
+<td>+4</td>
+</tr>
+</tbody>
+</table></div>
+<p>Usual pick: <strong>Warrior's Charge 3 + Savagery 3.</strong> Tomahawk only helps against resistant families (Chapter 5), and Aggressive Aim is for a ranged Warrior you probably won't play.</p>
+<aside class="box warn">
+<p><strong>WARNING — test Warrior's Charge first.</strong> In Phoenix's code it gives Double Attack +100% for up to 60 seconds and ends early only when you weapon skill. If that's what you see in game, the play is: Warrior's Charge → swing to 100% TP → weapon skill. If it ends after one attack round, it's a one-shot double-attack and much weaker. Check your buff bar.</p>
+</aside>
+<h3>Other merits worth taking</h3>
+<ul>
+<li><strong>STR</strong> (attributes) — up to +5 at era caps.</li>
+<li><strong>Great Axe / Axe skill</strong> (combat skills) — skill over cap = accuracy.</li>
+<li><strong>HP</strong> — survive the AoE that kills the mages.</li>
+</ul>
+
+<header class="band" id="chapter-10"><span class="num">CHAPTER 10</span><h2 class="ch">THE ENDGAME WARRIOR</h2></header>
+<h3>Where Warrior shines on Phoenix</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Content</th>
+<th>Why they want you</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dynamis</strong></td>
+<td>Fast kills, Warcry for the whole alliance</td>
+<td>Relic armor, Bravura</td>
+</tr>
+<tr>
+<td><strong>Sky</strong> (Ru'Aun Gardens)</td>
+<td>Byakko and the gods need damage</td>
+<td>Byakko's Haidate (DEX+15, Haste+5%), Byakko's Axe</td>
+</tr>
+<tr>
+<td><strong>Sea</strong> (Al'Taieu)</td>
+<td>Jailer of Fortitude and friends</td>
+<td>Fortitude Torque</td>
+</tr>
+<tr>
+<td><strong>Limbus</strong></td>
+<td>Speed matters</td>
+<td>Ancient Beastcoins → Brutal Earring</td>
+</tr>
+<tr>
+<td><strong>HNMs</strong> (Nidhogg, Kirin)</td>
+<td>Damage on long fights</td>
+<td>Earthen Abjuration (Armada/Adaman), Neptunal Abjuration (Hecatomb)</td>
+</tr>
+<tr>
+<td><strong>Assault</strong> (ToAU)</td>
+<td>Small groups, every job welcome</td>
+<td>Imperial Bhuj, Chivalrous Chain, Potent Belt, Amir Boots</td>
+</tr>
+<tr>
+<td><strong>Besieged</strong></td>
+<td>Allied Notes</td>
+<td>Axe Grip</td>
+</tr>
+</tbody>
+</table></div>
+<h3>The rules of endgame damage</h3>
+<ol>
+<li><strong>Weapon skill on call.</strong> In Dynamis and Sky, a skillchain is worth more than your extra 200 damage.</li>
+<li><strong>Warcry for the party, Berserk for you.</strong> Never let both sit unused.</li>
+<li><strong>Mighty Strikes on the NM, not the trash.</strong> It's 45 seconds of guaranteed crits once every 2 hours.</li>
+<li><strong>Don't steal hate from the tank with Raging Rush at 300% TP.</strong> Let them get two Provokes ahead.</li>
+</ol>
+
+<header class="band" id="appendix-a"><span class="num">APPENDIX A</span><h2 class="ch">MACRO CHEAT SHEET</h2></header>
+<pre><code>Macro 1 — Berserk
+/ja &quot;Berserk&quot; &lt;me&gt;
+
+Macro 2 — Aggressor
+/ja &quot;Aggressor&quot; &lt;me&gt;
+
+Macro 3 — Warcry (party)
+/p Warcry up — WS now!
+/ja &quot;Warcry&quot; &lt;me&gt;
+
+Macro 4 — Steel Cyclone with WS set
+/equip head &quot;Maat's Cap&quot;
+/equip body &quot;Byrnie +1&quot;
+/equip hands &quot;Pallas's Bracelets&quot;
+/equip legs &quot;Conte Cosciales&quot;
+/equip feet &quot;Rutter Sabatons&quot;
+/ws &quot;Steel Cyclone&quot; &lt;t&gt;
+/wait 2
+/equipset 1
+
+Macro 5 — Provoke in enmity gear
+/equip body &quot;Fighter's Lorica&quot;
+/equip hands &quot;Fighter's Mufflers&quot;
+/ja &quot;Provoke&quot; &lt;t&gt;
+
+Macro 6 — Hasso (/SAM)
+/ja &quot;Hasso&quot; &lt;me&gt;
+</code></pre>
+<aside class="box warn">
+<p><strong>WARNING — <code>/equipset</code> may not exist for you.</strong> Equipment sets were added to retail FFXI in 2009, and I couldn't confirm whether Phoenix's client has them. If <code>/equipset 1</code> does nothing, put your TP set's <code>/equip</code> lines in a second macro and press it after the weapon skill.</p>
+</aside>
+
+<header class="band" id="appendix-b"><span class="num">APPENDIX B</span><h2 class="ch">LEVEL-BY-LEVEL CHECKLIST</h2></header>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Lv</th>
+<th>Do this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Provoke. Butterfly Axe or Brass Axe.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Bounding Boots</td>
+</tr>
+<tr>
+<td>11–13</td>
+<td>Light Axe (<em>The Pickpocket</em>), Greataxe +1, Iron Tempest at skill 40</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Berserk</strong></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Subjob quest</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Neckchopper</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Spike Necklace</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Double Attack, Defender.</strong> Check your race's RSE set and the <a href="https://phoenix-xi.com/world-info?tab=calendar">RSE calendar</a></td>
+</tr>
+<tr>
+<td>27–33</td>
+<td>Your race's RSE pieces (if worth it for WAR)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Attack Bonus. /SAM for Hasso (Great Axe)</td>
+</tr>
+<tr>
+<td>33</td>
+<td>Peacock Amulet</td>
+</tr>
+<tr>
+<td>35</td>
+<td><strong>Warcry</strong></td>
+</tr>
+<tr>
+<td>37</td>
+<td>/NIN for two axes, or stay /SAM</td>
+</tr>
+<tr>
+<td>40</td>
+<td><strong>AF1 The Doorman</strong> — Razor Axe</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Swordbelt +1</td>
+</tr>
+<tr>
+<td>45</td>
+<td><strong>Aggressor</strong></td>
+</tr>
+<tr>
+<td>50</td>
+<td><strong>AF2, AF3</strong> — Calligae, Lorica. Start <em>Borghertz's Warring Hands</em>. Leucous Voulge +1</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Fighter's Mufflers, Executioner</td>
+</tr>
+<tr>
+<td>59</td>
+<td>Haubergeon +1</td>
+</tr>
+<tr>
+<td>60</td>
+<td><strong>Raging Rush</strong> (skill 200), Byrnie +1, Behemoth or Amemet Mantle</td>
+</tr>
+<tr>
+<td>65</td>
+<td><strong>Full Break</strong> (skill 225), Sonic Belt +1</td>
+</tr>
+<tr>
+<td>68</td>
+<td>Great Axe 240 — ready for Steel Cyclone</td>
+</tr>
+<tr>
+<td>69</td>
+<td>Hauberk +1</td>
+</tr>
+<tr>
+<td>71</td>
+<td><strong>Steel Cyclone</strong> quest. Bhuj +1 or Gawain's Axe</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Dusk Gloves +1, Dusk Ledelsens +1</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Merits: Double Attack, Berserk recast, Warrior's Charge, Savagery</td>
+</tr>
+</tbody>
+</table></div>
+
+<header class="band" id="appendix-c"><span class="num">APPENDIX C</span><h2 class="ch">SOURCES</h2></header>
+<ul>
+<li>Phoenix server code, github.com/phoenixffxi/Phoenix (commit 014069e4ed): <code>modules/era/lua/globals/job_utils/warrior.lua</code>, <code>modules/era/lua/actions/weaponskills/*.lua</code>, <code>data/skills.yaml</code> (era override), <code>data/ecosystems.yaml</code>, zone <code>mobs.yaml</code> files, <code>sql/item_mods.sql</code>, <code>scripts/quests/bastok/*</code> (WAR AF), <code>scripts/quests/jeuno/helpers.lua</code> (Borghertz), <code>modules/phoenix/lua/zones/npc_visibility.lua</code> (hidden ZNM/Einherjar NPCs), <code>src/map/utils/battleutils.cpp</code> (skillchains, Souleater).</li>
+<li>BG Wiki — quest walkthroughs (The Doorman, The Talekeeper's Truth, The Talekeeper's Gift, The Weight of Your Limits) and weapon-skill-point values.</li>
+<li>HorizonXI Wiki — 75-era quest walkthroughs, cross-check for AF steps.</li>
+<li>The project's leveling-camps guide for the camp list.</li>
+</ul>
+</main>
+</div>
+<footer id="siteFooter"></footer>
+</main>
+</div>
+<script>(function(){
+"use strict";
+var CACHE_KEY='phoenix-ah-v1',MAX_AGE=86400;
+window.AH=null;
+function load(){
+ try{
+  var c=JSON.parse(localStorage.getItem(CACHE_KEY));
+  if(c&&c.prices&&(Date.now()/1000-c.fetched)<MAX_AGE){window.AH=c.prices;show(c);return;}
+ }catch(e){}
+ var x=new XMLHttpRequest();
+ x.open('GET','/data/ah-prices.json');
+ x.onload=function(){
+  if(x.status===200){
+   try{
+    var d=JSON.parse(x.responseText);
+    window.AH=d.prices;
+    try{localStorage.setItem(CACHE_KEY,x.responseText);}catch(e){}
+    show(d);
+   }catch(e){}
+  }
+ };
+ x.send();
+}
+function show(d){
+ if(!window.PT)return;
+ var el=document.getElementById('ahStatus');
+ if(!el)return;
+ var ago=Math.floor((Date.now()/1000-d.fetched)/60);
+ var t=ago<60?ago+'m ago':Math.floor(ago/60)+'h ago';
+ el.innerHTML='<span class="ah-dot"></span>AH: '+d.count+' items ('+t+')';
+ el.title='Prices from PSXI.gg for PhoenixXI';
+ el.style.display='';
+}
+load();
+})();</script>
+<script>window._iconPos={};
+(function(){
+  var x=new XMLHttpRequest();
+  x.open('GET','/icon-positions.json',true);
+  x.onload=function(){if(x.status===200)try{window._iconPos=JSON.parse(x.responseText)}catch(e){}};
+  x.send();
+})();
+function iconSpan(id,sz){
+  sz=sz||20;
+  var p=window._iconPos[id];
+  if(!p)return '';
+  var s='--ic:'+p[1]+';--ir:'+p[2]+';--isz:'+sz+'px';
+  if(p[0])s+=';--is:'+p[0];
+  return '<span class="icon" style="'+s+'"></span> ';
+}</script>
+<script src="/table-tools.34610db5.js" defer></script>
+</body>
+</html>
