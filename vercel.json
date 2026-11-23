@@ -9,7 +9,9 @@
     { "source": "/fishinglookup/:path*", "destination": "/fishing", "permanent": true },
     { "source": "/fishing-lookup", "destination": "/fishing", "permanent": true },
     { "source": "/fishing-lookup/:path*", "destination": "/fishing", "permanent": true },
-    { "source": "/bcnm-tool", "destination": "/bcnm/profit", "permanent": true },
+    { "source": "/bcnm-tool", "destination": "/bcnm", "permanent": true },
+    { "source": "/bcnm/profit", "destination": "/bcnm", "permanent": true },
+    { "source": "/shopping", "destination": "/profit", "permanent": true },
     { "source": "/fishing-cooking", "destination": "/guides/fishing-cooking", "permanent": true },
     { "source": "/fishing-101", "destination": "/guides/fishing-101", "permanent": true }
   ],

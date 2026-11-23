@@ -86,8 +86,8 @@ def _build_updates(limit=8):
 
 
 page = full_page(
-    title='FFXI Crafting Tools — calculator, profit finder, shopping list for era-75',
-    description='FFXI era-75 crafting calculator, profit finder, and shopping list. Data pulled from the LandSandBoat server source.',
+    title='FFXI Crafting Tools — calculator, profit finder, guides for era-75',
+    description='FFXI era-75 crafting calculator, profit finder, and reference tools. Data pulled from the LandSandBoat server source.',
     og_url='https://ffxicrafting.com/',
     body_html=BODY.format(updates=_build_updates()),
     active='',

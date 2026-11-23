@@ -149,8 +149,9 @@ function initChrome(){
  var isF101=p==='/guides/fishing-101';
  var isFLvl=p==='/guides/fishing-leveling';
  var isJob=p.indexOf('/guides/jobs')===0;
- var isGuide=isFC||isF101||isFLvl||isJob;
+ var isGuide=isFC||isF101||isFLvl;
  var isCrafts=/^\/crafts/.test(p);
+ var isProf=isCrafts||isGuide;
 
  // === TOP BAR ===
  var tb=document.getElementById('topBar');
@@ -169,27 +170,32 @@ function initChrome(){
   }
   gdd+='</div></div>';
 
-  var guides='<div class="nav-dd"><span class="nav-dd-btn'+ac(isGuide)+'">Guides <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
-  guides+='<a href="/guides/fishing-cooking"'+acl(isFC)+'>Fishing + Cooking</a>';
-  guides+='<a href="/guides/fishing-101"'+acl(isF101)+'>Fishing 101</a>';
-  guides+='<a href="/guides/fishing-leveling"'+acl(isFLvl)+'>Fishing Leveling 1-85</a>';
-  guides+='<span class="nav-dd-sep"></span>';
-  guides+='<a href="/guides/jobs/beastmaster"'+acl(p==='/guides/jobs/beastmaster')+'>Beastmaster</a>';
-  guides+='<a href="/guides/jobs/white-mage"'+acl(p==='/guides/jobs/white-mage')+'>White Mage</a>';
-  guides+='<a href="/guides/jobs/ninja"'+acl(p==='/guides/jobs/ninja')+'>Ninja</a>';
-  guides+='</div></div>';
+  var profDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isProf)+'">Professions <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
+  profDD+='<a href="/crafts/woodworking"'+acl(p==='/crafts/woodworking')+'>Woodworking</a>';
+  profDD+='<a href="/crafts/smithing"'+acl(p==='/crafts/smithing')+'>Smithing</a>';
+  profDD+='<a href="/crafts/goldsmithing"'+acl(p==='/crafts/goldsmithing')+'>Goldsmithing</a>';
+  profDD+='<a href="/crafts/clothcraft"'+acl(p==='/crafts/clothcraft')+'>Clothcraft</a>';
+  profDD+='<a href="/crafts/leathercraft"'+acl(p==='/crafts/leathercraft')+'>Leathercraft</a>';
+  profDD+='<a href="/crafts/bonecraft"'+acl(p==='/crafts/bonecraft')+'>Bonecraft</a>';
+  profDD+='<a href="/crafts/alchemy"'+acl(p==='/crafts/alchemy')+'>Alchemy</a>';
+  profDD+='<a href="/crafts/cooking"'+acl(p==='/crafts/cooking')+'>Cooking</a>';
+  profDD+='<a href="/gathering/fishing"'+acl(p==='/gathering/fishing')+'>Fishing</a>';
+  profDD+='<span class="nav-dd-sep"></span>';
+  profDD+='<a href="/guides/fishing-cooking"'+acl(isFC)+'>Fishing + Cooking</a>';
+  profDD+='<a href="/guides/fishing-101"'+acl(isF101)+'>Fishing 101</a>';
+  profDD+='<a href="/guides/fishing-leveling"'+acl(isFLvl)+'>Fishing Leveling 1-85</a>';
+  profDD+='</div></div>';
 
-  var craftsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isCrafts)+'">Crafts <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
-  craftsDD+='<a href="/crafts"'+acl(p==='/crafts')+'>All Crafts</a>';
-  craftsDD+='</div></div>';
+  var jobsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isJob)+'">Jobs <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
+  jobsDD+='<a href="/guides/jobs/beastmaster"'+acl(p==='/guides/jobs/beastmaster')+'>Beastmaster</a>';
+  jobsDD+='<a href="/guides/jobs/white-mage"'+acl(p==='/guides/jobs/white-mage')+'>White Mage</a>';
+  jobsDD+='<a href="/guides/jobs/ninja"'+acl(p==='/guides/jobs/ninja')+'>Ninja</a>';
+  jobsDD+='</div></div>';
 
-  var isProfit=p==='/profit',isShopping=p==='/shopping',
-      isBCNMProfit=p==='/bcnm/profit';
-  var isTool=isProfit||isShopping||isBCNMProfit;
+  var isProfit=p==='/profit';
+  var isTool=isProfit;
   var toolsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isTool)+'">Tools <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
   toolsDD+='<a href="/profit"'+acl(isProfit)+'>Profit Finder</a>';
-  toolsDD+='<a href="/shopping"'+acl(isShopping)+'>Shopping List</a>';
-  toolsDD+='<a href="/bcnm/profit"'+acl(isBCNMProfit)+'>BCNM Profit Ranker</a>';
   toolsDD+='</div></div>';
 
   tb.innerHTML=
@@ -198,7 +204,7 @@ function initChrome(){
    '<div class="nav-links">'+toolsDD+gdd+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
-   guides+
+   profDD+jobsDD+
    '</div>';
  }
 
@@ -246,19 +252,25 @@ function initChrome(){
  function _initDeferred(){
   var sb=document.getElementById('sidebar');
   if(sb){
-   var tools=[
-    ['/profit','Profit Finder','profit'],
-    ['/shopping','Shopping List','shop'],
-    ['/bcnm/profit','BCNM Profit Ranker','bcnm'],
+   var marketTools=[
+    ['/profit','Profit Finder','profit']
+   ];
+   var gatherTools=[
     ['/fishing','Fishing Codex','fish'],
     ['/vendors','Vendor Directory','shop'],
     ['/gathering/gardening','Gardening Lookup','garden']
    ];
    var sh='<div class="sb-search"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>';
-   sh+='<div class="sb-section"><div class="sb-heading" style="font-size:15px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Tools</div>';
-   for(var i=0;i<tools.length;i++){
-    var t=tools[i],href=t[0],label=t[1],icon=t[2],soon=t[3];
-    if(soon){sh+='<span style="opacity:.4;padding:4px 8px;font-size:13px;display:block">'+label+' (soon)</span>';continue;}
+   sh+='<div class="sb-section"><div class="sb-heading">Market Tools</div>';
+   for(var i=0;i<marketTools.length;i++){
+    var t=marketTools[i],href=t[0],label=t[1],icon=t[2];
+    var isAct=p===href.replace(/\/$/,'');
+    sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool"><svg aria-hidden="true"><use href="#i-'+icon+'"/></svg>'+label+'</span></a>';
+   }
+   sh+='</div>';
+   sh+='<div class="sb-section"><div class="sb-heading">Gathering Tools</div>';
+   for(var i=0;i<gatherTools.length;i++){
+    var t=gatherTools[i],href=t[0],label=t[1],icon=t[2];
     var isAct=p===href.replace(/\/$/,'');
     sh+='<a href="'+href+'"'+(isAct?' class="active"':'')+'><span class="sb-tool"><svg aria-hidden="true"><use href="#i-'+icon+'"/></svg>'+label+'</span></a>';
    }

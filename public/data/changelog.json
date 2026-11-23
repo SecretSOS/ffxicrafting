@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-23",
+    "title": "Site trim: removed Shopping List & BCNM Profit Ranker",
+    "desc": "Removed the Shopping List and BCNM Profit Ranker pages to focus the site on its core tools. The main BCNM loot table remains. Sidebar reorganized into Market Tools and Gathering Tools sections.",
+    "tags": ["site"]
+  },
+  {
     "date": "2026-11-18",
     "title": "Job Guides & Christmas theme",
     "desc": "Added Job Guides section (Beastmaster, White Mage, Ninja) to navigation. New Christmas theme in the theme toggle. Removed Harvest Festival until next year.",
