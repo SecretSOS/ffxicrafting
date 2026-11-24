@@ -202,18 +202,27 @@ function initChrome(){
   jobsDD+='</div></div>';
 
   var isProfit=p==='/profit';
-  var isTool=isProfit;
+  var isVendors=p==='/vendors';
+  var isFishCodex=p==='/fishing';
+  var isGarden=p==='/gathering/gardening';
+  var isTool=isProfit||isVendors||isFishCodex||isGarden;
   var toolsDD='<div class="nav-dd"><span class="nav-dd-btn'+ac(isTool)+'">Tools <span class="nav-dd-arr">&#9662;</span></span><div class="nav-dd-menu">';
+  toolsDD+='<span class="nav-dd-label">Market Tools</span>';
   toolsDD+='<a href="/profit"'+acl(isProfit)+'>Profit Finder</a>';
+  toolsDD+='<a href="/vendors"'+acl(isVendors)+'>Vendor Directory</a>';
+  toolsDD+='<span class="nav-dd-sep"></span>';
+  toolsDD+='<span class="nav-dd-label">Gathering Tools</span>';
+  toolsDD+='<a href="/fishing"'+acl(isFishCodex)+'>Fishing Codex</a>';
+  toolsDD+='<a href="/gathering/gardening"'+acl(isGarden)+'>Gardening Lookup</a>';
   toolsDD+='</div></div>';
 
   tb.innerHTML=
    '<button class="hamburger" id="menuBtn" type="button" aria-label="Open menu">&#9776;</button>'+
    '<a href="/" class="logo">FFXI Crafting</a>'+
    '<div class="nav-links">'+toolsDD+gdd+
+   profDD+jobsDD+
    '<a href="/nm/" class="nav-link'+ac(isNM)+'">NMs</a>'+
    '<a href="/bcnm" class="nav-link'+ac(isBCNM)+'">BCNMs</a>'+
-   profDD+jobsDD+
    '</div>';
  }
 
@@ -262,11 +271,11 @@ function initChrome(){
   var sb=document.getElementById('sidebar');
   if(sb){
    var marketTools=[
-    ['/profit','Profit Finder','profit']
+    ['/profit','Profit Finder','profit'],
+    ['/vendors','Vendor Directory','shop']
    ];
    var gatherTools=[
     ['/fishing','Fishing Codex','fish'],
-    ['/vendors','Vendor Directory','shop'],
     ['/gathering/gardening','Gardening Lookup','garden']
    ];
    var sh='<div class="sb-search"><input type="search" id="search" placeholder="Search items…" autocomplete="off" aria-label="Search items"><span class="kbd">/</span><div id="searchResults" class="search-results" hidden></div></div>';

@@ -440,6 +440,7 @@ li{margin-bottom:.4em}
 .nav-dd-menu a.active{color:var(--accent)}
 .nav-dd-all{font-weight:700;border-bottom:1px solid var(--border)!important;margin-bottom:2px}
 .nav-dd-sep{display:block;height:1px;background:var(--border);margin:4px 14px}
+.nav-dd-label{display:block;padding:4px 14px 2px;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-family:var(--font-display)}
 
 /* --- Sidebar layout grid --- */
 .site-layout{display:grid;grid-template-columns:210px 1fr;gap:28px;max-width:1600px;width:92%;margin:0 auto;padding:0 16px;align-items:start}
