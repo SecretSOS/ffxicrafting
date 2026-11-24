@@ -15,10 +15,14 @@
 <link rel="stylesheet" href="/style.0ccbad75.css">
 <style>
 /* ── Tabs ── */
-.vd-tabs{display:flex;gap:2px;margin-bottom:16px;border-bottom:2px solid var(--border);overflow-x:auto}
-.vd-tab{padding:10px 16px;font-size:.84rem;font-weight:700;color:var(--ink-faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap;flex-shrink:0}
-.vd-tab:hover{color:var(--ink)}
-.vd-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.vd-tabs{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.vd-tab{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:10px;color:var(--ink-faint);background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .15s}
+.vd-tab:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+.vd-tab.active{background:color-mix(in srgb,var(--accent) 12%,transparent);border-color:var(--accent)}
+.vd-tab .vt-name{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--ink);white-space:nowrap;min-width:130px}
+.vd-tab.active .vt-name{color:var(--accent)}
+.vd-tab:hover .vt-name{color:var(--accent)}
+.vd-tab .vt-desc{font-size:.82rem;color:var(--ink-faint);line-height:1.4}
 .vd-tab .tc{font-weight:400;font-size:.74rem;margin-left:4px;opacity:.6}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
@@ -76,8 +80,9 @@
 
 /* ── Responsive ── */
 @media(max-width:700px){
-  .vd-tabs{gap:0}
-  .vd-tab{padding:8px 10px;font-size:.78rem}
+  .vd-tab{flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px}
+  .vd-tab .vt-name{min-width:0;font-size:.9rem}
+  .vd-tab .vt-desc{font-size:.76rem}
   .vd-npc{padding:10px 12px}
   .vd-group-head{padding:10px 12px}
   .vd-tbl{font-size:.76rem}
@@ -111,11 +116,11 @@ try{window.PT=localStorage.getItem('phoenix-pt')==='1'}catch(e){window.PT=false}
 </div>
 
 <div class="vd-tabs" id="vdTabs">
-  <div class="vd-tab active" data-tab="npc">NPC Shops <span class="tc" id="tcNpc"></span></div>
-  <div class="vd-tab" data-tab="guild">Guild Shops <span class="tc" id="tcGuild"></span></div>
-  <div class="vd-tab" data-tab="regional">Regional <span class="tc" id="tcRegional"></span></div>
-  <div class="vd-tab" data-tab="conquest">Conquest <span class="tc" id="tcConquest"></span></div>
-  <div class="vd-tab" data-tab="curio">Curio Moogle <span class="tc" id="tcCurio"></span></div>
+  <div class="vd-tab active" data-tab="npc"><span class="vt-name">NPC Shops <span class="tc" id="tcNpc"></span></span><span class="vt-desc">Standard NPC merchants — gear, consumables, and materials sold in towns and dungeons</span></div>
+  <div class="vd-tab" data-tab="guild"><span class="vt-name">Guild Shops <span class="tc" id="tcGuild"></span></span><span class="vt-desc">Craft guild vendors with rotating stock — crystals, materials, and tools by profession</span></div>
+  <div class="vd-tab" data-tab="regional"><span class="vt-name">Regional <span class="tc" id="tcRegional"></span></span><span class="vt-desc">Regional merchants that appear when your nation controls the region</span></div>
+  <div class="vd-tab" data-tab="conquest"><span class="vt-name">Conquest <span class="tc" id="tcConquest"></span></span><span class="vt-desc">Spend Conquest Points on gear and items tied to your nation's rank</span></div>
+  <div class="vd-tab" data-tab="curio"><span class="vt-name">Curio Moogle <span class="tc" id="tcCurio"></span></span><span class="vt-desc">The Curio Vendor Moogle — special items available for gil in towns</span></div>
 </div>
 
 <div class="vd-result" id="vdResult"></div>
